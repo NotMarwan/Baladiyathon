@@ -2,515 +2,527 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أثر — عرض تقديمي (3 دقائق)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أثر — قرار قابل للإثبات في ثلاث دقائق</title>
 <style>
   :root{
-    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
-    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
-    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --asphalt:#102535;
+    --asphalt-2:#18384d;
+    --paper:#f3f0e8;
+    --surface:#fffdf8;
+    --ink:#17242c;
+    --muted:#62717a;
+    --blue:#1f6b8f;
+    --blue-soft:#dcebf1;
+    --amber:#d19231;
+    --amber-soft:#f4e6d0;
+    --mint:#cce8d8;
+    --red:#b34a42;
+    --line:#d7d3c8;
+    --display:"Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+    --body:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
     --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
-    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;height:100%;background:var(--ground);color:var(--ink);font-family:var(--sans)}
-  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
-
-  /* deck container: scroll-snap fallback + JS transform-based paging */
-  #deck{
-    height:100vh;
-    width:100vw;
-    overflow-y:auto;
-    scroll-snap-type:y mandatory;
-    scroll-behavior:smooth;
-  }
+  html,body{margin:0;width:100%;height:100%;background:var(--paper);color:var(--ink);font-family:var(--body)}
+  button,a{font:inherit}
+  a{color:inherit}
+  #deck{height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
   .slide{
-    height:100vh;
     width:100%;
+    min-height:100svh;
     scroll-snap-align:start;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:stretch;
-    padding:clamp(28px,5vw,80px);
+    display:grid;
+    place-items:center;
     position:relative;
     overflow:hidden;
+    padding:clamp(28px,5vw,76px);
   }
-  .slide-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:20px}
-  .eyebrow{font-size:13px;letter-spacing:.06em;color:var(--navy);font-weight:600}
-  h1{font-size:clamp(40px,7vw,72px);line-height:1.05;margin:0;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-  h1 .latin{font-family:var(--mono);font-size:.32em;font-weight:500;color:var(--faint);letter-spacing:.02em}
-  h2{font-size:clamp(26px,4vw,40px);font-weight:700;margin:0;letter-spacing:-.01em}
-  h3{font-size:17px;font-weight:600;margin:0 0 6px}
-  p{margin:0;color:var(--ink)}
-  .thesis{font-size:clamp(16px,2vw,21px);color:#26313d;line-height:1.6;max-width:78ch}
-  .hook{font-size:clamp(14px,1.6vw,17px);color:var(--ochre);font-weight:600;line-height:1.55;max-width:70ch;border-inline-start:3px solid var(--ochre);padding-inline-start:14px}
-  .cover .hook{border-inline-start:none;padding-inline-start:0;margin:0 auto;text-align:center;max-width:64ch}
-
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
-  .stat .num{font-family:var(--mono);font-size:clamp(26px,3vw,36px);font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
-  .stat .lab{margin-top:10px;font-size:14.5px;color:var(--muted);line-height:1.5}
-
-  .ref{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em;margin-top:10px}
-  .card .ref{margin-top:8px}
-  .limit{font-size:14px;line-height:1.7;color:var(--muted);border-right:3px solid var(--gold);padding-right:12px;margin:14px 0 0}
-
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
-  .card p{font-size:14.5px;color:var(--muted);line-height:1.5}
-  .card.good{background:var(--navy-soft);border-color:#C3D7E6}
-
-  .pipe{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:12px;align-items:stretch}
-  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
-  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
-  .stage-h{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:10px;letter-spacing:.03em}
-  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:6px}
-  .stage li{font-size:13.5px;color:var(--ink);line-height:1.4}
-
-  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:9px}
-  .demo li{counter-increment:d;position:relative;padding-inline-start:40px;font-size:15px;min-height:28px;display:flex;align-items:center;color:var(--muted)}
-  .demo li b{color:var(--ink)}
-  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:12.5px;display:flex;align-items:center;justify-content:center;font-weight:600}
-
-  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--ochre-soft);color:var(--ochre);font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;width:fit-content}
-  .badge.link{background:var(--navy-soft);color:var(--navy)}
-  a.linkbtn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-size:14.5px;font-weight:600;padding:10px 18px;border-radius:8px;text-decoration:none;width:fit-content}
-  a.linkbtn:hover{background:#163e5f}
-  a.linkbtn:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
-
-  /* slide 4: embedded live demo */
-  .demo-layout{display:grid;grid-template-columns:28% 72%;gap:18px;flex:1;min-height:0}
-  .demo-col{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden}
-  .demo-col .demo li{font-size:13px;min-height:22px;padding-inline-start:32px}
-  .demo-col .demo li::before{width:21px;height:21px;font-size:11px}
-  .device-frame{background:#1B2129;border-radius:14px;padding:8px 8px 0;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(15,25,35,.28);min-height:0;flex:1}
-  .device-bar{display:flex;align-items:center;gap:7px;padding:5px 6px 9px;flex:0 0 auto}
-  .device-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-  .device-dot.r{background:#E5605A}
-  .device-dot.y{background:#E8B23D}
-  .device-dot.g{background:#3FA65B}
-  .device-url{margin-inline-start:8px;background:#2A323B;color:#C8CDD3;font-family:var(--mono);font-size:11px;padding:4px 14px;border-radius:6px;flex:1;text-align:center;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .device-screen{flex:1;min-height:0;border-radius:8px 8px 0 0;overflow:hidden;background:#fff}
-  .device-screen iframe{width:100%;height:100%;border:0;display:block}
-  .fallback-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  @media(max-width:760px){
-    .demo-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(220px,1fr)}
+  .slide::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg,rgba(31,107,143,.05) 1px,transparent 1px),
+      linear-gradient(rgba(31,107,143,.05) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.35),transparent 72%);
   }
-
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--muted)}
-
-  .pill{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:6px}
-  .pill span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 20px;font-weight:600;font-size:15px;color:var(--navy)}
-  .pill i{font-style:normal;color:var(--faint);font-size:18px}
-
-  .footnote{position:absolute;inset-inline:0;bottom:18px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:0 40px}
-  .footnote span{font-family:var(--mono);font-size:11px;color:var(--faint)}
-
-  .closing{background:var(--navy);color:#fff}
-  .closing .eyebrow{color:#BFD6E7}
-  .closing h2{color:#fff}
-  .closing .thesis{color:#EAF1F7}
-  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
-  .flow .step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:12px 18px;font-weight:600;font-size:16px}
-  .flow .step.hi{background:#fff;color:var(--navy)}
-  .flow .arrow{color:#BFD6E7;font-size:20px}
-  .cmp{width:100%;border-collapse:collapse;font-size:.72rem}
-  .cmp th,.cmp td{border:1px solid var(--line,#dde);padding:6px 10px;text-align:right}
-  .cmp tr:last-child td{background:#eef4f9}
-  .loops{margin:10px 0 0;padding-inline-start:20px;font-size:.82rem;line-height:1.9}
-  .qa p{font-size:.74rem;line-height:1.8;margin:0 0 8px}
-
-  /* nav chrome */
+  .slide-inner{position:relative;width:min(1180px,100%);display:grid;gap:clamp(16px,2.4vw,28px)}
+  .topline{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .eyebrow{color:var(--blue);font-size:13px;font-weight:900;letter-spacing:.035em}
+  .evidence-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--line);border-radius:999px;background:rgba(255,253,248,.84);
+    color:var(--muted);font-size:12px;font-weight:800;padding:6px 10px;
+  }
+  .evidence-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber)}
+  h1,h2,h3,p{margin:0}
+  h1,h2{font-family:var(--display);color:var(--asphalt);letter-spacing:-.02em}
+  h1{font-size:clamp(46px,8vw,92px);line-height:1}
+  h2{font-size:clamp(30px,4.6vw,56px);line-height:1.2;max-width:18ch}
+  h3{font-size:17px;color:var(--asphalt)}
+  .lead{font-size:clamp(18px,2.2vw,26px);line-height:1.7;max-width:72ch;color:#2d3c45}
+  .quiet{font-size:14px;line-height:1.7;color:var(--muted)}
+  .latin,.num{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:var(--mono)}
+  .hero-lockup{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:44px}
+  .hero-mark{border-right:7px solid var(--amber);padding-right:24px}
+  .hero-mark p{margin-top:18px}
+  .decision-card{
+    background:var(--asphalt);color:#f8fafb;border-radius:26px;padding:26px;
+    min-height:260px;display:grid;align-content:space-between;box-shadow:0 24px 60px rgba(16,37,53,.22)
+  }
+  .decision-card .label{color:#b9d4e1;font-size:13px;font-weight:800}
+  .decision-card .question{font-size:clamp(23px,3vw,36px);line-height:1.5;font-weight:800}
+  .decision-card .answer{display:flex;align-items:center;gap:10px;color:#d9eee2;font-size:14px}
+  .decision-card .answer::before{content:"";width:28px;height:2px;background:#d9eee2}
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .metric{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;
+    display:grid;gap:9px;min-height:145px;box-shadow:0 12px 34px rgba(16,37,53,.055)
+  }
+  .metric .value{font-family:var(--mono);direction:ltr;text-align:right;color:var(--amber);font-size:clamp(26px,3.6vw,42px);font-weight:900}
+  .metric p{font-size:14px;color:var(--muted);line-height:1.55}
+  .metric a{font-size:11px;color:var(--blue);font-weight:900;text-decoration:none}
+  .metric a:hover{text-decoration:underline}
+  .metric.decision-card{background:var(--asphalt);color:#f8fafb;border-color:var(--asphalt)}
+  .metric.decision-card .value{color:#f1bd6b}
+  .metric.decision-card .question{color:#fff}
+  .metric.decision-card .answer{color:#d9eee2}
+  .metric.decision-card a{color:#bcd9e6}
+  .source-strip{display:flex;gap:10px;flex-wrap:wrap}
+  .source-strip a{
+    text-decoration:none;background:var(--surface);border:1px solid var(--line);
+    color:var(--blue);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900
+  }
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .panel.strong{background:var(--asphalt);color:#fff;border-color:var(--asphalt)}
+  .panel.strong h3{color:#fff}
+  .panel p{margin-top:9px;line-height:1.65;color:var(--muted)}
+  .panel.strong p{color:#c9dae3}
+  .truth-list{display:grid;gap:10px}
+  .truth-row{
+    display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:start;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px
+  }
+  .truth-row b{color:var(--blue)}
+  .truth-row p{font-size:14px;line-height:1.6;color:var(--muted)}
+  .compare{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
+  .scenario{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;min-height:240px;display:grid;align-content:space-between}
+  .scenario.alt{border-color:#8bb8a0;background:#f0f8f3}
+  .scenario .time{font-family:var(--mono);font-size:clamp(42px,6vw,72px);color:var(--asphalt);direction:ltr;text-align:right}
+  .scenario .status{font-size:13px;color:var(--muted)}
+  .scenario .bar{height:10px;background:#ead7ba;border-radius:99px;overflow:hidden}
+  .scenario .bar span{display:block;height:100%;width:86%;background:var(--red)}
+  .scenario.alt .bar{background:#d5eadf}
+  .scenario.alt .bar span{width:38%;background:#3f8562}
+  .arrow{font-size:38px;color:var(--blue)}
+  .path{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .path-step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:150px}
+  .path-step:not(:last-child)::after{content:"←";position:absolute;left:-18px;top:52px;color:var(--blue);font-size:22px;font-weight:900}
+  .path-step b{display:block;color:var(--blue);font-family:var(--mono);font-size:12px;margin-bottom:10px}
+  .path-step p{font-size:14px;line-height:1.6}
+  .formula{
+    background:var(--asphalt);color:#fff;border-radius:20px;padding:24px;
+    display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center
+  }
+  .formula .symbol{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:var(--asphalt);font-size:32px;font-weight:900}
+  .formula code{display:block;direction:ltr;text-align:right;color:#d8e9f2;font-family:var(--mono);font-size:clamp(14px,2vw,20px);white-space:normal}
+  .formula p{margin-top:8px;color:#c7d8e1;line-height:1.6}
+  .gate{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+  .gate-list{display:grid;gap:10px}
+  .gate-row{display:flex;justify-content:space-between;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .gate-row b{color:var(--asphalt)}
+  .gate-row span{font-size:13px;color:var(--muted)}
+  .hard-stop{background:#3d2525;color:#fff;border-radius:18px;padding:22px;display:grid;align-content:center;gap:12px}
+  .hard-stop strong{font-size:24px}
+  .hard-stop p{color:#f0ceca;line-height:1.65}
+  #ask{background:var(--asphalt);color:#fff}
+  #ask::before{opacity:.25}
+  #ask h2{color:#fff;max-width:16ch}
+  #ask .lead{color:#d3e2e9}
+  .ask-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .ask-box div{border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;background:rgba(255,255,255,.06)}
+  .ask-box b{display:block;color:#f0bd6c;margin-bottom:7px}
+  .ask-box p{font-size:14px;line-height:1.6;color:#cfdee6}
+  .appendix{background:#e8ecec}
+  .appendix h2{max-width:none}
+  .appendix-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .appendix-list a,.qa-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px;text-decoration:none}
+  .appendix-list a b{display:block;color:var(--blue);margin-bottom:5px}
+  .appendix-list a span,.qa-card p{font-size:13px;color:var(--muted);line-height:1.6}
+  .qa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .qa-card h3{margin-bottom:6px}
+  .trace{
+    position:fixed;top:0;right:0;left:0;height:5px;background:rgba(16,37,53,.12);z-index:50
+  }
+  #progress{height:100%;background:var(--amber);width:12.5%;transition:width .22s ease}
   #counter{
-    position:fixed;
-    bottom:16px;
-    inset-inline-end:20px;
-    font-family:var(--mono);
-    font-size:13px;
-    color:var(--muted);
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:999px;
-    padding:6px 14px;
-    z-index:50;
-    direction:ltr;
+    position:fixed;bottom:18px;left:20px;z-index:50;
+    direction:ltr;font-family:var(--mono);font-size:13px;font-weight:800;
+    background:rgba(255,253,248,.94);border:1px solid var(--line);border-radius:999px;padding:8px 13px;color:var(--asphalt)
   }
-  #clickzone-prev,#clickzone-next{
-    position:fixed;
-    top:0;
-    height:100vh;
-    width:14vw;
-    z-index:40;
-    cursor:pointer;
-    background:transparent;
-    border:none;
+  .nav-btn{
+    position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:44px;height:64px;
+    border:1px solid var(--line);background:rgba(255,253,248,.88);color:var(--asphalt);cursor:pointer
   }
-  #clickzone-prev{inset-inline-start:0}
-  #clickzone-next{inset-inline-end:0}
-  #progress{
-    position:fixed;
-    top:0;
-    inset-inline-start:0;
-    height:3px;
-    background:var(--ochre);
-    z-index:60;
-    transition:width .25s ease;
+  #prev{right:12px;border-radius:12px 0 0 12px}
+  #next{left:12px;border-radius:0 12px 12px 0}
+  .nav-btn:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+  @media(max-width:860px){
+    .hero-lockup,.two-col,.gate{grid-template-columns:1fr}
+    .metric-grid{grid-template-columns:1fr 1fr}
+    .path{grid-template-columns:1fr 1fr}
+    .path-step::after{display:none}
   }
-  .cover{justify-content:center;align-items:center;text-align:center}
-  .cover .slide-inner{align-items:center;text-align:center}
-  .cover .thesis{max-width:60ch;margin:0 auto}
-
-  /* slide-enter fade+rise (CSS-only scroll-linked entry animation; no-op where unsupported) */
-  @keyframes slideEnterRise{ from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-  @supports (animation-timeline: view()){
-    @media (prefers-reduced-motion: no-preference){
-      .slide-inner{
-        animation:slideEnterRise linear both;
-        animation-timeline:view();
-        animation-range:entry 0% cover 35%;
-      }
-    }
+  @media(max-width:620px){
+    .slide{padding:54px 22px 64px;overflow-y:auto}
+    .metric-grid,.ask-box,.appendix-list,.qa-grid,.compare{grid-template-columns:1fr}
+    .arrow{transform:rotate(90deg);text-align:center}
+    .truth-row{grid-template-columns:1fr}
+    .path{grid-template-columns:1fr}
+    .formula{grid-template-columns:1fr}
+    .nav-btn{display:none}
   }
-
-  @media(max-width:760px){
-    .stats,.cards,.pipe,.split{grid-template-columns:1fr}
+  @media(max-height:820px) and (min-width:621px){
+    .slide{padding:34px 64px}
+    .slide-inner{gap:13px}
+    h2{font-size:clamp(27px,4vw,43px)}
+    .lead{font-size:17px}
+    .metric,.panel,.scenario{padding:14px;min-height:auto}
+    .path-step{min-height:124px;padding:12px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #deck{scroll-behavior:auto}
+    #progress{transition:none}
   }
 </style>
 </head>
 <body>
+<div class="trace" aria-hidden="true"><div id="progress"></div></div>
+<button class="nav-btn" id="prev" type="button" aria-label="الشريحة السابقة">←</button>
+<button class="nav-btn" id="next" type="button" aria-label="الشريحة التالية">→</button>
+<div id="counter">1 / 8</div>
 
-<div id="progress" style="width:8.3%"></div>
-<button id="clickzone-prev" aria-label="الشريحة السابقة" title="السابق"></button>
-<button id="clickzone-next" aria-label="الشريحة التالية" title="التالي"></button>
-<div id="counter">1 / 12</div>
-
-<div id="deck">
-
-  <!-- SPEAKER NOTES: [0:00–0:15] اليوم يرى ضابط الترخيص موقع الحفر ومدته، لكنه لا يرى تكلفة القرار على حركة الناس قبل التوقيع. «أثر» يضيف هذا القرار قبل الموافقة. -->
-  <section class="slide cover" id="slide-1">
+<main id="deck">
+  <!-- 0:00–0:15 -->
+  <section class="slide main" data-story="permit-network" data-start="0" data-end="15" data-seconds="15">
     <div class="slide-inner">
-      <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · أثر أعمال البنية التحتية على المرور</div>
-      <h1 style="justify-content:center">أثر <span class="latin">Athar</span></h1>
-      <p class="thesis">قبل أن نوقّع تصريح الحفر، نريد أن نعرف أثره على حركة الناس — ثم نرتّب موعداً أخف ونشرح سبب القرار.</p>
-      <p class="hook">النموذج الحالي: درجة تحليلية وجدولة مفسّرة؛ التكامل الشبكي المتخصص خارطة طريق.</p>
-    </div>
-  </section>
-
-  <!-- SPEAKER NOTES: [0:15–0:35] بلدي ينسق الحفريات ويعرضها على الخريطة؛ صفحات الخدمة العامة لا تثبت تنبؤاً مرورياً قبل الترخيص أو ترتيباً كمياً للبدائل. نقترح طبقة قرار حول المسار القائم، ولا ندعي ربطاً حالياً. -->
-  <section class="slide" id="slide-2">
-    <div class="slide-inner">
-      <div class="eyebrow">فجوة القرار</div>
-      <h2>بلدي ينسّق الحفر؛ «أثر» يقترح قرار الحركة قبل الموافقة</h2>
-      <p class="thesis">بلدي يملك خريطة للحفريات وتنسيقاً للمشاريع المستقبلية والمتعددة. الدليل العام لا يظهر تنبؤاً مرورياً منسوباً للحفرية أو ترتيباً كمياً للبدائل. «أثر» نموذج مستقل لطبقة قرار مقترحة حول هذا المسار.</p>
-      <div class="ref"><a href="athar-sources.html#src-008">src-008 · لا يثبت غياب قدرات داخلية غير منشورة</a></div>
-    </div>
-  </section>
-
-  <!-- SPEAKER NOTES: [0:35–0:55] نبدأ بفحص سريع من البيانات المفتوحة، نرفع الدقة عند توفر السرعة والحجم، ونحيل الحالات العالية لمحاكاة متخصصة. لا ندعي أن التكامل المتخصص موجود في النموذج الحالي. -->
-  <section class="slide" id="slide-3">
-    <div class="slide-inner">
-      <div class="eyebrow">الحل</div>
-      <h2>ثلاث درجات تمنع الإفراط في المحاكاة</h2>
-      <div class="pipe" id="slide-tiers">
-        <div class="stage"><div class="stage-h">فحص سريع</div><ul><li>بيانات التصريح</li><li>طبقات مفتوحة</li><li>حدود تحفظية</li></ul></div>
-        <div class="stage engine"><div class="stage-h">تشغيلي</div><ul><li>سرعة وحجم</li><li>معايرة عند توفر البيانات</li><li>بدائل زمنية مفسّرة</li></ul></div>
-        <div class="stage"><div class="stage-h">متخصص</div><ul><li>Vissim أو Aimsun</li><li>للحالات عالية الأثر</li><li>تكامل مستقبلي</li></ul></div>
+      <div class="topline">
+        <div class="eyebrow">أثر · قرار واحد قبل تصريح واحد</div>
+        <div class="evidence-tag">سياق رسمي، لا نتيجة محلية</div>
       </div>
-      <div class="ref"><a href="athar-sources.html#src-001">src-001 · منطق تدرّج مستعار من الكود؛ ليس حدود تصريح ملزمة</a></div>
+      <div class="hero-lockup">
+        <div class="hero-mark">
+          <h1>الحفرية لا تقف عند حدودها.</h1>
+          <p class="lead">موعد إغلاق مقطع واحد يمكن أن ينقل التأخير إلى شبكة كاملة. السؤال ليس هل نسمح بالحفر، بل أي جدول يخفف الضرر قبل أن نوقّع.</p>
+        </div>
+        <article class="metric decision-card" data-source="src-031">
+          <div class="label">سياق تشغيل رقمي رسمي</div>
+          <div class="value">2.2 مليون</div>
+          <div class="question">عمل شارع وطريق في إنجلترا خلال فترة رسمية محددة.</div>
+          <div class="answer">دليل حجم، وليس أثراً لأثر</div>
+          <a href="athar-sources.html#src-031">المصدر المباشر وحد الاستخدام</a>
+        </article>
+      </div>
+      <aside class="speaker-notes" hidden>نبدأ بتصريح حفر واحد. موقعه معروف، لكن أثر توقيته يمتد إلى شبكة كاملة. أثر لا يقرر إن كان الحفر ضرورياً؛ بل يقارن جدول الطلب بموعد أخف قبل التوقيع.</aside>
     </div>
   </section>
 
-  <!-- SPEAKER NOTES: [0:55–1:30] في النموذج نغيّر عدد المسارات والوقت، فتتغير درجة BPR فوراً. زر التحسين يقارن بدائل زمنية مفسرة، ومحرك التوجيه يحسب ثلاثة مسارات على شبكة طرق محلية ويقارن زمنها وسعتها المتبقية. قيم السعة والطلب افتراضات توضيحية تحتاج المعايرة. -->
-  <section class="slide" id="slide-4">
+  <!-- 0:15–0:35 -->
+  <section class="slide main" data-story="current-gap" data-start="15" data-end="35" data-seconds="20">
     <div class="slide-inner">
-      <div class="eyebrow">الديمو</div>
-      <h2>الديمو يثبت القرار الذي يعمل الآن</h2>
-      <span class="badge">بيانات ومدخلات توضيحية للعرض</span>
-      <div class="demo-layout">
-        <div class="demo-col">
-          <ol class="demo">
-            <li>أدخل الإغلاق والوقت.</li>
-            <li>شاهد درجة <b>BPR</b> فوراً.</li>
-            <li>قارن بدائل الجدولة وأسبابها.</li>
-            <li>اطبع مسودة خطة المرور.</li>
-            <li>قارن ثلاثة مسارات محسوبة على شبكة طرق محلية.</li>
-          </ol>
-          <div class="fallback-row">
-            <a class="linkbtn" href="athar-prototype.html" target="_blank" rel="noopener">افتح النموذج في نافذة كاملة ↗</a>
-            <a class="linkbtn" href="athar-lab.html" target="_blank" rel="noopener">افتح مختبر الابتكار ↗</a>
-          </div>
+      <div class="topline">
+        <div class="eyebrow">السؤال الأول · ما الذي لا يجيب عنه الفحص الحالي؟</div>
+        <div class="evidence-tag">حقيقة رسمية + استنتاج محدود</div>
+      </div>
+      <h2>الخريطة تعرف أين الحفر. القرار يحتاج أن يعرف متى يكون أخف.</h2>
+      <div class="two-col">
+        <div class="panel">
+          <h3>ما تثبته بلدي</h3>
+          <p>عرض مسارات الحفريات المصرح بها، وترشيحها، وفتح تفاصيلها الفنية.</p>
+          <div class="source-strip"><a href="athar-sources.html#src-008">src-008 · بلدي</a></div>
         </div>
-        <div class="device-frame">
-          <div class="device-bar">
-            <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
-            <span class="device-url">athar-prototype.html</span>
-          </div>
-          <div class="device-screen">
-            <iframe data-src="athar-prototype.html" loading="lazy" title="نموذج أثر الحالي"></iframe>
-          </div>
+        <div class="panel strong">
+          <h3>ما لا تثبته الصفحة العامة</h3>
+          <p>تنبؤ منسوب للحفرية قبل الترخيص، أو ترتيب كمي للبدائل. لهذا نقترح طبقة قرار مستقلة ولا ندعي ربطاً منفذاً.</p>
         </div>
       </div>
+      <p class="quiet">كود مناطق العمل يطلب خطة خاصة بالموقع ويربط الحماية بالحجم والسرعة والمدة والمخاطر.</p>
+      <div class="source-strip"><a href="athar-sources.html#src-042">src-042 · كود الطرق السعودي</a></div>
+      <aside class="speaker-notes" hidden>بلدي يثبت وجود خريطة رسمية للحفريات المصرح بها وتفاصيلها. ما لا تثبته الصفحة العامة هو تنبؤ منسوب للحفرية أو ترتيب كمي للبدائل. لذلك نقترح طبقة قرار مستقلة، ولا ندعي تكاملاً قائماً.</aside>
     </div>
   </section>
 
-  <!-- SPEAKER NOTES: [1:30–1:55] التنسيق الرقمي قابل للتشغيل على نطاق كبير: Street Manager ينسق أكثر من مليوني عمل سنوياً في إنجلترا. هذا معيار تشغيل عالمي، وليس حجماً سعودياً ولا نتيجة لأثر. -->
-  <section class="slide" id="slide-5">
+  <!-- 0:35–0:55 -->
+  <section class="slide main" data-story="evidence-boundary" data-start="35" data-end="55" data-seconds="20">
     <div class="slide-inner">
-      <div class="eyebrow">دليل التشغيل</div>
-      <h2>التنسيق الرقمي ينجح على نطاق وطني</h2>
-      <div class="stats">
-        <div class="stat">
-          <div class="num">+2M</div>
-          <div class="lab">عمل طريق سنوياً ينسقه Street Manager في إنجلترا.</div>
-          <div class="ref"><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · ليس حجماً سعودياً ولا نتيجة لأثر</a></div>
+      <div class="topline">
+        <div class="eyebrow">السؤال الثاني · ما الحقيقي وما الافتراض؟</div>
+        <div class="evidence-tag">الفصل ظاهر داخل القرار</div>
+      </div>
+      <h2>ثلاث طبقات، ولا طبقة تتنكر في الأخرى.</h2>
+      <div class="truth-list">
+        <div class="truth-row"><b>رسمي</b><p>مواقع محطات المترو والحافلات من بوابة الهيئة الملكية لمدينة الرياض.</p></div>
+        <div class="truth-row"><b>توضيحي</b><p>طلب الحفر والحركة والسعة والجدول في الديمو؛ ليست حالة ميدانية.</p></div>
+        <div class="truth-row"><b>مشتق</b><p>الخطأ والمنفعة والانحياز من معادلات منشورة في بروتوكول الظل.</p></div>
+      </div>
+      <div class="metric-grid">
+        <article class="metric" data-source="src-043">
+          <div class="value">2026</div><p>تحديث مجموعة محطات المترو.</p>
+          <a href="athar-sources.html#src-043">src-043 · المصدر الرسمي</a>
+        </article>
+        <article class="metric" data-source="src-044">
+          <div class="value">2024</div><p>سنة مجموعة محطات الحافلات المنشورة.</p>
+          <a href="athar-sources.html#src-044">src-044 · المصدر الرسمي</a>
+        </article>
+        <article class="metric" data-formula="classification">
+          <div class="value">3</div><p>تصنيفات ظاهرة: رسمي، توضيحي، مشتق.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">المعادلات وحدود الاستخدام</a>
+        </article>
+      </div>
+      <aside class="speaker-notes" hidden>الثقة تبدأ من تصنيف كل مدخل. مواقع النقل العام رسمية من الهيئة الملكية، وطلب العرض والحركة والسعة توضيحية، أما الخطأ والمنفعة والانحياز فهي قيم مشتقة من معادلات منشورة. لا تختلط طبقة بأخرى.</aside>
+    </div>
+  </section>
+
+  <!-- 0:55–1:25 -->
+  <section class="slide main" data-story="baseline-alternative" data-start="55" data-end="85" data-seconds="30">
+    <div class="slide-inner">
+      <div class="topline">
+        <div class="eyebrow">السؤال الثالث · هل يوجد بديل زمني أخف؟</div>
+        <div class="evidence-tag">حالة توضيحية داخل الشريحة</div>
+      </div>
+      <h2>نقارن جدول الطلب ببديل واحد، ثم نعرض سبب الاختيار.</h2>
+      <div class="compare">
+        <article class="metric scenario" data-formula="illustrative-baseline">
+          <div><div class="status">خط الأساس التوضيحي</div><div class="time">08:00</div></div>
+          <div class="bar" aria-label="تأثير توضيحي أعلى"><span></span></div>
+          <p>يتقاطع مع نافذة طلب أعلى في ملف الحركة التوضيحي.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">ليس قياساً ميدانياً</a>
+        </article>
+        <div class="arrow" aria-hidden="true">←</div>
+        <article class="metric scenario alt" data-formula="illustrative-alternative">
+          <div><div class="status">بديل زمني توضيحي</div><div class="time">22:00</div></div>
+          <div class="bar" aria-label="تأثير توضيحي أقل"><span></span></div>
+          <p>يبقى مقترحاً للمراجعة، ولا يتحول إلى وفر قبل القياس.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">قاعدة القياس بعد التنفيذ</a>
+        </article>
+      </div>
+      <div class="source-strip">
+        <a href="athar-prototype.html">افتح النموذج التفاعلي</a>
+        <a href="athar-lab.html">افتح مختبر القرار</a>
+      </div>
+      <p class="quiet">المقارنة التوضيحية تستخدم شبكة طرق محلية ومدخلات معلنة، ولا تمثل نتيجة ميدانية.</p>
+      <aside class="speaker-notes" hidden>في الحالة التوضيحية نقارن موعد الطلب في الثامنة صباحاً ببديل واحد في العاشرة مساءً. يوضح النموذج سبب انخفاض الطلب المتوقع، ويفحص الشبكة المحلية، ثم يعرض البديل للمراجع. لا نسمي الفرق وفراً، لأن ذلك يحتاج قياساً بعد التنفيذ.</aside>
+    </div>
+  </section>
+
+  <!-- 1:25–1:45 -->
+  <section class="slide main" data-story="decision-path" data-start="85" data-end="105" data-seconds="20">
+    <div class="slide-inner">
+      <div class="topline">
+        <div class="eyebrow">السؤال الرابع · ما مسار القرار؟</div>
+        <div class="evidence-tag">قرار بشري الإشراف</div>
+      </div>
+      <h2>مسار واحد قصير، وحدوده مكتوبة.</h2>
+      <div class="path">
+        <div class="path-step"><b>01</b><p>استلام طلب توضيحي ومصادره.</p></div>
+        <div class="path-step"><b>02</b><p>حساب خط الأساس والبديل.</p></div>
+        <div class="path-step"><b>03</b><p>فحص النقل العام والوصول الحرج.</p></div>
+        <div class="path-step"><b>04</b><p>عرض التوصية وأسبابها للمراجع.</p></div>
+        <div class="path-step"><b>05</b><p>قياس النتيجة بعد التنفيذ من دون كتابة تلقائية.</p></div>
+      </div>
+      <p class="quiet">المدخلات التوضيحية لا تصبح بيانات تصريح، والتوصية لا تصبح موافقة، والتكامل البلدي يبقى مسار نشر مقترحاً.</p>
+      <aside class="speaker-notes" hidden>المسار قصير وواضح: نستلم الطلب ومصدر المدخلات، نحسب خط الأساس والبديل، نفحص النقل العام والوصول الحرج، ثم نعرض توصية مفسرة. بعد التنفيذ نقيس النتيجة، من دون موافقة آلية أو كتابة في منصة التصاريح.</aside>
+    </div>
+  </section>
+
+  <!-- 1:45–2:10 -->
+  <section class="slide main" data-story="impact-range" data-start="105" data-end="130" data-seconds="25">
+    <div class="slide-inner">
+      <div class="topline">
+        <div class="eyebrow">السؤال الخامس · كيف نثبت الأثر؟</div>
+        <div class="evidence-tag">معادلة قبل الادعاء</div>
+      </div>
+      <h2>الأثر يبدأ بفارق مرصود، لا برقم مدينة سنوي.</h2>
+      <div class="formula">
+        <div class="symbol">Δ</div>
+        <div>
+          <code>observed benefit = counterfactual vehicle-hours − observed vehicle-hours</code>
+          <p>تدخل الحالات المقاسة فقط. الحالة ذات الخط المضاد غير الصالح لا تُملأ بقيمة تركيبية.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- SPEAKER NOTES: [1:55–2:20] لا نبيع وعداً؛ نقترح تجربة ظل على عشرين إلى ثلاثين تصريحاً خلال أربعة إلى ثمانية أسابيع، مع تعريف القياس وقواعد الاستبعاد قبل رؤية النتيجة. -->
-  <section class="slide" id="slide-6">
-    <div class="slide-inner">
-      <div class="eyebrow">خطة التجربة</div>
-      <h2>نثبت القيمة بتجربة ظل قبل التوسع</h2>
-      <div class="cards" id="slide-pilot">
-        <div class="card"><h3>العينة</h3><p>20–30 تصريحاً موزعة على درجات أثر وأنواع طرق مختلفة.</p></div>
-        <div class="card"><h3>الفترة</h3><p>4–8 أسابيع في وضع ظل لا يغيّر قرار الضابط.</p></div>
-        <div class="card"><h3>القياس</h3><p>قبل وأثناء وبعد، مع حالة مقابلة مماثلة.</p></div>
-        <div class="card good"><h3>النزاهة</h3><p>تعريف النجاح والاستبعاد قبل رؤية النتائج.</p></div>
+      <div class="metric-grid">
+        <article class="metric" data-formula="observed-benefit">
+          <div class="value">نطاق</div><p>نعرض عدم اليقين والانحياز، لا قيمة وسطى بلا مبرر.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">معادلات التقييم</a>
+        </article>
+        <article class="metric" data-source="src-041">
+          <div class="value">25–33%</div><p>سياق دولي محدود لتنسيق القنوات والألياف، لا وعد محلي.</p>
+          <a href="athar-sources.html#src-041">src-041 · التقرير الرقابي المباشر</a>
+        </article>
+        <article class="metric" data-formula="annual-impact-blocked">
+          <div class="value">محجوب</div><p>لا أثر سنوي للمدينة قبل عينة مقاسة ومقام رسمي.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">شرط منع التعميم</a>
+        </article>
       </div>
-      <div class="ref">أرقام تصميم تجربة مقترحة، وليست نتيجة أو حجم تشغيل حالي.</div>
+      <aside class="speaker-notes" hidden>الأثر لا يبدأ بإسقاط سنوي. يبدأ بفارق بين خط مضاد مثبت والواقع المرصود. نعرض النتيجة كنطاق مع عدم اليقين والانحياز. ونحتفظ بنطاق التقرير الأمريكي داخل سياقه المحدد، ولا نحوله إلى وعد محلي.</aside>
     </div>
   </section>
 
-  <!-- SPEAKER NOTES: [2:20–2:40] القرار لا يخرج كلون فقط: يعرض تقديرات سيناريو للتأخير وساعات الأشخاص ونطاق القيمة والانبعاثات، ثم تتحول إلى نتائج فقط بعد مقارنة التوقع بالقياس. -->
-  <section class="slide" id="slide-7">
+  <!-- 2:10–2:35 -->
+  <section class="slide main" data-story="shadow-gate" data-start="130" data-end="155" data-seconds="25">
     <div class="slide-inner">
-      <div class="eyebrow">الأثر القابل للإثبات</div>
-      <h2>النتيجة قابلة للتدقيق لا مجرد لون</h2>
-      <div class="cards">
-        <div class="card"><h3>الزمن</h3><p>تقدير التأخير المنسوب للحفرية وساعات الأشخاص.</p></div>
-        <div class="card"><h3>القيمة</h3><p>تقدير مالي كنطاق، لا رقم يقين منفرد.</p></div>
-        <div class="card"><h3>البيئة</h3><p>تقدير انبعاثات فيزيائية بمدخلات محلية معلنة.</p></div>
-        <div class="card good"><h3>الدقة</h3><p>خطأ التوقع بعد التنفيذ وسبب الانحراف.</p></div>
+      <div class="topline">
+        <div class="eyebrow">السؤال السادس · متى نقول نجح؟</div>
+        <div class="evidence-tag">بوابة يمكن أن تفشل</div>
       </div>
-      <div class="ref">تقديرات سيناريو قبل التنفيذ؛ لا تعميم ولا ادعاء نتيجة قبل تجربة ممثلة وبيانات معتمدة.</div>
-    </div>
-  </section>
-
-  <!-- SPEAKER NOTES: [2:40–3:00] «أثر» ليس منصة تصاريح جديدة؛ هو نموذج لطبقة قرار سعودية مقترحة حول بلدي. المطلوب تجربة ظل وبيانات مصرح بها وواجهة تكامل لاختبار الدقة. -->
-  <section class="slide cover closing" id="slide-8">
-    <div class="slide-inner">
-      <div class="eyebrow">القرار المطلوب</div>
-      <h2>تجربة ظل وبيانات مصرح بها</h2>
-      <p class="thesis">نقترح تجربة نموذج القرار مستقلاً، ثم نربطه بمسار بلدي فقط بعد إتاحة بيانات مصرح بها وواجهة تكامل. النجاح هو دقة مقبولة ومنفعة تحفظية موجبة بلا تدهور للنقل العام أو الوصول الحرج.</p>
-      <div class="flow">
-        <span class="step">بلدي</span><span class="arrow">←</span><span class="step hi">أثر القرار</span><span class="arrow">←</span><span class="step">قياس ومعايرة</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="slide appendix" id="slide-competitor-scale">
-    <div class="slide-inner">
-      <div class="eyebrow">ملحق المنافسين · قوة يجب الاعتراف بها</div>
-      <h2>سنغافورة تراجع أعمال الطرق بالذكاء الاصطناعي على نطاق يومي كبير</h2>
-      <div class="stats">
-        <div class="stat">
-          <div class="num">200–300</div>
-          <div class="lab">عمل طرق يومياً، مع توليد خطط تحكم وفحص وثائق وتوصيات للطلبات الأبسط.</div>
-          <div class="ref"><a href="athar-sources.html#src-030">src-030 · هيئة النقل البري في سنغافورة · 2025</a></div>
+      <h2>لا نجاح بلا حد أدنى مقاس.</h2>
+      <div class="gate">
+        <div class="gate-list">
+          <div class="gate-row"><b>الحالات التركيبية</b><span>تظهر للشفافية، ولا تدخل الحكم</span></div>
+          <div class="gate-row"><b>العينة المقاسة</b><span>تبلغ الحد المثبت قبل النجاح</span></div>
+          <div class="gate-row"><b>الخطأ والمنفعة</b><span>تجتاز العتبات المثبتة مسبقاً</span></div>
+          <div class="gate-row"><b>النقل العام</b><span>لا يتجاوز الحد المسموح</span></div>
+        </div>
+        <div class="hard-stop">
+          <strong>وصول الطوارئ قيد فشل صلب.</strong>
+          <p>يفشل الحكم حتى لو كانت الدقة والمنفعة مقبولتين.</p>
         </div>
       </div>
-      <p class="limit">التميّز المستهدف: أثر شبكي منسوب، اقتصاد وقت وفق منهج سعودي، بدائل زمنية مفسّرة، ومعايرة بعد التنفيذ. لا ندّعي أن مراجعة الوثائق بالذكاء الاصطناعي ابتكارنا.</p>
-    </div>
-  </section>
-
-  <section class="slide appendix" id="slide-competitor-notice">
-    <div class="slide-inner">
-      <div class="eyebrow">ملحق المنافسين · التنسيق المبكر</div>
-      <h2>سنغافورة تجعل التخطيط المسبق شرطاً لبعض الطرق</h2>
-      <div class="stats">
-        <div class="stat">
-          <div class="num">شهران</div>
-          <div class="lab">إخطار مسبق للجداول على طرق محددة قبل الموافقة.</div>
-          <div class="ref"><a href="athar-sources.html#src-029">src-029 · تحديث 2026 · القاعدة خاصة بسنغافورة وتدخل لاحقاً</a></div>
-        </div>
+      <div class="metric-grid">
+        <article class="metric" data-formula="pilot-sample">
+          <div class="value">20–30</div><p>تصريحاً كنطاق تجنيد مقترح.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">معلمة تصميم، لا نتيجة</a>
+        </article>
+        <article class="metric" data-formula="pilot-window">
+          <div class="value">4–8</div><p>أسابيع كنافذة تشغيل مقترحة.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">معلمة تصميم، لا التزام</a>
+        </article>
+        <article class="metric" data-formula="hard-breach-limit">
+          <div class="value">0</div><p>تجاوزات مسموحة لوصول الطوارئ.</p>
+          <a href="../docs/SHADOW-PILOT.md#design-parameters">قيد السلامة</a>
+        </article>
       </div>
-      <p class="limit">التميّز المستهدف: مقارنة بدائل الجدول على حركة الناس ثم اختبار دقة التوقع بعد التنفيذ، بعد توفير البيانات والتكامل.</p>
+      <aside class="speaker-notes" hidden>بوابة الظل مصممة لكي تفشل. الحالات التركيبية تظهر للشفافية لكنها لا تدخل الحكم. لا نجاح قبل الحد الأدنى المقاس، ولا نجاح إذا تجاوز الخطأ أو نقصت المنفعة. وأي تجاوز لوصول الطوارئ فشل صلب مهما بدت الأرقام جيدة.</aside>
     </div>
   </section>
 
-  <!-- SOURCES APPENDIX — لا تُعرض ضمن الـ3 دقائق -->
-  <section class="slide appendix" id="slide-sources">
+  <!-- 2:35–3:00 -->
+  <section class="slide main" id="ask" data-story="supervised-ask" data-start="155" data-end="180" data-seconds="25">
     <div class="slide-inner">
-      <div class="eyebrow">المصادر المعتمدة</div>
-      <h2>قاعدة الأدلة السعودية والمقارنة العالمية</h2>
-      <ul>
-        <li><b>كود الطرق السعودي 203</b> (قيمة الوقت، درجات التحليل) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
-        <li><b>كود الطرق السعودي 305</b> (مناطق العمل الذكية) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
-        <li><b>GASTAT — Livability in Saudi Cities 2025</b> (67 دقيقة · 34.7M رحلة حافلات) — stats.gov.sa</li>
-        <li><b>GASTAT — Road Transport Statistics 2024</b> (15.8M مركبة · 17,231 حادثة جسيمة) — stats.gov.sa</li>
-        <li><b>RCRC Open Data</b> (633 تقاطعاً · 3,010 نقاط حافلات · 117 مساراً · 94 محطة مترو) — opendata.rcrc.gov.sa</li>
-        <li><b>one.network</b> (المنافس المرجعي) — us.one.network</li>
-        <li><b>LTA Singapore</b> (مراجعة خطط المرور بالذكاء الاصطناعي) — lta.gov.sg</li>
-      </ul>
-      <div class="ref"><a href="athar-sources.html">افتح سجل الأدلة الموحّد: القيمة والوحدة والسنة وحد الاستخدام</a></div>
+      <div class="topline">
+        <div class="eyebrow" style="color:#f0bd6c">الطلب المحدد</div>
+        <div class="evidence-tag">تجربة، لا اعتماد تلقائي</div>
+      </div>
+      <h2>نطلب تجربة ظل بشرية الإشراف.</h2>
+      <p class="lead">نحتاج بيانات مصرحاً بها، ومسؤول اعتماد بيانات، ومراجعاً مرورياً. يظل القرار البشري حاكماً، وننشر الخطأ والمنفعة والفشل كما هي.</p>
+      <div class="ask-box">
+        <div><b>المدخل</b><p>تصاريح متتابعة بلا انتقاء نتائج.</p></div>
+        <div><b>المخرج</b><p>توصية مفسرة وسجل تدقيق، لا موافقة آلية.</p></div>
+        <div><b>قرار التوسع</b><p>بعد اجتياز العتبات المقاسة ومراجعة مستقلة.</p></div>
+      </div>
+      <div class="source-strip">
+        <a href="../docs/SHADOW-PILOT.md#design-parameters" style="color:#f0bd6c;border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.06)">افتح بروتوكول الظل</a>
+      </div>
+      <aside class="speaker-notes" hidden>طلبنا محدد: تجربة ظل بشرية الإشراف، ببيانات مصرح بها ومسؤول اعتماد ومراجع مروري، على تصاريح متتابعة بلا انتقاء. المخرج توصية مفسرة وسجل تدقيق. ولا ننتقل إلى التوسع إلا بعد اجتياز العتبات ومراجعة مستقلة.</aside>
     </div>
   </section>
 
-  <!-- Q&A ARSENAL — لا تُعرض ضمن الـ3 دقائق؛ تُفتح عند الأسئلة -->
-  <section class="slide appendix" id="slide-qa">
+  <section class="slide appendix" data-appendix="A">
     <div class="slide-inner">
-      <div class="eyebrow">ملحق الأسئلة</div>
-      <h2>أسئلة اللجنة — أجوبة جاهزة</h2>
-      <div class="qa">
-        <p><b>كيف تختلفون عن بلدي؟</b> النموذج الحالي مستقل ويستخدم مدخلات تجريبية. أي ربط مع مسار بلدي مرحلة تكامل لاحقة تتطلب صلاحيات.</p>
-        <p><b>لماذا نصدق أرقامكم؟</b> لأن كل رقم يفتح إلى سجل مصدر يبيّن القيمة والوحدة والسنة وحد الاستخدام. أرقام التجربة المقترحة موسومة كتصميم، وأي نتيجة تعرض نطاقاً وافتراضات وخطأ توقع.</p>
-        <p><b>ماذا عن سنغافورة؟</b> هي أقوى سابقة مباشرة: تراجع 200–300 عمل يومياً بالذكاء الاصطناعي وتفرض تخطيطاً مبكراً لبعض الطرق. لذلك لا ندّعي سبق الأتمتة؛ نستهدف التميز بالأثر الشبكي والاقتصاد السعودي وترتيب البدائل والمعايرة.</p>
-        <p><b>كيف تثبتون التوفير؟</b> حالة مقابلة تماثل الساعة والطلب، قياس قبل وأثناء وبعد، ونشر نطاق عدم اليقين وخطأ التوقع — لا رقم وحيد.</p>
-        <p><b>هل الأرقام وطنية؟</b> لا. النتائج لكل تصريح أو للتجربة المحددة؛ أي توسع سيناريو مشروط بالحجم الرسمي للتصاريح متى نُشر.</p>
-        <p><b>هل الذكاء الاصطناعي هو المنتج؟</b> لا. المنتج قرار مفسّر قابل للقياس؛ النماذج تُستخدم حيث تحسّن التوقع، والمعادلات والمصادر تبقى ظاهرة.</p>
-        <p><b>ولو غابت البيانات الحية؟</b> نبدأ بدرجة تحليلية من المدخلات المتاحة، ثم نرفع الدقة عند وصول السرعة والحجم. الحالات عالية الأثر يمكن أن تُحال مستقبلاً إلى محاكاة متخصصة بعد توفير بيانات المعايرة.</p>
+      <div class="topline"><div class="eyebrow">Appendix A</div><div class="evidence-tag">خارج العداد والزمن</div></div>
+      <h2>الأدلة المباشرة</h2>
+      <div class="appendix-list">
+        <a href="athar-sources.html#src-008"><b>بلدي</b><span>الخريطة الرسمية للحفريات وحد استخدامها.</span></a>
+        <a href="athar-sources.html#src-031"><b>وزارة النقل البريطانية</b><span>العدد الرسمي للفترة المحددة.</span></a>
+        <a href="athar-sources.html#src-041"><b>الجهة الرقابية الأمريكية</b><span>نطاق تنسيق القنوات والألياف وحدوده.</span></a>
+        <a href="athar-sources.html#src-042"><b>كود الطرق السعودي</b><span>خطة الموقع وقيود الحركة والسلامة.</span></a>
+        <a href="athar-sources.html#src-043"><b>بيانات مترو الرياض</b><span>المحطات والمواقع والخطوط.</span></a>
+        <a href="athar-sources.html#src-044"><b>بيانات حافلات الرياض</b><span>المحطات والمسارات والاتجاهات.</span></a>
       </div>
     </div>
   </section>
 
-</div>
+  <section class="slide appendix" data-appendix="B">
+    <div class="slide-inner">
+      <div class="topline"><div class="eyebrow">Appendix B</div><div class="evidence-tag">خارج العداد والزمن</div></div>
+      <h2>أسئلة الحكم المتشكك</h2>
+      <div class="qa-grid">
+        <div class="qa-card"><h3>هل الأثر مقاس؟</h3><p>لا. الحالة الحالية توضيحية، والبوابة تعرض نقص الأدلة بدلاً من إخفائه.</p></div>
+        <div class="qa-card"><h3>هل الربط البلدي منفذ؟</h3><p>لا. هو مسار نشر مقترح يتطلب بيانات مصرحاً بها وواجهة معتمدة.</p></div>
+        <div class="qa-card"><h3>لماذا نثق بالأرقام؟</h3><p>كل رقم رسمي يفتح المصدر الذي يذكره، وكل رقم تصميم يفتح البروتوكول المحلي.</p></div>
+        <div class="qa-card"><h3>ماذا لو أخفق؟</h3><p>ننشر الخطأ والمخالفة، ولا نغير العتبة بعد رؤية النتائج.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
 
 <script>
-(function(){
+(function () {
+  'use strict';
   var deck = document.getElementById('deck');
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var mainSlides = Array.prototype.slice.call(document.querySelectorAll('.slide.main'));
+  var total = mainSlides.length;
   var counter = document.getElementById('counter');
   var progress = document.getElementById('progress');
-  var total = slides.length;
   var current = 0;
 
-  /* fires whenever the active slide index changes, from any navigation path */
-  function dispatchSlideChange(){
-    document.dispatchEvent(new CustomEvent('slidechange', {
-      detail:{ index: current, id: slides[current].id }
-    }));
+  function updateChrome() {
+    var slide = slides[current];
+    if (slide.classList.contains('main')) {
+      var mainIndex = mainSlides.indexOf(slide);
+      counter.textContent = (mainIndex + 1) + ' / ' + total;
+      progress.style.width = (((mainIndex + 1) / total) * 100) + '%';
+    } else {
+      counter.textContent = 'Appendix ' + slide.dataset.appendix;
+      progress.style.width = '100%';
+    }
   }
 
-  function updateCounter(){
-    counter.textContent = (current + 1) + ' / ' + total;
-    progress.style.width = (((current + 1) / total) * 100) + '%';
-    dispatchSlideChange();
+  function goTo(index) {
+    current = Math.max(0, Math.min(index, slides.length - 1));
+    slides[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    updateChrome();
   }
 
-  function goTo(index){
-    if (index < 0) index = 0;
-    if (index >= total) index = total - 1;
-    current = index;
-    slides[current].scrollIntoView({behavior:'smooth', block:'start'});
-    updateCounter();
-  }
+  function next() { goTo(current + 1); }
+  function previous() { goTo(current - 1); }
 
-  function next(){ goTo(current + 1); }
-  function prev(){ goTo(current - 1); }
-
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
-      /* RTL deck: right arrow = previous slide (reading direction), left arrow = next */
-      if (e.key === 'ArrowLeft') next();
-      if (e.key === 'ArrowRight') prev();
-    } else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', previous);
+  document.addEventListener('keydown', function (event) {
+    if (['ArrowDown', 'PageDown', ' ', 'ArrowLeft'].includes(event.key)) {
       next();
-      e.preventDefault();
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp'){
-      prev();
-      e.preventDefault();
-    } else if (e.key === 'Home'){
+      event.preventDefault();
+    } else if (['ArrowUp', 'PageUp', 'ArrowRight'].includes(event.key)) {
+      previous();
+      event.preventDefault();
+    } else if (event.key === 'Home') {
       goTo(0);
-    } else if (e.key === 'End'){
-      goTo(total - 1);
+    } else if (event.key === 'End') {
+      goTo(mainSlides.length - 1);
     }
   });
 
-  document.getElementById('clickzone-next').addEventListener('click', next);
-  document.getElementById('clickzone-prev').addEventListener('click', prev);
-
-  /* keep counter in sync when user scrolls/snaps manually */
   var scrollTimer = null;
-  deck.addEventListener('scroll', function(){
-    if (scrollTimer) clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(function(){
-      var scrollPos = deck.scrollTop;
-      var idx = Math.round(scrollPos / window.innerHeight);
-      if (idx < 0) idx = 0;
-      if (idx >= total) idx = total - 1;
-      current = idx;
-      updateCounter();
-    }, 120);
+  deck.addEventListener('scroll', function () {
+    if (scrollTimer) window.clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(function () {
+      var viewport = window.innerHeight || 1;
+      current = Math.max(0, Math.min(
+        Math.round(deck.scrollTop / viewport),
+        slides.length - 1
+      ));
+      updateChrome();
+    }, 80);
   });
 
-  /* slide 4: load the live prototype into the iframe only once its slide becomes active */
-  document.addEventListener('slidechange', function(e){
-    if (!e.detail || e.detail.id !== 'slide-4') return;
-    var frame = document.querySelector('#slide-4 iframe[data-src]');
-    if (!frame) return;
-    frame.setAttribute('src', frame.getAttribute('data-src'));
-    frame.removeAttribute('data-src');
-  });
-
-  updateCounter();
+  updateChrome();
 })();
 </script>
-
-<script>
-(function(){
-  /* count-up animation for big stat numbers, once per element, when their slide is visible */
-  if (!('IntersectionObserver' in window)) return;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
-
-  var nums = Array.prototype.slice.call(document.querySelectorAll('.stat .num'));
-
-  function animateCountUp(el){
-    if (el.dataset.counted) return;
-    el.dataset.counted = '1';
-    var original = el.innerHTML;
-    var text = el.textContent;
-    var match = text.match(/[-−]?\d+(?:[.,]\d+)?/);
-    if (!match) return; /* no number in this stat (e.g. text-only stat) — leave as authored */
-
-    var raw = match[0].replace(',', '.').replace('−', '-');
-    var target = parseFloat(raw);
-    var decimals = (raw.split('.')[1] || '').length;
-    var prefix = text.slice(0, match.index);
-    var suffix = text.slice(match.index + match[0].length);
-    var duration = 900;
-    var start = null;
-
-    function step(ts){
-      if (start === null) start = ts;
-      var progress = Math.min((ts - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
-      if (progress < 1){
-        requestAnimationFrame(step);
-      } else {
-        el.innerHTML = original; /* restore exact authored markup/styling */
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting){
-        animateCountUp(entry.target);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {threshold:0.6});
-
-  nums.forEach(function(el){ observer.observe(el); });
-})();
-</script>
-
 </body>
 </html>
