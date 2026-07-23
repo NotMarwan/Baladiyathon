@@ -11,6 +11,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'athar-prototype.html'), 'utf8');
+const pitchArtifacts = ['athar-pitch.html', 'athar-merged.html', 'athar.html'].map((file) => ({
+  file,
+  html: fs.readFileSync(path.join(__dirname, '..', file), 'utf8'),
+}));
 
 let count = 0;
 function test(name, fn) {
@@ -95,6 +99,29 @@ test('all four calibration constants appear in the ASSUMPTIONS table', () => {
 test('transit impact uses real RCRC route count', () => {
   assert.ok(/transitImpact\(result, \{ routes: RCRC_TRANSIT\.routeCount \}\)/.test(html),
     'transitImpact not wired to RCRC_TRANSIT');
+});
+
+// بعد دمج محرّك التوجيه، يجب ألا تبقى صياغة العرض عالقة في حالة «قيد البناء».
+test('pitch artifacts describe the merged network routing capability', () => {
+  for (const artifact of pitchArtifacts) {
+    assert.ok(
+      !artifact.html.includes('الحساب الشبكي قيد البناء'),
+      `${artifact.file} still says network routing is under construction`
+    );
+    assert.ok(
+      artifact.html.includes('شبكة طرق محلية'),
+      `${artifact.file} does not describe the local road network`
+    );
+  }
+});
+
+// المختبر جزء من المنتج المدمج ويجب أن يكون قابلاً للوصول من النموذج والعرض.
+test('main prototype and timed pitch link to the innovation lab', () => {
+  assert.ok(/href="athar-lab\.html"/.test(html), 'prototype does not link to athar-lab.html');
+  assert.ok(
+    /href="athar-lab\.html"/.test(pitchArtifacts[0].html),
+    'timed pitch does not link to athar-lab.html'
+  );
 });
 
 console.log(`ALL UI SMOKE TESTS PASSED (${count})`);
