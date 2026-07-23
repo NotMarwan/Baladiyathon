@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دورة هندسة الحلقات للهاكاثونات | Loop Engineering Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0d14;
+  --bg2:#11131f;
+  --card:#181b2a;
+  --card2:#1f2340;
+  --border:#2a2f4a;
+  --accent:#6c5ce7;
+  --accent2:#a29bfe;
+  --accent3:#fd79a8;
+  --accent4:#00cec9;
+  --accent5:#fdcb6e;
+  --green:#00b894;
+  --red:#e17055;
+  --text:#e4e6f0;
+  --text2:#9498b0;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 8px 32px rgba(0,0,0,.4);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.8;
+  overflow-x:hidden;
+}
+/* particles bg */
+#particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* header */
+header{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  background:radial-gradient(ellipse at 50% 0%, rgba(108,92,231,.15) 0%, transparent 70%);
+}
+header .badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.4rem 1.2rem;
+  border-radius:50px;
+  background:rgba(108,92,231,.15);
+  border:1px solid rgba(108,92,231,.3);
+  color:var(--accent2);
+  font-size:.85rem;
+  font-weight:600;
+  letter-spacing:.5px;
+  margin-bottom:1.5rem;
+}
+header .badge span{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+header h1{
+  font-size:clamp(2.2rem,6vw,4.5rem);
+  font-weight:900;
+  line-height:1.2;
+  background:linear-gradient(135deg,var(--accent2),var(--accent3),var(--accent4));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  max-width:800px;
+}
+header p{
+  font-size:clamp(1rem,2vw,1.3rem);
+  color:var(--text2);
+  max-width:650px;
+  margin:1.5rem auto 2.5rem;
+}
+header .cta{
+  display:inline-flex;
+  align-items:center;
+  gap:.75rem;
+  padding:.85rem 2.2rem;
+  border-radius:50px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  font-size:1.05rem;
+  font-weight:700;
+  text-decoration:none;
+  transition:transform .3s, box-shadow .3s;
+  box-shadow:0 4px 20px rgba(108,92,231,.4);
+}
+header .cta:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(108,92,231,.5)}
+.scroll-indicator{
+  position:absolute;
+  bottom:2rem;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.5rem;
+  color:var(--text2);
+  font-size:.8rem;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* nav */
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(11,13,20,.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:.75rem 2rem;
+  display:none;
+  justify-content:space-between;
+  align-items:center;
+}
+nav .logo{font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav ul{display:flex;gap:1.5rem;list-style:none}
+nav ul a{color:var(--text2);text-decoration:none;font-size:.9rem;font-weight:600;transition:color .3s}
+nav ul a:hover{color:var(--accent2)}
+
+/* sections */
+section{position:relative;z-index:1;padding:5rem 2rem}
+.section-title{
+  text-align:center;
+  margin-bottom:3.5rem;
+}
+.section-title h2{
+  font-size:clamp(1.6rem,4vw,2.6rem);
+  font-weight:800;
+  background:linear-gradient(135deg,var(--accent2),var(--accent3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
+}
+.section-title p{color:var(--text2);font-size:1.05rem;margin-top:.5rem}
+.container{max-width:1100px;margin:0 auto;width:100%}
+
+/* intro cards */
+.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.intro-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:2rem;
+  transition:transform .3s, box-shadow .3s;
+}
+.intro-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.intro-card .icon{font-size:2.2rem;margin-bottom:1rem}
+.intro-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.intro-card p{color:var(--text2);font-size:.95rem}
+.intro-card.red{border-left:4px solid var(--red)}
+.intro-card.green{border-left:4px solid var(--green)}
+.intro-card.purple{border-left:4px solid var(--accent)}
+.intro-card.teal{border-left:4px solid var(--accent4)}
+
+/* comparison table */
+.table-wrapper{
+  overflow-x:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+}
+table{width:100%;border-collapse:collapse;min-width:550px}
+thead th{
+  text-align:right;
+  padding:1rem 1.2rem;
+  font-weight:700;
+  font-size:.9rem;
+  color:var(--accent2);
+  border-bottom:2px solid var(--accent);
+}
+tbody td{
+  padding:.9rem 1.2rem;
+  border-bottom:1px solid var(--border);
+  font-size:.95rem;
+  vertical-align:top;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody td:first-child{font-weight:700;color:var(--accent4);white-space:nowrap}
+tbody tr:hover{background:var(--card2)}
+
+/* diagram */
+.diagram-wrapper{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:2.5rem 1.5rem;
+  overflow-x:auto;
+}
+.diagram{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
+.diagram .node{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.4rem;
+  padding:1rem 1.2rem;
+  border-radius:var(--radius-sm);
+  font-size:.85rem;
+  font-weight:700;
+  text-align:center;
+  min-width:100px;
+  position:relative;
+}
+.diagram .node .num{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:800;color:#fff;
+}
+.diagram .node.discover{background:rgba(108,92,231,.15);border:2px solid var(--accent)}
+.diagram .node.discover .num{background:var(--accent)}
+.diagram .node.plan{background:rgba(0,206,201,.15);border:2px solid var(--accent4)}
+.diagram .node.plan .num{background:var(--accent4)}
+.diagram .node.execute{background:rgba(0,184,148,.15);border:2px solid var(--green)}
+.diagram .node.execute .num{background:var(--green)}
+.diagram .node.verify{background:rgba(253,203,110,.15);border:2px solid var(--accent5);color:var(--accent5)}
+.diagram .node.verify .num{background:var(--accent5);color:#1a1a2e}
+.diagram .node.iterate{background:rgba(225,112,85,.15);border:2px solid var(--red)}
+.diagram .node.iterate .num{background:var(--red)}
+.diagram .node.done{background:rgba(0,184,148,.15);border:2px solid var(--green);min-width:80px}
+.diagram .node.done .num{background:var(--green)}
+.diagram .arrow{
+  color:var(--text2);
+  font-size:1.5rem;
+  padding:0 .3rem;
+}
+.diagram .arrow.fail{color:var(--red)}
+.diagram .arrow.pass{color:var(--green)}
+.diagram .arrow-label{
+  font-size:.65rem;
+  color:var(--text2);
+  text-align:center;
+  margin-top:-.5rem;
+}
+
+/* scenario */
+.scenario{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+.scenario::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(108,92,231,.05),transparent);
+  pointer-events:none;
+}
+.scenario h3{font-size:1.2rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.scenario .project-desc{
+  background:var(--card2);
+  border-radius:var(--radius-sm);
+  padding:1rem;
+  margin-top:1rem;
+  border-right:4px solid var(--accent);
+}
+.project-desc strong{color:var(--accent2)}
+.steps{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.step{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:.75rem;
+  padding:1rem 1.2rem;
+  background:var(--bg2);
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border);
+}
+.step .snum{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;color:#fff;
+}
+.step .snum.g1{background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.step .snum.g2{background:linear-gradient(135deg,var(--accent4),var(--green))}
+.step .snum.g3{background:linear-gradient(135deg,var(--accent5),#e17055)}
+.step .scontent h4{font-size:.95rem;margin-bottom:.2rem}
+.step .scontent p{color:var(--text2);font-size:.85rem}
+
+/* timeline */
+.timeline{position:relative;padding-right:2rem}
+.timeline::before{
+  content:"";
+  position:absolute;
+  right:6px;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(to bottom,var(--accent),var(--accent4),var(--accent5),var(--green));
+  border-radius:3px;
+}
+.tl-item{position:relative;margin-bottom:2rem;padding-right:2rem}
+.tl-item::before{
+  content:"";
+  position:absolute;
+  right:-6px;top:6px;
+  width:15px;height:15px;
+  border-radius:50%;
+  border:3px solid var(--accent);
+  background:var(--bg);
+}
+.tl-item.fail::before{border-color:var(--red);background:rgba(225,112,85,.2)}
+.tl-item.pass::before{border-color:var(--green);background:rgba(0,184,148,.2)}
+.tl-item .tl-badge{
+  display:inline-block;
+  padding:.15rem .7rem;
+  border-radius:50px;
+  font-size:.75rem;
+  font-weight:700;
+  margin-bottom:.3rem;
+}
+.tl-item.fail .tl-badge{background:rgba(225,112,85,.15);color:var(--red);border:1px solid rgba(225,112,85,.3)}
+.tl-item.pass .tl-badge{background:rgba(0,184,148,.15);color:var(--green);border:1px solid rgba(0,184,148,.3)}
+.tl-item h4{font-size:.95rem;margin-bottom:.3rem}
+.tl-item p{color:var(--text2);font-size:.85rem}
+.tl-item code{
+  font-family:'Fira Code',monospace;
+  background:var(--card2);
+  padding:.1rem .4rem;
+  border-radius:4px;
+  font-size:.8rem;
+  color:var(--accent2);
+}
+
+/* feature cards */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.feature-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:2rem;
+  text-align:center;
+  transition:transform .3s;
+}
+.feature-card:hover{transform:translateY(-4px)}
+.feature-card .fc-icon{
+  width:60px;height:60px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;
+  font-size:1.5rem;
+}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.feature-card p{color:var(--text2);font-size:.85rem}
+
+/* pitfalls */
+.pitfalls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.pitfall-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:2rem;
+  border-top:4px solid var(--red);
+}
+.pitfall-card .p-icon{font-size:2rem;margin-bottom:.5rem}
+.pitfall-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.pitfall-card p{color:var(--text2);font-size:.9rem}
+.pitfall-card.yellow{border-top-color:var(--accent5)}
+.pitfall-card.orange{border-top-color:#e17055}
+
+/* quote */
+.quote-section{
+  background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(0,206,201,.1));
+  text-align:center;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.quote-section blockquote{
+  max-width:700px;margin:0 auto;
+  font-size:clamp(1.2rem,3vw,1.6rem);
+  font-weight:700;
+  color:var(--accent2);
+  line-height:1.6;
+}
+.quote-section cite{display:block;margin-top:1rem;color:var(--text2);font-size:.9rem;font-style:normal}
+
+/* footer */
+footer{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:3rem 2rem;
+  border-top:1px solid var(--border);
+  color:var(--text2);
+  font-size:.85rem;
+}
+footer strong{color:var(--accent2)}
+
+/* responsive */
+@media(max-width:768px){
+  section{padding:3rem 1rem}
+  .diagram{flex-direction:column;gap:.5rem}
+  .diagram .arrow{transform:rotate(90deg);padding:.2rem 0}
+  .diagram .node{width:100%;max-width:250px}
+  nav{padding:.5rem 1rem;flex-wrap:wrap;gap:.5rem}
+  nav ul{gap:.8rem;flex-wrap:wrap}
+  nav ul a{font-size:.8rem}
+  .intro-grid,.feature-grid,.pitfalls-grid{grid-template-columns:1fr}
+  .step{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<nav id="navbar">
+  <div class="logo">Loop Engineering</div>
+  <ul>
+    <li><a href="#intro">المقدمة</a></li>
+    <li><a href="#compare">المقارنة</a></li>
+    <li><a href="#loop">الحلقة</a></li>
+    <li><a href="#scenario">تطبيق عملي</a></li>
+    <li><a href="#strategy">استراتيجيات</a></li>
+    <li><a href="#pitfalls">تحذيرات</a></li>
+  </ul>
+</nav>
+
+<header>
+  <div class="badge"><span></span> دليل الهاكاثونات</div>
+  <h1>هندسة الحلقات<br>Loop Engineering</h1>
+  <p>حوِّل الذكاء الاصطناعي من مجرد أداة إلى عضو فريق مستقل يكتب، يختبر، ويصلح أخطاءه بنفسه — لتبني مشروع هاكاثون متكامل في ساعات.</p>
+  <a href="#intro" class="cta">👇 ابدأ الرحلة</a>
+  <div class="scroll-indicator">
+    <span>اسفل</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</header>
+
+<!-- Intro -->
+<section id="intro">
+  <div class="container">
+    <div class="section-title">
+      <h2>💡 المشكلة والحل</h2>
+      <p>من فخ المربية الرقمية إلى هندسة الحلقات الذكية</p>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-card red">
+        <div class="icon">🧑‍🏫</div>
+        <h3>المربية الرقمية</h3>
+        <p>الوقت هو أثمن ما تملك. السيناريو التقليدي: تكتب أمراً → تنتظر → تنسخ الكود → تجربه → يظهر خطأ → تنسخ الخطأ ← ترسله ← تنتظر ←... هذه الحلقة البشرية تستنزف وقتك وطاقتك.</p>
+      </div>
+      <div class="intro-card green">
+        <div class="icon">⚡</div>
+        <h3>هندسة الحلقات</h3>
+        <p>بناء نظام مغلق يُعطي الذكاء الاصطناعي صلاحية الوصول للملفات، كتابة الكود، تشغيله، اكتشاف الأخطاء، وتصحيحها ذاتياً دون تدخلك اليدوي.</p>
+      </div>
+      <div class="intro-card purple">
+        <div class="icon">🎯</div>
+        <h3>من سؤال وجواب إلى هدف ونتيجة</h3>
+        <p>بدلاً من "أكتب كود كذا" → تحصل على رد، تضع هدفاً: "ابنِ هذا المشروع واجتاز هذه الاختبارات" والذكاء يعمل حتى ينجز.</p>
+      </div>
+      <div class="intro-card teal">
+        <div class="icon">🧠</div>
+        <h3>ركز على ما يهم حقاً</h3>
+        <p>باستخدام هذه المنهجية، يتولى الذكاء الاصطناعي 80% من الجهد البرمجي، لتتفرغ أنت للفكرة، التصميم، والعرض التقديمي — ما يراه الحكام.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Compare -->
+<section id="compare" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-title">
+      <h2>⚖️ المقارنة السريعة</h2>
+      <p>هندسة الأوامر التقليدية vs هندسة الحلقات الذاتية</p>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الميزة</th><th>هندسة الأوامر التقليدية</th><th>هندسة الحلقات الذاتية</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>طريقة العمل</td>
+            <td>❌ سؤال وجواب (طلب ← إجابة)</td>
+            <td>✅ هدف ونتيجة (عمل مستمر حتى الإنجاز)</td>
+          </tr>
+          <tr>
+            <td>دور الإنسان</td>
+            <td>❌ عامل نقل بين الشاشات</td>
+            <td>✅ مدير جودة ومصمم للنظام</td>
+          </tr>
+          <tr>
+            <td>التعامل مع الأخطاء</td>
+            <td>❌ تكتشف الخطأ وترسله يدوياً</td>
+            <td>✅ الذكاء يشغل، يقرأ، ويصلح تلقائياً</td>
+          </tr>
+          <tr>
+            <td>الإنتاجية</td>
+            <td>❌ بطيئة ومستهلكة للطاقة</td>
+            <td>✅ سريعة جداً — ركز على العرض التقديمي</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- The Loop -->
+<section id="loop">
+  <div class="container">
+    <div class="section-title">
+      <h2>🔄 الهيكل الخماسي للحلقة</h2>
+      <p>تخيل أنك وظفت مبرمجاً مبتدئاً + مهندس جودة — هذه هي دائرتهما</p>
+    </div>
+    <div class="diagram-wrapper">
+      <div class="diagram">
+        <div class="node discover">
+          <div class="num">1</div>
+          <span>استكشاف<br><small>Discover</small></span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node plan">
+          <div class="num">2</div>
+          <span>تخطيط<br><small>Plan</small></span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node execute">
+          <div class="num">3</div>
+          <span>تنفيذ<br><small>Execute</small></span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node verify">
+          <div class="num">4</div>
+          <span>تحقق<br><small>Verify</small></span>
+        </div>
+        <div class="arrow pass">✅</div>
+        <div class="node done">
+          <div class="num">✓</div>
+          <span>تمام<br><small>Done</small></span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1rem">
+        <span style="color:var(--red);font-size:.85rem">↺ فشل ← تكرار</span>
+        <span style="color:var(--green);font-size:.85rem">✅ نجاح ← تسليم</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scenario -->
+<section id="scenario" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-title">
+      <h2>🏗️ سيناريو عملي</h2>
+      <p>لوحة تحكم ذكية لإدارة النفايات البلدية — في 4 ساعات فقط</p>
+    </div>
+    <div class="scenario">
+      <div class="project-desc">
+        <strong>📋 المشروع المطلوب:</strong> بناء لوحة تحكم تفاعلية (Smart Waste Management Dashboard) تعرض خريطة تفاعلية وحالة امتلاء كل حاوية. <br>
+        <strong>⏱️ الوقت المتاح:</strong> 4 ساعات. <br>
+        <strong>⚙️ التقنيات:</strong> Streamlit + SQLite + Folium
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="snum g1">1</div>
+          <div class="scontent">
+            <h4>📐 تهيئة معايير القبول</h4>
+            <p>ننشئ ملف <code>verify_dashboard.py</code> يختبر: تشغيل الخادم على المنفذ 8501، وجود قاعدة البيانات، وعناصر الواجهة الأساسية.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="snum g2">2</div>
+          <div class="scontent">
+            <h4>🚀 تشغيل الحلقة</h4>
+            <p>نوجه الذكاء: "ابنِ لوحة التحكم. المعايير في verify_dashboard.py. خطط، اكتب، وصحح تلقائياً. لا تسألني حتى تجتاز الاختبار أو تصل لـ 6 محاولات."</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="snum g3">3</div>
+          <div class="scontent">
+            <h4>🎯 النتيجة</h4>
+            <p>بعد 3 محاولات تلقائية (فشل ← تصحيح ← نجاح)، المشروع جاهز وأنت تركز على تصميم العرض التقديمي!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <h3 style="text-align:center;margin-bottom:1.5rem;font-size:1.2rem">🧪 كيف دارت الحلقة داخلياً؟</h3>
+      <div class="timeline">
+        <div class="tl-item fail">
+          <span class="tl-badge">✗ فشل</span>
+          <h4>المحاولة 1 — تنفيذ</h4>
+          <p>الذكاء ينشئ <code>app.py</code> ← تشغيل الاختبار ← خطأ: الجدول غير موجود في SQLite.</p>
+        </div>
+        <div class="tl-item fail">
+          <span class="tl-badge">✗ فشل</span>
+          <h4>المحاولة 2 — تصحيح</h4>
+          <p>يضيف إنشاء الجدول تلقائياً ← تشغيل الاختبار ← خطأ <code>ModuleNotFoundError: streamlit_folium</code></p>
+        </div>
+        <div class="tl-item pass">
+          <span class="tl-badge">✓ نجاح</span>
+          <h4>المحاولة 3 — نجاح 100%</h4>
+          <p>يشغّل <code>pip install streamlit-folium</code> ← يحدّث <code>requirements.txt</code> ← الاختبار يمر بالكامل!</p>
+        </div>
+      </div>
+      <p style="text-align:center;color:var(--accent5);font-weight:600;margin-top:1rem">✨ كل هذا تم بدون أي تدخل يدوي منك!</p>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<section class="quote-section">
+  <blockquote>
+    "الذكاء الاصطناعي بارع جداً في إقناعك بأن الكود يعمل وهو لا يعمل. التحقق الآلي المستقل هو الضمان الوحيد لنجاح الحلقة."
+    <cite>— ⚠️ Sycophancy Trap</cite>
+  </blockquote>
+</section>
+
+<!-- Strategy -->
+<section id="strategy">
+  <div class="container">
+    <div class="section-title">
+      <h2>🏆 كيف تستفيد لتفوز بالهاكاثون؟</h2>
+      <p>3 استراتيجيات عملية تمنحك التفوق</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card" style="border-top:4px solid var(--accent)">
+        <div class="fc-icon" style="background:rgba(108,92,231,.15)">🧩</div>
+        <h3>العمل على التوازي</h3>
+        <p>شغّل عدة حلقات في نفس الوقت — حلقة للـ Frontend، حلقة للـ Backend، وحلقة لنموذج AI. كلها تعمل باستقلالية وتلتقي عند النهاية.</p>
+      </div>
+      <div class="feature-card" style="border-top:4px solid var(--accent4)">
+        <div class="fc-icon" style="background:rgba(0,206,201,.15)">📋</div>
+        <h3>قوالب فحص جاهزة</h3>
+        <p>جهز مسبقاً سكربتات فحص عامة: فحص API (200 OK)، فحص جودة البيانات (Nulls)، فحص واجهات (Playwright).</p>
+      </div>
+      <div class="feature-card" style="border-top:4px solid var(--accent5)">
+        <div class="fc-icon" style="background:rgba(253,203,110,.15)">🎨</div>
+        <h3>ركز على Pitch & Design</h3>
+        <p>الحكام ينظرون للفكرة، العرض التقديمي، والتصميم. باستخدام الحلقات، يتولى الذكاء 80% من البرمجة لتتفرغ أنت للإبهار.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pitfalls -->
+<section id="pitfalls" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-title">
+      <h2>⚠️ فخاخ وتحذيرات هامة</h2>
+      <p>3 أخطاء قاتلة في الهاكاثونات وكيف تتجنبها</p>
+    </div>
+    <div class="pitfalls-grid">
+      <div class="pitfall-card">
+        <div class="p-icon">🔄</div>
+        <h3>فخ الحلقة اللانهائية</h3>
+        <p>إذا لم تضع حداً أقصى للمحاولات (مثلاً 5-6 محاولات)، قد يعلق الذكاء الاصطناعي في حلقة لا نهائية ويستنزف رصيد API الخاص بك في دقائق.</p>
+      </div>
+      <div class="pitfall-card yellow">
+        <div class="p-icon">🧹</div>
+        <h3>تعفن السياق (Context Rot)</h3>
+        <p>مع كثرة المحاولات، يمتلئ السياق بملفات الأخطاء القديمة. إذا دارت الحلقة 4 مرات دون حل، امسح الذاكرة وابدأ بمدخلات نظيفة.</p>
+      </div>
+      <div class="pitfall-card orange">
+        <div class="p-icon">🎭</div>
+        <h3>المراجعة الذاتية (Sycophancy)</h3>
+        <p>لا تجعل الذكاء يكتب كود الاختبار بنفسه — سيكتب اختبارات ضعيفة تمرر أخطاءه. اجعل كود الفحص مستقلاً ومكتوباً مسبقاً بقواعد صارمة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>تم التصميم بتقنية <strong>Loop Engineering</strong> — حيث يصبح الذكاء الاصطناعي عضو فريق لا مجرد أداة</p>
+  <p style="margin-top:.5rem;font-size:.8rem">Loop Engineering Course &copy; 2026</p>
+</footer>
+
+<script>
+// navbar visibility
+const nav = document.getElementById('navbar');
+const header = document.querySelector('header');
+const observer = new IntersectionObserver(([e]) => {
+  nav.style.display = e.isIntersecting ? 'none' : 'flex';
+});
+observer.observe(header);
+
+// smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// particles
+const c = document.createElement('canvas');
+c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0';
+document.body.prepend(c);
+const ctx = c.getContext('2d');
+let pts = [];
+
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize();
+addEventListener('resize',resize);
+
+for(let i=0;i<60;i++){
+  pts.push({
+    x:Math.random()*c.width,
+    y:Math.random()*c.height,
+    vx:(Math.random()-.5)*.4,
+    vy:(Math.random()-.5)*.4,
+    r:Math.random()*2+1,
+    a:Math.random()*.4+.1
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let p of pts){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>c.width)p.vx*=-1;
+    if(p.y<0||p.y>c.height)p.vy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(108,92,231,${p.a})`;
+    ctx.fill();
+  }
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.moveTo(pts[i].x,pts[i].y);
+        ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(108,92,231,${.08*(1-dist/120)})`;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>

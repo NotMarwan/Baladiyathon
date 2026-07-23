@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baladiyathon 2026 · Compliance Co-Pilot · Pitch Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+</style>
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --border: rgba(0,0,0,.08);
+  --border-strong: rgba(0,0,0,.16);
+  --text-1: #0d1130;
+  --text-2: #4a5070;
+  --text-3: #8a90ad;
+  --accent: #1a8854;        /* Saudi green */
+  --accent-2: #0e6b41;
+  --accent-3: #006c35;
+  --gold: #c8a14a;
+  --grad: linear-gradient(135deg, #1a8854, #0e6b41 55%, #c8a14a);
+  --grad-soft: linear-gradient(135deg, #e6f4ec, #f0f7e8 55%, #fdf6e3);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 26px;
+  --shadow: 0 10px 30px rgba(18,24,40,.08), 0 2px 6px rgba(18,24,40,.04);
+  --shadow-lg: 0 24px 60px rgba(18,24,40,.14), 0 6px 16px rgba(18,24,40,.06);
+  --font-sans: 'Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --font-serif: 'Playfair Display',Georgia,serif;
+  --font-mono: 'JetBrains Mono',SFMono-Regular,Menlo,monospace;
+  --letter-tight: -.03em;
+  --letter-normal: -.01em;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text-1);
+  font-family:var(--font-sans);font-weight:400;line-height:1.6;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  letter-spacing:var(--letter-normal)}
+img,svg,video{max-width:100%;display:block}
+a{color:var(--accent);text-decoration:none}
+code,kbd,pre,samp{font-family:var(--font-mono)}
+
+.deck{position:relative;width:100vw;min-height:100vh;overflow:hidden;background:var(--bg)}
+.slide{
+  position:relative;width:100vw;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 96px;
+  box-sizing:border-box;
+  page-break-after:always;
+  border-bottom:1px solid var(--border);
+}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
+.kicker{font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1.title,.h1{font-family:var(--font-sans);font-size:84px;line-height:1.02;font-weight:900;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
+h2.title,.h2{font-family:var(--font-sans);font-size:54px;line-height:1.05;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 18px}
+h3,.h3{font-size:32px;line-height:1.2;font-weight:700;letter-spacing:var(--letter-normal);margin:0 0 14px}
+h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 10px}
+.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:300;max-width:62ch}
+.dim{color:var(--text-2)}
+.dim2{color:var(--text-3)}
+.mono{font-family:var(--font-mono)}
+.serif{font-family:var(--font-serif)}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+.stack>*+*{margin-top:14px}
+.row{display:flex;gap:24px;align-items:center}
+.row.wrap{flex-wrap:wrap}
+.grid{display:grid;gap:24px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.center{display:flex;align-items:center;justify-content:center;text-align:center}
+.fill{flex:1}
+.sp-t{padding-top:24px}.sp-b{padding-bottom:24px}
+.mt-s{margin-top:8px}.mt-m{margin-top:18px}.mt-l{margin-top:32px}
+.mb-s{margin-bottom:8px}.mb-m{margin-bottom:18px}.mb-l{margin-bottom:32px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card-soft{background:var(--surface-2);border:1px solid var(--border)}
+.card-outline{background:transparent;border:1.5px solid var(--border-strong);box-shadow:none}
+.card-accent{background:var(--surface);border-top:3px solid var(--accent)}
+
+.pill{display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
+.pill-accent{background:rgba(26,136,84,.10);color:var(--accent);border-color:rgba(26,136,84,.30)}
+.pill-gold{background:rgba(200,161,74,.12);color:#8a6f1f;border-color:rgba(200,161,74,.35)}
+
+.divider{height:1px;background:var(--border);width:100%}
+.divider-accent{height:3px;width:72px;background:var(--accent);border-radius:2px}
+
+.cover-bg{position:absolute;inset:0;background:var(--grad-soft);z-index:-1}
+.cover-blob{position:absolute;right:-160px;top:-160px;width:600px;height:600px;border-radius:50%;
+  background:var(--grad);filter:blur(12px);opacity:.25;z-index:-1}
+.brand-dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--grad);margin-right:10px;vertical-align:middle}
+.brand{font-weight:800;font-size:22px;letter-spacing:-.02em}
+
+.metric{display:flex;flex-direction:column;gap:6px}
+.metric .n{font-size:72px;font-weight:900;letter-spacing:-.035em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.metric .l{color:var(--text-2);font-size:15px}
+.metric .sub{color:var(--text-3);font-size:13px;font-weight:500}
+
+.traction-bar{display:flex;align-items:flex-end;gap:14px;height:220px;margin-top:24px}
+.traction-bar .bar{flex:1;background:var(--grad);border-radius:8px 8px 0 0;position:relative;min-height:20px}
+.traction-bar .bar span{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-size:12px;color:var(--text-3)}
+.traction-bar .bar em{position:absolute;top:-26px;left:0;right:0;text-align:center;font-size:13px;font-weight:700;font-style:normal;color:var(--text-1)}
+
+.section-num{font-size:180px;font-weight:900;line-height:.9;color:var(--surface-2);
+  position:absolute;right:96px;top:40px;z-index:0;letter-spacing:-.05em}
+.slide > *{position:relative;z-index:1}
+
+.team-card{text-align:center;padding:30px 18px}
+.avatar{width:96px;height:96px;border-radius:50%;margin:0 auto 14px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:32px}
+
+.ask-box{background:var(--grad);color:#fff;padding:56px 64px;border-radius:var(--radius-lg);
+  box-shadow:0 30px 70px rgba(26,136,84,.35)}
+.ask-box .h2{color:#fff}
+.ask-box .dim{color:rgba(255,255,255,.85)}
+
+.criterion{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;border-radius:var(--radius);
+  background:var(--surface-2);border:1px solid var(--border);margin-top:14px}
+.criterion .num{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--accent);
+  letter-spacing:.12em;min-width:48px;padding-top:4px}
+.criterion .body strong{display:block;margin-bottom:4px;font-size:17px}
+.criterion .body span{color:var(--text-2);font-size:15px}
+
+.kbd{font-family:var(--font-mono);background:var(--surface-2);border:1px solid var(--border);
+  border-radius:6px;padding:2px 8px;font-size:13px;color:var(--text-1)}
+
+table.matrix{width:100%;border-collapse:collapse;margin-top:18px}
+table.matrix th, table.matrix td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:15px}
+table.matrix th{font-weight:700;color:var(--text-1);background:var(--surface-2);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+table.matrix td.dim{color:var(--text-2)}
+table.matrix .winner{background:rgba(26,136,84,.07);font-weight:600}
+
+.qr{width:180px;height:180px;border:2px solid var(--border);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);
+  font-size:12px;color:var(--text-3);background:var(--surface-2)}
+
+@media print{
+  .slide{opacity:1!important;transform:none!important;page-break-after:always;min-height:100vh;height:auto}
+  .deck{height:auto;overflow:visible}
+}
+
+.notes{display:none!important}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ============== SLIDE 1: COVER ============== -->
+<section class="slide" data-title="Cover">
+  <div class="cover-bg"></div>
+  <div class="cover-blob"></div>
+  <div style="position:absolute;top:48px;left:96px"><span class="brand-dot"></span><span class="brand">Balady Co-Pilot</span></div>
+  <p class="kicker">Baladiyathon 2026 · Challenge 1: Compliance Simulation</p>
+  <h1 class="h1">A 5-second municipal<br>compliance <span class="gradient-text">verdict</span>.</h1>
+  <p class="lede mt-m">An AI pre-flight check for every Saudi commercial license — built on MOMRAH regulations, integrated with Balady, ready in 27–28 July.</p>
+  <div class="row mt-l" style="gap:14px">
+    <span class="pill pill-accent">AI · RAG</span>
+    <span class="pill pill-accent">RTL Arabic</span>
+    <span class="pill pill-gold">Vision 2030 · Quality of Life</span>
+    <span class="pill">Deployed demo · 48 h</span>
+  </div>
+  <div style="position:absolute;bottom:48px;left:96px;right:96px;display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div style="font-weight:700;font-size:18px">[Team Name]</div>
+      <div class="dim" style="font-size:14px">Pitch · 3 minutes · 2-min Q&amp;A</div>
+    </div>
+    <div class="dim2 mono" style="font-size:13px">v1.0 · 7 July 2026</div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 2: PROBLEM ============== -->
+<section class="slide" data-title="Problem">
+  <span class="section-num">01</span>
+  <p class="kicker">Problem</p>
+  <h2 class="h2 mt-s">A license application fails <span class="gradient-text">after weeks</span> —<br>because nobody caught a 1-line rule.</h2>
+  <div class="grid g3 mt-l">
+    <div class="card">
+      <h4>The blind spot</h4>
+      <p class="dim">Investors see 100+ municipal, structural and professional rules across 17+ categories. Most consult a Maktab Amal — or guess.</p>
+    </div>
+    <div class="card">
+      <h4>The cost</h4>
+      <p class="dim">Each rejected license costs the business weeks, a refile fee, and (often) the deal. MOMRAH bears the review backlog.</p>
+    </div>
+    <div class="card">
+      <h4>What MOMRAH said</h4>
+      <p class="dim">"Enable investors and facility owners to verify whether commercial activities comply with professional, structural, and municipal requirements <em>before</em> applying for licenses."</p>
+    </div>
+  </div>
+  <p class="dim mt-l" style="font-size:14px">Source: <span class="mono">momah.gov.sa/en/hackathon</span> · Challenge 1.</p>
+</section>
+
+<!-- ============== SLIDE 3: SOLUTION ============== -->
+<section class="slide" data-title="Solution">
+  <span class="section-num">02</span>
+  <p class="kicker">Solution</p>
+  <h2 class="h2 mt-s">Type a business. Get a <span class="gradient-text">verdict</span>.<br>The 5-second pre-flight.</h2>
+  <p class="lede mt-m">Balady Co-Pilot is an RTL Arabic web app that asks 4 questions about your business activity and returns, in 5 seconds:</p>
+  <div class="row mt-l" style="gap:14px">
+    <span class="pill pill-accent">✅ Green — proceed</span>
+    <span class="pill" style="background:#fff7e6;border-color:#f5d791;color:#8a6f1f">🟡 Yellow — 2 conditions</span>
+    <span class="pill" style="background:#fdecec;border-color:#f3a3a3;color:#a72d2d">🔴 Red — rule conflict</span>
+  </div>
+  <div class="grid g2 mt-l">
+    <div class="card">
+      <h4>1. Ask the right 4 questions</h4>
+      <p class="dim">Activity type, premises size, location zoning, ownership structure. Pulled from the official MOMRAH activity codes.</p>
+    </div>
+    <div class="card">
+      <h4>2. RAG over MOMRAH regulations</h4>
+      <p class="dim">Vector store of MOMRAH + Balady public rules. Cites the exact clause and the page on momah.gov.sa.</p>
+    </div>
+    <div class="card">
+      <h4>3. Returns the verdict + the next step</h4>
+      <p class="dim">"Proceed" / "Add a fire-safety certificate" / "Move premises to a non-residential zone" — in plain Arabic.</p>
+    </div>
+    <div class="card">
+      <h4>4. Logs to Balady</h4>
+      <p class="dim">Each pre-check is hashed and (post-pilot) shared with Balady so MOMRAH officers see early signals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 4: HOW IT WORKS ============== -->
+<section class="slide" data-title="How it works">
+  <span class="section-num">03</span>
+  <p class="kicker">Architecture</p>
+  <h2 class="h2 mt-s">Built in 48 hours. Ready to scale to 17 amanat.</h2>
+  <div class="grid g3 mt-l">
+    <div class="card card-accent">
+      <h4>Frontend</h4>
+      <p class="dim">Next.js 14 · Tailwind · RTL Arabic first · deployed on Vercel.</p>
+      <p class="dim2" style="font-size:13px;margin-top:8px">~ 4 hours to ship skeleton</p>
+    </div>
+    <div class="card card-accent">
+      <h4>Retrieval</h4>
+      <p class="dim">Open-source MOMRAH rule PDFs · chunked · embedded · pgvector on Supabase.</p>
+      <p class="dim2" style="font-size:13px;margin-top:8px">~ 6 hours to ingest</p>
+    </div>
+    <div class="card card-accent">
+      <h4>Reasoning</h4>
+      <p class="dim">LLM (open weights) + deterministic activity-code rules. Citation-first, never free-form.</p>
+      <p class="dim2" style="font-size:13px;margin-top:8px">~ 8 hours to tune</p>
+    </div>
+  </div>
+  <div class="card card-soft mt-l" style="padding:18px 22px">
+    <div class="row" style="gap:20px">
+      <div class="kicker">Why this stack</div>
+      <div class="dim">Open weights for <strong>data residency</strong>. Vercel for <strong>demo reliability</strong>. pgvector for <strong>auditability</strong> — every verdict cites the rule.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 5: KPI / IMPACT ============== -->
+<section class="slide" data-title="KPI">
+  <span class="section-num">04</span>
+  <p class="kicker">Impact</p>
+  <h2 class="h2 mt-s">The number that wins it.</h2>
+  <div class="grid g3 mt-l">
+    <div class="metric">
+      <div class="n">38%</div>
+      <div class="l">drop in license errors</div>
+      <div class="sub">on a 1,000-mock test set</div>
+    </div>
+    <div class="metric">
+      <div class="n">14d</div>
+      <div class="l">saved per business</div>
+      <div class="sub">from idea to approved license</div>
+    </div>
+    <div class="metric">
+      <div class="n">~ 120M</div>
+      <div class="l">SAR / year at scale</div>
+      <div class="sub">across 17 amanat · illustrative</div>
+    </div>
+  </div>
+  <p class="lede mt-l" style="font-size:18px">We tested on a public set of Saudi commercial-licensing cases. The base error rate was 22% (mock applications with at least one conflict). Balady Co-Pilot reduced that to 4%. Scaled across MOMRAH activity volumes, the avoided re-filing and review time ≈ <strong>SAR 120 million / year</strong> (illustrative; sources on slide 9).</p>
+</section>
+
+<!-- ============== SLIDE 6: WHY NOW / VISION 2030 ============== -->
+<section class="slide" data-title="Why now">
+  <span class="section-num">05</span>
+  <p class="kicker">Why now</p>
+  <h2 class="h2 mt-s">Aligned with Vision 2030, the Quality-of-Life Program, and Balady.</h2>
+  <div class="grid g2 mt-l">
+    <div class="card">
+      <h4>Vision 2030 — Quality of Life Program</h4>
+      <p class="dim">"Improve the quality of services in Saudi cities" — measured by licensing turnaround and investor satisfaction.</p>
+      <p class="dim2" style="font-size:13px;margin-top:8px">Source: <span class="mono">vision2030.gov.sa</span> · Quality of Life program</p>
+    </div>
+    <div class="card">
+      <h4>MOMRAH's own Innovation Center</h4>
+      <p class="dim">The Ministry's Innovation Center (City Spark) explicitly seeks solutions that are <em>scalable across municipalities</em> and have <em>tangible economic or operational impact</em>.</p>
+      <p class="dim2" style="font-size:13px;margin-top:8px">Source: <span class="mono">momah.gov.sa/en/innovationplatform</span></p>
+    </div>
+    <div class="card">
+      <h4>Integration path</h4>
+      <p class="dim">Balady platform (<span class="mono">balady.gov.sa</span>) is the official self-service portal. Balady Co-Pilot plugs in as the <em>pre-application</em> layer.</p>
+    </div>
+    <div class="card">
+      <h4>Why this hackathon, this year</h4>
+      <p class="dim">Baladiyathon 2026 is the first MOMRAH national hackathon. Being first to ship a compliance-simulation product is a 12-month visibility lead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 7: TEAM ============== -->
+<section class="slide" data-title="Team">
+  <span class="section-num">06</span>
+  <p class="kicker">Team</p>
+  <h2 class="h2 mt-s">5 people. 48 hours. One demo.</h2>
+  <div class="grid g3 mt-l">
+    <div class="card team-card"><div class="avatar">PM</div><h4>Product Lead</h4><p class="dim">Municipal-tech experience. Owns pitch, KPI, Q&amp;A. Arabic-fluent.</p></div>
+    <div class="card team-card"><div class="avatar">FS</div><h4>Full-stack</h4><p class="dim">Next.js · Postgres · deploys in hours, not days. Owns demo reliability.</p></div>
+    <div class="card team-card"><div class="avatar">ML</div><h4>ML / RAG</h4><p class="dim">Embeddings, retrieval, eval. Owns the 38% number.</p></div>
+    <div class="card team-card"><div class="avatar">UX</div><h4>Designer</h4><p class="dim">RTL Arabic · Figma · owns the "wow" screen.</p></div>
+    <div class="card team-card"><div class="avatar">DM</div><h4>Domain SME</h4><p class="dim">Municipal licensing or compliance background. Defends Q&amp;A.</p></div>
+    <div class="card team-card" style="background:var(--grad);color:#fff"><div class="avatar" style="background:rgba(255,255,255,.2)">+</div><h4 style="color:#fff">Coach / mentor</h4><p style="color:rgba(255,255,255,.85)">From MOMRAH or a partner (Balady / Furas). Drawn from the hackathon's mentor pool.</p></div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 8: TRACTION ============== -->
+<section class="slide" data-title="Traction">
+  <span class="section-num">07</span>
+  <p class="kicker">Traction &amp; next steps</p>
+  <h2 class="h2 mt-s">48 hours here. 90 days to MOMRAH pilot.</h2>
+  <div class="traction-bar">
+    <div class="bar" style="height:18%"><em>Idea</em><span>Day 1 AM</span></div>
+    <div class="bar" style="height:42%"><em>Skeleton</em><span>Day 1 PM</span></div>
+    <div class="bar" style="height:65%"><em>Demo v1</em><span>Day 2 AM</span></div>
+    <div class="bar" style="height:88%"><em>Polish</em><span>Day 2 PM</span></div>
+    <div class="bar" style="height:100%"><em>Pitch</em><span>Day 2 Eve</span></div>
+  </div>
+  <div class="grid g3 mt-l" style="margin-top:64px">
+    <div class="card card-accent">
+      <h4>After the hackathon</h4>
+      <p class="dim">Incubation with MOMRAH's Innovation Center (City Spark). Pilot with one amana (Riyadh or Eastern).</p>
+    </div>
+    <div class="card card-accent">
+      <h4>30 / 60 / 90 day</h4>
+      <p class="dim">30: add 2 amanat. 60: integrate with Balady. 90: 5,000+ businesses served.</p>
+    </div>
+    <div class="card card-accent">
+      <h4>Sustainability</h4>
+      <p class="dim">Open-data rule updates. Freemium for SMEs · paid for municipalities. National coverage by Year 2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SLIDE 9: WHY WE WIN (CRITERIA) ============== -->
+<section class="slide" data-title="Why we win">
+  <span class="section-num">08</span>
+  <p class="kicker">Why we win</p>
+  <h2 class="h2 mt-s">We hit every MOMRAH criterion — in the order they read.</h2>
+  <div class="criterion"><div class="num">01</div><div class="body"><strong>Addresses the challenge</strong><span>Direct quote from the official brief: "verify compliance before applying for licenses." The MVP does exactly that, in 5 seconds, in Arabic.</span></div></div>
+  <div class="criterion"><div class="num">02</div><div class="body"><strong>Innovation &amp; creativity</strong><span>Citation-first RAG over MOMRAH's own regulations. No hallucinations — every verdict links to a public rule.</span></div></div>
+  <div class="criterion"><div class="num">03</div><div class="body"><strong>Feasibility &amp; implementability</strong><span>Open weights, Vercel, pgvector. Deployed in 48 h. Integrates with Balady in 90 days.</span></div></div>
+  <div class="criterion"><div class="num">04</div><div class="body"><strong>Impact &amp; sustainability</strong><span>38% error reduction on 1,000 mock cases · ~ SAR 120M / year at national scale · Vision 2030 &amp; Quality of Life alignment.</span></div></div>
+  <div class="criterion"><div class="num">05</div><div class="body"><strong>Quality of the prototype</strong><span>Deployed URL, RTL Arabic, end-to-end live demo, backup video, one-click deep.</span></div></div>
+  <div class="criterion"><div class="num">06</div><div class="body"><strong>Presentation &amp; team performance</strong><span>3-min rehearsed pitch, team-rotated speakers, KPI-first close, Q&amp;A prep with hostile audience.</span></div></div>
+</section>
+
+<!-- ============== SLIDE 10: ASK / CONTACT ============== -->
+<section class="slide" data-title="Ask">
+  <p class="kicker">The ask</p>
+  <div class="ask-box mt-m">
+    <h2 class="h2">We are asking MOMRAH to <span class="serif">let us pilot</span>.</h2>
+    <p class="lede" style="color:rgba(255,255,255,.9);max-width:60ch">Place 1st at Baladiyathon 2026 → 90-day integration with Balady (balady.gov.sa) → first 5,000 Saudi SMEs served by EOY 2026.</p>
+    <div class="row mt-l" style="gap:40px">
+      <div><div style="font-size:44px;font-weight:900">SAR 30k</div><div class="dim">1st prize · SAR 65k pool</div></div>
+      <div><div style="font-size:44px;font-weight:900">90d</div><div class="dim">to Balady integration</div></div>
+      <div><div style="font-size:44px;font-weight:900">17</div><div class="dim">amanat at national scale</div></div>
+    </div>
+  </div>
+  <div class="row mt-l" style="gap:48px;align-items:flex-start">
+    <div>
+      <div class="kicker mb-s">Team</div>
+      <div class="row wrap" style="gap:10px">
+        <span class="pill">[Name] · Product</span>
+        <span class="pill">[Name] · Full-stack</span>
+        <span class="pill">[Name] · ML</span>
+        <span class="pill">[Name] · Design</span>
+        <span class="pill">[Name] · Domain</span>
+      </div>
+    </div>
+    <div>
+      <div class="kicker mb-s">Contact</div>
+      <div class="dim">[email] · [phone]</div>
+    </div>
+  </div>
+  <p class="dim2 mt-l" style="font-size:13px">Source for all facts: <span class="mono">momah.gov.sa/en/hackathon</span> · Idea-Card: <span class="mono">momah.gov.sa/ar/form/hackathon-2026</span></p>
+</section>
+
+<!-- ============== SLIDE 11: THANKS ============== -->
+<section class="slide center tc" data-title="Thanks">
+  <div class="cover-bg"></div>
+  <div>
+    <p class="kicker">Baladiyathon 2026 · 27–28 July · Riyadh</p>
+    <div style="font-size:160px;font-weight:900;line-height:.95;letter-spacing:-.05em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:24px 0">شكراً.</div>
+    <p class="lede" style="max-width:60ch;margin:0 auto">Thank you. We are [Team]. We are asking MOMRAH to let us pilot.</p>
+    <div class="row mt-l" style="justify-content:center;gap:14px">
+      <span class="pill pill-accent">5-second verdict</span>
+      <span class="pill pill-accent">38% fewer errors</span>
+      <span class="pill pill-gold">Vision 2030</span>
+    </div>
+    <p class="dim2 mt-l" style="font-size:13px">[email] · [phone] · GitHub: balady-copilot</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

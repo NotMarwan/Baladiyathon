@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل هندسة الحلقات للهاكاثونات | Loop Engineering Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(20, 20, 32, 0.7);
+            --border-color: rgba(139, 92, 246, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: -2;
+        }
+        .bg-orb {
+            position: fixed; border-radius: 50%;
+            filter: blur(120px); opacity: 0.15;
+            pointer-events: none; z-index: -1;
+        }
+        .bg-orb-1 { width: 600px; height: 600px; background: var(--accent-purple); top: -200px; right: -200px; }
+        .bg-orb-2 { width: 500px; height: 500px; background: var(--accent-cyan); bottom: 10%; left: -150px; }
+        .bg-orb-3 { width: 400px; height: 400px; background: var(--accent-pink); top: 40%; left: 30%; }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-content {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-weight: 800; font-size: 1.25rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-cyan); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+        section { padding: 5rem 0; position: relative; }
+        h1, h2, h3, h4 { font-family: 'Tajawal', 'Cairo', sans-serif; line-height: 1.3; }
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; margin-bottom: 1rem; }
+        h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .section-label {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--accent-cyan); font-weight: 700; font-size: 0.875rem;
+            margin-bottom: 1rem; letter-spacing: 1px;
+        }
+        .section-label::before { content: '//'; color: var(--accent-purple); }
+        p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.05rem; }
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .gradient-text-pink {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.875rem 2rem; border-radius: 12px;
+            font-weight: 700; font-size: 1rem; text-decoration: none;
+            transition: all 0.3s ease; border: none; cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--gradient-primary); color: white;
+            box-shadow: 0 4px 30px rgba(139, 92, 246, 0.4);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(139, 92, 246, 0.5); }
+        .btn-secondary {
+            background: transparent; color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.05); }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .icon-box {
+            width: 56px; height: 56px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 1.25rem;
+            background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding-top: 6rem;
+            text-align: center;
+        }
+        .hero-content { max-width: 900px; margin: 0 auto; }
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;
+        }
+        .hero-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+        .badge {
+            padding: 0.5rem 1rem; border-radius: 50px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;
+        }
+        .hero-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .code-window {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 20px; overflow: hidden; margin-top: 3rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+        .code-header {
+            padding: 1rem 1.25rem; background: rgba(20, 20, 32, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: var(--accent-red); }
+        .dot-amber { background: var(--accent-amber); }
+        .dot-green { background: var(--accent-green); }
+        .code-body { padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.9rem; text-align: right; direction: rtl; }
+        .code-line { display: block; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .code-comment { color: var(--text-muted); }
+        .code-keyword { color: var(--accent-cyan); }
+        .code-string { color: var(--accent-green); }
+        .code-func { color: var(--accent-pink); }
+        /* Loop Flow */
+        .loop-flow { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+        .loop-step {
+            width: 100%; max-width: 500px;
+            display: flex; align-items: center; gap: 1.25rem;
+            padding: 1.5rem; border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--step-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .loop-step:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .step-number {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--step-color);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.25rem; color: white;
+            flex-shrink: 0;
+        }
+        .step-content h3 { margin-bottom: 0.25rem; }
+        .step-content p { margin: 0; font-size: 0.95rem; }
+        .loop-arrow {
+            color: var(--text-muted); font-size: 1.5rem; font-weight: 700;
+        }
+        /* Timeline */
+        .timeline { position: relative; padding-right: 2rem; }
+        .timeline::before {
+            content: ''; position: absolute; right: 10px; top: 0; bottom: 0;
+            width: 2px; background: var(--border-color);
+        }
+        .timeline-item { position: relative; margin-bottom: 2rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; right: -2rem; top: 0.5rem;
+            width: 16px; height: 16px; border-radius: 50%;
+            background: var(--accent-purple); border: 3px solid var(--bg-primary);
+            transform: translateX(50%);
+        }
+        .timeline-item.fail::before { background: var(--accent-red); }
+        .timeline-item.success::before { background: var(--accent-green); }
+        .timeline-item h4 { color: var(--text-primary); margin-bottom: 0.5rem; }
+        .timeline-item p { margin: 0; }
+        .attempt-badge {
+            display: inline-block; padding: 0.25rem 0.75rem; border-radius: 6px;
+            font-size: 0.75rem; font-weight: 700; margin-bottom: 0.5rem;
+        }
+        .attempt-fail { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .attempt-success { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        /* Warning boxes */
+        .warning-box {
+            border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem;
+            border: 1px solid; display: flex; align-items: start; gap: 1rem;
+        }
+        .warning-box.warning { background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.3); }
+        .warning-box.tip { background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.3); }
+        .warning-box.caution { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.3); }
+        .warning-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .warning-box h4 { margin-bottom: 0.5rem; color: var(--text-primary); }
+        .warning-box p { margin: 0; font-size: 0.95rem; }
+
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Loop Engineering</div>
+            <ul class="nav-links">
+                <li><a href="#problem">المشكلة</a></li>
+                <li><a href="#solution">الحل</a></li>
+                <li><a href="#loop">الحلقة</a></li>
+                <li><a href="#scenario">سيناريو</a></li>
+                <li><a href="#win">الفوز</a></li>
+                <li><a href="#warnings">تحذيرات</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="section-label" style="justify-content:center">دورة تدريبية مكثفة</div>
+                <h1>حوّل الذكاء الاصطناعي إلى <span class="gradient-text">عضو فريق حقيقي</span></h1>
+                <p class="hero-subtitle">
+                    دليل هندسة الحلقات للهاكاثونات: كيف تبني مشروعاً متكاملاً في ساعات معدودة باستخدام أنظمة الذكاء الاصطناعي الذاتية التصحيح
+                </p>
+                <div class="hero-badges">
+                    <span class="badge">24-72 ساعة</span>
+                    <span class="badge">5 مراحل عملية</span>
+                    <span class="badge">أنظمة مستقلة</span>
+                    <span class="badge">تحقق آلي</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#problem" class="btn btn-primary">ابدأ التعلم</a>
+                    <a href="#scenario" class="btn btn-secondary">شاهد السيناريو العملي</a>
+                </div>
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-amber"></span>
+                        <span class="dot dot-green"></span>
+                        <span style="margin-right: auto; color: var(--text-muted); font-size: 0.8rem;">loop_engineering.py</span>
+                    </div>
+                    <div class="code-body">
+                        <span class="code-line"><span class="code-keyword">while</span> <span class="code-keyword">not</span> project.success():</span>
+                        <span class="code-line">    discover() <span class="code-comment"># 1. استكشاف</span></span>
+                        <span class="code-line">    plan()     <span class="code-comment"># 2. تخطيط</span></span>
+                        <span class="code-line">    execute()  <span class="code-comment"># 3. تنفيذ</span></span>
+                        <span class="code-line">    verify()   <span class="code-comment"># 4. تحقق</span></span>
+                        <span class="code-line">    iterate()  <span class="code-comment"># 5. تكرار</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problem">
+        <div class="container">
+            <div class="section-label">المشكلة الكبرى</div>
+            <h2>فخ <span class="gradient-text-pink">"المربية الرقمية"</span></h2>
+            <p style="font-size: 1.15rem; max-width: 800px;">
+                في الهاكاثون، الوقت أثمن ما تملك. لكن 90% من المشاركين يقعون في دور "عامل النقل" بين الذكاء الاصطناعي وبيئة التطوير، بدلاً من أن يكونوا مبرمجين حقيقيين.
+            </p>
+            <div class="code-window" style="margin-top: 2rem;">
+                <div class="code-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-amber"></span>
+                    <span class="dot dot-green"></span>
+                    <span style="margin-right: auto; color: var(--text-muted); font-size: 0.8rem;">السيناريو التقليدي</span>
+                </div>
+                <div class="code-body" style="direction: rtl;">
+                    <span class="code-line">أنت تكتب أمرًا → الانتظار → نسخ الكود → تجربة الكود → يظهر خطأ</span>
+                    <span class="code-line">→ تنسخ الخطأ للذكاء الاصطناعي → الانتظار → حل جديد → خطأ آخر...</span>
+                    <span class="code-line" style="color: var(--accent-red); margin-top: 1rem;">النتيجة: أنت لا تبرمج، أنت تلعب دور المربية الرقمية.</span>
+                </div>
+            </div>
+            <div class="card-grid" style="margin-top: 2.5rem;">
+                <div class="card">
+                    <div class="icon-box">⏱️</div>
+                    <h3>ضياع الوقت</h3>
+                    <p>كل دورة نسخ/لصق/تجربة تستهلك دقائق ثمينة في هاكاثون لا يتجاوز 72 ساعة.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box">🧠</div>
+                    <h3>استنزاف ذهني</h3>
+                    <p>تركيزك ينصب على نقل الأخطاء بدلاً من الإبداع في الفكرة والتصميم.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box">🔄</div>
+                    <h3>حلقة لا تنتهي</h3>
+                    <p>كل خطأ يولد خطأً جديداً، والمشروع لا يصل إلى مرحلة التسليم.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution" style="background: rgba(139, 92, 246, 0.03);">
+        <div class="container">
+            <div class="section-label">الحل الثوري</div>
+            <h2>ما هي <span class="gradient-text">هندسة الحلقات؟</span></h2>
+            <p style="font-size: 1.15rem; max-width: 800px;">
+                بدلاً من أن تكون أنت الحلقة التي تنقل الأخطاء، نبني <strong>نظاماً مغلقاً</strong> يمنح الذكاء الاصطناعي صلاحية الوصول للملفات، كتابة الأكواد، تشغيلها، واكتشاف الأخطاء وتصحيحها ذاتياً حتى ينجح المشروع.
+            </p>
+            
+            <div style="overflow-x: auto; margin-top: 3rem;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                    <thead>
+                        <tr style="background: rgba(139, 92, 246, 0.15);">
+                            <th style="padding: 1.25rem; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--text-primary);">الميزة</th>
+                            <th style="padding: 1.25rem; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">هندسة الأوامر التقليدية</th>
+                            <th style="padding: 1.25rem; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--accent-cyan);">هندسة الحلقات الذاتية</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 1.25rem; font-weight: 700;">طريقة العمل</td>
+                            <td style="padding: 1.25rem; color: var(--text-secondary);">سؤال وجواب</td>
+                            <td style="padding: 1.25rem; color: var(--text-primary);">هدف ونتيجة مستمرة</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 1.25rem; font-weight: 700;">دور الإنسان</td>
+                            <td style="padding: 1.25rem; color: var(--text-secondary);">عامل نقل</td>
+                            <td style="padding: 1.25rem; color: var(--text-primary);">مدير جودة ومصمم نظام</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 1.25rem; font-weight: 700;">التعامل مع الأخطاء</td>
+                            <td style="padding: 1.25rem; color: var(--text-secondary);">الإنسان يعيد الخطأ</td>
+                            <td style="padding: 1.25rem; color: var(--text-primary);">تصحيح ذاتي آلي</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1.25rem; font-weight: 700;">الإنتاجية</td>
+                            <td style="padding: 1.25rem; color: var(--text-secondary);">بطيئة وتستهلك طاقة</td>
+                            <td style="padding: 1.25rem; color: var(--text-primary);">سريعة جداً ومركزة</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="loop">
+        <div class="container">
+            <div class="section-label">الهيكل الخماسي</div>
+            <h2>الحلقة الخماسية <span class="gradient-text">للهاكاثون</span></h2>
+            <p style="max-width: 800px;">
+                تخيل أنك وظفت مبرمجاً مبتدئاً مع مهندس جودة. الحلقة تدور بين التنفيذ والتحقق حتى تتحقق معايير القبول.
+            </p>
+
+            <div class="loop-flow" style="margin-top: 3rem;">
+                <div class="loop-step" style="--step-color: var(--accent-purple);">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>الاستكشاف</h3>
+                        <p>فهم متطلبات الهاكاثون ومقومات المشروع</p>
+                    </div>
+                </div>
+                <div class="loop-arrow">↓</div>
+                <div class="loop-step" style="--step-color: var(--accent-cyan);">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>التخطيط</h3>
+                        <p>تقسيم العمل إلى خطوات صغيرة متتالية</p>
+                    </div>
+                </div>
+                <div class="loop-arrow">↓</div>
+                <div class="loop-step" style="--step-color: var(--accent-pink);">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>التنفيذ</h3>
+                        <p>كتابة الأكواد وإنشاء الملفات</p>
+                    </div>
+                </div>
+                <div class="loop-arrow">↓</div>
+                <div class="loop-step" style="--step-color: var(--accent-amber);">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>التحقق</h3>
+                        <p>تشغيل الكود وفحصه بالمليمتر</p>
+                    </div>
+                </div>
+                <div class="loop-arrow" style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <span style="color: var(--accent-red);">فشل ←</span>
+                    <span>↓</span>
+                    <span style="color: var(--accent-green);">نجاح →</span>
+                </div>
+                <div class="loop-step" style="--step-color: var(--accent-green);">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>التكرار والتصحيح</h3>
+                        <p>قراءة الخطأ وتعديل الخطة والكود</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2.5rem; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);">
+                <div style="display: flex; align-items: start; gap: 1rem;">
+                    <div class="icon-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3);">🎯</div>
+                    <div>
+                        <h3>مبدأ أساسي: التحقق المستقل</h3>
+                        <p>الذكاء الاصطناعي بارع في إقناعك بأن الكود يعمل وهو لا يعمل. لذلك، يجب أن يكون كود الفحص <strong>مستقلاً تماماً</strong> ومكتوباً مسبقاً بقواعد صارمة، ليضمن أن النجاح الحقيقي وليس مجرد وهم.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scenario" style="background: rgba(6, 182, 212, 0.03);">
+        <div class="container">
+            <div class="section-label">سيناريو عملي</div>
+            <h2>من قلب الهاكاثون: <span class="gradient-text">لوحة تحكم النفايات الذكية</span></h2>
+            <p style="max-width: 800px;">
+                المشروع: بناء لوحة تحكم تفاعلية لعربات النفايات البلدية تعرض خريطة تفاعلية وحالة امتلاء كل حاوية. الوقت المتاح: <strong>4 ساعات فقط</strong>.
+            </p>
+
+            <div class="card-grid" style="margin-top: 2.5rem;">
+                <div class="card">
+                    <div class="icon-box" style="background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3);">📝</div>
+                    <h3>الخطوة 1: معايير القبول</h3>
+                    <p>قبل كتابة أي كود، ننشئ <code>verify_dashboard.py</code> يتحقق من:</p>
+                    <ul style="color: var(--text-secondary); padding-right: 1.25rem; margin-top: 0.75rem;">
+                        <li>استجابة الخادم على المنفذ 8501</li>
+                        <li>وجود قاعدة البيانات وقراءة بيانات الحاويات</li>
+                        <li>وجود الخريطة وجدول الحاويات في الواجهة</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon-box" style="background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.3);">🚀</div>
+                    <h3>الخطوة 2: توجيه الحلقة</h3>
+                    <p>نعطي العميل الذكي هدفاً محدداً مع حد أقصى للمحاولات وبروتوكول تصحيح ذاتي.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                        "هدفك هو بناء لوحة تحكم باستخدام Streamlit وSQLite. قم بالتخطيط والكتابة والتصحيح تلقائياً حتى تجتاز الاختبار أو تصل لـ 6 محاولات."
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2.5rem;">
+                <h3 style="margin-bottom: 1.5rem;">كيف تدور الحلقة داخلياً؟</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="attempt-badge attempt-fail">محاولة 1: فشل</span>
+                        <h4>إنشاء app.py وكود Streamlit</h4>
+                        <p>الخطأ: الجدول غير موجود لأن قاعدة البيانات لم تُنشأ أولاً.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="attempt-badge attempt-fail">محاولة 2: فشل</span>
+                        <h4>إنشاء الجدول التلقائي وحقن البيانات</h4>
+                        <p>الخطأ: مكتبة folium غير مثبتة في النظام.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="attempt-badge attempt-fail">محاولة 3: فشل</span>
+                        <h4>تثبيت streamlit-folium وتحديث requirements</h4>
+                        <p>الخطأ: مشكلة في دمج الخريطة مع واجهة Streamlit.</p>
+                    </div>
+                    <div class="timeline-item success">
+                        <span class="attempt-badge attempt-success">محاولة 4: نجاح 100%</span>
+                        <h4>تصحيح التكامل والتحقق النهائي</h4>
+                        <p>اجتياز جميع اختبارات verify_dashboard.py. تم بناء المشروع وأنت تشرب قهوتك!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="win">
+        <div class="container">
+            <div class="section-label">استراتيجية الفوز</div>
+            <h2>كيف تفوز بالهاكاثون <span class="gradient-text">بهندسة الحلقات؟</span></h2>
+
+            <div class="card-grid" style="margin-top: 2.5rem;">
+                <div class="card">
+                    <div class="icon-box" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3);">⚡</div>
+                    <h3>العمل على التوازي</h3>
+                    <p>شغّل عدة حلقات في نفس الوقت: حلقة لنموذج الذكاء الاصطناعي، وأخرى للواجهة الأمامية، وثالثة للـ Backend. كل حلقة لها شروط تحقق خاصة.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3);">📋</div>
+                    <h3>نماذج تحقق جاهزة</h3>
+                    <p>جهز مسبقاً سكربتات لفحص API، وجودة البيانات، وعمل الواجهات باستخدام Playwright أو Selenium.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box" style="background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.3);">🎨</div>
+                    <h3>ركّز على ما يراه الحكام</h3>
+                    <p>الحكام ينظرون للفكرة والعرض والتصميم أكثر من الكود النظيف. دع الذكاء الاصطناعي يتولى 80% من البرمجة لتفرغ للعرض التقديمي.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <div class="card" style="display: inline-block; max-width: 700px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                    <h3>النتيجة النهائية</h3>
+                    <p>مشروع متكامل يعمل بنسبة 100%، وعرض تقديمي مقنع، وتصميم واجهة جذاب، وكل ذلك في وقت قياسي.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="warnings" style="background: rgba(239, 68, 68, 0.03);">
+        <div class="container">
+            <div class="section-label">تحذيرات هامة</div>
+            <h2>فخاخ يجب تجنبها <span class="gradient-text-pink">في الهاكاثون</span></h2>
+
+            <div class="warning-box warning">
+                <div class="warning-icon">🔄</div>
+                <div>
+                    <h4>فخ الحلقة اللانهائية</h4>
+                    <p>إذا لم تضع حداً أقصى للمحاولات (مثلاً 5 أو 6)، قد يعلق الذكاء الاصطناعي في حلقة مستحيلة ويستنزف رصيد API في دقائق. ضع دائماً شرط إيقاف للتدخل البشري.</p>
+                </div>
+            </div>
+
+            <div class="warning-box tip">
+                <div class="warning-icon">🧠</div>
+                <div>
+                    <h4>تعفن السياق (Context Rot)</h4>
+                    <p>مع كثرة المحاولات، يمتلئ سياق العميل بملفات الأخطاء القديمة فيبدأ بنسيان الهدف. إذا دارت الحلقة 4 مرات دون حل، امسح الذاكرة وابدأ بمدخلات نظيفة.</p>
+                </div>
+            </div>
+
+            <div class="warning-box caution">
+                <div class="warning-icon">⚠️</div>
+                <div>
+                    <h4>لا تجعل الذكاء الاصطناعي يراجع نفسه</h4>
+                    <p>إذا كتب العميل الذكي الكود وهو نفسه كتب الفحص، سيكتب فحصاً ضعيفاً يمرر أخطاءه. اجعل كود الفحص مستقلاً تماماً ومكتوباً مسبقاً.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 4rem 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem;">ابدأ رحلتك في هندسة الحلقات</h3>
+            <p style="max-width: 600px; margin: 0 auto 2rem;">
+                حوّل ذكاءك الاصطناعي من أداة أسئلة إلى شريك برمجي حقيقي، وابنِ مشاريعك القادمة بسرعة وثقة.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="#problem" class="btn btn-primary">ابدأ من جديد</a>
+                <a href="#" class="btn btn-secondary" onclick="window.print(); return false;">طباعة الدليل</a>
+            </div>
+            <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.875rem;">
+                مبني على دليل هندسة الحلقات للهاكاثونات
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

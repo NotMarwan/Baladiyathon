@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WORK-2026-0142",
+        "road": "طريق الملك فهد (مقطع العليا)",
+        "status": "قيد التنفيذ",
+        "impactLevel": "high",
+        "closureCountThisYear": 1,
+        "from": "تقاطع طريق العروبة",
+        "to": "تقاطع طريق التخصصي"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [46.685, 24.695],
+          [46.686, 24.715],
+          [46.6875, 24.735],
+          [46.689, 24.755]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WORK-2026-0157",
+        "road": "طريق العروبة",
+        "status": "مصرّح - لم يبدأ",
+        "impactLevel": "medium",
+        "closureCountThisYear": 3,
+        "from": "تقاطع طريق الملك فهد",
+        "to": "تقاطع طريق الأمير تركي"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [46.700, 24.700],
+          [46.702, 24.712]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WORK-2026-0163",
+        "road": "طريق التخصصي",
+        "status": "منتهٍ",
+        "impactLevel": "low",
+        "closureCountThisYear": 2,
+        "from": "تقاطع طريق الأمير محمد بن عبدالعزيز",
+        "to": "تقاطع طريق الملك فهد"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [46.672, 24.740],
+          [46.680, 24.744],
+          [46.689, 24.748]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مُطابِق — دوسيه المشروع</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
+  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
+  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:600;margin:0 0 5px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
+  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
+  header .thesis b{color:var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
+  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
+  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
+  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
+  .stage.engine li::marker{color:var(--navy)}
+  .seqwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+  svg.seq{min-width:720px;width:100%;height:auto;display:block}
+  .seq text{font-family:var(--sans)}
+  .seq .t-life{fill:var(--navy);font-size:13px;font-weight:600}
+  .seq .t-msg{fill:#2b3742;font-size:12.5px}
+  .seq .t-note{fill:var(--faint);font-size:11px}
+  .seq .ll{stroke:#C3CDD6;stroke-width:1;stroke-dasharray:4 4}
+  .seq .act{fill:var(--navy-soft);stroke:#9DBAD0}
+  .seq .call{stroke:var(--navy);stroke-width:1.6;fill:none}
+  .seq .ret{stroke:var(--navy);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+  .seq .hbox{fill:var(--navy-soft);stroke:var(--navy)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:26px;height:0;border-top:2px solid var(--navy);display:inline-block}
+  .legend i.dash{border-top-style:dashed}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
+  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
+  .delta b{color:var(--ink);font-weight:600}
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .demo b{color:var(--good)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:20px}
+  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  @media(max-width:680px){
+    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
+    h2{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الأول · مطابقة الاشتراطات قبل الترخيص</div>
+    <h1>مُطابِق <span class="latin">Mutabiq</span></h1>
+    <p class="thesis">تضع <b>دبوساً على الخريطة</b> وتختار نشاطك — فيحكم النظام على كل اشتراط مهني ومكاني وبلدي في الحال، مع <b>نص البند</b> وكيفية الإصلاح، قبل أن تصرف ريالاً واحداً.</p>
+    <div class="origin"><span class="origin-k">مبني على أصلين مُثبتين</span> OpenFisca «القواعد كشيفرة» (حكومة نيو ساوث ويلز — ترخيص الأعمال + فحص أهلية القمار) · Archistar AI PreCheck (55% أسرع، 90% جودة أول تقديم، 30+ مدينة) · أضفنا: خريطة «ضع دبوساً» من مراقب + استيعاب اللوائح العربية بالذكاء.</div>
+  </header>
+
+  <section>
+    <div class="eyebrow">الثغرة</div>
+    <h2>ماذا ينقص اليوم؟</h2>
+    <p class="thesis">«الدليل الذكي» في بلدي يستعلم ويعرض الخدمات فقط — لا يتحقق من الأهلية ولا من الامتثال، ولا يعرف <b>أين</b> تقع على الخريطة. هنا يعمل «مُطابِق»: طبقة <b>قرار مكاني</b> فوق طبقة <b>المعلومات</b>، تضع دبوساً فتعرف إن كان موقعك يمرّ أم لا — قبل أن تدفع.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">الدليل</div>
+    <h2>لماذا نثق أنها تنجح</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">55%</div><div class="lab">تسريع مراجعات الامتثال بفحص مسبق ذكي (Archistar PreCheck — 30+ مدينة منها Austin وLA County وNYC).</div><div class="ref">Archistar</div></div>
+      <div class="stat"><div class="num">90%</div><div class="lab">من الطلبات تصبح مطابقة من أول تقديم بعد الفحص المسبق للاشتراطات المكانية والمهنية.</div><div class="ref">Archistar</div></div>
+      <div class="stat"><div class="num">NSW</div><div class="lab">OpenFisca يُستخدم حيّاً في نيو ساوث ويلز لتقييم أهلية تراخيص الأعمال وفحص أنشطة القمار — نفس المحرّك الذي نبنيه.</div><div class="ref">Digital.NSW</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">كيف يعمل</div>
+    <h2>من الدبوس إلى الحكم</h2>
+    <div class="pipe">
+      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>دبوس على الخريطة (الموقع)</li><li>نوع النشاط (ISIC)</li><li>اللوائح العربية (MOMRAH)</li><li>بيانات بلدي والتقسيم والجوار</li></ul></div>
+      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>استعلام مكاني: التقسيم + التراخيص المجاورة + الأثر التراكمي</li><li>استيعاب اللوائح بالذكاء (نص ← قاعدة OpenFisca)</li><li>محرّك القواعد كشيفرة (OpenFisca)</li><li>فحص الشروط المهنية والإنشائية والبلدية</li><li>شرح بالبند + خريطة أخضر/أحمر</li></ul></div>
+      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>بطاقة حكم: ✅/❌ لكل اشتراط مع البند</li><li>خريطة: دبوسك أخضر أم أحمر</li><li>قائمة «كيف تصلح» + البدائل المكانية</li><li>API امتثال يغذّي التحدي 2 (رقيب)</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">مسار التنفيذ · UML Sequence</div>
+    <h2>تسلسل التحركات بين المستخدم والنظام</h2>
+    <div class="seqwrap">
+      <svg class="seq" viewBox="0 0 830 520" role="img" aria-label="مخطط تسلسلي يوضح تفاعل المستثمر مع نظام مطابق ومحرك القواعد وطبقة بلدي المكانية">
+        <defs>
+          <marker id="solid" markerWidth="10" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1D4E77"/></marker>
+          <marker id="open" markerWidth="12" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#1D4E77" stroke-width="1.3"/></marker>
+        </defs>
+        <rect class="hbox" x="20" y="16" width="150" height="34" rx="6"/><text class="t-life" x="95" y="38" text-anchor="middle">المستثمر</text>
+        <rect class="hbox" x="210" y="16" width="150" height="34" rx="6"/><text class="t-life" x="285" y="38" text-anchor="middle">مُطابِق (النظام)</text>
+        <rect class="hbox" x="410" y="16" width="150" height="34" rx="6"/><text class="t-life" x="485" y="38" text-anchor="middle">محرّك القواعد</text>
+        <rect class="hbox" x="610" y="16" width="200" height="34" rx="6"/><text class="t-life" x="710" y="38" text-anchor="middle">بلدي المكاني + التقسيم</text>
+        <line class="ll" x1="95" y1="50" x2="95" y2="490"/>
+        <line class="ll" x1="285" y1="50" x2="285" y2="490"/>
+        <line class="ll" x1="485" y1="50" x2="485" y2="490"/>
+        <line class="ll" x1="710" y1="50" x2="710" y2="490"/>
+        <rect class="act" x="280" y="92" width="10" height="372"/>
+        <rect class="act" x="480" y="260" width="10" height="135"/>
+        <rect class="act" x="705" y="145" width="10" height="67"/>
+        <text class="t-msg" x="190" y="92" text-anchor="middle">اختَر نشاطاً + ضع دبوساً على الخريطة</text>
+        <line class="call" x1="95" y1="100" x2="278" y2="100" marker-end="url(#solid)"/>
+        <text class="t-msg" x="498" y="150" text-anchor="middle">استعلم عن التقسيم والاشتراطات المكانية</text>
+        <line class="call" x1="291" y1="158" x2="703" y2="158" marker-end="url(#solid)"/>
+        <text class="t-msg" x="498" y="188" text-anchor="middle">التقسيم · المنطقة · التراخيص المجاورة</text>
+        <line class="ret" x1="705" y1="196" x2="292" y2="196" marker-end="url(#open)"/>
+        <text class="t-msg" x="388" y="252" text-anchor="middle">افحص الامتثال: المهني + المكاني + البلدي</text>
+        <line class="call" x1="291" y1="260" x2="478" y2="260" marker-end="url(#solid)"/>
+        <path class="call" d="M490,298 L545,298 L545,320 L492,320" marker-end="url(#solid)"/>
+        <text class="t-msg" x="553" y="313" text-anchor="start">تحقّق لكل بند: التقسيم ← المسافات ← الشروط المهنية</text>
+        <text class="t-msg" x="388" y="367" text-anchor="middle">نتيجة كل اشتراط + نص البند + كيفية الإصلاح</text>
+        <line class="ret" x1="480" y1="375" x2="292" y2="375" marker-end="url(#open)"/>
+        <text class="t-msg" x="190" y="439" text-anchor="middle">بطاقة الحكم + خريطة أخضر/أحمر + البدائل</text>
+        <line class="ret" x1="280" y1="448" x2="98" y2="448" marker-end="url(#open)"/>
+      </svg>
+    </div>
+    <div class="legend"><span><i></i> استدعاء / طلب</span><span><i class="dash"></i> رد / نتيجة</span></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">القدرات</div>
+    <h2>ماذا يفعل بالتفصيل</h2>
+    <div class="caps">
+      <div class="cap"><h3>خريطة «ضع دبوساً»</h3><p>تختار موقعك على خريطة تفاعلية — فيحكم النظام فوراً: هل التقسيم يسمح بهذا النشاط هنا؟ مع عرض التراخيص المجاورة والأثر التراكمي.</p></div>
+      <div class="cap"><h3>استيعاب اللوائح بالذكاء</h3><p>نموذج لغوي يحوّل فقرة لائحة عربية إلى قاعدة OpenFisca قابلة للتنفيذ — فنغطي مئات الأنشطة بأيام لا أشهر.</p></div>
+      <div class="cap"><h3>محرّك القواعد كشيفرة</h3><p>OpenFisca ينفّذ آلاف الاشتراطات المهنية والبلدية والإنشائية بشكل متسق وقابل للتدقيق — نفس المحرّك الذي تستخدمه حكومة NSW.</p></div>
+      <div class="cap"><h3>فحص التقسيم المكاني + المهني معاً</h3><p>لا نكتفي بـ«هل التقسيم يسمح؟» — ندمج المسافات والارتفاعات وشروط التهوية والصرف الصحي والدفاع المدني في حكم واحد.</p></div>
+      <div class="cap"><h3>شرح قابل للتفسير مع الخريطة</h3><p>لماذا فشل الاشتراط + نص البند + كيف تصلحه + المواقع البديلة التي تمرّ تلقائياً على الخريطة.</p></div>
+      <div class="cap"><h3>API امتثال قابل لإعادة الاستخدام</h3><p>مخرجات قابلة للقراءة آلياً تغذّي التحدي 2 (رقيب — التفتيش الاستباقي) والتحدي 3 (أثر — محاكاة الأثر المروري).</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">التميّز</div>
+    <h2>ما الذي نضيفه فوق الأصل</h2>
+    <ul class="delta">
+      <li><b>واجهة المسار — من الدبوس إلى الترخيص</b> — لسنا استمارة نملؤها، نحن خريطة نتفاعل معها: تختار موقعاً، ترى حكمه، تصلح ما يلزم، وتتقدم بثقة، في مسار بصري واحد مترابط من أول نقرة حتى الحكم النهائي.</li>
+      <li><b>دمج المكاني والمهني في حكم واحد</b> — OpenFisca الأصلي لا يعرف الخرائط؛ نحن ندمج التقسيم + المسافات + التراخيص المجاورة + الشروط المهنية في استعلام واحد.</li>
+      <li><b>استيعاب اللوائح العربية بالذكاء</b> — الأصل يتطلب ترميز القواعد يدوياً؛ نحن نستخرجها آلياً من النص العربي (LLM → OpenFisca)، مدعوم بأبحاث Policy2Code (2024) وCompliance-to-Code (2025).</li>
+      <li><b>خريطة أخضر/أحمر + بدائل مكانية</b> — إن فشل موقعك، نريك أين تنجح. الدليل الذكي لا يفعلها.</li>
+      <li><b>API مشترك للتحديات الثلاثة</b> — طبقة الامتثال التي نبنيها تغذّي رقيب (التفتيش) وأثر (محاكاة البنية التحتية) — فنحن منصة، لا منتجاً منعزلاً.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">العرض الحي · التسلسل السردي</div>
+    <h2>لحظة الإبهار</h2>
+    <ol class="demo">
+      <li>يختار الحكَم نشاط «مطعم» ويضع دبوساً على خريطة حي معيّن.</li>
+      <li>تظهر بطاقة حكم فورية: كل اشتراط ✅ أو ❌ مع نص البند — وخريطة تُلوِّن الدبوس أخضر أو أحمر.</li>
+      <li>يبرز تنبيه: «التقسيم لا يسمح بأنشطة الأغذية هنا» + تظهر المواقع البديلة القريبة التي <b>تمرّ تلقائياً</b>.</li>
+      <li>نقلب للوحة الذكاء ونلصق فقرة لائحة عربية حقيقية من MOMRAH.</li>
+      <li>تتحوّل الفقرة إلى <b>قاعدة OpenFisca حيّة</b> أمام اللجنة — ويُعاد تقييم النشاط فوراً بالقاعدة الجديدة.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">التحكيم</div>
+    <h2>المطابقة لمعايير اللجنة</h2>
+    <table>
+      <tr><th>معالجة التحدي</th><td>الحكم على المطابقة قبل الترخيص — نص التحدي الأول حرفياً — مضافاً إليه البُعد المكاني الذي يجعل المحاكاة واقعية.</td></tr>
+      <tr><th>الابتكار</th><td>«القواعد كشيفرة» + استخراجها بالذكاء من العربية + واجهة الدبوس على الخريطة — مزيج غير مطبّق إقليمياً ولا عالمياً.</td></tr>
+      <tr><th>الجدوى</th><td>OpenFisca مفتوح المصدر (Python) وقابل للنشر خلال الهاكاثون؛ الخريطة تبنى على مكتبات مفتوحة (Leaflet/Deck.gl)؛ محرك الامتثال مُثبت في NSW.</td></tr>
+      <tr><th>الأثر والاستدامة</th><td>أقل رفض للطلبات ووقت أقصر + توجيه المستثمرين للمواقع المناسبة تلقائياً — يدعم تحسين بيئة الأعمال ورؤية 2030.</td></tr>
+      <tr><th>جودة النموذج</th><td>خريطة تفاعلية + بطاقة حكم شغّالة + تحويل لائحة إلى قاعدة حيّة.</td></tr>
+      <tr><th>العرض</th><td>قصة واحدة: «تضع دبوساً على الخريطة — فنقول لك إن كنت ستنجح قبل أن تصرف ريالاً».</td></tr>
+    </table>
+  </section>
+
+  <section class="split">
+    <div>
+      <div class="eyebrow">الجدوى</div>
+      <h2>واقعي وقابل للبناء</h2>
+      <p class="thesis">نزرع 8–15 نشاطاً حقيقياً في OpenFisca + خريطة تفاعلية ببيانات تقسيم مفتوحة/تجريبية + خط الذكاء ينتج قواعد مُتحقّقة قبل العرض. المسار الكامل — من الدبوس إلى الحكم — يعمل في الهاكاثون.</p>
+    </div>
+    <div>
+      <div class="eyebrow">المخاطر</div>
+      <h2>بصراحة</h2>
+      <ul>
+        <li>دقة القواعد — بشري في الحلقة + استشهاد بالبند + نطاق أنشطة محدود للعرض.</li>
+        <li>الوصول لبيانات التقسيم — مفتوح/تجريبي للعرض، يُصمم للبيانات الرسمية.</li>
+        <li>الموضعة: طبقة قرار + خريطة فوق «الدليل الذكي»، لا بديلاً عنه.</li>
+        <li>دقة استخراج القواعد بالذكاء — نعرض المسار كاملاً (LLM ← تدقيق بشري ← OpenFisca)، والقواعد المنشورة مُتحقّقة مسبقاً.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">المصادر</div>
+    <ul class="src">
+      <li><b>التحدي</b> — momah.gov.sa/ar/hackathon</li>
+      <li><b>OpenFisca</b> — openfisca.org/en</li>
+      <li><b>Rules as Code (NSW) — ترخيص الأعمال وفحص القمار</b> — digital.nsw.gov.au/article/rules-as-code-test-learn-repeat</li>
+      <li><b>Archistar AI PreCheck</b> — archistar.ai/aiprecheck/government</li>
+      <li><b>Policy2Code (Georgetown)</b> — digitalgovernmenthub.org/publications/ai-powered-rules-as-code-experiments-with-public-benefits-policy</li>
+      <li><b>Compliance-to-Code (arXiv)</b> — arxiv.org/pdf/2505.19804</li>
+      <li><b>ثغرة الدليل الذكي</b> — balady.gov.sa/en/services/smart-guide</li>
+      <li><b>منصة بلدي — 2.5M مستخدم</b> — balady.gov.sa</li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مِرْآة ٱلْمَدِينَة — دوسيه المشروع</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
+  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
+  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:600;margin:0 0 5px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
+  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
+  header .thesis b{color:var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
+  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
+  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
+  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
+  .stage.engine li::marker{color:var(--navy)}
+  .seqwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+  svg.seq{min-width:720px;width:100%;height:auto;display:block}
+  .seq text{font-family:var(--sans)}
+  .seq .t-life{fill:var(--navy);font-size:13px;font-weight:600}
+  .seq .t-msg{fill:#2b3742;font-size:12.5px}
+  .seq .t-note{fill:var(--faint);font-size:11px}
+  .seq .ll{stroke:#C3CDD6;stroke-width:1;stroke-dasharray:4 4}
+  .seq .act{fill:var(--navy-soft);stroke:#9DBAD0}
+  .seq .call{stroke:var(--navy);stroke-width:1.6;fill:none}
+  .seq .ret{stroke:var(--navy);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+  .seq .hbox{fill:var(--navy-soft);stroke:var(--navy)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:26px;height:0;border-top:2px solid var(--navy);display:inline-block}
+  .legend i.dash{border-top-style:dashed}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
+  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
+  .delta b{color:var(--ink);font-weight:600}
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .demo b{color:var(--good)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:20px}
+  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  @media(max-width:680px){
+    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
+    h2{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · أثر مشاريع البنية التحتية على حركة المرور</div>
+    <h1>مِرْآة ٱلْمَدِينَة <span class="latin">MIR'AT AL-MADINA</span></h1>
+    <p class="thesis">توأم رقمي وطني ثلاثي الأبعاد مع شريط زمني، لا يعرض حركة المرور فحسب، بل <b>يقودها</b> — يعيد توقيت كل حفريّة ومشاركتها في خندق مشترك قبل الموافقة على الترخيص.</p>
+    <div class="origin"><span class="origin-k">مبني على أصل مُثبت</span> Virtual Singapore — التوأم الرقمي الحكومي (5,500 كم شبكة طرق مُسحّة جوّالاً لتحليل حركة المرور)</div>
+  </header>
+
+  <section>
+    <div class="eyebrow">الثغرة</div>
+    <h2>ماذا ينقص اليوم؟</h2>
+    <p class="thesis">بلدي تخدم ~2.5 مليون مستخدم وتصدر ~234 ألف رخصة بناء، لكن كل رخصة قرارٌ منفصل على نموذج ورقي لا يرى الصورة الكاملة. لوحات المدينة الذكية حول العالم — بما فيها Virtual Singapore — <b>للقراءة فقط</b>. لا أحد وضع توأماً رقمياً 4D داخل حلقة إصدار التراخيص البلدية.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">الدليل</div>
+    <h2>لماذا نثق أنها تنجح</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">19</div><div class="lab">خدمة تنسيق أعمال بنية تحتية على منصة بلدي، منها التصاريح والتنسيق المتعدد.</div><div class="ref">balady.gov.sa</div></div>
+      <div class="stat"><div class="num">3.6M</div><div class="lab">راكب/يوم السعة التصميمية لمترو الرياض (6 خطوط، 85 محطة، 176 كم).</div><div class="ref">Wikipedia — Riyadh Metro</div></div>
+      <div class="stat"><div class="num">450+</div><div class="lab">جهة حكومية تشارك بيانات مرورية ثنائية الاتجاه عبر Waze for Cities.</div><div class="ref">Wikipedia — Waze</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">كيف يعمل</div>
+    <h2>من التصريح إلى المدينة المُحسّنة</h2>
+    <div class="pipe">
+      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>تصاريح الحفر والأعمال من Balady API</li><li>OpenStreetMap + Google Open Buildings</li><li>INRIX: بيانات حية من 500M+ مركبة</li><li>GTFS مترو الرياض</li></ul></div>
+      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>توأم هندسي ثلاثي الأبعاد (CesiumJS / deck.gl)</li><li>محاكاة SUMO مجهرية متعددة الوسائط</li><li>شريط زمني للتنقّل في المستقبل</li><li>مُحسّن لإعادة التوقيت والتشارك في الخنادق</li><li>إنسان في الحلقة: موظف بلدي يوافق</li></ul></div>
+      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>توقعات ازدحام بصرية مع شريط زمني</li><li>جدولة مُحسّنة وبدائل للطرق</li><li>دفع فوري إلى Waze / Google Maps / Balady</li><li>تقارير للمفتشين والمواطنين</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">مسار التنفيذ · UML Sequence</div>
+    <h2>تسلسل التحركات بين موظف بلدي والمرآة</h2>
+    <div class="seqwrap">
+      <svg class="seq" viewBox="0 0 830 470" role="img" aria-label="مخطط تسلسلي يوضح تفاعل موظف بلدي مع مرآة المدينة والمحاكي وبيانات بلدي">
+        <defs>
+          <marker id="solid" markerWidth="10" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1D4E77"/></marker>
+          <marker id="open" markerWidth="12" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#1D4E77" stroke-width="1.3"/></marker>
+        </defs>
+        <rect class="hbox" x="45" y="16" width="150" height="34" rx="6"/><text class="t-life" x="120" y="38" text-anchor="middle">موظف بلدي</text>
+        <rect class="hbox" x="255" y="16" width="150" height="34" rx="6"/><text class="t-life" x="330" y="38" text-anchor="middle">مرآة المدينة</text>
+        <rect class="hbox" x="465" y="16" width="150" height="34" rx="6"/><text class="t-life" x="540" y="38" text-anchor="middle">محاكي SUMO</text>
+        <rect class="hbox" x="665" y="16" width="150" height="34" rx="6"/><text class="t-life" x="740" y="38" text-anchor="middle">بيانات بلدي والمرور</text>
+        <line class="ll" x1="120" y1="50" x2="120" y2="440"/>
+        <line class="ll" x1="330" y1="50" x2="330" y2="440"/>
+        <line class="ll" x1="540" y1="50" x2="540" y2="440"/>
+        <line class="ll" x1="740" y1="50" x2="740" y2="440"/>
+        <rect class="act" x="325" y="92" width="10" height="312"/>
+        <rect class="act" x="535" y="200" width="10" height="85"/>
+        <rect class="act" x="735" y="130" width="10" height="55"/>
+        <text class="t-msg" x="225" y="92" text-anchor="middle">ارسم إغلاقاً على الخريطة</text>
+        <line class="call" x1="120" y1="100" x2="323" y2="100" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="132" text-anchor="middle">اجلب التصاريح والمرور</text>
+        <line class="call" x1="336" y1="140" x2="733" y2="140" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="167" text-anchor="middle">تصاريح + بيانات مرور حية</text>
+        <line class="ret" x1="735" y1="175" x2="337" y2="175" marker-end="url(#open)"/>
+        <text class="t-msg" x="438" y="202" text-anchor="middle">شغّل المحاكاة 4D</text>
+        <line class="call" x1="336" y1="210" x2="533" y2="210" marker-end="url(#solid)"/>
+        <path class="call" d="M545,235 L600,235 L600,255 L547,255" marker-end="url(#solid)"/>
+        <text class="t-msg" x="608" y="250" text-anchor="start">حاكِم 1–24 ساعة</text>
+        <text class="t-msg" x="438" y="282" text-anchor="middle">توقعات الازدحام</text>
+        <line class="ret" x1="535" y1="290" x2="337" y2="290" marker-end="url(#open)"/>
+        <path class="call" d="M335,315 L390,315 L390,335 L337,335" marker-end="url(#solid)"/>
+        <text class="t-msg" x="398" y="330" text-anchor="start">حسّن التوقيت والتشارك</text>
+        <text class="t-msg" x="225" y="391" text-anchor="middle">توصية مُحسّنة + بدائل</text>
+        <line class="ret" x1="325" y1="399" x2="123" y2="399" marker-end="url(#open)"/>
+      </svg>
+    </div>
+    <div class="legend"><span><i></i> استدعاء / طلب</span><span><i class="dash"></i> رد / نتيجة</span></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">القدرات</div>
+    <h2>ماذا يفعل بالتفصيل</h2>
+    <div class="caps">
+      <div class="cap"><h3>توأم رقمي 4D</h3><p>ثلاثية أبعاد + شريط زمني: المدينة حية، وكل ساعة قابلة للمسح والمعاينة.</p></div>
+      <div class="cap"><h3>محاكاة مرور مجهرية</h3><p>Eclipse SUMO يجري محاكاة متعددة الوسائط للشوارع والمترو والحفريات.</p></div>
+      <div class="cap"><h3>إعادة التوقيت والتشارك</h3><p>المرآة لا ترفض الحفريّة، بل تُعيد جدولتها لتتشارك في خندق مع utilities أخرى.</p></div>
+      <div class="cap"><h3>وضع "القائد"</h3><p>تحسين جميع التصاريح الحالية معاً لمدة 30 يوماً في لوحة زمنية واحدة.</p></div>
+      <div class="cap"><h3>دفع فوري للمواطنين</h3><p>القرار يصل إلى Waze، Google Maps، تطبيق Balady، ورسائل WhatsApp في نفس الثانية.</p></div>
+      <div class="cap"><h3>مترو الرياض كممتصّ للازدحام</h3><p>عند إغلاق شارع، تُعاد توجيه الرحلات إلى المترو بسعة 3.6M راكب/يوم.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">التميّز</div>
+    <h2>ما الذي نضيفه فوق الأصل</h2>
+    <ul class="delta">
+      <li><b>من 3D إلى 4D</b> — Virtual Singapore توأم ثلاثي الأبعاد للتخطيط؛ مرآة المدينة تضيف محور الزمن وشريط التنقّل.</li>
+      <li><b>من قراءة إلى كتابة</b> — الأنظمة العالمية تعرض المدينة؛ مرآتنا تُصدر التراخيص المحسّنة.</li>
+      <li><b>من البلدية إلى المواطن</b> — لا توجد أداة عالمية تربط مكتب التراخيص بنفس اللحظة بتطبيقات الملاحة.</li>
+      <li><b>إنسان في الحلقة</b> — الموظف البلدي يوافق دائماً؛ الذكاء ينصح، والإنسان يقرر.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">العرض الحي · التسلسل السردي</div>
+    <h2>لحظة الإبهار</h2>
+    <ol class="demo">
+      <li>تظهر الرياض ثلاثية الأبعاد على الشاشة: سيارات حقيقية مجهّلة، وحفريّات برتقالية، وتصاريح نابضة بالأزرق.</li>
+      <li>يرسم الموظف إغلاقاً على طريق الملك فهد لمدة 4 ساعات يوم سبت.</li>
+      <li>يحرّك شريط الزمن: 14:00 → 19:00، ويرى الازدحام الأحمر يتفشّى عبر المدينة.</li>
+      <li>تتحدث المرآة: "أعدّ الجدولة إلى الجمعة 22:00، شارك خندقاً مع اتصالات، وتوقّع −41% تأثيراً".</li>
+      <li>بضغطة واحدة ينشر القرار إلى Waze وBalady والمفتشين — <b>توفير ~12,400 ساعة سائق</b>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">التحكيم</div>
+    <h2>المطابقة لمعايير اللجنة</h2>
+    <table>
+      <tr><th>معالجة التحدي</th><td>يحلّل ويقيس أثر كل حفريّة على المرور، ويقدّم بدائل وتحويلات — نص التحدي الثالث حرفياً.</td></tr>
+      <tr><th>الابتكار</th><td>أول توأم رقمي 4D داخل حلقة إصدار التراخيص البلدية عالمياً؛ ليس لوحة معلومات بل صانع قرار.</td></tr>
+      <tr><th>الجدوى</th><td>كل طبقة موجودة ومفتوحة أو تجارية: Balady، SUMO، OSM، INRIX، Waze for Cities.</td></tr>
+      <tr><th>الأثر والاستدامة</th><td>كل تصريح يمرّ عبر النظومة يحسّن التالي؛ المدينة تتعلّم من حفرياتها.</td></tr>
+      <tr><th>جودة النموذج</th><td>عرض حيّ 70 ثانية: مدينة ثلاثية الأبعاد، شريط زمني، توصية صوتية، ودفع فوري.</td></tr>
+      <tr><th>العرض</th><td>قصة واحدة سينمائية: "انظر إلى مدينتك قبل أن تحفر بها".</td></tr>
+    </table>
+  </section>
+
+  <section class="split">
+    <div>
+      <div class="eyebrow">الجدوى</div>
+      <h2>واقعي وقابل للبناء</h2>
+      <p class="thesis">كل طبقة تقنية موجودة اليوم. نستخدم CesiumJS/deck.gl + SUMO + Riyadh OSM extract لبناء نموذج أولي خلال الهاكاثون. التكامل الحقيقي مع Balady هو مشروع 90 يوماً، والنظام يلتف حول سير عمل موجود لا يستبدله.</p>
+    </div>
+    <div>
+      <div class="eyebrow">المخاطر</div>
+      <h2>بصراحة</h2>
+      <ul>
+        <li>الوصول إلى Balady API: يفترض بوابة مفتوحة أو شراكة داخلية؛ نستخدم بيانات تجريبية للعرض.</li>
+        <li>الحوسبة في الوقت الفعلي: المحاكاة على نطاق المدينة تحتاج خوادم؛ نبدأ بممرات محدودة.</li>
+        <li>التبنّي المؤسسي: النظام يلتف حول سير العمل ولا يستبدله، مع موظف بلدي في الحلقة.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">المصادر</div>
+    <ul class="src">
+      <li><b>Baladiyathon 2026</b> — momah.gov.sa/en/hackathon</li>
+      <li><b>Balady — 19 خدمة تنسيق بنية تحتية</b> — balady.gov.sa/ar/all-products/10497</li>
+      <li><b>Riyadh Metro</b> — en.wikipedia.org/wiki/Riyadh_Metro</li>
+      <li><b>Eclipse SUMO</b> — en.wikipedia.org/wiki/Simulation_of_Urban_MObility</li>
+      <li><b>INRIX AI Traffic</b> — en.wikipedia.org/wiki/INRIX</li>
+      <li><b>Waze for Cities</b> — en.wikipedia.org/wiki/Waze</li>
+      <li><b>Virtual Singapore</b> — en.wikipedia.org/wiki/Virtual_Singapore</li>
+      <li><b>OpenStreetMap</b> — openstreetmap.org/about</li>
+      <li><b>Saudi population / GASTAT</b> — stats.gov.sa/en</li>
+      <li><b>NEOM scale-back context</b> — en.wikipedia.org/wiki/Neom</li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

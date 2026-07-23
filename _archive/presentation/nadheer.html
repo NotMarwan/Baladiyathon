@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نَذِير — دوسيه المشروع</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
+  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
+  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:600;margin:0 0 5px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
+  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
+  header .thesis b{color:var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
+  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
+  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
+  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
+  .stage.engine li::marker{color:var(--navy)}
+  .seqwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+  svg.seq{min-width:720px;width:100%;height:auto;display:block}
+  .seq text{font-family:var(--sans)}
+  .seq .t-life{fill:var(--navy);font-size:13px;font-weight:600}
+  .seq .t-msg{fill:#2b3742;font-size:12.5px}
+  .seq .t-note{fill:var(--faint);font-size:11px}
+  .seq .ll{stroke:#C3CDD6;stroke-width:1;stroke-dasharray:4 4}
+  .seq .act{fill:var(--navy-soft);stroke:#9DBAD0}
+  .seq .call{stroke:var(--navy);stroke-width:1.6;fill:none}
+  .seq .ret{stroke:var(--navy);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+  .seq .hbox{fill:var(--navy-soft);stroke:var(--navy)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:26px;height:0;border-top:2px solid var(--navy);display:inline-block}
+  .legend i.dash{border-top-style:dashed}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
+  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
+  .delta b{color:var(--ink);font-weight:600}
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .demo b{color:var(--good)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:20px}
+  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  @media(max-width:680px){
+    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
+    h2{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الثاني · التفتيش الاستباقي بالذكاء الاصطناعي</div>
+    <h1>نَذِير <span class="latin">NADHEER</span></h1>
+    <p class="thesis">مدينة رقمية حيّة تُبصر كل مخالفة قبل أن تبدأ، وتُحوّل الرقابة البلدية من ردّ فعلٍ متأخر إلى <b>تنبؤ ومنع</b>.</p>
+    <div class="origin"><span class="origin-k">مبني على أصل مُثبت</span> Sentinel-2 التابع لبرنامج Copernicus (صور مجانية 10 أمتار كل 5 أيام) · Virtual Singapore (أقدم التوائم الرقمية المدنية تقدماً في العالم)</div>
+  </header>
+
+  <section>
+    <div class="eyebrow">الثغرة</div>
+    <h2>ماذا ينقص اليوم؟</h2>
+    <p class="thesis">«الدليل الذكي» في بلدي يستعرض الخدمات فقط، و«940» ينتظر شكوى، والمفتش يصل بعد حدوث المخالفة. لا أحد يربط صور الأقمار الصناعية بقاعدة التراخيص، ولا أحد يُنبّه المالك قبل أن يُكمل البناء. هنا يعمل <b>نذير</b>: عين رقمية فوق كل متر مربع، ودماغٌ يقرأ الصورة، وصوتٌ يتحدث بالعربية قبل وقوع المخالفة.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">الدليل</div>
+    <h2>لماذا نثق أنها تنجح</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">~2.5M</div><div class="lab">مستخدم على منصة بلدي؛ قناة جاهزة للتنبيهات والإشعارات.</div><div class="ref">balady.gov.sa</div></div>
+      <div class="stat"><div class="num">29,000+</div><div class="lab">زيارة رقابية نفذتها أمانات وزارة الشؤون البلدية خلال موسم حج 1447هـ.</div><div class="ref">balady.gov.sa/news</div></div>
+      <div class="stat"><div class="num">5 أيام</div><div class="lab">فاصل التغطية المجانية لصور Sentinel-2 بدقة 10 أمتار على كامل المملكة.</div><div class="ref">ESA Copernicus</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">كيف يعمل</div>
+    <h2>من الصورة إلى التذكرة</h2>
+    <div class="pipe">
+      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>صور Sentinel-2 / PlanetScope</li><li>مسح طائرة بدون طيار + سيارات البلدية</li><li>API تراخيص بلدي (تجاري + إنشائي)</li><li>بلاغات 940 وسجل المخالفات</li><li>طبقات GIS البلدية</li></ul></div>
+      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>ChangeFormer: رصد التغيّر من أزواج الصور</li><li>GPT-4V / Gemini: وصف بصري للبناء المُكتشف</li><li>استعلام تلقائي لقاعدة التراخيص</li><li>مصنّف المخالفات (إنشائي، إشارة، تعدٍّ)</li><li>TimesFM / Chronos: محاكاة اتجاهات المخالفات</li><li>نموذج عربي توليدي للإشعارات</li></ul></div>
+      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>تنبيه جغرافي على التوأم الرقمي</li><li>تذكرة تفتيش بأولوية وأدلة</li><li>إشعار عربي للمالك عبر تطبيق بلدي</li><li>تقرير ربعي لصناع القرار</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">مسار التنفيذ · UML Sequence</div>
+    <h2>تسلسل التحركات بين العين والدماغ والقرار</h2>
+    <div class="seqwrap">
+      <svg class="seq" viewBox="0 0 830 470" role="img" aria-label="مخطط تسلسلي يوضح تدفق نذير من القمر الصناعي إلى قاعدة التراخيص والمفتش">
+        <defs>
+          <marker id="solid" markerWidth="10" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1D4E77"/></marker>
+          <marker id="open" markerWidth="12" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#1D4E77" stroke-width="1.3"/></marker>
+        </defs>
+        <rect class="hbox" x="45" y="16" width="150" height="34" rx="6"/><text class="t-life" x="120" y="38" text-anchor="middle">قمر صناعي</text>
+        <rect class="hbox" x="255" y="16" width="150" height="34" rx="6"/><text class="t-life" x="330" y="38" text-anchor="middle">نذير (النظام)</text>
+        <rect class="hbox" x="465" y="16" width="150" height="34" rx="6"/><text class="t-life" x="540" y="38" text-anchor="middle">قاعدة بلدي</text>
+        <rect class="hbox" x="665" y="16" width="150" height="34" rx="6"/><text class="t-life" x="740" y="38" text-anchor="middle">مفتش / مواطن</text>
+        <line class="ll" x1="120" y1="50" x2="120" y2="440"/>
+        <line class="ll" x1="330" y1="50" x2="330" y2="440"/>
+        <line class="ll" x1="540" y1="50" x2="540" y2="440"/>
+        <line class="ll" x1="740" y1="50" x2="740" y2="440"/>
+        <rect class="act" x="325" y="92" width="10" height="338"/>
+        <rect class="act" x="535" y="170" width="10" height="70"/>
+        <rect class="act" x="735" y="300" width="10" height="70"/>
+        <text class="t-msg" x="225" y="92" text-anchor="middle">صورة جديدة + تغيّر مكاني</text>
+        <line class="call" x1="120" y1="100" x2="323" y2="100" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="162" text-anchor="middle">استعلام: هل يوجد ترخيص نشط؟</text>
+        <line class="call" x1="336" y1="170" x2="533" y2="170" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="212" text-anchor="middle">لا يوجد ترخيص مطابق</text>
+        <line class="ret" x1="535" y1="220" x2="337" y2="220" marker-end="url(#open)"/>
+        <path class="call" d="M335,270 L390,270 L390,292 L337,292" marker-end="url(#solid)"/>
+        <text class="t-msg" x="398" y="285" text-anchor="start">تحليل صوري + تصنيف المخالفة</text>
+        <text class="t-msg" x="536" y="350" text-anchor="middle">تذكرة تفتيش + إشعار للمالك</text>
+        <line class="call" x1="336" y1="358" x2="733" y2="358" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="405" text-anchor="middle">تأكيد الاستلام والمعالجة</text>
+        <line class="ret" x1="735" y1="413" x2="337" y2="413" marker-end="url(#open)"/>
+      </svg>
+    </div>
+    <div class="legend"><span><i></i> استدعاء / طلب</span><span><i class="dash"></i> رد / نتيجة</span></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">القدرات</div>
+    <h2>ماذا يفعل بالتفصيل</h2>
+    <div class="caps">
+      <div class="cap"><h3>رصد التغيّر بالأقمار الصناعية</h3><p>مقارنة صور Sentinel-2 بفاصل 5 أيام لاكتشاف أي بناء أو هدم أو تعدٍّ جديد.</p></div>
+      <div class="cap"><h3>تحليل بصري متعدد الوسائط</h3><p>نموذج رؤية لغوي يصف البناء المكتشف: نوعه، مساحته، مواد الإنشاء الظاهرة.</p></div>
+      <div class="cap"><h3>التحقق الفوري من التراخيص</h3><p>استعلام تلقائي عن الترخيص النشط عبر API بلدي، مع مطابقة الإحداثيات.</p></div>
+      <div class="cap"><h3>التوأم الرقمي الحيّ</h3><p>نسخة ثلاثية الأبعاد محدثة للمدينة، تُظهر المخالفات بالأحمر والامتثال بالأخضر.</p></div>
+      <div class="cap"><h3>التنبيهات العربية التوليدية</h3><p>إشعارات مخصصة بالعربية للمالك توضح المخالفة، السبب، والخطوات القانونية.</p></div>
+      <div class="cap"><h3>المحاكاة التنبؤية المسبقة</h3><p>توقع أماكن ظهور المخالفات خلال الأشهر القادمة لتوجيه المفتشين قبل الحدوث.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">التميّز</div>
+    <h2>ما الذي نضيفه فوق الأصل</h2>
+    <ul class="delta">
+      <li><b>من توأم ثابت إلى توأم حيّ</b> — Virtual Singapore نموذج تخطيطي ثابت؛ نذير يُغذّى بالأقمار الصناعية والطائرات بدون طيار ويُحدّث نفسه.</li>
+      <li><b>من العرض إلى الفعل</b> — UK National Digital Twin إطار مبدئي؛ نذير يولّد تذاكر تفتيش حقيقية ويُرسل إشعارات للمواطنين.</li>
+      <li><b>دمج الترخيص مع الصورة</b> — لا يكتفي برصد التغيّر، بل يستعلم عن الترخيص فوراً ليقرر: مخالفة أو امتثال.</li>
+      <li><b>تواصل عربي توليدي</b> — نموذج لغوي عربي يشرح للمواطن المخالفة وكيفية تصحيحها، لا مجرد بيانات.</li>
+      <li><b>محاكاة مستقبلية</b> — يتجاوز رصد الماضي إلى توقع المخالفات قبل حدوثها وتوجيه الموارد مسبقاً.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">العرض الحي · التسلسل السردي</div>
+    <h2>لحظة الإبهار</h2>
+    <ol class="demo">
+      <li>تنطفئ الأنوار، ثم تظهر الرياض ثلاثية الأبعاد — كل شارع ومبنى وحيّ.</li>
+      <li>تنتشر نبضات حمراء على الخريطة: مئات المخالفات النشطة التي لا يعرف عنها أحد.</li>
+      <li>نتوقف عند فيلا في النخيل ونشغّل «آلة الزمن»: البناء يتقدم شهراً تلو الآخر دون تنبيه.</li>
+      <li>نعيد تشغيل المشهد مع نذير: يكتشف الأساس في اليوم الثالث، ويُرسل إشعاراً للمالك فوراً.</li>
+      <li>النبضة الحمراء تذوب وتتحول إلى <b>أخضر — المخالفة لم تحدث أصلاً</b>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">التحكيم</div>
+    <h2>المطابقة لمعايير اللجنة</h2>
+    <table>
+      <tr><th>معالجة التحدي</th><td>يستهدف التحدي الثاني حرفياً: كشف المخالفات قبل وقوعها، وترتيب أولويات التفتيش، ورفع كفاءة المراقبة.</td></tr>
+      <tr><th>الابتكار</th><td>أول نظام بلديي توليدي يجمع التوأم الرقمي والأقمار الصناعية والتراخيص والحوار العربي في نظام واحد.</td></tr>
+      <tr><th>الجدوى</th><td>كل مكوّن موجود اليوم: Sentinel-2 المجاني، GPT-4V، Balady API، Arabic LLMs، NVIDIA Omniverse / Cesium.</td></tr>
+      <tr><th>الأثر والاستدامة</th><td>قابل لإعادة الاستخدام في الفيضانات والجزر الحرارية وصيانة البنية التحتية وطوارئ المدن.</td></tr>
+      <tr><th>جودة النموذج</th><td>عرض حي يجمع صور أقمار حقيقية، توأم رقمي، وتدفق تنبيهات عربية — كلها مرئية ومفهومة.</td></tr>
+      <tr><th>العرض</th><td>قصة واحدة: «المدينة التي ترى الغد» — من مشهد مدينة عمياء إلى مدينة تمنع المخالفة قبل بدئها.</td></tr>
+    </table>
+  </section>
+
+  <section class="split">
+    <div>
+      <div class="eyebrow">الجدوى</div>
+      <h2>واقعي وقابل للبناء</h2>
+      <p class="thesis">نسخة العرض تعتمد على صور Sentinel-2 الحقيقية، ونموذج 3D مبني من بيانات مفتوحة، ومحرك رصد تغيّر يعمل دون اتصال بقاعدة بيانات حية. التكامل الكامل مع Balady API يأتي كخطوة تالية بعد الهاكاثون.</p>
+    </div>
+    <div>
+      <div class="eyebrow">المخاطر</div>
+      <h2>بصراحة</h2>
+      <ul>
+        <li>الوصول لقاعدة التراخيص الحية — نستخدم بيانات تجريبية مطابقة للمخططات خلال العرض.</li>
+        <li>دقة الرصد في المناطق الكثيفة — نبدأ بالمخالفات الإنشائية الواضحة (إضافات، هدم).</li>
+        <li>التغطية السحابية للأقمار — ندمج PlanetScope التجاري كاحتياط للمناطق الحرجة.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">المصادر</div>
+    <ul class="src">
+      <li><b>التحدي</b> — https://momah.gov.sa/en/hackathon</li>
+      <li><b>بلدي</b> — https://balady.gov.sa/ar/services/الدليل-الذكي</li>
+      <li><b>بلاغات 940</b> — https://balady.gov.sa</li>
+      <li><b>زيارات الرقابة</b> — https://balady.gov.sa/ar/about-balady/news</li>
+      <li><b>Sentinel-2</b> — https://sentiwiki.copernicus.eu/web/s2-mission</li>
+      <li><b>Virtual Singapore / Digital Twin</b> — https://en.wikipedia.org/wiki/Digital_twin</li>
+      <li><b>Planet Labs</b> — https://www.planet.com/products/planetscope</li>
+      <li><b>NVIDIA Omniverse</b> — https://www.nvidia.com/en-us/omniverse/digital-twins</li>
+      <li><b>Jais Arabic LLM</b> — https://inceptionai.ai/jais</li>
+      <li><b>NEOM Technology & Digital</b> — https://www.neom.com/en-us</li>
+      <li><b>Vision 2030 Quality of Life</b> — https://www.vision2030.gov.sa/en/explore/programs/quality-of-life-program</li>
+      <li><b>DGA Rankings</b> — https://dga.gov.sa/en</li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

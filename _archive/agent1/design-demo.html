@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mutabiq — Municipal Compliance Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            base: '#f9fafb',
+            ink: '#0c0d0e',
+            muted: '#64748b',
+            accent: '#059669',
+            'accent-soft': '#d1fae5',
+          },
+          boxShadow: {
+            'diffuse': '0 20px 40px -15px rgba(0,0,0,0.05)',
+            'float': '0 8px 24px -8px rgba(0,0,0,0.08)',
+          },
+          borderRadius: {
+            '4xl': '2.5rem',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.6' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Geist', system-ui, sans-serif; background: #f9fafb; color: #0c0d0e; }
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 12px 32px -16px rgba(0,0,0,0.08);
+    }
+    .text-gradient { background: linear-gradient(135deg, #0c0d0e 0%, #374151 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .shimmer-bg { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%); background-size: 200% 100%; }
+    .tile { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .tile:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -18px rgba(0,0,0,0.08); }
+    .btn-press:active { transform: scale(0.98) translateY(1px); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Nav -->
+  <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-5xl">
+    <div class="glass rounded-full px-5 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <span class="font-semibold text-ink tracking-tight">Mutabiq</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-muted">
+        <a href="#" class="hover:text-ink transition-colors">Platform</a>
+        <a href="#" class="hover:text-ink transition-colors">Regulations</a>
+        <a href="#" class="hover:text-ink transition-colors">Customers</a>
+      </div>
+      <button class="btn-press bg-ink text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-zinc-800 transition-colors">
+        Request access
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="min-h-[100dvh] pt-32 pb-20 px-4 md:px-8 flex items-center">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div class="order-2 lg:order-1">
+        <div class="inline-flex items-center gap-2 bg-accent-soft text-accent text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-soft"></span>
+          Now tracking 12,400+ municipal standards
+        </div>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl tracking-tighter leading-[0.95] text-ink mb-6">
+          Compliance that keeps pace with the city.
+        </h1>
+        <p class="text-lg text-muted leading-relaxed max-w-[55ch] mb-8">
+          Mutabiq maps local regulations to your operations in real time. Know what changed, who owns it, and when action is due — before the inspector does.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="btn-press bg-accent text-white font-medium px-7 py-3.5 rounded-full hover:bg-emerald-700 transition-colors shadow-float">
+            Start free trial
+          </button>
+          <button class="btn-press bg-white border border-zinc-200 text-ink font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 transition-colors">
+            See the platform
+          </button>
+        </div>
+        <div class="mt-10 flex items-center gap-4 text-sm text-muted">
+          <div class="flex -space-x-2">
+            <img src="https://picsum.photos/seed/khalid/64/64" alt="" class="w-8 h-8 rounded-full border-2 border-base" />
+            <img src="https://picsum.photos/seed/nora/64/64" alt="" class="w-8 h-8 rounded-full border-2 border-base" />
+            <img src="https://picsum.photos/seed/yousef/64/64" alt="" class="w-8 h-8 rounded-full border-2 border-base" />
+          </div>
+          <p>Trusted by 47 Saudi municipalities</p>
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2 relative">
+        <div class="absolute inset-0 bg-gradient-to-tr from-emerald-100/40 to-transparent rounded-4xl blur-3xl -z-10"></div>
+        <div class="relative bg-white rounded-4xl shadow-diffuse border border-slate-200/50 p-6 md:p-8 overflow-hidden">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <p class="text-xs font-semibold text-muted uppercase tracking-wider">Compliance health</p>
+              <p class="text-2xl font-semibold text-ink tracking-tight">Riyadh Branch</p>
+            </div>
+            <span class="bg-emerald-50 text-accent text-sm font-semibold px-3 py-1 rounded-full">94.2%</span>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-ink">Waste management ordinance</p>
+                  <p class="text-xs text-muted">Updated 6 hours ago</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold text-emerald-600">Compliant</span>
+            </div>
+            <div class="flex items-center justify-between p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-ink">Fire safety certification</p>
+                  <p class="text-xs text-muted">Due in 11 days</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold text-amber-600">Action needed</span>
+            </div>
+            <div class="flex items-center justify-between p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-ink">Labor permit renewal</p>
+                  <p class="text-xs text-muted">Overdue by 2 days</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold text-rose-600">Critical</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-6 border-t border-zinc-100 flex items-center justify-between">
+            <p class="text-xs text-muted">Next municipal sync</p>
+            <p class="text-xs font-semibold text-ink">Today, 14:30 AST</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Features -->
+  <section class="py-24 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16 max-w-2xl">
+        <p class="text-xs font-semibold text-accent uppercase tracking-wider mb-3">Platform</p>
+        <h2 class="text-4xl md:text-5xl tracking-tighter text-ink mb-4">Everything that changes, tracked.</h2>
+        <p class="text-muted leading-relaxed">From ordinance drafts to final enforcement dates, Mutabiq watches the signals so your team doesn't miss the deadline.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="tile bg-white rounded-4xl p-8 shadow-diffuse border border-slate-200/50 md:col-span-2">
+          <div class="flex items-start justify-between mb-8">
+            <div>
+              <p class="text-sm font-semibold text-muted mb-1">Live regulation feed</p>
+              <p class="text-2xl font-semibold text-ink tracking-tight">3 new amendments today</p>
+            </div>
+            <div class="relative w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center animate-pulse-soft">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-accent rounded-full border-2 border-white"></span>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <span class="text-xs font-medium text-muted w-16">09:14</span>
+              <p class="text-sm font-medium text-ink">Building code: updated fire-escape requirements</p>
+            </div>
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <span class="text-xs font-medium text-muted w-16">08:42</span>
+              <p class="text-sm font-medium text-ink">Labor law: revised overtime calculation for shift workers</p>
+            </div>
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+              <span class="text-xs font-medium text-muted w-16">07:03</span>
+              <p class="text-sm font-medium text-ink">Environmental: new hazardous waste reporting threshold</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="tile bg-white rounded-4xl p-8 shadow-diffuse border border-slate-200/50 flex flex-col justify-between">
+          <div>
+            <p class="text-sm font-semibold text-muted mb-4">Risk profile</p>
+            <div class="relative w-40 h-40 mx-auto mb-6">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" stroke="#e5e7eb" stroke-width="10" fill="none" />
+                <circle cx="50" cy="50" r="42" stroke="#059669" stroke-width="10" fill="none" stroke-dasharray="238" stroke-dashoffset="14" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-3xl font-bold text-ink tracking-tighter">94.2%</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-ink font-semibold mb-1">Low risk</p>
+            <p class="text-sm text-muted">Only 2 items flagged across 18 regulatory domains.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="tile bg-white rounded-4xl p-8 shadow-diffuse border border-slate-200/50">
+          <p class="text-sm font-semibold text-muted mb-6">Upcoming deadlines</p>
+          <div class="space-y-5">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex flex-col items-center justify-center text-xs font-semibold text-ink">
+                <span class="text-[10px] text-muted uppercase">Jul</span>
+                <span>14</span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-ink">Commercial license renewal</p>
+                <p class="text-xs text-muted">Riyadh municipality</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex flex-col items-center justify-center text-xs font-semibold text-ink">
+                <span class="text-[10px] text-muted uppercase">Jul</span>
+                <span>22</span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-ink">Zoning compliance report</p>
+                <p class="text-xs text-muted">Eastern province</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="tile bg-white rounded-4xl p-8 shadow-diffuse border border-slate-200/50 md:col-span-2">
+          <div class="flex items-center justify-between mb-6">
+            <p class="text-sm font-semibold text-muted">Document verification</p>
+            <span class="text-xs font-medium bg-emerald-50 text-accent px-2 py-1 rounded-full">AI-verified</span>
+          </div>
+          <div class="p-5 rounded-2xl bg-zinc-50 border border-zinc-100">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-ink">SAFETY_CERT_2026_Q2.pdf</p>
+                <p class="text-xs text-muted mb-3">Uploaded by Reem Al-Harbi — 2 hours ago</p>
+                <div class="h-2 w-full bg-zinc-200 rounded-full overflow-hidden">
+                  <div class="h-full w-[92%] bg-accent rounded-full relative overflow-hidden">
+                    <div class="absolute inset-0 shimmer-bg animate-shimmer"></div>
+                  </div>
+                </div>
+                <p class="text-xs text-muted mt-2">92% match with current ordinance language</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="relative overflow-hidden rounded-4xl bg-ink text-white px-8 py-16 md:px-16 md:py-20">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div class="relative max-w-2xl">
+          <h2 class="text-4xl md:text-5xl tracking-tighter mb-6">Stop guessing what changed.</h2>
+          <p class="text-zinc-400 text-lg leading-relaxed mb-8 max-w-xl">
+            Join the municipalities and operators using Mutabiq to turn regulatory chaos into a clear action plan.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="btn-press bg-accent text-white font-medium px-7 py-3.5 rounded-full hover:bg-emerald-500 transition-colors">
+              Schedule a demo
+            </button>
+            <button class="btn-press bg-white/10 text-white font-medium px-7 py-3.5 rounded-full hover:bg-white/15 transition-colors backdrop-blur-sm">
+              View pricing
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 md:px-8 border-t border-zinc-200">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <span class="font-semibold text-ink">Mutabiq</span>
+      </div>
+      <p class="text-sm text-muted">Built for Saudi municipalities and compliant operators.</p>
+      <div class="flex items-center gap-6 text-sm text-muted">
+        <a href="#" class="hover:text-ink transition-colors">Privacy</a>
+        <a href="#" class="hover:text-ink transition-colors">Terms</a>
+        <a href="#" class="hover:text-ink transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

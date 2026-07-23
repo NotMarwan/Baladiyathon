@@ -1,0 +1,25 @@
+# Saudi primary evidence
+https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/203%20EN.pdf
+https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/305%20EN.pdf
+https://www.stats.gov.sa/documents/20117/2435245/GASTAT_LISC%2Breport_2025_EN.pdf/80b46893-12e0-2b26-2a54-70a1553169c1
+https://www.stats.gov.sa/documents/20117/2435281/Road%2BTranspot%2BStatistics%2B2024_EN.pdf/2c6ede72-2f23-7af1-50a3-150e493caddf
+https://datasaudi.sa/en
+https://opendata.rcrc.gov.sa/api/explore/v2.1/catalog/datasets/traffic-intersections-by-main-street-and-cross-street-2024/records?limit=1
+https://old.rcrc.gov.sa/ar/news/61388/
+https://balady.gov.sa/ar/open-data
+https://balady.gov.sa/ar/faq
+https://istitlaa.ncc.gov.sa/ar/Municipality/momra/temporary/Pages/Article_005.aspx
+
+# International standards and measurement
+https://www.transportation.gov/av/data/wzdx
+https://ops.fhwa.dot.gov/wz/resources/publications/fhwahop12005/sec2.htm
+https://ops.fhwa.dot.gov/wz/resources/publications/fhwahop11033/select_measures.htm
+https://datex2.eu/
+
+# Competitor and capability evidence
+https://www.tomtom.com/traffic-index/city/riyadh/
+https://us.one.network/product
+https://www.ptvgroup.com/en-us/products/ptv-vissim
+https://www.aimsun.com/aimsun-live/
+https://www.esri.com/en-us/c/product/share-road-closures
+https://www.rta.ae/wps/portal/rta/ae/home/rta-services/service-details?serviceId=306

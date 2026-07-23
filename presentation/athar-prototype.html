@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر — النموذج التفاعلي</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6;padding:32px 20px 64px}
+  .wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+  .num{direction:ltr;unicode-bidi:isolate;display:inline-block;font-variant-numeric:tabular-nums}
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline:3px solid var(--navy); outline-offset:2px;
+  }
+
+  header{background:linear-gradient(135deg, var(--navy-soft) 0%, var(--surface) 55%);border:1px solid var(--line);border-radius:10px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(29,78,119,.06)}
+  .eyebrow{font-size:12px;letter-spacing:.08em;color:var(--navy);font-weight:700;text-transform:uppercase}
+  h1{font-size:clamp(26px,4vw,36px);line-height:1.1;margin:0;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.4em;font-weight:500;color:var(--faint)}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12.5px;padding:5px 11px;border-radius:20px}
+  .badge.api{background:var(--navy-soft);color:var(--navy)}
+  .badge.api.offline{background:#F4EDE1;color:var(--ochre)}
+  .badge-dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+
+  h2{font-size:19px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
+  h3{font-size:15px;font-weight:600;margin:0 0 4px}
+  .section-eyebrow{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:.04em;margin-bottom:8px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;transition:transform .18s cubic-bezier(.16,1,.3,1), box-shadow .18s cubic-bezier(.16,1,.3,1)}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(21,32,43,.08)}
+  .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+
+  #map{height:420px;border-radius:8px;border:1px solid var(--line);background:#E4E8EC}
+  .map-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .leaflet-interactive{transition:stroke .35s ease}
+  .leaflet-tooltip.neighbor-tooltip{background:var(--ochre-soft);color:var(--ochre);border:1px solid var(--ochre);font-weight:600;font-size:11.5px;padding:2px 9px;border-radius:6px}
+
+  .timeline-controls{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .timeline-slider-wrap{flex:1 1 260px;min-width:220px;position:relative;padding-bottom:20px}
+  .timeline-ticks{position:relative;height:16px}
+  .timeline-ticks .tick{position:absolute;inset-inline-start:calc(var(--pos) / 23 * 100%);transform:translateX(-50%);width:2px;height:7px;background:var(--ochre);top:0;border-radius:1px}
+  .timeline-ticks .peak-label{position:absolute;inset-inline-start:calc(var(--pos) / 23 * 100%);transform:translateX(-50%);top:8px;font-size:10px;font-weight:700;color:var(--ochre);white-space:nowrap}
+  .timeline-readout{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+  .hour-label{font-size:15px;font-weight:700;color:var(--navy)}
+  .hour-metrics{display:flex;gap:20px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+  .hour-metrics b{color:var(--ink)}
+  .hour-compare{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}
+  .hour-compare .compare-requested{color:var(--bad)}
+  .hour-compare .compare-chosen{color:var(--good)}
+  .hour-compare b{font-weight:700}
+
+  button{font-family:var(--sans);cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 16px;font-size:14px;font-weight:600;transition:background .15s, color .15s, border-color .15s}
+  button:hover{background:var(--navy-soft);border-color:var(--navy)}
+  button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+  button.primary:hover{background:#163f5f}
+  button.ghost{background:transparent}
+  button:disabled{opacity:.5;cursor:not-allowed}
+
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+  .field label{font-size:13.5px;font-weight:600;color:var(--muted)}
+  .field .value{font-family:var(--mono);color:var(--navy);font-weight:600}
+  input[type=range]{width:100%;accent-color:var(--navy)}
+  input[type=number]{font-family:var(--mono);padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:14px;width:100%}
+
+  .impact-score{display:flex;align-items:center;gap:18px}
+  .impact-score .big{font-family:var(--mono);font-size:52px;font-weight:700;line-height:1;color:var(--navy)}
+  .chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700}
+  .chip.low{background:#E4F1EA;color:var(--good)}
+  .chip.medium{background:var(--ochre-soft);color:var(--ochre)}
+  .chip.high{background:#F7E4E1;color:var(--bad)}
+  .impact-detail{font-size:14px;color:var(--muted);margin-top:10px}
+  .impact-detail b{color:var(--ink)}
+
+  .opt-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  @media(max-width:900px){.opt-cards{grid-template-columns:1fr}}
+  .opt-card{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--ground);cursor:pointer;text-align:right;display:flex;flex-direction:column;gap:8px;transition:transform .18s cubic-bezier(.16,1,.3,1), box-shadow .18s cubic-bezier(.16,1,.3,1), border-color .15s}
+  .opt-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 6px 16px rgba(21,32,43,.10)}
+  .opt-card.selected{background:var(--navy-soft);border-color:var(--navy)}
+  .opt-card .saved{font-family:var(--mono);color:var(--good);font-weight:700;font-size:15px}
+  .opt-card ul{margin:0;padding-inline-start:16px;font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+
+  .backtest{display:flex;align-items:center;gap:16px;margin-top:14px;font-family:var(--mono)}
+  .backtest .arrow{color:var(--faint);font-size:20px}
+  .backtest .before{color:var(--bad);font-weight:700;font-size:20px}
+  .backtest .after{color:var(--good);font-weight:700;font-size:20px}
+
+  .value-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.value-row{grid-template-columns:1fr}}
+  .value-card .num{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--navy)}
+  .value-card .lab{font-size:13px;color:var(--muted);margin-top:6px}
+  .value-card.warn{border-color:var(--bad);background:#FBEFEE}
+  .value-card.warn .num{color:var(--bad);font-size:15px}
+
+  .assump-table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .assump-table th,.assump-table td{text-align:start;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .assump-table th{color:var(--navy);font-weight:600;width:22%}
+  .assump-table td.tag{width:16%}
+  .tag-src{color:var(--good);font-weight:600;font-size:12px}
+  .tag-assume{color:var(--ochre);font-weight:600;font-size:12px}
+  .sources{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .sources li{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-word}
+
+  footer.foot-note{font-size:12px;color:var(--faint);text-align:center;padding-top:8px}
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .card:hover, .opt-card, .opt-card:hover, button, .leaflet-interactive { transition: none !important; }
+  }
+
+  /* Print-only TMP */
+  #tmp-view{display:none}
+  @media print{
+    body *{visibility:hidden}
+    #tmp-view, #tmp-view *{visibility:visible}
+    #tmp-view{display:block;position:absolute;inset:0;padding:20px}
+    .no-print{display:none !important}
+  }
+  #tmp-view h2{font-size:22px}
+  #tmp-view table{width:100%;border-collapse:collapse;margin:14px 0}
+  #tmp-view th,#tmp-view td{border:1px solid #999;padding:8px 10px;text-align:start;font-size:13px}
+  .sig-line{margin-top:40px;display:flex;justify-content:space-between}
+  .sig-box{width:40%;border-top:1px solid #333;padding-top:6px;font-size:12px}
+  .src-badge{display:inline-block;font-size:.68rem;color:var(--muted, #667);background:var(--ground, #f2f4f6);border:1px solid var(--line, #dde);border-radius:6px;padding:1px 7px;margin-inline-start:6px;vertical-align:middle}
+  .wzdx-btn{margin-top:10px;padding:7px 16px;border:1px solid var(--navy, #1d4e77);background:transparent;color:var(--navy, #1d4e77);border-radius:8px;cursor:pointer;font-family:inherit;font-size:.85rem}
+  .wzdx-btn:hover{background:var(--navy, #1d4e77);color:#fff}
+  .cf-card{margin-top:12px;border:1px dashed var(--navy, #1d4e77);border-radius:10px;padding:12px 16px;background:var(--ground, #f7f9fb)}
+  .cf-card h4{margin:0 0 6px;font-size:.9rem;color:var(--navy, #1d4e77)}
+  .cf-card p{margin:0 0 8px;font-size:.8rem;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث</div>
+    <h1>أثر <span class="latin">Athar</span> — النموذج التفاعلي</h1>
+    <div class="badge-row">
+      <span class="badge">طريق الملك فهد (مقطع العليا) — بيانات توضيحية للعرض</span>
+      <span class="badge api offline" id="apiBadge"><span class="badge-dot"></span><span id="apiBadgeText">جارٍ التحقق من الخادم…</span></span>
+    </div>
+  </header>
+
+  <!-- Step 2: Map -->
+  <section class="card">
+    <div class="section-eyebrow">الخطوة ١–٢ · حدد موقع الحفر على الممر</div>
+    <h2>خريطة الممر التفاعلية</h2>
+    <div id="map" role="application" aria-label="خريطة تفاعلية لطريق الملك فهد مقطع العليا"></div>
+    <div class="map-actions">
+      <button type="button" class="primary" id="btnSelectClosure" aria-label="حدد موقع الحفر على المقطع الأوسط من الطريق">حدد موقع الحفر</button>
+      <button type="button" id="btnToggleWorks" aria-pressed="false" aria-label="إظهار أو إخفاء الخريطة العامة لأعمال الحفر">الخريطة العامة للأعمال</button>
+    </div>
+  </section>
+
+  <!-- Upgrade 1: 24-hour timeline scrubber -->
+  <section class="card" id="timelineCard">
+    <div class="section-eyebrow">البعد الزمني · محاكاة الازدحام على مدار اليوم</div>
+    <h2>الخط الزمني — 24 ساعة</h2>
+    <div class="timeline-controls">
+      <button type="button" id="btnPlayTimeline" aria-pressed="false" aria-label="شغّل محاكاة الازدحام على مدار ٢٤ ساعة">▶ شغّل اليوم</button>
+      <div class="timeline-slider-wrap">
+        <input type="range" id="hourSlider" min="0" max="23" step="1" value="8" aria-label="اسحب لاختيار ساعة من ٢٤ ساعة ومعاينة أثرها المروري" aria-describedby="hourLabel">
+        <div class="timeline-ticks" aria-hidden="true">
+          <span class="tick" style="--pos:7"></span>
+          <span class="tick" style="--pos:9"></span>
+          <span class="peak-label" style="--pos:8">ذروة الصباح</span>
+          <span class="tick" style="--pos:16"></span>
+          <span class="tick" style="--pos:19"></span>
+          <span class="peak-label" style="--pos:17">ذروة المساء</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-readout">
+      <div class="hour-label num" id="hourLabel">08:00 — ذروة الصباح</div>
+      <div class="hour-metrics">
+        <span>الطلب هذه الساعة: <b class="num" id="hourDemand">—</b> مركبة/س</span>
+        <span>التأخير لو أُغلق الممر: <b class="num" id="hourDelay">—</b> س-م</span>
+      </div>
+      <div class="hour-compare" id="hourCompare" style="display:none">
+        <span class="compare-requested">الجدول المطلوب: <b class="num" id="hourReqImpact">—</b> س-م</span>
+        <span class="compare-chosen">الجدول المُختار: <b class="num" id="hourChosenImpact">—</b> س-م</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <!-- Step 4/5: Impact + optimize -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <section class="card">
+        <div class="section-eyebrow">الخطوة ٤ · درجة الأثر المروري</div>
+        <h2>بطاقة التأثير</h2>
+        <div class="impact-score">
+          <div class="big num" id="scoreBig">0</div>
+          <div>
+            <span class="chip low" id="levelChip">منخفض</span>
+            <div class="impact-detail">ساعات-مركبة مضافة: <b class="num" id="delayVehHours">٠</b></div>
+          </div>
+        </div>
+        <div class="impact-detail">ساعات-أشخاص (نطاق): <b class="num" id="personHoursRange">—</b> <span class="src-badge">إشغال ١٫٢–١٫٦ افتراض · كود الطرق 203</span></div>
+        <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span></div>
+        <div class="impact-detail">انبعاثات متجنبة محتملة (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
+        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span></div>
+        <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
+        <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
+      </section>
+
+      <section class="card">
+        <div class="section-eyebrow">الخطوة ٥ · تحسين الجدولة</div>
+        <h2>الجدولة المثلى</h2>
+        <button type="button" class="primary" id="btnOptimize">حسّن الجدولة</button>
+        <div class="opt-cards" id="optCards" aria-live="polite"></div>
+        <div class="backtest" id="backtestRow" style="display:none">
+          <span>ساعات-مركبة:</span>
+          <span class="before num" id="btBefore">0</span>
+          <span class="arrow">←</span>
+          <span class="after num" id="btAfter">0</span>
+        </div>
+        <div class="cf-card" id="cfCard" style="display:none">
+          <h4>الحالة المقابلة — كيف نعزو التأخير؟</h4>
+          <p>التأخير المعروض هو <b>الفرق</b> بين زمن الرحلة أثناء الإغلاق وزمنها في حالة مقابلة بلا إغلاق <b>لنفس الساعة ونفس الطلب المروري</b> — لا يُنسب ازدحام المدينة كله إلى الحفرية.</p>
+          <div class="impact-detail">التوقع: <b class="num" id="cfPredicted">—</b> س-م · المرصود <span class="src-badge">حالة تركيبية موسومة للعرض</span>: <b class="num" id="cfObserved">—</b> س-م</div>
+          <div class="impact-detail">خطأ التوقع: <b class="num" id="cfError">—</b>٪ — الحكم: <b id="cfVerdict">—</b></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-eyebrow">الخطوة ٦ · القيمة المضافة</div>
+        <h2>الأثر البيئي والمالي</h2>
+        <div class="value-row">
+          <div class="card value-card">
+            <div class="num" id="co2Num">— كجم</div>
+            <div class="lab">وفر CO₂ (<span id="fuelNum">—</span> لتر وقود موفّر)</div>
+          </div>
+          <div class="card value-card">
+            <div class="num" id="digOnceNum">— ﷼</div>
+            <div class="lab">وفر Dig-Once (<span id="digOncePct">—</span>٪ عن الحفر المنفصل)</div>
+          </div>
+          <div class="card value-card" id="compoundCard" style="display:none">
+            <div class="num" id="compoundNum">—</div>
+            <div class="lab" id="compoundLab">تنبيه التأثير المركّب</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-eyebrow">الخطوة ٧ · التصديق والنشر</div>
+        <h2>خطة إدارة المرور</h2>
+        <p style="font-size:13.5px;color:var(--muted);margin:0 0 12px">يفتح معاينة طباعة عربية جاهزة — استخدم «طباعة → حفظ كـ PDF» من متصفحك.</p>
+        <button type="button" class="primary" id="btnIssuePlan">أصدر خطة إدارة المرور (PDF)</button>
+      </section>
+    </div>
+
+    <!-- Step 3: Inputs -->
+    <aside class="card">
+      <div class="section-eyebrow">الخطوة ٣ · مدخلات التصريح</div>
+      <h2>لوحة التحكم</h2>
+
+      <div class="field">
+        <label for="lanesClosed">مسارات مغلقة <span class="value num" id="lanesClosedVal">2</span> من 4</label>
+        <input type="range" id="lanesClosed" min="1" max="3" step="1" value="2" aria-label="عدد المسارات المغلقة">
+      </div>
+
+      <div class="field">
+        <label for="startHour">ساعة البدء <span class="value num" id="startHourVal">08:00</span></label>
+        <input type="range" id="startHour" min="0" max="23" step="1" value="8" aria-label="ساعة بدء العمل">
+      </div>
+
+      <div class="field">
+        <label for="durationHours">المدة بالساعات <span class="value num" id="durationHoursVal">48</span></label>
+        <input type="range" id="durationHours" min="6" max="72" step="1" value="48" aria-label="مدة العمل بالساعات">
+      </div>
+
+      <div class="field">
+        <label for="neighborPermits">تصاريح مجاورة للدمج <span class="value num" id="neighborPermitsVal">1</span></label>
+        <input type="range" id="neighborPermits" min="0" max="2" step="1" value="1" aria-label="عدد التصاريح المجاورة المطلوب دمجها">
+      </div>
+    </aside>
+  </div>
+
+  <!-- Step 10: Assumptions -->
+  <section class="card">
+    <div class="section-eyebrow">الشفافية</div>
+    <h2>الافتراضات والمصادر</h2>
+    <table class="assump-table" id="assumpTable">
+      <thead><tr><th>الثابت</th><th>القيمة</th><th>النوع</th><th>الشرح</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="section-eyebrow" style="margin-top:16px">سجل المصادر</div>
+    <ul class="sources">
+      <li>momah.gov.sa/ar/hackathon — التحدي، المواعيد، الجوائز</li>
+      <li>gov.uk/.../new-digital-service-to-minimise-disruptive-roadworks — UK Street Manager</li>
+      <li>publications.parliament.uk/pa/cm5901/cmselect/cmtrans/522/report.html — 2.5M عملية أعمال/سنة في إنجلترا</li>
+      <li>nyc.gov/html/dot/html/infrastructure/permits.shtml — مكتب تنسيق وتخفيف أعمال البناء في نيويورك NYC OCMC — مراجعة خبيرة للتصاريح وتنسيق Dig-Once</li>
+      <li>researchgate.net/publication/237896838 — خفض تأخير الجدولة المُحسّنة −11.1% (بحث محكّم، 2009)</li>
+      <li>iaarc.org/.../ant_colony_optimization.html — ACO + VISUM (ISARC 2011)</li>
+      <li>fhwa.dot.gov/policy/otps/policy_brief_dig_once.pdf — الحفر حتى 90% من كلفة الألياف</li>
+      <li>broadbandnow.com/report/dig-once-digital-divide — GAO: توفير Dig-Once 25–33% في المناطق الحضرية الكثيفة</li>
+      <li>balady.gov.sa/en/services/excavation-permits — تصاريح الحفر: 150 يومًا للطرق الرئيسية / 300 يومًا للطرق العامة</li>
+      <li>balady.gov.sa/en/services/request-multiple-excavation-coordination — التنسيق قائم لكن بلا تحليل مروري (الفجوة)</li>
+      <li>sciencedirect.com/org/science/article/pii/S1556831824000285 — انبعاثات مواقع العمل (بحث محكّم)</li>
+      <li>roadworks.org / one.network — سابقة الخريطة العامة للأعمال في المملكة المتحدة</li>
+    </ul>
+  </section>
+
+  <footer class="foot-note">أثر — نموذج تفاعلي توضيحي · بلدياتثون 2026 · جميع الأرقام المرورية بيانات توضيحية للعرض</footer>
+</div>
+
+<!-- Step 7: hidden print-only TMP -->
+<div id="tmp-view">
+  <h2>خطة إدارة المرور — أثر</h2>
+  <p><b>الطريق:</b> طريق الملك فهد (مقطع العليا) — بيانات توضيحية للعرض</p>
+  <table>
+    <tr><th>رقم التصريح</th><td id="tmpPermitId">—</td></tr>
+    <tr><th>مسارات مغلقة</th><td id="tmpLanes">—</td></tr>
+    <tr><th>ساعة البدء</th><td id="tmpStart">—</td></tr>
+    <tr><th>المدة (ساعات)</th><td id="tmpDuration">—</td></tr>
+    <tr><th>الجدول المعتمد</th><td id="tmpSchedule">—</td></tr>
+    <tr><th>ساعات-المركبة قبل/بعد</th><td id="tmpBeforeAfter">—</td></tr>
+    <tr><th>المسار البديل</th><td id="tmpReroute">—</td></tr>
+    <tr><th>تصاريح مُدمجة</th><td id="tmpMerged">—</td></tr>
+    <tr><th>تاريخ الإصدار</th><td id="tmpDate">—</td></tr>
+  </table>
+  <p style="font-size:12px;color:#555">جميع الأرقام المرورية بيانات توضيحية للعرض. المصادر: momah.gov.sa/ar/hackathon، balady.gov.sa، researchgate.net/publication/237896838.</p>
+  <div class="sig-line">
+    <div class="sig-box">توقيع ضابط الترخيص</div>
+    <div class="sig-box">توقيع المقاول المنفذ</div>
+  </div>
+</div>
+
+<script src="vendor/leaflet.js"></script>
+<script src="athar-engine.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // -------------------------------------------------------------------
+  // Fallback works data (used when fetch('data/works.geojson') fails,
+  // e.g. when the page is opened directly via file://).
+  // -------------------------------------------------------------------
+  var WORKS_FALLBACK = {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "WORK-2026-0142",
+          "road": "طريق الملك فهد (مقطع العليا)",
+          "status": "قيد التنفيذ",
+          "impactLevel": "high",
+          "closureCountThisYear": 1,
+          "from": "تقاطع طريق العروبة",
+          "to": "تقاطع طريق التخصصي"
+        },
+        "geometry": { "type": "LineString", "coordinates": [[46.685,24.695],[46.686,24.715],[46.6875,24.735],[46.689,24.755]] }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "WORK-2026-0157",
+          "road": "طريق العروبة",
+          "status": "مصرّح - لم يبدأ",
+          "impactLevel": "medium",
+          "closureCountThisYear": 3,
+          "from": "تقاطع طريق الملك فهد",
+          "to": "تقاطع طريق الأمير تركي"
+        },
+        "geometry": { "type": "LineString", "coordinates": [[46.700,24.700],[46.702,24.712]] }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "WORK-2026-0163",
+          "road": "طريق التخصصي",
+          "status": "منتهٍ",
+          "impactLevel": "low",
+          "closureCountThisYear": 2,
+          "from": "تقاطع طريق الأمير محمد بن عبدالعزيز",
+          "to": "تقاطع طريق الملك فهد"
+        },
+        "geometry": { "type": "LineString", "coordinates": [[46.672,24.740],[46.680,24.744],[46.689,24.748]] }
+      }
+    ]
+  };
+
+  var IMPACT_COLORS = { high: '#B23B32', medium: '#A9722B', low: '#2F7A57' };
+
+  // -------------------------------------------------------------------
+  // State
+  // -------------------------------------------------------------------
+  var state = {
+    apiMode: false,
+    lanesClosed: 2,
+    startHour: 8,
+    durationHours: 48,
+    neighborPermits: 1,
+    closureSelected: false,
+    lastScoreResult: null,
+    lastOptimizeResult: null,
+    selectedCandidate: null,
+    worksVisible: false,
+    selectedSegIdx: null,
+    scrubHour: 8,
+    canonicalHourly: null,
+    playing: false,
+    playTimer: null,
+    prevCo2Kg: 0,
+    prevDigOnceSAR: 0,
+  };
+
+  // -------------------------------------------------------------------
+  // Map setup
+  // -------------------------------------------------------------------
+  var CORRIDOR_COORDS = [
+    [24.686, 46.6815],
+    [24.700, 46.6790],
+    [24.714, 46.6765],
+    [24.7285, 46.6740],
+    [24.7425, 46.6742],
+    [24.7565, 46.6768],
+  ];
+
+  var map = L.map('map', { scrollWheelZoom: false }).setView([24.714, 46.678], 12);
+
+  var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors',
+  });
+
+  var tileErrorShown = false;
+  function showOfflineNotice() {
+    if (tileErrorShown) return;
+    tileErrorShown = true;
+    var notice = document.createElement('div');
+    notice.textContent = 'وضع بدون اتصال — تفاصيل الخريطة معطلة، الممر والنتائج تعمل';
+    notice.setAttribute('role', 'status');
+    notice.style.cssText = 'position:absolute;z-index:1000;top:10px;left:50%;transform:translateX(-50%);'
+      + 'background:#15202B;color:#fff;font-size:12.5px;font-weight:600;padding:8px 14px;'
+      + 'border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);opacity:1;transition:opacity .6s ease;';
+    var mapEl = document.getElementById('map');
+    mapEl.style.position = mapEl.style.position || 'relative';
+    mapEl.appendChild(notice);
+    setTimeout(function () {
+      notice.style.opacity = '0';
+      setTimeout(function () {
+        if (notice.parentNode) notice.parentNode.removeChild(notice);
+      }, 700);
+    }, 4000);
+  }
+
+  // Gate tile requests on navigator.onLine: offline means zero tile requests
+  // issued (zero console errors) instead of relying on tileerror after the
+  // fact. The tileerror handler below still covers the online-but-tiles-down
+  // case (e.g. captive portal, DNS failure).
+  if (navigator.onLine) {
+    tileLayer.addTo(map);
+  } else {
+    showOfflineNotice();
+  }
+  tileLayer.on('tileerror', showOfflineNotice);
+
+  var segCount = CORRIDOR_COORDS.length - 1;
+  var midSegIndex = Math.floor(segCount / 2);
+  var segmentLayers = [];
+
+  for (var i = 0; i < segCount; i += 1) {
+    var seg = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
+      color: '#1D4E77',
+      weight: 6,
+    }).addTo(map);
+    seg.on('click', (function (idx) {
+      return function () { selectClosure(idx); };
+    })(i));
+    segmentLayers.push(seg);
+  }
+
+  var closureMarker = null;
+  var rerouteLine = null;
+  var worksLayerGroup = L.layerGroup();
+
+  function midpoint(a, b) {
+    return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  }
+
+  function selectClosure(idx) {
+    idx = typeof idx === 'number' ? idx : midSegIndex;
+    state.closureSelected = true;
+    state.selectedSegIdx = idx;
+
+    segmentLayers.forEach(function (layer, i) {
+      layer.setStyle({ color: i === idx ? '#B23B32' : '#1D4E77' });
+    });
+
+    var mid = midpoint(CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]);
+    if (closureMarker) {
+      closureMarker.setLatLng(mid);
+    } else {
+      closureMarker = L.marker(mid, { title: 'موقع الحفر', alt: 'موقع الحفر المحدد' }).addTo(map);
+      closureMarker.bindPopup('موقع الحفر المحدد');
+    }
+    closureMarker.openPopup();
+
+    if (rerouteLine) {
+      map.removeLayer(rerouteLine);
+      rerouteLine = null;
+    }
+
+    recompute();
+  }
+
+  document.getElementById('btnSelectClosure').addEventListener('click', function () {
+    selectClosure(midSegIndex);
+  });
+
+  function drawReroute(idx) {
+    if (rerouteLine) map.removeLayer(rerouteLine);
+    var a = CORRIDOR_COORDS[idx];
+    var b = CORRIDOR_COORDS[idx + 1];
+    var offset = 0.006;
+    var midA = [a[0] + offset, a[1] + offset * 0.4];
+    var midB = [b[0] + offset, b[1] + offset * 0.4];
+    rerouteLine = L.polyline([a, midA, midB, b], {
+      color: '#A9722B',
+      weight: 4,
+      dashArray: '8 6',
+    }).addTo(map);
+  }
+
+  // -------------------------------------------------------------------
+  // Public works transparency layer (Step 8)
+  // -------------------------------------------------------------------
+  function renderWorksLayer(geojson) {
+    worksLayerGroup.clearLayers();
+    (geojson.features || []).forEach(function (feature) {
+      var props = feature.properties || {};
+      var color = IMPACT_COLORS[props.impactLevel] || '#1D4E77';
+      var coords = (feature.geometry.coordinates || []).map(function (c) {
+        return [c[1], c[0]];
+      });
+      var line = L.polyline(coords, { color: color, weight: 4, opacity: 0.85, dashArray: '2 6' });
+      var closureCount = props.closureCountThisYear;
+      var closureLine = typeof closureCount === 'number' ? '<br>إغلاقات هذا العام: ' + closureCount : '';
+      var priorityLine = typeof closureCount === 'number' && closureCount >= 3
+        ? '<br>⚠ ممر متكرر الإزعاج — أولوية Dig-Once'
+        : '';
+      line.bindPopup(
+        '<b>' + props.road + '</b><br>' + props.status + '<br>' + props.from + ' → ' + props.to
+          + closureLine + priorityLine
+      );
+      worksLayerGroup.addLayer(line);
+    });
+  }
+
+  function loadWorks() {
+    if (location.protocol === 'file:') {
+      renderWorksLayer(WORKS_FALLBACK);
+      return;
+    }
+    fetch('data/works.geojson')
+      .then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        return r.json();
+      })
+      .then(renderWorksLayer)
+      .catch(function () {
+        renderWorksLayer(WORKS_FALLBACK);
+      });
+  }
+  loadWorks();
+
+  document.getElementById('btnToggleWorks').addEventListener('click', function () {
+    state.worksVisible = !state.worksVisible;
+    this.setAttribute('aria-pressed', String(state.worksVisible));
+    if (state.worksVisible) {
+      worksLayerGroup.addTo(map);
+    } else {
+      map.removeLayer(worksLayerGroup);
+    }
+  });
+
+  // -------------------------------------------------------------------
+  // API auto-detect (Step 9)
+  // -------------------------------------------------------------------
+  var apiBadge = document.getElementById('apiBadge');
+  var apiBadgeText = document.getElementById('apiBadgeText');
+
+  function setApiBadge(isOnline) {
+    state.apiMode = isOnline;
+    apiBadge.classList.toggle('offline', !isOnline);
+    apiBadgeText.textContent = isOnline ? 'متصل بالخادم — وضع API' : 'وضع مستقل — المحرك محلي';
+  }
+
+  function detectApi() {
+    if (location.protocol === 'file:') {
+      setApiBadge(false);
+      return;
+    }
+    var signal;
+    try {
+      signal = AbortSignal.timeout(800);
+    } catch (e) {
+      signal = undefined;
+    }
+    fetch('/api/works', signal ? { signal: signal } : {})
+      .then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        setApiBadge(true);
+      })
+      .catch(function () {
+        setApiBadge(false);
+      });
+  }
+  detectApi();
+
+  function apiPost(path, payload) {
+    return fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(function (r) {
+      if (!r.ok) throw new Error('api error');
+      return r.json();
+    });
+  }
+
+  function computeScore(input) {
+    if (state.apiMode) {
+      return apiPost('/api/score', input).catch(function () {
+        return AtharEngine.score(input);
+      });
+    }
+    return Promise.resolve(AtharEngine.score(input));
+  }
+
+  function computeOptimize(input) {
+    if (state.apiMode) {
+      return apiPost('/api/optimize', input).catch(function () {
+        return AtharEngine.optimize(input);
+      });
+    }
+    return Promise.resolve(AtharEngine.optimize(input));
+  }
+
+  // -------------------------------------------------------------------
+  // Inputs (Step 3)
+  // -------------------------------------------------------------------
+  var lanesClosedInput = document.getElementById('lanesClosed');
+  var startHourInput = document.getElementById('startHour');
+  var durationHoursInput = document.getElementById('durationHours');
+  var neighborPermitsInput = document.getElementById('neighborPermits');
+
+  function formatArabicNumber(n) {
+    return new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 }).format(Math.round(n));
+  }
+
+  function formatPercent(n) {
+    return new Intl.NumberFormat('ar-SA', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
+  }
+
+  function prefersReducedMotion() {
+    return typeof window.matchMedia === 'function'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function animateCountUp(el, from, to, formatFn) {
+    if (prefersReducedMotion() || Math.abs(to - from) < 0.001) {
+      el.textContent = formatFn(to);
+      return;
+    }
+    var durationMs = 700;
+    var startTime = null;
+    function step(timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(1, elapsed / durationMs);
+      var current = from + (to - from) * progress;
+      el.textContent = formatFn(current);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = formatFn(to);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function currentEngineInput() {
+    return Object.assign({}, AtharEngine.DEFAULTS, {
+      lanesClosed: state.lanesClosed,
+      startHour: state.startHour,
+      durationHours: state.durationHours,
+    });
+  }
+
+  function updateInputLabels() {
+    document.getElementById('lanesClosedVal').textContent = state.lanesClosed;
+    document.getElementById('startHourVal').textContent = String(state.startHour).padStart(2, '0') + ':00';
+    document.getElementById('durationHoursVal').textContent = state.durationHours;
+    document.getElementById('neighborPermitsVal').textContent = state.neighborPermits;
+  }
+
+  function renderScore(result) {
+    state.lastScoreResult = result;
+    document.getElementById('scoreBig').textContent = result.score;
+    document.getElementById('delayVehHours').textContent = formatArabicNumber(result.delayVehHours);
+
+    var phRange = AtharEngine.personHours(result.delayVehHours);
+    var tvRange = AtharEngine.timeValueSAR(phRange);
+    var co2R = AtharEngine.co2Range(result.delayVehHours);
+    var transitR = AtharEngine.transitImpact(result);
+    document.getElementById('personHoursRange').textContent =
+      formatArabicNumber(phRange.lowPersonHours) + ' – ' + formatArabicNumber(phRange.highPersonHours) + ' س-ش';
+    document.getElementById('timeValueRange').textContent =
+      formatArabicNumber(tvRange.lowSAR) + ' – ' + formatArabicNumber(tvRange.highSAR) + ' ريال';
+    document.getElementById('co2RangeLine').textContent =
+      formatArabicNumber(co2R.lowCo2Kg) + ' – ' + formatArabicNumber(co2R.highCo2Kg) + ' كجم CO₂';
+    document.getElementById('transitRangeLine').textContent =
+      formatArabicNumber(transitR.lowPersonHours) + ' – ' + formatArabicNumber(transitR.highPersonHours) + ' س-ش (' + formatArabicNumber(transitR.busesAffected) + ' حافلة/ساعة)';
+
+    var chip = document.getElementById('levelChip');
+    chip.className = 'chip ' + result.level;
+    var levelLabels = { low: 'منخفض', medium: 'متوسط', high: 'مرتفع' };
+    chip.textContent = levelLabels[result.level] || result.level;
+
+    var co2Result = AtharEngine.co2(result.delayVehHours);
+    animateCountUp(document.getElementById('co2Num'), state.prevCo2Kg, co2Result.co2Kg, function (v) {
+      return formatArabicNumber(v) + ' كجم';
+    });
+    state.prevCo2Kg = co2Result.co2Kg;
+    document.getElementById('fuelNum').textContent = formatArabicNumber(co2Result.fuelL);
+
+    var digOnceResult = AtharEngine.digOnce({
+      trenchKm: 1.2,
+      permitsMerged: 1 + state.neighborPermits,
+    });
+    animateCountUp(document.getElementById('digOnceNum'), state.prevDigOnceSAR, digOnceResult.savedSAR, function (v) {
+      return formatArabicNumber(v) + ' ﷼';
+    });
+    state.prevDigOnceSAR = digOnceResult.savedSAR;
+    document.getElementById('digOncePct').textContent = formatPercent(digOnceResult.savedPct);
+
+    var compoundCard = document.getElementById('compoundCard');
+    if (state.neighborPermits > 0) {
+      var neighborScore = AtharEngine.score(Object.assign({}, currentEngineInput(), {
+        lanesClosed: Math.max(1, state.lanesClosed - 1),
+      }));
+      var compoundResult = AtharEngine.compound(result, neighborScore);
+      compoundCard.style.display = '';
+      document.getElementById('compoundNum').textContent = formatArabicNumber(compoundResult.combined) + ' س-م';
+      document.getElementById('compoundLab').textContent = compoundResult.warning
+        || 'التأثير المركّب لتصريحين متجاورين — عامل التضخيم ' + compoundResult.factor;
+    } else {
+      compoundCard.style.display = 'none';
+    }
+  }
+
+  function recompute() {
+    updateInputLabels();
+    stopPlaying();
+    var input = currentEngineInput();
+    computeScore(input).then(renderScore);
+    // Reset optimize UI on input change since candidates are now stale.
+    document.getElementById('optCards').innerHTML = '';
+    document.getElementById('backtestRow').style.display = 'none';
+    state.lastOptimizeResult = null;
+    state.selectedCandidate = null;
+
+    state.canonicalHourly = computeCanonicalHourly();
+    updateNeighborPermitVisual();
+    renderTimeline();
+  }
+
+  lanesClosedInput.addEventListener('input', function () {
+    state.lanesClosed = Number(this.value);
+    recompute();
+  });
+  startHourInput.addEventListener('input', function () {
+    state.startHour = Number(this.value);
+    recompute();
+  });
+  durationHoursInput.addEventListener('input', function () {
+    state.durationHours = Number(this.value);
+    recompute();
+  });
+  neighborPermitsInput.addEventListener('input', function () {
+    state.neighborPermits = Number(this.value);
+    recompute();
+  });
+
+  // -------------------------------------------------------------------
+  // Optimize (Step 5)
+  // -------------------------------------------------------------------
+  document.getElementById('btnOptimize').addEventListener('click', function () {
+    var input = currentEngineInput();
+    computeOptimize(input).then(function (result) {
+      state.lastOptimizeResult = result;
+      renderOptimizeCards(result);
+    });
+  });
+
+  function renderOptimizeCards(result) {
+    var container = document.getElementById('optCards');
+    container.innerHTML = '';
+    result.top3.forEach(function (candidate, idx) {
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'opt-card';
+      card.setAttribute('aria-label', 'اختر الجدولة: ' + candidate.label);
+
+      var title = document.createElement('h3');
+      title.textContent = candidate.label;
+
+      var saved = document.createElement('div');
+      saved.className = 'saved num';
+      saved.textContent = formatArabicNumber(candidate.savedVehHours) + ' س-م موفّرة (' + formatPercent(candidate.savedPct) + '٪)';
+
+      var reasonsList = document.createElement('ul');
+      candidate.reasons.forEach(function (reason) {
+        var li = document.createElement('li');
+        li.textContent = reason;
+        reasonsList.appendChild(li);
+      });
+
+      card.appendChild(title);
+      card.appendChild(saved);
+      card.appendChild(reasonsList);
+
+      card.addEventListener('click', function () {
+        selectCandidate(candidate, container, card);
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  function selectCandidate(candidate, container, cardEl) {
+    state.selectedCandidate = candidate;
+    Array.prototype.forEach.call(container.children, function (el) {
+      el.classList.remove('selected');
+    });
+    cardEl.classList.add('selected');
+
+    var segIdx = state.selectedSegIdx !== null ? state.selectedSegIdx : midSegIndex;
+    drawReroute(segIdx);
+
+    var input = currentEngineInput();
+    var backTestResult = AtharEngine.backTest(input, candidate);
+    animateBackTest(backTestResult.beforeVehHours, backTestResult.afterVehHours);
+
+    // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض = التوقع + 12%
+    var predicted = candidate.delayVehHours;
+    var observed = predicted * 1.12;
+    var pe = AtharEngine.predictionError(predicted, observed);
+    document.getElementById('cfCard').style.display = 'block';
+    document.getElementById('cfPredicted').textContent = formatArabicNumber(predicted);
+    document.getElementById('cfObserved').textContent = formatArabicNumber(observed);
+    document.getElementById('cfError').textContent = formatArabicNumber(pe.pctError);
+    document.getElementById('cfVerdict').textContent = pe.verdict;
+
+    renderTimeline();
+  }
+
+  function animateBackTest(before, after) {
+    var row = document.getElementById('backtestRow');
+    row.style.display = 'flex';
+    var beforeEl = document.getElementById('btBefore');
+    var afterEl = document.getElementById('btAfter');
+    beforeEl.textContent = formatArabicNumber(before);
+    afterEl.textContent = formatArabicNumber(after); // القيمة النهائية مضمونة حتى لو لم يعمل rAF (تبويب خلفي)
+
+    if (prefersReducedMotion()) return;
+
+    var durationMs = 1200;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(1, elapsed / durationMs);
+      var current = before + (after - before) * progress;
+      afterEl.textContent = formatArabicNumber(current);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        afterEl.textContent = formatArabicNumber(after);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  document.getElementById('wzdxExportBtn').addEventListener('click', function () {
+    var startHour = state.selectedCandidate ? state.selectedCandidate.startHour : 22;
+    var startISO = '2026-07-27T' + String(startHour).padStart(2, '0') + ':00:00Z';
+    var fc = AtharEngine.wzdx({
+      id: 'athar-demo-001',
+      roadName: 'طريق الملك فهد (العليا)',
+      direction: 'northbound',
+      lanes: AtharEngine.DEFAULTS.lanes,
+      lanesClosed: state.lanesClosed,
+      startISO: startISO,
+      durationHours: state.durationHours,
+      coordinates: [[46.675, 24.700], [46.680, 24.735]],
+    });
+    var blob = new Blob([JSON.stringify(fc, null, 2)], { type: 'application/geo+json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'athar-wzdx-demo.geojson';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // -------------------------------------------------------------------
+  // 24-hour timeline scrubber (البعد الزمني) — Upgrade 1
+  // -------------------------------------------------------------------
+  var COLOR_STOPS = [[47, 122, 87], [169, 114, 43], [178, 59, 50]]; // good -> ochre -> bad
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function hourColor(t) {
+    var clamped = Math.max(0, Math.min(1, t));
+    var seg = clamped < 0.5 ? 0 : 1;
+    var localT = clamped < 0.5 ? clamped / 0.5 : (clamped - 0.5) / 0.5;
+    var c0 = COLOR_STOPS[seg];
+    var c1 = COLOR_STOPS[seg + 1];
+    var r = Math.round(lerp(c0[0], c1[0], localT));
+    var g = Math.round(lerp(c0[1], c1[1], localT));
+    var b = Math.round(lerp(c0[2], c1[2], localT));
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  function getHourPhaseLabel(hour) {
+    if (hour >= 7 && hour < 9) return 'ذروة الصباح';
+    if (hour >= 16 && hour < 19) return 'ذروة المساء';
+    if (hour >= 21 || hour < 5) return 'ساعات هادئة — نافذة ليلية مثالية';
+    return 'خارج الذروة';
+  }
+
+  // score() with startHour=0/durationHours=24 so hourly[h] maps to clock hour h.
+  function computeCanonicalHourly() {
+    var input = Object.assign({}, currentEngineInput(), { startHour: 0, durationHours: 24 });
+    return AtharEngine.score(input).hourly;
+  }
+
+  function activeHourSet(startHour, windowLen) {
+    var len = Math.max(0, Math.min(24, windowLen));
+    var set = {};
+    for (var i = 0; i < len; i += 1) {
+      set[(startHour + i) % 24] = true;
+    }
+    return set;
+  }
+
+  // Windowed candidates embed "نافذة {N} س" in their label; continuous ones run for the full requested duration.
+  function getChosenWindowLen(candidate) {
+    var match = /نافذة (\d+) س/.exec(candidate.label);
+    return match ? parseInt(match[1], 10) : state.durationHours;
+  }
+
+  var haloLine = null;
+  function drawHalo(idx, color) {
+    var coords = [CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]];
+    if (haloLine) {
+      haloLine.setLatLngs(coords);
+      haloLine.setStyle({ color: color });
+    } else {
+      haloLine = L.polyline(coords, { color: color, weight: 16, opacity: 0.3 }).addTo(map);
+      haloLine.bringToBack();
+    }
+  }
+  function removeHalo() {
+    if (haloLine) {
+      map.removeLayer(haloLine);
+      haloLine = null;
+    }
+  }
+
+  function renderTimeline() {
+    var hour = state.scrubHour;
+    var hourly = state.canonicalHourly || computeCanonicalHourly();
+    var hourData = hourly[hour];
+    var maxDelay = hourly.reduce(function (m, h) { return Math.max(m, h.delayVehHours); }, 0) || 1;
+
+    document.getElementById('hourLabel').textContent = String(hour).padStart(2, '0') + ':00 — ' + getHourPhaseLabel(hour);
+    document.getElementById('hourDemand').textContent = formatArabicNumber(hourData.demand);
+    document.getElementById('hourDelay').textContent = formatArabicNumber(hourData.delayVehHours);
+
+    var compareRow = document.getElementById('hourCompare');
+    var candidate = state.selectedCandidate;
+    var segIdx = state.selectedSegIdx;
+    var congestionShare = hourData.delayVehHours / maxDelay;
+
+    if (candidate) {
+      var requestedSet = activeHourSet(state.startHour, state.durationHours);
+      var chosenSet = activeHourSet(candidate.startHour, getChosenWindowLen(candidate));
+      var reqImpact = requestedSet[hour] ? hourData.delayVehHours : 0;
+      var chosenImpact = chosenSet[hour] ? hourData.delayVehHours : 0;
+
+      compareRow.style.display = 'flex';
+      document.getElementById('hourReqImpact').textContent = formatArabicNumber(reqImpact);
+      document.getElementById('hourChosenImpact').textContent = formatArabicNumber(chosenImpact);
+
+      if (segIdx !== null) {
+        var reqColor = requestedSet[hour] ? hourColor(congestionShare) : '#2F7A57';
+        var chosenColor = chosenSet[hour] ? hourColor(congestionShare) : '#2F7A57';
+        drawHalo(segIdx, reqColor);
+        segmentLayers[segIdx].setStyle({ color: chosenColor });
+      }
+    } else {
+      compareRow.style.display = 'none';
+      removeHalo();
+      if (segIdx !== null) {
+        segmentLayers[segIdx].setStyle({ color: hourColor(congestionShare) });
+      }
+    }
+  }
+
+  var hourSlider = document.getElementById('hourSlider');
+  var btnPlayTimeline = document.getElementById('btnPlayTimeline');
+
+  hourSlider.addEventListener('input', function () {
+    stopPlaying();
+    state.scrubHour = Number(this.value);
+    renderTimeline();
+  });
+
+  function stepPlay() {
+    state.scrubHour = (state.scrubHour + 1) % 24;
+    hourSlider.value = state.scrubHour;
+    renderTimeline();
+  }
+
+  function startPlaying() {
+    state.playing = true;
+    btnPlayTimeline.textContent = '⏸ إيقاف';
+    btnPlayTimeline.setAttribute('aria-pressed', 'true');
+    state.playTimer = setInterval(stepPlay, 300); // 24 steps * 300ms ≈ 7.2s per loop
+  }
+
+  function stopPlaying() {
+    if (!state.playing) return;
+    state.playing = false;
+    btnPlayTimeline.textContent = '▶ شغّل اليوم';
+    btnPlayTimeline.setAttribute('aria-pressed', 'false');
+    if (state.playTimer) {
+      clearInterval(state.playTimer);
+      state.playTimer = null;
+    }
+  }
+
+  btnPlayTimeline.addEventListener('click', function () {
+    if (state.playing) stopPlaying(); else startPlaying();
+  });
+
+  // -------------------------------------------------------------------
+  // Neighboring permit map counterpart (Upgrade 3)
+  // -------------------------------------------------------------------
+  var neighborLine = null;
+  var neighborConnector = null;
+  var neighborMarker = null;
+
+  function updateNeighborPermitVisual() {
+    removeNeighborPermitVisual();
+    if (!(state.neighborPermits > 0) || state.selectedSegIdx === null) return;
+
+    var idx = state.selectedSegIdx;
+    var a = CORRIDOR_COORDS[idx];
+    var b = CORRIDOR_COORDS[idx + 1];
+    var offset = -0.007;
+    var pA = [a[0] + offset, a[1] + offset * 0.5];
+    var pB = [b[0] + offset, b[1] + offset * 0.5];
+
+    neighborLine = L.polyline([pA, pB], { color: '#8A929B', weight: 4, opacity: 0.85, dashArray: '3 5' }).addTo(map);
+    neighborConnector = L.polyline([midpoint(a, b), midpoint(pA, pB)], {
+      color: '#8A929B', weight: 1.5, dashArray: '2 4',
+    }).addTo(map);
+    neighborMarker = L.marker(midpoint(pA, pB), {
+      title: 'تصريح مجاور', alt: 'موقع تصريح مجاور على شارع موازٍ',
+    }).addTo(map);
+    neighborMarker.bindTooltip('تصريح مجاور', { permanent: true, direction: 'top', className: 'neighbor-tooltip' }).openTooltip();
+  }
+
+  function removeNeighborPermitVisual() {
+    [neighborLine, neighborConnector, neighborMarker].forEach(function (layer) {
+      if (layer) map.removeLayer(layer);
+    });
+    neighborLine = null;
+    neighborConnector = null;
+    neighborMarker = null;
+  }
+
+  // -------------------------------------------------------------------
+  // TMP / print (Step 7)
+  // -------------------------------------------------------------------
+  document.getElementById('btnIssuePlan').addEventListener('click', function () {
+    document.getElementById('tmpPermitId').textContent = 'WORK-2026-DEMO-' + Math.floor(Math.random() * 900 + 100);
+    document.getElementById('tmpLanes').textContent = state.lanesClosed + ' من 4';
+    document.getElementById('tmpStart').textContent = String(state.startHour).padStart(2, '0') + ':00';
+    document.getElementById('tmpDuration').textContent = state.durationHours + ' ساعة';
+
+    var scheduleText = state.selectedCandidate ? state.selectedCandidate.label : 'الجدول المطلوب (بلا تحسين)';
+    document.getElementById('tmpSchedule').textContent = scheduleText;
+
+    var beforeAfterText = state.lastScoreResult
+      ? formatArabicNumber(state.lastScoreResult.delayVehHours) + (state.selectedCandidate ? ' ← ' + formatArabicNumber(state.selectedCandidate.delayVehHours) : '')
+      : '—';
+    document.getElementById('tmpBeforeAfter').textContent = beforeAfterText;
+
+    document.getElementById('tmpReroute').textContent = state.selectedCandidate
+      ? 'مسار تحويلة موازٍ عبر الشارع الجانبي (انظر الخريطة)'
+      : 'لا يوجد مسار بديل محدد بعد';
+
+    document.getElementById('tmpMerged').textContent = state.neighborPermits + ' تصريح مجاور مُدمج';
+    document.getElementById('tmpDate').textContent = new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
+      year: 'numeric', month: 'long', day: 'numeric',
+    }).format(new Date());
+
+    window.print();
+  });
+
+  // -------------------------------------------------------------------
+  // Assumptions table (Step 10)
+  // -------------------------------------------------------------------
+  var ASSUMPTIONS = [
+    { key: 'aadt', label: 'الطلب اليومي (AADT)', value: AtharEngine.DEFAULTS.aadt, tag: 'assume', note: 'حجم مروري توضيحي لمقطع طريق الملك فهد (العليا) — لا يوجد قياس فعلي متاح' },
+    { key: 'lanes', label: 'عدد المسارات', value: AtharEngine.DEFAULTS.lanes, tag: 'assume', note: 'عدد نمطي لطريق شرياني رئيسي' },
+    { key: 'capacityPerLane', label: 'سعة المسار', value: AtharEngine.DEFAULTS.capacityPerLane + ' م/س', tag: 'src', note: 'افتراض قياسي بأسلوب HCM للتدفق المشبع' },
+    { key: 'freeFlowMin', label: 'زمن التدفق الحر', value: AtharEngine.DEFAULTS.freeFlowMin + ' دقيقة', tag: 'assume', note: 'تقدير توضيحي لطول المقطع' },
+    { key: 'lengthKm', label: 'طول المقطع', value: AtharEngine.DEFAULTS.lengthKm + ' كم', tag: 'assume', note: 'تقريب لمقطع العليا من طريق الملك فهد' },
+    { key: 'valueOfTimeSAR', label: 'قيمة الوقت', value: AtharEngine.DEFAULTS.valueOfTimeSAR + ' ﷼/ساعة-مركبة', tag: 'assume', note: 'للاستخدام السردي فقط' },
+    { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
+    { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
+    { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
+  ];
+
+  function renderAssumptions() {
+    var tbody = document.querySelector('#assumpTable tbody');
+    ASSUMPTIONS.forEach(function (row) {
+      var tr = document.createElement('tr');
+
+      var thName = document.createElement('th');
+      thName.textContent = row.label;
+
+      var tdValue = document.createElement('td');
+      tdValue.textContent = row.value;
+      tdValue.className = 'num';
+
+      var tdTag = document.createElement('td');
+      tdTag.className = 'tag';
+      var span = document.createElement('span');
+      span.className = row.tag === 'src' ? 'tag-src' : 'tag-assume';
+      span.textContent = row.tag === 'src' ? 'مصدر' : 'افتراض توضيحي';
+      tdTag.appendChild(span);
+
+      var tdNote = document.createElement('td');
+      tdNote.textContent = row.note;
+
+      tr.appendChild(thName);
+      tr.appendChild(tdValue);
+      tr.appendChild(tdTag);
+      tr.appendChild(tdNote);
+      tbody.appendChild(tr);
+    });
+  }
+  renderAssumptions();
+
+  // -------------------------------------------------------------------
+  // Init
+  // -------------------------------------------------------------------
+  updateInputLabels();
+  recompute();
+})();
+</script>
+</body>
+</html>

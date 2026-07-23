@@ -1,0 +1,69 @@
+{
+  "researchDate": "2026-07-23",
+  "project": "Athar",
+  "challenge": "Traffic impact of infrastructure and excavation works on major roads and neighbourhoods",
+  "scope": {
+    "indexedCorpus": "Baladiyathon only",
+    "navigation": [
+      "root README",
+      "Graphify"
+    ],
+    "obsidianRole": "indexed content only; not a navigation layer"
+  },
+  "counts": {
+    "existingClaimRecords": 2278,
+    "existingUrlMentions": 755,
+    "existingUniqueUrls": 238,
+    "newEvidenceRecords": 40,
+    "competitors": 16,
+    "impactMetrics": 26,
+    "scrapyRecords": 17,
+    "scraplingDynamicRecords": 1
+  },
+  "collection": {
+    "scrapy": {
+      "status": "completed",
+      "artifact": "raw/scrapy-clean.json"
+    },
+    "scrapling": {
+      "status": "completed",
+      "artifact": "raw/scrapling-tomtom.json"
+    },
+    "firecrawl": {
+      "status": "unavailable_no_credentials",
+      "reason": "No FIRECRAWL_API_KEY and no reachable self-hosted endpoint at localhost:3002."
+    },
+    "browserSearch": {
+      "status": "completed",
+      "rule": "Primary and official sources preferred."
+    },
+    "pdfVerification": {
+      "status": "completed",
+      "documents": [
+        "Saudi Highway Code 203",
+        "Saudi Highway Code 305",
+        "GASTAT Road Transport Statistics 2024",
+        "GASTAT Livability in Saudi Cities 2025"
+      ],
+      "method": "Text extraction plus rendered-page visual inspection for the Saudi Highway Code documents."
+    }
+  },
+  "knownLimitations": [
+    "No official published annual excavation-permit count was found for Saudi Arabia or Riyadh.",
+    "No public measured before-and-after delay dataset was found for the current Riyadh road-program portfolio.",
+    "Some legacy RCRC pages have intermittent DNS availability for automated scrapers.",
+    "A capability marked false in the competitor dataset means not evidenced on cited public pages, not proven absent."
+  ],
+  "claimPolicy": {
+    "demonstrated": "Observed directly in the prototype or supplied data.",
+    "externallyValidated": "Supported by a cited external source.",
+    "pilotProjection": "Calculated for a defined pilot using documented assumptions.",
+    "scaleScenario": "Conditional scenario; never presented as achieved or official.",
+    "forbidden": [
+      "Treating total congestion as excavation-caused congestion.",
+      "Scaling pilot benefits nationally without official permit volume and representativeness.",
+      "Presenting synthetic permits as real permits.",
+      "Presenting public capability absence as confirmed technical absence."
+    ]
+  }
+}

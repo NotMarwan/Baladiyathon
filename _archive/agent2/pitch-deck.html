@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raqeeb AI — Pitch Deck | Baladiyathon 2026</title>
+  <style>
+    :root {
+      --primary: #005C3F;
+      --primary-dark: #003D2A;
+      --accent: #C8A464;
+      --accent-light: #F2E6CE;
+      --danger: #D32F2F;
+      --success: #2E7D32;
+      --bg: #F7F8FA;
+      --text: #1A1A1A;
+      --muted: #6B7280;
+      --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .deck {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .slide {
+      min-width: 100vw;
+      height: 100vh;
+      padding: 6vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    .slide-hero::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(200,164,100,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .slide-light { background: white; }
+    .slide-sand { background: var(--accent-light); }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .slide-hero h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      margin: 0 0 16px;
+      line-height: 1.05;
+      font-weight: 800;
+    }
+
+    .slide-hero h2 {
+      font-size: clamp(22px, 2.6vw, 34px);
+      margin: 0 0 32px;
+      font-weight: 400;
+      opacity: 0.92;
+    }
+
+    .slide-hero .meta {
+      display: flex;
+      gap: 28px;
+      font-size: 15px;
+      opacity: 0.85;
+      flex-wrap: wrap;
+    }
+
+    h2.section-title {
+      font-size: clamp(28px, 3.2vw, 42px);
+      color: var(--primary-dark);
+      margin: 0 0 12px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: clamp(16px, 1.4vw, 20px);
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 760px;
+    }
+
+    .big-number {
+      font-size: clamp(48px, 6vw, 84px);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      border-top: 4px solid var(--primary);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--primary-dark);
+      font-size: 20px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    ul.points {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.points li {
+      padding: 12px 0 12px 32px;
+      position: relative;
+      font-size: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    ul.points li:last-child { border-bottom: none; }
+
+    ul.points li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 800;
+    }
+
+    .chart-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .chart-bar .label {
+      width: 140px;
+      font-size: 14px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .chart-bar .bar {
+      height: 28px;
+      background: var(--primary);
+      border-radius: 6px;
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .ask-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .ask-box .amount {
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 12px 0;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 16px;
+      font-size: 16px;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      padding: 10px 18px;
+      border-radius: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav button {
+      border: none;
+      background: var(--primary);
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d1d5db;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .dot.active { background: var(--primary); }
+
+    .page-num {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .logo-inline {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, var(--accent-light) 0%, var(--accent-light) 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 88%;
+      padding: 0 4px;
+    }
+
+    .source-note {
+      position: absolute;
+      bottom: 28px;
+      left: 40px;
+      font-size: 11px;
+      color: var(--muted);
+      max-width: 70%;
+    }
+
+    @media print {
+      .nav { display: none; }
+      .slide { min-width: 100vw; height: 100vh; page-break-after: always; }
+      .deck { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- Slide 1: Hero -->
+  <section class="slide slide-hero">
+    <div class="badge">Baladiyathon 2026 · Challenge 2</div>
+    <h1>Raqeeb AI</h1>
+    <h2>رقيب الذكاء الاصطناعي — Proactive Municipal Inspection Intelligence</h2>
+    <div class="meta">
+      <span>AI / Data Analytics / Geospatial</span>
+      <span>Vision 2030 Aligned</span>
+      <span>MOMRAH-Ready</span>
+    </div>
+    <div class="page-num">1 / 10</div>
+  </section>
+
+  <!-- Slide 2: Problem -->
+  <section class="slide slide-light">
+    <h2 class="section-title">The Problem</h2>
+    <p class="subtitle">Municipal inspections in Saudi Arabia still rely heavily on reactive, paper-heavy workflows that miss high-risk establishments until complaints pile up.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>2.7M+</h3>
+        <p>Balady platform users and millions of licenses — too many for uniform manual coverage.</p>
+      </div>
+      <div class="card">
+        <h3>29,000+</h3>
+        <p>Supervisory visits during Hajj season alone, yet critical violations often emerge late.</p>
+      </div>
+      <div class="card">
+        <h3>940 / 199040</h3>
+        <p>Complaint hotlines show citizens expect faster, evidence-based enforcement.</p>
+      </div>
+    </div>
+    <div class="source-note">Sources: balady.gov.sa; momah.gov.sa</div>
+    <div class="page-num">2 / 10</div>
+  </section>
+
+  <!-- Slide 3: Solution -->
+  <section class="slide slide-sand">
+    <h2 class="section-title">The Solution</h2>
+    <p class="subtitle">Raqeeb AI predicts which establishments are most likely to violate municipal codes, then explains why — so inspectors act before citizens complain.</p>
+    <div class="grid-2">
+      <ul class="points">
+        <li><strong>Risk Score per Establishment</strong> — prioritizes inspections by probability of violation</li>
+        <li><strong>SHAP Explainability</strong> — every flag shows the evidence, building inspector trust</li>
+        <li><strong>Geospatial Heatmap</strong> — district-level view for resource deployment</li>
+        <li><strong>Feedback Loop</strong> — inspection results continuously retrain the model</li>
+      </ul>
+      <div class="card">
+        <h3>How It Works</h3>
+        <p>1. Ingest Balady data, complaints, weather, and seasonal signals.</p>
+        <p>2. Train a LightGBM/XGBoost classifier on historical inspection outcomes.</p>
+        <p>3. Generate daily pre-inspection lists with explainable risk drivers.</p>
+        <p>4. Inspectors confirm or refute; model learns and improves.</p>
+      </div>
+    </div>
+    <div class="page-num">3 / 10</div>
+  </section>
+
+  <!-- Slide 4: Demo / Traction -->
+  <section class="slide slide-light">
+    <h2 class="section-title">Live Demo Snapshot</h2>
+    <p class="subtitle">Prototype dashboard built for Challenge 2: 36 neighborhood cells, 12 prioritized targets, and SHAP-based explanations.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Dashboard Metrics (Synthetic)</h3>
+        <div class="chart-bar">
+          <span class="label">Est. Hit-Rate</span>
+          <div class="bar" style="width:34%; background:var(--success)">34%</div>
+        </div>
+        <div class="chart-bar">
+          <span class="label">Inspector Time Saved</span>
+          <div class="bar" style="width:62%; background:var(--primary)">6.2 hrs/day</div>
+        </div>
+        <div class="chart-bar">
+          <span class="label">High-Risk Targets</span>
+          <div class="bar" style="width:28%; background:var(--danger)">38</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Evidence-Based Precedents</h3>
+        <p>Chicago's food-inspection model improved violation detection by routing inspectors to high-risk venues first. Raqeeb AI adapts the same principle to Saudi municipal contexts: restaurants, cafeterias, bakeries, construction sites, and retail.</p>
+        <p style="margin-top:12px; font-size:13px; color:var(--muted)">Source: City of Chicago /food-inspections-evaluation</p>
+      </div>
+    </div>
+    <div class="page-num">4 / 10</div>
+  </section>
+
+  <!-- Slide 5: Market -->
+  <section class="slide slide-sand">
+    <h2 class="section-title">Market & Impact</h2>
+    <p class="subtitle">Raqeeb AI addresses a national-scale municipal operations opportunity aligned with Vision 2030 digital-government targets.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Immediate</h3>
+        <p>MOMRAH & Balady municipal inspection teams across 13 regions.</p>
+      </div>
+      <div class="card">
+        <h3>Adjacent</h3>
+        <p>Hajj/Umrah service quality, food safety, construction compliance, environmental health.</p>
+      </div>
+      <div class="card">
+        <h3>Exportable</h3>
+        <p>Model framework portable to other GCC municipal authorities facing similar scale.</p>
+      </div>
+    </div>
+    <div style="margin-top:30px; text-align:center">
+      <div class="big-number">1.3M+</div>
+      <p style="color:var(--muted); margin-top:6px">Commercial licenses on Balady platform alone</p>
+    </div>
+    <div class="source-note">Source: balady.gov.sa platform statistics</div>
+    <div class="page-num">5 / 10</div>
+  </section>
+
+  <!-- Slide 6: Business Model -->
+  <section class="slide slide-light">
+    <h2 class="section-title">Business Model</h2>
+    <p class="subtitle">Designed for government adoption: low-friction integration, transparent pricing, and measurable ROI.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Primary Revenue</h3>
+        <ul class="points">
+          <li>SaaS license to MOMRAH / Balady per inspector seat</li>
+          <li>Implementation & data-integration services</li>
+          <li>Annual model retraining & support contracts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Value Capture</h3>
+        <ul class="points">
+          <li>Higher violation hit-rate per inspection day</li>
+          <li>Faster response to citizen complaints (940/199040)</li>
+          <li>Reduced compliance incidents during Hajj/Umrah peaks</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-num">6 / 10</div>
+  </section>
+
+  <!-- Slide 7: Competition -->
+  <section class="slide slide-sand">
+    <h2 class="section-title">Competitive Edge</h2>
+    <p class="subtitle">Generic BI tools show what happened. Raqeeb AI predicts what will happen and tells inspectors why.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Generic BI Dashboards</h3>
+        <p>Reactive, descriptive, require manual interpretation. Often miss the latent signals that predict violations.</p>
+      </div>
+      <div class="card" style="border-top-color:var(--accent)">
+        <h3>Raqeeb AI</h3>
+        <p>Predictive, explainable, integrated with Balady workflows. Built for Saudi data, regulations, and seasonal peaks.</p>
+      </div>
+    </div>
+    <ul class="points" style="margin-top:28px">
+      <li><strong>Localization:</strong> Arabic-first interfaces, Saudi calendar/seasonality, Hajj/Umrah patterns.</li>
+      <li><strong>Trust:</strong> SHAP explanations make every recommendation auditable.</li>
+      <li><strong>Speed:</strong> Lightweight MVP can integrate with existing Balady data exports in days.</li>
+    </ul>
+    <div class="page-num">7 / 10</div>
+  </section>
+
+  <!-- Slide 8: Team -->
+  <section class="slide slide-light">
+    <h2 class="section-title">Team</h2>
+    <p class="subtitle">A multidisciplinary team combining Saudi domain knowledge, machine learning engineering, and civic-tech product design.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>ML / Data Lead</h3>
+        <p>Builds and validates predictive models, handles feature engineering, SHAP explainability, and retraining pipelines.</p>
+      </div>
+      <div class="card">
+        <h3>Full-Stack Engineer</h3>
+        <p>Develops FastAPI/Next.js backend, React dashboard, geospatial visualizations, and Balady integration layer.</p>
+      </div>
+      <div class="card">
+        <h3>Product / Domain Lead</h3>
+        <p>Translates municipal inspection workflows into user stories, ensures regulatory alignment and field usability.</p>
+      </div>
+    </div>
+    <div class="page-num">8 / 10</div>
+  </section>
+
+  <!-- Slide 9: Ask -->
+  <section class="slide slide-hero">
+    <div class="ask-box">
+      <div class="badge" style="background:rgba(0,92,63,0.12); color:var(--primary); border-color:var(--primary)">The Ask</div>
+      <h2 style="color:var(--primary-dark); margin:8px 0 4px">Support Raqeeb AI at Baladiyathon 2026</h2>
+      <p style="color:var(--muted)">We are seeking validation, mentorship, and a path to pilot with MOMRAH.</p>
+      <div class="amount">1st Prize</div>
+      <p style="color:var(--muted); font-size:18px; margin:0 0 8px">SAR 30,000 + National Pilots</p>
+      <p style="color:var(--muted); font-size:15px; max-width:540px; margin:0 auto 20px">
+        Winning Baladiyathon means credibility, government mentorship, and the opportunity to deploy Raqeeb AI where it matters most: protecting citizens and visitors across Saudi Arabia.
+      </p>
+      <a class="cta" href="mailto:Digital_Innov@momah.gov.sa">Contact MOMRAH Innovation</a>
+    </div>
+    <div class="page-num">9 / 10</div>
+  </section>
+
+  <!-- Slide 10: Closing -->
+  <section class="slide slide-sand">
+    <h2 class="section-title">Why Now?</h2>
+    <p class="subtitle">Vision 2030 is accelerating digital government. MOMRAH's Baladiyathon is explicitly calling for AI-driven municipal innovation. The data, the need, and the platform are ready.</p>
+    <div class="grid-2">
+      <ul class="points">
+        <li><strong>Data Availability:</strong> Balady platform generates structured licensing, complaints, and inspection data.</li>
+        <li><strong>Policy Tailwind:</strong> Vision 2030 and National Data Management Office support AI in government.</li>
+        <li><strong>Clear Use Case:</strong> Hajj/Umrah peaks prove the cost of reactive inspection.</li>
+      </ul>
+      <div class="card">
+        <h3>Next Steps</h3>
+        <p>1. Submit idea card with report + dashboard + pitch deck.</p>
+        <p>2. Shortlist presentation (20 July 2026).</p>
+        <p>3. Build MVP during hackathon (27–28 July 2026).</p>
+        <p>4. Pilot with a MOMRAH field office for 90 days.</p>
+      </div>
+    </div>
+    <div style="margin-top:36px; text-align:center">
+      <div class="logo-inline">Raqeeb AI · رقيب الذكاء الاصطناعي</div>
+      <p style="color:var(--muted); margin:0">Proactive Municipal Inspection Intelligence</p>
+    </div>
+    <div class="page-num">10 / 10</div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="move(-1)">‹</button>
+  <div class="dots" id="dots"></div>
+  <button id="next" onclick="move(1)">›</button>
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  });
+
+  function update() {
+    deck.style.transform = `translateX(-${current * 100}vw)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === slides.length - 1;
+  }
+
+  function move(dir) {
+    current = Math.max(0, Math.min(slides.length - 1, current + dir));
+    update();
+  }
+
+  function goTo(i) {
+    current = i;
+    update();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') move(1);
+    if (e.key === 'ArrowLeft') move(-1);
+  });
+
+  update();
+</script>
+
+</body>
+</html>

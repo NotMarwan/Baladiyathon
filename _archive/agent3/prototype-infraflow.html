@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfraFlow | انسياب — Demo Prototype</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:#0f172a; color:#e2e8f0; height:100vh; display:flex; }
+#sidebar { width:380px; background:#1e293b; display:flex; flex-direction:column; border-left:2px solid #334155; }
+#sidebar-header { padding:16px; background:linear-gradient(135deg,#1e3a5f,#0ea5e9); border-bottom:2px solid #38bdf8; }
+#sidebar-header h1 { font-size:20px; display:flex; align-items:center; gap:8px; color:#fff; margin:0; }
+#sidebar-header .logo { background:#0ea5e9; color:#fff; padding:4px 10px; border-radius:6px; font-weight:800; font-size:14px; }
+.badge { display:inline-block; background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px; margin-top:6px; }
+#sidebar-body { flex:1; overflow-y:auto; padding:16px; }
+#sidebar-body h3 { font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin:16px 0 8px; }
+.form-group { margin-bottom:12px; }
+.form-group label { display:block; font-size:12px; color:#94a3b8; margin-bottom:4px; }
+.form-group input,.form-group select { width:100%; padding:8px 10px; background:#0f172a; border:1px solid #334155; border-radius:6px; color:#e2e8f0; font-size:13px; }
+.form-group input:focus,.form-group select:focus { outline:none; border-color:#0ea5e9; }
+.btn { padding:10px 20px; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+.btn-primary { background:#0ea5e9; color:#fff; width:100%; }
+.btn-primary:hover { background:#0284c7; }
+.btn-secondary { background:#334155; color:#e2e8f0; }
+.btn-danger { background:#ef4444; color:#fff; }
+.btn-row { display:flex; gap:8px; margin-top:8px; }
+#map-container { flex:1; position:relative; }
+#map { width:100%; height:100%; }
+#impact-panel { margin-top:12px; padding:12px; background:#0f172a; border-radius:8px; border:1px solid #334155; display:none; }
+#impact-panel h4 { color:#0ea5e9; margin-bottom:8px; font-size:14px; }
+.metric-row { display:flex; justify-content:space-between; padding:4px 0; font-size:12px; border-bottom:1px solid #1e293b; }
+.metric-row:last-child { border-bottom:none; }
+.metric-label { color:#94a3b8; }
+.metric-value { font-weight:600; }
+.conflict-alert { background:#7f1d1d; border:1px solid #ef4444; padding:10px; border-radius:6px; margin-top:8px; display:none; }
+.conflict-alert h4 { color:#fca5a5; margin:0 0 4px; font-size:13px; }
+.conflict-alert p { font-size:11px; margin:0; }
+.alt-route { background:#064e3b; border:1px solid #10b981; padding:10px; border-radius:6px; margin-top:8px; display:none; }
+.alt-route h4 { color:#6ee7b7; margin:0 0 4px; font-size:13px; }
+.alt-route p { font-size:11px; margin:0; }
+.leaflet-draw-actions { display:none !important; }
+.draw-instruction { font-size:11px; color:#64748b; padding:6px 0; }
+.phase-pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; }
+.phase-critical { background:#7f1d1d; color:#fca5a5; }
+.phase-high { background:#78350f; color:#fcd34d; }
+.phase-medium { background:#1e3a5f; color:#7dd3fc; }
+.permit-item { background:#0f172a; border:1px solid #334155; border-radius:6px; padding:10px; margin-bottom:8px; font-size:11px; }
+.permit-item .permit-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+.permit-item .permit-name { font-weight:600; color:#e2e8f0; }
+</style>
+</head>
+<body>
+
+<div id="map-container">
+  <div id="map"></div>
+</div>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    <h1><span class="logo">انسياب</span> InfraFlow</h1>
+    <span class="badge">Challenge 3 • Baladiyathon 2026</span>
+  </div>
+  <div id="sidebar-body">
+    <p class="draw-instruction">🖱️ Use the toolbar on the left side of the map to draw an excavation closure zone, then click "Run Simulation"</p>
+
+    <h3>🛠️ Closure Parameters</h3>
+    <div class="form-group">
+      <label>Project Name</label>
+      <input type="text" id="projName" value="Water Main Replacement — King Fahd Rd" />
+    </div>
+    <div class="form-group">
+      <label>Utility Type</label>
+      <select id="utilityType">
+        <option value="water">National Water Company (NWC) — المياه</option>
+        <option value="electric">Saudi Electricity (SEC) — الكهرباء</option>
+        <option value="telecom">STC — الاتصالات</option>
+        <option value="gas">Gas Network — الغاز</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Lanes Closed</label>
+      <select id="lanesClosed">
+        <option value="1">1 lane</option>
+        <option value="2" selected>2 lanes</option>
+        <option value="3">3 lanes</option>
+        <option value="all">Full closure</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Duration (days)</label>
+      <select id="duration">
+        <option value="1">1 day</option>
+        <option value="3" selected>3 days</option>
+        <option value="7">1 week</option>
+        <option value="14">2 weeks</option>
+        <option value="30">1 month</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Work Hours</label>
+      <select id="workHours">
+        <option value="day" selected>6 AM — 6 PM</option>
+        <option value="night">8 PM — 5 AM</option>
+        <option value="24h">24 hours</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" onclick="runSimulation()">▶ Run Simulation</button>
+
+    <div id="impact-panel">
+      <h4>📊 Simulation Results</h4>
+      <div class="metric-row">
+        <span class="metric-label">Impact Level</span>
+        <span class="metric-value"><span class="phase-pill phase-high" id="impactLevelLabel">HIGH</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Avg. Delay per Vehicle</span>
+        <span class="metric-value" id="avgDelay">23 min</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Queue Length (peak)</span>
+        <span class="metric-value" id="queueLen">4.2 km</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Vehicles Affected (per day)</span>
+        <span class="metric-value" id="vehAffected">~12,400</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Total Delay Generated</span>
+        <span class="metric-value" id="totalDelay">~4,760 veh-hrs</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Spillover Radius</span>
+        <span class="metric-value" id="spillover">1.8 km</span>
+      </div>
+    </div>
+
+    <div class="conflict-alert" id="conflictAlert">
+      <h4>⚠️ CONFLICT DETECTED</h4>
+      <p id="conflictDesc">SEC cable work permit (Permit #SEC-2026-0341) overlaps on the same road segment 800m north, same week. Recommend: stagger by 3+ days.</p>
+    </div>
+
+    <div class="alt-route" id="altRoute">
+      <h4>🔄 Alternative Route Suggested</h4>
+      <p id="altRouteDesc">Divert northbound traffic via Prince Turki bin Abdulaziz Al Awwal Road → Northern Ring Road. Estimated detour: +7 min, saves 23 min delay.</p>
+    </div>
+
+    <h3>📋 Active Permits (Demo)</h3>
+    <div class="permit-item">
+      <div class="permit-header">
+        <span class="permit-name">NWC Water Main — King Fahd Rd</span>
+        <span class="phase-pill phase-high">HIGH</span>
+      </div>
+      <div style="color:#94a3b8">Jul 27-29 • 2 lanes • 300m</div>
+    </div>
+    <div class="permit-item">
+      <div class="permit-header">
+        <span class="permit-name">SEC Cable — King Fahd Rd (North)</span>
+        <span class="phase-pill phase-medium">MEDIUM</span>
+      </div>
+      <div style="color:#94a3b8">Jul 25-28 • 1 lane • 150m</div>
+    </div>
+    <div class="permit-item">
+      <div class="permit-header">
+        <span class="permit-name">STC Fiber — Olaya St</span>
+        <span class="phase-pill phase-medium">MEDIUM</span>
+      </div>
+      <div style="color:#94a3b8">Jul 30-Aug 2 • 1 lane • 200m</div>
+    </div>
+    <div class="permit-item">
+      <div class="permit-header">
+        <span class="permit-name">Gas Pipeline — Eastern Ring</span>
+        <span class="phase-pill phase-critical">CRITICAL</span>
+      </div>
+      <div style="color:#94a3b8">Jul 27-31 • Full closure • 500m</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+<script>
+var map = L.map('map').setView([24.7136, 46.6753], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:'&copy; OpenStreetMap contributors | InfraFlow Demo',
+  maxZoom:19
+}).addTo(map);
+
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+var drawControl = new L.Control.Draw({
+  draw: {
+    polyline: false, circlemarker: false, marker: false, circle: false,
+    polygon: {
+      shapeOptions: { color: '#ef4444', weight: 2, fillColor: '#ef4444', fillOpacity: 0.3 },
+      allowIntersection: false
+    },
+    rectangle: {
+      shapeOptions: { color: '#ef4444', weight: 2, fillColor: '#ef4444', fillOpacity: 0.3 }
+    }
+  },
+  edit: { featureGroup: drawnItems }
+});
+map.addControl(drawControl);
+
+map.on(L.Draw.Event.CREATED, function(e) {
+  drawnItems.clearLayers();
+  drawnItems.addLayer(e.layer);
+  document.getElementById('impact-panel').style.display = 'none';
+  document.getElementById('conflictAlert').style.display = 'none';
+  document.getElementById('altRoute').style.display = 'none';
+});
+
+var heatLayer = null;
+var routeLine = null;
+
+function runSimulation() {
+  var impactPanel = document.getElementById('impact-panel');
+  var conflictAlert = document.getElementById('conflictAlert');
+  var altRoute = document.getElementById('altRoute');
+
+  impactPanel.style.display = 'block';
+  conflictAlert.style.display = 'block';
+  altRoute.style.display = 'block';
+
+  var layers = drawnItems.getLayers();
+  if (layers.length === 0) {
+    alert('Please draw a closure zone on the map first using the rectangle/polygon tool.');
+    return;
+  }
+
+  var layer = layers[0];
+  var bounds = layer.getBounds ? layer.getBounds() : L.latLngBounds(layer.getLatLngs()[0]);
+
+  if (heatLayer) map.removeLayer(heatLayer);
+  if (routeLine) map.removeLayer(routeLine);
+
+  var center = bounds.getCenter();
+  var heatPoints = [];
+  for (var i = 0; i < 600; i++) {
+    var lat = center.lat + (Math.random() - 0.5) * 0.04;
+    var lng = center.lng + (Math.random() - 0.5) * 0.04;
+    var intensity = Math.random();
+    heatPoints.push([lat, lng, intensity * 0.8 + 0.2]);
+  }
+  for (var j = 0; j < 300; j++) {
+    var dlat = bounds.getCenter().lat + (Math.random() - 0.5) * 0.015;
+    var dlng = bounds.getCenter().lng + (Math.random() - 0.5) * 0.015;
+    heatPoints.push([dlat, dlng, 0.7 + Math.random() * 0.3]);
+  }
+
+  heatLayer = L.heatLayer(heatPoints, {
+    radius: 30, blur: 20, maxZoom: 17,
+    gradient: {0.2:'#0ea5e9', 0.4:'#22d3ee', 0.6:'#fbbf24', 0.8:'#f97316', 1.0:'#ef4444'}
+  }).addTo(map);
+
+  routeLine = L.polyline([
+    [center.lat - 0.008, center.lng - 0.01],
+    [center.lat - 0.005, center.lng],
+    [center.lat + 0.002, center.lng + 0.008],
+    [center.lat + 0.006, center.lng + 0.004]
+  ], { color: '#10b981', weight: 4, dashArray:'10 6', opacity: 0.8 }).addTo(map);
+
+  document.getElementById('avgDelay').textContent = (18 + Math.floor(Math.random() * 15)) + ' min';
+  document.getElementById('queueLen').textContent = (2.5 + Math.random() * 3).toFixed(1) + ' km';
+  document.getElementById('vehAffected').textContent = '~' + (8000 + Math.floor(Math.random() * 8000)).toLocaleString();
+  document.getElementById('totalDelay').textContent = '~' + (3000 + Math.floor(Math.random() * 4000)).toLocaleString() + ' veh-hrs';
+  document.getElementById('spillover').textContent = (1.2 + Math.random() * 2).toFixed(1) + ' km';
+
+  map.fitBounds(bounds.pad(0.3));
+}
+
+var defaultRect = L.rectangle([[24.705, 46.668], [24.718, 46.682]], {
+  color: '#ef4444', weight: 2, fillColor: '#ef4444', fillOpacity: 0.3
+});
+drawnItems.addLayer(defaultRect);
+map.fitBounds(drawnItems.getBounds().pad(0.3));
+</script>
+</body>
+</html>

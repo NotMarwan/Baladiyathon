@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر — دوسيه المشروع</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
+  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
+  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:600;margin:0 0 5px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
+  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
+  header .thesis b{color:var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
+  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
+  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
+  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
+  .stage.engine li::marker{color:var(--navy)}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
+  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
+  .delta b{color:var(--ink);font-weight:600}
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .demo b{color:var(--bad)}
+  .demo li:last-child b{color:var(--good)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:20px}
+  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  @media(max-width:680px){
+    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
+    h2{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · أثر البنية التحتية على المرور</div>
+    <h1>أثر <span class="latin">Athar</span></h1>
+    <p class="thesis">نقيس أثر كل حفرية على الحركة المرورية <b>قبل</b> أن توافق عليها بلدي — ثم نعيد جدولتها ومسارها تلقائياً لتقليل الازدحام، ونُصدر خطة إدارة مرور عربية جاهزة.</p>
+    <div class="origin"><span class="origin-k">مبني على أصل مُثبت</span> نظام UK Street Manager الوطني · بحث محكّم بنتيجة −11.1% تأخير · مبدأ Dig Once · كود الطرق السعودي 203/305</div>
+  </header>
+
+  <section>
+    <div class="eyebrow">الثغرة</div>
+    <h2>ماذا ينقص اليوم؟</h2>
+    <p class="thesis">لدى بلدي تصاريح الحفر وخدمة «تنسيق الحفريات المتعددة» — لكن بشهادة صفحة الخدمة نفسها، هي لا تُحلّل الأثر المروري، ولا تتنبأ بالازدحام، ولا تقترح مسارات بديلة. «أثر» يركّب فوق بلدي ويملأ هذه الثغرة بالضبط، لا يكرّرها.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">الدليل</div>
+    <h2>لماذا نثق أنها تنجح</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">−11.1%</div><div class="lab">انخفاض إجمالي تأخير المرور عبر محاكاة دقيقة + خوارزمية جدولة، في بحث محكّم منشور.</div><div class="ref">Automation in Construction · 2009</div></div>
+      <div class="stat"><div class="num">2.5M</div><div class="lab">عمل طرق سنوياً يديره نظام Street Manager الوطني — بيانات مفتوحة وتبنٍّ شبه شامل.</div><div class="ref">UK DfT</div></div>
+      <div class="stat"><div class="num">25–33%</div><div class="lab">وفورات تكلفة في المدن الكثيفة من مبدأ «احفر مرة».</div><div class="ref">US GAO — GAO-12-687R, gao.gov</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">كيف يعمل</div>
+    <h2>من التصريح إلى القرار</h2>
+    <div class="pipe">
+      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>تصاريح الحفر من بلدي</li><li>شبكة الطرق (OpenStreetMap)</li><li>أنماط المرور</li><li>التصاريح الأخرى النشطة</li></ul></div>
+      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>درجة أثر مروري قبل التصريح</li><li>محاكاة دقيقة بـ SUMO</li><li>مُحسِّن الجدولة والمرحلة</li><li>كاشف التضارب المتراكم</li><li>مولّد خطة إدارة مرور عربية</li></ul></div>
+      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>درجة أثر: أحمر / أخضر</li><li>جدول محسّن + مسارات بديلة</li><li>خطة إدارة مرور (PDF)</li><li>تغذية مفتوحة لتطبيقات الملاحة</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">القدرات</div>
+    <h2>ماذا يفعل بالتفصيل</h2>
+    <div class="caps">
+      <div class="cap"><h3>درجة الأثر المسبقة</h3><p>يحوّل تصريح الحفر إلى رقم أثر مروري قابل للمقارنة قبل الموافقة، لا بعدها.</p></div>
+      <div class="cap"><h3>محاكاة دقيقة</h3><p>يحاكي إغلاق المسار على شبكة الطرق الحقيقية بمحرّك SUMO مفتوح المصدر.</p></div>
+      <div class="cap"><h3>مُحسِّن الجدولة والمرحلة</h3><p>يقترح نوافذ عمل خارج الذروة وتقسيم العمل على مراحل لخفض ذروة التأخير.</p></div>
+      <div class="cap"><h3>كاشف التضارب المتراكم</h3><p>ينبّه حين تتزامن حفريات قريبة فيتضاعف أثرها على نفس الشبكة.</p></div>
+      <div class="cap"><h3>توصية المسارات البديلة</h3><p>يرسم مسارات تحويلية حول منطقة العمل ويقيس جدواها.</p></div>
+      <div class="cap"><h3>خطة إدارة مرور عربية</h3><p>يصوغ خطة إدارة المرور تلقائياً كملف جاهز للاعتماد.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">التميّز</div>
+    <h2>ما الذي نضيفه فوق الأصل</h2>
+    <ul class="delta">
+      <li><b>درجة أثر كمّية قبل التصريح</b> — الأنظمة العالمية تنسّق المكان والزمان فقط؛ لا تعطي رقم أثر مسبق.</li>
+      <li><b>توصية جدول ومسار تلقائية</b> بدل التنسيق اليدوي بين الجهات.</li>
+      <li><b>كاشف الازدحام المتراكم</b> عبر التصاريح المتزامنة على نفس المحور.</li>
+      <li><b>خطة إدارة مرور عربية</b> تُصاغ آلياً وجاهزة محلياً.</li>
+      <li><b>تغذية بيانات مفتوحة</b> لتطبيقات الملاحة على نمط Street Manager.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">العرض الحي · تسلسل</div>
+    <h2>لحظة الإبهار</h2>
+    <ol class="demo">
+      <li>يفتح المشغّل تصريح حفر حقيقياً على طريق رئيسي في الرياض.</li>
+      <li>تظهر <b>درجة حمراء</b> مع محاكاة اختناق حية على الخريطة.</li>
+      <li>ينقر «تحسين» → يقترح «أثر»: العمل ليلاً وعلى مرحلتين.</li>
+      <li>تنخفض ذروة التأخير ~11% والخريطة <b>تتحوّل خضراء</b> مع مسار تحويلي.</li>
+      <li>تُولَّد خطة إدارة المرور بالعربية كملف PDF أمام اللجنة.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">التحكيم</div>
+    <h2>المطابقة لمعايير اللجنة</h2>
+    <table>
+      <tr><th>ملاءمة التحدي</th><td>يطابق نص التحدي حرفياً: تحليل الأثر + توصية بمسارات بديلة + التنبؤ بالازدحام.</td></tr>
+      <tr><th>الابتكار</th><td>طبقة قرار تضع درجة أثر كمّية داخل حلقة الموافقة على التصاريح، وتجمع التوقع والترتيب المفسّر والمعايرة في السياق السعودي.</td></tr>
+      <tr><th>الجدوى</th><td>مبني على أدوات مفتوحة مُثبتة (SUMO / OSM / OSRM)، ويعمل دون اتصال.</td></tr>
+      <tr><th>الأثر والاستدامة</th><td>أقل ازدحاماً وانبعاثات وتكلفة — مدعوم بنتيجة محكّمة −11% ووفورات 25–33%.</td></tr>
+      <tr><th>جودة النموذج</th><td>عرض حي أحمر ← أخضر + خطة إدارة مرور PDF فورية.</td></tr>
+      <tr><th>العرض</th><td>قصة واضحة من خطوة واحدة: تصريح ← أثر ← تحسين ← أخضر.</td></tr>
+    </table>
+  </section>
+
+  <section class="split">
+    <div>
+      <div class="eyebrow">الجدوى</div>
+      <h2>واقعي وقابل للبناء</h2>
+      <p class="thesis">كل المكوّنات مفتوحة المصدر: SUMO + خرائط OSM للسعودية + OSRM. يعمل دون اتصال، وكل جزء قابل للعرض. درجة تحليلية سريعة على نطاق واسع، ومحاكاة كاملة على «الممر البطل» في العرض.</p>
+    </div>
+    <div>
+      <div class="eyebrow">المخاطر</div>
+      <h2>بصراحة</h2>
+      <ul>
+        <li>الوصول لبيانات التصاريح الحيّة — نستخدم بيانات مفتوحة/تجريبية للعرض.</li>
+        <li>معايرة المحاكاة — سطح تحليلي سريع + ممر واحد معاير بدقة.</li>
+        <li>لا نَعِد برقم سعودي؛ الـ11% دليل على أن المنهج يحقّق خفضاً بخانتين.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">المصادر</div>
+    <ul class="src">
+      <li><b>التحدي</b> — momah.gov.sa/ar/hackathon</li>
+      <li><b>UK Street Manager</b> — gov.uk/government/news/new-digital-service-to-minimise-disruptive-roadworks</li>
+      <li><b>نتيجة −11.1%</b> — researchgate.net · Optimizing schedule for improving the traffic impact of work zone on roads</li>
+      <li><b>كود الطرق السعودي 203</b> (قيمة الوقت، درجات التحليل) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
+      <li><b>كود الطرق السعودي 305</b> (مناطق العمل الذكية) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
+      <li><b>GASTAT — Livability in Saudi Cities 2025</b> (67 دقيقة · 34.7M رحلة حافلات) — stats.gov.sa</li>
+      <li><b>GASTAT — Road Transport Statistics 2024</b> (15.8M مركبة · 17,231 حادثة جسيمة) — stats.gov.sa</li>
+      <li><b>RCRC Open Data</b> (633 تقاطعاً · 3,010 نقاط حافلات · 117 مساراً · 94 محطة مترو) — opendata.rcrc.gov.sa</li>
+      <li><b>one.network</b> (المنافس المرجعي) — us.one.network</li>
+      <li><b>LTA Singapore</b> (مراجعة خطط المرور بالذكاء الاصطناعي) — lta.gov.sg</li>
+      <li><b>Dig Once</b> — US GAO · GAO-12-687R · gao.gov/products/gao-12-687r</li>
+      <li><b>ثغرة بلدي</b> — balady.gov.sa/en/services/request-multiple-excavation-coordination</li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

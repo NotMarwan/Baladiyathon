@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متوافق — محاكي التطابق قبل الترخيص</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --green:#00854a;--green-light:#00a859;--green-bg:#e8f5e9;
+    --red:#c62828;--red-bg:#ffebee;
+    --amber:#f57f17;--amber-bg:#fff8e1;
+    --bg:#f5f7fa;--card:#fff;--text:#1a1a2e;--muted:#6b7280;
+    --border:#e5e7eb;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.06);
+  }
+  body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+  
+  .header{background:linear-gradient(135deg,var(--green) 0%,#004d29 100%);color:#fff;padding:20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.15)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-icon{width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .logo h1{font-size:22px;font-weight:700}
+  .logo span{font-size:12px;opacity:.8;display:block}
+  .badge{background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:12px;backdrop-filter:blur(4px)}
+
+  .container{max-width:1100px;margin:0 auto;padding:32px 24px}
+
+  .hero{text-align:center;padding:40px 0 32px}
+  .hero h2{font-size:28px;margin-bottom:8px;color:var(--green)}
+  .hero p{color:var(--muted);font-size:15px;max-width:600px;margin:0 auto}
+
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:20px;border:1px solid var(--border)}
+  .card-title{font-size:16px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .card-title .icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+
+  .form-group{margin-bottom:20px}
+  .form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text)}
+  .form-group .hint{font-size:12px;color:var(--muted);margin-bottom:6px}
+  select,input[type="number"]{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 16px center;padding-left:40px}
+  select:focus,input:focus{outline:none;border-color:var(--green)}
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.row{grid-template-columns:1fr}}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:none;border-radius:10px;font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+  .btn-primary{background:var(--green);color:#fff;width:100%;justify-content:center}
+  .btn-primary:hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,133,74,.3)}
+  .btn-secondary{background:var(--green-bg);color:var(--green);padding:10px 20px;font-size:14px}
+  .btn-secondary:hover{background:#c8e6c9}
+  .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text);padding:10px 20px;font-size:14px}
+  .btn-outline:hover{border-color:var(--green);color:var(--green)}
+
+  .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+  @media(max-width:768px){.scenarios{grid-template-columns:1fr}}
+  .scenario-btn{padding:16px;border:2px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;text-align:center;transition:all .2s;font-family:inherit}
+  .scenario-btn:hover{border-color:var(--green);background:var(--green-bg)}
+  .scenario-btn.active{border-color:var(--green);background:var(--green-bg)}
+  .scenario-btn .emoji{font-size:28px;display:block;margin-bottom:6px}
+  .scenario-btn .label{font-size:13px;font-weight:600}
+  .scenario-btn .sublabel{font-size:11px;color:var(--muted)}
+
+  .results{display:none;animation:slideUp .4s ease}
+  .results.show{display:block}
+  @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+  .verdict{padding:24px;border-radius:var(--radius);text-align:center;margin-bottom:20px}
+  .verdict.pass{background:var(--green-bg);border:2px solid var(--green)}
+  .verdict.fail{background:var(--red-bg);border:2px solid var(--red)}
+  .verdict.conditional{background:var(--amber-bg);border:2px solid var(--amber)}
+  .verdict-icon{font-size:48px;margin-bottom:8px}
+  .verdict h3{font-size:22px;margin-bottom:4px}
+  .verdict.pass h3{color:var(--green)}
+  .verdict.fail h3{color:var(--red)}
+  .verdict.conditional h3{color:var(--amber)}
+  .verdict p{font-size:14px;color:var(--muted)}
+
+  .checks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+  @media(max-width:640px){.checks{grid-template-columns:1fr}}
+  .check-card{padding:16px;border-radius:10px;border:1px solid var(--border);text-align:center}
+  .check-card.pass{border-color:#a5d6a7;background:#f1f8e9}
+  .check-card.fail{border-color:#ef9a9a;background:#fce4ec}
+  .check-card.warn{border-color:#ffe082;background:#fffde7}
+  .check-card .check-icon{font-size:24px;margin-bottom:4px}
+  .check-card .check-label{font-size:13px;font-weight:600}
+  .check-card .check-status{font-size:11px;color:var(--muted)}
+
+  .fix-list{list-style:none;margin:12px 0}
+  .fix-list li{padding:12px 16px;border-right:3px solid var(--amber);background:var(--amber-bg);border-radius:0 8px 8px 0;margin-bottom:8px;font-size:14px;display:flex;align-items:flex-start;gap:8px}
+  .fix-list li .fix-icon{flex-shrink:0}
+
+  .estimate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .estimate-card{padding:16px;background:#f8fafc;border-radius:10px;text-align:center;border:1px solid var(--border)}
+  .estimate-card .value{font-size:22px;font-weight:700;color:var(--green)}
+  .estimate-card .label{font-size:12px;color:var(--muted)}
+
+  .actions{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+
+  .footer{text-align:center;padding:32px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+  .footer a{color:var(--green);text-decoration:none}
+
+  .loading{display:none;text-align:center;padding:40px}
+  .loading.show{display:block}
+  .spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{color:var(--muted);font-size:14px}
+
+  .vision-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00854a,#004d29);color:#fff;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:600;margin-top:8px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">&#9878;</div>
+      <div>
+        <h1>متوافق</h1>
+        <span>Mutawafiq — Pre-License Compliance Simulator</span>
+      </div>
+    </div>
+    <div class="badge">بلدياتثون 2026 &#127464;&#127462;</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <h2>تحقق من تطابق نشاطك التجاري قبل التقديم</h2>
+    <p>أدخل بيانات نشاطك وموقعك ومواصفات وحدتك — واحصل على نتيجة فورية حول مدى توافقك مع الاشتراطات المهنية والإنشائية والبلدية</p>
+    <div class="vision-badge">&#127775; متوافق مع رؤية 2030 — التحول الرقمي البلدي</div>
+  </div>
+
+  <div class="scenarios">
+    <button class="scenario-btn" onclick="loadScenario(1)">
+      <span class="emoji">&#127860;</span>
+      <span class="label">مطعم — الرياض</span>
+      <span class="sublabel">سيناريو: نجاح</span>
+    </button>
+    <button class="scenario-btn" onclick="loadScenario(2)">
+      <span class="emoji">&#128138;</span>
+      <span class="label">صيدلية — جدة</span>
+      <span class="sublabel">سيناريو: رسوب مع إصلاحات</span>
+    </button>
+    <button class="scenario-btn" onclick="loadScenario(3)">
+      <span class="emoji">&#128188;</span>
+      <span class="label">مكتب استشارات — الدمام</span>
+      <span class="sublabel">سيناريو: مشروط</span>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="icon" style="background:var(--green-bg);color:var(--green)">&#9881;</span>
+      بيانات النشاط التجاري
+    </div>
+
+    <div class="form-group">
+      <label>نوع النشاط التجاري</label>
+      <div class="hint">اختر النشاط من التصنيف البلدي المعتمد</div>
+      <select id="activity">
+        <option value="">— اختر النشاط —</option>
+        <option value="restaurant">&#127860; مطعم (أغذية ومشروبات)</option>
+        <option value="pharmacy">&#128138; صيدلية (طبي)</option>
+        <option value="consulting">&#128188; مكتب استشارات (استشارات)</option>
+        <option value="workshop">&#128295; ورشة حرفية (صناعي)</option>
+        <option value="ecommerce">&#128722; متجر إلكتروني (شركات)</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>المدينة / الأمانة</label>
+        <select id="city">
+          <option value="">— اختر المدينة —</option>
+          <option value="riyadh">أمانة منطقة الرياض</option>
+          <option value="jeddah">أمانة محافظة جدة</option>
+          <option value="dammam">أمانة المنطقة الشرقية (الدمام)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>نطاق المنطقة</label>
+        <select id="zone">
+          <option value="">— اختر النطاق —</option>
+          <option value="commercial">منطقة تجارية</option>
+          <option value="mixed">منطقة مختلطة</option>
+          <option value="residential">منطقة سكنية</option>
+          <option value="industrial">منطقة صناعية</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="icon" style="background:#e3f2fd;color:#1565c0">&#127968;</span>
+      مواصفات الوحدة
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>المساحة (م²)</label>
+        <input type="number" id="area" placeholder="مثال: 50" min="1">
+      </div>
+      <div class="form-group">
+        <label>الطابق</label>
+        <select id="floor">
+          <option value="">— اختر —</option>
+          <option value="ground">الدور الأرضي</option>
+          <option value="first">الدور الأول</option>
+          <option value="second">الدور الثاني</option>
+          <option value="third">الدور الثالث</option>
+          <option value="basement">بدروم</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>نوع المبنى</label>
+      <select id="building">
+        <option value="">— اختر —</option>
+        <option value="commercial">مبنى تجاري</option>
+        <option value="residential">مبنى سكني (دور أرضي تجاري)</option>
+        <option value="mixed">مبنى مختلط الاستخدام</option>
+        <option value="villa">فيلا محولة</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="simulate()">
+    &#128269; تحقق من التطابق
+  </button>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>جارٍ التحقق من الاشتراطات المهنية والإنشائية والبلدية...</p>
+    <p style="font-size:12px;margin-top:4px">محرك القواعد + RAG + LLM Reasoner</p>
+  </div>
+
+  <div class="results" id="results">
+    <div class="verdict" id="verdict">
+      <div class="verdict-icon" id="verdict-icon"></div>
+      <h3 id="verdict-title"></h3>
+      <p id="verdict-desc"></p>
+    </div>
+
+    <div class="checks" id="checks"></div>
+
+    <div class="card" id="fixes-card" style="display:none">
+      <div class="card-title">
+        <span class="icon" style="background:var(--amber-bg);color:var(--amber)">&#9888;</span>
+        الإصلاحات المطلوبة
+      </div>
+      <ul class="fix-list" id="fix-list"></ul>
+    </div>
+
+    <div class="estimate" id="estimate"></div>
+
+    <div class="actions">
+      <button class="btn btn-secondary">&#128196; تحميل تقرير التطابق (PDF)</button>
+      <button class="btn btn-outline">&#128640; تقديم طلب الترخيص على بلدي</button>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>متوافق — محاكي التطابق قبل الترخيص | بلدياتثون 2026</p>
+  <p>وزارة البلديات والإسكان — <a href="https://momah.gov.sa" target="_blank">momah.gov.sa</a> | منصة بلدي — <a href="https://balady.gov.sa" target="_blank">balady.gov.sa</a></p>
+  <p style="margin-top:8px;font-size:11px">نموذج أولي (Prototype) — البيانات للتوضيح فقط</p>
+</footer>
+
+<script>
+const scenarios = {
+  1: {
+    activity:'restaurant', city:'riyadh', zone:'commercial',
+    area:50, floor:'ground', building:'commercial',
+    result:'pass',
+    professional:{status:'pass',label:'الاشتراطات المهنية',detail:'متوافق — نشاط مطعم مصنف ضمن أغذية/مشروبات'},
+    structural:{status:'pass',label:'الاشتراطات الإنشائية',detail:'متوافق — دور أرضي في مبنى تجاري، مساحة 50م² ≥ 30م²'},
+    municipal:{status:'pass',label:'الاشتراطات البلدية',detail:'متوافق — منطقة تجارية بأمانة الرياض'},
+    fixes:[],
+    costTime:{cost:'0 ريال (متوافق حالياً)',time:'يمكن التقديم فوراً'}
+  },
+  2: {
+    activity:'pharmacy', city:'jeddah', zone:'mixed',
+    area:25, floor:'first', building:'residential',
+    result:'fail',
+    professional:{status:'fail',label:'الاشتراطات المهنية',detail:'غير متوافق — مساحة 25م² أقل من الحد الأدنى 30م² لهيئة الغذاء والدواء'},
+    structural:{status:'fail',label:'الاشتراطات الإنشائية',detail:'غير متوافق — دور أول في مبنى سكني بدون مصعد، لا يوجد غرفة تخزين منفصلة'},
+    municipal:{status:'warn',label:'الاشتراطات البلدية',detail:'مشروط — منطقة مختلطة مقبولة بشرط موافقة الدفاع المدني'},
+    fixes:[
+      {icon:'&#128207;',text:'زيادة مساحة الوحدة إلى 30م² على الأقل (اشتراط هيئة الغذاء والدواء — SFDA)'},
+      {icon:'&#127970;',text:'نقل الوحدة إلى دور أرضي أو توفير مصعد معتمد للوصول (كود البناء السعودي SBC)'},
+      {icon:'&#128230;',text:'تخصيص غرفة تخزين منفصلة لا تقل عن 6م² (اشتراط بلدي — أمانة جدة)'},
+      {icon:'&#128658;',text:'الحصول على تقرير موافقة من الدفاع المدني (اشتراط إلزامي لجميع الأنشطة الطبية)'}
+    ],
+    costTime:{cost:'~15,000–25,000 ريال (تعديلات الوحدة + تجهيزات)',time:'2–4 أسابيع للإصلاحات + 3–5 أيام عمل لمراجعة البلدية'}
+  },
+  3: {
+    activity:'consulting', city:'dammam', zone:'commercial',
+    area:40, floor:'third', building:'commercial',
+    result:'conditional',
+    professional:{status:'pass',label:'الاشتراطات المهنية',detail:'متوافق — مكتب استشارات لا يتطلب اشتراطات مهنية خاصة'},
+    structural:{status:'pass',label:'الاشتراطات الإنشائية',detail:'متوافق — مبنى تجاري، مساحة 40م² كافية'},
+    municipal:{status:'warn',label:'الاشتراطات البلدية',detail:'مشروط — إشغال أكثر من 10 أشخاص يتطلب موافقة دفاع مدني إضافية'},
+    fixes:[
+      {icon:'&#128658;',text:'تقديم مخطط إخلاء معتمد من الدفاع المدني (مطلوب لإشغال > 10 أشخاص)'},
+      {icon:'&#128101;',text:'تحديد عدد الموظفين المتوقع وتثبيت لافتة سعة قصوى عند المدخل'},
+      {icon:'&#128682;',text:'توفير مخرج طوارئ إضافي إذا كانت السعة تتجاوز 15 شخصاً'}
+    ],
+    costTime:{cost:'~2,000–5,000 ريال (مخطط إخلاء + تجهيزات سلامة)',time:'1–2 أسبوع لتجهيز الموافقات + 3 أيام عمل لمراجعة البلدية'}
+  }
+};
+
+function loadScenario(n){
+  document.querySelectorAll('.scenario-btn').forEach((b,i)=>b.classList.toggle('active',i===n-1));
+  const s=scenarios[n];
+  document.getElementById('activity').value=s.activity;
+  document.getElementById('city').value=s.city;
+  document.getElementById('zone').value=s.zone;
+  document.getElementById('area').value=s.area;
+  document.getElementById('floor').value=s.floor;
+  document.getElementById('building').value=s.building;
+  simulate();
+}
+
+function simulate(){
+  const activity=document.getElementById('activity').value;
+  const city=document.getElementById('city').value;
+  const zone=document.getElementById('zone').value;
+  const area=parseInt(document.getElementById('area').value);
+  const floor=document.getElementById('floor').value;
+  const building=document.getElementById('building').value;
+
+  if(!activity||!city||!zone||!area||!floor||!building){
+    alert('يرجى تعبئة جميع الحقول');return;
+  }
+
+  let scenario=null;
+  for(const k in scenarios){
+    const s=scenarios[k];
+    if(s.activity===activity&&s.city===city&&s.zone===zone&&s.area===area&&s.floor===floor&&s.building===building){
+      scenario=s;break;
+    }
+  }
+
+  if(!scenario){
+    // Generate a generic result for custom inputs
+    scenario={
+      result: area>=30?'pass':'fail',
+      professional:{status:'pass',label:'الاشتراطات المهنية',detail:'متوافق — النشاط المختار لا يتطلب اشتراطات مهنية خاصة'},
+      structural:{status:area>=30?'pass':'fail',label:'الاشتراطات الإنشائية',detail:area>=30?'متوافق — المساحة كافية':'غير متوافق — المساحة أقل من الحد الأدنى'},
+      municipal:{status:'pass',label:'الاشتراطات البلدية',detail:'متوافق — الموقع في نطاق مناسب'},
+      fixes:area<30?[{icon:'&#128207;',text:'زيادة مساحة الوحدة لتلبية الحد الأدنى المطلوب (30م²)'}]:[],
+      costTime:{cost:area>=30?'0 ريال':'~10,000 ريال (تعديلات)',time:area>=30?'يمكن التقديم فوراً':'2–3 أسابيع'}
+    };
+  }
+
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  setTimeout(()=>{
+    renderResults(scenario);
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  },1500);
+}
+
+function renderResults(s){
+  const v=document.getElementById('verdict');
+  v.className='verdict '+s.result;
+  const icons={pass:'&#9989;',fail:'&#10060;',conditional:'&#9888;&#65039;'};
+  const titles={pass:'متوافق — يمكن التقديم',fail:'غير متوافق — يحتاج إصلاحات',conditional:'مشروط — يحتاج استيفاء متطلبات'};
+  const descs={
+    pass:'جميع الاشتراطات المهنية والإنشائية والبلدية مستوفاة. يمكنك تقديم طلب الترخيص مباشرة.',
+    fail:'وجدنا '+s.fixes.length+' متطلبات غير مستوفاة. يرجى مراجعة قائمة الإصلاحات أدناه.',
+    conditional:'الاشتراطات الأساسية مستوفاة، ولكن هناك شروط إضافية يجب استيفاؤها قبل الاعتماد النهائي.'
+  };
+  document.getElementById('verdict-icon').innerHTML=icons[s.result];
+  document.getElementById('verdict-title').textContent=titles[s.result];
+  document.getElementById('verdict-desc').textContent=descs[s.result];
+
+  const checks=document.getElementById('checks');
+  checks.innerHTML='';
+  [s.professional,s.structural,s.municipal].forEach(c=>{
+    const cls=c.status==='pass'?'pass':c.status==='fail'?'fail':'warn';
+    const ic=c.status==='pass'?'&#9989;':c.status==='fail'?'&#10060;':'&#9888;&#65039;';
+    const st=c.status==='pass'?'متوافق':c.status==='fail'?'غير متوافق':'مشروط';
+    checks.innerHTML+=`<div class="check-card ${cls}"><div class="check-icon">${ic}</div><div class="check-label">${c.label}</div><div class="check-status">${st}</div><div style="font-size:11px;color:var(--muted);margin-top:4px">${c.detail}</div></div>`;
+  });
+
+  const fc=document.getElementById('fixes-card');
+  const fl=document.getElementById('fix-list');
+  if(s.fixes.length>0){
+    fc.style.display='block';
+    fl.innerHTML=s.fixes.map(f=>`<li><span class="fix-icon">${f.icon}</span><span>${f.text}</span></li>`).join('');
+  }else{
+    fc.style.display='none';
+  }
+
+  const est=document.getElementById('estimate');
+  est.innerHTML=`
+    <div class="estimate-card"><div class="value">${s.costTime.cost}</div><div class="label">التكلفة التقديرية للإصلاحات</div></div>
+    <div class="estimate-card"><div class="value">${s.costTime.time}</div><div class="label">المدة المتوقعة</div></div>
+  `;
+}
+</script>
+</body>
+</html>

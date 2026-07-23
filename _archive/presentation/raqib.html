@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>رقيب — دوسيه المشروع</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
+  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
+  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:600;margin:0 0 5px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
+  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
+  header .thesis b{color:var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
+  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
+  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
+  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
+  .stage.engine li::marker{color:var(--navy)}
+  .seqwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+  svg.seq{min-width:720px;width:100%;height:auto;display:block}
+  .seq text{font-family:var(--sans)}
+  .seq .t-life{fill:var(--navy);font-size:13px;font-weight:600}
+  .seq .t-msg{fill:#2b3742;font-size:12.5px}
+  .seq .t-note{fill:var(--faint);font-size:11px}
+  .seq .ll{stroke:#C3CDD6;stroke-width:1;stroke-dasharray:4 4}
+  .seq .act{fill:var(--navy-soft);stroke:#9DBAD0}
+  .seq .call{stroke:var(--navy);stroke-width:1.6;fill:none}
+  .seq .ret{stroke:var(--navy);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+  .seq .hbox{fill:var(--navy-soft);stroke:var(--navy)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:26px;height:0;border-top:2px solid var(--navy);display:inline-block}
+  .legend i.dash{border-top-style:dashed}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
+  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
+  .delta b{color:var(--ink);font-weight:600}
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .demo b{color:var(--good)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:20px}
+  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  @media(max-width:680px){
+    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
+    h2{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">بلدياتثون 2026 · التحدي الثاني · التفتيش الرقمي الاستباقي</div>
+    <h1>رقيب <span class="latin">Raqib</span></h1>
+    <p class="thesis">نرتّب المنشآت والقطع الأكثر احتمالاً للمخالفة هذا الأسبوع — ونُنبّه المالك <b>بالعربية قبل</b> أن تُسجَّل عليه مخالفة. طبقة خطورة <b>أخلاقية</b> تقيّم أماكن لا أشخاصاً، مبنية على نموذج شيكاغو المُثبت ومدعومة بكشف تغيّر الأقمار الصناعية (Sentinel-2).</p>
+    <div class="origin"><span class="origin-k">مبني على أصل مُثبت</span> Chicago Food Inspection Forecasting (69% مقابل 55%، ~7.5 أيام أسرع) · Cincinnati 78% مقابل 53% · San Jose 59% مقابل 46% · Chelsea MA 81% مقابل 45% (1.8×، محكّم) · NYC FireCast ~20% دقّة أعلى</div>
+  </header>
+
+  <section>
+    <div class="eyebrow">الثغرة</div>
+    <h2>ماذا ينقص اليوم؟</h2>
+    <p class="thesis">منصة بلدي (~2.5M مستخدم، ~659K رخصة تجارية، ~234K رخصة إنشائية) وقناة «940» تستقبل بلاغات المواطنين — لكن لا يوجد <b>تنبؤ</b> ولا <b>تنبيه استباقي</b> ولا <b>كشف قائم على القمر الصناعي</b>. كل التفتيش تفاعلي: مخالفة ← بلاغ ← مفتش ← أسابيع. هنا يعمل «رقيب»: طبقة <b>ترتيب + تنبيه + قمر</b> فوق بلدي، تعطي المفتش قائمة مرتّبة <b>قبل</b> أن يخرج من مكتبه.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">الدليل</div>
+    <h2>لماذا نثق أنها تنجح</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">69%</div><div class="lab">من المنشآت ذات المخالفات الجسيمة أمسكها النموذج في النصف الأول من الزيارات مقابل 55% بدونه — تجريب حقيقي على 1,637 منشأة (شيكاغو 2014).</div><div class="ref">Chicago Dept. of Innovation</div></div>
+      <div class="stat"><div class="num">7.5 أيام</div><div class="lab">متوسط اكتشاف أبكر للمخالفات الجسيمة — أي نفس عدد المفتشين يحمون العامة قبلاً.</div><div class="ref">Chicago Food Inspections</div></div>
+      <div class="stat"><div class="num">81%</div><div class="lab">نسبة المتوقّع أن تحوي مخالفة في أعلى ترتيب خطورة مقابل 45% بالممارسة الحالية — تحقّق محكّم على بيانات تشيلسي MA.</div><div class="ref">Harvard Ash Center / PMC8781224</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">كيف يعمل</div>
+    <h2>من البيانات إلى تنبيه عربي للمالك</h2>
+    <div class="pipe">
+      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>رخصة + موقع القطعة</li><li>سجل بلاغات 940 (Amanah)</li><li>صور Sentinel-2 الحديثة (ESA، مجانية)</li><li>سجل التفتيش السابق</li></ul></div>
+      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>نموذج خطورة مرتّب (XGBoost/LightGBM)</li><li>كشف تغيّر مكاني عبر Sentinel-2</li><li>تفسير SHAP لكل عامل</li><li>تقييم أماكن لا أشخاص (place-level fairness)</li><li>تنبيه عربي استباقي قبل المخالفة</li></ul></div>
+      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>قائمة مرتّبة للمفتش (top 40)</li><li>بطاقة تفسير لكل عنصر</li><li>تنبيه استباقي للمالك بالعربية</li><li>API خطورة يغذّي التحدي 1</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">مسار التنفيذ · UML Sequence</div>
+    <h2>تسلسل التحركات بين المالك والنظام</h2>
+    <div class="seqwrap">
+      <svg class="seq" viewBox="0 0 830 470" role="img" aria-label="مخطط تسلسلي يوضح تفاعل المالك مع نظام رقيب ومحرك الخطورة ومصادر البيانات">
+        <defs>
+          <marker id="solid" markerWidth="10" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1D4E77"/></marker>
+          <marker id="open" markerWidth="12" markerHeight="8" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#1D4E77" stroke-width="1.3"/></marker>
+        </defs>
+        <rect class="hbox" x="45" y="16" width="150" height="34" rx="6"/><text class="t-life" x="120" y="38" text-anchor="middle">المالك</text>
+        <rect class="hbox" x="255" y="16" width="150" height="34" rx="6"/><text class="t-life" x="330" y="38" text-anchor="middle">رقيب (النظام)</text>
+        <rect class="hbox" x="465" y="16" width="150" height="34" rx="6"/><text class="t-life" x="540" y="38" text-anchor="middle">محرّك الخطورة</text>
+        <rect class="hbox" x="665" y="16" width="150" height="34" rx="6"/><text class="t-life" x="740" y="38" text-anchor="middle">بلدي · 940 · Sentinel-2</text>
+        <line class="ll" x1="120" y1="50" x2="120" y2="440"/>
+        <line class="ll" x1="330" y1="50" x2="330" y2="440"/>
+        <line class="ll" x1="540" y1="50" x2="540" y2="440"/>
+        <line class="ll" x1="740" y1="50" x2="740" y2="440"/>
+        <rect class="act" x="325" y="92" width="10" height="312"/>
+        <rect class="act" x="535" y="225" width="10" height="112"/>
+        <rect class="act" x="735" y="140" width="10" height="42"/>
+        <text class="t-msg" x="225" y="92" text-anchor="middle">افحص عنواني / سجّل للاشتراك</text>
+        <line class="call" x1="120" y1="100" x2="323" y2="100" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="142" text-anchor="middle">اجلب الرخصة + بلاغات 940 + Sentinel-2</text>
+        <line class="call" x1="336" y1="150" x2="733" y2="150" marker-end="url(#solid)"/>
+        <text class="t-msg" x="536" y="177" text-anchor="middle">تفاصيل الرخصة + 3 بلاغات + صور قبل/بعد</text>
+        <line class="ret" x1="735" y1="185" x2="337" y2="185" marker-end="url(#open)"/>
+        <text class="t-msg" x="438" y="222" text-anchor="middle">احسب الخطورة + كشف التغيّر</text>
+        <line class="call" x1="336" y1="230" x2="533" y2="230" marker-end="url(#solid)"/>
+        <path class="call" d="M545,268 L600,268 L600,290 L547,290" marker-end="url(#solid)"/>
+        <text class="t-msg" x="608" y="283" text-anchor="start">تحقّق: رخصة + شروط + تغيّر مكاني</text>
+        <text class="t-msg" x="438" y="329" text-anchor="middle">درجة الخطورة + أهم 3 عوامل (SHAP)</text>
+        <line class="ret" x1="535" y1="337" x2="337" y2="337" marker-end="url(#open)"/>
+        <text class="t-msg" x="225" y="391" text-anchor="middle">بطاقة خطورة + تنبيه عربي للمالك</text>
+        <line class="ret" x1="325" y1="399" x2="123" y2="399" marker-end="url(#open)"/>
+      </svg>
+    </div>
+    <div class="legend"><span><i></i> استدعاء / طلب</span><span><i class="dash"></i> رد / نتيجة</span></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">القدرات</div>
+    <h2>ماذا يفعل بالتفصيل</h2>
+    <div class="caps">
+      <div class="cap"><h3>نموذج خطورة مُثبت</h3><p>XGBoost/LightGBM مرتّب يرتّب كل قطعة/منشأة باحتمال مخالفة هذا الأسبوع — نفس عائلة النماذج التي حقّقت 81% مقابل 45% في تشيلسي MA.</p></div>
+      <div class="cap"><h3>كشف تغيّر بالأقمار (Sentinel-2)</h3><p>ESA Sentinel-2 مجاني (10م، كل 5 أيام) — نقارن قبل/بعد لاكتشاف بناء جديد بلا ترخيص. لا درونز، قابل للنشر وآمن قانونياً.</p></div>
+      <div class="cap"><h3>تنبيه عربي استباقي للمالك</h3><p>قبل أن تُسجَّل المخالفة، تصل رسالة عربية عبر تطبيق بلدي: «نظام رقيب رصد تغيّراً في عقارك… قدّم الترخيص خلال 7 أيام لتجنّب المخالفة».</p></div>
+      <div class="cap"><h3>تفسير قابل للتدقيق (SHAP)</h3><p>كل عنصر في القائمة يعرض أهم 3 عوامل: انتهاء رخصة، بلاغات 940 حديثة، تغيّر مكاني. المفتش يرى <b>لماذا</b> وليس فقط <b>ماذا</b>.</p></div>
+      <div class="cap"><h3>عدالة بالتصميم: أماكن لا أشخاص</h3><p>نقيّم قطعاً ومنشآت ورخصاً — لا نستخدم الجنسية أو اللغة أو العمر أو أي سمة ديموغرافية. درسنا من إخفاقات أمستردام وروتردام في التحيّز الخوارزمي.</p></div>
+      <div class="cap"><h3>API خطورة قابل لإعادة الاستخدام</h3><p>مخرجات قابلة للقراءة آلياً تُغذّي التحدي 1 (مُطابِق) والتحليلات البلدية — طبقة خطورة مشتركة.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">التميّز</div>
+    <h2>ما الذي نضيفه فوق الأصل</h2>
+    <ul class="delta">
+      <li><b>طبقة Sentinel-2</b> — شيكاغو لا ترى إلا ما رآه المفتش سابقاً؛ نضيف قمراً مجانياً يكشف البناء غير المرخّص تلقائياً.</li>
+      <li><b>تنبيه عربي استباقي للمالك قبل المخالفة</b> — الأصل رتّب الزيارات، نحن نمنع المخالفة من الأساس بإشعار مبكر.</li>
+      <li><b>نموذج عائلة واحدة لكل أنواع المخالفات</b> — تجارية وإنشائية وصحة عامة، بدل نموذج منفصل لكل نوع.</li>
+      <li><b>عدالة بالتصميم: أماكن لا أشخاص</b> — درسنا من إلغاء أمستردام لبرنامجها الرقابي (€535k) بعد تحيّز ضد المهاجرين؛ لا ميزات ديموغرافية إطلاقاً، وتُنشر المراجعة.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">العرض الحي · التسلسل السردي</div>
+    <h2>لحظة الإبهار</h2>
+    <ol class="demo">
+      <li>يختار الحكَم حيّاً في الخريطة ويطلب «قائمة هذا الأسبوع».</li>
+      <li>تظهر <b>قائمة مرتّبة</b> من 40 قطعة/منشأة، من أخضر إلى أحمر، مع درجة الخطورة لكل عنصر.</li>
+      <li>يضغط على قطعة في أعلى الترتيب: <b>شريط قمر Sentinel-2 قبل/بعد</b> يُظهر مبنى جديداً لم يكن موجوداً قبل 3 أشهر.</li>
+      <li>يظهر «لا توجد رخصة إنشاء نشطة»: النظام أرسل تنبيهاً عربياً للمالك قبل 6 أيام عبر تطبيق بلدي.</li>
+      <li>نضغط «تفسير»: أعلى 3 عوامل (انتهاء رخصة + 3 بلاغات 940 حديثة + تغيّر مكاني).</li>
+      <li>نعرض <b>back-test</b>: أول 20 زيارة أمسكَت 14 مخالفة بدل 8 — مرآة لنتائج شيكاغو 69% مقابل 55% على بياناتنا.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">التحكيم</div>
+    <h2>المطابقة لمعايير اللجنة</h2>
+    <table>
+      <tr><th>معالجة التحدي</th><td>ترتيب مخاطر + تنبيه استباقي قبل المخالفة + أولوية زيارات ميدانية — نص التحدي الثاني حرفياً.</td></tr>
+      <tr><th>الابتكار</th><td>دمج نموذج مُثبت (شيكاغو) + كشف Sentinel-2 + تنبيه عربي استباقي + عدالة أماكن لا أشخاص — غير مطبّق إقليمياً.</td></tr>
+      <tr><th>الجدوى</th><td>XGBoost/LightGBM مفتوح المصدر · Sentinel-2 مجاني · بيانات بلدي/940 داخل الوزارة · قابل للبناء في الهاكاثون.</td></tr>
+      <tr><th>الأثر والاستدامة</th><td>نفس عدد المفتشين يكتشف مخالفات أبكر بـ 7.5 أيام (شيكاغو)؛ يدعم هدف «حياة نوعية» في رؤية 2030.</td></tr>
+      <tr><th>جودة النموذج</th><td>قائمة مرتّبة شغّالة + شريط قمر قبل/بعد + تنبيه عربي + back-test مقارنة بنتائج شيكاغو.</td></tr>
+      <tr><th>العرض</th><td>قصة واحدة في 60 ثانية: «نُنبّه المالك بالعربية قبل أن يُسجَّل عليه شيء — ونرتّب زيارات المفتش بالأدلّة».</td></tr>
+    </table>
+  </section>
+
+  <section class="split">
+    <div>
+      <div class="eyebrow">الجدوى</div>
+      <h2>واقعي وقابل للبناء</h2>
+      <p class="thesis">نبني النموذج على بيانات مفتوحة/تركيبية بنفس ملامح بلدي، ونشغّل back-test بنفس منهجية شيكاغو. خط الذكاء يعمل قبل العرض فيُنتج قائمة مرتّبة + تنبيهاً عربياً + شريط قمر — فالعرض الحي مضمون. MOMRAH أصلاً تشغّل ذكاءً جغرافياً مكانياً في كشف الأراضي البيضاء (من &gt;20 يوماً إلى 4–6 ساعات لكل حي).</p>
+    </div>
+    <div>
+      <div class="eyebrow">المخاطر</div>
+      <h2>بصراحة</h2>
+      <ul>
+        <li>تحيّز بيانات التفتيش التاريخي — صراحة + مراجِع بشري + لا ميزات ديموغرافية + مراجعة عدالة منشورة.</li>
+        <li>دقّة Sentinel-2 (10م) — فلاغ للمراجعة البشرية، ليس عقوبة آلية.</li>
+        <li>الوصول لبيانات بلدي الكاملة — شراكة ما بعد الهاكاثون (White Lands يثبت أن خطوط البيانات موجودة).</li>
+        <li>حلقة التعلّم — عيّنات عشوائية دورية كما فعلت DSaPP في سان خوسيه.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">المصادر</div>
+    <ul class="src">
+      <li><b>التحدي</b> — momah.gov.sa/ar/hackathon</li>
+      <li><b>Chicago Food Inspection Forecasting (تقييم)</b> — chicago.github.io/food-inspections-evaluation</li>
+      <li><b>Chicago repo (R, MIT)</b> — github.com/Chicago/food-inspections-evaluation</li>
+      <li><b>Cincinnati blight 78% vs 53%</b> — seas.harvard.edu/news/2017/05/battling-blight-big-data</li>
+      <li><b>San Jose 59% vs 46%</b> — datasciencepublicpolicy.org (DSaPP portfolio)</li>
+      <li><b>Chelsea MA 81% vs 45% (محكّم)</b> — pmc.ncbi.nlm.nih.gov/articles/PMC8781224</li>
+      <li><b>NYC FireCast ~20%</b> — govtech.com/public-safety/new-york-city-fights-fire-with-data</li>
+      <li><b>Satellite/CV illegal construction 75–83%</b> — ongeo-intelligence.com/blog/detection-of-illegal-construction-in-satellite-images</li>
+      <li><b>IEEE CNN + cadastral</b> — ieeexplore.ieee.org/document/8710565</li>
+      <li><b>MOMRAH geospatial AI (White Lands)</b> — momah.gov.sa/en/node/15220</li>
+      <li><b>Amsterdam Smart Check scrapped</b> — technologyreview.com/2025/06/11/1118233</li>
+      <li><b>Rotterdam welfare-fraud bias</b> — lighthousereports.com/investigation/the-limits-of-ethical-ai</li>
+      <li><b>Sentinel-2 mission</b> — sentiwiki.copernicus.eu/web/s2-mission</li>
+      <li><b>Balady · 940</b> — balady.gov.sa</li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

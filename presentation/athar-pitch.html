@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر — عرض تقديمي (3 دقائق)</title>
+<style>
+  :root{
+    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
+    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
+    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;background:var(--ground);color:var(--ink);font-family:var(--sans)}
+  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+  /* deck container: scroll-snap fallback + JS transform-based paging */
+  #deck{
+    height:100vh;
+    width:100vw;
+    overflow-y:auto;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+  }
+  .slide{
+    height:100vh;
+    width:100%;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+    padding:clamp(28px,5vw,80px);
+    position:relative;
+    overflow:hidden;
+  }
+  .slide-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:20px}
+  .eyebrow{font-size:13px;letter-spacing:.06em;color:var(--navy);font-weight:600}
+  h1{font-size:clamp(40px,7vw,72px);line-height:1.05;margin:0;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1 .latin{font-family:var(--mono);font-size:.32em;font-weight:500;color:var(--faint);letter-spacing:.02em}
+  h2{font-size:clamp(26px,4vw,40px);font-weight:700;margin:0;letter-spacing:-.01em}
+  h3{font-size:17px;font-weight:600;margin:0 0 6px}
+  p{margin:0;color:var(--ink)}
+  .thesis{font-size:clamp(16px,2vw,21px);color:#26313d;line-height:1.6;max-width:78ch}
+  .hook{font-size:clamp(14px,1.6vw,17px);color:var(--ochre);font-weight:600;line-height:1.55;max-width:70ch;border-inline-start:3px solid var(--ochre);padding-inline-start:14px}
+  .cover .hook{border-inline-start:none;padding-inline-start:0;margin:0 auto;text-align:center;max-width:64ch}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+  .stat .num{font-family:var(--mono);font-size:clamp(26px,3vw,36px);font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
+  .stat .lab{margin-top:10px;font-size:14.5px;color:var(--muted);line-height:1.5}
+
+  .ref{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em;margin-top:10px}
+  .card .ref{margin-top:8px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .card p{font-size:14.5px;color:var(--muted);line-height:1.5}
+  .card.good{background:var(--navy-soft);border-color:#C3D7E6}
+
+  .pipe{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:12px;align-items:stretch}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
+  .stage-h{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:10px;letter-spacing:.03em}
+  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:6px}
+  .stage li{font-size:13.5px;color:var(--ink);line-height:1.4}
+
+  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:9px}
+  .demo li{counter-increment:d;position:relative;padding-inline-start:40px;font-size:15px;min-height:28px;display:flex;align-items:center;color:var(--muted)}
+  .demo li b{color:var(--ink)}
+  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:12.5px;display:flex;align-items:center;justify-content:center;font-weight:600}
+
+  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--ochre-soft);color:var(--ochre);font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;width:fit-content}
+  .badge.link{background:var(--navy-soft);color:var(--navy)}
+  a.linkbtn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-size:14.5px;font-weight:600;padding:10px 18px;border-radius:8px;text-decoration:none;width:fit-content}
+  a.linkbtn:hover{background:#163e5f}
+  a.linkbtn:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
+
+  /* slide 4: embedded live demo */
+  .demo-layout{display:grid;grid-template-columns:28% 72%;gap:18px;flex:1;min-height:0}
+  .demo-col{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden}
+  .demo-col .demo li{font-size:13px;min-height:22px;padding-inline-start:32px}
+  .demo-col .demo li::before{width:21px;height:21px;font-size:11px}
+  .device-frame{background:#1B2129;border-radius:14px;padding:8px 8px 0;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(15,25,35,.28);min-height:0;flex:1}
+  .device-bar{display:flex;align-items:center;gap:7px;padding:5px 6px 9px;flex:0 0 auto}
+  .device-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .device-dot.r{background:#E5605A}
+  .device-dot.y{background:#E8B23D}
+  .device-dot.g{background:#3FA65B}
+  .device-url{margin-inline-start:8px;background:#2A323B;color:#C8CDD3;font-family:var(--mono);font-size:11px;padding:4px 14px;border-radius:6px;flex:1;text-align:center;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .device-screen{flex:1;min-height:0;border-radius:8px 8px 0 0;overflow:hidden;background:#fff}
+  .device-screen iframe{width:100%;height:100%;border:0;display:block}
+  .fallback-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  @media(max-width:760px){
+    .demo-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(220px,1fr)}
+  }
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--muted)}
+
+  .pill{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:6px}
+  .pill span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 20px;font-weight:600;font-size:15px;color:var(--navy)}
+  .pill i{font-style:normal;color:var(--faint);font-size:18px}
+
+  .footnote{position:absolute;inset-inline:0;bottom:18px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:0 40px}
+  .footnote span{font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+  .closing{background:var(--navy);color:#fff}
+  .closing .eyebrow{color:#BFD6E7}
+  .closing h2{color:#fff}
+  .closing .thesis{color:#EAF1F7}
+  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .flow .step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:12px 18px;font-weight:600;font-size:16px}
+  .flow .step.hi{background:#fff;color:var(--navy)}
+  .flow .arrow{color:#BFD6E7;font-size:20px}
+  .cmp{width:100%;border-collapse:collapse;font-size:.72rem}
+  .cmp th,.cmp td{border:1px solid var(--line,#dde);padding:6px 10px;text-align:right}
+  .cmp tr:last-child td{background:#eef4f9}
+  .loops{margin:10px 0 0;padding-inline-start:20px;font-size:.82rem;line-height:1.9}
+  .qa p{font-size:.74rem;line-height:1.8;margin:0 0 8px}
+
+  /* nav chrome */
+  #counter{
+    position:fixed;
+    bottom:16px;
+    inset-inline-end:20px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px;
+    z-index:50;
+    direction:ltr;
+  }
+  #clickzone-prev,#clickzone-next{
+    position:fixed;
+    top:0;
+    height:100vh;
+    width:14vw;
+    z-index:40;
+    cursor:pointer;
+    background:transparent;
+    border:none;
+  }
+  #clickzone-prev{inset-inline-start:0}
+  #clickzone-next{inset-inline-end:0}
+  #progress{
+    position:fixed;
+    top:0;
+    inset-inline-start:0;
+    height:3px;
+    background:var(--ochre);
+    z-index:60;
+    transition:width .25s ease;
+  }
+  .cover{justify-content:center;align-items:center;text-align:center}
+  .cover .slide-inner{align-items:center;text-align:center}
+  .cover .thesis{max-width:60ch;margin:0 auto}
+
+  /* slide-enter fade+rise (CSS-only scroll-linked entry animation; no-op where unsupported) */
+  @keyframes slideEnterRise{ from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .slide-inner{
+        animation:slideEnterRise linear both;
+        animation-timeline:view();
+        animation-range:entry 0% cover 35%;
+      }
+    }
+  }
+
+  @media(max-width:760px){
+    .stats,.cards,.pipe,.split{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress" style="width:7.7%"></div>
+<button id="clickzone-prev" aria-label="الشريحة السابقة" title="السابق"></button>
+<button id="clickzone-next" aria-label="الشريحة التالية" title="التالي"></button>
+<div id="counter">1 / 13</div>
+
+<div id="deck">
+
+  <!-- SLIDE 1: الغلاف — 0:00-0:15 -->
+  <!-- SPEAKER NOTES: [0:00–0:15] "أثر" — الاسم يعني الأثر المروري الذي نقيسه قبل وقوعه. بلدياتثون 2026، التحدي الثالث: تأثير البنية التحتية والحفر على المرور. -->
+  <section class="slide cover" id="slide-1">
+    <div class="slide-inner">
+      <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · تأثير البنية التحتية والحفر على المرور</div>
+      <h1 style="justify-content:center">أثر <span class="latin">Athar</span></h1>
+      <p class="thesis">نقول للأمانة قبل إصدار الترخيص: كم سيدفع سكان المدينة من <b>وقت وازدحام</b> بسبب هذا الحفر؟ ثم نُعيد جدولته وندمجه مع حفريات مجاورة، ونرسم مساراً بديلاً حتى يتحول الأثر من <b>أحمر إلى أخضر</b>.</p>
+      <p class="hook">كل تصريح حفر يُوقَّع اليوم دون أن يعرف أحد كم سيكلف المدينة من ساعات الازدحام. أثر يجيب قبل التوقيع.</p>
+    </div>
+    <div class="footnote"><span>momah.gov.sa/ar/hackathon</span></div>
+  </section>
+
+  <!-- SLIDE 2: المشكلة — 0:15-0:40 -->
+  <!-- SPEAKER NOTES: [0:15–0:40] بلدي لديه خدمة تنسيق حفريات متعددة، بينما لا تعرض صفحات الخدمة العامة تحليلاً للأثر المروري أو تنبؤاً بالازدحام. حلول العالم تثبت إمكان سد الفجوة؛ تميّز أثر في جمع التوقع المنسوب واقتصاد الوقت والترتيب المفسّر والمعايرة في السياق السعودي. -->
+  <section class="slide" id="slide-2">
+    <div class="slide-inner">
+      <div class="eyebrow">المشكلة</div>
+      <h2>بلدي يُصدر تصاريح الحفر دون تحليل الأثر المروري</h2>
+      <p class="thesis">خدمة «تنسيق حفريات متعددة» في بلدي تنسّق <b>المكان والزمان</b> فقط — بلا تحليل تأثير مروري، وبلا تنبؤ بالازدحام، وبلا مسارات بديلة. هذه فجوة في المنظومة المحلية — وحلول العالم (سنغافورة، one.network) تثبت أن سدّها ممكن؛ تميّزنا في الجمع والسياق السعودي، لا في ادعاء السبق.</p>
+      <div class="stats">
+        <div class="stat"><div class="num">150 <span style="font-size:16px">يوم</span></div><div class="lab">أقصى مدة تصريح حفر على الطرق السريعة.</div><div class="ref">balady.gov.sa/en/services/excavation-permits</div></div>
+        <div class="stat"><div class="num">300 <span style="font-size:16px">يوم</span></div><div class="lab">أقصى مدة تصريح حفر على الطرق الرئيسية.</div><div class="ref">balady.gov.sa/en/services/excavation-permits</div></div>
+        <div class="stat"><div class="num" style="font-size:22px;line-height:1.3">لا تحليل مروري</div><div class="lab">خدمة تنسيق الحفريات المتعددة لا تذكر تحليل الأثر أو التنبؤ بالازدحام.</div><div class="ref">balady.gov.sa/.../request-multiple-excavation-coordination</div></div>
+      </div>
+    </div>
+    <div class="footnote"><span>balady.gov.sa/en/services/excavation-permits</span><span>balady.gov.sa/en/services/request-multiple-excavation-coordination</span></div>
+  </section>
+
+  <!-- COMPETITOR POSITIONING — APPENDIX TO THE 3-MINUTE FLOW -->
+  <section class="slide" id="slide-competitors">
+    <div class="slide-inner">
+      <div class="eyebrow">المنافسون والتميّز</div>
+      <h2>نعرف المنافسين — وهذا موضعنا</h2>
+      <table class="cmp">
+        <tr><th>الحل</th><th>ما يفعله</th><th>ما لا يفعله لسياقنا</th></tr>
+        <tr><td>one.network (أمريكا/بريطانيا)</td><td>تصاريح + تنسيق + خريطة عامة + تكامل ملاحة</td><td>لا اقتصاد وقت سعودي (كود 203) ولا معايرة توقع/واقع معلنة</td></tr>
+        <tr><td>LTA سنغافورة (PROMPT + AI)</td><td>مراجعة خطط التحكم المروري بالذكاء الاصطناعي</td><td>مراجعة وثائق — لا ترتيب بدائل جدولة بأثر شبكي مفسّر</td></tr>
+        <tr><td>PTV Vissim / Aimsun</td><td>محاكاة مرورية دقيقة</td><td>أداة خبراء لكل حالة — لا طبقة قرار لكل تصريح</td></tr>
+        <tr><td>UK Street Manager</td><td>تنسيق وطني 2.5M عمل/سنة</td><td>سجل وتنسيق — لا توصية توقيت مثلى مفسّرة</td></tr>
+        <tr><td><b>أثر</b></td><td colspan="2"><b>طبقة قرار فوق بلدي: توقّع منسوب + اقتصاد وقت بكود 203 + ترتيب بدائل مفسّر + معايرة بعد التنفيذ — مجتمعةً في سياق سعودي</b></td></tr>
+      </table>
+      <div class="ref">one.network · LTA Singapore · PTV Vissim · Aimsun · UK Department for Transport — مقارنة قدرات عامة، لا قياس أثر سعودي</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: الحل — 0:40-1:05 -->
+  <!-- SPEAKER NOTES: [0:40–1:05] أثر يضيف طبقة قرار فوق الترخيص: يحسب درجة أثر مروري قبل التوقيع، يبحث عن جدولة مثلى، يقترح دمج التصريح مع تصاريح مجاورة في خندق مشترك، ويرسم مساراً بديلاً — عبر محرك مزدوج: محاكاة تحليلية سريعة (BPR) للاستجابة الفورية. -->
+  <section class="slide" id="slide-3">
+    <div class="slide-inner">
+      <div class="eyebrow">الحل</div>
+      <h2>خمس حلقات مترابطة — هذا هو الابتكار</h2>
+      <ol class="loops">
+        <li><b>حد تأثير يتوسع بالحركة</b> لا بمسافة ثابتة حول الحفرية.</li>
+        <li><b>درجة أثر مفسّرة</b> متوافقة مع منهج كود الطرق السعودي.</li>
+        <li><b>ميزانية أثر لكل محور</b> تمنع تراكم المشاريع في الوقت نفسه.</li>
+        <li><b>ترتيب بدائل</b> بساعات الأشخاص والقيمة والنقل العام والوصول الحرج.</li>
+        <li><b>معايرة بعد التنفيذ</b>: توقع ← قياس ← تصحيح — يتحسن مع كل تصريح.</li>
+      </ol>
+      <div class="pipe">
+        <div class="stage"><div class="stage-h">المدخلات</div><ul><li>طلب تصريح حفر (الموقع، المدة، المسارات)</li><li>شبكة الطرق وحركة المرور النموذجية</li><li>تصاريح مجاورة ومتزامنة</li></ul></div>
+        <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>درجة أثر مروري (دالة BPR القياسية)</li><li>مُحسّن الجدولة عبر شبكة سيناريوهات زمنية</li><li>كاشف دمج الحفريات (Dig-Once)</li><li>كاشف التأثيرات المركّبة بين ممرات متوازية</li></ul></div>
+        <div class="stage"><div class="stage-h">المخرجات</div><ul><li>درجة أثر (أحمر/أصفر/أخضر) + سبب القرار</li><li>أفضل 3 جداول بديلة مع التبرير</li><li>وفر CO₂ ووفر Dig-Once بالريال</li></ul></div>
+      </div>
+    </div>
+    <div class="footnote"><span>BPR = Bureau of Public Roads volume-delay function (معيار هندسي قياسي)</span></div>
+  </section>
+
+  <!-- SLIDE 4: الديمو المباشر — 1:05-1:30 -->
+  <!-- SPEAKER NOTES: [1:05–1:30] هذا هو النموذج التفاعلي الحي — نفتحه الآن على طريق الملك فهد بالرياض (مقطع العليا، بيانات توضيحية للعرض). سبع خطوات: حدد موقع الحفر، اضبط عدد المسارات المغلقة والمدة، شاهد درجة الأثر، اضغط "حسّن الجدولة"، قارن قبل/بعد، شاهد وفر CO₂ ووفر Dig-Once، ثم أصدر خطة إدارة المرور. -->
+  <section class="slide" id="slide-4">
+    <div class="slide-inner">
+      <div class="eyebrow">الديمو المباشر</div>
+      <h2>النموذج التفاعلي — طريق الملك فهد، الرياض (مقطع العليا)</h2>
+      <span class="badge">بيانات توضيحية للعرض</span>
+      <div class="demo-layout">
+        <div class="demo-col">
+          <ol class="demo">
+            <li><b>حدد موقع الحفر</b> على الخريطة التفاعلية (Leaflet).</li>
+            <li>اضبط <b>عدد المسارات المغلقة</b>، ساعة البدء، والمدة — الدرجة تتحدث فوراً.</li>
+            <li>اضغط <b>«حسّن الجدولة»</b> لعرض أفضل 3 بدائل مع أسباب الفوز.</li>
+            <li>شاهد عدّاد <b>back-test</b>: ساعات-مركبة قبل ← بعد.</li>
+            <li>شاهد بطاقتي <b>وفر CO₂</b> و<b>وفر Dig-Once بالريال</b>.</li>
+            <li>أصدر <b>خطة إدارة مرور (طباعة PDF)</b> جاهزة بالعربية.</li>
+          </ol>
+          <div class="fallback-row">
+            <a class="linkbtn" href="athar-prototype.html" target="_blank" rel="noopener">افتح النموذج في نافذة كاملة ↗</a>
+          </div>
+        </div>
+        <div class="device-frame">
+          <div class="device-bar">
+            <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
+            <span class="device-url">athar-prototype.html</span>
+          </div>
+          <div class="device-screen">
+            <iframe data-src="athar-prototype.html" loading="lazy" title="نموذج أثر الحي"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>الديمو يعمل بدون خادم (وضع مستقل) وبواجهة API عند تشغيل server.js</span></div>
+  </section>
+
+  <!-- SLIDE 5: الدليل — 1:30-1:55 -->
+  <!-- SPEAKER NOTES: [1:30–1:55] نفتتح بالأرقام السعودية الرسمية: 67 دقيقة متوسط الرحلة اليومية و34.7 مليون رحلة حافلات — هذه سياق البيئة، ولا ننسبها للحفريات؛ منفعتنا تقاس كتأخير منسوب لمنطقة العمل فقط. المنهجية ليست تخميناً: دراسة محكّمة سنة 2009 أثبتت خفض التأخير 11.1% عبر إعادة جدولة الحفريات — نستشهد بها كدليل منهجية لا وعداً بنتيجة سعودية. بريطانيا تنسق 2.5 مليون عملية طريق سنوياً عبر Street Manager. ودمج الحفريات (Dig-Once) يوفر 25-33% في المناطق الحضرية الكثيفة. -->
+  <section class="slide" id="slide-5">
+    <div class="slide-inner">
+      <div class="eyebrow">الدليل</div>
+      <h2>لماذا نثق أنها تنجح</h2>
+      <div class="stats">
+        <div class="stat"><div class="num">67 دقيقة</div><div class="lab">متوسط رحلة الذهاب والعودة اليومية في الرياض (2024) — حجم البيئة المرورية التي يعمل فيها كل تصريح، لا رقم ننسبه للحفريات.</div><div class="ref">GASTAT — Livability in Saudi Cities 2025</div></div>
+        <div class="stat"><div class="num">+34.7M</div><div class="lab">رحلة ركاب بحافلات الرياض في 2024 — كل إغلاق يمس النقل العام لا المركبات وحدها.</div><div class="ref">GASTAT — Livability in Saudi Cities 2025</div></div>
+        <div class="stat"><div class="num">−11.1%</div><div class="lab">خفض تأخير المرور عند إعادة جدولة أعمال الحفر — <b>دليل منهجية</b> من دراسة محكّمة، لا وعد بنتيجة في المملكة.</div><div class="ref">Automation in Construction, 2009</div></div>
+        <div class="stat"><div class="num">2.5M</div><div class="lab">عملية طريق تُنسّق سنوياً في إنجلترا عبر منصة Street Manager الحكومية.</div><div class="ref">UK Parliament / gov.uk</div></div>
+        <div class="stat"><div class="num">25–33%</div><div class="lab">وفر في التكلفة عند دمج الحفريات في خندق مشترك (Dig-Once) بالمناطق الحضرية الكثيفة.</div><div class="ref">US GAO — GAO-12-687R, gao.gov</div></div>
+      </div>
+    </div>
+    <div class="footnote"><span>researchgate.net/publication/237896838</span><span>publications.parliament.uk/pa/cm5901/cmselect/cmtrans/522/report.html</span><span>gao.gov/products/gao-12-687r</span><span>nyc.gov/html/dot/html/infrastructure/permits.shtml — مكتب تنسيق وتخفيف أعمال البناء في نيويورك NYC OCMC — مراجعة خبيرة للتصاريح وتنسيق Dig-Once</span></div>
+  </section>
+
+  <!-- SLIDE 6: التفسيرية — 1:55-2:15 -->
+  <!-- SPEAKER NOTES: [1:55–2:15] كل جدول بديل يأتي مع 3 أسباب مشتقة من الأرقام الفعلية — "لماذا فاز هذا الجدول" — هذا يبني ثقة لجنة اتخاذ القرار في الأمانة، لأن القرار مفسَّر لا صندوقاً أسود. -->
+  <section class="slide" id="slide-6">
+    <div class="slide-inner">
+      <div class="eyebrow">التفسيرية</div>
+      <h2>«لماذا فاز هذا الجدول» — ثقة اللجنة</h2>
+      <p class="thesis">كل جدول مقترح يُرفق بثلاثة أسباب مشتقة من التحليل الفعلي، لا نصاً معلّباً — يرى متخذ القرار <b>لماذا</b> لا <b>ماذا</b> فقط.</p>
+      <div class="cards">
+        <div class="card good"><h3>نافذة خارج الذروة</h3><p>البدء الساعة 23:00 يقابل طلباً أقل بنسبة كبيرة مقارنة بذروة الصباح 7–9.</p></div>
+        <div class="card good"><h3>تقسيم على مرحلتين</h3><p>تقسيم العمل على ليلتين يخفّض ذروة التأثير بدل تركيزه دفعة واحدة.</p></div>
+        <div class="card good"><h3>تفادي ذروة الصباح</h3><p>تجنّب الساعات 7–9 يمنع تراكب الحفر مع أعلى طلب يومي على الممر.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: الأثر — 2:15-2:35 -->
+  <!-- SPEAKER NOTES: [2:15–2:35] النتائج تُترجم لوحدات قرار: ساعات-مركبة موفّرة، كيلوغرامات CO₂ (بحث محكّم في مجلة علمية عن انبعاثات مواقع العمل)، وريالات موفّرة من دمج الحفريات (Dig-Once). لا نسب مجردة — أرقام يفهمها متخذ القرار المالي والبيئي. -->
+  <section class="slide" id="slide-7">
+    <div class="slide-inner">
+      <div class="eyebrow">الأثر</div>
+      <h2>نتائج بوحدات قرار، لا نسب مجردة</h2>
+      <div class="cards">
+        <div class="card"><h3>ساعات-مركبة موفّرة</h3><p>عدّاد before/after مباشر لكل تصريح — الفرق الفعلي في الازدحام المُقاس.</p></div>
+        <div class="card"><h3>CO₂ الموفّر (كجم)</h3><p>تحويل زمن التوقف الموفّر إلى لترات وقود وكيلوغرامات CO₂ — مرتبط بأهداف الاستدامة.</p><div class="ref">sciencedirect.com/.../S1556831824000285</div></div>
+        <div class="card"><h3>وفر Dig-Once (ريال)</h3><p>وفر التكلفة عند دمج تصاريح متجاورة في خندق حفر مشترك بدل حفرها منفصلة.</p><div class="ref">fhwa.dot.gov/policy/otps/policy_brief_dig_once.pdf</div></div>
+        <div class="card good"><h3>أثر قابل للإثبات</h3><p>نعلن النتيجة لكل تصريح أو للتجربة المحددة كنطاق موثّق. أي توسع للمدينة أو المملكة يبقى سيناريو مشروطاً بالحجم الرسمي للتصاريح وتمثيل العينة.</p><div class="ref">منهج قياس أثر — تجربة ظل قبل/أثناء/بعد</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: الشفافية — 2:35-2:45 -->
+  <!-- SPEAKER NOTES: [2:35–2:45] خريطة عامة للمواطن تعرض الأعمال النشطة ودرجة أثرها ومواعيدها — نفس نمط roadworks.org / one.network في بريطانيا، لكن مبنية على بيانات بلدي. -->
+  <section class="slide" id="slide-8">
+    <div class="slide-inner">
+      <div class="eyebrow">الشفافية</div>
+      <h2>خريطة عامة للأعمال — للمواطن قبل المطوّر</h2>
+      <p class="thesis">نفس بيانات الأعمال المُعتمدة تُنشر كخريطة عامة يراها كل مواطن: الموقع، درجة الأثر، والمواعيد — سابقة مطبّقة في بريطانيا (roadworks.org / one.network) نُطبّقها هنا فوق بيانات بلدي. لا يتحمّل حيّ واحد إزعاج المدينة كلها — الممرات متكررة الإغلاق تُرصد وتُعطى أولوية الدمج.</p>
+    </div>
+    <div class="footnote"><span>roadworks.org · one.network</span></div>
+  </section>
+
+  <!-- SLIDE 9: الجدوى — 2:45-2:55 -->
+  <!-- SPEAKER NOTES: [2:45–2:55] النموذج يعمل مباشرة فوق بيانات بلدي الحالية دون تعديل هيكلي، الكود مفتوح المصدر بالكامل، ويعتمد حصريًا على بيانات التصاريح والبنية التحتية — فقط بيانات تصاريح حفر وشبكة طرق عامة. -->
+  <section class="slide" id="slide-9">
+    <div class="slide-inner">
+      <div class="eyebrow">الجدوى</div>
+      <h2>قابل للتطبيق من اليوم الأول</h2>
+      <div class="pill">
+        <span>يعمل فوق بيانات بلدي الحالية</span>
+        <i>·</i>
+        <span>مفتوح المصدر بالكامل</span>
+        <i>·</i>
+        <span>يعتمد حصريًا على بيانات التصاريح والبنية التحتية</span>
+        <i>·</i>
+        <span>بلا أي أجهزة استشعار أو تصوير إضافية</span>
+      </div>
+      <p class="thesis" style="margin-top:10px">لا يتطلب بنية تحتية جديدة — طبقة منطق حسابي فوق تصاريح الحفر وشبكة الطرق العامة، تعمل بلا اتصال أو عبر واجهة API خفيفة.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: الختام — 2:55-3:00 -->
+  <!-- SPEAKER NOTES: [2:55–3:00] الختام: أثر ليس أداة معزولة — بل الوحدة الثالثة في طبقة ذكاء بلدي الشاملة: امتثال قبل الترخيص، ثم تفتيش استباقي، ثم بنية تحتية — أثر يمثل حلقة البنية التحتية بنفس فلسفة القرار الذكي. -->
+  <section class="slide cover closing" id="slide-10">
+    <div class="slide-inner">
+      <div class="eyebrow">الختام</div>
+      <h2>«أثر = الوحدة الثالثة في طبقة ذكاء بلدي»</h2>
+      <div class="flow">
+        <span class="step">امتثال</span>
+        <span class="arrow">←</span>
+        <span class="step">تفتيش</span>
+        <span class="arrow">←</span>
+        <span class="step hi">بنية تحتية (أثر)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOURCES APPENDIX — لا تُعرض ضمن الـ3 دقائق -->
+  <section class="slide" id="slide-sources">
+    <div class="slide-inner">
+      <div class="eyebrow">المصادر المعتمدة</div>
+      <h2>قاعدة الأدلة السعودية والمقارنة العالمية</h2>
+      <ul>
+        <li><b>نتيجة −11.1%</b> — Automation in Construction, 2009 · دليل منهجية لا وعد سعودي</li>
+        <li><b>كود الطرق السعودي 203</b> (قيمة الوقت، درجات التحليل) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
+        <li><b>كود الطرق السعودي 305</b> (مناطق العمل الذكية) — shc.rga.gov.sa · هيئة الطرق · 2026</li>
+        <li><b>GASTAT — Livability in Saudi Cities 2025</b> (67 دقيقة · 34.7M رحلة حافلات) — stats.gov.sa</li>
+        <li><b>GASTAT — Road Transport Statistics 2024</b> (15.8M مركبة · 17,231 حادثة جسيمة) — stats.gov.sa</li>
+        <li><b>RCRC Open Data</b> (633 تقاطعاً · 3,010 نقاط حافلات · 117 مساراً · 94 محطة مترو) — opendata.rcrc.gov.sa</li>
+        <li><b>US GAO — GAO-12-687R</b> (وفر Dig-Once الحضري 25–33%) — gao.gov</li>
+        <li><b>one.network</b> (المنافس المرجعي) — us.one.network</li>
+        <li><b>LTA Singapore</b> (مراجعة خطط المرور بالذكاء الاصطناعي) — lta.gov.sg</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Q&A ARSENAL — لا تُعرض ضمن الـ3 دقائق؛ تُفتح عند الأسئلة -->
+  <section class="slide" id="slide-qa">
+    <div class="slide-inner">
+      <div class="eyebrow">ملحق الأسئلة</div>
+      <h2>أسئلة اللجنة — أجوبة جاهزة</h2>
+      <div class="qa">
+        <p><b>كيف تختلفون عن بلدي؟</b> بلدي يدير التصريح والتنسيق؛ نحن نحسب أثر القرار ونرتب البدائل ونقيس النتيجة، ثم نعيدها إلى مسار بلدي نفسه.</p>
+        <p><b>وone.network وسنغافورة؟</b> نعرفهما — سنغافورة تراجع الوثائق بالذكاء الاصطناعي وone.network يجمع التصاريح والخريطة. لا أحد يجمع التوقع المنسوب واقتصاد كود 203 والترتيب المفسّر والمعايرة في سياق سعودي فوق بلدي.</p>
+        <p><b>كيف تثبتون التوفير؟</b> حالة مقابلة تماثل الساعة والطلب، قياس قبل وأثناء وبعد، ونشر نطاق عدم اليقين وخطأ التوقع — لا رقم وحيد.</p>
+        <p><b>هل الأرقام وطنية؟</b> لا. النتائج لكل تصريح أو للتجربة المحددة؛ أي توسع سيناريو مشروط بالحجم الرسمي للتصاريح متى نُشر.</p>
+        <p><b>هل الذكاء الاصطناعي هو المنتج؟</b> لا. المنتج قرار مفسّر قابل للقياس؛ النماذج تُستخدم حيث تحسّن التوقع، والمعادلات والمصادر تبقى ظاهرة.</p>
+        <p><b>ولو غابت البيانات الحية؟</b> نبدأ بفحص سريع بالطبقات المفتوحة، نرفع الدقة عند وصول السرعة والحجم، والحالات عالية الأثر تذهب لمحاكاة متخصصة (Vissim/Aimsun) — ثلاث درجات معمارية.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var counter = document.getElementById('counter');
+  var progress = document.getElementById('progress');
+  var total = slides.length;
+  var current = 0;
+
+  /* fires whenever the active slide index changes, from any navigation path */
+  function dispatchSlideChange(){
+    document.dispatchEvent(new CustomEvent('slidechange', {
+      detail:{ index: current, id: slides[current].id }
+    }));
+  }
+
+  function updateCounter(){
+    counter.textContent = (current + 1) + ' / ' + total;
+    progress.style.width = (((current + 1) / total) * 100) + '%';
+    dispatchSlideChange();
+  }
+
+  function goTo(index){
+    if (index < 0) index = 0;
+    if (index >= total) index = total - 1;
+    current = index;
+    slides[current].scrollIntoView({behavior:'smooth', block:'start'});
+    updateCounter();
+  }
+
+  function next(){ goTo(current + 1); }
+  function prev(){ goTo(current - 1); }
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+      /* RTL deck: right arrow = previous slide (reading direction), left arrow = next */
+      if (e.key === 'ArrowLeft') next();
+      if (e.key === 'ArrowRight') prev();
+    } else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){
+      next();
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp'){
+      prev();
+      e.preventDefault();
+    } else if (e.key === 'Home'){
+      goTo(0);
+    } else if (e.key === 'End'){
+      goTo(total - 1);
+    }
+  });
+
+  document.getElementById('clickzone-next').addEventListener('click', next);
+  document.getElementById('clickzone-prev').addEventListener('click', prev);
+
+  /* keep counter in sync when user scrolls/snaps manually */
+  var scrollTimer = null;
+  deck.addEventListener('scroll', function(){
+    if (scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function(){
+      var scrollPos = deck.scrollTop;
+      var idx = Math.round(scrollPos / window.innerHeight);
+      if (idx < 0) idx = 0;
+      if (idx >= total) idx = total - 1;
+      current = idx;
+      updateCounter();
+    }, 120);
+  });
+
+  /* slide 4: load the live prototype into the iframe only once its slide becomes active */
+  document.addEventListener('slidechange', function(e){
+    if (!e.detail || e.detail.id !== 'slide-4') return;
+    var frame = document.querySelector('#slide-4 iframe[data-src]');
+    if (!frame) return;
+    frame.setAttribute('src', frame.getAttribute('data-src'));
+    frame.removeAttribute('data-src');
+  });
+
+  updateCounter();
+})();
+</script>
+
+<script>
+(function(){
+  /* count-up animation for big stat numbers, once per element, when their slide is visible */
+  if (!('IntersectionObserver' in window)) return;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  var nums = Array.prototype.slice.call(document.querySelectorAll('.stat .num'));
+
+  function animateCountUp(el){
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    var original = el.innerHTML;
+    var text = el.textContent;
+    var match = text.match(/[-−]?\d+(?:[.,]\d+)?/);
+    if (!match) return; /* no number in this stat (e.g. text-only stat) — leave as authored */
+
+    var raw = match[0].replace(',', '.').replace('−', '-');
+    var target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length;
+    var prefix = text.slice(0, match.index);
+    var suffix = text.slice(match.index + match[0].length);
+    var duration = 900;
+    var start = null;
+
+    function step(ts){
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
+      if (progress < 1){
+        requestAnimationFrame(step);
+      } else {
+        el.innerHTML = original; /* restore exact authored markup/styling */
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        animateCountUp(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.6});
+
+  nums.forEach(function(el){ observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>

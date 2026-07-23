@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raqeeb AI — Proactive Municipal Inspection Dashboard</title>
+  <style>
+    :root {
+      --primary: #005C3F;
+      --primary-dark: #003D2A;
+      --accent: #C8A464;
+      --accent-light: #F2E6CE;
+      --danger: #D32F2F;
+      --warning: #F9A825;
+      --success: #2E7D32;
+      --bg: #F7F8FA;
+      --panel: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --radius: 10px;
+      --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      background: white;
+      color: var(--primary);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .brand-text span {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .header-meta div {
+      text-align: center;
+    }
+
+    .header-meta strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .top-bar h2 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--primary-dark);
+    }
+
+    .badge {
+      background: var(--accent-light);
+      color: var(--primary-dark);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--accent);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--primary);
+    }
+
+    .kpi-card h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .kpi-delta {
+      font-size: 13px;
+      margin-top: 6px;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      color: var(--primary-dark);
+    }
+
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .cell {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    .cell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      z-index: 2;
+    }
+
+    .cell.low { background: #81C784; }
+    .cell.medium { background: #FFB74D; color: #3e2723; }
+    .cell.high { background: #E57373; }
+    .cell.critical { background: var(--danger); }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .target-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .target-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .target-item:hover, .target-item.active {
+      background: #F0FDF4;
+      border-color: var(--primary);
+    }
+
+    .target-info h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .target-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .risk-score {
+      text-align: center;
+      min-width: 64px;
+    }
+
+    .risk-score .score {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .risk-score .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .detail-panel {
+      margin-top: 20px;
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .detail-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .detail-header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .shap-list {
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .shap-item {
+      margin-bottom: 12px;
+    }
+
+    .shap-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .shap-bar-bg {
+      height: 10px;
+      background: #E5E7EB;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .shap-bar {
+      height: 100%;
+      border-radius: 5px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+    }
+
+    button:hover { opacity: 0.92; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-ghost { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary-dark);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      font-size: 14px;
+      transform: translateY(120px);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show { transform: translateY(0); }
+
+    .empty-state {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .model-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(46, 125, 50, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">ر</div>
+    <div class="brand-text">
+      <h1>Raqeeb AI <span style="font-weight:400">| رقيب الذكاء الاصطناعي</span></h1>
+      <span>Proactive Municipal Inspection Intelligence — Challenge 2 Demo</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div><strong id="today-targets">12</strong>Today's Targets</div>
+    <div><strong id="hit-rate">34%</strong>Est. Hit-Rate</div>
+    <div><strong id="saved-hours">6.2h</strong>Inspector Hours Saved</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="top-bar">
+    <h2>District Risk Overview — Makkah Al-Mukarramah</h2>
+    <div class="badge">SYNTHETIC DEMO DATA</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <h3>Establishments Monitored</h3>
+      <div class="kpi-value">1,247</div>
+      <div class="kpi-delta">Across 6 districts</div>
+    </div>
+    <div class="kpi-card">
+      <h3>High-Risk Today</h3>
+      <div class="kpi-value">38</div>
+      <div class="kpi-delta">Top 10% flagged by model</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Avg. Risk Score</h3>
+      <div class="kpi-value">0.42</div>
+      <div class="kpi-delta">↑ 0.08 vs last week</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Feedback Loops</h3>
+      <div class="kpi-value">842</div>
+      <div class="kpi-delta">Inspections retrained on</div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="panel">
+      <h3>Risk Heatmap — 36 Neighborhood Cells</h3>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:#81C784"></span> Low (&lt;0.3)</span>
+        <span><span class="dot" style="background:#FFB74D"></span> Medium (0.3–0.5)</span>
+        <span><span class="dot" style="background:#E57373"></span> High (0.5–0.75)</span>
+        <span><span class="dot" style="background:var(--danger)"></span> Critical (&gt;0.75)</span>
+      </div>
+      <div class="model-status"><span class="pulse"></span> Model live — last retrain 3 hours ago</div>
+    </div>
+
+    <div class="panel">
+      <h3>Prioritized Inspection Route</h3>
+      <ul class="target-list" id="target-list"></ul>
+    </div>
+  </div>
+
+  <div class="panel detail-panel" id="detail-panel" style="display:none">
+    <div class="detail-header">
+      <div>
+        <h3 id="detail-name">Al-Faisaliyah Restaurant</h3>
+        <p id="detail-meta">License: 440129 | Category: Restaurant | District: Al-Aziziyah</p>
+      </div>
+      <div class="risk-score">
+        <div class="score" id="detail-score">0.87</div>
+        <div class="label" id="detail-label">Critical</div>
+      </div>
+    </div>
+    <h3>Why Flagged — SHAP Explanation</h3>
+    <ul class="shap-list" id="shap-list"></ul>
+    <div class="actions">
+      <button class="btn-success" onclick="recordOutcome('violation')">✓ Found Violation</button>
+      <button class="btn-ghost" onclick="recordOutcome('clean')">✓ Compliant</button>
+      <button class="btn-danger" onclick="recordOutcome('false')">Flag False Positive</button>
+      <button class="btn-primary" onclick="addToRoute()">Add to Today's Route</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Action recorded. Model feedback loop updated.</div>
+
+<script>
+  // Synthetic demo dataset
+  const categories = ['Restaurant', 'Cafeteria', 'Bakery', 'Construction Site', 'Retail'];
+  const districts = ['Al-Aziziyah', 'Al-Haram', 'Al-Sharaa', 'Al-Mansour', 'Al-Nuzha', 'Al-Zahir'];
+  const reasons = [
+    { label: '3 complaints in last 30 days', weight: 0.22 },
+    { label: 'Previous critical violation 8 months ago', weight: 0.18 },
+    { label: 'License expires within 14 days', weight: 0.14 },
+    { label: 'Neighborhood violation density 2.3× average', weight: 0.13 },
+    { label: 'High-traffic location near Hajj route', weight: 0.11 },
+    { label: 'No recent inspection (>120 days)', weight: 0.10 },
+    { label: 'Seasonal spike: Ramadan +15%', weight: 0.07 },
+    { label: 'Weather alert: high temperature', weight: 0.05 }
+  ];
+
+  let establishments = [];
+  for (let i = 1; i <= 36; i++) {
+    const risk = Math.min(0.97, Math.max(0.05, Math.pow(Math.random(), 1.6) * 0.95 + 0.02));
+    const est = {
+      id: i,
+      name: `Establishment ${String(i).padStart(3, '0')}`,
+      license: `44${String(Math.floor(Math.random() * 8999) + 1000)}`,
+      category: categories[Math.floor(Math.random() * categories.length)],
+      district: districts[Math.floor(Math.random() * districts.length)],
+      risk: risk,
+      shap: reasons.sort(() => Math.random() - 0.5).slice(0, 4).map(r => ({
+        label: r.label,
+        value: Math.round(r.weight * (0.7 + Math.random() * 0.6) * 100)
+      }))
+    };
+    // normalize shap values to sum ~100
+    const total = est.shap.reduce((s, x) => s + x.value, 0);
+    est.shap.forEach(x => x.value = Math.round((x.value / total) * 100));
+    establishments.push(est);
+  }
+
+  // Sort by risk descending
+  establishments.sort((a, b) => b.risk - a.risk);
+
+  function riskClass(r) {
+    if (r >= 0.75) return 'critical';
+    if (r >= 0.5) return 'high';
+    if (r >= 0.3) return 'medium';
+    return 'low';
+  }
+
+  function riskLabel(r) {
+    if (r >= 0.75) return 'Critical';
+    if (r >= 0.5) return 'High';
+    if (r >= 0.3) return 'Medium';
+    return 'Low';
+  }
+
+  function renderHeatmap() {
+    const grid = document.getElementById('heatmap');
+    grid.innerHTML = '';
+    establishments.forEach(est => {
+      const cell = document.createElement('div');
+      cell.className = `cell ${riskClass(est.risk)}`;
+      cell.textContent = est.id;
+      cell.title = `${est.name} — Risk ${(est.risk * 100).toFixed(0)}%`;
+      cell.onclick = () => selectEstablishment(est.id);
+      grid.appendChild(cell);
+    });
+  }
+
+  function renderTargets() {
+    const list = document.getElementById('target-list');
+    list.innerHTML = '';
+    establishments.slice(0, 12).forEach(est => {
+      const li = document.createElement('li');
+      li.className = 'target-item';
+      li.id = `target-${est.id}`;
+      li.onclick = () => selectEstablishment(est.id);
+      li.innerHTML = `
+        <div class="target-info">
+          <h4>${est.name}</h4>
+          <div class="target-meta">${est.category} · ${est.district} · License ${est.license}</div>
+        </div>
+        <div class="risk-score">
+          <div class="score" style="color:${est.risk >= 0.75 ? 'var(--danger)' : est.risk >= 0.5 ? '#E57373' : est.risk >= 0.3 ? 'var(--warning)' : 'var(--success)'}">${(est.risk * 100).toFixed(0)}%</div>
+          <div class="label">${riskLabel(est.risk)}</div>
+        </div>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  let selectedId = null;
+
+  function selectEstablishment(id) {
+    selectedId = id;
+    const est = establishments.find(e => e.id === id);
+    document.querySelectorAll('.target-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(`target-${id}`)?.classList.add('active');
+
+    document.getElementById('detail-panel').style.display = 'block';
+    document.getElementById('detail-name').textContent = est.name;
+    document.getElementById('detail-meta').textContent = `License: ${est.license} | Category: ${est.category} | District: ${est.district}`;
+    document.getElementById('detail-score').textContent = (est.risk * 100).toFixed(0) + '%';
+    document.getElementById('detail-label').textContent = riskLabel(est.risk);
+
+    const shapList = document.getElementById('shap-list');
+    shapList.innerHTML = '';
+    est.shap.forEach(f => {
+      const li = document.createElement('li');
+      li.className = 'shap-item';
+      li.innerHTML = `
+        <div class="shap-label">
+          <span>${f.label}</span>
+          <span>+${f.value}%</span>
+        </div>
+        <div class="shap-bar-bg">
+          <div class="shap-bar" style="width:${f.value}%; background:var(--primary)"></div>
+        </div>
+      `;
+      shapList.appendChild(li);
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  function recordOutcome(type) {
+    if (!selectedId) return;
+    const labels = {
+      violation: 'Violation confirmed. Model rewarded.',
+      clean: 'Compliant visit recorded. Model updated.',
+      false: 'False positive logged. Model will down-weight similar signals.'
+    };
+    showToast(labels[type]);
+  }
+
+  function addToRoute() {
+    if (!selectedId) return;
+    showToast('Added to today\'s route. Inspector notified.');
+  }
+
+  // Initialize
+  renderHeatmap();
+  renderTargets();
+  selectEstablishment(establishments[0].id);
+</script>
+
+</body>
+</html>

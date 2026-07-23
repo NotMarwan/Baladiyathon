@@ -1,0 +1,221 @@
+{
+  "main": {
+    "id": "78f7a7ad2c5654e3",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae086f4a3534f179",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fe4663b7d630da8b",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "152aba1d810b760a",
+    "type": "split",
+    "children": [
+      {
+        "id": "56376449a4d8ade5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b27a8788efad015a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "17ee61b7b9af15dd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "6f4282e8cff09c91",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "0205c3946ef6e207",
+    "type": "split",
+    "children": [
+      {
+        "id": "46527fcd87962732",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ec24e0c5b093115",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "96718fc667dd3624",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "5b128e93b3792bd8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "29051900a257e8fd",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "4b555607960ff712",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "fe4663b7d630da8b",
+  "lastOpenFiles": [
+    "00 Athar - Home.md",
+    "01 Athar/New Capabilities (research).md",
+    "Athar.canvas",
+    "Athar.canvas.tmp.588.ddfc16574dc1",
+    "01 Athar/Demo Script.md",
+    "01 Athar/Demo Script.md.tmp.588.88ea4a67016c",
+    "01 Athar/Merges & Fixes.md",
+    "01 Athar/Merges & Fixes.md.tmp.588.33e3e880c0bc",
+    "01 Athar/Athar - Master.md",
+    "00 Athar - Home.md.tmp.588.0e99f8d120df",
+    "99 Archive/00 Index (old).md",
+    "99 Archive/Baladiyathon 2026 (old).canvas",
+    "99 Archive/attachments-other/raqib.html",
+    "99 Archive/attachments-other/mutabiq.html",
+    "99 Archive/attachments-other",
+    "99 Archive/Agents/Agent 4.md",
+    "99 Archive/Agents/Agent 1.md",
+    "99 Archive/Agents/Agent 3.md",
+    "99 Archive/Agents/Agent 2.md",
+    "99 Archive/Agents",
+    "99 Archive/Concepts/TAKHAYYAL.md",
+    "99 Archive/Concepts/Research - Challenge 3.md",
+    "99 Archive/Concepts/Research - Challenge 1.md",
+    "99 Archive/Concepts/Research - Challenge 2.md",
+    "99 Archive/Concepts/NADHEER.md",
+    "99 Archive/Concepts/PRO-INSPECT.md",
+    "99 Archive/Concepts/MURAQQIB.md",
+    "99 Archive/Concepts/MUTABIQ_CORE.md",
+    "99 Archive/Concepts/HURAS.md",
+    "99 Archive/Concepts/MIRAT AL-MADINA.md",
+    "99 Archive/Concepts/BASEERA.md",
+    "99 Archive/Concepts/HAFRA.md",
+    "99 Archive/Concepts",
+    "99 Archive/Final Projects/Raqib.md",
+    "99 Archive/Final Projects/Mutabiq.md",
+    "99 Archive/Final Projects/Athar.md",
+    "99 Archive/Final Projects",
+    "99 Archive/Merger Plan/Ideas Evaluation.md",
+    "Baladiyathon 2026.canvas"
+  ]
+}
