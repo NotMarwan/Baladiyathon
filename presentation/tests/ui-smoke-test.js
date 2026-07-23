@@ -70,4 +70,32 @@ test('wzdx export uses selected segment coordinates', () => {
   assert.ok(!/coordinates: \[\[46\.675, 24\.700\], \[46\.680, 24\.735\]\],\n    \}\);\n    var blob/.test(html), 'hardcoded coords remain in export');
 });
 
+// اللقطة المضمنة في الواجهة تطابق ملف البيانات الحقيقي المجلوب من RCRC
+test('inline RCRC snapshot matches vendored data file', () => {
+  const data = JSON.parse(
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'rcrc-corridor-transit.json'), 'utf8')
+  );
+  assert.strictEqual(data.busStops.routeCount, 9);
+  assert.strictEqual(data.busStops.totalWithin2km, 70);
+  assert.strictEqual(data.metroStations.totalWithin2km, 6);
+  assert.ok(data._provenance.accessedDate === '2026-07-23', 'provenance date missing');
+  assert.ok(/routeCount: 9/.test(html), 'inline routeCount mismatch');
+  assert.ok(/busStopsWithin2km: 70/.test(html), 'inline stop count mismatch');
+  assert.ok(/metroStationsWithin2km: 6/.test(html), 'inline metro count mismatch');
+});
+
+// ثوابت المعايرة الأربعة معروضة في جدول الشفافية
+test('all four calibration constants appear in the ASSUMPTIONS table', () => {
+  for (const key of ['scoreCalibration', 'sharedTrenchOverhead', 'compoundFactor', 'minCapacityFraction']) {
+    assert.ok(html.includes(`key: '${key}'`), `ASSUMPTIONS missing ${key}`);
+  }
+  assert.ok(/CALIBRATION\.SCORE_CALIBRATION/.test(html), 'table not bound to engine CALIBRATION export');
+});
+
+// transitImpact في الواجهة مربوط بعدد المسارات الحقيقي لا بالافتراض
+test('transit impact uses real RCRC route count', () => {
+  assert.ok(/transitImpact\(result, \{ routes: RCRC_TRANSIT\.routeCount \}\)/.test(html),
+    'transitImpact not wired to RCRC_TRANSIT');
+});
+
 console.log(`ALL UI SMOKE TESTS PASSED (${count})`);

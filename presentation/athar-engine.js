@@ -561,6 +561,13 @@
     HOURLY_PROFILE,
     DEFAULTS,
     WORK_WINDOW_HOURS,
+    // ثوابت المعايرة غير المصدرية — مُصدَّرة كي يعرضها جدول الشفافية في الواجهة
+    CALIBRATION: {
+      SCORE_CALIBRATION,
+      SHARED_TRENCH_OVERHEAD,
+      COMPOUND_FACTOR,
+      MIN_CAPACITY_FRACTION,
+    },
     bprTravelTime,
     score,
     optimize,
