@@ -12,6 +12,7 @@ const Demo = require(path.join(__dirname, '..', 'data', 'innovation-demo-data.js
 const Boundary = require(path.join(__dirname, '..', 'athar-boundary.js'));
 const Budget = require(path.join(__dirname, '..', 'athar-budget.js'));
 const Reasons = require(path.join(__dirname, '..', 'athar-reasons.js'));
+const Conflict = require(path.join(__dirname, '..', 'athar-conflict.js'));
 
 let count = 0;
 
@@ -174,6 +175,77 @@ test('quantitative explainer returns numbers instead of templated reason strings
       )
     )
   );
+});
+
+test('multi-permit conflict analysis builds a symmetric N by N matrix', () => {
+  const result = Conflict.analyze(Demo.permits, {
+    coordinationWindowHours: 72,
+    provenance: Demo.meta,
+  });
+
+  assert.equal(result.matrix.length, Demo.permits.length);
+  assert.ok(
+    result.matrix.every((row) => row.length === Demo.permits.length)
+  );
+  assert.equal(result.matrix[0][1].temporalOverlapHours, 7);
+  assert.equal(result.matrix[0][1].sharedSegmentCount, 1);
+  assert.deepEqual(result.matrix[0][1], result.matrix[1][0]);
+  assert.ok(result.matrix.every((row, index) => row[index].exposure === 0));
+});
+
+test('multi-permit conflict analysis reports conflicts and Dig-Once groups', () => {
+  const result = Conflict.analyze(Demo.permits, {
+    coordinationWindowHours: 72,
+    provenance: Demo.meta,
+  });
+
+  assert.ok(
+    result.conflicts.some(
+      (item) => item.pair.includes('P-101') && item.pair.includes('P-102')
+    )
+  );
+  assert.ok(
+    result.digOnceGroups.some(
+      (group) =>
+        group.permitIds.includes('P-101') &&
+        group.permitIds.includes('P-102')
+    )
+  );
+  assert.ok(result.interactionRatio > 1);
+  assert.match(result.interactionDerivation, /overlap-hours/);
+});
+
+test('multi-permit interaction ratio is derived from overlap instead of 1.3', () => {
+  const noOverlap = Demo.permits.map((permit, index) => ({
+    ...permit,
+    routeSegments: [`UNIQUE-${index}`],
+  }));
+  const result = Conflict.analyze(noOverlap, {
+    coordinationWindowHours: 72,
+    provenance: Demo.meta,
+  });
+
+  assert.equal(result.interactionRatio, 1);
+  assert.notEqual(result.interactionRatio, 1.3);
+});
+
+test('Dig-Once grouping responds to the supplied coordination window', () => {
+  const narrow = Conflict.analyze(Demo.permits, {
+    coordinationWindowHours: 72,
+    provenance: Demo.meta,
+  });
+  const wide = Conflict.analyze(Demo.permits, {
+    coordinationWindowHours: 400,
+    provenance: Demo.meta,
+  });
+  const narrowLargest = Math.max(
+    ...narrow.digOnceGroups.map((group) => group.permitIds.length)
+  );
+  const wideLargest = Math.max(
+    ...wide.digOnceGroups.map((group) => group.permitIds.length)
+  );
+
+  assert.ok(wideLargest > narrowLargest);
 });
 
 console.log(`ALL INNOVATION TESTS PASSED (${count})`);
