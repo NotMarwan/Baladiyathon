@@ -198,6 +198,20 @@
     #deck{scroll-behavior:auto}
     #progress{transition:none}
   }
+.gate-demo{margin-top:14px;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.05)}
+.gate-demo-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.gate-demo-buttons button{font:inherit;font-weight:700;padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:inherit;cursor:pointer}
+.gate-demo-buttons button:hover,.gate-demo-buttons button:focus-visible{background:rgba(255,255,255,.22);outline:2px solid #f0bd6c;outline-offset:2px}
+.gate-demo-output{margin-top:10px;min-height:52px;font-size:.92em}
+.gate-demo-hint{opacity:.7;margin:0}
+.gate-demo-blocked{border-right:4px solid #e0655c;padding:8px 12px;background:rgba(224,101,92,.12);border-radius:8px}
+.gate-demo-blocked b{color:#f2a29c}
+.gate-demo-decision{border-right:4px solid #6ccb8f;padding:8px 12px;background:rgba(108,203,143,.12);border-radius:8px}
+.gate-demo-decision b{color:#9fe0b8}
+.gate-demo-missing{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.gate-demo-missing li{border:1px solid rgba(224,101,92,.5);border-radius:6px;padding:2px 8px;font-size:.85em}
+.vision-line{margin-top:12px;font-size:.95em;opacity:.92}
+.vision-line a{color:#f0bd6c}
 </style>
 </head>
 <body>
@@ -335,7 +349,16 @@
         <div class="path-step"><b>05</b><p>قياس النتيجة بعد التنفيذ من دون كتابة تلقائية.</p></div>
       </div>
       <p class="quiet">المدخلات التوضيحية لا تصبح بيانات تصريح، والتوصية لا تصبح موافقة، والتكامل البلدي يبقى مسار نشر مقترحاً.</p>
-      <aside class="speaker-notes" hidden>المسار قصير وواضح: نستلم الطلب ومصدر المدخلات، نحسب خط الأساس والبديل، نفحص النقل العام والوصول الحرج، ثم نعرض توصية مفسرة. بعد التنفيذ نقيس النتيجة، من دون موافقة آلية أو كتابة في منصة التصاريح.</aside>
+      <div id="gate-demo" class="gate-demo" data-note="حالة توضيحية — المحرك الحقيقي يعمل الآن">
+        <div class="gate-demo-buttons">
+          <button type="button" id="gate-demo-incomplete">١ · أرسل طلباً ناقصاً</button>
+          <button type="button" id="gate-demo-complete">٢ · أكمل البيانات واحسب</button>
+        </div>
+        <div id="gate-demo-output" class="gate-demo-output" aria-live="polite">
+          <p class="gate-demo-hint">هذا المحرك نفسه الذي تختبره 185 حالة آلية — ليس فيديو ولا صوراً.</p>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>المسار قصير وواضح: نستلم الطلب ومصدر المدخلات، نحسب خط الأساس والبديل، نفحص النقل العام والوصول الحرج، ثم نعرض توصية مفسرة. بعد التنفيذ نقيس النتيجة، من دون موافقة آلية أو كتابة في منصة التصاريح. وهنا لحظة العرض الحية: أرسل طلباً ناقصاً أمامكم فيمتنع النظام ويسمي الحقول الناقصة، ثم أكمل البيانات فيتحول الامتناع إلى قرار كمي بالساعات-مركبة في أقل من ثانية — على المحرك الحقيقي نفسه.</aside>
     </div>
   </section>
 
@@ -424,10 +447,12 @@
         <div><b>المخرج</b><p>توصية مفسرة وسجل تدقيق، لا موافقة آلية.</p></div>
         <div><b>قرار التوسع</b><p>بعد اجتياز العتبات المقاسة ومراجعة مستقلة.</p></div>
       </div>
+      <p class="vision-line">يخدم هذا المسار هدف <b>رؤية 2030</b> في تحسين جودة الحياة بالمدن وكفاءة البنية التحتية — ربط نوعي بلا أرقام مفترضة.
+        <a href="athar-sources.html#src-045">src-045 · المصدر الرسمي</a></p>
       <div class="source-strip">
         <a href="../docs/SHADOW-PILOT.md#design-parameters" style="color:#f0bd6c;border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.06)">افتح بروتوكول الظل</a>
       </div>
-      <aside class="speaker-notes" hidden>طلبنا محدد: تجربة ظل بشرية الإشراف، ببيانات مصرح بها ومسؤول اعتماد ومراجع مروري، على تصاريح متتابعة بلا انتقاء. المخرج توصية مفسرة وسجل تدقيق. ولا ننتقل إلى التوسع إلا بعد اجتياز العتبات ومراجعة مستقلة.</aside>
+      <aside class="speaker-notes" hidden>طلبنا محدد: تجربة ظل بشرية الإشراف، ببيانات مصرح بها ومسؤول اعتماد ومراجع مروري، على تصاريح متتابعة بلا انتقاء. المخرج توصية مفسرة وسجل تدقيق. ولا ننتقل إلى التوسع إلا بعد اجتياز العتبات ومراجعة مستقلة. وهذا المسار يخدم هدف رؤية 2030 في جودة الحياة وكفاءة البنية التحتية ربطاً نوعياً بلا أرقام مفترضة.</aside>
     </div>
   </section>
 
@@ -522,6 +547,80 @@
   });
 
   updateChrome();
+})();
+</script>
+<script src="athar-engine.js"></script>
+<script src="athar-decision.js"></script>
+<script>
+(function () {
+  'use strict';
+  var output = document.getElementById('gate-demo-output');
+  var btnIncomplete = document.getElementById('gate-demo-incomplete');
+  var btnComplete = document.getElementById('gate-demo-complete');
+  if (!output || !btnIncomplete || !btnComplete) return;
+
+  var FIELD_LABELS = {
+    permitId: 'رقم التصريح',
+    segmentId: 'المقطع',
+    startDate: 'تاريخ البدء',
+    startHour: 'ساعة البدء',
+    durationHours: 'المدة',
+    lanes: 'عدد المسارات',
+    lanesClosed: 'المسارات المغلقة',
+    aadt: 'حجم المرور اليومي',
+    originNodeId: 'نقطة الأصل',
+    destinationNodeId: 'نقطة الوجهة',
+  };
+
+  var INCOMPLETE_INPUT = { permitId: 'DEMO-01', startHour: 8 };
+  var COMPLETE_INPUT = {
+    permitId: 'DEMO-01',
+    segmentId: 'seg-demo',
+    startDate: '2026-07-27',
+    startHour: 8,
+    durationHours: 10,
+    lanes: 3,
+    lanesClosed: 1,
+    aadt: 30000,
+    originNodeId: 'n1',
+    destinationNodeId: 'n2',
+  };
+
+  var formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 1 });
+
+  btnIncomplete.addEventListener('click', function () {
+    var verdict = AtharDecision.validateDecisionInput(INCOMPLETE_INPUT);
+    var items = verdict.missing.map(function (field) {
+      return '<li>' + (FIELD_LABELS[field] || field) + '</li>';
+    }).join('');
+    output.innerHTML =
+      '<div class="gate-demo-blocked"><b>امتنع النظام عن التوصية.</b>' +
+      ' البيانات الحاسمة ناقصة، والبوابة تسمي الناقص بالاسم:' +
+      '<ul class="gate-demo-missing">' + items + '</ul></div>';
+  });
+
+  btnComplete.addEventListener('click', function () {
+    var verdict = AtharDecision.validateDecisionInput(COMPLETE_INPUT);
+    if (!verdict.canDecide) {
+      output.innerHTML = '<div class="gate-demo-blocked"><b>ما زالت البوابة مغلقة.</b></div>';
+      return;
+    }
+    var engineInput = Object.assign({}, AtharEngine.DEFAULTS, COMPLETE_INPUT);
+    var day = AtharEngine.score(engineInput);
+    var nightWindows = AtharEngine.buildNightWindows(22, COMPLETE_INPUT.durationHours, 8);
+    var nightDelay = nightWindows.reduce(function (sum, win) {
+      return sum + AtharEngine.score(Object.assign({}, engineInput, {
+        startHour: win.startHour,
+        durationHours: win.durationHours,
+      })).delayVehHours;
+    }, 0);
+    output.innerHTML =
+      '<div class="gate-demo-decision"><b>اكتملت البيانات فانفتحت البوابة.</b>' +
+      ' تنفيذ نهاري: ' + formatter.format(day.delayVehHours) + ' ساعة-مركبة تأخيراً،' +
+      ' مقابل ' + formatter.format(nightDelay) + ' ليلاً على نافذتين (' +
+      nightWindows.map(function (w) { return formatter.format(w.durationHours); }).join(' + ') +
+      ' ساعات) — حالة توضيحية على المحرك الحقيقي، والقرار يبقى للمراجع البشري.</div>';
+  });
 })();
 </script>
 </body>

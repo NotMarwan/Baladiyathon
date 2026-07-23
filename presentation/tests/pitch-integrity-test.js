@@ -225,4 +225,25 @@ test('all local presentation links resolve to existing owned or project files', 
   });
 });
 
+test('pitch links Vision 2030 qualitatively to src-045', () => {
+  assert.ok(pitch.includes('رؤية 2030'), 'pitch must mention Vision 2030');
+  assert.ok(pitch.includes('athar-sources.html#src-045'), 'must cite src-045');
+  assert.ok(!/رؤية 2030[^<]*[0-9٠-٩]+\s*[%٪]/.test(pitch), 'no invented 2030 percentage');
+});
+
+test('sources ledger has official Vision 2030 entry', () => {
+  assert.ok(sources.includes('id="src-045"'));
+  assert.ok(sources.includes('https://www.vision2030.gov.sa'));
+});
+
+test('pitch embeds live gate demo wired to real engine modules', () => {
+  assert.ok(pitch.includes('src="athar-engine.js"'));
+  assert.ok(pitch.includes('src="athar-decision.js"'));
+  assert.ok(pitch.includes('id="gate-demo"'));
+  assert.ok(pitch.includes('id="gate-demo-incomplete"'));
+  assert.ok(pitch.includes('id="gate-demo-complete"'));
+  assert.ok(pitch.includes('AtharDecision.validateDecisionInput'));
+  assert.ok(pitch.includes('AtharEngine.score'));
+});
+
 console.log(`ALL PITCH INTEGRITY TESTS PASSED (${count})`);
