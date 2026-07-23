@@ -55,15 +55,12 @@
     ridersPerBusHigh: 40, // راكب/حافلة — حد أعلى، افتراض توضيحي للعرض
   };
 
-  // Coordination overhead applied when trenching is shared across merged
-  // permits instead of dug separately. Calibrated so digOnce({permitsMerged:2})
-  // .savedPct lands inside the GAO dig-once band (25-33%, Sources Ledger #7)
-  // with head-room up to 42.5% as required by the acceptance test. 18%
-  // overhead (SHARED_TRENCH_OVERHEAD = 1.18) yields savedPct = 41% at
-  // permitsMerged=2. افتراض توضيحي للعرض (calibration constant, not sourced).
-  // مُصمَّم لإعادة المعايرة الدورية من نتائج back-test المسجّلة (ساعات-مركبة
-  // مقيسة قبل/بعد لكل تصريح منفَّذ).
-  const SHARED_TRENCH_OVERHEAD = 1.18;
+  // GAO dig-once savings band for dense urban areas (Sources Ledger #7):
+  // sharing a trench across merged permits saves 25-33% of the separate-dig
+  // cost. Reported as a range, verbatim from the source — no reverse
+  // calibration to a target test value.
+  const DIG_ONCE_SAVED_FRACTION_LOW = 0.25;
+  const DIG_ONCE_SAVED_FRACTION_HIGH = 0.33;
 
   // Parallel-corridor superposition factor used by compound(): when two
   // nearby permits are active at once, their combined delay is modelled as
@@ -80,6 +77,15 @@
   // Minimum capacity floor fraction applied when lanesClosed >= lanes, so the
   // BPR function never divides by (near) zero. افتراض توضيحي للعرض.
   const MIN_CAPACITY_FRACTION = 0.25;
+
+  // Work-zone friction: lane shifts, tapers and merges slow traffic through an
+  // active closure even when demand is far below capacity (e.g. empty night
+  // hours). Modeled as a floor: the closed travel time is at least 10% above
+  // free-flow-hour baseline. This stops the BPR^4 term from collapsing night
+  // delay to ~0, which otherwise produced a physically impossible ~99.6%
+  // "saving" that contradicts the cited −11.1% scheduling study (Ledger #5).
+  // افتراض توضيحي للعرض.
+  const WORK_ZONE_FRICTION = 1.10;
 
   // Candidate scheduling grid used by optimize().
   const CANDIDATE_START_HOURS = [22, 23, 0, 8, 10, 13];
@@ -141,7 +147,10 @@
 
       const baseT = bprTravelTime(freeFlowMin, demand, fullCapacity);
       const closedT = lanesClosed > 0
-        ? bprTravelTime(freeFlowMin, demand, closedCapacity)
+        ? Math.max(
+            bprTravelTime(freeFlowMin, demand, closedCapacity),
+            baseT * WORK_ZONE_FRICTION,
+          )
         : baseT;
 
       const hourDelayVehHours = lanesClosed > 0
@@ -427,19 +436,41 @@
 
   /**
    * Compare trenching cost for separately-dug vs. shared (dig-once) permits.
+   * Savings reported as the GAO 25-33% band (Sources Ledger #7). Single
+   * permit => no merge => zero saving.
    * @param {{trenchKm:number, permitsMerged:number}} input
-   * @returns {{separateSAR:number, sharedSAR:number, savedSAR:number, savedPct:number}}
+   * @returns {{separateSAR:number, sharedLowSAR:number, sharedHighSAR:number,
+   *            savedLowSAR:number, savedHighSAR:number, savedPctLow:number,
+   *            savedPctHigh:number}}
    */
   function digOnce(input) {
     const { trenchKm, permitsMerged } = input;
     const cost = DEFAULTS.trenchCostPerKmSAR;
-
     const separateSAR = permitsMerged * trenchKm * cost;
-    const sharedSAR = trenchKm * cost * SHARED_TRENCH_OVERHEAD;
-    const savedSAR = separateSAR - sharedSAR;
-    const savedPct = separateSAR > 0 ? (savedSAR / separateSAR) * 100 : 0;
 
-    return { separateSAR, sharedSAR, savedSAR, savedPct };
+    if (permitsMerged <= 1) {
+      return {
+        separateSAR,
+        sharedLowSAR: separateSAR,
+        sharedHighSAR: separateSAR,
+        savedLowSAR: 0,
+        savedHighSAR: 0,
+        savedPctLow: 0,
+        savedPctHigh: 0,
+      };
+    }
+
+    const savedLowSAR = separateSAR * DIG_ONCE_SAVED_FRACTION_LOW;
+    const savedHighSAR = separateSAR * DIG_ONCE_SAVED_FRACTION_HIGH;
+    return {
+      separateSAR,
+      sharedLowSAR: separateSAR - savedHighSAR,
+      sharedHighSAR: separateSAR - savedLowSAR,
+      savedLowSAR,
+      savedHighSAR,
+      savedPctLow: DIG_ONCE_SAVED_FRACTION_LOW * 100,
+      savedPctHigh: DIG_ONCE_SAVED_FRACTION_HIGH * 100,
+    };
   }
 
   /**
@@ -543,6 +574,28 @@
     return { absError, pctError, verdict };
   }
 
+  // Which unofficial demo assumptions feed each headline number. Used by the
+  // UI to print "عدد الافتراضات في هذا الرقم: N" on the card itself, turning
+  // assumption stacking into visible transparency instead of a hidden weakness.
+  const METRIC_ASSUMPTIONS = {
+    score: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'WORK_ZONE_FRICTION'],
+    timeValueSAR: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'occupancyBand', 'workHoursPerMonth'],
+    co2: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'idleFuelLPerHour'],
+    digOnce: ['trenchCostPerKmSAR', 'trenchKm'],
+    transitImpact: ['busRoutesOnSegment', 'busesPerHourPerRoute', 'ridersPerBus'],
+  };
+
+  /**
+   * List the unofficial demo assumptions a given headline metric depends on.
+   * @param {string} metric one of score|timeValueSAR|co2|digOnce|transitImpact
+   * @returns {string[]|null} copy of the assumption names, or null if unknown
+   */
+  function assumptionsUsed(metric) {
+    return Object.prototype.hasOwnProperty.call(METRIC_ASSUMPTIONS, metric)
+      ? METRIC_ASSUMPTIONS[metric].slice()
+      : null;
+  }
+
   /**
    * Compare the requested schedule's delay against a chosen optimized schedule.
    * @param {object} input - same shape as score(), at the originally requested startHour/durationHours.
@@ -564,7 +617,7 @@
     // ثوابت المعايرة غير المصدرية — مُصدَّرة كي يعرضها جدول الشفافية في الواجهة
     CALIBRATION: {
       SCORE_CALIBRATION,
-      SHARED_TRENCH_OVERHEAD,
+      WORK_ZONE_FRICTION,
       COMPOUND_FACTOR,
       MIN_CAPACITY_FRACTION,
     },
@@ -581,5 +634,6 @@
     digOnce,
     compound,
     backTest,
+    assumptionsUsed,
   };
 });

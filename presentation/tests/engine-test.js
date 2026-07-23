@@ -9,6 +9,16 @@ const assert = require('node:assert');
 const path = require('node:path');
 
 const AtharEngine = require(path.join(__dirname, '..', 'athar-engine.js'));
+const Calib = require(path.join(__dirname, '..', 'athar-impact-calibration.js'));
+const Budget = require(path.join(__dirname, '..', 'athar-impact-budget.js'));
+
+function memStore() {
+  const m = new Map();
+  return {
+    getItem: (k) => (m.has(k) ? m.get(k) : null),
+    setItem: (k, v) => m.set(k, v),
+  };
+}
 
 let count = 0;
 function test(name, fn) {
@@ -421,27 +431,112 @@ test('co2(0) => fuelL 0, co2Kg 0', () => {
 });
 
 // ---------------------------------------------------------------------------
+// calibration loop
+// ---------------------------------------------------------------------------
+
+test('calibration: empty store => factor 1, n 0', () => {
+  const c = Calib.createCalibration(memStore());
+  assert.deepStrictEqual(c.status(), { n: 0, factor: 1 });
+});
+
+test('calibration: median of observed/predicted ratios', () => {
+  const c = Calib.createCalibration(memStore());
+  c.record({ permitId: 'a', predictedVehHours: 100, observedVehHours: 110 });
+  c.record({ permitId: 'b', predictedVehHours: 100, observedVehHours: 120 });
+  c.record({ permitId: 'c', predictedVehHours: 100, observedVehHours: 130 });
+  assert.strictEqual(c.correctionFactor(), 1.2);
+  assert.strictEqual(c.status().n, 3);
+});
+
+test('calibration: rejects non-positive prediction, persists via store', () => {
+  const store = memStore();
+  const c = Calib.createCalibration(store);
+  assert.strictEqual(c.record({ permitId: 'x', predictedVehHours: 0, observedVehHours: 5 }), false);
+  assert.strictEqual(c.status().n, 0);
+  c.record({ permitId: 'y', predictedVehHours: 200, observedVehHours: 180 });
+  // a fresh instance over the same store sees the persisted record
+  const c2 = Calib.createCalibration(store);
+  assert.strictEqual(c2.status().n, 1);
+  assert.strictEqual(c2.correctionFactor(), 0.9);
+});
+
+// ---------------------------------------------------------------------------
+// corridor impact budget
+// ---------------------------------------------------------------------------
+
+test('corridorBudget: within / near / over verdicts', () => {
+  const base = { monthlyBudgetVehHours: 5000, consumedVehHours: 3000 };
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 500 }).verdict, 'ضمن الميزانية');
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 1500 }).verdict, 'قرب السقف');
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 2500 }).verdict, 'تجاوز — يتطلب إعادة جدولة');
+});
+
+test('corridorBudget: remaining floors at 0, pct and consumedAfter honest', () => {
+  const r = Budget.corridorBudget({ monthlyBudgetVehHours: 5000, consumedVehHours: 4000, currentPermitVehHours: 3000 });
+  assert.strictEqual(r.consumedAfter, 7000);
+  assert.strictEqual(r.remaining, 0);
+  assert.strictEqual(r.pctUsed, 140);
+  assert.strictEqual(r.verdict, 'تجاوز — يتطلب إعادة جدولة');
+});
+
+// ---------------------------------------------------------------------------
+// assumptionsUsed()
+// ---------------------------------------------------------------------------
+
+test('assumptionsUsed counts unofficial assumptions per metric', () => {
+  assert.strictEqual(AtharEngine.assumptionsUsed('timeValueSAR').length, 7);
+  assert.ok(AtharEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
+  assert.strictEqual(AtharEngine.assumptionsUsed('nope'), null);
+});
+
+test('assumptionsUsed returns a copy (caller cannot mutate internal table)', () => {
+  const a = AtharEngine.assumptionsUsed('digOnce');
+  a.push('x');
+  assert.ok(!AtharEngine.assumptionsUsed('digOnce').includes('x'));
+});
+
+// ---------------------------------------------------------------------------
+// work-zone friction floor
+// ---------------------------------------------------------------------------
+
+test('night closure still produces nonzero delay (work-zone friction floor)', () => {
+  const r = AtharEngine.score({
+    aadt: 85000, lanes: 4, lanesClosed: 1, capacityPerLane: 1800,
+    freeFlowMin: 6, startHour: 2, durationHours: 4,
+  });
+  assert.ok(r.delayVehHours > 0, `expected >0, got ${r.delayVehHours}`);
+});
+
+test('optimize kills the 99.6% mirage: no candidate saves >=99% and best still has material delay', () => {
+  const r = AtharEngine.optimize({
+    aadt: 85000, lanes: 4, lanesClosed: 2, capacityPerLane: 1800,
+    freeFlowMin: 6, startHour: 8, durationHours: 48,
+  });
+  r.top3.forEach((c) => assert.ok(c.savedPct < 99, `savedPct ${c.savedPct}`));
+  // best schedule still carries real work-zone delay (not the ~0 mirage)
+  assert.ok(r.top3[0].delayVehHours >= 100, `best delay ${r.top3[0].delayVehHours}`);
+});
+
+// ---------------------------------------------------------------------------
 // digOnce()
 // ---------------------------------------------------------------------------
 
-test('digOnce(2 permits).savedPct within 25-42.5% (GAO band + calibration head-room)', () => {
+test('digOnce(2 permits) saved pct fixed at GAO 25-33% band', () => {
   const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
-  assert.ok(
-    r.savedPct >= 25 && r.savedPct <= 42.5,
-    `savedPct out of band: ${r.savedPct}`
-  );
+  assert.strictEqual(r.savedPctLow, 25);
+  assert.strictEqual(r.savedPctHigh, 33);
+  assert.ok(Math.abs(r.savedLowSAR - r.separateSAR * 0.25) < 1e-6);
+  assert.ok(Math.abs(r.savedHighSAR - r.separateSAR * 0.33) < 1e-6);
+  assert.ok(Math.abs(r.sharedLowSAR - (r.separateSAR - r.savedHighSAR)) < 1e-6);
+  assert.ok(Math.abs(r.sharedHighSAR - (r.separateSAR - r.savedLowSAR)) < 1e-6);
 });
 
-test('digOnce() savedSAR = separateSAR - sharedSAR and savedPct consistent', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
-  assert.ok(Math.abs(r.savedSAR - (r.separateSAR - r.sharedSAR)) < 1e-6);
-  const expectedPct = (r.savedSAR / r.separateSAR) * 100;
-  assert.ok(Math.abs(r.savedPct - expectedPct) < 1e-6);
-});
-
-test('digOnce() with 1 permit yields zero or minimal savings (no merge to share)', () => {
+test('digOnce() with 1 permit yields zero savings', () => {
   const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
-  assert.ok(r.savedSAR <= 0, `expected non-positive saving for single permit, got ${r.savedSAR}`);
+  assert.strictEqual(r.savedLowSAR, 0);
+  assert.strictEqual(r.savedHighSAR, 0);
+  assert.strictEqual(r.savedPctLow, 0);
+  assert.strictEqual(r.savedPctHigh, 0);
 });
 
 // ---------------------------------------------------------------------------

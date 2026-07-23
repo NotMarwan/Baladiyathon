@@ -206,10 +206,11 @@
           </div>
         </div>
         <div class="impact-detail">ساعات-أشخاص (نطاق): <b class="num" id="personHoursRange">—</b> <span class="src-badge">إشغال ١٫٢–١٫٦ افتراض · كود الطرق 203</span></div>
-        <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span></div>
-        <div class="impact-detail">انبعاثات متجنبة محتملة (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
-        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">٩ مسارات فعلية ضمن ٢كم — RCRC 2024 · التواتر والركاب افتراض</span></div>
+        <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span> <span class="src-badge" id="asmTimeValue" title="">افتراضات: —</span></div>
+        <div class="impact-detail">انبعاثات مضافة بسبب الإغلاق (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span> <span class="src-badge" id="asmCo2" title="">افتراضات: —</span></div>
+        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">٩ مسارات فعلية ضمن ٢كم — RCRC 2024 · التواتر والركاب افتراض</span> <span class="src-badge" id="asmTransit" title="">افتراضات: —</span></div>
         <div class="impact-detail">نقل عام ضمن نطاق الممر: <b class="num">٧٠ محطة حافلات · ٦ محطات مترو</b> <span class="src-badge">لقطة RCRC حقيقية 2026-07-23</span></div>
+        <div class="impact-detail">التوقع المعايَر: <b class="num" id="calibratedLine">—</b> <span class="src-badge" id="calibBadge">معايرة من ٠ حالة</span> <span class="src-badge">حالات back-test تركيبية موسومة للعرض</span></div>
         <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
       </section>
@@ -238,16 +239,23 @@
         <h2>الأثر البيئي والمالي</h2>
         <div class="value-row">
           <div class="card value-card">
-            <div class="num" id="co2Num">— كجم</div>
-            <div class="lab">وفر CO₂ (<span id="fuelNum">—</span> لتر وقود موفّر)</div>
+            <div class="num" id="co2Num">— اختر جدولة</div>
+            <div class="lab">وفر CO₂ من الجدولة المحسّنة (<span id="fuelNum">—</span> لتر موفّر) <span class="src-badge">من ساعات-مركبة موفّرة فقط</span></div>
           </div>
           <div class="card value-card">
             <div class="num" id="digOnceNum">— ﷼</div>
-            <div class="lab">وفر Dig-Once (<span id="digOncePct">—</span>٪ عن الحفر المنفصل)</div>
+            <div class="lab">وفر Dig-Once (نطاق) <span class="src-badge">٢٥–٣٣٪ — GAO للمناطق الحضرية الكثيفة</span> <span class="src-badge" id="asmDigOnce" title="">افتراضات: —</span></div>
           </div>
           <div class="card value-card" id="compoundCard" style="display:none">
             <div class="num" id="compoundNum">—</div>
             <div class="lab" id="compoundLab">تنبيه التأثير المركّب</div>
+          </div>
+        </div>
+        <div class="card" id="budgetCard" style="margin-top:16px">
+          <div class="section-eyebrow">ميزانية أثر المحور الشهرية</div>
+          <div class="impact-detail">مستهلك: <b class="num" id="budgetConsumed">—</b> من <b class="num" id="budgetTotal">—</b> س-م — <b id="budgetVerdict">—</b> <span class="src-badge">سقف واستهلاك سابق: افتراض توضيحي للعرض</span></div>
+          <div id="budgetMeter" style="height:14px;border-radius:7px;background:rgba(120,120,120,.18);overflow:hidden;margin-top:8px">
+            <div id="budgetMeterFill" style="height:100%;width:0%;border-radius:7px;transition:width .4s ease"></div>
           </div>
         </div>
       </section>
@@ -339,6 +347,8 @@
 
 <script src="vendor/leaflet.js"></script>
 <script src="athar-engine.js"></script>
+<script src="athar-impact-calibration.js"></script>
+<script src="athar-impact-budget.js"></script>
 <script>
 (function () {
   'use strict';
@@ -426,7 +436,64 @@
     playTimer: null,
     prevCo2Kg: 0,
     prevDigOnceSAR: 0,
+    calibration: null,
   };
+
+  // -------------------------------------------------------------------
+  // Calibration loop (real mechanism, persisted in localStorage)
+  // -------------------------------------------------------------------
+  function makeCalibrationStore() {
+    try {
+      var t = '__athar_probe__';
+      window.localStorage.setItem(t, '1');
+      window.localStorage.removeItem(t);
+      return window.localStorage;
+    } catch (e) {
+      // Private mode / file:// restrictions — fall back to an in-memory store.
+      var mem = {};
+      return {
+        getItem: function (k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+        setItem: function (k, v) { mem[k] = String(v); },
+      };
+    }
+  }
+
+  state.calibration = AtharImpactCalibration.createCalibration(makeCalibrationStore());
+  // Seed a few labeled synthetic back-tests so the mechanism is visible on
+  // first load (clearly tagged as demo data in the UI badge).
+  if (state.calibration.status().n === 0) {
+    state.calibration.record({ permitId: 'DEMO-001', predictedVehHours: 1200, observedVehHours: 1320 });
+    state.calibration.record({ permitId: 'DEMO-002', predictedVehHours: 900, observedVehHours: 1035 });
+    state.calibration.record({ permitId: 'DEMO-003', predictedVehHours: 1500, observedVehHours: 1590 });
+  }
+
+  // Corridor monthly impact budget (demo-labeled ceiling + prior consumption).
+  var CORRIDOR_MONTHLY_BUDGET_VEHHOURS = 40000;
+  var CORRIDOR_CONSUMED_VEHHOURS = 12000;
+
+  function renderBudget(currentPermitVehHours) {
+    var b = AtharImpactBudget.corridorBudget({
+      monthlyBudgetVehHours: CORRIDOR_MONTHLY_BUDGET_VEHHOURS,
+      consumedVehHours: CORRIDOR_CONSUMED_VEHHOURS,
+      currentPermitVehHours: currentPermitVehHours,
+    });
+    document.getElementById('budgetConsumed').textContent = formatArabicNumber(b.consumedAfter);
+    document.getElementById('budgetTotal').textContent = formatArabicNumber(b.budget);
+    document.getElementById('budgetVerdict').textContent = b.verdict;
+    var fill = document.getElementById('budgetMeterFill');
+    fill.style.width = Math.min(100, b.pctUsed) + '%';
+    fill.style.background = b.verdict === 'ضمن الميزانية'
+      ? '#2e9e5b'
+      : (b.verdict === 'قرب السقف' ? '#d9a021' : '#d64545');
+  }
+
+  function renderCalibration(rawVehHours) {
+    var st = state.calibration.status();
+    var corrected = rawVehHours * st.factor;
+    document.getElementById('calibratedLine').textContent =
+      formatArabicNumber(corrected) + ' س-م (معامل ' + formatPercent(st.factor) + '×)';
+    document.getElementById('calibBadge').textContent = 'معايرة من ' + formatArabicNumber(st.n) + ' حالة';
+  }
 
   // -------------------------------------------------------------------
   // Map setup
@@ -677,6 +744,16 @@
     return new Intl.NumberFormat('ar-SA', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
   }
 
+  // Show how many unofficial demo assumptions feed a headline number, with the
+  // full list on hover — turns assumption stacking into visible transparency.
+  function setAssumptionBadge(elId, metric) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    var list = AtharEngine.assumptionsUsed(metric) || [];
+    el.textContent = 'عدد الافتراضات: ' + formatArabicNumber(list.length);
+    el.title = list.join('، ');
+  }
+
   function prefersReducedMotion() {
     return typeof window.matchMedia === 'function'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -737,27 +814,38 @@
     document.getElementById('transitRangeLine').textContent =
       formatArabicNumber(transitR.lowPersonHours) + ' – ' + formatArabicNumber(transitR.highPersonHours) + ' س-ش (' + formatArabicNumber(transitR.busesAffected) + ' حافلة/ساعة)';
 
+    setAssumptionBadge('asmTimeValue', 'timeValueSAR');
+    setAssumptionBadge('asmCo2', 'co2');
+    setAssumptionBadge('asmTransit', 'transitImpact');
+    setAssumptionBadge('asmDigOnce', 'digOnce');
+    renderCalibration(result.delayVehHours);
+    renderBudget(result.delayVehHours * state.calibration.status().factor);
+
     var chip = document.getElementById('levelChip');
     chip.className = 'chip ' + result.level;
     var levelLabels = { low: 'منخفض', medium: 'متوسط', high: 'مرتفع' };
     chip.textContent = levelLabels[result.level] || result.level;
 
-    var co2Result = AtharEngine.co2(result.delayVehHours);
-    animateCountUp(document.getElementById('co2Num'), state.prevCo2Kg, co2Result.co2Kg, function (v) {
-      return formatArabicNumber(v) + ' كجم';
-    });
-    state.prevCo2Kg = co2Result.co2Kg;
-    document.getElementById('fuelNum').textContent = formatArabicNumber(co2Result.fuelL);
+    // CO₂ savings are computed ONLY from saved vehicle-hours after a schedule
+    // is chosen (see selectCandidate). Do not derive "savings" from the
+    // closure's own added delay. Reset until a candidate is picked.
+    document.getElementById('co2Num').textContent = '— اختر جدولة';
+    document.getElementById('fuelNum').textContent = '—';
+    state.prevCo2Kg = 0;
 
     var digOnceResult = AtharEngine.digOnce({
       trenchKm: 1.2,
       permitsMerged: 1 + state.neighborPermits,
     });
-    animateCountUp(document.getElementById('digOnceNum'), state.prevDigOnceSAR, digOnceResult.savedSAR, function (v) {
-      return formatArabicNumber(v) + ' ﷼';
-    });
-    state.prevDigOnceSAR = digOnceResult.savedSAR;
-    document.getElementById('digOncePct').textContent = formatPercent(digOnceResult.savedPct);
+    var digOnceNumEl = document.getElementById('digOnceNum');
+    if (state.neighborPermits > 0) {
+      digOnceNumEl.textContent =
+        formatArabicNumber(digOnceResult.savedLowSAR) + ' – ' +
+        formatArabicNumber(digOnceResult.savedHighSAR) + ' ﷼';
+    } else {
+      digOnceNumEl.textContent = 'لا دمج — أضف تصريحاً مجاوراً';
+    }
+    state.prevDigOnceSAR = digOnceResult.savedHighSAR;
 
     var compoundCard = document.getElementById('compoundCard');
     if (state.neighborPermits > 0) {
@@ -833,7 +921,13 @@
 
       var saved = document.createElement('div');
       saved.className = 'saved num';
-      saved.textContent = formatArabicNumber(candidate.savedVehHours) + ' س-م موفّرة (' + formatPercent(candidate.savedPct) + '٪)';
+      // Absolute vehicle-hours first (before → after), then the saving. The
+      // percentage is secondary because an extreme baseline can make it look
+      // implausibly high; the absolute delay is the honest headline number.
+      var beforeVh = state.lastScoreResult ? state.lastScoreResult.delayVehHours : candidate.delayVehHours + candidate.savedVehHours;
+      saved.textContent =
+        formatArabicNumber(beforeVh) + ' ← ' + formatArabicNumber(candidate.delayVehHours) + ' س-م' +
+        ' (وفر ' + formatArabicNumber(candidate.savedVehHours) + ' س-م، ' + formatPercent(candidate.savedPct) + '٪)';
 
       var reasonsList = document.createElement('ul');
       candidate.reasons.forEach(function (reason) {
@@ -868,6 +962,13 @@
     var backTestResult = AtharEngine.backTest(input, candidate);
     animateBackTest(backTestResult.beforeVehHours, backTestResult.afterVehHours);
 
+    // CO₂ saving = idle emissions avoided by the saved vehicle-hours only.
+    var savedCo2 = AtharEngine.co2Range(candidate.savedVehHours);
+    var savedFuel = AtharEngine.co2(candidate.savedVehHours);
+    document.getElementById('co2Num').textContent =
+      formatArabicNumber(savedCo2.lowCo2Kg) + ' – ' + formatArabicNumber(savedCo2.highCo2Kg) + ' كجم';
+    document.getElementById('fuelNum').textContent = formatArabicNumber(savedFuel.fuelL);
+
     // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض. الانحراف يتغير حتمياً
     // مع خصائص المرشح (5%–34%) كي لا يكون حكم «دقيق» مضموناً بالتصميم —
     // بعض البدائل تُظهر «مقبول» أو «يتطلب إعادة معايرة» بصدق.
@@ -880,6 +981,17 @@
     document.getElementById('cfObserved').textContent = formatArabicNumber(observed);
     document.getElementById('cfError').textContent = formatArabicNumber(pe.pctError);
     document.getElementById('cfVerdict').textContent = pe.verdict;
+
+    // Log this back-test into the calibration store so the correction factor
+    // and the "معايرة من N حالة" counter grow with real (here demo-labeled) use.
+    if (state.calibration && predicted > 0) {
+      state.calibration.record({
+        permitId: 'SESSION-' + state.calibration.status().n,
+        predictedVehHours: predicted,
+        observedVehHours: observed,
+      });
+      if (state.lastScoreResult) renderCalibration(state.lastScoreResult.delayVehHours);
+    }
 
     renderTimeline();
   }
@@ -1168,12 +1280,19 @@
     { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
     { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
     { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
+    { key: 'digOnceBand', label: 'نطاق وفر Dig-Once', value: '٢٥–٣٣٪', tag: 'src', note: 'GAO للمناطق الحضرية الكثيفة — مصدر #7' },
     { key: 'trenchKmDemo', label: 'طول الخندق في حساب Dig-Once', value: '1.2 كم', tag: 'assume', note: 'قيمة العرض المستخدمة في بطاقة الوفر — تُستبدل بطول التصريح الفعلي' },
-    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: String(AtharEngine.CALIBRATION.SCORE_CALIBRATION), tag: 'assume', note: 'يحوّل ساعات-التأخير إلى درجة 0-100 — غير مُستند، مرشح لإعادة معايرة من back-tests' },
-    { key: 'sharedTrenchOverhead', label: 'معامل تكلفة الخندق المشترك', value: String(AtharEngine.CALIBRATION.SHARED_TRENCH_OVERHEAD), tag: 'assume', note: 'يحدد نسبة وفر Dig-Once — قيد إعادة الاشتقاق ليتوافق مع نطاق GAO 25–33%' },
-    { key: 'compoundFactor', label: 'معامل التأثير المركّب', value: String(AtharEngine.CALIBRATION.COMPOUND_FACTOR), tag: 'assume', note: 'تقدير تفاعل تصريحين متجاورين — غير مُستند' },
-    { key: 'minCapacityFraction', label: 'أرضية السعة عند الإغلاق الكامل', value: String(AtharEngine.CALIBRATION.MIN_CAPACITY_FRACTION), tag: 'assume', note: 'يمنع القسمة على صفر في BPR — حد نمذجة لا قياس' },
-    { key: 'rcrcTransit', label: 'مسارات الحافلات ضمن ٢كم من الممر', value: '9 مسارات · 70 محطة · 6 محطات مترو', tag: 'src', note: 'لقطة حقيقية من RCRC Open Data بتاريخ 2026-07-23 — data/rcrc-corridor-transit.json' },
+    { key: 'workZoneFriction', label: 'معامل احتكاك منطقة العمل', value: '١٫١٠', tag: 'assume', note: 'أرضية: زمن الإغلاق ≥ ١١٠٪ من الأساس — يمنع تصفير تأخير الليل (مِراج ٩٩٫٦٪)' },
+    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: '٠٫٣٥', tag: 'assume', note: 'تطبيع درجة 0-100 — قابل لإعادة المعايرة من سجل back-test' },
+    { key: 'minCapacityFraction', label: 'أرضية السعة الدنيا', value: '٠٫٢٥', tag: 'assume', note: 'يمنع القسمة على صفر عند إغلاق كل المسارات' },
+    { key: 'compoundFactor', label: 'عامل التأثير المركّب', value: '١٫٣', tag: 'assume', note: 'تراكب تصريحين متجاورين نشطين معاً' },
+    { key: 'occupancyBand', label: 'نطاق الإشغال', value: '١٫٢–١٫٦ شخص/مركبة', tag: 'assume', note: 'كود 203 يشترط الإشغال لا عدّ المركبات (src-003) — لا رقم رياض رسمي' },
+    { key: 'wageMonthlySAR', label: 'الأجر الشهري', value: formatArabicNumber(AtharEngine.DEFAULTS.wageMonthlySAR) + ' ﷼', tag: 'src', note: 'GASTAT الربع الأول 2026 (src-017)' },
+    { key: 'votShare', label: 'نصيب قيمة الوقت من الأجر', value: '٤٠–٧٠٪', tag: 'src', note: 'كود الطرق 203 (src-003): راكب مشارك → سفر بين المدن' },
+    { key: 'idleFuelBand', label: 'استهلاك التعطل (نطاق)', value: '٠٫٧–١٫١ لتر/ساعة-مركبة', tag: 'assume', note: 'نطاق تقديري بترتيب الحجم' },
+    { key: 'busService', label: 'خدمة الحافلات', value: '٩ مسارات فعلية × ٤ حافلات/ساعة', tag: 'assume', note: 'المسارات حقيقية (RCRC src-011)؛ التواتر افتراض للعرض' },
+    { key: 'ridersBand', label: 'ركاب/حافلة (نطاق)', value: '١٥–٤٠ راكب', tag: 'assume', note: 'نطاق افتراضي للعرض' },
+    { key: 'rcrcTransit', label: 'نقل عام ضمن ٢كم من الممر', value: '9 مسارات · 70 محطة · 6 محطات مترو', tag: 'src', note: 'لقطة حقيقية من RCRC Open Data بتاريخ 2026-07-23 — data/rcrc-corridor-transit.json' },
   ];
 
   function renderAssumptions() {
