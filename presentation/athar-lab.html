@@ -1,0 +1,1769 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مختبر أثر — خمس حلقات قرار</title>
+  <style>
+    :root {
+      --asphalt: #16252c;
+      --asphalt-soft: #263942;
+      --fog: #edf3f4;
+      --paper: #f8faf9;
+      --white: #ffffff;
+      --teal: #0c6e68;
+      --teal-soft: #d8ebe8;
+      --amber: #d89a20;
+      --amber-soft: #fbebc7;
+      --coral: #c8533f;
+      --coral-soft: #f4dcd6;
+      --blue: #377a93;
+      --line: #c9d5d8;
+      --muted: #5f7078;
+      --shadow: 0 18px 45px rgba(22, 37, 44, 0.1);
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--asphalt);
+      background:
+        linear-gradient(rgba(55, 122, 147, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 122, 147, 0.055) 1px, transparent 1px),
+        var(--fog);
+      background-size: 32px 32px;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 3px;
+    }
+
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      min-height: 68px;
+      padding: 10px max(24px, calc((100vw - 1240px) / 2));
+      color: var(--white);
+      background: rgba(22, 37, 44, 0.96);
+      border-bottom: 4px solid var(--amber);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      color: var(--asphalt);
+      background: var(--amber);
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .brand b {
+      display: block;
+      font: 800 1rem/1 Tahoma, Arial, sans-serif;
+    }
+
+    .brand small {
+      color: #b9c7cb;
+      font-size: 0.68rem;
+    }
+
+    .loop-nav {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .loop-nav a {
+      padding: 7px 10px;
+      color: #dce5e7;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 0.76rem;
+    }
+
+    .loop-nav a:hover {
+      color: var(--white);
+      border-color: var(--amber);
+    }
+
+    .status-chip,
+    .source-chip,
+    .method-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 5px 9px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font: 700 0.68rem/1.25 "Segoe UI", Tahoma, sans-serif;
+    }
+
+    .status-chip::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: currentColor;
+      border-radius: 50%;
+    }
+
+    .masthead .status-chip {
+      color: #9ed7d2;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+      align-items: center;
+      gap: 60px;
+      min-height: 650px;
+      padding: 80px max(28px, calc((100vw - 1240px) / 2)) 92px;
+      color: var(--white);
+      background: var(--asphalt);
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      z-index: -1;
+      height: 18px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          var(--amber) 0 42px,
+          transparent 42px 66px
+        );
+      opacity: 0.85;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: #9ed7d2;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 4px;
+      background: var(--amber);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 22px;
+      font: 900 clamp(2.5rem, 6vw, 5.4rem)/1.05 Tahoma, Arial, sans-serif;
+      letter-spacing: -0.055em;
+    }
+
+    h1 em {
+      display: block;
+      color: var(--amber);
+      font-style: normal;
+    }
+
+    .hero-copy {
+      max-width: 670px;
+      margin-bottom: 30px;
+      color: #cfdbde;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      max-width: 680px;
+      overflow: hidden;
+      border: 1px solid #45606b;
+      background: #45606b;
+    }
+
+    .hero-proof > div {
+      min-height: 92px;
+      padding: 16px;
+      background: #1c3039;
+    }
+
+    .hero-proof strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--white);
+      font: 800 1.35rem/1 Tahoma, sans-serif;
+    }
+
+    .hero-proof span {
+      color: #9fb2b9;
+      font-size: 0.72rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 480px;
+      overflow: hidden;
+      border: 1px solid #47616a;
+      background:
+        linear-gradient(rgba(237, 243, 244, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(237, 243, 244, 0.1) 1px, transparent 1px),
+        #1b3039;
+      background-size: 42px 42px;
+      box-shadow: inset 0 0 0 14px rgba(22, 37, 44, 0.5);
+    }
+
+    .hero-road {
+      position: absolute;
+      width: 140%;
+      height: 52px;
+      background: #31464f;
+      border-block: 2px solid #61747b;
+      transform: rotate(-24deg);
+    }
+
+    .hero-road::after {
+      content: "";
+      position: absolute;
+      top: 23px;
+      right: 0;
+      width: 100%;
+      border-top: 3px dashed var(--amber);
+    }
+
+    .boundary-ring {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 260px;
+      height: 260px;
+      border: 3px solid var(--amber);
+      border-radius: 50%;
+      background: rgba(216, 154, 32, 0.13);
+      box-shadow:
+        0 0 0 18px rgba(216, 154, 32, 0.06),
+        0 0 45px rgba(216, 154, 32, 0.24);
+      transition: width 280ms ease, height 280ms ease;
+    }
+
+    .work-zone {
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 82px;
+      height: 82px;
+      color: var(--white);
+      background: var(--coral);
+      border: 7px double var(--asphalt);
+      border-radius: 50%;
+      font-weight: 900;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    }
+
+    .boundary-label {
+      position: absolute;
+      inset: 18px 18px auto auto;
+      max-width: 165px;
+      padding: 9px 11px;
+      color: #c9d7da;
+      background: rgba(22, 37, 44, 0.85);
+      border-right: 3px solid var(--amber);
+      font: 600 0.74rem/1.5 "Segoe UI", sans-serif;
+    }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 30px;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 76px 28px 34px;
+    }
+
+    .section-intro h2 {
+      margin-bottom: 8px;
+      font: 900 clamp(2rem, 4vw, 3.8rem)/1.1 Tahoma, Arial, sans-serif;
+      letter-spacing: -0.04em;
+    }
+
+    .section-intro p {
+      max-width: 710px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .source-key {
+      display: grid;
+      gap: 8px;
+      min-width: 245px;
+      padding: 14px;
+      color: var(--asphalt);
+      background: var(--amber-soft);
+      border-right: 5px solid var(--amber);
+      font-size: 0.72rem;
+    }
+
+    .dossier {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto 80px;
+      padding: 0 28px;
+    }
+
+    .dossier::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      bottom: 28px;
+      right: 66px;
+      width: 7px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          var(--amber) 0 32px,
+          transparent 32px 49px
+        );
+    }
+
+    .loop-section {
+      position: relative;
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    .loop-index {
+      position: sticky;
+      top: 92px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      align-self: start;
+      width: 76px;
+      height: 76px;
+      color: var(--white);
+      background: var(--asphalt);
+      border: 7px solid var(--fog);
+      border-radius: 50%;
+      font: 900 1.2rem/1 "Consolas", monospace;
+      box-shadow: 0 0 0 2px var(--amber);
+    }
+
+    .loop-body {
+      overflow: hidden;
+      background: rgba(248, 250, 249, 0.97);
+      border: 1px solid var(--line);
+      border-top: 6px solid var(--asphalt);
+      box-shadow: var(--shadow);
+    }
+
+    .loop-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      padding: 26px 30px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .loop-heading h3 {
+      margin-bottom: 4px;
+      font: 900 clamp(1.45rem, 3vw, 2.4rem)/1.1 Tahoma, sans-serif;
+      letter-spacing: -0.035em;
+    }
+
+    .loop-heading p {
+      max-width: 730px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .method-chip {
+      align-self: start;
+      color: var(--teal);
+      background: var(--teal-soft);
+      border-color: transparent;
+    }
+
+    .scene-grid {
+      display: grid;
+      grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+      min-height: 330px;
+    }
+
+    .controls {
+      padding: 26px 30px;
+      background: #e6edef;
+      border-left: 1px solid var(--line);
+    }
+
+    .controls-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .controls-title::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      background: var(--teal);
+      transform: rotate(45deg);
+    }
+
+    .control {
+      margin-bottom: 22px;
+    }
+
+    .control:last-child {
+      margin-bottom: 0;
+    }
+
+    .control label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      color: var(--asphalt-soft);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .control output {
+      direction: ltr;
+      color: var(--teal);
+      font: 800 0.82rem/1 "Consolas", monospace;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      appearance: none;
+      background: #bac9cd;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      width: 20px;
+      height: 20px;
+      appearance: none;
+      background: var(--teal);
+      border: 4px solid var(--white);
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px var(--teal);
+    }
+
+    .scene-output {
+      min-width: 0;
+      padding: 26px 30px 30px;
+    }
+
+    .result-kicker {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .result-number {
+      margin-bottom: 6px;
+      color: var(--asphalt);
+      font: 900 clamp(2.5rem, 6vw, 5rem)/0.95 Tahoma, sans-serif;
+      letter-spacing: -0.055em;
+    }
+
+    .result-number small {
+      color: var(--muted);
+      font-size: 0.24em;
+      letter-spacing: 0;
+    }
+
+    .equation {
+      direction: ltr;
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      margin: 16px 0;
+      padding: 9px 12px;
+      overflow-x: auto;
+      color: #d9ecea;
+      background: var(--asphalt);
+      border-right: 4px solid var(--teal);
+      font: 700 0.76rem/1.5 "Consolas", monospace;
+      text-align: left;
+    }
+
+    .component-list,
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .component,
+    .metric {
+      padding: 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .component b,
+    .metric b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--asphalt);
+      font: 900 1.05rem/1.1 Tahoma, sans-serif;
+    }
+
+    .component span,
+    .metric span {
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .decision {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 4px 0 12px;
+      padding: 8px 12px;
+      border: 1px solid currentColor;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .decision.accept {
+      color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .decision.reschedule {
+      color: var(--coral);
+      background: var(--coral-soft);
+    }
+
+    .budget-track {
+      position: relative;
+      height: 22px;
+      margin: 20px 0 10px;
+      overflow: hidden;
+      background: #dbe4e6;
+      border: 1px solid var(--line);
+    }
+
+    .budget-fill {
+      width: var(--usage, 0%);
+      height: 100%;
+      background: var(--teal);
+      transition: width 220ms ease, background 220ms ease;
+    }
+
+    .budget-fill.over {
+      background: var(--coral);
+    }
+
+    .budget-limit {
+      position: absolute;
+      inset: -4px 0 -4px auto;
+      width: 3px;
+      background: var(--asphalt);
+    }
+
+    .suggestion {
+      padding: 13px 15px;
+      color: var(--asphalt);
+      background: var(--amber-soft);
+      border-right: 5px solid var(--amber);
+      font-size: 0.8rem;
+    }
+
+    .rank-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rank-card {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr);
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .rank-card.winner {
+      border-color: var(--teal);
+      box-shadow: inset 0 0 0 2px var(--teal);
+    }
+
+    .rank-position {
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: var(--asphalt);
+      font: 900 1.5rem/1 "Consolas", monospace;
+    }
+
+    .rank-content {
+      min-width: 0;
+      padding: 13px 15px;
+    }
+
+    .rank-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .rank-head b {
+      font-family: Tahoma, sans-serif;
+    }
+
+    .rank-head span {
+      direction: ltr;
+      color: var(--teal);
+      font: 800 0.75rem/1 "Consolas", monospace;
+    }
+
+    .factor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .factor {
+      min-width: 0;
+      padding: 8px;
+      background: #edf3f4;
+    }
+
+    .factor-name {
+      display: block;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 0.61rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .factor-value {
+      display: block;
+      direction: ltr;
+      margin: 3px 0;
+      font: 800 0.7rem/1.2 "Consolas", monospace;
+      text-align: right;
+    }
+
+    .factor-weight {
+      display: block;
+      height: 4px;
+      background: #c4d2d5;
+    }
+
+    .factor-weight i {
+      display: block;
+      width: var(--weight);
+      height: 100%;
+      background: var(--teal);
+    }
+
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+    }
+
+    .conflict-matrix {
+      width: 100%;
+      min-width: 520px;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.72rem;
+    }
+
+    .conflict-matrix th,
+    .conflict-matrix td {
+      padding: 10px 8px;
+      border: 1px solid var(--line);
+    }
+
+    .conflict-matrix th {
+      color: var(--white);
+      background: var(--asphalt);
+      font-family: "Consolas", monospace;
+    }
+
+    .conflict-matrix td {
+      direction: ltr;
+      background: var(--white);
+      font-family: "Consolas", monospace;
+    }
+
+    .conflict-matrix td.active {
+      color: #7c271b;
+      background: var(--coral-soft);
+      font-weight: 900;
+    }
+
+    .conflict-matrix td.shared {
+      background: var(--amber-soft);
+    }
+
+    .groups {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .group-chip {
+      direction: ltr;
+      padding: 7px 10px;
+      color: var(--teal);
+      background: var(--teal-soft);
+      border: 1px solid #a6d0cb;
+      font: 800 0.7rem/1 "Consolas", monospace;
+    }
+
+    .memory-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .memory-summary .metric {
+      border-top: 4px solid var(--teal);
+    }
+
+    .memory-table-wrap {
+      overflow-x: auto;
+    }
+
+    .memory-table {
+      width: 100%;
+      min-width: 650px;
+      border-collapse: collapse;
+      font-size: 0.7rem;
+    }
+
+    .memory-table th,
+    .memory-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+    }
+
+    .memory-table th {
+      color: var(--muted);
+      background: #edf3f4;
+    }
+
+    .memory-table td.numeric {
+      direction: ltr;
+      font-family: "Consolas", monospace;
+      text-align: center;
+    }
+
+    .verdict {
+      display: inline-block;
+      min-width: 54px;
+      padding: 3px 6px;
+      text-align: center;
+      font-size: 0.62rem;
+      font-weight: 900;
+    }
+
+    .verdict.success {
+      color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .verdict.failure {
+      color: var(--coral);
+      background: var(--coral-soft);
+    }
+
+    .change-better {
+      color: var(--teal);
+    }
+
+    .change-worse {
+      color: var(--coral);
+    }
+
+    .competitive-position {
+      color: var(--white);
+      background: var(--blue);
+    }
+
+    .position-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      gap: 70px;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 74px 28px;
+    }
+
+    .competitive-position h2 {
+      margin-bottom: 14px;
+      font: 900 clamp(2.2rem, 4.5vw, 4.2rem)/1.05 Tahoma, sans-serif;
+      letter-spacing: -0.05em;
+    }
+
+    .competitive-position p {
+      color: #d8e8ee;
+    }
+
+    .position-stack {
+      display: grid;
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .position-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      padding: 17px 19px;
+      background: rgba(22, 37, 44, 0.34);
+    }
+
+    .position-row b {
+      direction: ltr;
+      font-family: "Consolas", monospace;
+      text-align: right;
+    }
+
+    .position-row span {
+      color: #e4eff2;
+      font-size: 0.83rem;
+    }
+
+    .position-row.athar {
+      color: var(--asphalt);
+      background: var(--amber);
+    }
+
+    .position-row.athar span {
+      color: var(--asphalt);
+      font-weight: 700;
+    }
+
+    .provenance {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 44px 28px 58px;
+    }
+
+    .provenance h2 {
+      font: 900 1.5rem/1.2 Tahoma, sans-serif;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .source-item {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+    }
+
+    .source-item b {
+      display: block;
+      direction: ltr;
+      margin-bottom: 5px;
+      color: var(--teal);
+      font: 800 0.76rem/1 "Consolas", monospace;
+      text-align: right;
+    }
+
+    .source-item span {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    footer {
+      padding: 22px 28px;
+      color: #b6c5ca;
+      background: var(--asphalt);
+      text-align: center;
+      font-size: 0.72rem;
+    }
+
+    @media (max-width: 920px) {
+      .masthead {
+        grid-template-columns: auto 1fr;
+      }
+
+      .masthead > .status-chip {
+        display: none;
+      }
+
+      .loop-nav {
+        justify-content: flex-start;
+      }
+
+      .hero,
+      .section-intro,
+      .position-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        gap: 36px;
+      }
+
+      .hero-visual {
+        min-height: 390px;
+      }
+
+      .scene-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        border-bottom: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .source-key {
+        min-width: 0;
+      }
+
+      .source-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .masthead {
+        position: static;
+        display: block;
+        padding: 12px 18px;
+      }
+
+      .loop-nav {
+        justify-content: flex-start;
+        margin-top: 12px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        padding: 60px 20px 70px;
+      }
+
+      .hero-proof,
+      .component-list,
+      .metric-strip,
+      .memory-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 330px;
+      }
+
+      .section-intro,
+      .position-inner,
+      .provenance {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+
+      .dossier {
+        padding: 0 14px;
+      }
+
+      .dossier::before {
+        display: none;
+      }
+
+      .loop-section {
+        grid-template-columns: 1fr;
+      }
+
+      .loop-index {
+        position: relative;
+        top: 0;
+        width: 54px;
+        height: 54px;
+        margin-bottom: -15px;
+        margin-right: 14px;
+        border-width: 5px;
+      }
+
+      .loop-heading {
+        grid-template-columns: 1fr;
+        padding: 30px 20px 18px;
+      }
+
+      .controls,
+      .scene-output {
+        padding: 22px 20px;
+      }
+
+      .factor-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .source-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .position-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="#top" aria-label="العودة إلى بداية المختبر">
+      <span class="brand-mark">أ</span>
+      <span>
+        <b>مختبر أثر</b>
+        <small>طبقة قرار فوق بلدي</small>
+      </span>
+    </a>
+    <nav class="loop-nav" aria-label="الحلقات الخمس">
+      <a href="#boundary-scene">حد التأثير</a>
+      <a href="#budget-scene">ميزانية المحور</a>
+      <a href="#reasons-scene">سبب الترتيب</a>
+      <a href="#conflict-scene">التعارضات</a>
+      <a href="#memory-scene">ذاكرة المعايرة</a>
+    </nav>
+    <span class="status-chip">يعمل محليًا دون اتصال</span>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">من نموذج تأخير إلى نظام قرار قابل للقياس</div>
+        <h1 id="hero-title">المعادلة هي البداية.<em>الابتكار في الحلقات.</em></h1>
+        <p class="hero-copy">
+          يحافظ أثر على نموذج التأخير المعياري، ثم يضيف فوقه خمس حلقات تتخذ قرارًا،
+          وتشرح سببه بالأرقام، وتقارن التوقع بالواقع بعد التنفيذ.
+        </p>
+        <div class="hero-proof" aria-label="ملخص المختبر">
+          <div>
+            <strong>٥ حلقات</strong>
+            <span>وحدات مستقلة تعمل وتتغير مع المدخلات</span>
+          </div>
+          <div>
+            <strong id="hero-engine-delay">—</strong>
+            <span>ساعة-مركبة من محرك التأخير القائم</span>
+          </div>
+          <div>
+            <strong>٠ شبكة</strong>
+            <span>ملفات محلية ولا طلبات خارجية</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="تصور حي لحد التأثير">
+        <div class="hero-road" aria-hidden="true"></div>
+        <div class="boundary-ring" id="hero-boundary-ring">
+          <div class="work-zone">عمل</div>
+        </div>
+        <div class="boundary-label">
+          الحد ليس دائرة ثابتة؛ يتغير الآن مع حجم الحركة والسعة المتبقية.
+        </div>
+      </div>
+    </section>
+
+    <section class="section-intro" aria-labelledby="loops-title">
+      <div>
+        <h2 id="loops-title">ملف القرار، خطوة بخطوة</h2>
+        <p>
+          غيّر أي مدخل. لا توجد نتيجة محفوظة للعرض: كل حكم أدناه يعاد حسابه
+          داخل المتصفح، مع إظهار المعادلة ومصدر البيانات أو وسم الافتراض.
+        </p>
+      </div>
+      <div class="source-key">
+        <b>حالة البيانات الحالية</b>
+        <span>افتراض توضيحي للعرض</span>
+        <span>يستبدل ببيانات التصاريح والرصد عند التكامل.</span>
+      </div>
+    </section>
+
+    <article class="dossier" aria-label="حلقات القرار الخمس">
+      <section class="loop-section" id="boundary-scene">
+        <div class="loop-index" aria-hidden="true">01</div>
+        <div class="loop-body">
+          <header class="loop-heading">
+            <div>
+              <h3>حد تأثير يتنفس مع الطريق</h3>
+              <p>
+                يبدأ من نصف طول منطقة العمل، ثم يتوسع بنسبة الطلب إلى السعة
+                وبنسبة المسارات المفقودة. لا مسافة دائرية ثابتة.
+              </p>
+            </div>
+            <span class="method-chip">اشتقاق صريح</span>
+          </header>
+          <div class="scene-grid">
+            <div class="controls">
+              <div class="controls-title">مدخلات منطقة العمل</div>
+              <div class="control">
+                <label for="boundary-volume">
+                  حجم الحركة في الساعة
+                  <output id="boundary-volume-value">—</output>
+                </label>
+                <input id="boundary-volume" type="range" min="800" max="7200" step="100" value="5200">
+              </div>
+              <div class="control">
+                <label for="boundary-closed-lanes">
+                  المسارات المغلقة
+                  <output id="boundary-closed-lanes-value">—</output>
+                </label>
+                <input id="boundary-closed-lanes" type="range" min="0" max="4" step="1" value="2">
+              </div>
+              <div class="control">
+                <label for="boundary-length">
+                  طول منطقة العمل
+                  <output id="boundary-length-value">—</output>
+                </label>
+                <input id="boundary-length" type="range" min="100" max="1000" step="50" value="400">
+              </div>
+              <span class="source-chip">افتراض توضيحي للعرض</span>
+            </div>
+            <div class="scene-output" aria-live="polite">
+              <div class="result-kicker">نصف قطر التأثير المحسوب</div>
+              <div class="result-number"><span id="boundary-radius">—</span> <small>متر</small></div>
+              <code class="equation" id="boundary-equation">—</code>
+              <div class="component-list" id="boundary-components"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="loop-section" id="budget-scene">
+        <div class="loop-index" aria-hidden="true">02</div>
+        <div class="loop-body">
+          <header class="loop-heading">
+            <div>
+              <h3>لكل محور ميزانية أثر</h3>
+              <p>
+                يجمع النظام ساعات-المركبات المقبولة في الشهر. إذا تجاوز الطلب
+                السقف الذي تحدده الجهة، يرفض التوقيت ويقترح أول شهر يملك سعة.
+              </p>
+            </div>
+            <span class="method-chip">قرار قبول أو إعادة جدولة</span>
+          </header>
+          <div class="scene-grid">
+            <div class="controls">
+              <div class="controls-title">طلب التصريح</div>
+              <div class="control">
+                <label for="budget-request-impact">
+                  أثر الطلب
+                  <output id="budget-request-impact-value">—</output>
+                </label>
+                <input id="budget-request-impact" type="range" min="500" max="5000" step="100" value="2800">
+              </div>
+              <div class="control">
+                <label for="budget-limit">
+                  السقف الشهري
+                  <output id="budget-limit-value">—</output>
+                </label>
+                <input id="budget-limit" type="range" min="6000" max="14000" step="500" value="8000">
+              </div>
+              <span class="source-chip">سقف تجريبي تحدده الجهة</span>
+            </div>
+            <div class="scene-output" aria-live="polite">
+              <div id="budget-decision" class="decision">—</div>
+              <div class="result-number"><span id="budget-projected">—</span> <small>ساعة-مركبة</small></div>
+              <div class="budget-track" aria-hidden="true">
+                <div class="budget-fill" id="budget-fill"></div>
+                <div class="budget-limit"></div>
+              </div>
+              <code class="equation" id="budget-equation">—</code>
+              <div class="metric-strip" id="budget-metrics"></div>
+              <p class="suggestion" id="budget-suggestion">—</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="loop-section" id="reasons-scene">
+        <div class="loop-index" aria-hidden="true">03</div>
+        <div class="loop-body">
+          <header class="loop-heading">
+            <div>
+              <h3>الترتيب يشرح نفسه بالأرقام</h3>
+              <p>
+                كل بديل يحمل فرق الطلب والطابور وأثر الحافلات وتعارضات المحور،
+                إضافة إلى وزن مساهمة كل عامل في نتيجته النهائية.
+              </p>
+            </div>
+            <span class="method-chip">أوزان مشتقة من نطاق البدائل</span>
+          </header>
+          <div class="scene-grid">
+            <div class="controls">
+              <div class="controls-title">اختبار حساسية البديل الليلي</div>
+              <div class="control">
+                <label for="ranking-bus-impact">
+                  أثر الحافلات عند 23:00
+                  <output id="ranking-bus-impact-value">—</output>
+                </label>
+                <input id="ranking-bus-impact" type="range" min="40" max="1600" step="20" value="170">
+              </div>
+              <div class="control">
+                <label for="ranking-queue-impact">
+                  أثر الطابور عند 23:00
+                  <output id="ranking-queue-impact-value">—</output>
+                </label>
+                <input id="ranking-queue-impact" type="range" min="400" max="6000" step="100" value="1400">
+              </div>
+              <span class="source-chip">المقاييس: منهج src-021</span>
+            </div>
+            <div class="scene-output" aria-live="polite">
+              <div class="result-kicker">ترتيب حي لثلاثة بدائل</div>
+              <code class="equation">تحسن العامل ÷ نطاقه بين البدائل = نقاط مساهمته</code>
+              <div class="rank-list" id="ranking-results"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="loop-section" id="conflict-scene">
+        <div class="loop-index" aria-hidden="true">04</div>
+        <div class="loop-body">
+          <header class="loop-heading">
+            <div>
+              <h3>المحفظة كلها على مصفوفة واحدة</h3>
+              <p>
+                يقارن كل تصريح بكل تصريح في الزمن والمقطع، ويشتق معامل التفاعل
+                من ساعات التراكب الفعلية، ثم يقترح مجموعات دمج للأعمال المتقاربة.
+              </p>
+            </div>
+            <span class="method-chip">تحليل متعدد التصاريح</span>
+          </header>
+          <div class="scene-grid">
+            <div class="controls">
+              <div class="controls-title">اختبار تنسيق المحفظة</div>
+              <div class="control">
+                <label for="coordination-hours">
+                  نافذة تنسيق الدمج
+                  <output id="coordination-hours-value">—</output>
+                </label>
+                <input id="coordination-hours" type="range" min="24" max="480" step="24" value="72">
+              </div>
+              <div class="control">
+                <label for="conflict-shift">
+                  إزاحة التصريح P-102
+                  <output id="conflict-shift-value">—</output>
+                </label>
+                <input id="conflict-shift" type="range" min="0" max="400" step="8" value="0">
+              </div>
+              <span class="source-chip">بيانات محفظة تركيبية موسومة</span>
+            </div>
+            <div class="scene-output" aria-live="polite">
+              <div class="metric-strip" id="conflict-metrics"></div>
+              <code class="equation">1 + ساعات تراكب المقاطع المشتركة ÷ إجمالي ساعات التصاريح</code>
+              <div class="matrix-wrap" id="conflict-matrix"></div>
+              <div class="groups" id="conflict-groups"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="loop-section" id="memory-scene">
+        <div class="loop-index" aria-hidden="true">05</div>
+        <div class="loop-body">
+          <header class="loop-heading">
+            <div>
+              <h3>كل تصريح يترك ذاكرة</h3>
+              <p>
+                يسجل النظام المتوقع والمرصود، ويحسب معامل تصحيح من مجموع الحالات،
+                من دون إخفاء الحالات التي أخطأ فيها أو التي ساءت بعد التصحيح.
+              </p>
+            </div>
+            <span class="method-chip">نجاح وفشل ظاهر</span>
+          </header>
+          <div class="scene-grid">
+            <div class="controls">
+              <div class="controls-title">حكم المعايرة</div>
+              <div class="control">
+                <label for="success-threshold">
+                  عتبة النجاح
+                  <output id="success-threshold-value">—</output>
+                </label>
+                <input id="success-threshold" type="range" min="5" max="35" step="1" value="15">
+              </div>
+              <div class="control">
+                <label for="memory-observed">
+                  المرصود في الحالة M3
+                  <output id="memory-observed-value">—</output>
+                </label>
+                <input id="memory-observed" type="range" min="850" max="1500" step="10" value="1120">
+              </div>
+              <span class="source-chip">أخطاء تركيبية متنوعة 5–40%</span>
+            </div>
+            <div class="scene-output" aria-live="polite">
+              <div class="memory-summary" id="memory-summary"></div>
+              <code class="equation">معامل التصحيح = مجموع المرصود ÷ مجموع المتوقع</code>
+              <div class="memory-table-wrap" id="memory-table"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <section class="competitive-position" aria-labelledby="position-title">
+      <div class="position-inner">
+        <div>
+          <div class="eyebrow">تميّز صادق لا ادعاء سبق</div>
+          <h2 id="position-title">الجمع هو موضعنا.</h2>
+          <p>
+            تثبت سنغافورة وone.network نضج قدرات مجاورة. قيمة أثر المقترحة هي
+            جمع التوقع المنسوب، واقتصاد كود الطرق السعودي، وميزانية الأثر،
+            والمعايرة اللاحقة في طبقة قرار فوق بلدي.
+          </p>
+        </div>
+        <div class="position-stack" aria-label="مقارنة القدرات">
+          <div class="position-row">
+            <b>Singapore LTA</b>
+            <span>أتمتة مراجعة خطط المرور والوثائق وإصدار التوصيات.</span>
+          </div>
+          <div class="position-row">
+            <b>one.network</b>
+            <span>تصاريح وتنسيق وخريطة عامة وتكامل مع أنظمة الملاحة.</span>
+          </div>
+          <div class="position-row">
+            <b>Vissim / Aimsun</b>
+            <span>محاكاة متخصصة للحالات التي تستحق تحليلًا أعمق.</span>
+          </div>
+          <div class="position-row athar">
+            <b>ATHAR</b>
+            <span>خمس حلقات قرار قابلة للقياس ضمن السياق السعودي وفوق مسار بلدي.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="provenance" aria-labelledby="sources-title">
+      <h2 id="sources-title">مفاتيح الدليل وحدود الاستخدام</h2>
+      <div class="source-grid">
+        <div class="source-item">
+          <b>src-003</b>
+          <span>كود الطرق السعودي 203؛ مرجع منهج ساعات الأشخاص وقيمة الوقت.</span>
+        </div>
+        <div class="source-item">
+          <b>src-021</b>
+          <span>مجموعة مقاييس مناطق العمل؛ ساعات التأخير والطوابير والموثوقية.</span>
+        </div>
+        <div class="source-item">
+          <b>src-024</b>
+          <span>one.network؛ معيار معلن لقدرات التصاريح والتنسيق والنشر.</span>
+        </div>
+        <div class="source-item">
+          <b>src-030</b>
+          <span>سنغافورة؛ سابقة رسمية لاستخدام الذكاء الاصطناعي في أعمال الطرق.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    جميع أرقام السيناريوهات في المختبر «افتراض توضيحي للعرض» إلى حين ربطها بقياسات التصاريح الفعلية.
+  </footer>
+
+  <script src="./athar-engine.js"></script>
+  <script src="./data/innovation-demo-data.js"></script>
+  <script src="./athar-boundary.js"></script>
+  <script src="./athar-budget.js"></script>
+  <script src="./athar-reasons.js"></script>
+  <script src="./athar-conflict.js"></script>
+  <script src="./athar-memory.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const Demo = window.AtharInnovationDemoData;
+      const number = new Intl.NumberFormat('ar-SA', {
+        maximumFractionDigits: 1,
+      });
+      const integer = new Intl.NumberFormat('ar-SA', {
+        maximumFractionDigits: 0,
+      });
+
+      function value(id) {
+        return Number(document.getElementById(id).value);
+      }
+
+      function formatDate(iso) {
+        return new Intl.DateTimeFormat('ar-SA', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }).format(new Date(iso));
+      }
+
+      function metric(label, displayedValue) {
+        return `<div class="metric"><b>${displayedValue}</b><span>${label}</span></div>`;
+      }
+
+      function renderBoundary() {
+        const input = {
+          workLengthMeters: value('boundary-length'),
+          hourlyVolume: value('boundary-volume'),
+          totalLanes: Demo.boundary.totalLanes,
+          lanesClosed: value('boundary-closed-lanes'),
+          capacityPerLane: Demo.boundary.capacityPerLane,
+          provenance: Demo.meta,
+        };
+        const result = window.AtharBoundary.calculate(input);
+        const visualDiameter = Math.max(
+          160,
+          Math.min(360, 100 + result.radiusMeters / 2.2)
+        );
+        const engineResult = window.AtharEngine.score({
+          ...window.AtharEngine.DEFAULTS,
+          lanesClosed: input.lanesClosed,
+          startHour: 18,
+          durationHours: 8,
+        });
+
+        document.getElementById('boundary-volume-value').textContent =
+          `${integer.format(input.hourlyVolume)} مركبة`;
+        document.getElementById('boundary-closed-lanes-value').textContent =
+          `${integer.format(input.lanesClosed)} من ${integer.format(input.totalLanes)}`;
+        document.getElementById('boundary-length-value').textContent =
+          `${integer.format(input.workLengthMeters)} م`;
+        document.getElementById('boundary-radius').textContent =
+          integer.format(result.radiusMeters);
+        document.getElementById('boundary-equation').textContent =
+          `${number.format(result.baseRadiusMeters)} × (1 + ${number.format(result.demandRatio)} + ${number.format(1 - result.residualCapacityRatio)}) = ${integer.format(result.radiusMeters)} m`;
+        document.getElementById('boundary-components').innerHTML =
+          result.components
+            .map((component) =>
+              `<div class="component"><b>${number.format(component.meters)} م</b><span>${component.label}</span></div>`
+            )
+            .join('');
+        document.getElementById('hero-boundary-ring').style.width =
+          `${visualDiameter}px`;
+        document.getElementById('hero-boundary-ring').style.height =
+          `${visualDiameter}px`;
+        document.getElementById('hero-engine-delay').textContent =
+          integer.format(engineResult.delayVehHours);
+      }
+
+      function renderBudget() {
+        const request = {
+          ...Demo.permits.find((permit) => permit.status === 'requested'),
+          delayVehHours: value('budget-request-impact'),
+        };
+        const monthlyBudgetVehHours = value('budget-limit');
+        const result = window.AtharBudget.assess(request, Demo.permits, {
+          monthlyBudgetVehHours,
+          provenance: Demo.meta,
+        });
+        const isAccepted = result.decision === 'accept';
+        const usageWidth = Math.min(100, result.utilizationPct);
+        const decision = document.getElementById('budget-decision');
+        const fill = document.getElementById('budget-fill');
+
+        document.getElementById('budget-request-impact-value').textContent =
+          `${integer.format(request.delayVehHours)} س-م`;
+        document.getElementById('budget-limit-value').textContent =
+          `${integer.format(monthlyBudgetVehHours)} س-م`;
+        decision.className = `decision ${isAccepted ? 'accept' : 'reschedule'}`;
+        decision.textContent = isAccepted
+          ? 'مقبول ضمن الميزانية'
+          : 'يعاد جدولة التوقيت';
+        document.getElementById('budget-projected').textContent =
+          integer.format(result.projectedUsage);
+        fill.style.setProperty('--usage', `${usageWidth}%`);
+        fill.classList.toggle('over', !isAccepted);
+        document.getElementById('budget-equation').textContent =
+          `${integer.format(result.usedBefore)} + ${integer.format(request.delayVehHours)} = ${integer.format(result.projectedUsage)} / ${integer.format(monthlyBudgetVehHours)} veh-h`;
+        document.getElementById('budget-metrics').innerHTML =
+          metric('مستهلك قبل الطلب', integer.format(result.usedBefore)) +
+          metric('المتبقي بعد الطلب', integer.format(result.remainingAfter)) +
+          metric('نسبة الاستخدام', `${number.format(result.utilizationPct)}٪`);
+        document.getElementById('budget-suggestion').textContent = isAccepted
+          ? `يحافظ الطلب على ${integer.format(result.remainingAfter)} ساعة-مركبة للشهر.`
+          : `أقرب نافذة بسعة شهرية كافية: ${formatDate(result.suggestedStart)}.`;
+      }
+
+      function renderReasons() {
+        const candidates = Demo.ranking.candidates.map((candidate) =>
+          candidate.id === 'C-23'
+            ? {
+                ...candidate,
+                busPersonHours: value('ranking-bus-impact'),
+                queueVehHours: value('ranking-queue-impact'),
+              }
+            : { ...candidate }
+        );
+        const result = window.AtharReasons.explain(
+          Demo.ranking.baseline,
+          candidates,
+          Demo.meta
+        );
+
+        document.getElementById('ranking-bus-impact-value').textContent =
+          `${integer.format(value('ranking-bus-impact'))} س-ش`;
+        document.getElementById('ranking-queue-impact-value').textContent =
+          `${integer.format(value('ranking-queue-impact'))} س-م`;
+        document.getElementById('ranking-results').innerHTML = result.ranked
+          .map((candidate) => {
+            const factors = candidate.factors
+              .map((factor) => {
+                const width = Math.min(100, Math.abs(factor.weightPct));
+                const sign = factor.delta >= 0 ? '−' : '+';
+                return `
+                  <div class="factor">
+                    <span class="factor-name">${factor.label}</span>
+                    <span class="factor-value">${sign}${number.format(Math.abs(factor.delta))} ${factor.unit}</span>
+                    <span class="factor-name">وزن ${number.format(factor.weightPct)}٪</span>
+                    <span class="factor-weight"><i style="--weight:${width}%"></i></span>
+                  </div>`;
+              })
+              .join('');
+            return `
+              <div class="rank-card ${candidate.rank === 1 ? 'winner' : ''}">
+                <div class="rank-position">${candidate.rank}</div>
+                <div class="rank-content">
+                  <div class="rank-head">
+                    <b>بديل ${candidate.label}</b>
+                    <span>${number.format(candidate.totalPoints)} points</span>
+                  </div>
+                  <div class="factor-grid">${factors}</div>
+                </div>
+              </div>`;
+          })
+          .join('');
+      }
+
+      function shiftedPermits() {
+        const shiftMilliseconds = value('conflict-shift') * 3600000;
+        return Demo.permits.map((permit) => {
+          if (permit.id !== 'P-102') {
+            return { ...permit, routeSegments: [...permit.routeSegments] };
+          }
+          return {
+            ...permit,
+            routeSegments: [...permit.routeSegments],
+            start: new Date(new Date(permit.start).getTime() + shiftMilliseconds).toISOString(),
+            end: new Date(new Date(permit.end).getTime() + shiftMilliseconds).toISOString(),
+          };
+        });
+      }
+
+      function renderConflict() {
+        const coordinationWindowHours = value('coordination-hours');
+        const permits = shiftedPermits();
+        const result = window.AtharConflict.analyze(permits, {
+          coordinationWindowHours,
+          provenance: Demo.meta,
+        });
+
+        document.getElementById('coordination-hours-value').textContent =
+          `${integer.format(coordinationWindowHours)} ساعة`;
+        document.getElementById('conflict-shift-value').textContent =
+          `${integer.format(value('conflict-shift'))} ساعة`;
+        document.getElementById('conflict-metrics').innerHTML =
+          metric('تعارض زمني-مكاني', integer.format(result.conflicts.length)) +
+          metric('معامل مشتق', number.format(result.interactionRatio)) +
+          metric('ساعات تراكب مشتركة', number.format(result.overlapExposureHours));
+
+        const header = result.permits
+          .map((permit) => `<th scope="col">${permit.id}</th>`)
+          .join('');
+        const rows = result.matrix
+          .map((row, rowIndex) => {
+            const cells = row
+              .map((cell, columnIndex) => {
+                const diagonal = rowIndex === columnIndex;
+                const className =
+                  cell.exposure > 0
+                    ? 'active'
+                    : cell.sharedSegmentCount > 0
+                      ? 'shared'
+                      : '';
+                const content = diagonal
+                  ? '—'
+                  : `${number.format(cell.temporalOverlapHours)}h × ${cell.sharedSegmentCount}`;
+                return `<td class="${className}">${content}</td>`;
+              })
+              .join('');
+            return `<tr><th scope="row">${result.permits[rowIndex].id}</th>${cells}</tr>`;
+          })
+          .join('');
+        document.getElementById('conflict-matrix').innerHTML =
+          `<table class="conflict-matrix"><thead><tr><th>تصريح</th>${header}</tr></thead><tbody>${rows}</tbody></table>`;
+        document.getElementById('conflict-groups').innerHTML =
+          result.digOnceGroups.length > 0
+            ? result.digOnceGroups
+                .map(
+                  (group) =>
+                    `<span class="group-chip">Dig-Once: ${group.permitIds.join(' + ')}</span>`
+                )
+                .join('')
+            : '<span class="group-chip">لا توجد مجموعة ضمن النافذة الحالية</span>';
+      }
+
+      function renderMemory() {
+        const threshold = value('success-threshold');
+        const records = Demo.memoryRecords.map((record) =>
+          record.id === 'M3'
+            ? { ...record, observedVehHours: value('memory-observed') }
+            : { ...record }
+        );
+        const result = window.AtharMemory.calibrate(records, {
+          successThresholdPct: threshold,
+          provenance: Demo.meta,
+        });
+
+        document.getElementById('success-threshold-value').textContent =
+          `${integer.format(threshold)}٪`;
+        document.getElementById('memory-observed-value').textContent =
+          `${integer.format(value('memory-observed'))} س-م`;
+        document.getElementById('memory-summary').innerHTML =
+          metric('معامل التصحيح', number.format(result.correctionFactor)) +
+          metric('الخطأ قبل', `${number.format(result.beforeMapePct)}٪`) +
+          metric('الخطأ بعد', `${number.format(result.afterMapePct)}٪`) +
+          metric(
+            'تحسن / تراجع',
+            `${integer.format(result.casesImproved)} / ${integer.format(result.casesWorsened)}`
+          );
+
+        const rows = result.records
+          .map((record) => {
+            const improved = record.afterErrorPct < record.beforeErrorPct;
+            return `
+              <tr>
+                <td><b>${record.id}</b></td>
+                <td class="numeric">${integer.format(record.predictedVehHours)}</td>
+                <td class="numeric">${integer.format(record.observedVehHours)}</td>
+                <td class="numeric">${number.format(record.beforeErrorPct)}٪</td>
+                <td><span class="verdict ${record.beforeVerdict}">${record.beforeVerdict === 'success' ? 'نجاح' : 'فشل'}</span></td>
+                <td class="numeric">${number.format(record.correctedPrediction)}</td>
+                <td class="numeric ${improved ? 'change-better' : 'change-worse'}">${number.format(record.afterErrorPct)}٪</td>
+                <td><span class="verdict ${record.afterVerdict}">${record.afterVerdict === 'success' ? 'نجاح' : 'فشل'}</span></td>
+              </tr>`;
+          })
+          .join('');
+        document.getElementById('memory-table').innerHTML = `
+          <table class="memory-table">
+            <thead>
+              <tr>
+                <th>الحالة</th>
+                <th>متوقع</th>
+                <th>مرصود</th>
+                <th>خطأ قبل</th>
+                <th>الحكم</th>
+                <th>متوقع مصحح</th>
+                <th>خطأ بعد</th>
+                <th>الحكم</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>`;
+      }
+
+      function renderAll() {
+        renderBoundary();
+        renderBudget();
+        renderReasons();
+        renderConflict();
+        renderMemory();
+      }
+
+      document
+        .querySelectorAll('input[type="range"]')
+        .forEach((element) => element.addEventListener('input', renderAll));
+
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
