@@ -78,6 +78,15 @@
   // BPR function never divides by (near) zero. افتراض توضيحي للعرض.
   const MIN_CAPACITY_FRACTION = 0.25;
 
+  // Work-zone friction: lane shifts, tapers and merges slow traffic through an
+  // active closure even when demand is far below capacity (e.g. empty night
+  // hours). Modeled as a floor: the closed travel time is at least 10% above
+  // free-flow-hour baseline. This stops the BPR^4 term from collapsing night
+  // delay to ~0, which otherwise produced a physically impossible ~99.6%
+  // "saving" that contradicts the cited −11.1% scheduling study (Ledger #5).
+  // افتراض توضيحي للعرض.
+  const WORK_ZONE_FRICTION = 1.10;
+
   // Candidate scheduling grid used by optimize().
   const CANDIDATE_START_HOURS = [22, 23, 0, 8, 10, 13];
   const CANDIDATE_PHASES = [1, 2];
@@ -138,7 +147,10 @@
 
       const baseT = bprTravelTime(freeFlowMin, demand, fullCapacity);
       const closedT = lanesClosed > 0
-        ? bprTravelTime(freeFlowMin, demand, closedCapacity)
+        ? Math.max(
+            bprTravelTime(freeFlowMin, demand, closedCapacity),
+            baseT * WORK_ZONE_FRICTION,
+          )
         : baseT;
 
       const hourDelayVehHours = lanesClosed > 0

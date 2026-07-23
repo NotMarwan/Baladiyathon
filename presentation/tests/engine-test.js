@@ -406,6 +406,28 @@ test('co2(0) => fuelL 0, co2Kg 0', () => {
 });
 
 // ---------------------------------------------------------------------------
+// work-zone friction floor
+// ---------------------------------------------------------------------------
+
+test('night closure still produces nonzero delay (work-zone friction floor)', () => {
+  const r = AtharEngine.score({
+    aadt: 85000, lanes: 4, lanesClosed: 1, capacityPerLane: 1800,
+    freeFlowMin: 6, startHour: 2, durationHours: 4,
+  });
+  assert.ok(r.delayVehHours > 0, `expected >0, got ${r.delayVehHours}`);
+});
+
+test('optimize kills the 99.6% mirage: no candidate saves >=99% and best still has material delay', () => {
+  const r = AtharEngine.optimize({
+    aadt: 85000, lanes: 4, lanesClosed: 2, capacityPerLane: 1800,
+    freeFlowMin: 6, startHour: 8, durationHours: 48,
+  });
+  r.top3.forEach((c) => assert.ok(c.savedPct < 99, `savedPct ${c.savedPct}`));
+  // best schedule still carries real work-zone delay (not the ~0 mirage)
+  assert.ok(r.top3[0].delayVehHours >= 100, `best delay ${r.top3[0].delayVehHours}`);
+});
+
+// ---------------------------------------------------------------------------
 // digOnce()
 // ---------------------------------------------------------------------------
 

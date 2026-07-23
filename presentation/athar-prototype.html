@@ -824,7 +824,13 @@
 
       var saved = document.createElement('div');
       saved.className = 'saved num';
-      saved.textContent = formatArabicNumber(candidate.savedVehHours) + ' س-م موفّرة (' + formatPercent(candidate.savedPct) + '٪)';
+      // Absolute vehicle-hours first (before → after), then the saving. The
+      // percentage is secondary because an extreme baseline can make it look
+      // implausibly high; the absolute delay is the honest headline number.
+      var beforeVh = state.lastScoreResult ? state.lastScoreResult.delayVehHours : candidate.delayVehHours + candidate.savedVehHours;
+      saved.textContent =
+        formatArabicNumber(beforeVh) + ' ← ' + formatArabicNumber(candidate.delayVehHours) + ' س-م' +
+        ' (وفر ' + formatArabicNumber(candidate.savedVehHours) + ' س-م، ' + formatPercent(candidate.savedPct) + '٪)';
 
       var reasonsList = document.createElement('ul');
       candidate.reasons.forEach(function (reason) {
