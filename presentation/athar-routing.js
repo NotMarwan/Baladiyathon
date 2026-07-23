@@ -227,6 +227,19 @@
     return { from: firstEdge.from, to: lastEdge.to };
   }
 
+  // Straight-through travel time along the corridor (kf edges only), honoring
+  // the closure. This is what a driver who STAYS on the main road suffers —
+  // as opposed to the network shortest path, which would silently divert.
+  function corridorThroughTime(graph, network, hour, closure) {
+    var hf = hourFractionOf(hour);
+    var aadtScale = graph.network.metadata.aadtScale;
+    var total = 0;
+    network.corridorEdges.forEach(function (eid) {
+      total += edgeTravelTime(graph.edgeById[eid], hf, aadtScale, closure);
+    });
+    return total;
+  }
+
   /**
    * Compute alternative routes around a closed corridor edge.
    * @param {object} network
@@ -243,12 +256,10 @@
     var ends = corridorEndpoints(network);
     var closure = { edgeId: closedEdgeId, lanesClosed: lanesClosed };
 
-    // Corridor travel time with no closure (normal day) and with the closure
-    // active (what a driver suffers if they stay on the corridor).
-    var baseline = shortestPath(graph, ends.from, ends.to, hour, null, {});
-    var viaClosure = shortestPath(graph, ends.from, ends.to, hour, closure, {});
-    var baselineMin = baseline ? baseline.travelMin : 0;
-    var viaClosureMin = viaClosure ? viaClosure.travelMin : 0;
+    // Straight-through corridor time with no closure (normal day) and with the
+    // closure active (what a driver suffers if they stay on the main road).
+    var baselineMin = corridorThroughTime(graph, network, hour, null);
+    var viaClosureMin = corridorThroughTime(graph, network, hour, closure);
 
     // k-diverse alternatives: forbid the closed edge; penalize already-used
     // edges so each successive route diverges.
