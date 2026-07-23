@@ -768,7 +768,8 @@
       compoundCard.style.display = '';
       document.getElementById('compoundNum').textContent = formatArabicNumber(compoundResult.combined) + ' س-م';
       document.getElementById('compoundLab').textContent = compoundResult.warning
-        || 'التأثير المركّب لتصريحين متجاورين — عامل التضخيم ' + compoundResult.factor;
+        || 'التأثير المركّب لتصريحين متجاورين — عامل التضخيم ' + compoundResult.factor
+        + ' (تقدير تقريبي: يفترض تصريحاً مجاوراً مماثلاً على المحور نفسه، لا موقعاً جغرافياً مستقلاً)';
     } else {
       compoundCard.style.display = 'none';
     }
