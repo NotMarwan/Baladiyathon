@@ -54,6 +54,7 @@
 
   .ref{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em;margin-top:10px}
   .card .ref{margin-top:8px}
+  .limit{font-size:14px;line-height:1.7;color:var(--muted);border-right:3px solid var(--gold);padding-right:12px;margin:14px 0 0}
 
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
@@ -180,95 +181,61 @@
 </head>
 <body>
 
-<div id="progress" style="width:7.7%"></div>
+<div id="progress" style="width:8.3%"></div>
 <button id="clickzone-prev" aria-label="الشريحة السابقة" title="السابق"></button>
 <button id="clickzone-next" aria-label="الشريحة التالية" title="التالي"></button>
-<div id="counter">1 / 13</div>
+<div id="counter">1 / 12</div>
 
 <div id="deck">
 
-  <!-- SLIDE 1: الغلاف — 0:00-0:15 -->
-  <!-- SPEAKER NOTES: [0:00–0:15] "أثر" — الاسم يعني الأثر المروري الذي نقيسه قبل وقوعه. بلدياتثون 2026، التحدي الثالث: تأثير البنية التحتية والحفر على المرور. -->
+  <!-- SPEAKER NOTES: [0:00–0:15] اليوم يرى ضابط الترخيص موقع الحفر ومدته، لكنه لا يرى تكلفة القرار على حركة الناس قبل التوقيع. «أثر» يضيف هذا القرار قبل الموافقة. -->
   <section class="slide cover" id="slide-1">
     <div class="slide-inner">
-      <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · تأثير البنية التحتية والحفر على المرور</div>
+      <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · أثر أعمال البنية التحتية على المرور</div>
       <h1 style="justify-content:center">أثر <span class="latin">Athar</span></h1>
-      <p class="thesis">يعرض النموذج الحالي درجة تحليلية وبدائل جدولة مفسّرة لطلب الحفر قبل المراجعة.</p>
-      <p class="hook">مسار توضيحي؛ الحساب الشبكي قيد البناء.</p>
+      <p class="thesis">قبل أن نوقّع تصريح الحفر، نريد أن نعرف أثره على حركة الناس — ثم نرتّب موعداً أخف ونشرح سبب القرار.</p>
+      <p class="hook">النموذج الحالي: درجة تحليلية وجدولة مفسّرة؛ التكامل الشبكي المتخصص خارطة طريق.</p>
     </div>
-    <div class="footnote"><span>momah.gov.sa/ar/hackathon</span></div>
   </section>
 
-  <!-- SLIDE 2: المشكلة — 0:15-0:40 -->
-  <!-- SPEAKER NOTES: [0:15–0:40] بلدي لديه خدمة تنسيق حفريات متعددة، بينما لا تعرض صفحات الخدمة العامة تحليلاً للأثر المروري أو تنبؤاً بالازدحام. حلول العالم تثبت إمكان سد الفجوة؛ تميّز أثر في جمع التوقع المنسوب واقتصاد الوقت والترتيب المفسّر والمعايرة في السياق السعودي. -->
+  <!-- SPEAKER NOTES: [0:15–0:35] بلدي ينسق الحفريات ويعرضها على الخريطة؛ صفحات الخدمة العامة لا تثبت تنبؤاً مرورياً قبل الترخيص أو ترتيباً كمياً للبدائل. نقترح طبقة قرار حول المسار القائم، ولا ندعي ربطاً حالياً. -->
   <section class="slide" id="slide-2">
     <div class="slide-inner">
-      <div class="eyebrow">المشكلة</div>
-      <h2>نموذج قرار لطلبات الحفر</h2>
-      <p class="thesis">يختبر النموذج كيف يمكن عرض درجة تحليلية وبدائل جدولة مفسّرة لطلب الحفر. الربط المباشر مع بلدي ليس ضمن النموذج الحالي.</p>
-      <div class="stats">
-        <div class="stat"><div class="num" style="font-size:22px;line-height:1.3">لا تحليل مروري</div><div class="lab">خدمة تنسيق الحفريات المتعددة لا تذكر تحليل الأثر أو التنبؤ بالازدحام.</div><div class="ref">balady.gov.sa/.../request-multiple-excavation-coordination</div></div>
-      </div>
-    </div>
-    <div class="footnote"><span>balady.gov.sa/en/services/excavation-permits</span><span>balady.gov.sa/en/services/request-multiple-excavation-coordination</span></div>
-  </section>
-
-  <!-- COMPETITOR POSITIONING — APPENDIX TO THE 3-MINUTE FLOW -->
-  <section class="slide" id="slide-competitors">
-    <div class="slide-inner">
-      <div class="eyebrow">المنافسون والتميّز</div>
-      <h2>نعرف المنافسين — وهذا موضعنا</h2>
-      <table class="cmp">
-        <tr><th>الحل</th><th>ما يفعله</th><th>ما لا يفعله لسياقنا</th></tr>
-        <tr><td>one.network (أمريكا/بريطانيا)</td><td>تصاريح + تنسيق + خريطة عامة + تكامل ملاحة</td><td>لا اقتصاد وقت سعودي (كود 203) ولا معايرة توقع/واقع معلنة</td></tr>
-        <tr><td>LTA سنغافورة (PROMPT + AI)</td><td>مراجعة خطط التحكم المروري بالذكاء الاصطناعي</td><td>مراجعة وثائق — لا ترتيب بدائل جدولة بأثر شبكي مفسّر</td></tr>
-        <tr><td>PTV Vissim / Aimsun</td><td>محاكاة مرورية دقيقة</td><td>أداة خبراء لكل حالة — لا طبقة قرار لكل تصريح</td></tr>
-        <tr><td>UK Street Manager</td><td>تنسيق أكثر من +2M عمل/سنة في إنجلترا</td><td>سجل وتنسيق — لا توصية توقيت مثلى مفسّرة</td></tr>
-        <tr><td><b>أثر</b></td><td colspan="2"><b>طبقة قرار مقترحة حول بلدي: درجة تحليلية + ترتيب بدائل مفسّر + معايرة بعد التنفيذ؛ تتطلب بيانات مصرّحاً بها وواجهة تكامل</b></td></tr>
-      </table>
-      <div class="ref">one.network · LTA Singapore · PTV Vissim · Aimsun — مقارنة قدرات عامة، لا قياس أثر سعودي</div>
-      <div class="ref"><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · +2M عمل/سنة · ليس حجماً سعودياً</a></div>
+      <div class="eyebrow">فجوة القرار</div>
+      <h2>بلدي ينسّق الحفر؛ «أثر» يقترح قرار الحركة قبل الموافقة</h2>
+      <p class="thesis">بلدي يملك خريطة للحفريات وتنسيقاً للمشاريع المستقبلية والمتعددة. الدليل العام لا يظهر تنبؤاً مرورياً منسوباً للحفرية أو ترتيباً كمياً للبدائل. «أثر» نموذج مستقل لطبقة قرار مقترحة حول هذا المسار.</p>
+      <div class="ref"><a href="athar-sources.html#src-008">src-008 · لا يثبت غياب قدرات داخلية غير منشورة</a></div>
     </div>
   </section>
 
-  <!-- SLIDE 3: الحل — 0:40-1:05 -->
-  <!-- SPEAKER NOTES: [0:40–1:05] النموذج يعرض درجة تحليلية وبدائل جدولة مفسرة بمدخلات تجريبية. المسار ظاهر للتوضيح فقط، والحساب الشبكي والمحاكاة المتخصصة مرحلتان لاحقتان. -->
+  <!-- SPEAKER NOTES: [0:35–0:55] نبدأ بفحص سريع من البيانات المفتوحة، نرفع الدقة عند توفر السرعة والحجم، ونحيل الحالات العالية لمحاكاة متخصصة. لا ندعي أن التكامل المتخصص موجود في النموذج الحالي. -->
   <section class="slide" id="slide-3">
     <div class="slide-inner">
       <div class="eyebrow">الحل</div>
-      <h2>خمس حلقات مترابطة — هذا هو الابتكار</h2>
-      <ol class="loops">
-        <li><b>حد تأثير يتوسع بالحركة</b> لا بمسافة ثابتة حول الحفرية.</li>
-        <li><b>درجة أثر مفسّرة</b> متوافقة مع منهج كود الطرق السعودي.</li>
-        <li><b>ميزانية أثر لكل محور</b> تمنع تراكم المشاريع في الوقت نفسه.</li>
-        <li><b>ترتيب بدائل</b> بساعات الأشخاص والقيمة والنقل العام والوصول الحرج.</li>
-        <li><b>معايرة بعد التنفيذ</b>: توقع ← قياس ← تصحيح — مصمم ليُعايَر من نتائج ما بعد التنفيذ.</li>
-      </ol>
-      <div class="pipe">
-        <div class="stage"><div class="stage-h">المدخلات</div><ul><li>طلب تصريح حفر (الموقع، المدة، المسارات)</li><li>شبكة الطرق وحركة المرور النموذجية</li><li>تصاريح مجاورة ومتزامنة</li></ul></div>
-        <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>درجة أثر مروري (دالة BPR القياسية)</li><li>مُحسّن الجدولة عبر شبكة سيناريوهات زمنية</li><li>كاشف دمج الحفريات (Dig-Once)</li><li>كاشف التأثيرات المركّبة بين ممرات متوازية</li></ul></div>
-        <div class="stage"><div class="stage-h">المخرجات</div><ul><li>درجة أثر (أحمر/أصفر/أخضر) + سبب القرار</li><li>أفضل 3 جداول بديلة مع التبرير</li><li>مسار توضيحي؛ الحساب الشبكي قيد البناء</li></ul></div>
+      <h2>ثلاث درجات تمنع الإفراط في المحاكاة</h2>
+      <div class="pipe" id="slide-tiers">
+        <div class="stage"><div class="stage-h">فحص سريع</div><ul><li>بيانات التصريح</li><li>طبقات مفتوحة</li><li>حدود تحفظية</li></ul></div>
+        <div class="stage engine"><div class="stage-h">تشغيلي</div><ul><li>سرعة وحجم</li><li>معايرة عند توفر البيانات</li><li>بدائل زمنية مفسّرة</li></ul></div>
+        <div class="stage"><div class="stage-h">متخصص</div><ul><li>Vissim أو Aimsun</li><li>للحالات عالية الأثر</li><li>تكامل مستقبلي</li></ul></div>
       </div>
+      <div class="ref"><a href="athar-sources.html#src-001">src-001 · منطق تدرّج مستعار من الكود؛ ليس حدود تصريح ملزمة</a></div>
     </div>
-    <div class="footnote"><span>BPR = Bureau of Public Roads volume-delay function (معيار هندسي قياسي)</span></div>
   </section>
 
-  <!-- SLIDE 4: الديمو المباشر — 1:05-1:30 -->
-  <!-- SPEAKER NOTES: [1:05–1:30] هذا هو النموذج التفاعلي الحي — نفتحه الآن على طريق الملك فهد بالرياض (مقطع العليا، بيانات توضيحية للعرض). سبع خطوات: حدد موقع الحفر، اضبط عدد المسارات المغلقة والمدة، شاهد درجة الأثر، اضغط "حسّن الجدولة"، قارن قبل/بعد، شاهد وفر CO₂ ووفر Dig-Once، ثم أصدر خطة إدارة المرور. -->
+  <!-- SPEAKER NOTES: [0:55–1:30] في النموذج نغيّر عدد المسارات والوقت، فتتغير درجة BPR فوراً. زر التحسين يقارن بدائل زمنية مفسرة، والمسار المعروض توضيحي لأن الحساب الشبكي قيد البناء. -->
   <section class="slide" id="slide-4">
     <div class="slide-inner">
-      <div class="eyebrow">الديمو المباشر</div>
-      <h2>النموذج التفاعلي — طريق الملك فهد، الرياض (مقطع العليا)</h2>
-      <span class="badge">بيانات توضيحية للعرض</span>
+      <div class="eyebrow">الديمو</div>
+      <h2>الديمو يثبت القرار الذي يعمل الآن</h2>
+      <span class="badge">بيانات ومدخلات توضيحية للعرض</span>
       <div class="demo-layout">
         <div class="demo-col">
           <ol class="demo">
-            <li><b>حدد موقع الحفر</b> على الخريطة التفاعلية (Leaflet).</li>
-            <li>اضبط <b>عدد المسارات المغلقة</b>، ساعة البدء، والمدة — الدرجة تتحدث فوراً.</li>
-            <li>اضغط <b>«حسّن الجدولة»</b> لعرض أفضل 3 بدائل مع أسباب الفوز.</li>
-            <li>شاهد مقارنة تقديرية للسيناريو قبل ← بعد؛ تتطلب التحقق من نتائج ما بعد التنفيذ.</li>
-            <li>شاهد فرص تقدير الانبعاثات ودمج الحفريات عند توافر المدخلات المحلية.</li>
-            <li>أنشئ <b>مسودة خطة إدارة مرور قابلة للطباعة</b> بالعربية للمراجعة.</li>
+            <li>أدخل الإغلاق والوقت.</li>
+            <li>شاهد درجة <b>BPR</b> فوراً.</li>
+            <li>قارن بدائل الجدولة وأسبابها.</li>
+            <li>اطبع مسودة خطة المرور.</li>
+            <li>المسار توضيحي؛ الحساب الشبكي قيد البناء.</li>
           </ol>
           <div class="fallback-row">
             <a class="linkbtn" href="athar-prototype.html" target="_blank" rel="noopener">افتح النموذج في نافذة كاملة ↗</a>
@@ -280,107 +247,102 @@
             <span class="device-url">athar-prototype.html</span>
           </div>
           <div class="device-screen">
-            <iframe data-src="athar-prototype.html" loading="lazy" title="نموذج أثر الحي"></iframe>
+            <iframe data-src="athar-prototype.html" loading="lazy" title="نموذج أثر الحالي"></iframe>
           </div>
         </div>
       </div>
     </div>
-    <div class="footnote"><span>الديمو يعمل بدون خادم (وضع مستقل) وبواجهة API عند تشغيل server.js</span></div>
   </section>
 
-  <!-- SLIDE 5: الدليل — 1:30-1:55 -->
-  <!-- SPEAKER NOTES: [1:30–1:55] نستخدم الأرقام السعودية الرسمية كسياق للبيئة المرورية، ولا ننسبها للحفريات. Street Manager مرجع دولي لتنسيق أكثر من مليوني عمل سنوياً في إنجلترا، لا تقديراً سعودياً. -->
+  <!-- SPEAKER NOTES: [1:30–1:55] التنسيق الرقمي قابل للتشغيل على نطاق كبير: Street Manager ينسق أكثر من مليوني عمل سنوياً في إنجلترا. هذا معيار تشغيل عالمي، وليس حجماً سعودياً ولا نتيجة لأثر. -->
   <section class="slide" id="slide-5">
     <div class="slide-inner">
-      <div class="eyebrow">الدليل</div>
-      <h2>لماذا نثق أنها تنجح</h2>
+      <div class="eyebrow">دليل التشغيل</div>
+      <h2>التنسيق الرقمي ينجح على نطاق وطني</h2>
       <div class="stats">
-        <div class="stat"><div class="num">67 دقيقة</div><div class="lab">متوسط رحلة الذهاب والعودة اليومية في الرياض (2024) — حجم البيئة المرورية التي يعمل فيها كل تصريح، لا رقم ننسبه للحفريات.</div><div class="ref">GASTAT — Livability in Saudi Cities 2025</div></div>
-        <div class="stat"><div class="num">+34.7M</div><div class="lab">رحلة ركاب بحافلات الرياض في 2024 — كل إغلاق يمس النقل العام لا المركبات وحدها.</div><div class="ref">GASTAT — Livability in Saudi Cities 2025</div></div>
-        <div class="stat"><div class="num">+2M</div><div class="lab">أعمال طرق تُدار سنوياً في إنجلترا عبر Street Manager؛ هذا مرجع دولي وليس حجماً سعودياً.</div><div class="ref"><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · +2M عمل/سنة · ليس حجماً سعودياً</a></div></div>
+        <div class="stat">
+          <div class="num">+2M</div>
+          <div class="lab">عمل طريق سنوياً ينسقه Street Manager في إنجلترا.</div>
+          <div class="ref"><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · ليس حجماً سعودياً ولا نتيجة لأثر</a></div>
+        </div>
       </div>
     </div>
-    <div class="footnote"><span><a href="https://www.nyc.gov/html/dot/html/infrastructure/permits_gencond.shtml">NYC OCMC · src-032</a></span><span><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · +2M عمل/سنة · ليس حجماً سعودياً</a></span></div>
   </section>
 
-  <!-- SLIDE 6: التفسيرية — 1:55-2:15 -->
-  <!-- SPEAKER NOTES: [1:55–2:15] كل جدول بديل يأتي مع 3 أسباب مشتقة من الأرقام الفعلية — "لماذا فاز هذا الجدول" — هذا يبني ثقة لجنة اتخاذ القرار في الأمانة، لأن القرار مفسَّر لا صندوقاً أسود. -->
+  <!-- SPEAKER NOTES: [1:55–2:20] لا نبيع وعداً؛ نقترح تجربة ظل على عشرين إلى ثلاثين تصريحاً خلال أربعة إلى ثمانية أسابيع، مع تعريف القياس وقواعد الاستبعاد قبل رؤية النتيجة. -->
   <section class="slide" id="slide-6">
     <div class="slide-inner">
-      <div class="eyebrow">التفسيرية</div>
-      <h2>«لماذا فاز هذا الجدول» — ثقة اللجنة</h2>
-      <p class="thesis">كل جدول مقترح يُرفق بثلاثة أسباب مشتقة من التحليل الفعلي، لا نصاً معلّباً — يرى متخذ القرار <b>لماذا</b> لا <b>ماذا</b> فقط.</p>
-      <div class="cards">
-        <div class="card good"><h3>نافذة خارج الذروة</h3><p>البدء الساعة 23:00 يقابل طلباً أقل بنسبة كبيرة مقارنة بذروة الصباح 7–9.</p></div>
-        <div class="card good"><h3>تقسيم على مرحلتين</h3><p>تقسيم العمل على ليلتين يخفّض ذروة التأثير بدل تركيزه دفعة واحدة.</p></div>
-        <div class="card good"><h3>تفادي ذروة الصباح</h3><p>تجنّب الساعات 7–9 يمنع تراكب الحفر مع أعلى طلب يومي على الممر.</p></div>
+      <div class="eyebrow">خطة التجربة</div>
+      <h2>نثبت القيمة بتجربة ظل قبل التوسع</h2>
+      <div class="cards" id="slide-pilot">
+        <div class="card"><h3>العينة</h3><p>20–30 تصريحاً موزعة على درجات أثر وأنواع طرق مختلفة.</p></div>
+        <div class="card"><h3>الفترة</h3><p>4–8 أسابيع في وضع ظل لا يغيّر قرار الضابط.</p></div>
+        <div class="card"><h3>القياس</h3><p>قبل وأثناء وبعد، مع حالة مقابلة مماثلة.</p></div>
+        <div class="card good"><h3>النزاهة</h3><p>تعريف النجاح والاستبعاد قبل رؤية النتائج.</p></div>
       </div>
+      <div class="ref">أرقام تصميم تجربة مقترحة، وليست نتيجة أو حجم تشغيل حالي.</div>
     </div>
   </section>
 
-  <!-- SLIDE 7: الأثر — 2:15-2:35 -->
-  <!-- SPEAKER NOTES: [2:15–2:35] يعرض النموذج تقديرات سيناريو لا نتائج مقاسة. تحتاج ساعات-المركبة والانبعاثات ووفورات دمج الحفريات إلى تحقق ما بعد التنفيذ ومدخلات محلية موثقة. -->
+  <!-- SPEAKER NOTES: [2:20–2:40] القرار لا يخرج كلون فقط: يعرض تقديرات سيناريو للتأخير وساعات الأشخاص ونطاق القيمة والانبعاثات، ثم تتحول إلى نتائج فقط بعد مقارنة التوقع بالقياس. -->
   <section class="slide" id="slide-7">
     <div class="slide-inner">
-      <div class="eyebrow">الأثر</div>
-      <h2>نتائج بوحدات قرار، لا نسب مجردة</h2>
+      <div class="eyebrow">الأثر القابل للإثبات</div>
+      <h2>النتيجة قابلة للتدقيق لا مجرد لون</h2>
       <div class="cards">
-        <div class="card"><h3>ساعات-مركبة تقديرية</h3><p>مقارنة سيناريو قبل/بعد؛ لا تصبح نتيجة مقاسة إلا بعد التحقق من التنفيذ.</p></div>
-        <div class="card"><h3>تقدير CO₂</h3><p>يمكن تقدير الانبعاثات من أثر الحركة بعد توفير مدخلات محلية ومعايرة.</p><div class="ref"><a href="athar-sources.html#src-040">src-040 · بحث محكّم 2024 · يلزم إدخال محلي</a></div></div>
-        <div class="card"><h3>تقدير وفر Dig-Once</h3><p>يتطلب تقدير الوفر بالريال مدخلات تكلفة محلية موثقة، ثم التحقق من النتيجة بعد التنفيذ.</p></div>
-        <div class="card good"><h3>أثر قابل للإثبات</h3><p>نعلن النتيجة لكل تصريح أو للتجربة المحددة كنطاق موثّق. أي توسع للمدينة أو المملكة يبقى سيناريو مشروطاً بالحجم الرسمي للتصاريح وتمثيل العينة.</p><div class="ref">منهج قياس أثر — تجربة ظل قبل/أثناء/بعد</div></div>
+        <div class="card"><h3>الزمن</h3><p>تقدير التأخير المنسوب للحفرية وساعات الأشخاص.</p></div>
+        <div class="card"><h3>القيمة</h3><p>تقدير مالي كنطاق، لا رقم يقين منفرد.</p></div>
+        <div class="card"><h3>البيئة</h3><p>تقدير انبعاثات فيزيائية بمدخلات محلية معلنة.</p></div>
+        <div class="card good"><h3>الدقة</h3><p>خطأ التوقع بعد التنفيذ وسبب الانحراف.</p></div>
       </div>
+      <div class="ref">تقديرات سيناريو قبل التنفيذ؛ لا تعميم ولا ادعاء نتيجة قبل تجربة ممثلة وبيانات معتمدة.</div>
     </div>
   </section>
 
-  <!-- SLIDE 8: الشفافية — 2:35-2:45 -->
-  <!-- SPEAKER NOTES: [2:35–2:45] الخريطة العامة مخرج مستقبلي بعد إتاحة بيانات مصرّح بها وتحديد آلية نشرها؛ لا يعرض النموذج الحالي بيانات بلدية مباشرة. -->
-  <section class="slide" id="slide-8">
+  <!-- SPEAKER NOTES: [2:40–3:00] «أثر» ليس منصة تصاريح جديدة؛ هو نموذج لطبقة قرار سعودية مقترحة حول بلدي. المطلوب تجربة ظل وبيانات مصرح بها وواجهة تكامل لاختبار الدقة. -->
+  <section class="slide cover closing" id="slide-8">
     <div class="slide-inner">
-      <div class="eyebrow">الشفافية</div>
-      <h2>خريطة عامة للأعمال — للمواطن قبل المطوّر</h2>
-      <p class="thesis">يمكن في مرحلة لاحقة نشر الأعمال المعتمدة كخريطة عامة بعد اعتماد مصدر البيانات وآلية النشر. النموذج الحالي لا يفترض اتصالاً مباشراً ببيانات بلدي.</p>
-    </div>
-    <div class="footnote"><span>roadworks.org · one.network</span></div>
-  </section>
-
-  <!-- SLIDE 9: الجدوى — 2:45-2:55 -->
-  <!-- SPEAKER NOTES: [2:45–2:55] النموذج الحالي يستخدم مدخلات تجريبية مطابقة لبنية التصريح وخرائط مفتوحة. الربط البلدي والمحاكاة المتخصصة مراحل لاحقة تحتاج صلاحيات وبيانات معايرة. -->
-  <section class="slide" id="slide-9">
-    <div class="slide-inner">
-      <div class="eyebrow">الجدوى</div>
-      <h2>نطاق النموذج الحالي</h2>
-      <div class="pill">
-        <span>مدخلات تجريبية مطابقة لبنية التصريح</span>
-        <i>·</i>
-        <span>خرائط مفتوحة</span>
-        <i>·</i>
-        <span>درجة تحليلية محلية</span>
-        <i>·</i>
-        <span>بيانات معايرة مطلوبة للتوسع</span>
-      </div>
-      <p class="thesis" style="margin-top:10px">يعمل النموذج الحالي بمدخلات تجريبية مطابقة لبنية التصريح وخرائط مفتوحة؛ ربط بلدي والحساب الشبكي والمحاكاة المتخصصة مراحل تكامل لاحقة تتطلب صلاحيات وبيانات معايرة.</p>
-    </div>
-  </section>
-
-  <!-- SLIDE 10: الختام — 2:55-3:00 -->
-  <!-- SPEAKER NOTES: [2:55–3:00] أثر نموذج مستقل يمكن اقتراحه كتكامل مستقبلي لقرار البنية التحتية بعد إتاحة البيانات المصرح بها وواجهة التكامل. -->
-  <section class="slide cover closing" id="slide-10">
-    <div class="slide-inner">
-      <div class="eyebrow">الختام</div>
-      <h2>«أثر: هدف تكامل مستقبلي لقرار البنية التحتية»</h2>
+      <div class="eyebrow">القرار المطلوب</div>
+      <h2>تجربة ظل وبيانات مصرح بها</h2>
+      <p class="thesis">نقترح تجربة نموذج القرار مستقلاً، ثم نربطه بمسار بلدي فقط بعد إتاحة بيانات مصرح بها وواجهة تكامل. النجاح هو دقة مقبولة ومنفعة تحفظية موجبة بلا تدهور للنقل العام أو الوصول الحرج.</p>
       <div class="flow">
-        <span class="step">امتثال</span>
-        <span class="arrow">←</span>
-        <span class="step">تفتيش</span>
-        <span class="arrow">←</span>
-        <span class="step hi">بنية تحتية (أثر)</span>
+        <span class="step">بلدي</span><span class="arrow">←</span><span class="step hi">أثر القرار</span><span class="arrow">←</span><span class="step">قياس ومعايرة</span>
       </div>
+    </div>
+  </section>
+
+  <section class="slide appendix" id="slide-competitor-scale">
+    <div class="slide-inner">
+      <div class="eyebrow">ملحق المنافسين · قوة يجب الاعتراف بها</div>
+      <h2>سنغافورة تراجع أعمال الطرق بالذكاء الاصطناعي على نطاق يومي كبير</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">200–300</div>
+          <div class="lab">عمل طرق يومياً، مع توليد خطط تحكم وفحص وثائق وتوصيات للطلبات الأبسط.</div>
+          <div class="ref"><a href="athar-sources.html#src-030">src-030 · هيئة النقل البري في سنغافورة · 2025</a></div>
+        </div>
+      </div>
+      <p class="limit">التميّز المستهدف: أثر شبكي منسوب، اقتصاد وقت وفق منهج سعودي، بدائل زمنية مفسّرة، ومعايرة بعد التنفيذ. لا ندّعي أن مراجعة الوثائق بالذكاء الاصطناعي ابتكارنا.</p>
+    </div>
+  </section>
+
+  <section class="slide appendix" id="slide-competitor-notice">
+    <div class="slide-inner">
+      <div class="eyebrow">ملحق المنافسين · التنسيق المبكر</div>
+      <h2>سنغافورة تجعل التخطيط المسبق شرطاً لبعض الطرق</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">شهران</div>
+          <div class="lab">إخطار مسبق للجداول على طرق محددة قبل الموافقة.</div>
+          <div class="ref"><a href="athar-sources.html#src-029">src-029 · تحديث 2026 · القاعدة خاصة بسنغافورة وتدخل لاحقاً</a></div>
+        </div>
+      </div>
+      <p class="limit">التميّز المستهدف: مقارنة بدائل الجدول على حركة الناس ثم اختبار دقة التوقع بعد التنفيذ، بعد توفير البيانات والتكامل.</p>
     </div>
   </section>
 
   <!-- SOURCES APPENDIX — لا تُعرض ضمن الـ3 دقائق -->
-  <section class="slide" id="slide-sources">
+  <section class="slide appendix" id="slide-sources">
     <div class="slide-inner">
       <div class="eyebrow">المصادر المعتمدة</div>
       <h2>قاعدة الأدلة السعودية والمقارنة العالمية</h2>
@@ -393,17 +355,19 @@
         <li><b>one.network</b> (المنافس المرجعي) — us.one.network</li>
         <li><b>LTA Singapore</b> (مراجعة خطط المرور بالذكاء الاصطناعي) — lta.gov.sg</li>
       </ul>
+      <div class="ref"><a href="athar-sources.html">افتح سجل الأدلة الموحّد: القيمة والوحدة والسنة وحد الاستخدام</a></div>
     </div>
   </section>
 
   <!-- Q&A ARSENAL — لا تُعرض ضمن الـ3 دقائق؛ تُفتح عند الأسئلة -->
-  <section class="slide" id="slide-qa">
+  <section class="slide appendix" id="slide-qa">
     <div class="slide-inner">
       <div class="eyebrow">ملحق الأسئلة</div>
       <h2>أسئلة اللجنة — أجوبة جاهزة</h2>
       <div class="qa">
         <p><b>كيف تختلفون عن بلدي؟</b> النموذج الحالي مستقل ويستخدم مدخلات تجريبية. أي ربط مع مسار بلدي مرحلة تكامل لاحقة تتطلب صلاحيات.</p>
-        <p><b>وone.network وسنغافورة؟</b> نعرفهما — سنغافورة تراجع الوثائق بالذكاء الاصطناعي وone.network يجمع التصاريح والخريطة. يركز نموذجنا على عرض درجة مفسرة وبدائل جدولة قابلة للمراجعة في سياق سعودي.</p>
+        <p><b>لماذا نصدق أرقامكم؟</b> لأن كل رقم يفتح إلى سجل مصدر يبيّن القيمة والوحدة والسنة وحد الاستخدام. أرقام التجربة المقترحة موسومة كتصميم، وأي نتيجة تعرض نطاقاً وافتراضات وخطأ توقع.</p>
+        <p><b>ماذا عن سنغافورة؟</b> هي أقوى سابقة مباشرة: تراجع 200–300 عمل يومياً بالذكاء الاصطناعي وتفرض تخطيطاً مبكراً لبعض الطرق. لذلك لا ندّعي سبق الأتمتة؛ نستهدف التميز بالأثر الشبكي والاقتصاد السعودي وترتيب البدائل والمعايرة.</p>
         <p><b>كيف تثبتون التوفير؟</b> حالة مقابلة تماثل الساعة والطلب، قياس قبل وأثناء وبعد، ونشر نطاق عدم اليقين وخطأ التوقع — لا رقم وحيد.</p>
         <p><b>هل الأرقام وطنية؟</b> لا. النتائج لكل تصريح أو للتجربة المحددة؛ أي توسع سيناريو مشروط بالحجم الرسمي للتصاريح متى نُشر.</p>
         <p><b>هل الذكاء الاصطناعي هو المنتج؟</b> لا. المنتج قرار مفسّر قابل للقياس؛ النماذج تُستخدم حيث تحسّن التوقع، والمعادلات والمصادر تبقى ظاهرة.</p>
