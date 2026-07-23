@@ -2,190 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أثر — دوسيه المشروع</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أثر — الملخص التنفيذي</title>
 <style>
-  :root{
-    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
-    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
-    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
-    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
-    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
-  }
+  :root{--asphalt:#102535;--paper:#f3f0e8;--surface:#fffdf8;--ink:#17242c;--muted:#62717a;--blue:#1f6b8f;--amber:#d19231;--mint:#dcefe4;--line:#d7d3c8}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 20px 64px}
-  .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
-  .num,.ref{direction:ltr;unicode-bidi:isolate;display:inline-block}
-  .eyebrow{font-size:12.5px;letter-spacing:.05em;color:var(--navy);font-weight:600;margin-bottom:10px}
-  h1{font-size:clamp(38px,7vw,58px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-  h1 .latin{font-family:var(--mono);font-size:.34em;font-weight:500;color:var(--faint);letter-spacing:.02em}
-  h2{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
-  h3{font-size:16px;font-weight:600;margin:0 0 5px}
-  p{margin:0;color:var(--ink)}
-  .thesis{font-size:19px;color:#26313d;max-width:66ch;line-height:1.55}
-  .origin{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
-  .origin-k{display:inline-block;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12px;padding:3px 9px;border-radius:4px;margin-inline-end:8px}
-  header .thesis b{color:var(--navy)}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
-  .stat .num{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--ochre);font-variant-numeric:tabular-nums;line-height:1}
-  .stat .lab{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5}
-  .stat .ref{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.02em}
-  .pipe{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px}
-  .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
-  .stage.engine{background:var(--navy-soft);border-color:#C3D7E6}
-  .stage-h{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:11px;letter-spacing:.03em}
-  .stage ul{margin:0;padding-inline-start:16px;display:flex;flex-direction:column;gap:7px}
-  .stage li{font-size:14px;color:var(--ink);line-height:1.4}
-  .stage.engine li::marker{color:var(--navy)}
-  .caps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .cap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-  .cap p{font-size:14px;color:var(--muted);line-height:1.5}
-  .delta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
-  .delta li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:15px;color:var(--muted)}
-  .delta b{color:var(--ink);font-weight:600}
-  .demo{margin:0;padding:0;list-style:none;counter-reset:d;display:flex;flex-direction:column;gap:12px}
-  .demo li{counter-increment:d;position:relative;padding-inline-start:44px;font-size:15.5px;min-height:32px;display:flex;align-items:center}
-  .demo li::before{content:counter(d);position:absolute;inset-inline-start:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:600}
-  .demo b{color:var(--bad)}
-  .demo li:last-child b{color:var(--good)}
-  table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  th,td{text-align:start;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{background:#F3F6F8;font-weight:600;font-size:12.5px;color:var(--navy);width:32%}
-  tr:last-child td,tr:last-child th{border-bottom:none}
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-  .split ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--muted)}
-  footer{border-top:1px solid var(--line);padding-top:20px}
-  .src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-  .src li{font-family:var(--mono);font-size:12.5px;color:var(--muted);word-break:break-word}
-  .src b{color:var(--ink);font-weight:600;font-family:var(--sans)}
-  @media(max-width:680px){
-    .stats,.pipe,.caps,.split{grid-template-columns:1fr}
-    h2{font-size:21px}
-  }
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.75}
+  main{width:min(980px,92vw);margin:auto;padding:54px 0 80px}
+  header{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:34px}
+  .kicker{font-weight:900;color:var(--blue)}
+  h1{font-size:clamp(46px,8vw,86px);line-height:1;margin:8px 0 18px;color:var(--asphalt)}
+  h2{font-size:clamp(26px,4vw,40px);line-height:1.3;margin:0 0 12px;color:var(--asphalt)}
+  h3,p{margin:0}
+  .lead{font-size:20px;line-height:1.7;color:#2f3d45}
+  .context{background:var(--asphalt);color:#fff;border-radius:22px;padding:24px}
+  .context .num{font:900 42px/1 ui-monospace,Consolas,monospace;direction:ltr;text-align:right;color:#f1bd6b}
+  .context p{margin:12px 0;color:#cadbe3}
+  .context a{color:#fff}
+  section[data-story]{padding:40px 0;border-bottom:1px solid var(--line);scroll-margin-top:20px}
+  .story-id{font:800 12px/1 ui-monospace,Consolas,monospace;color:var(--blue);direction:ltr;text-align:right;margin-bottom:11px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:17px}
+  .card h3{color:var(--asphalt);margin-bottom:7px}
+  .card p{font-size:14px;color:var(--muted)}
+  .card a{display:inline-block;margin-top:10px;color:var(--blue);font-size:12px;font-weight:900}
+  .fact{background:var(--mint)}
+  .formula{direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;background:var(--asphalt);color:#d8e8ef;border-radius:14px;padding:18px;margin-top:16px}
+  .times{display:flex;align-items:center;gap:16px;margin-top:18px}
+  .time{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .time b{display:block;font:900 34px/1 ui-monospace,Consolas,monospace;direction:ltr;text-align:right;color:var(--amber);margin-bottom:10px}
+  .time p{color:var(--muted)}
+  .arrow{font-size:28px;color:var(--blue)}
+  .callout{border-right:5px solid var(--amber);padding:5px 16px 5px 0;margin-top:16px;color:var(--muted)}
+  footer{padding-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+  footer a{background:var(--asphalt);color:#fff;text-decoration:none;border-radius:999px;padding:9px 14px;font-weight:800}
+  @media(max-width:720px){header,.grid,.grid.three{grid-template-columns:1fr}.times{flex-direction:column}.arrow{transform:rotate(90deg)}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
+<main>
   <header>
-    <div class="eyebrow">بلدياتثون 2026 · التحدي الثالث · أثر البنية التحتية على المرور</div>
-    <h1>أثر <span class="latin">Athar</span></h1>
-    <p class="thesis">يعرض النموذج الحالي درجة تحليلية لكل طلب حفر قبل المراجعة، مع بدائل جدولة مفسّرة ومسودة خطة إدارة مرور عربية.</p>
-    <div class="origin"><span class="origin-k">مرجعية مقارنة</span> نظام UK Street Manager الوطني · كود الطرق السعودي 203/305</div>
+    <div>
+      <div class="kicker">أثر · الملخص التنفيذي</div>
+      <h1>قرار يُختبر قبل أن يُعتمد.</h1>
+      <p class="lead">نموذج لطبقة قرار تضع الحقيقة والافتراض والمعادلة في مسار واحد، ثم تمنع إعلان الأثر قبل القياس.</p>
+    </div>
+    <div class="context">
+      <div class="num">2.2 مليون</div>
+      <p>عمل شارع وطريق في إنجلترا بين أبريل 2023 ومارس 2024. سياق رسمي لحجم التنسيق الرقمي، لا نتيجة محلية.</p>
+      <a href="athar-sources.html#src-031">src-031 · المصدر وحد الاستخدام</a>
+    </div>
   </header>
 
-  <section>
-    <div class="eyebrow">الثغرة</div>
-    <h2>ماذا ينقص اليوم؟</h2>
-    <p class="thesis">النموذج يستكشف إضافة درجة تحليلية وبدائل جدولة إلى سير مراجعة طلبات الحفر. الربط المباشر مع بلدي ليس ضمن النموذج الحالي.</p>
+  <section data-story="permit-network">
+    <div class="story-id">01 · permit-network</div>
+    <h2>تصريح واحد قد يغيّر حركة شبكة كاملة.</h2>
+    <p class="lead">المراجعة المطلوبة ليست جولة في خصائص المنتج. إنها مقارنة قرار واحد: جدول الطلب مقابل بديل زمني أقل ضرراً، قبل التوقيع.</p>
   </section>
 
-  <section>
-    <div class="eyebrow">الدليل</div>
-    <h2>لماذا نثق أنها تنجح</h2>
-    <div class="stats">
-      <div class="stat"><div class="num">+2M</div><div class="lab">أعمال طرق تُدار سنوياً في إنجلترا عبر Street Manager؛ هذا مرجع دولي وليس حجماً سعودياً.</div><div class="ref"><a href="athar-sources.html#src-031">src-031 · وزارة النقل البريطانية · +2M عمل/سنة · ليس حجماً سعودياً</a></div></div>
+  <section data-story="current-gap">
+    <div class="story-id">02 · current-gap</div>
+    <h2>الخريطة الرسمية مهمة، لكنها لا تجيب وحدها عن سؤال التوقيت.</h2>
+    <div class="grid">
+      <div class="card fact"><h3>المثبت</h3><p>تعرض بلدي الحفريات المصرح بها ومرشحاتها وتفاصيلها الفنية.</p><a href="athar-sources.html#src-008">src-008 · بلدي</a></div>
+      <div class="card"><h3>الفجوة المقترحة</h3><p>تقدير منسوب للحفرية وترتيب كمي للبدائل قبل الترخيص، من دون ادعاء تكامل قائم.</p><a href="athar-sources.html#src-042">src-042 · متطلبات منطقة العمل</a></div>
     </div>
   </section>
 
-  <section>
-    <div class="eyebrow">كيف يعمل</div>
-    <h2>من التصريح إلى القرار</h2>
-    <div class="pipe">
-      <div class="stage"><div class="stage-h">المدخلات</div><ul><li>طلب تجريبي مطابق لبنية التصريح</li><li>خرائط مفتوحة</li><li>افتراضات حركة توضيحية</li><li>طلبات متزامنة تجريبية</li></ul></div>
-      <div class="stage engine"><div class="stage-h">المحرّك</div><ul><li>درجة أثر مروري قبل المراجعة</li><li>محاكاة متخصصة للحالات العالية — تكامل مستقبلي</li><li>بدائل جدولة ومرحلة مفسّرة</li><li>مؤشرات تضارب بين الطلبات</li><li>مسودة خطة إدارة مرور عربية</li></ul></div>
-      <div class="stage"><div class="stage-h">المخرجات</div><ul><li>درجة أثر: أحمر / أخضر</li><li>بدائل جدولة + ثلاثة مسارات محسوبة على شبكة طرق محلية</li><li>مسودة خطة إدارة مرور قابلة للطباعة</li><li>تكاملات الملاحة مرحلة لاحقة</li></ul></div>
+  <section data-story="evidence-boundary">
+    <div class="story-id">03 · evidence-boundary</div>
+    <h2>البيانات تحمل تصنيفها معها.</h2>
+    <div class="grid three">
+      <div class="card fact"><h3>رسمي</h3><p>طبقات مترو وحافلات منشورة من الهيئة الملكية لمدينة الرياض.</p><a href="athar-sources.html#src-043">src-043</a> · <a href="athar-sources.html#src-044">src-044</a></div>
+      <div class="card"><h3>توضيحي</h3><p>الطلب والحركة والسعة والجدول في العرض ليست قياساً ميدانياً.</p></div>
+      <div class="card"><h3>مشتق</h3><p>الخطأ والانحياز والمنفعة ناتجة من معادلات البروتوكول.</p><a href="../docs/SHADOW-PILOT.md#design-parameters">البروتوكول المحلي</a></div>
     </div>
   </section>
 
-  <section>
-    <div class="eyebrow">القدرات</div>
-    <h2>ماذا يفعل بالتفصيل</h2>
-    <div class="caps">
-      <div class="cap"><h3>درجة الأثر المسبقة</h3><p>يحوّل تصريح الحفر إلى رقم أثر مروري قابل للمقارنة قبل الموافقة، لا بعدها.</p></div>
-      <div class="cap"><h3>محاكاة متخصصة</h3><p>يبدأ بدرجة تحليلية سريعة؛ تُحال الحالات العالية مستقبلاً إلى Vissim أو Aimsun بعد توفير بيانات المعايرة.</p></div>
-      <div class="cap"><h3>مُحسِّن الجدولة والمرحلة</h3><p>يقترح نوافذ عمل خارج الذروة وتقسيم العمل على مراحل لخفض ذروة التأخير.</p></div>
-      <div class="cap"><h3>كاشف التضارب المتراكم</h3><p>ينبّه حين تتزامن حفريات قريبة فيتضاعف أثرها على نفس الشبكة.</p></div>
-      <div class="cap"><h3>مسارات بديلة محسوبة</h3><p>يحسب ثلاثة بدائل حول المقطع المغلق ويقيس جدواها بزمن الرحلة والسعة المتبقية، مع تنبيه المرور قرب مستشفى أو مدرسة. قيم السعة والطلب افتراضات توضيحية تحتاج المعايرة.</p></div>
-      <div class="cap"><h3>خطة إدارة مرور عربية</h3><p>ينتج مسودة قابلة للطباعة لمراجعة الجهة المختصة.</p></div>
+  <section data-story="baseline-alternative">
+    <div class="story-id">04 · baseline-alternative</div>
+    <h2>المقارنة التوضيحية: موعد الطلب مقابل بديل واحد.</h2>
+    <div class="times">
+      <div class="time"><b>08:00</b><p>خط أساس توضيحي يتقاطع مع نافذة طلب أعلى.</p></div>
+      <div class="arrow">←</div>
+      <div class="time"><b>22:00</b><p>بديل توضيحي يبقى توصية للمراجعة، لا وفراً محققاً.</p></div>
+    </div>
+    <p class="callout">الحساب يجري على شبكة طرق محلية بمدخلات توضيحية. صلاحية البديل لا تثبت إلا بقياس لاحق.</p>
+  </section>
+
+  <section data-story="decision-path">
+    <div class="story-id">05 · decision-path</div>
+    <h2>مسار القرار: طلب، مقارنة، سلامة، مراجعة، قياس.</h2>
+    <div class="grid">
+      <div class="card"><h3>قبل القرار</h3><p>نسخة بيانات، وخط أساس، وبديل واحد، وأسباب ظاهرة، وفحص نقل عام ووصول حرج.</p></div>
+      <div class="card"><h3>بعد التنفيذ</h3><p>بيانات مرصودة وخط مضاد مثبت، ثم خطأ وانحياز ومنفعة. لا كتابة تلقائية في منصة التصاريح.</p></div>
     </div>
   </section>
 
-  <section>
-    <div class="eyebrow">التميّز</div>
-    <h2>ما الذي نضيفه فوق الأصل</h2>
-    <ul class="delta">
-      <li><b>درجة أثر قبل المراجعة</b> — تعرض أساساً مفسّراً للنقاش حول الطلب.</li>
-      <li><b>بدائل جدولة</b> تستند إلى مدخلات السيناريو المتاحة.</li>
-      <li><b>مؤشرات تضارب</b> للطلبات المتزامنة على المحور نفسه.</li>
-      <li><b>خطة إدارة مرور عربية</b> في صورة مسودة للمراجعة.</li>
-      <li><b>بيانات مفتوحة</b> كمسار تكامل لاحق لتطبيقات الملاحة.</li>
-    </ul>
-  </section>
-
-  <section>
-    <div class="eyebrow">التحقق</div>
-    <h2>تجربة ظل قبل أي تعميم</h2>
-    <p class="thesis">نقترح 20–30 تصريحاً خلال 4–8 أسابيع، مع قياس قبل وأثناء وبعد وتثبيت قواعد التقييم مسبقاً. هذه أرقام تصميم تجربة وليست نتائج.</p>
-  </section>
-
-  <section>
-    <div class="eyebrow">عمق التحليل</div>
-    <h2>ثلاث درجات حسب خطورة الحالة</h2>
-    <p class="thesis">فحص سريع بالبيانات المفتوحة، ثم تحليل تشغيلي بالسرعة والحجم عند توفر البيانات، ثم Vissim أو Aimsun للحالات عالية الأثر. الدرجة المتخصصة تكامل مستقبلي.</p>
-    <div class="ref"><a href="athar-sources.html#src-001">src-001 · تكييف منهجي يحتاج اعتماد الجهة</a></div>
-  </section>
-
-  <section>
-    <div class="eyebrow">العرض الحي · تسلسل</div>
-    <h2>لحظة الإبهار</h2>
-    <ol class="demo">
-      <li>يفتح المشغّل طلب حفر تجريبياً بمدخلات توضيحية.</li>
-      <li>تظهر <b>درجة أثر</b> مع الافتراضات المستخدمة في التحليل.</li>
-      <li>يعرض النموذج بدائل جدولة مثل العمل ليلاً أو على مراحل.</li>
-      <li>يقارن ثلاثة مسارات محسوبة ويعرض الزمن والسعة المتبقية ومخاطر الوصول الحرج.</li>
-      <li>تُنتج مسودة خطة إدارة المرور بالعربية للمراجعة.</li>
-    </ol>
-  </section>
-
-  <section>
-    <div class="eyebrow">التحكيم</div>
-    <h2>المطابقة لمعايير اللجنة</h2>
-    <table>
-      <tr><th>ملاءمة التحدي</th><td>يعرض تحليلاً للأثر وبدائل جدولة ومسارات محسوبة وتنبؤاً زمنياً بالازدحام.</td></tr>
-      <tr><th>الابتكار</th><td>طبقة قرار مفسّرة تربط الطلب بدرجة أثر وبدائل قابلة للمراجعة.</td></tr>
-      <tr><th>الجدوى</th><td>يعمل النموذج الحالي بمدخلات تجريبية مطابقة لبنية التصريح وخرائط مفتوحة؛ ربط بلدي والمحاكاة المتخصصة مرحلتان لاحقتان تتطلبان صلاحيات وبيانات معايرة.</td></tr>
-      <tr><th>الأثر والاستدامة</th><td>تقدير الأثر والانبعاثات يتطلب مدخلات محلية ومعايرة قبل استخدامه في القرار.</td></tr>
-      <tr><th>جودة النموذج</th><td>درجة تحليلية فورية وبدائل جدولة ومسارات شبكية ومسودة خطة مرور.</td></tr>
-      <tr><th>العرض</th><td>قصة واضحة: طلب ← أثر ← بدائل ← مراجعة.</td></tr>
-    </table>
-  </section>
-
-  <section class="split">
-    <div>
-      <div class="eyebrow">الجدوى</div>
-      <h2>واقعي وقابل للبناء</h2>
-      <p class="thesis">النموذج الحالي يعمل محلياً بدرجة تحليلية وتوجيه شبكي وتنبؤ زمني على خرائط مفتوحة. سعات الشبكة والطلب المروري افتراضات توضيحية تحتاج المعايرة؛ المحاكاة المتخصصة وربط بلدي مرحلتا تكامل لاحقتان.</p>
+  <section data-story="impact-range">
+    <div class="story-id">06 · impact-range</div>
+    <h2>الأثر فرق مرصود، وليس إسقاطاً سنوياً.</h2>
+    <div class="formula">observed benefit = counterfactual vehicle-hours − observed vehicle-hours</div>
+    <div class="grid">
+      <div class="card"><h3>نطاق لا نقطة</h3><p>يعرض عدم اليقين والانحياز وحدود الخط المضاد.</p><a href="../docs/SHADOW-PILOT.md#design-parameters">المعادلات</a></div>
+      <div class="card"><h3>سياق محدود</h3><p>نطاق التقرير الرقابي لتنسيق القنوات والألياف لا يعمم على الحفريات البلدية.</p><a href="athar-sources.html#src-041">src-041 · 25–33%</a></div>
     </div>
-    <div>
-      <div class="eyebrow">المخاطر</div>
-      <h2>بصراحة</h2>
-      <ul>
-        <li>الوصول لبيانات التصاريح الحيّة — نستخدم بيانات مفتوحة/تجريبية للعرض.</li>
-        <li>معايرة النموذج تتطلب نتائج ما بعد التنفيذ ومدخلات محلية.</li>
-        <li>لا نَعِد بأثر سعودي قبل تجربة وقياس موثّقين.</li>
-      </ul>
+  </section>
+
+  <section data-story="shadow-gate">
+    <div class="story-id">07 · shadow-gate</div>
+    <h2>بوابة الظل تمنع النجاح بلا أدلة.</h2>
+    <div class="grid three">
+      <div class="card"><h3>20–30 تصريحاً</h3><p>نطاق تجنيد مقترح، لا حجم تشغيل.</p></div>
+      <div class="card"><h3>4–8 أسابيع</h3><p>نافذة مقترحة، لا موعد معتمداً.</p></div>
+      <div class="card"><h3>وصول الطوارئ</h3><p>أي تجاوز هو فشل صلب حتى لو اجتازت الأرقام.</p></div>
     </div>
+    <p class="callout">الحالات التركيبية تبقى ظاهرة للشفافية، لكنها لا تدخل الخطأ أو المنفعة أو حكم النجاح.</p>
+  </section>
+
+  <section data-story="supervised-ask">
+    <div class="story-id">08 · supervised-ask</div>
+    <h2>الطلب: تجربة ظل بشرية الإشراف.</h2>
+    <p class="lead">بيانات مصرح بها، ومسؤول اعتماد بيانات، ومراجع مروري، وتصاريح متتابعة بلا انتقاء. المخرج توصية مفسرة وسجل تدقيق؛ القرار البشري يظل حاكماً.</p>
   </section>
 
   <footer>
-    <div class="eyebrow">المصادر</div>
-    <p class="thesis">السجل الموحّد يربط كل رقم وادعاء بمصدره وحد استخدامه وتاريخ الوصول.</p>
-    <p><a href="athar-prototype.html">افتح النموذج التفاعلي ←</a> · <a href="athar-lab.html">افتح مختبر الابتكار ←</a></p>
-    <p><a href="athar-sources.html">افتح سجل الأدلة الكامل ←</a></p>
+    <a href="athar-pitch.html">العرض الرئيسي</a>
+    <a href="athar-prototype.html">النموذج التفاعلي</a>
+    <a href="athar-lab.html">مختبر القرار</a>
+    <a href="athar-sources.html">سجل الأدلة</a>
   </footer>
-
-</div>
+</main>
 </body>
 </html>
