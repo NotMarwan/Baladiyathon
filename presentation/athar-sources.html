@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>أثر — سجل الأدلة</title>
+  <style>
+    :root{--ink:#18231f;--muted:#63706a;--paper:#f5f1e8;--card:#fffdf7;--green:#176b50;--line:#d9d4c7;--amber:#a56618}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Tahoma","Arial",sans-serif;line-height:1.7}
+    main{width:min(1120px,92vw);margin:auto;padding:48px 0 80px}
+    header{display:grid;gap:14px;margin-bottom:28px}
+    h1{font-size:clamp(38px,6vw,72px);line-height:1.05;margin:0}
+    h2{font-size:24px;margin:0 0 8px}
+    p{margin:0}
+    .lead{font-size:19px;max-width:850px;color:var(--muted)}
+    .toolbar{position:sticky;top:0;z-index:4;padding:14px 0;background:linear-gradient(var(--paper) 75%,transparent)}
+    input{width:100%;border:1px solid var(--line);border-radius:14px;background:white;padding:14px 16px;font:inherit}
+    .legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    article{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;scroll-margin-top:88px}
+    article:target{outline:4px solid #d6eadf}
+    .id{color:var(--green);font-weight:800;letter-spacing:.04em}
+    .value{font-size:30px;font-weight:900;color:var(--green);margin:8px 0}
+    .meta,.limit{font-size:14px;color:var(--muted)}
+    .limit{border-right:3px solid var(--amber);padding-right:10px;margin-top:12px}
+    a{color:var(--green);font-weight:700;overflow-wrap:anywhere}
+    .empty{display:none;padding:30px;text-align:center;color:var(--muted)}
+    footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="id">أثر · سجل الأدلة الحاكم للعرض</div>
+    <h1>كل رقم له مصدر وحدّ استخدام</h1>
+    <p class="lead">هذه الصفحة لا تدّعي نتائج للنموذج الأولي. إنها تربط أدلة السياق والمنهج والمنافسة بحدودها، وتفصل بوضوح بين ما هو منفّذ وما هو مقترح للتجربة أو خارطة الطريق.</p>
+    <div class="legend"><span>تاريخ الوصول: 23 يوليو 2026</span><span>·</span><span>المرجع الكامل: سجل المصادر المحلي</span></div>
+  </header>
+  <div class="toolbar"><input id="search" type="search" placeholder="ابحث بالمعرّف أو الجهة أو الادعاء" aria-label="بحث في سجل الأدلة"></div>
+  <section class="grid" id="sources">
+    <article id="src-001" data-search="كود الطرق السعودي الدرجات الثلاث">
+      <div class="id">src-001</div><h2>كود الطرق السعودي: درجات التحليل</h2>
+      <p>يوفّر الكود مرجعاً لثلاث درجات من فحص الحركة. يستعير «أثر» منطق التدرّج، ولا يقدمه كحدود ملزمة لتصاريح الحفر.</p>
+      <p class="limit">حد الاستخدام: الحدود الأصلية تخص دراسات حركة التطوير، وتكييفها لأعمال الطرق يحتاج اعتماد الجهة.</p>
+      <p class="meta">هيئة الطرق · 2026</p>
+      <a href="https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/203%20EN.pdf">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-004" data-search="انبعاثات كود الطرق السعودي">
+      <div class="id">src-004</div><h2>منهج الانبعاثات</h2>
+      <p>يربط الكود عوامل الانبعاث بنوع المركبة والحجم، لذلك يعرض «أثر» الانبعاثات كقياس فيزيائي أولاً.</p>
+      <p class="limit">حد الاستخدام: القيم النقدية القديمة لا تستخدم قبل تحديث سنة الأساس.</p>
+      <p class="meta">هيئة الطرق · 2026</p>
+      <a href="https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/203%20EN.pdf">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-008" data-search="بلدي الخريطة الحفريات التنسيق">
+      <div class="id">src-008</div><h2>قدرات بلدي الحالية</h2>
+      <p>تعرض بلدي مسارات الحفريات المصرح بها وتدعم التنسيق المستقبلي والمتعدد؛ «أثر» طبقة قرار تكملها ولا تستبدلها.</p>
+      <p class="limit">حد الاستخدام: الصفحات العامة لا تثبت تنبؤاً مرورياً قبل الترخيص أو ترتيباً كمياً للبدائل.</p>
+      <p class="meta">بلدي · وصول 2026</p>
+      <a href="https://balady.gov.sa/ar/faq/%D9%85%D8%A7-%D9%87%D9%8A-%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9%D8%9F">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-009" data-search="بلدي البيانات المفتوحة واجهة">
+      <div class="id">src-009</div><h2>مسار الحصول على البيانات</h2>
+      <div class="value">5 أيام عمل</div>
+      <p>تعلن بلدي واجهة بيانات مفتوحة ومسار طلب بيانات بزمن استجابة معلن.</p>
+      <p class="limit">حد الاستخدام: الواجهة العامة المختبرة لا تنشر سلسلة سنوية لتصاريح الحفر.</p>
+      <p class="meta">وزارة البلديات والإسكان · وصول 2026</p>
+      <a href="https://balady.gov.sa/ar/open-data">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-015" data-search="الرياض 67 دقيقة التنقل">
+      <div class="id">src-015</div><h2>زمن التنقل في الرياض</h2>
+      <div class="value">67 دقيقة</div>
+      <p>متوسط رحلة الذهاب والعودة اليومية في الرياض خلال 2024.</p>
+      <p class="limit">حد الاستخدام: سياق حضري عام؛ لا ينسب إلى الحفريات ولا يمثل نتيجة لـ«أثر».</p>
+      <p class="meta">الهيئة العامة للإحصاء · تقرير 2025</p>
+      <a href="https://www.stats.gov.sa/documents/20117/2435245/GASTAT_LISC%2Breport_2025_EN.pdf/80b46893-12e0-2b26-2a54-70a1553169c1">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-016" data-search="الرياض الحافلات 34.7 مليون">
+      <div class="id">src-016</div><h2>ركاب حافلات الرياض</h2>
+      <div class="value">+34.7 مليون</div>
+      <p>رحلات ركاب الحافلات الحضرية في الرياض خلال 2024.</p>
+      <p class="limit">حد الاستخدام: إجمالي سنوي؛ لا يحدد المتأثرين بحفرية معينة.</p>
+      <p class="meta">الهيئة العامة للإحصاء · تقرير 2025</p>
+      <a href="https://www.stats.gov.sa/documents/20117/2435245/GASTAT_LISC%2Breport_2025_EN.pdf/80b46893-12e0-2b26-2a54-70a1553169c1">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-024" data-search="one.network المنافس خريطة ملاحة تنسيق">
+      <div class="id">src-024</div><h2>المعيار العالمي المباشر</h2>
+      <p>يجمع النظام التصاريح والتنسيق والخريطة العامة وتبادل بيانات مناطق العمل والتكامل مع تطبيقات الملاحة.</p>
+      <p class="limit">حد الاستخدام: الدليل العام لا يثبت اقتصاد وقت وفق الكود السعودي أو ترتيب مواعيد مفسراً.</p>
+      <p class="meta">Causeway one.network · وصول 2026</p>
+      <a href="https://us.one.network/product/traffic-management/">افتح مصدر المنتج</a>
+    </article>
+    <article id="src-025" data-search="Vissim محاكاة متخصصة">
+      <div class="id">src-025</div><h2>محاكاة متخصصة للحالات العالية</h2>
+      <p>يوفر برنامج المحاكاة المجهرية اختبار سيناريوهات الازدحام والانبعاثات وأداء الشبكة.</p>
+      <p class="limit">حد الاستخدام: أداة خبراء للتكامل المستقبلي، وليست قدرة حالية في النموذج الأولي.</p>
+      <p class="meta">PTV Group · وصول 2026</p>
+      <a href="https://www.ptvgroup.com/en-us/products/ptv-vissim">افتح مصدر المنتج</a>
+    </article>
+    <article id="src-026" data-search="Aimsun محاكاة تنبؤ">
+      <div class="id">src-026</div><h2>سقف التنبؤ المتخصص</h2>
+      <div class="value">أقل من 5 دقائق</div>
+      <p>يعلن المنتج تنبؤاً حياً واختبار إجراءات إدارة الحركة خلال أقل من خمس دقائق.</p>
+      <p class="limit">حد الاستخدام: معيار مستقبلي؛ لا يمثل قدرة حالية في «أثر».</p>
+      <p class="meta">Aimsun · وصول 2026</p>
+      <a href="https://www.aimsun.com/aimsun-live/">افتح مصدر المنتج</a>
+    </article>
+    <article id="src-029" data-search="سنغافورة شهرين إخطار مسبق">
+      <div class="id">src-029</div><h2>تنسيق سنغافورة المبكر</h2>
+      <div class="value">شهران مسبقاً</div>
+      <p>تتطلب القاعدة لبعض الطرق المحددة جداول مستقبلية قبل الموافقة على التصريح.</p>
+      <p class="limit">حد الاستخدام: القاعدة خاصة بسنغافورة وتدخل حيز التنفيذ بعد تاريخ البحث.</p>
+      <p class="meta">هيئة النقل البري في سنغافورة · تحديث 2026</p>
+      <a href="https://prompt.lta.gov.sg/WebUIPWAS/">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-030" data-search="سنغافورة 200 300 أعمال طرق يومياً ذكاء اصطناعي">
+      <div class="id">src-030</div><h2>أقوى منافس مباشر</h2>
+      <div class="value">200–300 عمل يومياً</div>
+      <p>تراجع سنغافورة هذا الحجم من أعمال الطرق وتستخدم الذكاء الاصطناعي لتوليد خطط التحكم وفحص الوثائق.</p>
+      <p class="limit">حد الاستخدام: سابقة منافسة قوية؛ تميّز «أثر» يجب أن يكون في الأثر الشبكي والاقتصاد والمعايرة.</p>
+      <p class="meta">هيئة النقل البري في سنغافورة · 2025</p>
+      <a href="https://www.lta.gov.sg/content/dam/ltagov/industry_innovations/Innovations/land_transport_innovation_portal/Enhancement%20of%20Roadworks%20Application%20Process%20using%20Artificial%20Intelligence.pdf">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-031" data-search="Street Manager أكثر من 2 مليون أعمال سنوياً">
+      <div class="id">src-031</div><h2>التنسيق الوطني الرقمي</h2>
+      <div class="value">+2 مليون عمل سنوياً</div>
+      <p>ينسق النظام الإنجليزي التصاريح والتقييم والتفتيش وإعادة الطريق وينشر البيانات عبر واجهة.</p>
+      <p class="limit">حد الاستخدام: يثبت قابلية التنسيق الرقمي على نطاق واسع، لا أثر «أثر» ولا حجم التصاريح السعودي.</p>
+      <p class="meta">وزارة النقل البريطانية · صفحة حالية في 2026</p>
+      <a href="https://www.gov.uk/guidance/plan-and-manage-roadworks">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-032" data-search="نيويورك تنسيق الحفريات التصاريح">
+      <div class="id">src-032</div><h2>التنسيق المركزي في نيويورك</h2>
+      <p>تخضع تصاريح مختارة لمراجعة مكتب تنسيق وتخفيف أعمال البناء قبل الإصدار.</p>
+      <p class="limit">حد الاستخدام: يثبت الحوكمة والتنسيق، لا التحسين التنبؤي الكمي.</p>
+      <p class="meta">إدارة النقل في نيويورك · وصول 2026</p>
+      <a href="https://www.nyc.gov/html/dot/html/infrastructure/permits_gencond.shtml">افتح المصدر الرسمي</a>
+    </article>
+    <article id="src-040" data-search="الانبعاثات مواقع العمل بحث محكم">
+      <div class="id">src-040</div><h2>انبعاثات مناطق العمل</h2>
+      <p>يطور البحث إطار محاكاة لتقدير الوقود والأثر البيئي الناتج عن إغلاقات مناطق العمل.</p>
+      <p class="limit">حد الاستخدام: السيناريوات ليست قياساً سعودياً؛ يلزم أسطول ومدخلات محلية.</p>
+      <p class="meta">بحث محكّم · 2024</p>
+      <a href="https://doi.org/10.1080/15568318.2024.2392624">افتح المصدر المنشور</a>
+    </article>
+  </section>
+  <p class="empty" id="empty">لا توجد نتيجة مطابقة.</p>
+  <footer>المرجع الحاكم الكامل محفوظ محلياً في سجل المصادر. هذه الصفحة واجهة قراءة للعرض ولا تستبدل السجل.</footer>
+</main>
+<script>
+const search = document.getElementById('search');
+const cards = [...document.querySelectorAll('article')];
+const empty = document.getElementById('empty');
+search.addEventListener('input', () => {
+  const query = search.value.trim().toLowerCase();
+  let shown = 0;
+  cards.forEach(card => {
+    const match = !query || (card.textContent + ' ' + card.dataset.search).toLowerCase().includes(query);
+    card.hidden = !match;
+    if (match) shown += 1;
+  });
+  empty.style.display = shown ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
