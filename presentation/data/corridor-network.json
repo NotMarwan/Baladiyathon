@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "source": "digitized from OpenStreetMap © OpenStreetMap contributors — ODbL",
+    "license": "ODbL 1.0 (opendatacommons.org/licenses/odbl)",
+    "note": "هندسة العقد مقتبسة من OSM؛ قيم المسارات والسعة والسرعة الحرة والحصص الزمنية هي افتراض توضيحي للعرض — تُعاير ببيانات المشغل",
+    "area": "طريق الملك فهد (مقطع العليا) والشوارع الموازية — الرياض",
+    "aadtScale": 85000,
+    "coordFormat": "[lat, lng]"
+  },
+  "nodes": {
+    "kf0": { "lat": 24.6860, "lng": 46.6815, "name": "الملك فهد × العروبة" },
+    "kf1": { "lat": 24.7000, "lng": 46.6790, "name": "الملك فهد × التحلية" },
+    "kf2": { "lat": 24.7140, "lng": 46.6765, "name": "الملك فهد × مكة المكرمة" },
+    "kf3": { "lat": 24.7285, "lng": 46.6740, "name": "الملك فهد × الأمير محمد بن عبدالعزيز" },
+    "kf4": { "lat": 24.7425, "lng": 46.6742, "name": "الملك فهد × الملك عبدالله" },
+    "kf5": { "lat": 24.7565, "lng": 46.6768, "name": "الملك فهد × الأمير سلطان" },
+
+    "ol0": { "lat": 24.6862, "lng": 46.6870, "name": "العليا × العروبة" },
+    "ol1": { "lat": 24.7002, "lng": 46.6848, "name": "العليا × التحلية" },
+    "ol2": { "lat": 24.7142, "lng": 46.6825, "name": "العليا × مكة المكرمة" },
+    "ol3": { "lat": 24.7287, "lng": 46.6802, "name": "العليا × الأمير محمد" },
+    "ol4": { "lat": 24.7427, "lng": 46.6805, "name": "العليا × الملك عبدالله" },
+    "ol5": { "lat": 24.7567, "lng": 46.6830, "name": "العليا × الأمير سلطان" },
+
+    "tk0": { "lat": 24.6858, "lng": 46.6752, "name": "التخصصي × العروبة" },
+    "tk1": { "lat": 24.6998, "lng": 46.6730, "name": "التخصصي × التحلية" },
+    "tk2": { "lat": 24.7138, "lng": 46.6706, "name": "التخصصي × مكة المكرمة" },
+    "tk3": { "lat": 24.7283, "lng": 46.6682, "name": "التخصصي × الأمير محمد" },
+    "tk4": { "lat": 24.7423, "lng": 46.6684, "name": "التخصصي × الملك عبدالله" },
+    "tk5": { "lat": 24.7563, "lng": 46.6710, "name": "التخصصي × الأمير سلطان" }
+  },
+  "edges": [
+    { "id": "kf_1", "from": "kf0", "to": "kf1", "name": "طريق الملك فهد", "lanes": 4, "capacityPerLane": 1800, "freeFlowKmh": 70, "demandShare": 1.0 },
+    { "id": "kf_2", "from": "kf1", "to": "kf2", "name": "طريق الملك فهد", "lanes": 4, "capacityPerLane": 1800, "freeFlowKmh": 70, "demandShare": 1.0 },
+    { "id": "kf_3", "from": "kf2", "to": "kf3", "name": "طريق الملك فهد", "lanes": 4, "capacityPerLane": 1800, "freeFlowKmh": 70, "demandShare": 1.0 },
+    { "id": "kf_4", "from": "kf3", "to": "kf4", "name": "طريق الملك فهد", "lanes": 4, "capacityPerLane": 1800, "freeFlowKmh": 70, "demandShare": 1.0 },
+    { "id": "kf_5", "from": "kf4", "to": "kf5", "name": "طريق الملك فهد", "lanes": 4, "capacityPerLane": 1800, "freeFlowKmh": 70, "demandShare": 1.0 },
+
+    { "id": "ol_1", "from": "ol0", "to": "ol1", "name": "شارع العليا", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.55 },
+    { "id": "ol_2", "from": "ol1", "to": "ol2", "name": "شارع العليا", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.55 },
+    { "id": "ol_3", "from": "ol2", "to": "ol3", "name": "شارع العليا", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.55 },
+    { "id": "ol_4", "from": "ol3", "to": "ol4", "name": "شارع العليا", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.55 },
+    { "id": "ol_5", "from": "ol4", "to": "ol5", "name": "شارع العليا", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.55 },
+
+    { "id": "tk_1", "from": "tk0", "to": "tk1", "name": "طريق التخصصي", "lanes": 3, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.65 },
+    { "id": "tk_2", "from": "tk1", "to": "tk2", "name": "طريق التخصصي", "lanes": 3, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.65 },
+    { "id": "tk_3", "from": "tk2", "to": "tk3", "name": "طريق التخصصي", "lanes": 3, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.65 },
+    { "id": "tk_4", "from": "tk3", "to": "tk4", "name": "طريق التخصصي", "lanes": 3, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.65 },
+    { "id": "tk_5", "from": "tk4", "to": "tk5", "name": "طريق التخصصي", "lanes": 3, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.65 },
+
+    { "id": "x0_kt", "from": "kf0", "to": "tk0", "name": "طريق العروبة", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.5 },
+    { "id": "x0_ko", "from": "kf0", "to": "ol0", "name": "طريق العروبة", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.5 },
+    { "id": "x1_kt", "from": "kf1", "to": "tk1", "name": "شارع التحلية", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.6 },
+    { "id": "x1_ko", "from": "kf1", "to": "ol1", "name": "شارع التحلية", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.6 },
+    { "id": "x2_kt", "from": "kf2", "to": "tk2", "name": "طريق مكة المكرمة", "lanes": 3, "capacityPerLane": 1650, "freeFlowKmh": 55, "demandShare": 0.55 },
+    { "id": "x2_ko", "from": "kf2", "to": "ol2", "name": "طريق مكة المكرمة", "lanes": 3, "capacityPerLane": 1650, "freeFlowKmh": 55, "demandShare": 0.55 },
+    { "id": "x3_kt", "from": "kf3", "to": "tk3", "name": "طريق الأمير محمد بن عبدالعزيز", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.5 },
+    { "id": "x3_ko", "from": "kf3", "to": "ol3", "name": "طريق الأمير محمد بن عبدالعزيز", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 50, "demandShare": 0.5 },
+    { "id": "x4_kt", "from": "kf4", "to": "tk4", "name": "طريق الملك عبدالله", "lanes": 4, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.6 },
+    { "id": "x4_ko", "from": "kf4", "to": "ol4", "name": "طريق الملك عبدالله", "lanes": 4, "capacityPerLane": 1700, "freeFlowKmh": 60, "demandShare": 0.6 },
+    { "id": "x5_kt", "from": "kf5", "to": "tk5", "name": "طريق الأمير سلطان", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.5 },
+    { "id": "x5_ko", "from": "kf5", "to": "ol5", "name": "طريق الأمير سلطان", "lanes": 3, "capacityPerLane": 1600, "freeFlowKmh": 55, "demandShare": 0.5 }
+  ],
+  "corridorEdges": ["kf_1", "kf_2", "kf_3", "kf_4", "kf_5"],
+  "pois": [
+    { "id": "poi_hosp", "kind": "hospital", "name": "مستشفى (نقطة توضيحية)", "lat": 24.7283, "lng": 46.6682, "note": "موقع افتراض توضيحي للعرض قرب التخصصي × الأمير محمد" },
+    { "id": "poi_school", "kind": "school", "name": "مدرسة (نقطة توضيحية)", "lat": 24.7142, "lng": 46.6825, "note": "موقع افتراض توضيحي للعرض قرب العليا × مكة" }
+  ]
+}
