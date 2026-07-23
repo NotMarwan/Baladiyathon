@@ -242,7 +242,7 @@
           </div>
           <div class="card value-card">
             <div class="num" id="digOnceNum">— ﷼</div>
-            <div class="lab">وفر Dig-Once (<span id="digOncePct">—</span>٪ عن الحفر المنفصل)</div>
+            <div class="lab">وفر Dig-Once (نطاق) <span class="src-badge">٢٥–٣٣٪ — GAO للمناطق الحضرية الكثيفة</span></div>
           </div>
           <div class="card value-card" id="compoundCard" style="display:none">
             <div class="num" id="compoundNum">—</div>
@@ -741,11 +741,15 @@
       trenchKm: 1.2,
       permitsMerged: 1 + state.neighborPermits,
     });
-    animateCountUp(document.getElementById('digOnceNum'), state.prevDigOnceSAR, digOnceResult.savedSAR, function (v) {
-      return formatArabicNumber(v) + ' ﷼';
-    });
-    state.prevDigOnceSAR = digOnceResult.savedSAR;
-    document.getElementById('digOncePct').textContent = formatPercent(digOnceResult.savedPct);
+    var digOnceNumEl = document.getElementById('digOnceNum');
+    if (state.neighborPermits > 0) {
+      digOnceNumEl.textContent =
+        formatArabicNumber(digOnceResult.savedLowSAR) + ' – ' +
+        formatArabicNumber(digOnceResult.savedHighSAR) + ' ﷼';
+    } else {
+      digOnceNumEl.textContent = 'لا دمج — أضف تصريحاً مجاوراً';
+    }
+    state.prevDigOnceSAR = digOnceResult.savedHighSAR;
 
     var compoundCard = document.getElementById('compoundCard');
     if (state.neighborPermits > 0) {

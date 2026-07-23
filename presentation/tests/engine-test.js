@@ -409,24 +409,22 @@ test('co2(0) => fuelL 0, co2Kg 0', () => {
 // digOnce()
 // ---------------------------------------------------------------------------
 
-test('digOnce(2 permits).savedPct within 25-42.5% (GAO band + calibration head-room)', () => {
+test('digOnce(2 permits) saved pct fixed at GAO 25-33% band', () => {
   const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
-  assert.ok(
-    r.savedPct >= 25 && r.savedPct <= 42.5,
-    `savedPct out of band: ${r.savedPct}`
-  );
+  assert.strictEqual(r.savedPctLow, 25);
+  assert.strictEqual(r.savedPctHigh, 33);
+  assert.ok(Math.abs(r.savedLowSAR - r.separateSAR * 0.25) < 1e-6);
+  assert.ok(Math.abs(r.savedHighSAR - r.separateSAR * 0.33) < 1e-6);
+  assert.ok(Math.abs(r.sharedLowSAR - (r.separateSAR - r.savedHighSAR)) < 1e-6);
+  assert.ok(Math.abs(r.sharedHighSAR - (r.separateSAR - r.savedLowSAR)) < 1e-6);
 });
 
-test('digOnce() savedSAR = separateSAR - sharedSAR and savedPct consistent', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
-  assert.ok(Math.abs(r.savedSAR - (r.separateSAR - r.sharedSAR)) < 1e-6);
-  const expectedPct = (r.savedSAR / r.separateSAR) * 100;
-  assert.ok(Math.abs(r.savedPct - expectedPct) < 1e-6);
-});
-
-test('digOnce() with 1 permit yields zero or minimal savings (no merge to share)', () => {
+test('digOnce() with 1 permit yields zero savings', () => {
   const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
-  assert.ok(r.savedSAR <= 0, `expected non-positive saving for single permit, got ${r.savedSAR}`);
+  assert.strictEqual(r.savedLowSAR, 0);
+  assert.strictEqual(r.savedHighSAR, 0);
+  assert.strictEqual(r.savedPctLow, 0);
+  assert.strictEqual(r.savedPctHigh, 0);
 });
 
 // ---------------------------------------------------------------------------
