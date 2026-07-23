@@ -207,7 +207,7 @@
         </div>
         <div class="impact-detail">ساعات-أشخاص (نطاق): <b class="num" id="personHoursRange">—</b> <span class="src-badge">إشغال ١٫٢–١٫٦ افتراض · كود الطرق 203</span></div>
         <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span></div>
-        <div class="impact-detail">انبعاثات متجنبة محتملة (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
+        <div class="impact-detail">انبعاثات مضافة بسبب الإغلاق (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
         <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span></div>
         <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
@@ -237,8 +237,8 @@
         <h2>الأثر البيئي والمالي</h2>
         <div class="value-row">
           <div class="card value-card">
-            <div class="num" id="co2Num">— كجم</div>
-            <div class="lab">وفر CO₂ (<span id="fuelNum">—</span> لتر وقود موفّر)</div>
+            <div class="num" id="co2Num">— اختر جدولة</div>
+            <div class="lab">وفر CO₂ من الجدولة المحسّنة (<span id="fuelNum">—</span> لتر موفّر) <span class="src-badge">من ساعات-مركبة موفّرة فقط</span></div>
           </div>
           <div class="card value-card">
             <div class="num" id="digOnceNum">— ﷼</div>
@@ -730,12 +730,12 @@
     var levelLabels = { low: 'منخفض', medium: 'متوسط', high: 'مرتفع' };
     chip.textContent = levelLabels[result.level] || result.level;
 
-    var co2Result = AtharEngine.co2(result.delayVehHours);
-    animateCountUp(document.getElementById('co2Num'), state.prevCo2Kg, co2Result.co2Kg, function (v) {
-      return formatArabicNumber(v) + ' كجم';
-    });
-    state.prevCo2Kg = co2Result.co2Kg;
-    document.getElementById('fuelNum').textContent = formatArabicNumber(co2Result.fuelL);
+    // CO₂ savings are computed ONLY from saved vehicle-hours after a schedule
+    // is chosen (see selectCandidate). Do not derive "savings" from the
+    // closure's own added delay. Reset until a candidate is picked.
+    document.getElementById('co2Num').textContent = '— اختر جدولة';
+    document.getElementById('fuelNum').textContent = '—';
+    state.prevCo2Kg = 0;
 
     var digOnceResult = AtharEngine.digOnce({
       trenchKm: 1.2,
@@ -858,6 +858,13 @@
     var input = currentEngineInput();
     var backTestResult = AtharEngine.backTest(input, candidate);
     animateBackTest(backTestResult.beforeVehHours, backTestResult.afterVehHours);
+
+    // CO₂ saving = idle emissions avoided by the saved vehicle-hours only.
+    var savedCo2 = AtharEngine.co2Range(candidate.savedVehHours);
+    var savedFuel = AtharEngine.co2(candidate.savedVehHours);
+    document.getElementById('co2Num').textContent =
+      formatArabicNumber(savedCo2.lowCo2Kg) + ' – ' + formatArabicNumber(savedCo2.highCo2Kg) + ' كجم';
+    document.getElementById('fuelNum').textContent = formatArabicNumber(savedFuel.fuelL);
 
     // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض = التوقع + 12%
     var predicted = candidate.delayVehHours;
