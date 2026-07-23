@@ -228,7 +228,7 @@
           <h4>الحالة المقابلة — كيف نعزو التأخير؟</h4>
           <p>التأخير المعروض هو <b>الفرق</b> بين زمن الرحلة أثناء الإغلاق وزمنها في حالة مقابلة بلا إغلاق <b>لنفس الساعة ونفس الطلب المروري</b> — لا يُنسب ازدحام المدينة كله إلى الحفرية.</p>
           <div class="impact-detail">التوقع: <b class="num" id="cfPredicted">—</b> س-م · المرصود <span class="src-badge">حالة تركيبية موسومة للعرض</span>: <b class="num" id="cfObserved">—</b> س-م</div>
-          <div class="impact-detail">خطأ التوقع: <b class="num" id="cfError">—</b>٪ — الحكم: <b id="cfVerdict">—</b></div>
+          <div class="impact-detail">خطأ التوقع: <b class="num" id="cfError">—</b>٪ — الحكم: <b id="cfVerdict">—</b> <span class="src-badge">حكم على حالة تركيبية — يُستبدل بقياس ميداني في التجربة</span></div>
         </div>
       </section>
 
@@ -855,9 +855,12 @@
     var backTestResult = AtharEngine.backTest(input, candidate);
     animateBackTest(backTestResult.beforeVehHours, backTestResult.afterVehHours);
 
-    // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض = التوقع + 12%
+    // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض. الانحراف يتغير حتمياً
+    // مع خصائص المرشح (5%–34%) كي لا يكون حكم «دقيق» مضموناً بالتصميم —
+    // بعض البدائل تُظهر «مقبول» أو «يتطلب إعادة معايرة» بصدق.
     var predicted = candidate.delayVehHours;
-    var observed = predicted * 1.12;
+    var syntheticDrift = 1.05 + ((candidate.startHour * 7 + candidate.phases * 13) % 30) / 100;
+    var observed = predicted * syntheticDrift;
     var pe = AtharEngine.predictionError(predicted, observed);
     document.getElementById('cfCard').style.display = 'block';
     document.getElementById('cfPredicted').textContent = formatArabicNumber(predicted);
@@ -899,15 +902,20 @@
   document.getElementById('wzdxExportBtn').addEventListener('click', function () {
     var startHour = state.selectedCandidate ? state.selectedCandidate.startHour : 22;
     var startISO = '2026-07-27T' + String(startHour).padStart(2, '0') + ':00:00Z';
+    // إحداثيات المقطع المختار فعلاً على الخريطة (Leaflet يخزن [lat,lng]؛
+    // WZDx/GeoJSON يتطلب [lon,lat] — لذا نعكس الترتيب).
+    var segIdx = state.selectedSegIdx !== null ? state.selectedSegIdx : midSegIndex;
+    var segA = CORRIDOR_COORDS[segIdx];
+    var segB = CORRIDOR_COORDS[segIdx + 1];
     var fc = AtharEngine.wzdx({
-      id: 'athar-demo-001',
-      roadName: 'طريق الملك فهد (العليا)',
+      id: 'athar-demo-seg-' + segIdx,
+      roadName: 'طريق الملك فهد (العليا) — المقطع ' + (segIdx + 1),
       direction: 'northbound',
       lanes: AtharEngine.DEFAULTS.lanes,
       lanesClosed: state.lanesClosed,
       startISO: startISO,
       durationHours: state.durationHours,
-      coordinates: [[46.675, 24.700], [46.680, 24.735]],
+      coordinates: [[segA[1], segA[0]], [segB[1], segB[0]]],
     });
     var blob = new Blob([JSON.stringify(fc, null, 2)], { type: 'application/geo+json' });
     var url = URL.createObjectURL(blob);
@@ -961,8 +969,14 @@
     return set;
   }
 
-  // Windowed candidates embed "نافذة {N} س" in their label; continuous ones run for the full requested duration.
+  // Windowed candidates (phases=2 over multiple nights) use the engine's fixed
+  // nightly work window; continuous ones run for the full requested duration.
+  // Structured fields first — the Arabic-label regex is only a legacy fallback.
   function getChosenWindowLen(candidate) {
+    if (candidate.phases === 2 && (candidate.nights === undefined || candidate.nights > 1) &&
+        state.durationHours > AtharEngine.WORK_WINDOW_HOURS) {
+      return AtharEngine.WORK_WINDOW_HOURS;
+    }
     var match = /نافذة (\d+) س/.exec(candidate.label);
     return match ? parseInt(match[1], 10) : state.durationHours;
   }

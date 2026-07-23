@@ -560,6 +560,7 @@
   return {
     HOURLY_PROFILE,
     DEFAULTS,
+    WORK_WINDOW_HOURS,
     bprTravelTime,
     score,
     optimize,
