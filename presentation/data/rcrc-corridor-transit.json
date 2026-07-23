@@ -1,0 +1,653 @@
+{
+  "_provenance": {
+    "source": "Royal Commission for Riyadh City — Open Data (opendata.rcrc.gov.sa)",
+    "datasets": [
+      "bus-stops-in-riyadh-by-bus-route-direction-and-shelter-type-2024",
+      "metro-stations-in-riyadh-by-metro-line-and-station-type-2024"
+    ],
+    "query": "within_distance(geo_point_2d, geom'POINT(46.677 24.717)', 2km) — منتصف ممر العرض، طريق الملك فهد (العليا)",
+    "accessedDate": "2026-07-23",
+    "sourceLedgerRefs": [
+      "src-010",
+      "src-011"
+    ],
+    "note": "لقطة حقيقية غير معدلة من واجهة RCRC المفتوحة — ليست بيانات تركيبية"
+  },
+  "corridor": {
+    "midpoint": {
+      "lon": 46.677,
+      "lat": 24.717
+    },
+    "radiusKm": 2
+  },
+  "busStops": {
+    "totalWithin2km": 70,
+    "distinctRoutes": [
+      "7",
+      "8",
+      "9",
+      "11",
+      "230",
+      "341",
+      "925",
+      "926",
+      "927"
+    ],
+    "routeCount": 9,
+    "stops": [
+      {
+        "code": "53604",
+        "nameAr": "الملك عبدالله 410",
+        "route": "230",
+        "type": "Air conditioned shelter",
+        "lon": 46.672933,
+        "lat": 24.731861
+      },
+      {
+        "code": "53827",
+        "nameAr": "التخصصي 110",
+        "route": "8",
+        "type": "Feeder pole with standard site adaptation",
+        "lon": 46.663067,
+        "lat": 24.709112
+      },
+      {
+        "code": "53828",
+        "nameAr": "التخصصي 210",
+        "route": "8",
+        "type": "Air conditioned shelter",
+        "lon": 46.663014,
+        "lat": 24.710146
+      },
+      {
+        "code": "54223",
+        "nameAr": "العروبة 410",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.678942,
+        "lat": 24.715307
+      },
+      {
+        "code": "54228",
+        "nameAr": "العروبة 308",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.671316,
+        "lat": 24.711602
+      },
+      {
+        "code": "54229",
+        "nameAr": "العروبة 407",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.66709,
+        "lat": 24.710155
+      },
+      {
+        "code": "54232",
+        "nameAr": "العروبة 306",
+        "route": "7",
+        "type": "Air conditioned shelter",
+        "lon": 46.662494,
+        "lat": 24.707685
+      },
+      {
+        "code": "65100",
+        "nameAr": "العليا 215",
+        "route": "9",
+        "type": "Air conditioned shelter",
+        "lon": 46.680794,
+        "lat": 24.70277
+      },
+      {
+        "code": "65101",
+        "nameAr": "موسى بن نصير 406",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.678104,
+        "lat": 24.702505
+      },
+      {
+        "code": "65103",
+        "nameAr": "الملك فهد 204",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.676083,
+        "lat": 24.704637
+      },
+      {
+        "code": "65105",
+        "nameAr": "الملك فهد 203",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.674466,
+        "lat": 24.707899
+      },
+      {
+        "code": "65111",
+        "nameAr": "الملك فهد 103",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.673798,
+        "lat": 24.707743
+      },
+      {
+        "code": "65114",
+        "nameAr": "موسى بن نصير 405",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.675749,
+        "lat": 24.701486
+      },
+      {
+        "code": "67200",
+        "nameAr": "العليا 209",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.666785,
+        "lat": 24.730488
+      },
+      {
+        "code": "67201",
+        "nameAr": "العليا 109",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.666288,
+        "lat": 24.730723
+      },
+      {
+        "code": "68305",
+        "nameAr": "موسى بن نصير 308",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.683807,
+        "lat": 24.704668
+      },
+      {
+        "code": "68321",
+        "nameAr": "العليا 603",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.690774,
+        "lat": 24.707146
+      },
+      {
+        "code": "68402",
+        "nameAr": "العليا 601",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.685916,
+        "lat": 24.709196
+      },
+      {
+        "code": "68415",
+        "nameAr": "العليا 113",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.676266,
+        "lat": 24.711017
+      },
+      {
+        "code": "68417",
+        "nameAr": "عروة بن الزبير 401",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.681903,
+        "lat": 24.711107
+      },
+      {
+        "code": "90918",
+        "nameAr": "العليا 210",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.668968,
+        "lat": 24.726136
+      },
+      {
+        "code": "41127",
+        "nameAr": "الملك عبدالعزيز 06 ب",
+        "route": "11",
+        "type": "BRT station",
+        "lon": 46.688792,
+        "lat": 24.729676
+      },
+      {
+        "code": "53603",
+        "nameAr": "الملك عبدالله 310",
+        "route": "230",
+        "type": "Air conditioned shelter",
+        "lon": 46.673691,
+        "lat": 24.731512
+      },
+      {
+        "code": "53823",
+        "nameAr": "التخصصي 112",
+        "route": "8",
+        "type": "Feeder pole with standard site adaptation",
+        "lon": 46.666591,
+        "lat": 24.701961
+      },
+      {
+        "code": "53825",
+        "nameAr": "التخصصي 111",
+        "route": "8",
+        "type": "Air conditioned shelter",
+        "lon": 46.664338,
+        "lat": 24.706372
+      },
+      {
+        "code": "54217",
+        "nameAr": "العروبة 413",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.689919,
+        "lat": 24.720135
+      },
+      {
+        "code": "54221",
+        "nameAr": "العروبة 411",
+        "route": "341",
+        "type": "Open shelter",
+        "lon": 46.683018,
+        "lat": 24.717097
+      },
+      {
+        "code": "54226",
+        "nameAr": "العروبة 309",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.676191,
+        "lat": 24.71375
+      },
+      {
+        "code": "54230",
+        "nameAr": "العروبة 307",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.667207,
+        "lat": 24.709661
+      },
+      {
+        "code": "65104",
+        "nameAr": "الملك فهد 205",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.677906,
+        "lat": 24.701148
+      },
+      {
+        "code": "65110",
+        "nameAr": "الملك فهد 105",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.677598,
+        "lat": 24.700111
+      },
+      {
+        "code": "65112",
+        "nameAr": "الملك فهد 104",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.67535,
+        "lat": 24.70474
+      },
+      {
+        "code": "68302",
+        "nameAr": "موسى بن نصير 407",
+        "route": "926",
+        "type": "Air conditioned shelter",
+        "lon": 46.680959,
+        "lat": 24.703764
+      },
+      {
+        "code": "68303",
+        "nameAr": "موسى بن نصير 306",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.679462,
+        "lat": 24.702819
+      },
+      {
+        "code": "68304",
+        "nameAr": "موسى بن نصير 309",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.688331,
+        "lat": 24.706672
+      },
+      {
+        "code": "68403",
+        "nameAr": "خالد بن يزيد 301",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.680943,
+        "lat": 24.709302
+      },
+      {
+        "code": "68418",
+        "nameAr": "العليا 501",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.685045,
+        "lat": 24.710049
+      },
+      {
+        "code": "68419",
+        "nameAr": "العليا 502",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.686731,
+        "lat": 24.70678
+      },
+      {
+        "code": "68421",
+        "nameAr": "السليمانية 503",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.693571,
+        "lat": 24.710559
+      },
+      {
+        "code": "90912",
+        "nameAr": "العليا 114",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.679241,
+        "lat": 24.705068
+      },
+      {
+        "code": "53542",
+        "nameAr": "الاتصالات السعودية د",
+        "route": "230",
+        "type": "Large air conditioned shelter",
+        "lon": 46.667334,
+        "lat": 24.726346
+      },
+      {
+        "code": "53605",
+        "nameAr": "الملك عبدالله 311",
+        "route": "230",
+        "type": "Air conditioned shelter",
+        "lon": 46.677274,
+        "lat": 24.733046
+      },
+      {
+        "code": "53606",
+        "nameAr": "الملك عبدالله 411",
+        "route": "230",
+        "type": "Feeder pole with standard site adaptation",
+        "lon": 46.677369,
+        "lat": 24.733707
+      },
+      {
+        "code": "53824",
+        "nameAr": "التخصصي 212",
+        "route": "8",
+        "type": "Air conditioned shelter",
+        "lon": 46.66691,
+        "lat": 24.702115
+      },
+      {
+        "code": "53829",
+        "nameAr": "التخصصي 109",
+        "route": "8",
+        "type": "Air conditioned shelter",
+        "lon": 46.659943,
+        "lat": 24.715347
+      },
+      {
+        "code": "53830",
+        "nameAr": "التخصصي 209",
+        "route": "8",
+        "type": "Air conditioned shelter",
+        "lon": 46.659498,
+        "lat": 24.717089
+      },
+      {
+        "code": "53832",
+        "nameAr": "التخصصي 208",
+        "route": "8",
+        "type": "Open shelter",
+        "lon": 46.658189,
+        "lat": 24.719251
+      },
+      {
+        "code": "54218",
+        "nameAr": "العروبة 313",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.692205,
+        "lat": 24.72081
+      },
+      {
+        "code": "54219",
+        "nameAr": "العروبة 412",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.686509,
+        "lat": 24.718631
+      },
+      {
+        "code": "54220",
+        "nameAr": "العروبة 312",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.686852,
+        "lat": 24.718451
+      },
+      {
+        "code": "54222",
+        "nameAr": "العروبة 311",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.682898,
+        "lat": 24.716709
+      },
+      {
+        "code": "54224",
+        "nameAr": "العروبة 310",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.679248,
+        "lat": 24.7151
+      },
+      {
+        "code": "54225",
+        "nameAr": "العروبة 409",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.676027,
+        "lat": 24.714027
+      },
+      {
+        "code": "54227",
+        "nameAr": "العروبة 408",
+        "route": "341",
+        "type": "Air conditioned shelter",
+        "lon": 46.670335,
+        "lat": 24.711529
+      },
+      {
+        "code": "54231",
+        "nameAr": "العروبة 406",
+        "route": "7",
+        "type": "Air conditioned shelter",
+        "lon": 46.662483,
+        "lat": 24.708228
+      },
+      {
+        "code": "65107",
+        "nameAr": "الملك فهد 202",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.673748,
+        "lat": 24.709401
+      },
+      {
+        "code": "65109",
+        "nameAr": "الملك فهد 102",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.672826,
+        "lat": 24.709588
+      },
+      {
+        "code": "65115",
+        "nameAr": "موسى بن نصير 305",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.675327,
+        "lat": 24.701039
+      },
+      {
+        "code": "65116",
+        "nameAr": "موسى بن نصير 404",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.672767,
+        "lat": 24.700255
+      },
+      {
+        "code": "65117",
+        "nameAr": "موسى بن نصير 304",
+        "route": "925",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.672373,
+        "lat": 24.699839
+      },
+      {
+        "code": "68301",
+        "nameAr": "موسى بن نصير 408",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.684943,
+        "lat": 24.705414
+      },
+      {
+        "code": "68306",
+        "nameAr": "العليا 503",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.690892,
+        "lat": 24.706409
+      },
+      {
+        "code": "68322",
+        "nameAr": "السليمانية 601",
+        "route": "926",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.688193,
+        "lat": 24.708696
+      },
+      {
+        "code": "68401",
+        "nameAr": "السليمانية 602",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.69201,
+        "lat": 24.710206
+      },
+      {
+        "code": "68405",
+        "nameAr": "العليا 212",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.676038,
+        "lat": 24.712121
+      },
+      {
+        "code": "68420",
+        "nameAr": "السليمانية 502",
+        "route": "927",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.690618,
+        "lat": 24.709384
+      },
+      {
+        "code": "90910",
+        "nameAr": "العليا 110",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.669249,
+        "lat": 24.724851
+      },
+      {
+        "code": "90911",
+        "nameAr": "العليا 111",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.672872,
+        "lat": 24.717661
+      },
+      {
+        "code": "90919",
+        "nameAr": "العليا 211",
+        "route": "9",
+        "type": "Feeder pole with reduced site adaptation",
+        "lon": 46.673637,
+        "lat": 24.716872
+      },
+      {
+        "code": "41058",
+        "nameAr": "الملك عبدالعزيز 06 أ",
+        "route": "11",
+        "type": "BRT station",
+        "lon": 46.688673,
+        "lat": 24.729625
+      }
+    ]
+  },
+  "metroStations": {
+    "totalWithin2km": 6,
+    "stations": [
+      {
+        "code": "S08",
+        "nameAr": "الورود 2",
+        "nameEn": "Al Wurud 2",
+        "line": "Line1",
+        "lon": 46.67112888545265,
+        "lat": 24.72172740595173
+      },
+      {
+        "code": "S09",
+        "nameAr": "العروبة",
+        "nameEn": "Al Urubah",
+        "line": "Line1",
+        "lon": 46.67536633589778,
+        "lat": 24.71321629407025
+      },
+      {
+        "code": "S07",
+        "nameAr": "stc",
+        "nameEn": "stc",
+        "line": "Line2",
+        "lon": 46.66654513995131,
+        "lat": 24.72655843698455
+      },
+      {
+        "code": "S30",
+        "nameAr": "الورود",
+        "nameEn": "Al Wurud",
+        "line": "Line2",
+        "lon": 46.67749338636222,
+        "lat": 24.73304010012863
+      },
+      {
+        "code": "S07",
+        "nameAr": "stc",
+        "nameEn": "stc",
+        "line": "Line1",
+        "lon": 46.66687987819414,
+        "lat": 24.72679705304654
+      },
+      {
+        "code": "S10",
+        "nameAr": "مصرف الانماء",
+        "nameEn": "Alinma Bank",
+        "line": "Line1",
+        "lon": 46.68032471057251,
+        "lat": 24.70316648220116
+      }
+    ]
+  }
+}

@@ -208,7 +208,8 @@
         <div class="impact-detail">ساعات-أشخاص (نطاق): <b class="num" id="personHoursRange">—</b> <span class="src-badge">إشغال ١٫٢–١٫٦ افتراض · كود الطرق 203</span></div>
         <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span></div>
         <div class="impact-detail">انبعاثات متجنبة محتملة (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
-        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span></div>
+        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">٩ مسارات فعلية ضمن ٢كم — RCRC 2024 · التواتر والركاب افتراض</span></div>
+        <div class="impact-detail">نقل عام ضمن نطاق الممر: <b class="num">٧٠ محطة حافلات · ٦ محطات مترو</b> <span class="src-badge">لقطة RCRC حقيقية 2026-07-23</span></div>
         <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
       </section>
@@ -228,7 +229,7 @@
           <h4>الحالة المقابلة — كيف نعزو التأخير؟</h4>
           <p>التأخير المعروض هو <b>الفرق</b> بين زمن الرحلة أثناء الإغلاق وزمنها في حالة مقابلة بلا إغلاق <b>لنفس الساعة ونفس الطلب المروري</b> — لا يُنسب ازدحام المدينة كله إلى الحفرية.</p>
           <div class="impact-detail">التوقع: <b class="num" id="cfPredicted">—</b> س-م · المرصود <span class="src-badge">حالة تركيبية موسومة للعرض</span>: <b class="num" id="cfObserved">—</b> س-م</div>
-          <div class="impact-detail">خطأ التوقع: <b class="num" id="cfError">—</b>٪ — الحكم: <b id="cfVerdict">—</b></div>
+          <div class="impact-detail">خطأ التوقع: <b class="num" id="cfError">—</b>٪ — الحكم: <b id="cfVerdict">—</b> <span class="src-badge">حكم على حالة تركيبية — يُستبدل بقياس ميداني في التجربة</span></div>
         </div>
       </section>
 
@@ -396,6 +397,17 @@
   // -------------------------------------------------------------------
   // State
   // -------------------------------------------------------------------
+  // لقطة حقيقية من RCRC Open Data (2026-07-23) — ليست تركيبية. النسخة الكاملة
+  // مع بيان المنشأ والاستعلام في data/rcrc-corridor-transit.json (src-010/011).
+  // مضمّنة هنا كي تعمل من file:// بلا fetch.
+  var RCRC_TRANSIT = {
+    routeCount: 9,
+    routes: ['7', '8', '9', '11', '230', '341', '925', '926', '927'],
+    busStopsWithin2km: 70,
+    metroStationsWithin2km: 6,
+    accessedDate: '2026-07-23',
+  };
+
   var state = {
     apiMode: false,
     lanesClosed: 2,
@@ -715,7 +727,7 @@
     var phRange = AtharEngine.personHours(result.delayVehHours);
     var tvRange = AtharEngine.timeValueSAR(phRange);
     var co2R = AtharEngine.co2Range(result.delayVehHours);
-    var transitR = AtharEngine.transitImpact(result);
+    var transitR = AtharEngine.transitImpact(result, { routes: RCRC_TRANSIT.routeCount });
     document.getElementById('personHoursRange').textContent =
       formatArabicNumber(phRange.lowPersonHours) + ' – ' + formatArabicNumber(phRange.highPersonHours) + ' س-ش';
     document.getElementById('timeValueRange').textContent =
@@ -756,7 +768,8 @@
       compoundCard.style.display = '';
       document.getElementById('compoundNum').textContent = formatArabicNumber(compoundResult.combined) + ' س-م';
       document.getElementById('compoundLab').textContent = compoundResult.warning
-        || 'التأثير المركّب لتصريحين متجاورين — عامل التضخيم ' + compoundResult.factor;
+        || 'التأثير المركّب لتصريحين متجاورين — عامل التضخيم ' + compoundResult.factor
+        + ' (تقدير تقريبي: يفترض تصريحاً مجاوراً مماثلاً على المحور نفسه، لا موقعاً جغرافياً مستقلاً)';
     } else {
       compoundCard.style.display = 'none';
     }
@@ -855,9 +868,12 @@
     var backTestResult = AtharEngine.backTest(input, candidate);
     animateBackTest(backTestResult.beforeVehHours, backTestResult.afterVehHours);
 
-    // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض = التوقع + 12%
+    // بطاقة الحالة المقابلة: مرصود تركيبي موسوم للعرض. الانحراف يتغير حتمياً
+    // مع خصائص المرشح (5%–34%) كي لا يكون حكم «دقيق» مضموناً بالتصميم —
+    // بعض البدائل تُظهر «مقبول» أو «يتطلب إعادة معايرة» بصدق.
     var predicted = candidate.delayVehHours;
-    var observed = predicted * 1.12;
+    var syntheticDrift = 1.05 + ((candidate.startHour * 7 + candidate.phases * 13) % 30) / 100;
+    var observed = predicted * syntheticDrift;
     var pe = AtharEngine.predictionError(predicted, observed);
     document.getElementById('cfCard').style.display = 'block';
     document.getElementById('cfPredicted').textContent = formatArabicNumber(predicted);
@@ -899,15 +915,20 @@
   document.getElementById('wzdxExportBtn').addEventListener('click', function () {
     var startHour = state.selectedCandidate ? state.selectedCandidate.startHour : 22;
     var startISO = '2026-07-27T' + String(startHour).padStart(2, '0') + ':00:00Z';
+    // إحداثيات المقطع المختار فعلاً على الخريطة (Leaflet يخزن [lat,lng]؛
+    // WZDx/GeoJSON يتطلب [lon,lat] — لذا نعكس الترتيب).
+    var segIdx = state.selectedSegIdx !== null ? state.selectedSegIdx : midSegIndex;
+    var segA = CORRIDOR_COORDS[segIdx];
+    var segB = CORRIDOR_COORDS[segIdx + 1];
     var fc = AtharEngine.wzdx({
-      id: 'athar-demo-001',
-      roadName: 'طريق الملك فهد (العليا)',
+      id: 'athar-demo-seg-' + segIdx,
+      roadName: 'طريق الملك فهد (العليا) — المقطع ' + (segIdx + 1),
       direction: 'northbound',
       lanes: AtharEngine.DEFAULTS.lanes,
       lanesClosed: state.lanesClosed,
       startISO: startISO,
       durationHours: state.durationHours,
-      coordinates: [[46.675, 24.700], [46.680, 24.735]],
+      coordinates: [[segA[1], segA[0]], [segB[1], segB[0]]],
     });
     var blob = new Blob([JSON.stringify(fc, null, 2)], { type: 'application/geo+json' });
     var url = URL.createObjectURL(blob);
@@ -961,8 +982,14 @@
     return set;
   }
 
-  // Windowed candidates embed "نافذة {N} س" in their label; continuous ones run for the full requested duration.
+  // Windowed candidates (phases=2 over multiple nights) use the engine's fixed
+  // nightly work window; continuous ones run for the full requested duration.
+  // Structured fields first — the Arabic-label regex is only a legacy fallback.
   function getChosenWindowLen(candidate) {
+    if (candidate.phases === 2 && (candidate.nights === undefined || candidate.nights > 1) &&
+        state.durationHours > AtharEngine.WORK_WINDOW_HOURS) {
+      return AtharEngine.WORK_WINDOW_HOURS;
+    }
     var match = /نافذة (\d+) س/.exec(candidate.label);
     return match ? parseInt(match[1], 10) : state.durationHours;
   }
@@ -1134,13 +1161,19 @@
   var ASSUMPTIONS = [
     { key: 'aadt', label: 'الطلب اليومي (AADT)', value: AtharEngine.DEFAULTS.aadt, tag: 'assume', note: 'حجم مروري توضيحي لمقطع طريق الملك فهد (العليا) — لا يوجد قياس فعلي متاح' },
     { key: 'lanes', label: 'عدد المسارات', value: AtharEngine.DEFAULTS.lanes, tag: 'assume', note: 'عدد نمطي لطريق شرياني رئيسي' },
-    { key: 'capacityPerLane', label: 'سعة المسار', value: AtharEngine.DEFAULTS.capacityPerLane + ' م/س', tag: 'src', note: 'افتراض قياسي بأسلوب HCM للتدفق المشبع' },
+    { key: 'capacityPerLane', label: 'سعة المسار', value: AtharEngine.DEFAULTS.capacityPerLane + ' م/س', tag: 'assume', note: 'افتراض قياسي بأسلوب HCM للتدفق المشبع — منهجية معيارية لكن الرقم غير مقيس محلياً' },
     { key: 'freeFlowMin', label: 'زمن التدفق الحر', value: AtharEngine.DEFAULTS.freeFlowMin + ' دقيقة', tag: 'assume', note: 'تقدير توضيحي لطول المقطع' },
-    { key: 'lengthKm', label: 'طول المقطع', value: AtharEngine.DEFAULTS.lengthKm + ' كم', tag: 'assume', note: 'تقريب لمقطع العليا من طريق الملك فهد' },
+    { key: 'lengthKm', label: 'طول المقطع', value: AtharEngine.DEFAULTS.lengthKm + ' كم', tag: 'assume', note: 'تقريب لمقطع العليا — معلوماتي فقط: لا يدخل في حساب BPR الحالي' },
     { key: 'valueOfTimeSAR', label: 'قيمة الوقت', value: AtharEngine.DEFAULTS.valueOfTimeSAR + ' ﷼/ساعة-مركبة', tag: 'assume', note: 'للاستخدام السردي فقط' },
     { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
     { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
     { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
+    { key: 'trenchKmDemo', label: 'طول الخندق في حساب Dig-Once', value: '1.2 كم', tag: 'assume', note: 'قيمة العرض المستخدمة في بطاقة الوفر — تُستبدل بطول التصريح الفعلي' },
+    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: String(AtharEngine.CALIBRATION.SCORE_CALIBRATION), tag: 'assume', note: 'يحوّل ساعات-التأخير إلى درجة 0-100 — غير مُستند، مرشح لإعادة معايرة من back-tests' },
+    { key: 'sharedTrenchOverhead', label: 'معامل تكلفة الخندق المشترك', value: String(AtharEngine.CALIBRATION.SHARED_TRENCH_OVERHEAD), tag: 'assume', note: 'يحدد نسبة وفر Dig-Once — قيد إعادة الاشتقاق ليتوافق مع نطاق GAO 25–33%' },
+    { key: 'compoundFactor', label: 'معامل التأثير المركّب', value: String(AtharEngine.CALIBRATION.COMPOUND_FACTOR), tag: 'assume', note: 'تقدير تفاعل تصريحين متجاورين — غير مُستند' },
+    { key: 'minCapacityFraction', label: 'أرضية السعة عند الإغلاق الكامل', value: String(AtharEngine.CALIBRATION.MIN_CAPACITY_FRACTION), tag: 'assume', note: 'يمنع القسمة على صفر في BPR — حد نمذجة لا قياس' },
+    { key: 'rcrcTransit', label: 'مسارات الحافلات ضمن ٢كم من الممر', value: '9 مسارات · 70 محطة · 6 محطات مترو', tag: 'src', note: 'لقطة حقيقية من RCRC Open Data بتاريخ 2026-07-23 — data/rcrc-corridor-transit.json' },
   ];
 
   function renderAssumptions() {

@@ -120,13 +120,28 @@ test('score() with 0 lanesClosed => delayVehHours = 0, score = 0', () => {
   assert.strictEqual(r.level, 'low');
 });
 
-test('score() level buckets: low < 25 <= medium < 60 <= high', () => {
-  const mk = (score) => (score < 25 ? 'low' : score < 60 ? 'medium' : 'high');
-  assert.strictEqual(mk(0), 'low');
-  assert.strictEqual(mk(24), 'low');
-  assert.strictEqual(mk(25), 'medium');
-  assert.strictEqual(mk(59), 'medium');
-  assert.strictEqual(mk(60), 'high');
+test('score() level buckets match the real engine output across severities', () => {
+  // يستدعي score() الحقيقية (لا نسخة محلية من المنطق) عبر مدخلات متدرجة
+  // الشدة، ويتحقق أن level المُرجَع يطابق حدود score المُرجَع نفسه.
+  const bucketOf = (s) => (s < 25 ? 'low' : s < 60 ? 'medium' : 'high');
+  const severities = [
+    { lanesClosed: 0, startHour: 3, durationHours: 2 },
+    { lanesClosed: 1, startHour: 3, durationHours: 4 },
+    { lanesClosed: 2, startHour: 8, durationHours: 12 },
+    { lanesClosed: 3, startHour: 8, durationHours: 48 },
+    { lanesClosed: 4, startHour: 8, durationHours: 72 },
+  ];
+  const seen = new Set();
+  severities.forEach((sv) => {
+    const r = AtharEngine.score({
+      aadt: 85000, lanes: 4, capacityPerLane: 1800, freeFlowMin: 6,
+      lanesClosed: sv.lanesClosed, startHour: sv.startHour, durationHours: sv.durationHours,
+    });
+    assert.strictEqual(r.level, bucketOf(r.score),
+      `level ${r.level} != bucket of score ${r.score} for ${JSON.stringify(sv)}`);
+    seen.add(r.level);
+  });
+  assert.ok(seen.size >= 2, `expected at least 2 distinct levels, saw: ${[...seen]}`);
 });
 
 test('score() hourly breakdown length matches durationHours', () => {
