@@ -406,6 +406,22 @@ test('co2(0) => fuelL 0, co2Kg 0', () => {
 });
 
 // ---------------------------------------------------------------------------
+// assumptionsUsed()
+// ---------------------------------------------------------------------------
+
+test('assumptionsUsed counts unofficial assumptions per metric', () => {
+  assert.strictEqual(AtharEngine.assumptionsUsed('timeValueSAR').length, 7);
+  assert.ok(AtharEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
+  assert.strictEqual(AtharEngine.assumptionsUsed('nope'), null);
+});
+
+test('assumptionsUsed returns a copy (caller cannot mutate internal table)', () => {
+  const a = AtharEngine.assumptionsUsed('digOnce');
+  a.push('x');
+  assert.ok(!AtharEngine.assumptionsUsed('digOnce').includes('x'));
+});
+
+// ---------------------------------------------------------------------------
 // work-zone friction floor
 // ---------------------------------------------------------------------------
 

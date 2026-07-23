@@ -206,9 +206,9 @@
           </div>
         </div>
         <div class="impact-detail">ساعات-أشخاص (نطاق): <b class="num" id="personHoursRange">—</b> <span class="src-badge">إشغال ١٫٢–١٫٦ افتراض · كود الطرق 203</span></div>
-        <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span></div>
-        <div class="impact-detail">انبعاثات مضافة بسبب الإغلاق (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span></div>
-        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span></div>
+        <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span> <span class="src-badge" id="asmTimeValue" title="">افتراضات: —</span></div>
+        <div class="impact-detail">انبعاثات مضافة بسبب الإغلاق (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span> <span class="src-badge" id="asmCo2" title="">افتراضات: —</span></div>
+        <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span> <span class="src-badge" id="asmTransit" title="">افتراضات: —</span></div>
         <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
       </section>
@@ -242,7 +242,7 @@
           </div>
           <div class="card value-card">
             <div class="num" id="digOnceNum">— ﷼</div>
-            <div class="lab">وفر Dig-Once (نطاق) <span class="src-badge">٢٥–٣٣٪ — GAO للمناطق الحضرية الكثيفة</span></div>
+            <div class="lab">وفر Dig-Once (نطاق) <span class="src-badge">٢٥–٣٣٪ — GAO للمناطق الحضرية الكثيفة</span> <span class="src-badge" id="asmDigOnce" title="">افتراضات: —</span></div>
           </div>
           <div class="card value-card" id="compoundCard" style="display:none">
             <div class="num" id="compoundNum">—</div>
@@ -665,6 +665,16 @@
     return new Intl.NumberFormat('ar-SA', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
   }
 
+  // Show how many unofficial demo assumptions feed a headline number, with the
+  // full list on hover — turns assumption stacking into visible transparency.
+  function setAssumptionBadge(elId, metric) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    var list = AtharEngine.assumptionsUsed(metric) || [];
+    el.textContent = 'عدد الافتراضات: ' + formatArabicNumber(list.length);
+    el.title = list.join('، ');
+  }
+
   function prefersReducedMotion() {
     return typeof window.matchMedia === 'function'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -724,6 +734,11 @@
       formatArabicNumber(co2R.lowCo2Kg) + ' – ' + formatArabicNumber(co2R.highCo2Kg) + ' كجم CO₂';
     document.getElementById('transitRangeLine').textContent =
       formatArabicNumber(transitR.lowPersonHours) + ' – ' + formatArabicNumber(transitR.highPersonHours) + ' س-ش (' + formatArabicNumber(transitR.busesAffected) + ' حافلة/ساعة)';
+
+    setAssumptionBadge('asmTimeValue', 'timeValueSAR');
+    setAssumptionBadge('asmCo2', 'co2');
+    setAssumptionBadge('asmTransit', 'transitImpact');
+    setAssumptionBadge('asmDigOnce', 'digOnce');
 
     var chip = document.getElementById('levelChip');
     chip.className = 'chip ' + result.level;
@@ -1158,6 +1173,17 @@
     { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
     { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
     { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
+    { key: 'digOnceBand', label: 'نطاق وفر Dig-Once', value: '٢٥–٣٣٪', tag: 'src', note: 'GAO للمناطق الحضرية الكثيفة — مصدر #7' },
+    { key: 'workZoneFriction', label: 'معامل احتكاك منطقة العمل', value: '١٫١٠', tag: 'assume', note: 'أرضية: زمن الإغلاق ≥ ١١٠٪ من الأساس — يمنع تصفير تأخير الليل (مِراج ٩٩٫٦٪)' },
+    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: '٠٫٣٥', tag: 'assume', note: 'تطبيع درجة 0-100 — قابل لإعادة المعايرة من سجل back-test' },
+    { key: 'minCapacityFraction', label: 'أرضية السعة الدنيا', value: '٠٫٢٥', tag: 'assume', note: 'يمنع القسمة على صفر عند إغلاق كل المسارات' },
+    { key: 'compoundFactor', label: 'عامل التأثير المركّب', value: '١٫٣', tag: 'assume', note: 'تراكب تصريحين متجاورين نشطين معاً' },
+    { key: 'occupancyBand', label: 'نطاق الإشغال', value: '١٫٢–١٫٦ شخص/مركبة', tag: 'assume', note: 'كود 203 يشترط الإشغال لا عدّ المركبات (src-003) — لا رقم رياض رسمي' },
+    { key: 'wageMonthlySAR', label: 'الأجر الشهري', value: formatArabicNumber(AtharEngine.DEFAULTS.wageMonthlySAR) + ' ﷼', tag: 'src', note: 'GASTAT الربع الأول 2026 (src-017)' },
+    { key: 'votShare', label: 'نصيب قيمة الوقت من الأجر', value: '٤٠–٧٠٪', tag: 'src', note: 'كود الطرق 203 (src-003): راكب مشارك → سفر بين المدن' },
+    { key: 'idleFuelBand', label: 'استهلاك التعطل (نطاق)', value: '٠٫٧–١٫١ لتر/ساعة-مركبة', tag: 'assume', note: 'نطاق تقديري بترتيب الحجم' },
+    { key: 'busService', label: 'خدمة الحافلات', value: '٣ مسارات × ٤ حافلات/ساعة', tag: 'assume', note: 'مبني على طبقة المسارات المفتوحة (src-011)' },
+    { key: 'ridersBand', label: 'ركاب/حافلة (نطاق)', value: '١٥–٤٠ راكب', tag: 'assume', note: 'نطاق افتراضي للعرض' },
   ];
 
   function renderAssumptions() {

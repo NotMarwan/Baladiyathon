@@ -574,6 +574,28 @@
     return { absError, pctError, verdict };
   }
 
+  // Which unofficial demo assumptions feed each headline number. Used by the
+  // UI to print "عدد الافتراضات في هذا الرقم: N" on the card itself, turning
+  // assumption stacking into visible transparency instead of a hidden weakness.
+  const METRIC_ASSUMPTIONS = {
+    score: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'WORK_ZONE_FRICTION'],
+    timeValueSAR: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'occupancyBand', 'workHoursPerMonth'],
+    co2: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'idleFuelLPerHour'],
+    digOnce: ['trenchCostPerKmSAR', 'trenchKm'],
+    transitImpact: ['busRoutesOnSegment', 'busesPerHourPerRoute', 'ridersPerBus'],
+  };
+
+  /**
+   * List the unofficial demo assumptions a given headline metric depends on.
+   * @param {string} metric one of score|timeValueSAR|co2|digOnce|transitImpact
+   * @returns {string[]|null} copy of the assumption names, or null if unknown
+   */
+  function assumptionsUsed(metric) {
+    return Object.prototype.hasOwnProperty.call(METRIC_ASSUMPTIONS, metric)
+      ? METRIC_ASSUMPTIONS[metric].slice()
+      : null;
+  }
+
   /**
    * Compare the requested schedule's delay against a chosen optimized schedule.
    * @param {object} input - same shape as score(), at the originally requested startHour/durationHours.
@@ -604,5 +626,6 @@
     digOnce,
     compound,
     backTest,
+    assumptionsUsed,
   };
 });
