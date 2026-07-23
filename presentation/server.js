@@ -12,7 +12,6 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const url = require('node:url');
 
 const AtharEngine = require('./athar-engine.js');
 
@@ -59,22 +58,35 @@ function sendPlainError(res, statusCode, message) {
  * Read and JSON-parse a request body with a hard size limit.
  * Rejects with an Error on overflow or invalid JSON.
  */
+class RequestBodyError extends Error {
+  constructor(statusCode, code) {
+    super(code);
+    this.statusCode = statusCode;
+    this.code = code;
+  }
+}
+
 function readJsonBody(req) {
   return new Promise((resolve, reject) => {
     let totalBytes = 0;
-    const chunks = [];
+    let chunks = [];
+    let tooLarge = false;
 
     req.on('data', (chunk) => {
       totalBytes += chunk.length;
       if (totalBytes > MAX_BODY_BYTES) {
-        reject(new Error('Request body too large'));
-        req.destroy();
+        tooLarge = true;
+        chunks = [];
         return;
       }
-      chunks.push(chunk);
+      if (!tooLarge) chunks.push(chunk);
     });
 
     req.on('end', () => {
+      if (tooLarge) {
+        reject(new RequestBodyError(413, 'PAYLOAD_TOO_LARGE'));
+        return;
+      }
       const raw = Buffer.concat(chunks).toString('utf8');
       if (raw.trim() === '') {
         resolve({});
@@ -83,7 +95,7 @@ function readJsonBody(req) {
       try {
         resolve(JSON.parse(raw));
       } catch (err) {
-        reject(new Error('Invalid JSON body'));
+        reject(new RequestBodyError(400, 'INVALID_JSON'));
       }
     });
 
@@ -91,34 +103,135 @@ function readJsonBody(req) {
   });
 }
 
-async function handleApiScore(req, res) {
+function isPlainObject(value) {
+  return value !== null
+    && typeof value === 'object'
+    && !Array.isArray(value);
+}
+
+function validateScoreInput(input) {
+  const fields = {};
+  const required = ['aadt', 'lanes', 'lanesClosed', 'startHour', 'durationHours'];
+
+  required.forEach((field) => {
+    if (!Object.prototype.hasOwnProperty.call(input, field)
+        || input[field] === undefined) {
+      fields[field] = 'required';
+    }
+  });
+
+  function requireFinite(field) {
+    if (Object.prototype.hasOwnProperty.call(fields, field)) return false;
+    if (typeof input[field] !== 'number' || !Number.isFinite(input[field])) {
+      fields[field] = 'must be a finite number';
+      return false;
+    }
+    return true;
+  }
+
+  if (requireFinite('aadt') && input.aadt <= 0) {
+    fields.aadt = 'must be greater than 0';
+  }
+  if (requireFinite('lanes')) {
+    if (!Number.isInteger(input.lanes) || input.lanes <= 0) {
+      fields.lanes = 'must be a positive integer';
+    }
+  }
+  if (requireFinite('lanesClosed')) {
+    if (!Number.isInteger(input.lanesClosed)
+        || !Number.isInteger(input.lanes)
+        || input.lanesClosed < 1
+        || input.lanesClosed > input.lanes) {
+      fields.lanesClosed = 'must be between 1 and lanes';
+    }
+  }
+  if (requireFinite('startHour')) {
+    if (!Number.isInteger(input.startHour)
+        || input.startHour < 0
+        || input.startHour > 23) {
+      fields.startHour = 'must be an integer between 0 and 23';
+    }
+  }
+  if (requireFinite('durationHours') && input.durationHours <= 0) {
+    fields.durationHours = 'must be greater than 0';
+  }
+
+  ['capacityPerLane', 'freeFlowMin'].forEach((field) => {
+    if (!Object.prototype.hasOwnProperty.call(input, field)) return;
+    if (typeof input[field] !== 'number' || !Number.isFinite(input[field])) {
+      fields[field] = 'must be a finite number';
+    } else if (input[field] <= 0) {
+      fields[field] = 'must be greater than 0';
+    }
+  });
+
+  return { valid: Object.keys(fields).length === 0, fields };
+}
+
+function validateDigOnceInput(input) {
+  const fields = {};
+  for (const field of ['trenchKm', 'permitsMerged']) {
+    if (!Object.prototype.hasOwnProperty.call(input, field)
+        || input[field] === undefined) {
+      fields[field] = 'required';
+    } else if (typeof input[field] !== 'number' || !Number.isFinite(input[field])) {
+      fields[field] = 'must be a finite number';
+    }
+  }
+  if (!fields.trenchKm && input.trenchKm <= 0) {
+    fields.trenchKm = 'must be greater than 0';
+  }
+  if (!fields.permitsMerged
+      && (!Number.isInteger(input.permitsMerged) || input.permitsMerged < 1)) {
+    fields.permitsMerged = 'must be a positive integer';
+  }
+  return { valid: Object.keys(fields).length === 0, fields };
+}
+
+async function handleJsonEndpoint(req, res, validate, execute) {
   try {
     const body = await readJsonBody(req);
-    const result = AtharEngine.score(body);
-    sendJson(res, 200, result);
+    if (!isPlainObject(body)) {
+      sendJson(res, 400, { error: 'INVALID_JSON_STRUCTURE' });
+      return;
+    }
+    const validation = validate(body);
+    if (!validation.valid) {
+      sendJson(res, 422, {
+        error: 'VALIDATION_ERROR',
+        fields: validation.fields,
+      });
+      return;
+    }
+    sendJson(res, 200, execute(body));
   } catch (err) {
-    sendJson(res, 400, { error: err.message });
+    if (err instanceof RequestBodyError) {
+      sendJson(res, err.statusCode, { error: err.code });
+      return;
+    }
+    sendJson(res, 500, { error: 'INTERNAL_ERROR' });
   }
+}
+
+async function handleApiScore(req, res) {
+  return handleJsonEndpoint(req, res, validateScoreInput, (body) =>
+    AtharEngine.score({ ...AtharEngine.DEFAULTS, ...body })
+  );
 }
 
 async function handleApiOptimize(req, res) {
-  try {
-    const body = await readJsonBody(req);
-    const result = AtharEngine.optimize(body);
-    sendJson(res, 200, result);
-  } catch (err) {
-    sendJson(res, 400, { error: err.message });
-  }
+  return handleJsonEndpoint(req, res, validateScoreInput, (body) =>
+    AtharEngine.optimize({ ...AtharEngine.DEFAULTS, ...body })
+  );
 }
 
 async function handleApiDigOnce(req, res) {
-  try {
-    const body = await readJsonBody(req);
-    const result = AtharEngine.digOnce(body);
-    sendJson(res, 200, result);
-  } catch (err) {
-    sendJson(res, 400, { error: err.message });
-  }
+  return handleJsonEndpoint(
+    req,
+    res,
+    validateDigOnceInput,
+    (body) => AtharEngine.digOnce(body)
+  );
 }
 
 function handleApiWorks(req, res) {
@@ -164,41 +277,50 @@ function serveStatic(req, res, pathname) {
   });
 }
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url);
-  const pathname = parsedUrl.pathname || '/';
+function createServer() {
+  return http.createServer((req, res) => {
+    const parsedUrl = new URL(req.url, 'http://localhost');
+    const pathname = parsedUrl.pathname || '/';
 
-  if (pathname === '/api/score' && req.method === 'POST') {
-    handleApiScore(req, res);
-    return;
-  }
-  if (pathname === '/api/optimize' && req.method === 'POST') {
-    handleApiOptimize(req, res);
-    return;
-  }
-  if (pathname === '/api/digonce' && req.method === 'POST') {
-    handleApiDigOnce(req, res);
-    return;
-  }
-  if (pathname === '/api/works' && req.method === 'GET') {
-    handleApiWorks(req, res);
-    return;
-  }
-  if (pathname.startsWith('/api/')) {
-    sendJson(res, 404, { error: 'Unknown API route' });
-    return;
-  }
+    if (pathname === '/api/score' && req.method === 'POST') {
+      handleApiScore(req, res);
+      return;
+    }
+    if (pathname === '/api/optimize' && req.method === 'POST') {
+      handleApiOptimize(req, res);
+      return;
+    }
+    if (pathname === '/api/digonce' && req.method === 'POST') {
+      handleApiDigOnce(req, res);
+      return;
+    }
+    if (pathname === '/api/works' && req.method === 'GET') {
+      handleApiWorks(req, res);
+      return;
+    }
+    if (pathname.startsWith('/api/')) {
+      sendJson(res, 404, { error: 'Unknown API route' });
+      return;
+    }
 
-  if (req.method !== 'GET' && req.method !== 'HEAD') {
-    sendPlainError(res, 405, 'Method Not Allowed');
-    return;
-  }
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      sendPlainError(res, 405, 'Method Not Allowed');
+      return;
+    }
 
-  serveStatic(req, res, pathname);
-});
+    serveStatic(req, res, pathname);
+  });
+}
 
-server.listen(PORT, () => {
-  console.log(`أثر backend يعمل على http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  const server = createServer();
+  server.listen(PORT, () => {
+    console.log(`Athar server listening on http://localhost:${PORT}`);
+  });
+}
 
-module.exports = server;
+module.exports = {
+  createServer,
+  validateScoreInput,
+  validateDigOnceInput,
+};

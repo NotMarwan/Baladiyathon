@@ -40,7 +40,10 @@ test('critical interactive elements are present and wired', () => {
   for (const id of ['wzdxExportBtn', 'cfCard', 'cfVerdict', 'personHoursRange', 'transitRangeLine']) {
     assert.ok(html.includes(`id="${id}"`), `element ${id} missing`);
   }
-  assert.ok(/wzdxExportBtn'\)\.addEventListener/.test(html), 'wzdx button has no listener');
+  assert.ok(
+    /(?:wzdxExportBtn'\)|wzdxExportBtn)\.addEventListener/.test(html),
+    'wzdx button has no listener'
+  );
 });
 
 // الممنوعات الحمراء غائبة («فالنموذج مضمون» ادعاء ممنوع؛ كلمة «مضمونة» في
@@ -72,6 +75,46 @@ test('counterfactual card verdict is labeled synthetic and drift is variable', (
 test('wzdx export uses selected segment coordinates', () => {
   assert.ok(/CORRIDOR_COORDS\[segIdx\]/.test(html), 'wzdx not bound to selected segment');
   assert.ok(!/coordinates: \[\[46\.675, 24\.700\], \[46\.680, 24\.735\]\],\n    \}\);\n    var blob/.test(html), 'hardcoded coords remain in export');
+});
+
+test('wzdx export consumes the selected windows without rebuilding duration', () => {
+  assert.ok(/windows:\s*schedule\.windows/.test(html), 'selected windows are not passed to WZDx');
+  assert.ok(
+    !/AtharEngine\.wzdx\(\{[\s\S]{0,700}durationHours:\s*state\.durationHours/.test(html),
+    'export still rebuilds a continuous schedule from the original duration'
+  );
+  assert.ok(/wzdxExportBtn\.disabled\s*=\s*!schedule/.test(html),
+    'export is not disabled when selected windows are invalid or absent');
+});
+
+test('printed traffic plan derives start and duration from the selected schedule', () => {
+  assert.ok(/var schedule = getSelectedSchedule\(\);/.test(html), 'selected schedule helper is not used');
+  assert.ok(/tmpStart'\)\.textContent = formatScheduleStart\(schedule\)/.test(html),
+    'printed start time is not derived from selected schedule');
+  assert.ok(/tmpDuration'\)\.textContent = totalScheduleHours\(schedule\)/.test(html),
+    'printed duration is not derived from selected schedule windows');
+  assert.ok(/var beforeAfterText = state\.lastOptimizeResult[\s\S]{0,250}baseline\.delayVehHours/.test(html),
+    'printed before/after comparison does not use the comparable baseline windows');
+});
+
+test('route cards display post-diversion capacity and the illustrative allocation label', () => {
+  assert.ok(/alt\.residualCapacityAfterDiversion/.test(html),
+    'post-diversion residual capacity is not displayed');
+  assert.ok(/alt\.travelTimeAfterDiversion/.test(html),
+    'post-diversion travel time is not displayed');
+  assert.ok(/توزيع توضيحي غير مقاس/.test(html),
+    'illustrative diversion split is not labeled');
+  const capacityLines = html.split('\n').filter((line) => /سعة متبقية/.test(line));
+  assert.ok(capacityLines.every((line) => !/alt\.residualCapacityPct/.test(line)),
+    'pre-diversion capacity is still presented as remaining capacity');
+  assert.ok(/bestRecommendedIndex/.test(html),
+    'best visual rank is not reassigned to a post-diversion viable route');
+});
+
+test('server validation rejection is surfaced as an understandable UI error', () => {
+  assert.ok(html.includes('id="apiError"'), 'API error region is missing');
+  assert.ok(/VALIDATION_ERROR/.test(html), 'validation error code is not handled');
+  assert.ok(/تعذر حساب الأثر/.test(html), 'understandable Arabic rejection message is missing');
 });
 
 // اللقطة المضمنة في الواجهة تطابق ملف البيانات الحقيقي المجلوب من RCRC

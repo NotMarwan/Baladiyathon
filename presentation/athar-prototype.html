@@ -174,6 +174,7 @@
   .src-badge{display:inline-block;font-size:.68rem;color:var(--muted, #667);background:var(--ground, #f2f4f6);border:1px solid var(--line, #dde);border-radius:6px;padding:1px 7px;margin-inline-start:6px;vertical-align:middle}
   .wzdx-btn{margin-top:10px;padding:7px 16px;border:1px solid var(--navy, #1d4e77);background:transparent;color:var(--navy, #1d4e77);border-radius:8px;cursor:pointer;font-family:inherit;font-size:.85rem}
   .wzdx-btn:hover{background:var(--navy, #1d4e77);color:#fff}
+  .wzdx-btn:disabled{cursor:not-allowed;opacity:.45;background:transparent;color:var(--muted)}
   .cf-card{margin-top:12px;border:1px dashed var(--navy, #1d4e77);border-radius:10px;padding:12px 16px;background:var(--ground, #f7f9fb)}
   .cf-card h4{margin:0 0 6px;font-size:.9rem;color:var(--navy, #1d4e77)}
   .cf-card p{margin:0 0 8px;font-size:.8rem;line-height:1.7}
@@ -245,6 +246,7 @@
       <div class="impact-detail">البقاء على الممر أثناء الإغلاق: <b class="num" id="viaClosureMin">—</b> دقيقة
         · بلا إغلاق: <b class="num" id="baselineMin">—</b> دقيقة
         <span class="src-badge">شبكة OSM محلية (ODbL) · سعة/سرعة افتراض توضيحي</span></div>
+      <div class="impact-detail" id="routeAllocationNote"></div>
     </div>
     <div class="route-cards" id="routeCards"></div>
   </section>
@@ -299,8 +301,9 @@
         <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">٩ مسارات فعلية ضمن ٢كم — RCRC 2024 · التواتر والركاب افتراض</span> <span class="src-badge" id="asmTransit" title="">افتراضات: —</span></div>
         <div class="impact-detail">نقل عام ضمن نطاق الممر: <b class="num">٧٠ محطة حافلات · ٦ محطات مترو</b> <span class="src-badge">لقطة RCRC حقيقية 2026-07-23</span></div>
         <div class="impact-detail">التوقع المعايَر: <b class="num" id="calibratedLine">—</b> <span class="src-badge" id="calibBadge">معايرة من ٠ حالة</span> <span class="src-badge">حالات back-test تركيبية موسومة للعرض</span></div>
-        <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
+        <button id="wzdxExportBtn" type="button" class="wzdx-btn" disabled>⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
+        <div id="apiError" role="alert" style="display:none;color:var(--bad);font-size:13px;font-weight:700;margin-top:10px"></div>
       </section>
 
       <section class="card">
@@ -817,16 +820,21 @@
     }
     state_lastRoutes = res;
 
+    var bestRecommendedIndex = res.alternatives.findIndex(function (alt) {
+      return alt.recommended;
+    });
     res.alternatives.forEach(function (alt, i) {
       var latlngs = alt.path.map(nodeLatLng);
       var color = ROUTE_COLORS[i % ROUTE_COLORS.length];
+      var isBestRecommended = i === bestRecommendedIndex;
       var line = L.polyline(latlngs, {
-        color: color, weight: i === 0 ? 5 : 3.5,
-        opacity: i === 0 ? 0.95 : 0.7, dashArray: i === 0 ? null : '7 6',
+        color: color, weight: isBestRecommended ? 5 : 3.5,
+        opacity: isBestRecommended ? 0.95 : 0.7,
+        dashArray: isBestRecommended ? null : '7 6',
       }).addTo(map);
       line.bindPopup(
         '<b>مسار بديل ' + (i + 1) + '</b><br>'
-        + 'زمن الرحلة: ' + Math.round(alt.travelMin) + ' دقيقة<br>'
+        + 'زمن الرحلة بعد التحويل: ' + Math.round(alt.travelTimeAfterDiversion) + ' دقيقة<br>'
         + 'يضيف ' + Math.round(alt.extraMin) + ' دقيقة مقابل '
         + Math.round(res.viaClosureMin) + ' دقيقة عبر الإغلاق'
       );
@@ -876,23 +884,30 @@
     document.getElementById('rerouteSummary').style.display = '';
     document.getElementById('viaClosureMin').textContent = formatArabicNumber(res.viaClosureMin);
     document.getElementById('baselineMin').textContent = formatArabicNumber(res.baselineMin);
+    document.getElementById('routeAllocationNote').textContent =
+      'حركة محولة: ' + formatArabicNumber(res.divertedVehiclesPerHour)
+      + ' مركبة/ساعة · توزيع توضيحي غير مقاس حسب الزمن النسبي';
 
     var container = document.getElementById('routeCards');
     container.innerHTML = '';
-    var rankLabels = ['الأفضل', 'البديل الثاني', 'البديل الثالث'];
+    var bestRecommendedIndex = res.alternatives.findIndex(function (alt) {
+      return alt.recommended;
+    });
 
     res.alternatives.forEach(function (alt, i) {
       var card = document.createElement('div');
-      card.className = 'route-card' + (i === 0 ? ' best' : '');
+      card.className = 'route-card' + (i === bestRecommendedIndex ? ' best' : '');
 
       var head = document.createElement('div');
       head.className = 'route-head';
       var rank = document.createElement('span');
       rank.className = 'route-rank';
-      rank.textContent = rankLabels[i] || ('البديل ' + (i + 1));
+      rank.textContent = !alt.recommended
+        ? 'بديل غير موصى به بعد التحويل'
+        : (i === bestRecommendedIndex ? 'الأفضل القابل للتنفيذ بعد التحويل' : 'بديل قابل للتنفيذ');
       var time = document.createElement('span');
       time.className = 'route-time num';
-      time.textContent = formatArabicNumber(alt.travelMin) + ' دقيقة';
+      time.textContent = formatArabicNumber(alt.travelTimeAfterDiversion) + ' دقيقة';
       var extra = document.createElement('span');
       var extraMin = Math.round(alt.extraMin);
       extra.className = 'route-extra ' + (extraMin > 0 ? 'up' : 'flat');
@@ -907,7 +922,11 @@
       var meta = document.createElement('div');
       meta.className = 'route-meta';
       var cap = document.createElement('span');
-      cap.innerHTML = 'سعة متبقية على أضيق مقطع: <b>' + formatPercent(alt.residualCapacityPct) + '٪</b>';
+      cap.innerHTML = alt.residualCapacityAfterDiversion >= 0
+        ? 'سعة متبقية بعد التحويل على أضيق مقطع: <b>'
+          + formatArabicNumber(alt.residualCapacityAfterDiversion) + ' مركبة/ساعة</b>'
+        : 'تجاوز السعة بعد التحويل على أضيق مقطع: <b>'
+          + formatArabicNumber(-alt.residualCapacityAfterDiversion) + ' مركبة/ساعة</b>';
       var savedVsStay = Math.round(res.viaClosureMin - alt.travelMin);
       var vsStay = document.createElement('span');
       vsStay.innerHTML = savedVsStay > 0
@@ -1022,14 +1041,54 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     }).then(function (r) {
-      if (!r.ok) throw new Error('api error');
-      return r.json();
+      return r.json().catch(function () {
+        return { error: 'INVALID_SERVER_RESPONSE' };
+      }).then(function (body) {
+        if (!r.ok) {
+          var error = new Error(body.error || 'API_ERROR');
+          error.isApiRejection = true;
+          error.payload = body;
+          throw error;
+        }
+        return body;
+      });
     });
+  }
+
+  function clearApiError() {
+    var el = document.getElementById('apiError');
+    el.style.display = 'none';
+    el.textContent = '';
+  }
+
+  function showApiError(error) {
+    var el = document.getElementById('apiError');
+    var payload = error && error.payload ? error.payload : {};
+    var fieldLabels = {
+      aadt: 'حجم الحركة',
+      lanes: 'عدد المسارات',
+      lanesClosed: 'المسارات المغلقة',
+      startHour: 'وقت البدء',
+      durationHours: 'المدة',
+    };
+    var suffix = '';
+    if (payload.error === 'VALIDATION_ERROR' && payload.fields) {
+      suffix = ': ' + Object.keys(payload.fields).map(function (field) {
+        return fieldLabels[field] || field;
+      }).join('، ');
+    }
+    el.textContent = 'تعذر حساب الأثر لأن الخادم رفض المدخلات' + suffix;
+    el.style.display = 'block';
   }
 
   function computeScore(input) {
     if (state.apiMode) {
-      return apiPost('/api/score', input).catch(function () {
+      return apiPost('/api/score', input).catch(function (error) {
+        if (error.isApiRejection) {
+          showApiError(error);
+          throw error;
+        }
+        setApiBadge(false);
         return AtharEngine.score(input);
       });
     }
@@ -1038,7 +1097,12 @@
 
   function computeOptimize(input) {
     if (state.apiMode) {
-      return apiPost('/api/optimize', input).catch(function () {
+      return apiPost('/api/optimize', input).catch(function (error) {
+        if (error.isApiRejection) {
+          showApiError(error);
+          throw error;
+        }
+        setApiBadge(false);
         return AtharEngine.optimize(input);
       });
     }
@@ -1181,15 +1245,17 @@
   }
 
   function recompute() {
+    clearApiError();
     updateInputLabels();
     stopPlaying();
     var input = currentEngineInput();
-    computeScore(input).then(renderScore);
+    computeScore(input).then(renderScore).catch(function () {});
     // Reset optimize UI on input change since candidates are now stale.
     document.getElementById('optCards').innerHTML = '';
     document.getElementById('backtestRow').style.display = 'none';
     state.lastOptimizeResult = null;
     state.selectedCandidate = null;
+    updateExportAvailability();
 
     state.canonicalHourly = computeCanonicalHourly();
     updateNeighborPermitVisual();
@@ -1218,11 +1284,12 @@
   // Optimize (Step 5)
   // -------------------------------------------------------------------
   document.getElementById('btnOptimize').addEventListener('click', function () {
+    clearApiError();
     var input = currentEngineInput();
     computeOptimize(input).then(function (result) {
       state.lastOptimizeResult = result;
       renderOptimizeCards(result);
-    });
+    }).catch(function () {});
   });
 
   function renderOptimizeCards(result) {
@@ -1242,7 +1309,9 @@
       // Absolute vehicle-hours first (before → after), then the saving. The
       // percentage is secondary because an extreme baseline can make it look
       // implausibly high; the absolute delay is the honest headline number.
-      var beforeVh = state.lastScoreResult ? state.lastScoreResult.delayVehHours : candidate.delayVehHours + candidate.savedVehHours;
+      var beforeVh = state.lastOptimizeResult
+        ? state.lastOptimizeResult.baseline.delayVehHours
+        : candidate.delayVehHours + candidate.savedVehHours;
       saved.textContent =
         formatArabicNumber(beforeVh) + ' ← ' + formatArabicNumber(candidate.delayVehHours) + ' س-م' +
         ' (وفر ' + formatArabicNumber(candidate.savedVehHours) + ' س-م، ' + formatPercent(candidate.savedPct) + '٪)';
@@ -1268,6 +1337,7 @@
 
   function selectCandidate(candidate, container, cardEl) {
     state.selectedCandidate = candidate;
+    updateExportAvailability();
     Array.prototype.forEach.call(container.children, function (el) {
       el.classList.remove('selected');
     });
@@ -1342,8 +1412,61 @@
     requestAnimationFrame(step);
   }
 
-  document.getElementById('wzdxExportBtn').addEventListener('click', function () {
-    var startHour = state.selectedCandidate ? state.selectedCandidate.startHour : 22;
+  function totalScheduleHours(schedule) {
+    return schedule.windows.reduce(function (sum, window) {
+      return sum + window.durationHours;
+    }, 0) + ' ساعة';
+  }
+
+  function formatScheduleStart(schedule) {
+    return String(schedule.windows[0].startHour).padStart(2, '0') + ':00';
+  }
+
+  function formatScheduleWindows(windows) {
+    return windows.map(function (window) {
+      return 'اليوم +' + window.dayOffset + ' عند '
+        + String(window.startHour).padStart(2, '0') + ':00 لمدة '
+        + window.durationHours + ' ساعة';
+    }).join(' · ');
+  }
+
+  function getSelectedSchedule() {
+    var candidate = state.selectedCandidate;
+    if (!candidate || !Array.isArray(candidate.windows) || candidate.windows.length === 0) {
+      return null;
+    }
+    var valid = candidate.windows.every(function (window) {
+      return Number.isInteger(window.dayOffset) && window.dayOffset >= 0
+        && Number.isInteger(window.startHour) && window.startHour >= 0 && window.startHour <= 23
+        && Number.isFinite(window.durationHours) && window.durationHours > 0;
+    });
+    var total = candidate.windows.reduce(function (sum, window) {
+      return sum + window.durationHours;
+    }, 0);
+    return valid && Math.abs(total - state.durationHours) < 1e-9 ? candidate : null;
+  }
+
+  var wzdxExportBtn = document.getElementById('wzdxExportBtn');
+  var issuePlanBtn = document.getElementById('btnIssuePlan');
+
+  function updateExportAvailability() {
+    var schedule = getSelectedSchedule();
+    wzdxExportBtn.disabled = !schedule;
+    issuePlanBtn.disabled = !schedule;
+    var hint = schedule
+      ? 'سيُستخدم الجدول المختار نفسه في التصدير والطباعة'
+      : 'اختر جدولاً صالحاً قبل التصدير أو الطباعة';
+    wzdxExportBtn.title = hint;
+    issuePlanBtn.title = hint;
+  }
+
+  wzdxExportBtn.addEventListener('click', function () {
+    var schedule = getSelectedSchedule();
+    if (!schedule) {
+      updateExportAvailability();
+      return;
+    }
+    var startHour = schedule.windows[0].startHour;
     var startISO = '2026-07-27T' + String(startHour).padStart(2, '0') + ':00:00Z';
     // إحداثيات المقطع المختار فعلاً على الخريطة (Leaflet يخزن [lat,lng]؛
     // WZDx/GeoJSON يتطلب [lon,lat] — لذا نعكس الترتيب).
@@ -1357,7 +1480,7 @@
       lanes: AtharEngine.DEFAULTS.lanes,
       lanesClosed: state.lanesClosed,
       startISO: startISO,
-      durationHours: state.durationHours,
+      windows: schedule.windows,
       coordinates: [[segA[1], segA[0]], [segB[1], segB[0]]],
     });
     var blob = new Blob([JSON.stringify(fc, null, 2)], { type: 'application/geo+json' });
@@ -1412,16 +1535,12 @@
     return set;
   }
 
-  // Windowed candidates (phases=2 over multiple nights) use the engine's fixed
-  // nightly work window; continuous ones run for the full requested duration.
-  // Structured fields first — the Arabic-label regex is only a legacy fallback.
-  function getChosenWindowLen(candidate) {
-    if (candidate.phases === 2 && (candidate.nights === undefined || candidate.nights > 1) &&
-        state.durationHours > AtharEngine.WORK_WINDOW_HOURS) {
-      return AtharEngine.WORK_WINDOW_HOURS;
-    }
-    var match = /نافذة (\d+) س/.exec(candidate.label);
-    return match ? parseInt(match[1], 10) : state.durationHours;
+  function activeHourSetFromWindows(windows) {
+    return windows.reduce(function (set, window) {
+      var active = activeHourSet(window.startHour, window.durationHours);
+      Object.keys(active).forEach(function (hour) { set[hour] = true; });
+      return set;
+    }, {});
   }
 
   var haloLine = null;
@@ -1458,8 +1577,13 @@
     var congestionShare = hourData.delayVehHours / maxDelay;
 
     if (candidate) {
-      var requestedSet = activeHourSet(state.startHour, state.durationHours);
-      var chosenSet = activeHourSet(candidate.startHour, getChosenWindowLen(candidate));
+      var requestedWindows = AtharEngine.buildNightWindows(
+        state.startHour,
+        state.durationHours,
+        AtharEngine.WORK_WINDOW_HOURS
+      );
+      var requestedSet = activeHourSetFromWindows(requestedWindows);
+      var chosenSet = activeHourSetFromWindows(candidate.windows);
       var reqImpact = requestedSet[hour] ? hourData.delayVehHours : 0;
       var chosenImpact = chosenSet[hour] ? hourData.delayVehHours : 0;
 
@@ -1567,17 +1691,23 @@
   // -------------------------------------------------------------------
   // TMP / print (Step 7)
   // -------------------------------------------------------------------
-  document.getElementById('btnIssuePlan').addEventListener('click', function () {
+  issuePlanBtn.addEventListener('click', function () {
+    var schedule = getSelectedSchedule();
+    if (!schedule) {
+      updateExportAvailability();
+      return;
+    }
     document.getElementById('tmpPermitId').textContent = 'WORK-2026-DEMO-' + Math.floor(Math.random() * 900 + 100);
     document.getElementById('tmpLanes').textContent = state.lanesClosed + ' من 4';
-    document.getElementById('tmpStart').textContent = String(state.startHour).padStart(2, '0') + ':00';
-    document.getElementById('tmpDuration').textContent = state.durationHours + ' ساعة';
+    document.getElementById('tmpStart').textContent = formatScheduleStart(schedule);
+    document.getElementById('tmpDuration').textContent = totalScheduleHours(schedule);
 
-    var scheduleText = state.selectedCandidate ? state.selectedCandidate.label : 'الجدول المطلوب (بلا تحسين)';
+    var scheduleText = schedule.label + ' · ' + formatScheduleWindows(schedule.windows);
     document.getElementById('tmpSchedule').textContent = scheduleText;
 
-    var beforeAfterText = state.lastScoreResult
-      ? formatArabicNumber(state.lastScoreResult.delayVehHours) + (state.selectedCandidate ? ' ← ' + formatArabicNumber(state.selectedCandidate.delayVehHours) : '')
+    var beforeAfterText = state.lastOptimizeResult
+      ? formatArabicNumber(state.lastOptimizeResult.baseline.delayVehHours)
+        + ' ← ' + formatArabicNumber(schedule.delayVehHours)
       : '—';
     document.getElementById('tmpBeforeAfter').textContent = beforeAfterText;
 

@@ -118,6 +118,11 @@
     }
 
     var volume = edge.demandShare * aadtScale * hourFraction;
+    return travelTimeForVolume(edge, volume, capacity);
+  }
+
+  function travelTimeForVolume(edge, volume, capacity) {
+    var t0 = (edge.lengthKm / edge.freeFlowKmh) * 60;
     var ratio = volume / (capacity > 0 ? capacity : 1e-9);
     return t0 * (1 + BPR_ALPHA * Math.pow(ratio, BPR_BETA));
   }
@@ -218,6 +223,43 @@
     return worst;
   }
 
+  function routeLoadMetrics(graph, edges, hour, assignedDivertedVehiclesPerHour) {
+    var aadtScale = graph.network.metadata.aadtScale;
+    var hf = hourFractionOf(hour);
+    var freeFlowMinutes = 0;
+    var travelMinutes = 0;
+    var maxBaseVolume = 0;
+    var maxVolumeCapacityRatio = 0;
+    var tightestResidualCapacity = Infinity;
+
+    edges.forEach(function (eid) {
+      var edge = graph.edgeById[eid];
+      var capacity = edge.lanes * edge.capacityPerLane;
+      var baseVolume = edge.demandShare * aadtScale * hf;
+      var loadedVolume = baseVolume + assignedDivertedVehiclesPerHour;
+      var freeFlow = (edge.lengthKm / edge.freeFlowKmh) * 60;
+      var ratio = loadedVolume / (capacity > 0 ? capacity : 1e-9);
+
+      freeFlowMinutes += freeFlow;
+      travelMinutes += travelTimeForVolume(edge, loadedVolume, capacity);
+      if (baseVolume > maxBaseVolume) maxBaseVolume = baseVolume;
+      if (ratio > maxVolumeCapacityRatio) maxVolumeCapacityRatio = ratio;
+      tightestResidualCapacity = Math.min(
+        tightestResidualCapacity,
+        capacity - loadedVolume
+      );
+    });
+
+    return {
+      freeFlowMinutes: freeFlowMinutes,
+      travelMinutes: travelMinutes,
+      baseVolumePerHour: maxBaseVolume,
+      loadedVolumePerHour: maxBaseVolume + assignedDivertedVehiclesPerHour,
+      volumeCapacityRatio: maxVolumeCapacityRatio,
+      residualCapacity: tightestResidualCapacity
+    };
+  }
+
   // Endpoints spanning the closed edge: route from the corridor start node to
   // the corridor end node so alternatives must genuinely bypass the closure.
   function corridorEndpoints(network) {
@@ -255,6 +297,17 @@
     var graph = buildGraph(network);
     var ends = corridorEndpoints(network);
     var closure = { edgeId: closedEdgeId, lanesClosed: lanesClosed };
+    var closedEdge = graph.edgeById[closedEdgeId];
+    var closedDemandPerHour = closedEdge.demandShare
+      * network.metadata.aadtScale
+      * hourFractionOf(hour);
+    // Illustrative allocation rule: the share of demand associated with the
+    // closed lanes is diverted. This is explicit demo logic, not a measured
+    // driver-choice calibration.
+    var divertedVehiclesPerHour = closedDemandPerHour * Math.min(
+      1,
+      Math.max(0, lanesClosed / closedEdge.lanes)
+    );
 
     // Straight-through corridor time with no closure (normal day) and with the
     // closure active (what a driver suffers if they stay on the main road).
@@ -289,7 +342,6 @@
           streets: r.edges.map(function (eid) { return graph.edgeById[eid].name; }),
           travelMin: trueTime,
           extraMin: trueTime - baselineMin,
-          residualCapacityPct: residualCapacityPct(graph, r.edges, hour),
           nearPois: poisNearPath(network, graph, r.path)
         });
       }
@@ -297,11 +349,52 @@
       r.edges.forEach(function (eid) { penalty[eid] = true; });
     }
 
-    alternatives.sort(function (a, b) { return a.travelMin - b.travelMin; });
+    var weightTotal = alternatives.reduce(function (sum, route) {
+      route._allocationWeight = 1 / Math.max(route.travelMin, 1e-9);
+      return sum + route._allocationWeight;
+    }, 0);
+
+    alternatives.forEach(function (route) {
+      var diversionShare = weightTotal > 0
+        ? route._allocationWeight / weightTotal
+        : 0;
+      var assigned = divertedVehiclesPerHour * diversionShare;
+      var before = routeLoadMetrics(graph, route.edges, hour, 0);
+      var after = routeLoadMetrics(graph, route.edges, hour, assigned);
+
+      route.diversionShare = diversionShare;
+      route.assignedDivertedVehiclesPerHour = assigned;
+      route.baseVolumePerHour = before.baseVolumePerHour;
+      route.loadedVolumePerHour = after.loadedVolumePerHour;
+      route.freeFlowMinutes = before.freeFlowMinutes;
+      route.travelTimeBeforeDiversion = before.travelMinutes;
+      route.travelTimeAfterDiversion = after.travelMinutes;
+      route.volumeCapacityRatioBeforeDiversion = before.volumeCapacityRatio;
+      route.volumeCapacityRatioAfterDiversion = after.volumeCapacityRatio;
+      route.residualCapacityBeforeDiversion = before.residualCapacity;
+      route.residualCapacityAfterDiversion = after.residualCapacity;
+      route.residualCapacityPct = Math.max(
+        0,
+        (1 - after.volumeCapacityRatio) * 100
+      );
+      route.recommended = after.volumeCapacityRatio < 1;
+      route.recommendationReason = route.recommended
+        ? 'capacity-available-after-diversion'
+        : 'capacity-exceeded-after-diversion';
+      route.travelMin = after.travelMinutes;
+      route.extraMin = after.travelMinutes - baselineMin;
+      delete route._allocationWeight;
+    });
+
+    alternatives.sort(function (a, b) {
+      return a.travelTimeAfterDiversion - b.travelTimeAfterDiversion;
+    });
 
     return {
       viaClosureMin: viaClosureMin,
       baselineMin: baselineMin,
+      divertedVehiclesPerHour: divertedVehiclesPerHour,
+      allocationAssumption: 'inverse-travel-time illustrative split; not measured behavior',
       alternatives: alternatives
     };
   }

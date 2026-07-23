@@ -103,6 +103,37 @@
   // ---------------------------------------------------------------------
 
   /**
+   * Split requested work into explicit nightly closure windows without
+   * rounding a partial final night up to a full window.
+   * @param {number} startHour integer clock hour, 0..23
+   * @param {number} durationHours positive finite work duration
+   * @param {number} maxNightHours positive finite maximum per night
+   * @returns {Array<{dayOffset:number,startHour:number,durationHours:number}>}
+   */
+  function buildNightWindows(startHour, durationHours, maxNightHours) {
+    if (!Number.isInteger(startHour) || startHour < 0 || startHour > 23) {
+      throw new RangeError('startHour must be an integer between 0 and 23');
+    }
+    if (!Number.isFinite(durationHours) || durationHours <= 0) {
+      throw new RangeError('durationHours must be a positive finite number');
+    }
+    if (!Number.isFinite(maxNightHours) || maxNightHours <= 0 || maxNightHours > 24) {
+      throw new RangeError('maxNightHours must be a positive finite number up to 24');
+    }
+
+    const windows = [];
+    let remaining = durationHours;
+    let dayOffset = 0;
+    while (remaining > 0) {
+      const duration = Math.min(maxNightHours, remaining);
+      windows.push({ dayOffset, startHour, durationHours: duration });
+      remaining -= duration;
+      dayOffset += 1;
+    }
+    return windows;
+  }
+
+  /**
    * Standard BPR (Bureau of Public Roads) volume-delay function.
    * t = t0 * (1 + 0.15 * (v/c)^4)
    * @param {number} freeFlowMin - free-flow travel time (minutes)
@@ -141,8 +172,10 @@
     let delayVehHours = 0;
     const hourly = [];
 
-    for (let i = 0; i < durationHours; i += 1) {
-      const hour = (startHour + i) % 24;
+    for (let elapsed = 0; elapsed < durationHours;) {
+      const hourOffset = Math.floor(elapsed);
+      const segmentDuration = Math.min(1, durationHours - elapsed);
+      const hour = (startHour + hourOffset) % 24;
       const demand = aadt * HOURLY_PROFILE[hour];
 
       const baseT = bprTravelTime(freeFlowMin, demand, fullCapacity);
@@ -153,18 +186,21 @@
           )
         : baseT;
 
-      const hourDelayVehHours = lanesClosed > 0
+      const fullHourDelayVehHours = lanesClosed > 0
         ? (demand * (closedT - baseT)) / 60
         : 0;
+      const hourDelayVehHours = fullHourDelayVehHours * segmentDuration;
 
       delayVehHours += hourDelayVehHours;
       hourly.push({
         hour,
+        durationHours: segmentDuration,
         demand,
         baseT,
         closedT,
         delayVehHours: hourDelayVehHours,
       });
+      elapsed += segmentDuration;
     }
 
     const rawScore = (100 * delayVehHours) / (aadt * SCORE_CALIBRATION);
@@ -190,68 +226,49 @@
    * @returns {{top3: Array, baseline: {delayVehHours:number}}}
    */
   function optimize(input) {
-    const baselineResult = score(input);
     const totalDuration = input.durationHours;
+    const baselineWindows = buildNightWindows(
+      input.startHour,
+      totalDuration,
+      WORK_WINDOW_HOURS
+    );
+    const baselineResult = scoreWindows(input, baselineWindows);
 
     const candidates = [];
+    const scheduleSignatures = new Set();
+
+    function addCandidate(startHour, phases, windows) {
+      const signature = JSON.stringify(windows);
+      if (scheduleSignatures.has(signature)) return;
+      scheduleSignatures.add(signature);
+      candidates.push({
+        startHour,
+        phases,
+        windows,
+        delayVehHours: scoreWindows(input, windows).delayVehHours,
+      });
+    }
 
     CANDIDATE_START_HOURS.forEach((startHour) => {
       CANDIDATE_PHASES.forEach((phases) => {
         if (phases === 1) {
           // Continuous block starting at the candidate's clock hour — the
           // closure runs uninterrupted for the full requested duration.
-          const candidateResult = score({
-            ...input,
+          addCandidate(startHour, phases, [{
+            dayOffset: 0,
             startHour,
             durationHours: totalDuration,
-          });
-
-          candidates.push({
-            startHour,
-            phases,
-            delayVehHours: candidateResult.delayVehHours,
-            nights: 1,
-          });
+          }]);
           return;
         }
 
-        // phases === 2: windowed night-work schedule. The road stays open
-        // during the day; the closure is only active for WORK_WINDOW_HOURS
-        // each night starting at the candidate's clock hour, repeated over
-        // enough nights to cover the requested total durationHours. If the
-        // requested duration already fits inside one window, this collapses
-        // to a single short block (equivalent to phases=1 for that length).
-        if (totalDuration <= WORK_WINDOW_HOURS) {
-          const candidateResult = score({
-            ...input,
-            startHour,
-            durationHours: totalDuration,
-          });
-
-          candidates.push({
-            startHour,
-            phases,
-            delayVehHours: candidateResult.delayVehHours,
-            nights: 1,
-          });
-          return;
-        }
-
-        const nights = Math.ceil(totalDuration / WORK_WINDOW_HOURS);
-        const windowResult = score({
-          ...input,
-          startHour,
-          durationHours: WORK_WINDOW_HOURS,
-        });
-
-        const totalDelay = windowResult.delayVehHours * nights;
-
-        candidates.push({
+        // phases === 2: windowed work schedule. Each actual window is scored
+        // independently, so the open daytime gap is never counted as closure.
+        addCandidate(
           startHour,
           phases,
-          delayVehHours: totalDelay,
-          nights,
-        });
+          buildNightWindows(startHour, totalDuration, WORK_WINDOW_HOURS)
+        );
       });
     });
 
@@ -269,9 +286,10 @@
       const reasons = buildReasons(input, candidate, baselineResult);
 
       return {
-        label: formatLabel(candidate.startHour, candidate.phases, candidate.nights),
+        label: formatLabel(candidate.startHour, candidate.phases, candidate.windows),
         startHour: candidate.startHour,
         phases: candidate.phases,
+        windows: candidate.windows.map((window) => ({ ...window })),
         delayVehHours: candidate.delayVehHours,
         savedVehHours,
         savedPct,
@@ -281,20 +299,33 @@
 
     return {
       top3,
-      baseline: { delayVehHours: baselineResult.delayVehHours },
+      baseline: {
+        delayVehHours: baselineResult.delayVehHours,
+        windows: baselineWindows.map((window) => ({ ...window })),
+      },
     };
   }
 
-  function formatLabel(startHour, phases, nights) {
+  function scoreWindows(input, windows) {
+    return {
+      delayVehHours: windows.reduce((sum, window) => {
+        const result = score({
+          ...input,
+          startHour: window.startHour,
+          durationHours: window.durationHours,
+        });
+        return sum + result.delayVehHours;
+      }, 0),
+    };
+  }
+
+  function formatLabel(startHour, phases, windows) {
     const hourLabel = String(startHour).padStart(2, '0') + ':00';
-    if (phases === 1) {
+    if (phases === 1 || windows.length <= 1) {
       return `كتلة متواصلة تبدأ ${hourLabel}`;
     }
-    const nightCount = nights || 1;
-    if (nightCount <= 1) {
-      return `كتلة متواصلة تبدأ ${hourLabel}`;
-    }
-    return `عمل ليلي على ${nightCount} ليالٍ (نافذة ${WORK_WINDOW_HOURS} س تبدأ ${hourLabel})`;
+    const durations = windows.map((window) => window.durationHours).join(' + ');
+    return `عمل ليلي على ${windows.length} ليالٍ (${durations} س، تبدأ ${hourLabel})`;
   }
 
   function buildReasons(input, candidate, baselineResult) {
@@ -315,7 +346,7 @@
       reasons.push('نافذة خارج ساعات الذروة المعروفة');
     }
 
-    const isWindowed = candidate.phases === 2 && (candidate.nights || 1) > 1;
+    const isWindowed = candidate.phases === 2 && candidate.windows.length > 1;
     if (isWindowed) {
       reasons.push('الطريق مفتوح بالكامل خارج نافذة العمل الليلية');
     } else if (candidate.phases === 2) {
@@ -483,8 +514,14 @@
    * @returns {object} GeoJSON FeatureCollection
    */
   function wzdx(input) {
-    const start = new Date(input.startISO);
-    const end = new Date(start.getTime() + input.durationHours * 3600 * 1000);
+    const baseStart = new Date(input.startISO);
+    const windows = Array.isArray(input.windows) && input.windows.length > 0
+      ? input.windows
+      : [{
+          dayOffset: 0,
+          startHour: baseStart.getUTCHours(),
+          durationHours: input.durationHours,
+        }];
 
     let vehicleImpact;
     if (input.lanesClosed <= 0) vehicleImpact = 'all-lanes-open';
@@ -493,10 +530,14 @@
 
     return {
       type: 'FeatureCollection',
-      features: [
-        {
+      features: windows.map((window, index) => {
+        const start = new Date(baseStart.getTime());
+        start.setUTCDate(baseStart.getUTCDate() + window.dayOffset);
+        start.setUTCHours(window.startHour, 0, 0, 0);
+        const end = new Date(start.getTime() + window.durationHours * 3600 * 1000);
+        return {
           type: 'Feature',
-          id: input.id,
+          id: windows.length === 1 ? input.id : `${input.id}-window-${index + 1}`,
           geometry: {
             type: 'LineString',
             coordinates: input.coordinates,
@@ -510,13 +551,15 @@
             },
             start_date: start.toISOString(),
             end_date: end.toISOString(),
+            dayOffset: window.dayOffset,
+            durationHours: window.durationHours,
             vehicle_impact: vehicleImpact,
             location_method: 'other',
             start_date_accuracy: 'estimated',
             end_date_accuracy: 'estimated',
           },
-        },
-      ],
+        };
+      }),
     };
   }
 
@@ -603,7 +646,10 @@
    * @returns {{beforeVehHours:number, afterVehHours:number}}
    */
   function backTest(input, chosen) {
-    const before = score(input);
+    const before = scoreWindows(
+      input,
+      buildNightWindows(input.startHour, input.durationHours, WORK_WINDOW_HOURS)
+    );
     return {
       beforeVehHours: before.delayVehHours,
       afterVehHours: chosen.delayVehHours,
@@ -614,6 +660,7 @@
     HOURLY_PROFILE,
     DEFAULTS,
     WORK_WINDOW_HOURS,
+    buildNightWindows,
     // ثوابت المعايرة غير المصدرية — مُصدَّرة كي يعرضها جدول الشفافية في الواجهة
     CALIBRATION: {
       SCORE_CALIBRATION,

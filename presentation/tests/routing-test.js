@@ -98,6 +98,46 @@ test('alternativeRoutes returns comparative travel times (viaClosure vs alt)', (
   assert.ok(typeof best.residualCapacityPct === 'number');
 });
 
+test('alternativeRoutes loads diverted demand onto every route before reporting capacity', () => {
+  const res = AtharRouting.alternativeRoutes(network, 'kf_3', 8, { lanesClosed: 2 });
+  assert.ok(res.divertedVehiclesPerHour > 0);
+  res.alternatives.forEach((route) => {
+    assert.ok(route.loadedVolumePerHour >= route.baseVolumePerHour);
+    assert.ok(
+      route.residualCapacityAfterDiversion
+      <= route.residualCapacityBeforeDiversion
+    );
+    assert.ok(route.travelTimeAfterDiversion >= route.freeFlowMinutes);
+    assert.ok(route.volumeCapacityRatioAfterDiversion >= route.volumeCapacityRatioBeforeDiversion);
+    assert.strictEqual(route.travelMin, route.travelTimeAfterDiversion);
+  });
+});
+
+test('diverted demand is conserved across route allocation shares', () => {
+  const res = AtharRouting.alternativeRoutes(network, 'kf_3', 8, { lanesClosed: 2 });
+  const assigned = res.alternatives.reduce(
+    (sum, route) => sum + route.assignedDivertedVehiclesPerHour,
+    0
+  );
+  const shareTotal = res.alternatives.reduce(
+    (sum, route) => sum + route.diversionShare,
+    0
+  );
+  assert.ok(Math.abs(assigned - res.divertedVehiclesPerHour) < 1e-6);
+  assert.ok(Math.abs(shareTotal - 1) < 1e-9);
+});
+
+test('route that overloads only after diversion is marked not recommended', () => {
+  const res = AtharRouting.alternativeRoutes(network, 'kf_3', 8, { lanesClosed: 2 });
+  const overloaded = res.alternatives.find((route) =>
+    route.volumeCapacityRatioBeforeDiversion < 1
+    && route.volumeCapacityRatioAfterDiversion >= 1
+  );
+  assert.ok(overloaded, 'expected a route to cross capacity after diversion');
+  assert.strictEqual(overloaded.recommended, false);
+  assert.strictEqual(overloaded.recommendationReason, 'capacity-exceeded-after-diversion');
+});
+
 test('alternative route geometry changes when a different edge is closed', () => {
   const a = AtharRouting.alternativeRoutes(network, 'kf_1', 8, { lanesClosed: 2 });
   const b = AtharRouting.alternativeRoutes(network, 'kf_5', 8, { lanesClosed: 2 });

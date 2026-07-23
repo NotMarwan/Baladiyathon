@@ -27,6 +27,13 @@ function test(name, fn) {
   console.log(`  ok - ${name}`);
 }
 
+function totalWindowHours(candidate) {
+  return candidate.windows.reduce(
+    (sum, window) => sum + window.durationHours,
+    0
+  );
+}
+
 // ---------------------------------------------------------------------------
 // HOURLY_PROFILE / DEFAULTS basic shape checks
 // ---------------------------------------------------------------------------
@@ -266,6 +273,105 @@ test('zero lanesClosed => zero delay across multi-hour, multi-day closures', () 
 // optimize()
 // ---------------------------------------------------------------------------
 
+test('buildNightWindows preserves exact requested hours across boundary cases', () => {
+  for (const durationHours of [1, 8, 9, 10, 16, 17, 10.5]) {
+    const windows = AtharEngine.buildNightWindows(22, durationHours, 8);
+    assert.ok(windows.length >= 1);
+    assert.ok(windows.every((window) => window.durationHours > 0 && window.durationHours <= 8));
+    assert.ok(windows.every((window) => window.startHour === 22));
+    assert.deepStrictEqual(
+      windows.map((window) => window.dayOffset),
+      windows.map((_, index) => index)
+    );
+    assert.ok(
+      Math.abs(windows.reduce((sum, window) => sum + window.durationHours, 0) - durationHours) < 1e-9,
+      `window total did not equal ${durationHours}`
+    );
+  }
+});
+
+test('buildNightWindows rejects invalid hours before entering its loop', () => {
+  assert.throws(() => AtharEngine.buildNightWindows(24, 8, 8), /startHour/);
+  assert.throws(() => AtharEngine.buildNightWindows(22, 0, 8), /durationHours/);
+  assert.throws(() => AtharEngine.buildNightWindows(22, Infinity, 8), /durationHours/);
+  assert.throws(() => AtharEngine.buildNightWindows(22, 8, 0), /maxNightHours/);
+});
+
+test('10-hour night schedule uses one full window and one 2-hour window', () => {
+  const result = AtharEngine.optimize({
+    aadt: 85000,
+    lanes: 4,
+    lanesClosed: 1,
+    capacityPerLane: 1800,
+    freeFlowMin: 6,
+    startHour: 22,
+    durationHours: 10,
+  });
+  const night = result.top3.find((item) =>
+    Array.isArray(item.windows)
+    && item.windows.length === 2
+  );
+  assert.ok(night, 'expected a phased night candidate');
+  assert.deepStrictEqual(
+    night.windows.map((item) => item.durationHours),
+    [8, 2]
+  );
+  assert.strictEqual(totalWindowHours(night), 10);
+});
+
+test('baseline and every candidate represent the same requested work hours', () => {
+  const result = AtharEngine.optimize({
+    aadt: 85000,
+    lanes: 4,
+    lanesClosed: 2,
+    capacityPerLane: 1800,
+    freeFlowMin: 6,
+    startHour: 8,
+    durationHours: 17,
+  });
+  assert.strictEqual(totalWindowHours(result.baseline), 17);
+  result.top3.forEach((candidate) => {
+    assert.strictEqual(totalWindowHours(candidate), 17);
+  });
+});
+
+test('phased delay sums active windows only and excludes daytime gaps', () => {
+  const input = {
+    aadt: 85000,
+    lanes: 4,
+    lanesClosed: 2,
+    capacityPerLane: 1800,
+    freeFlowMin: 6,
+    startHour: 8,
+    durationHours: 10,
+  };
+  const result = AtharEngine.optimize(input);
+  const phased = result.top3.find((candidate) => candidate.windows.length === 2);
+  assert.ok(phased, 'expected a phased candidate');
+  const expected = phased.windows.reduce((sum, window) => {
+    return sum + AtharEngine.score({
+      ...input,
+      startHour: window.startHour,
+      durationHours: window.durationHours,
+    }).delayVehHours;
+  }, 0);
+  assert.ok(Math.abs(phased.delayVehHours - expected) < 1e-9);
+});
+
+test('top alternatives have distinct window schedules', () => {
+  const result = AtharEngine.optimize({
+    aadt: 85000,
+    lanes: 4,
+    lanesClosed: 2,
+    capacityPerLane: 1800,
+    freeFlowMin: 6,
+    startHour: 8,
+    durationHours: 6,
+  });
+  const signatures = result.top3.map((candidate) => JSON.stringify(candidate.windows));
+  assert.strictEqual(new Set(signatures).size, result.top3.length);
+});
+
 test('optimize().top3[0].delayVehHours <= baseline.delayVehHours', () => {
   const input = {
     aadt: 85000,
@@ -394,7 +500,7 @@ test('optimize() durationHours=6 (< work window) still returns 3 valid candidate
   });
 });
 
-test('optimize() top3 candidate return shape keys are unchanged', () => {
+test('optimize() candidate and baseline return windows as the schedule contract', () => {
   const input = {
     aadt: 85000,
     lanes: 4,
@@ -406,11 +512,11 @@ test('optimize() top3 candidate return shape keys are unchanged', () => {
     durationHours: 48,
   };
   const result = AtharEngine.optimize(input);
-  const expectedKeys = ['label', 'startHour', 'phases', 'delayVehHours', 'savedVehHours', 'savedPct', 'reasons'].sort();
+  const expectedKeys = ['label', 'startHour', 'phases', 'windows', 'delayVehHours', 'savedVehHours', 'savedPct', 'reasons'].sort();
   result.top3.forEach((c) => {
     assert.deepStrictEqual(Object.keys(c).sort(), expectedKeys);
   });
-  assert.deepStrictEqual(Object.keys(result.baseline).sort(), ['delayVehHours']);
+  assert.deepStrictEqual(Object.keys(result.baseline).sort(), ['delayVehHours', 'windows']);
   assert.deepStrictEqual(Object.keys(result).sort(), ['baseline', 'top3'].sort());
 });
 
@@ -751,6 +857,45 @@ test('wzdx vehicle_impact: all lanes closed => all-lanes-closed; zero => all-lan
   assert.strictEqual(closed.features[0].properties.vehicle_impact, 'all-lanes-closed');
   const open = AtharEngine.wzdx({ ...base, lanesClosed: 0 });
   assert.strictEqual(open.features[0].properties.vehicle_impact, 'all-lanes-open');
+});
+
+test('wzdx emits one closure feature per selected schedule window', () => {
+  const windows = [
+    { dayOffset: 0, startHour: 22, durationHours: 8 },
+    { dayOffset: 1, startHour: 22, durationHours: 2 },
+  ];
+  const fc = AtharEngine.wzdx({
+    id: 'athar-demo-windowed',
+    roadName: 'طريق الملك فهد',
+    direction: 'northbound',
+    lanes: 4,
+    lanesClosed: 2,
+    startISO: '2026-07-27T22:00:00Z',
+    windows,
+    coordinates: [[46.675, 24.700], [46.680, 24.735]],
+  });
+  assert.strictEqual(fc.features.length, windows.length);
+  assert.deepStrictEqual(
+    fc.features.map((feature) => feature.properties.dayOffset),
+    [0, 1]
+  );
+  assert.deepStrictEqual(
+    fc.features.map((feature) => feature.properties.durationHours),
+    [8, 2]
+  );
+  assert.deepStrictEqual(
+    fc.features.map((feature) => feature.properties.start_date),
+    ['2026-07-27T22:00:00.000Z', '2026-07-28T22:00:00.000Z']
+  );
+  assert.deepStrictEqual(
+    fc.features.map((feature) => feature.properties.end_date),
+    ['2026-07-28T06:00:00.000Z', '2026-07-29T00:00:00.000Z']
+  );
+  const exportedHours = fc.features.reduce(
+    (sum, feature) => sum + feature.properties.durationHours,
+    0
+  );
+  assert.strictEqual(exportedHours, 10);
 });
 
 // ---------------------------------------------------------------------------
