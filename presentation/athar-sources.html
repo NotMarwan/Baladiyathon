@@ -3,165 +3,202 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>أثر — سجل الأدلة</title>
+  <title>أثر — سجل الأدلة المباشرة</title>
   <style>
-    :root{--ink:#18231f;--muted:#63706a;--paper:#f5f1e8;--card:#fffdf7;--green:#176b50;--line:#d9d4c7;--amber:#a56618}
+    :root{
+      --asphalt:#102535;
+      --blue:#1f6b8f;
+      --paper:#f3f0e8;
+      --card:#fffdf8;
+      --ink:#17242c;
+      --muted:#617079;
+      --line:#d7d3c8;
+      --amber:#c98524;
+      --mint:#d9eee2;
+    }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Tahoma","Arial",sans-serif;line-height:1.7}
-    main{width:min(1120px,92vw);margin:auto;padding:48px 0 80px}
-    header{display:grid;gap:14px;margin-bottom:28px}
-    h1{font-size:clamp(38px,6vw,72px);line-height:1.05;margin:0}
-    h2{font-size:24px;margin:0 0 8px}
+    html{background:var(--paper)}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+      line-height:1.75;
+    }
+    main{width:min(1120px,92vw);margin:auto;padding:52px 0 80px}
+    header{display:grid;grid-template-columns:1.3fr .7fr;gap:34px;align-items:end;margin-bottom:30px}
+    .kicker{color:var(--blue);font-weight:800;letter-spacing:.03em}
+    h1{font-size:clamp(38px,6vw,72px);line-height:1.08;margin:8px 0 14px;color:var(--asphalt)}
+    .lead{font-size:18px;max-width:720px;color:var(--muted);margin:0}
+    .stamp{
+      border:1px solid var(--line);
+      background:var(--card);
+      padding:18px;
+      border-radius:18px;
+    }
+    .stamp b{display:block;color:var(--asphalt);font-size:18px}
+    .stamp span{display:block;color:var(--muted);font-size:14px;margin-top:5px}
+    .toolbar{position:sticky;top:0;z-index:4;padding:14px 0;background:linear-gradient(var(--paper) 78%,transparent)}
+    input{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      padding:14px 16px;
+      color:var(--ink);
+      font:inherit;
+    }
+    .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 22px;color:var(--muted);font-size:14px}
+    .legend span,.type{
+      display:inline-flex;
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 10px;
+      background:var(--card);
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+    article{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      scroll-margin-top:96px;
+      box-shadow:0 12px 34px rgba(16,37,53,.05);
+    }
+    article:target{outline:4px solid var(--mint)}
+    .row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .id{color:var(--blue);font-weight:900;font-family:ui-monospace,Consolas,monospace;direction:ltr}
+    .type{font-size:12px;color:var(--muted)}
+    h2{font-size:21px;line-height:1.35;margin:14px 0 8px;color:var(--asphalt)}
+    .value{font-size:30px;font-weight:900;color:var(--amber);direction:ltr;text-align:right;margin:8px 0}
     p{margin:0}
-    .lead{font-size:19px;max-width:850px;color:var(--muted)}
-    .toolbar{position:sticky;top:0;z-index:4;padding:14px 0;background:linear-gradient(var(--paper) 75%,transparent)}
-    input{width:100%;border:1px solid var(--line);border-radius:14px;background:white;padding:14px 16px;font:inherit}
-    .legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-    article{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;scroll-margin-top:88px}
-    article:target{outline:4px solid #d6eadf}
-    .id{color:var(--green);font-weight:800;letter-spacing:.04em}
-    .value{font-size:30px;font-weight:900;color:var(--green);margin:8px 0}
-    .meta,.limit{font-size:14px;color:var(--muted)}
-    .limit{border-right:3px solid var(--amber);padding-right:10px;margin-top:12px}
-    a{color:var(--green);font-weight:700;overflow-wrap:anywhere}
+    .meta{margin-top:10px;color:var(--muted);font-size:13px}
+    .supports,.limit{font-size:14px;margin-top:12px;padding:10px 12px;border-radius:10px}
+    .supports{background:var(--mint);color:#24533d}
+    .limit{background:#f7ead8;color:#704a17}
+    a{display:inline-block;margin-top:14px;color:var(--blue);font-weight:800;overflow-wrap:anywhere}
     .empty{display:none;padding:30px;text-align:center;color:var(--muted)}
-    footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+    footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+    @media(max-width:720px){header{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 <main>
   <header>
-    <div class="id">أثر · سجل الأدلة الحاكم للعرض</div>
-    <h1>كل رقم له مصدر وحدّ استخدام</h1>
-    <p class="lead">هذه الصفحة لا تدّعي نتائج للنموذج الأولي. إنها تربط أدلة السياق والمنهج والمنافسة بحدودها، وتفصل بوضوح بين ما هو منفّذ وما هو مقترح للتجربة أو خارطة الطريق.</p>
-    <div class="legend"><span>تاريخ الوصول: 23 يوليو 2026</span><span>·</span><span>المرجع الكامل: سجل المصادر المحلي</span></div>
+    <div>
+      <div class="kicker">سجل الأدلة الحاكم للعرض</div>
+      <h1>كل رقم يفتح دليله نفسه</h1>
+      <p class="lead">يسجل هذا الملحق الجهة والعنوان والتاريخ والرابط المباشر وما يثبته المصدر وما لا يثبته. لا توجد هنا نتائج ميدانية منسوبة إلى النموذج.</p>
+    </div>
+    <div class="stamp">
+      <b>تاريخ الوصول الموحد</b>
+      <span>2026-07-23</span>
+      <span>المصادر الخارجية أدناه أولية ورسمية.</span>
+    </div>
   </header>
-  <div class="toolbar"><input id="search" type="search" placeholder="ابحث بالمعرّف أو الجهة أو الادعاء" aria-label="بحث في سجل الأدلة"></div>
+
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="ابحث بالمعرف أو الجهة أو الادعاء" aria-label="بحث في سجل الأدلة">
+  </div>
+  <div class="legend">
+    <span>مصدر أولي: الجهة الناشرة الأصلية</span>
+    <span>مصدر محلي: بروتوكول أو معادلة داخل المشروع</span>
+  </div>
+
   <section class="grid" id="sources">
-    <article id="src-001" data-search="كود الطرق السعودي الدرجات الثلاث">
-      <div class="id">src-001</div><h2>كود الطرق السعودي: درجات التحليل</h2>
-      <p>يوفّر الكود مرجعاً لثلاث درجات من فحص الحركة. يستعير «أثر» منطق التدرّج، ولا يقدمه كحدود ملزمة لتصاريح الحفر.</p>
-      <p class="limit">حد الاستخدام: الحدود الأصلية تخص دراسات حركة التطوير، وتكييفها لأعمال الطرق يحتاج اعتماد الجهة.</p>
-      <p class="meta">هيئة الطرق · 2026</p>
-      <a href="https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/203%20EN.pdf">افتح المصدر الرسمي</a>
+    <article id="src-008" data-type="primary">
+      <div class="row"><div class="id">src-008</div><div class="type">مصدر أولي رسمي</div></div>
+      <h2>الخريطة التفاعلية في منصة الحفريات</h2>
+      <p>توضح منصة بلدي أن الخريطة تعرض مسارات الحفريات المصرح بها وتتيح ترشيحها وعرض تفاصيلها الفنية.</p>
+      <p class="meta">منصة بلدي · آخر تحديث 2025-03-20 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: وجود خريطة رسمية للحفريات المصرح بها وخصائص ترشيح.</p>
+      <p class="limit">لا يدعم: وجود تنبؤ مروري قبل الترخيص أو ترتيب كمي للبدائل.</p>
+      <a href="https://balady.gov.sa/ar/node/17896">افتح الصفحة الرسمية المباشرة</a>
     </article>
-    <article id="src-004" data-search="انبعاثات كود الطرق السعودي">
-      <div class="id">src-004</div><h2>منهج الانبعاثات</h2>
-      <p>يربط الكود عوامل الانبعاث بنوع المركبة والحجم، لذلك يعرض «أثر» الانبعاثات كقياس فيزيائي أولاً.</p>
-      <p class="limit">حد الاستخدام: القيم النقدية القديمة لا تستخدم قبل تحديث سنة الأساس.</p>
-      <p class="meta">هيئة الطرق · 2026</p>
-      <a href="https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/203%20EN.pdf">افتح المصدر الرسمي</a>
+
+    <article id="src-031" data-type="primary">
+      <div class="row"><div class="id">src-031</div><div class="type">مصدر أولي رسمي</div></div>
+      <h2>حجم أعمال الطرق المسجلة في إنجلترا</h2>
+      <div class="value">2.2 مليون</div>
+      <p>تذكر إرشادات وزارة النقل البريطانية أن هذا عدد أعمال الشوارع والطرق المنفذة بين أبريل 2023 ومارس 2024 وفق بيانات النظام الوطني.</p>
+      <p class="meta">وزارة النقل البريطانية · تحديث 2025-12-17 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: حجم تشغيل رقمي رسمي على نطاق واسع خلال الفترة المحددة.</p>
+      <p class="limit">لا يدعم: حجماً سعودياً أو نتيجة أثر أو وفراً حققه النموذج.</p>
+      <a href="https://www.gov.uk/government/publications/street-works-lane-rental/lane-rental-schemes-guidance-for-english-highway-authorities">افتح الصفحة الرسمية التي تذكر الرقم</a>
     </article>
-    <article id="src-008" data-search="بلدي الخريطة الحفريات التنسيق">
-      <div class="id">src-008</div><h2>قدرات بلدي الحالية</h2>
-      <p>تعرض بلدي مسارات الحفريات المصرح بها وتدعم التنسيق المستقبلي والمتعدد؛ «أثر» طبقة قرار تكملها ولا تستبدلها.</p>
-      <p class="limit">حد الاستخدام: الصفحات العامة لا تثبت تنبؤاً مرورياً قبل الترخيص أو ترتيباً كمياً للبدائل.</p>
-      <p class="meta">بلدي · وصول 2026</p>
-      <a href="https://balady.gov.sa/ar/faq/%D9%85%D8%A7-%D9%87%D9%8A-%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9%D8%9F">افتح المصدر الرسمي</a>
+
+    <article id="src-041" data-type="primary">
+      <div class="row"><div class="id">src-041</div><div class="type">مصدر أولي رقابي</div></div>
+      <h2>نطاق التوفير عند تنسيق تمديد القنوات</h2>
+      <div class="value">25–33%</div>
+      <p>ينقل تقرير الجهة الرقابية الأمريكية تقديرات لمسؤولين وتقييم هندسي عن تنسيق تمديد القنوات والألياف مع مشروع طريق أو مرافق في المناطق الأعلى كلفة.</p>
+      <p class="meta">مكتب المساءلة الحكومية الأمريكي · نشر 2012-06-27 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: هذا النطاق المحدد لتنسيق القنوات والألياف ضمن سياق التقرير.</p>
+      <p class="limit">لا يدعم: نسبة عامة لكل حفريات المدن أو وفراً سعودياً أو نتيجة من النموذج.</p>
+      <a href="https://www.gao.gov/assets/gao-12-687r.pdf">افتح التقرير الرسمي المباشر</a>
     </article>
-    <article id="src-009" data-search="بلدي البيانات المفتوحة واجهة">
-      <div class="id">src-009</div><h2>مسار الحصول على البيانات</h2>
-      <div class="value">5 أيام عمل</div>
-      <p>تعلن بلدي واجهة بيانات مفتوحة ومسار طلب بيانات بزمن استجابة معلن.</p>
-      <p class="limit">حد الاستخدام: الواجهة العامة المختبرة لا تنشر سلسلة سنوية لتصاريح الحفر.</p>
-      <p class="meta">وزارة البلديات والإسكان · وصول 2026</p>
-      <a href="https://balady.gov.sa/ar/open-data">افتح المصدر الرسمي</a>
+
+    <article id="src-042" data-type="primary">
+      <div class="row"><div class="id">src-042</div><div class="type">مصدر أولي رسمي</div></div>
+      <h2>كود الطرق السعودي لمناطق العمل</h2>
+      <p>يفرض الكود خطة إدارة مرور خاصة بكل موقع، ويربط الحماية بالسرعة والحجم والمدة والمخاطر، وينبه إلى تعارض العمل مع تدفقات الذروة.</p>
+      <p class="meta">الهيئة العامة للطرق · النسخة المنشورة 2026 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: الحاجة إلى تقييم خاص بالموقع وقيود سلامة وإدارة حركة في مناطق العمل.</p>
+      <p class="limit">لا يدعم: دقة محرك أثر أو عتبات النجاح المقترحة للتجربة.</p>
+      <a href="https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/305%20EN.pdf">افتح الملف الرسمي المباشر</a>
     </article>
-    <article id="src-015" data-search="الرياض 67 دقيقة التنقل">
-      <div class="id">src-015</div><h2>زمن التنقل في الرياض</h2>
-      <div class="value">67 دقيقة</div>
-      <p>متوسط رحلة الذهاب والعودة اليومية في الرياض خلال 2024.</p>
-      <p class="limit">حد الاستخدام: سياق حضري عام؛ لا ينسب إلى الحفريات ولا يمثل نتيجة لـ«أثر».</p>
-      <p class="meta">الهيئة العامة للإحصاء · تقرير 2025</p>
-      <a href="https://www.stats.gov.sa/documents/20117/2435245/GASTAT_LISC%2Breport_2025_EN.pdf/80b46893-12e0-2b26-2a54-70a1553169c1">افتح المصدر الرسمي</a>
+
+    <article id="src-043" data-type="primary">
+      <div class="row"><div class="id">src-043</div><div class="type">مصدر أولي رسمي</div></div>
+      <h2>محطات مترو الرياض</h2>
+      <p>تنشر بوابة البيانات المفتوحة أسماء المحطات ومواقعها وخطوطها ونوعها، مع إحداثيات في النسخة القابلة للتنزيل.</p>
+      <p class="meta">الهيئة الملكية لمدينة الرياض · تحديث 2026-01-26 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: استخدام طبقة رسمية لمواقع المترو في فحص الوصول والتأثير.</p>
+      <p class="limit">لا يدعم: الطلب الحي أو الإشغال أو أثر حفرية بعينها.</p>
+      <a href="https://opendata.rcrc.gov.sa/explore/dataset/metro-stations-in-riyadh-by-metro-line-and-station-type-2024/custom/?flg=en-gb">افتح مجموعة البيانات الرسمية</a>
     </article>
-    <article id="src-016" data-search="الرياض الحافلات 34.7 مليون">
-      <div class="id">src-016</div><h2>ركاب حافلات الرياض</h2>
-      <div class="value">+34.7 مليون</div>
-      <p>رحلات ركاب الحافلات الحضرية في الرياض خلال 2024.</p>
-      <p class="limit">حد الاستخدام: إجمالي سنوي؛ لا يحدد المتأثرين بحفرية معينة.</p>
-      <p class="meta">الهيئة العامة للإحصاء · تقرير 2025</p>
-      <a href="https://www.stats.gov.sa/documents/20117/2435245/GASTAT_LISC%2Breport_2025_EN.pdf/80b46893-12e0-2b26-2a54-70a1553169c1">افتح المصدر الرسمي</a>
+
+    <article id="src-044" data-type="primary">
+      <div class="row"><div class="id">src-044</div><div class="type">مصدر أولي رسمي</div></div>
+      <h2>محطات حافلات الرياض</h2>
+      <p>تنشر البوابة أسماء محطات الحافلات ومواقعها ومساراتها واتجاهاتها ونوع المأوى ضمن بيانات الشبكة المخططة.</p>
+      <p class="meta">الهيئة الملكية لمدينة الرياض · تحديث 2025-05-21 · وصول 2026-07-23</p>
+      <p class="supports">يدعم: استخدام طبقة رسمية للمحطات والمسارات في فحص النقل العام.</p>
+      <p class="limit">لا يدعم: مواعيد حية أو أعداد ركاب أو مخالفة نقل عام مقاسة.</p>
+      <a href="https://opendata.rcrc.gov.sa/explore/dataset/bus-stops-in-riyadh-by-bus-route-direction-and-shelter-type-2024/custom/?flg=en-gb">افتح مجموعة البيانات الرسمية</a>
     </article>
-    <article id="src-024" data-search="one.network المنافس خريطة ملاحة تنسيق">
-      <div class="id">src-024</div><h2>المعيار العالمي المباشر</h2>
-      <p>يجمع النظام التصاريح والتنسيق والخريطة العامة وتبادل بيانات مناطق العمل والتكامل مع تطبيقات الملاحة.</p>
-      <p class="limit">حد الاستخدام: الدليل العام لا يثبت اقتصاد وقت وفق الكود السعودي أو ترتيب مواعيد مفسراً.</p>
-      <p class="meta">Causeway one.network · وصول 2026</p>
-      <a href="https://us.one.network/product/traffic-management/">افتح مصدر المنتج</a>
-    </article>
-    <article id="src-025" data-search="Vissim محاكاة متخصصة">
-      <div class="id">src-025</div><h2>محاكاة متخصصة للحالات العالية</h2>
-      <p>يوفر برنامج المحاكاة المجهرية اختبار سيناريوهات الازدحام والانبعاثات وأداء الشبكة.</p>
-      <p class="limit">حد الاستخدام: أداة خبراء للتكامل المستقبلي، وليست قدرة حالية في النموذج الأولي.</p>
-      <p class="meta">PTV Group · وصول 2026</p>
-      <a href="https://www.ptvgroup.com/en-us/products/ptv-vissim">افتح مصدر المنتج</a>
-    </article>
-    <article id="src-026" data-search="Aimsun محاكاة تنبؤ">
-      <div class="id">src-026</div><h2>سقف التنبؤ المتخصص</h2>
-      <div class="value">أقل من 5 دقائق</div>
-      <p>يعلن المنتج تنبؤاً حياً واختبار إجراءات إدارة الحركة خلال أقل من خمس دقائق.</p>
-      <p class="limit">حد الاستخدام: معيار مستقبلي؛ لا يمثل قدرة حالية في «أثر».</p>
-      <p class="meta">Aimsun · وصول 2026</p>
-      <a href="https://www.aimsun.com/aimsun-live/">افتح مصدر المنتج</a>
-    </article>
-    <article id="src-029" data-search="سنغافورة شهرين إخطار مسبق">
-      <div class="id">src-029</div><h2>تنسيق سنغافورة المبكر</h2>
-      <div class="value">شهران مسبقاً</div>
-      <p>تتطلب القاعدة لبعض الطرق المحددة جداول مستقبلية قبل الموافقة على التصريح.</p>
-      <p class="limit">حد الاستخدام: القاعدة خاصة بسنغافورة وتدخل حيز التنفيذ بعد تاريخ البحث.</p>
-      <p class="meta">هيئة النقل البري في سنغافورة · تحديث 2026</p>
-      <a href="https://prompt.lta.gov.sg/WebUIPWAS/">افتح المصدر الرسمي</a>
-    </article>
-    <article id="src-030" data-search="سنغافورة 200 300 أعمال طرق يومياً ذكاء اصطناعي">
-      <div class="id">src-030</div><h2>أقوى منافس مباشر</h2>
-      <div class="value">200–300 عمل يومياً</div>
-      <p>تراجع سنغافورة هذا الحجم من أعمال الطرق وتستخدم الذكاء الاصطناعي لتوليد خطط التحكم وفحص الوثائق.</p>
-      <p class="limit">حد الاستخدام: سابقة منافسة قوية؛ تميّز «أثر» يجب أن يكون في الأثر الشبكي والاقتصاد والمعايرة.</p>
-      <p class="meta">هيئة النقل البري في سنغافورة · 2025</p>
-      <a href="https://www.lta.gov.sg/content/dam/ltagov/industry_innovations/Innovations/land_transport_innovation_portal/Enhancement%20of%20Roadworks%20Application%20Process%20using%20Artificial%20Intelligence.pdf">افتح المصدر الرسمي</a>
-    </article>
-    <article id="src-031" data-search="Street Manager أكثر من 2 مليون أعمال سنوياً">
-      <div class="id">src-031</div><h2>التنسيق الوطني الرقمي</h2>
-      <div class="value">+2 مليون عمل سنوياً</div>
-      <p>ينسق النظام الإنجليزي التصاريح والتقييم والتفتيش وإعادة الطريق وينشر البيانات عبر واجهة.</p>
-      <p class="limit">حد الاستخدام: يثبت قابلية التنسيق الرقمي على نطاق واسع، لا أثر «أثر» ولا حجم التصاريح السعودي.</p>
-      <p class="meta">وزارة النقل البريطانية · صفحة حالية في 2026</p>
-      <a href="https://www.gov.uk/guidance/plan-and-manage-roadworks">افتح المصدر الرسمي</a>
-    </article>
-    <article id="src-032" data-search="نيويورك تنسيق الحفريات التصاريح">
-      <div class="id">src-032</div><h2>التنسيق المركزي في نيويورك</h2>
-      <p>تخضع تصاريح مختارة لمراجعة مكتب تنسيق وتخفيف أعمال البناء قبل الإصدار.</p>
-      <p class="limit">حد الاستخدام: يثبت الحوكمة والتنسيق، لا التحسين التنبؤي الكمي.</p>
-      <p class="meta">إدارة النقل في نيويورك · وصول 2026</p>
-      <a href="https://www.nyc.gov/html/dot/html/infrastructure/permits_gencond.shtml">افتح المصدر الرسمي</a>
-    </article>
-    <article id="src-040" data-search="الانبعاثات مواقع العمل بحث محكم">
-      <div class="id">src-040</div><h2>انبعاثات مناطق العمل</h2>
-      <p>يطور البحث إطار محاكاة لتقدير الوقود والأثر البيئي الناتج عن إغلاقات مناطق العمل.</p>
-      <p class="limit">حد الاستخدام: السيناريوات ليست قياساً سعودياً؛ يلزم أسطول ومدخلات محلية.</p>
-      <p class="meta">بحث محكّم · 2024</p>
-      <a href="https://doi.org/10.1080/15568318.2024.2392624">افتح المصدر المنشور</a>
+
+    <article id="src-P01" data-type="local">
+      <div class="row"><div class="id">src-P01</div><div class="type">مصدر محلي</div></div>
+      <h2>تصميم تجربة الظل ومعادلاتها</h2>
+      <p>يحدد البروتوكول العينة المقترحة والنافذة ومعادلات الخطأ والانحياز والمنفعة وترتيب أحكام نقص الأدلة والفشل والنجاح.</p>
+      <p class="meta">وثيقة داخل المشروع · وصول 2026-07-23</p>
+      <p class="supports">يدعم: تصنيف الأرقام كمعلمات تصميم ومعادلات قابلة للتنفيذ.</p>
+      <p class="limit">لا يدعم: أن تجربة أُجريت أو أن جهة اعتمدت العتبات أو أن أثراً ميدانياً تحقق.</p>
+      <a href="../docs/SHADOW-PILOT.md#design-parameters">افتح البروتوكول المحلي</a>
     </article>
   </section>
+
   <p class="empty" id="empty">لا توجد نتيجة مطابقة.</p>
-  <footer>المرجع الحاكم الكامل محفوظ محلياً في سجل المصادر. هذه الصفحة واجهة قراءة للعرض ولا تستبدل السجل.</footer>
+  <footer>لا تستخدم أي بطاقة خارج حدها المكتوب. عند تغير مصدر رسمي، يُحدث الرقم وتاريخ الوصول في العرض والبطاقة معاً.</footer>
 </main>
 <script>
-const search = document.getElementById('search');
-const cards = [...document.querySelectorAll('article')];
-const empty = document.getElementById('empty');
-search.addEventListener('input', () => {
-  const query = search.value.trim().toLowerCase();
-  let shown = 0;
-  cards.forEach(card => {
-    const match = !query || (card.textContent + ' ' + card.dataset.search).toLowerCase().includes(query);
-    card.hidden = !match;
-    if (match) shown += 1;
+(function () {
+  'use strict';
+  const search = document.getElementById('search');
+  const cards = Array.from(document.querySelectorAll('article'));
+  const empty = document.getElementById('empty');
+  search.addEventListener('input', function () {
+    const query = search.value.trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(function (card) {
+      const match = !query || card.textContent.toLowerCase().includes(query);
+      card.hidden = !match;
+      if (match) shown += 1;
+    });
+    empty.style.display = shown ? 'none' : 'block';
   });
-  empty.style.display = shown ? 'none' : 'block';
-});
+})();
 </script>
 </body>
 </html>
