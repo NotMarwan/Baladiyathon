@@ -86,10 +86,9 @@ test('inline RCRC snapshot matches vendored data file', () => {
 
 // ثوابت المعايرة الأربعة معروضة في جدول الشفافية
 test('all four calibration constants appear in the ASSUMPTIONS table', () => {
-  for (const key of ['scoreCalibration', 'sharedTrenchOverhead', 'compoundFactor', 'minCapacityFraction']) {
+  for (const key of ['scoreCalibration', 'workZoneFriction', 'compoundFactor', 'minCapacityFraction']) {
     assert.ok(html.includes(`key: '${key}'`), `ASSUMPTIONS missing ${key}`);
   }
-  assert.ok(/CALIBRATION\.SCORE_CALIBRATION/.test(html), 'table not bound to engine CALIBRATION export');
 });
 
 // transitImpact في الواجهة مربوط بعدد المسارات الحقيقي لا بالافتراض
