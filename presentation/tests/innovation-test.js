@@ -11,6 +11,7 @@ const path = require('node:path');
 const Demo = require(path.join(__dirname, '..', 'data', 'innovation-demo-data.js'));
 const Boundary = require(path.join(__dirname, '..', 'athar-boundary.js'));
 const Budget = require(path.join(__dirname, '..', 'athar-budget.js'));
+const Reasons = require(path.join(__dirname, '..', 'athar-reasons.js'));
 
 let count = 0;
 
@@ -114,6 +115,65 @@ test('corridor budget counts only accepted permits on the same corridor and mont
   });
 
   assert.equal(result.usedBefore, 5900);
+});
+
+test('quantitative explainer ranks the strongest measured candidate first', () => {
+  const result = Reasons.explain(
+    Demo.ranking.baseline,
+    Demo.ranking.candidates,
+    Demo.meta
+  );
+  const winner = result.ranked[0];
+
+  assert.equal(winner.id, 'C-23');
+  assert.equal(winner.rank, 1);
+  assert.equal(winner.factors.length, 4);
+  assert.ok(winner.factors.every((factor) => Number.isFinite(factor.delta)));
+  assert.ok(winner.factors.every((factor) => Number.isFinite(factor.deltaPct)));
+  assert.ok(winner.factors.every((factor) => Number.isFinite(factor.weightPct)));
+  assert.ok(
+    Math.abs(
+      winner.factors.reduce((sum, factor) => sum + factor.weightPct, 0) - 100
+    ) < 1e-9
+  );
+  assert.match(result.method, /no fixed factor weights/i);
+});
+
+test('quantitative explainer responds to changed candidate measurements', () => {
+  const changed = Demo.ranking.candidates.map((candidate) =>
+    candidate.id === 'C-08'
+      ? {
+          ...candidate,
+          demandVehPerHour: 2000,
+          queueVehHours: 600,
+          busPersonHours: 80,
+          corridorConflicts: 0,
+        }
+      : candidate
+  );
+  const result = Reasons.explain(Demo.ranking.baseline, changed, Demo.meta);
+
+  assert.equal(result.ranked[0].id, 'C-08');
+});
+
+test('quantitative explainer returns numbers instead of templated reason strings', () => {
+  const result = Reasons.explain(
+    Demo.ranking.baseline,
+    Demo.ranking.candidates,
+    Demo.meta
+  );
+
+  assert.ok(result.ranked.every((candidate) => candidate.reasons === undefined));
+  assert.ok(
+    result.ranked.every((candidate) =>
+      candidate.factors.every(
+        (factor) =>
+          typeof factor.baseline === 'number' &&
+          typeof factor.candidate === 'number' &&
+          typeof factor.unit === 'string'
+      )
+    )
+  );
 });
 
 console.log(`ALL INNOVATION TESTS PASSED (${count})`);
