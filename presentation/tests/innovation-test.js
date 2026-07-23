@@ -6,6 +6,7 @@
  */
 
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const path = require('node:path');
 
 const Demo = require(path.join(__dirname, '..', 'data', 'innovation-demo-data.js'));
@@ -302,6 +303,59 @@ test('calibration judgments respond to the supplied success threshold', () => {
   assert.ok(
     broad.verdictCounts.before.success > strict.verdictCounts.before.success
   );
+});
+
+test('offline lab contains every innovation scene and local dependency', () => {
+  const labPath = path.join(__dirname, '..', 'athar-lab.html');
+  const lab = fs.readFileSync(labPath, 'utf8');
+  const localAssets = [
+    'athar-engine.js',
+    'athar-boundary.js',
+    'athar-budget.js',
+    'athar-reasons.js',
+    'athar-conflict.js',
+    'athar-memory.js',
+    'innovation-demo-data.js',
+  ];
+  const scenes = [
+    'boundary-scene',
+    'budget-scene',
+    'reasons-scene',
+    'conflict-scene',
+    'memory-scene',
+  ];
+
+  localAssets.forEach((asset) =>
+    assert.ok(lab.includes(asset), `missing local asset ${asset}`)
+  );
+  scenes.forEach((scene) =>
+    assert.ok(lab.includes(`id="${scene}"`), `missing scene ${scene}`)
+  );
+  assert.ok(!/src=["']https?:\/\//.test(lab), 'lab must not request scripts');
+  assert.ok(!/href=["']https?:\/\//.test(lab), 'lab must not request styles');
+  assert.ok(lab.includes('افتراض توضيحي للعرض'));
+});
+
+test('offline lab exposes live controls and honest competitive positioning', () => {
+  const lab = fs.readFileSync(
+    path.join(__dirname, '..', 'athar-lab.html'),
+    'utf8'
+  );
+
+  [
+    'boundary-volume',
+    'budget-request-impact',
+    'ranking-bus-impact',
+    'coordination-hours',
+    'success-threshold',
+  ].forEach((id) =>
+    assert.ok(lab.includes(`id="${id}"`), `missing live control ${id}`)
+  );
+  assert.ok(lab.includes('سنغافورة'));
+  assert.ok(lab.includes('one.network'));
+  assert.ok(lab.includes('السياق السعودي'));
+  assert.ok(!lab.includes('الأول عالميًا'));
+  assert.ok(!lab.includes('الوحيد'));
 });
 
 console.log(`ALL INNOVATION TESTS PASSED (${count})`);
