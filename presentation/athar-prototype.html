@@ -111,6 +111,45 @@
   .sources{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
   .sources li{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-word}
 
+  /* Alternative routes */
+  .route-cards{display:flex;flex-direction:column;gap:12px}
+  .route-card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--ground);display:flex;flex-direction:column;gap:8px;transition:border-color .15s, box-shadow .15s}
+  .route-card:hover{border-color:var(--navy);box-shadow:0 4px 14px rgba(21,32,43,.08)}
+  .route-card.best{border-color:var(--good);background:#F1F8F4}
+  .route-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .route-rank{font-weight:700;color:var(--navy)}
+  .route-time{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink)}
+  .route-extra{font-family:var(--mono);font-size:13px;font-weight:700}
+  .route-extra.up{color:var(--bad)}
+  .route-extra.flat{color:var(--good)}
+  .route-streets{font-size:13px;color:var(--muted)}
+  .route-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+  .route-meta b{color:var(--ink);font-family:var(--mono)}
+  .route-poi{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--bad);background:#F7E4E1;padding:3px 9px;border-radius:14px}
+  .route-poi.school{color:var(--ochre);background:var(--ochre-soft)}
+
+  /* Forecast heatmap */
+  .forecast-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .forecast-controls label{font-size:13.5px;font-weight:600;color:var(--muted)}
+  .forecast-controls select{font-family:var(--sans);padding:7px 10px;border:1px solid var(--line);border-radius:6px;font-size:14px;background:var(--surface);color:var(--ink)}
+  .heatmap-wrap{overflow-x:auto;padding-bottom:6px}
+  .heatmap{display:grid;gap:2px;min-width:640px}
+  .heatmap .hm-corner{font-size:11px;color:var(--faint);font-weight:600;display:flex;align-items:center;justify-content:center}
+  .heatmap .hm-hour{font-size:10px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums;padding:2px 0}
+  .heatmap .hm-seg{font-size:11px;color:var(--muted);font-weight:600;display:flex;align-items:center;padding-inline-end:6px;white-space:nowrap;justify-content:flex-end}
+  .heatmap .hm-cell{height:26px;border-radius:3px;cursor:default;transition:transform .1s}
+  .heatmap .hm-cell:hover{transform:scale(1.15);outline:2px solid var(--navy);z-index:2}
+  .heatmap-legend{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--muted)}
+  .heatmap-legend .legend-bar{flex:0 0 120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#2F7A57,#A9722B,#B23B32)}
+  .heatmap-legend .legend-note{margin-inline-start:auto}
+  .calibrate-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .calibrate-btn{display:inline-block;padding:8px 16px;border:1px solid var(--navy);background:transparent;color:var(--navy);border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600}
+  .calibrate-btn:hover{background:var(--navy);color:#fff}
+  .calibrate-status{font-size:13px;font-weight:600}
+  .calibrate-status.ok{color:var(--good)}
+  .calibrate-status.err{color:var(--bad)}
+  .badge.api.calibrated{background:#E4F1EA;color:var(--good)}
+
   footer.foot-note{font-size:12px;color:var(--faint);text-align:center;padding-top:8px}
 
   @media (prefers-reduced-motion: reduce) {
@@ -189,6 +228,52 @@
         <span class="compare-requested">الجدول المطلوب: <b class="num" id="hourReqImpact">—</b> س-م</span>
         <span class="compare-chosen">الجدول المُختار: <b class="num" id="hourChosenImpact">—</b> س-م</span>
       </div>
+    </div>
+  </section>
+
+  <!-- Alternative routing (Criterion 1: مسارات بديلة محسوبة على شبكة) -->
+  <section class="card" id="rerouteCard">
+    <div class="section-eyebrow">المسارات البديلة · محسوبة على شبكة طرق حقيقية</div>
+    <h2>مقارنة المسارات البديلة</h2>
+    <p class="reroute-hint" id="rerouteHint" style="font-size:13.5px;color:var(--muted);margin:0 0 12px">
+      حدد موقع الحفر على الخريطة لحساب المسارات البديلة عبر الشبكة (Dijkstra على أزمنة رحلة BPR).
+    </p>
+    <div class="reroute-summary" id="rerouteSummary" style="display:none">
+      <div class="impact-detail">البقاء على الممر أثناء الإغلاق: <b class="num" id="viaClosureMin">—</b> دقيقة
+        · بلا إغلاق: <b class="num" id="baselineMin">—</b> دقيقة
+        <span class="src-badge">شبكة OSM محلية (ODbL) · سعة/سرعة افتراض توضيحي</span></div>
+    </div>
+    <div class="route-cards" id="routeCards"></div>
+  </section>
+
+  <!-- Congestion forecast heatmap (Criterion 1: التنبؤ بمستويات الازدحام) -->
+  <section class="card" id="forecastCard">
+    <div class="section-eyebrow">التنبؤ بمستويات الازدحام · خريطة حرارية زمنية</div>
+    <h2>التنبؤ — ساعة × مقطع</h2>
+    <div class="forecast-controls">
+      <label for="dowSelect">يوم الأسبوع:</label>
+      <select id="dowSelect" aria-label="اختر يوم الأسبوع للتنبؤ">
+        <option value="0">الأحد</option>
+        <option value="1">الاثنين</option>
+        <option value="2" selected>الثلاثاء</option>
+        <option value="3">الأربعاء</option>
+        <option value="4">الخميس</option>
+        <option value="5">الجمعة</option>
+        <option value="6">السبت</option>
+      </select>
+      <span class="badge api offline" id="forecastBadge"><span class="badge-dot"></span><span id="forecastBadgeText">تنبؤ نموذجي — يُعاير ببيانات المشغل</span></span>
+    </div>
+    <div class="heatmap-wrap"><div class="heatmap" id="heatmap" role="img" aria-label="خريطة حرارية للتنبؤ بالازدحام على مدار اليوم لكل مقطع"></div></div>
+    <div class="heatmap-legend">
+      <span>هادئ</span>
+      <span class="legend-bar" aria-hidden="true"></span>
+      <span>مزدحم</span>
+      <span class="legend-note">النطاق ±<span id="bandPct">15</span>٪ — عدم يقين النموذج</span>
+    </div>
+    <div class="calibrate-row">
+      <label class="calibrate-btn" for="csvUpload">⬆ حمّل عدّادات حقيقية (CSV: hour,count)</label>
+      <input type="file" id="csvUpload" accept=".csv,text/csv" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden" aria-label="حمّل ملف CSV لعدّادات السرعة/الحجم الحقيقية">
+      <span class="calibrate-status" id="calibrateStatus"></span>
     </div>
   </section>
 
@@ -349,6 +434,8 @@
 <script src="athar-engine.js"></script>
 <script src="athar-impact-calibration.js"></script>
 <script src="athar-impact-budget.js"></script>
+<script src="athar-routing.js"></script>
+<script src="athar-forecast.js"></script>
 <script>
 (function () {
   'use strict';
@@ -404,6 +491,72 @@
 
   var IMPACT_COLORS = { high: '#B23B32', medium: '#A9722B', low: '#2F7A57' };
 
+  // Local road network (digitized from OpenStreetMap © contributors, ODbL).
+  // Embedded fallback so alternative routing works fully offline (file://).
+  // Kept in sync with data/corridor-network.json.
+  var NETWORK_FALLBACK = {
+    metadata: {
+      source: 'digitized from OpenStreetMap © OpenStreetMap contributors — ODbL',
+      license: 'ODbL 1.0 (opendatacommons.org/licenses/odbl)',
+      note: 'هندسة العقد من OSM؛ قيم المسارات والسعة افتراض توضيحي للعرض',
+      aadtScale: 85000, coordFormat: '[lat, lng]'
+    },
+    nodes: {
+      kf0: { lat: 24.6860, lng: 46.6815, name: 'الملك فهد × العروبة' },
+      kf1: { lat: 24.7000, lng: 46.6790, name: 'الملك فهد × التحلية' },
+      kf2: { lat: 24.7140, lng: 46.6765, name: 'الملك فهد × مكة المكرمة' },
+      kf3: { lat: 24.7285, lng: 46.6740, name: 'الملك فهد × الأمير محمد بن عبدالعزيز' },
+      kf4: { lat: 24.7425, lng: 46.6742, name: 'الملك فهد × الملك عبدالله' },
+      kf5: { lat: 24.7565, lng: 46.6768, name: 'الملك فهد × الأمير سلطان' },
+      ol0: { lat: 24.6862, lng: 46.6870, name: 'العليا × العروبة' },
+      ol1: { lat: 24.7002, lng: 46.6848, name: 'العليا × التحلية' },
+      ol2: { lat: 24.7142, lng: 46.6825, name: 'العليا × مكة المكرمة' },
+      ol3: { lat: 24.7287, lng: 46.6802, name: 'العليا × الأمير محمد' },
+      ol4: { lat: 24.7427, lng: 46.6805, name: 'العليا × الملك عبدالله' },
+      ol5: { lat: 24.7567, lng: 46.6830, name: 'العليا × الأمير سلطان' },
+      tk0: { lat: 24.6858, lng: 46.6752, name: 'التخصصي × العروبة' },
+      tk1: { lat: 24.6998, lng: 46.6730, name: 'التخصصي × التحلية' },
+      tk2: { lat: 24.7138, lng: 46.6706, name: 'التخصصي × مكة المكرمة' },
+      tk3: { lat: 24.7283, lng: 46.6682, name: 'التخصصي × الأمير محمد' },
+      tk4: { lat: 24.7423, lng: 46.6684, name: 'التخصصي × الملك عبدالله' },
+      tk5: { lat: 24.7563, lng: 46.6710, name: 'التخصصي × الأمير سلطان' }
+    },
+    edges: [
+      { id: 'kf_1', from: 'kf0', to: 'kf1', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+      { id: 'kf_2', from: 'kf1', to: 'kf2', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+      { id: 'kf_3', from: 'kf2', to: 'kf3', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+      { id: 'kf_4', from: 'kf3', to: 'kf4', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+      { id: 'kf_5', from: 'kf4', to: 'kf5', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+      { id: 'ol_1', from: 'ol0', to: 'ol1', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+      { id: 'ol_2', from: 'ol1', to: 'ol2', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+      { id: 'ol_3', from: 'ol2', to: 'ol3', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+      { id: 'ol_4', from: 'ol3', to: 'ol4', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+      { id: 'ol_5', from: 'ol4', to: 'ol5', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+      { id: 'tk_1', from: 'tk0', to: 'tk1', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+      { id: 'tk_2', from: 'tk1', to: 'tk2', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+      { id: 'tk_3', from: 'tk2', to: 'tk3', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+      { id: 'tk_4', from: 'tk3', to: 'tk4', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+      { id: 'tk_5', from: 'tk4', to: 'tk5', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+      { id: 'x0_kt', from: 'kf0', to: 'tk0', name: 'طريق العروبة', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+      { id: 'x0_ko', from: 'kf0', to: 'ol0', name: 'طريق العروبة', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+      { id: 'x1_kt', from: 'kf1', to: 'tk1', name: 'شارع التحلية', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.6 },
+      { id: 'x1_ko', from: 'kf1', to: 'ol1', name: 'شارع التحلية', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.6 },
+      { id: 'x2_kt', from: 'kf2', to: 'tk2', name: 'طريق مكة المكرمة', lanes: 3, capacityPerLane: 1650, freeFlowKmh: 55, demandShare: 0.55 },
+      { id: 'x2_ko', from: 'kf2', to: 'ol2', name: 'طريق مكة المكرمة', lanes: 3, capacityPerLane: 1650, freeFlowKmh: 55, demandShare: 0.55 },
+      { id: 'x3_kt', from: 'kf3', to: 'tk3', name: 'طريق الأمير محمد بن عبدالعزيز', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.5 },
+      { id: 'x3_ko', from: 'kf3', to: 'ol3', name: 'طريق الأمير محمد بن عبدالعزيز', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.5 },
+      { id: 'x4_kt', from: 'kf4', to: 'tk4', name: 'طريق الملك عبدالله', lanes: 4, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.6 },
+      { id: 'x4_ko', from: 'kf4', to: 'ol4', name: 'طريق الملك عبدالله', lanes: 4, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.6 },
+      { id: 'x5_kt', from: 'kf5', to: 'tk5', name: 'طريق الأمير سلطان', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+      { id: 'x5_ko', from: 'kf5', to: 'ol5', name: 'طريق الأمير سلطان', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 }
+    ],
+    corridorEdges: ['kf_1', 'kf_2', 'kf_3', 'kf_4', 'kf_5'],
+    pois: [
+      { id: 'poi_hosp', kind: 'hospital', name: 'مستشفى (نقطة توضيحية)', lat: 24.7283, lng: 46.6682, note: 'افتراض توضيحي للعرض' },
+      { id: 'poi_school', kind: 'school', name: 'مدرسة (نقطة توضيحية)', lat: 24.7142, lng: 46.6825, note: 'افتراض توضيحي للعرض' }
+    ]
+  };
+
   // -------------------------------------------------------------------
   // State
   // -------------------------------------------------------------------
@@ -437,7 +590,25 @@
     prevCo2Kg: 0,
     prevDigOnceSAR: 0,
     calibration: null,
+    network: NETWORK_FALLBACK,
+    forecastDow: 2,
+    forecastProfile: null,
+    forecastCalibrated: false,
   };
+
+  // Load the network from data/ when served over HTTP; keep the embedded
+  // fallback under file:// so alternative routing works offline.
+  function loadNetwork() {
+    if (location.protocol === 'file:') return;
+    fetch('data/corridor-network.json')
+      .then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); })
+      .then(function (net) {
+        state.network = net;
+        if (state.closureSelected) drawComputedRoutes(state.selectedSegIdx, state.scrubHour);
+        renderHeatmap();
+      })
+      .catch(function () { /* keep fallback */ });
+  }
 
   // -------------------------------------------------------------------
   // Calibration loop (real mechanism, persisted in localStorage)
@@ -562,7 +733,6 @@
   }
 
   var closureMarker = null;
-  var rerouteLine = null;
   var worksLayerGroup = L.layerGroup();
 
   function midpoint(a, b) {
@@ -587,30 +757,174 @@
     }
     closureMarker.openPopup();
 
-    if (rerouteLine) {
-      map.removeLayer(rerouteLine);
-      rerouteLine = null;
-    }
-
     recompute();
+    drawComputedRoutes(idx, state.scrubHour);
   }
 
   document.getElementById('btnSelectClosure').addEventListener('click', function () {
     selectClosure(midSegIndex);
   });
 
-  function drawReroute(idx) {
-    if (rerouteLine) map.removeLayer(rerouteLine);
-    var a = CORRIDOR_COORDS[idx];
-    var b = CORRIDOR_COORDS[idx + 1];
-    var offset = 0.006;
-    var midA = [a[0] + offset, a[1] + offset * 0.4];
-    var midB = [b[0] + offset, b[1] + offset * 0.4];
-    rerouteLine = L.polyline([a, midA, midB, b], {
-      color: '#A9722B',
-      weight: 4,
-      dashArray: '8 6',
-    }).addTo(map);
+  // Layers for computed alternative routes + POI markers.
+  var routeLayers = [];
+  var poiMarkers = [];
+  var ROUTE_COLORS = ['#A9722B', '#1D4E77', '#5A6672'];
+  var state_lastRoutes = null;
+
+  function clearRouteLayers() {
+    routeLayers.forEach(function (l) { map.removeLayer(l); });
+    routeLayers = [];
+  }
+
+  function nodeLatLng(nodeId) {
+    var n = state.network.nodes[nodeId];
+    return [n.lat, n.lng];
+  }
+
+  function renderPoiMarkers() {
+    poiMarkers.forEach(function (m) { map.removeLayer(m); });
+    poiMarkers = [];
+    (state.network.pois || []).forEach(function (poi) {
+      var icon = poi.kind === 'hospital' ? '🏥' : '🏫';
+      var marker = L.marker([poi.lat, poi.lng], {
+        title: poi.name, alt: poi.name,
+        icon: L.divIcon({
+          className: 'poi-div-icon',
+          html: '<span style="font-size:18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">' + icon + '</span>',
+          iconSize: [22, 22], iconAnchor: [11, 11],
+        }),
+      }).addTo(map);
+      marker.bindTooltip(poi.name + ' — ' + poi.note, { direction: 'top' });
+      poiMarkers.push(marker);
+    });
+  }
+
+  // Compute + draw alternative routes for the closed corridor segment idx at
+  // the given clock hour, and render the comparison cards.
+  function drawComputedRoutes(idx, hour) {
+    if (idx === null || idx === undefined) return;
+    clearRouteLayers();
+    var closedEdgeId = 'kf_' + (idx + 1);
+    var lanesClosed = state.lanesClosed;
+    var res;
+    try {
+      res = AtharRouting.alternativeRoutes(state.network, closedEdgeId, hour, { lanesClosed: lanesClosed });
+    } catch (e) {
+      return;
+    }
+    state_lastRoutes = res;
+
+    res.alternatives.forEach(function (alt, i) {
+      var latlngs = alt.path.map(nodeLatLng);
+      var color = ROUTE_COLORS[i % ROUTE_COLORS.length];
+      var line = L.polyline(latlngs, {
+        color: color, weight: i === 0 ? 5 : 3.5,
+        opacity: i === 0 ? 0.95 : 0.7, dashArray: i === 0 ? null : '7 6',
+      }).addTo(map);
+      line.bindPopup(
+        '<b>مسار بديل ' + (i + 1) + '</b><br>'
+        + 'زمن الرحلة: ' + Math.round(alt.travelMin) + ' دقيقة<br>'
+        + 'يضيف ' + Math.round(alt.extraMin) + ' دقيقة مقابل '
+        + Math.round(res.viaClosureMin) + ' دقيقة عبر الإغلاق'
+      );
+      routeLayers.push(line);
+    });
+
+    renderRouteCards(res);
+    renderPoiMarkers();
+    drawShockwave(closedEdgeId, hour, lanesClosed);
+  }
+
+  // Tint corridor segments adjacent to the closure by queue spillover (v/c
+  // after absorbing overflow). Deepening: shockwave propagation.
+  var shockwaveLayers = [];
+  function clearShockwave() {
+    shockwaveLayers.forEach(function (l) { map.removeLayer(l); });
+    shockwaveLayers = [];
+  }
+  function drawShockwave(closedEdgeId, hour, lanesClosed) {
+    clearShockwave();
+    var sw;
+    try {
+      sw = AtharRouting.shockwave(state.network, closedEdgeId, hour, { lanesClosed: lanesClosed });
+    } catch (e) { return; }
+    if (sw.excessVehPerHour <= 0) return;
+    // Map affected corridor edges (kf_N) to segment polylines and overlay a
+    // red glow proportional to their post-spill v/c.
+    Object.keys(sw.overflow).forEach(function (eid) {
+      var m = /^kf_(\d+)$/.exec(eid);
+      if (!m) return;
+      var segIdx = parseInt(m[1], 10) - 1;
+      if (segIdx < 0 || segIdx >= segmentLayers.length) return;
+      var vc = sw.overflow[eid];
+      var intensity = Math.max(0, Math.min(0.6, (vc - 1) * 0.5 + 0.2));
+      var glow = L.polyline(
+        [CORRIDOR_COORDS[segIdx], CORRIDOR_COORDS[segIdx + 1]],
+        { color: '#B23B32', weight: 18, opacity: intensity }
+      ).addTo(map);
+      glow.bringToBack();
+      glow.bindTooltip('انتشار الطابور: v/c ≈ ' + vc.toFixed(2) + ' بعد امتصاص الفائض', { direction: 'top' });
+      shockwaveLayers.push(glow);
+    });
+  }
+
+  function renderRouteCards(res) {
+    document.getElementById('rerouteHint').style.display = 'none';
+    document.getElementById('rerouteSummary').style.display = '';
+    document.getElementById('viaClosureMin').textContent = formatArabicNumber(res.viaClosureMin);
+    document.getElementById('baselineMin').textContent = formatArabicNumber(res.baselineMin);
+
+    var container = document.getElementById('routeCards');
+    container.innerHTML = '';
+    var rankLabels = ['الأفضل', 'البديل الثاني', 'البديل الثالث'];
+
+    res.alternatives.forEach(function (alt, i) {
+      var card = document.createElement('div');
+      card.className = 'route-card' + (i === 0 ? ' best' : '');
+
+      var head = document.createElement('div');
+      head.className = 'route-head';
+      var rank = document.createElement('span');
+      rank.className = 'route-rank';
+      rank.textContent = rankLabels[i] || ('البديل ' + (i + 1));
+      var time = document.createElement('span');
+      time.className = 'route-time num';
+      time.textContent = formatArabicNumber(alt.travelMin) + ' دقيقة';
+      var extra = document.createElement('span');
+      var extraMin = Math.round(alt.extraMin);
+      extra.className = 'route-extra ' + (extraMin > 0 ? 'up' : 'flat');
+      extra.textContent = (extraMin > 0 ? '+' : '') + formatArabicNumber(alt.extraMin) + ' دقيقة عن الوضع الطبيعي';
+      head.appendChild(rank); head.appendChild(time); head.appendChild(extra);
+
+      var streets = document.createElement('div');
+      streets.className = 'route-streets';
+      var uniqueStreets = alt.streets.filter(function (s, idx2) { return alt.streets.indexOf(s) === idx2; });
+      streets.textContent = 'عبر: ' + uniqueStreets.join(' ← ');
+
+      var meta = document.createElement('div');
+      meta.className = 'route-meta';
+      var cap = document.createElement('span');
+      cap.innerHTML = 'سعة متبقية على أضيق مقطع: <b>' + formatPercent(alt.residualCapacityPct) + '٪</b>';
+      var savedVsStay = Math.round(res.viaClosureMin - alt.travelMin);
+      var vsStay = document.createElement('span');
+      vsStay.innerHTML = savedVsStay > 0
+        ? 'يوفّر <b>' + formatArabicNumber(savedVsStay) + '</b> دقيقة مقابل البقاء على الممر'
+        : 'أبطأ من البقاء على الممر بـ<b>' + formatArabicNumber(-savedVsStay) + '</b> دقيقة';
+      meta.appendChild(cap); meta.appendChild(vsStay);
+
+      card.appendChild(head);
+      card.appendChild(streets);
+      card.appendChild(meta);
+
+      alt.nearPois.forEach(function (poi) {
+        var badge = document.createElement('span');
+        badge.className = 'route-poi' + (poi.kind === 'school' ? ' school' : '');
+        badge.textContent = (poi.kind === 'hospital' ? '🏥 يمر قرب مستشفى — وصول حرج' : '🏫 يمر قرب مدرسة — احترس أوقات الدخول/الخروج');
+        card.appendChild(badge);
+      });
+
+      container.appendChild(card);
+    });
   }
 
   // -------------------------------------------------------------------
@@ -877,6 +1191,7 @@
     state.canonicalHourly = computeCanonicalHourly();
     updateNeighborPermitVisual();
     renderTimeline();
+    if (typeof renderHeatmap === 'function') renderHeatmap();
   }
 
   lanesClosedInput.addEventListener('input', function () {
@@ -956,7 +1271,7 @@
     cardEl.classList.add('selected');
 
     var segIdx = state.selectedSegIdx !== null ? state.selectedSegIdx : midSegIndex;
-    drawReroute(segIdx);
+    drawComputedRoutes(segIdx, state.scrubHour);
 
     var input = currentEngineInput();
     var backTestResult = AtharEngine.backTest(input, candidate);
@@ -1167,16 +1482,24 @@
   var hourSlider = document.getElementById('hourSlider');
   var btnPlayTimeline = document.getElementById('btnPlayTimeline');
 
+  function refreshRoutesForHour() {
+    if (state.closureSelected && state.selectedSegIdx !== null) {
+      drawComputedRoutes(state.selectedSegIdx, state.scrubHour);
+    }
+  }
+
   hourSlider.addEventListener('input', function () {
     stopPlaying();
     state.scrubHour = Number(this.value);
     renderTimeline();
+    refreshRoutesForHour();
   });
 
   function stepPlay() {
     state.scrubHour = (state.scrubHour + 1) % 24;
     hourSlider.value = state.scrubHour;
     renderTimeline();
+    refreshRoutesForHour();
   }
 
   function startPlaying() {
@@ -1255,9 +1578,19 @@
       : '—';
     document.getElementById('tmpBeforeAfter').textContent = beforeAfterText;
 
-    document.getElementById('tmpReroute').textContent = state.selectedCandidate
-      ? 'مسار تحويلة موازٍ عبر الشارع الجانبي (انظر الخريطة)'
-      : 'لا يوجد مسار بديل محدد بعد';
+    var rerouteText = 'لا يوجد مسار بديل محدد بعد';
+    if (state_lastRoutes && state_lastRoutes.alternatives.length > 0) {
+      var best = state_lastRoutes.alternatives[0];
+      var uniq = best.streets.filter(function (s, i) { return best.streets.indexOf(s) === i; });
+      rerouteText = 'المسار البديل الأفضل عبر: ' + uniq.join(' ← ')
+        + ' — ' + formatArabicNumber(best.travelMin) + ' دقيقة (يضيف '
+        + formatArabicNumber(best.extraMin) + ' دقيقة مقابل '
+        + formatArabicNumber(state_lastRoutes.viaClosureMin) + ' دقيقة عبر الإغلاق)';
+      best.nearPois.forEach(function (p) {
+        rerouteText += ' · تنبيه: يمر قرب ' + (p.kind === 'hospital' ? 'مستشفى' : 'مدرسة');
+      });
+    }
+    document.getElementById('tmpReroute').textContent = rerouteText;
 
     document.getElementById('tmpMerged').textContent = state.neighborPermits + ' تصريح مجاور مُدمج';
     document.getElementById('tmpDate').textContent = new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
@@ -1327,10 +1660,110 @@
   renderAssumptions();
 
   // -------------------------------------------------------------------
+  // Congestion forecast heatmap (التنبؤ بمستويات الازدحام)
+  // -------------------------------------------------------------------
+  function heatColor(v) {
+    // v in [0,1] -> good(green) -> ochre -> bad(red)
+    var stops = [[47, 122, 87], [169, 114, 43], [178, 59, 50]];
+    var clamped = Math.max(0, Math.min(1, v));
+    var seg = clamped < 0.5 ? 0 : 1;
+    var t = clamped < 0.5 ? clamped / 0.5 : (clamped - 0.5) / 0.5;
+    var c0 = stops[seg], c1 = stops[seg + 1];
+    return 'rgb(' + Math.round(lerp(c0[0], c1[0], t)) + ','
+      + Math.round(lerp(c0[1], c1[1], t)) + ','
+      + Math.round(lerp(c0[2], c1[2], t)) + ')';
+  }
+
+  function currentClosureForForecast() {
+    if (state.closureSelected && state.selectedSegIdx !== null) {
+      return { edgeId: 'kf_' + (state.selectedSegIdx + 1), lanesClosed: state.lanesClosed };
+    }
+    return null;
+  }
+
+  function renderHeatmap() {
+    var closure = currentClosureForForecast();
+    var opts = state.forecastProfile
+      ? { profile: state.forecastProfile, calibrated: state.forecastCalibrated }
+      : {};
+    var grid = AtharForecast.forecastGrid(state.forecastDow, closure, state.network, opts);
+
+    var el = document.getElementById('heatmap');
+    var nSeg = grid.segments.length;
+    // Columns: 1 label + 24 hours. Rows: 1 header + nSeg segments.
+    el.style.gridTemplateColumns = 'minmax(120px,auto) repeat(24, 1fr)';
+
+    var html = '<div class="hm-corner">مقطع \\ ساعة</div>';
+    for (var h = 0; h < 24; h += 1) {
+      html += '<div class="hm-hour">' + String(h).padStart(2, '0') + '</div>';
+    }
+    grid.segments.forEach(function (seg, sIdx) {
+      html += '<div class="hm-seg">' + seg.name.replace('طريق ', '') + ' (' + seg.id + ')</div>';
+      for (var hh = 0; hh < 24; hh += 1) {
+        var cell = grid.hours[hh].cells[sIdx];
+        var pctLow = Math.round(cell.low * 100);
+        var pctHigh = Math.round(cell.high * 100);
+        var title = 'الساعة ' + String(hh).padStart(2, '0') + ':00 · ' + seg.name
+          + ' — مؤشر ازدحام ' + Math.round(cell.congestion * 100) + '٪ (نطاق ' + pctLow + '–' + pctHigh + '٪)';
+        html += '<div class="hm-cell" style="background:' + heatColor(cell.congestion) + '" title="' + title + '"></div>';
+      }
+    });
+    el.innerHTML = html;
+
+    var band = state.forecastCalibrated ? 8 : 15;
+    document.getElementById('bandPct').textContent = band;
+  }
+
+  var dowSelect = document.getElementById('dowSelect');
+  dowSelect.addEventListener('change', function () {
+    state.forecastDow = Number(this.value);
+    renderHeatmap();
+  });
+
+  function setForecastBadge(calibrated, sampleCount) {
+    var badge = document.getElementById('forecastBadge');
+    var text = document.getElementById('forecastBadgeText');
+    badge.classList.toggle('calibrated', calibrated);
+    badge.classList.toggle('offline', !calibrated);
+    text.textContent = calibrated
+      ? 'مُعاير من CSV محمّل (' + sampleCount + ' صف)'
+      : 'تنبؤ نموذجي — يُعاير ببيانات المشغل';
+  }
+
+  var csvUpload = document.getElementById('csvUpload');
+  csvUpload.addEventListener('change', function () {
+    var file = this.files && this.files[0];
+    var status = document.getElementById('calibrateStatus');
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var result = AtharForecast.calibrateFromCSV(String(reader.result));
+      if (result.errors.length > 0) {
+        status.className = 'calibrate-status err';
+        status.textContent = '✕ فشل: ' + result.errors.slice(0, 2).join(' · ');
+        return;
+      }
+      state.forecastProfile = result.profile;
+      state.forecastCalibrated = true;
+      status.className = 'calibrate-status ok';
+      status.textContent = '✓ تمّت المعايرة من ' + result.sampleCount + ' صف — تقلّص نطاق عدم اليقين إلى ±٨٪';
+      setForecastBadge(true, result.sampleCount);
+      renderHeatmap();
+    };
+    reader.onerror = function () {
+      status.className = 'calibrate-status err';
+      status.textContent = '✕ تعذّرت قراءة الملف';
+    };
+    reader.readAsText(file);
+  });
+
+  // -------------------------------------------------------------------
   // Init
   // -------------------------------------------------------------------
   updateInputLabels();
   recompute();
+  renderHeatmap();
+  loadNetwork();
 })();
 </script>
 </body>
