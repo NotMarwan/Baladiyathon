@@ -209,6 +209,7 @@
         <div class="impact-detail">قيمة الوقت (نطاق): <b class="num" id="timeValueRange">—</b> <span class="src-badge">كود 203 (٤٠–٧٠٪ من الأجر) · أجر GASTAT ٥٬٨٠٠ ر/شهر</span> <span class="src-badge" id="asmTimeValue" title="">افتراضات: —</span></div>
         <div class="impact-detail">انبعاثات مضافة بسبب الإغلاق (نطاق): <b class="num" id="co2RangeLine">—</b> <span class="src-badge">فيزيائي فقط — لا تحويل نقدي (كود 203)</span> <span class="src-badge" id="asmCo2" title="">افتراضات: —</span></div>
         <div class="impact-detail">أثر ركاب الحافلات (نطاق): <b class="num" id="transitRangeLine">—</b> <span class="src-badge">١١٧ مساراً — طبقة مفتوحة · ركاب/حافلة افتراض</span> <span class="src-badge" id="asmTransit" title="">افتراضات: —</span></div>
+        <div class="impact-detail">التوقع المعايَر: <b class="num" id="calibratedLine">—</b> <span class="src-badge" id="calibBadge">معايرة من ٠ حالة</span> <span class="src-badge">حالات back-test تركيبية موسومة للعرض</span></div>
         <button id="wzdxExportBtn" type="button" class="wzdx-btn">⬇ تصدير WZDx (JSON)</button>
         <span class="src-badge">صيغة تبادل مناطق العمل — جاهز لأنظمة الملاحة</span>
       </section>
@@ -247,6 +248,13 @@
           <div class="card value-card" id="compoundCard" style="display:none">
             <div class="num" id="compoundNum">—</div>
             <div class="lab" id="compoundLab">تنبيه التأثير المركّب</div>
+          </div>
+        </div>
+        <div class="card" id="budgetCard" style="margin-top:16px">
+          <div class="section-eyebrow">ميزانية أثر المحور الشهرية</div>
+          <div class="impact-detail">مستهلك: <b class="num" id="budgetConsumed">—</b> من <b class="num" id="budgetTotal">—</b> س-م — <b id="budgetVerdict">—</b> <span class="src-badge">سقف واستهلاك سابق: افتراض توضيحي للعرض</span></div>
+          <div id="budgetMeter" style="height:14px;border-radius:7px;background:rgba(120,120,120,.18);overflow:hidden;margin-top:8px">
+            <div id="budgetMeterFill" style="height:100%;width:0%;border-radius:7px;transition:width .4s ease"></div>
           </div>
         </div>
       </section>
@@ -338,6 +346,8 @@
 
 <script src="vendor/leaflet.js"></script>
 <script src="athar-engine.js"></script>
+<script src="athar-impact-calibration.js"></script>
+<script src="athar-impact-budget.js"></script>
 <script>
 (function () {
   'use strict';
@@ -414,7 +424,64 @@
     playTimer: null,
     prevCo2Kg: 0,
     prevDigOnceSAR: 0,
+    calibration: null,
   };
+
+  // -------------------------------------------------------------------
+  // Calibration loop (real mechanism, persisted in localStorage)
+  // -------------------------------------------------------------------
+  function makeCalibrationStore() {
+    try {
+      var t = '__athar_probe__';
+      window.localStorage.setItem(t, '1');
+      window.localStorage.removeItem(t);
+      return window.localStorage;
+    } catch (e) {
+      // Private mode / file:// restrictions — fall back to an in-memory store.
+      var mem = {};
+      return {
+        getItem: function (k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+        setItem: function (k, v) { mem[k] = String(v); },
+      };
+    }
+  }
+
+  state.calibration = AtharImpactCalibration.createCalibration(makeCalibrationStore());
+  // Seed a few labeled synthetic back-tests so the mechanism is visible on
+  // first load (clearly tagged as demo data in the UI badge).
+  if (state.calibration.status().n === 0) {
+    state.calibration.record({ permitId: 'DEMO-001', predictedVehHours: 1200, observedVehHours: 1320 });
+    state.calibration.record({ permitId: 'DEMO-002', predictedVehHours: 900, observedVehHours: 1035 });
+    state.calibration.record({ permitId: 'DEMO-003', predictedVehHours: 1500, observedVehHours: 1590 });
+  }
+
+  // Corridor monthly impact budget (demo-labeled ceiling + prior consumption).
+  var CORRIDOR_MONTHLY_BUDGET_VEHHOURS = 40000;
+  var CORRIDOR_CONSUMED_VEHHOURS = 12000;
+
+  function renderBudget(currentPermitVehHours) {
+    var b = AtharImpactBudget.corridorBudget({
+      monthlyBudgetVehHours: CORRIDOR_MONTHLY_BUDGET_VEHHOURS,
+      consumedVehHours: CORRIDOR_CONSUMED_VEHHOURS,
+      currentPermitVehHours: currentPermitVehHours,
+    });
+    document.getElementById('budgetConsumed').textContent = formatArabicNumber(b.consumedAfter);
+    document.getElementById('budgetTotal').textContent = formatArabicNumber(b.budget);
+    document.getElementById('budgetVerdict').textContent = b.verdict;
+    var fill = document.getElementById('budgetMeterFill');
+    fill.style.width = Math.min(100, b.pctUsed) + '%';
+    fill.style.background = b.verdict === 'ضمن الميزانية'
+      ? '#2e9e5b'
+      : (b.verdict === 'قرب السقف' ? '#d9a021' : '#d64545');
+  }
+
+  function renderCalibration(rawVehHours) {
+    var st = state.calibration.status();
+    var corrected = rawVehHours * st.factor;
+    document.getElementById('calibratedLine').textContent =
+      formatArabicNumber(corrected) + ' س-م (معامل ' + formatPercent(st.factor) + '×)';
+    document.getElementById('calibBadge').textContent = 'معايرة من ' + formatArabicNumber(st.n) + ' حالة';
+  }
 
   // -------------------------------------------------------------------
   // Map setup
@@ -739,6 +806,8 @@
     setAssumptionBadge('asmCo2', 'co2');
     setAssumptionBadge('asmTransit', 'transitImpact');
     setAssumptionBadge('asmDigOnce', 'digOnce');
+    renderCalibration(result.delayVehHours);
+    renderBudget(result.delayVehHours * state.calibration.status().factor);
 
     var chip = document.getElementById('levelChip');
     chip.className = 'chip ' + result.level;
@@ -896,6 +965,17 @@
     document.getElementById('cfObserved').textContent = formatArabicNumber(observed);
     document.getElementById('cfError').textContent = formatArabicNumber(pe.pctError);
     document.getElementById('cfVerdict').textContent = pe.verdict;
+
+    // Log this back-test into the calibration store so the correction factor
+    // and the "معايرة من N حالة" counter grow with real (here demo-labeled) use.
+    if (state.calibration && predicted > 0) {
+      state.calibration.record({
+        permitId: 'SESSION-' + state.calibration.status().n,
+        predictedVehHours: predicted,
+        observedVehHours: observed,
+      });
+      if (state.lastScoreResult) renderCalibration(state.lastScoreResult.delayVehHours);
+    }
 
     renderTimeline();
   }

@@ -9,6 +9,16 @@ const assert = require('node:assert');
 const path = require('node:path');
 
 const AtharEngine = require(path.join(__dirname, '..', 'athar-engine.js'));
+const Calib = require(path.join(__dirname, '..', 'athar-impact-calibration.js'));
+const Budget = require(path.join(__dirname, '..', 'athar-impact-budget.js'));
+
+function memStore() {
+  const m = new Map();
+  return {
+    getItem: (k) => (m.has(k) ? m.get(k) : null),
+    setItem: (k, v) => m.set(k, v),
+  };
+}
 
 let count = 0;
 function test(name, fn) {
@@ -403,6 +413,55 @@ test('co2(0) => fuelL 0, co2Kg 0', () => {
   const r = AtharEngine.co2(0);
   assert.strictEqual(r.fuelL, 0);
   assert.strictEqual(r.co2Kg, 0);
+});
+
+// ---------------------------------------------------------------------------
+// calibration loop
+// ---------------------------------------------------------------------------
+
+test('calibration: empty store => factor 1, n 0', () => {
+  const c = Calib.createCalibration(memStore());
+  assert.deepStrictEqual(c.status(), { n: 0, factor: 1 });
+});
+
+test('calibration: median of observed/predicted ratios', () => {
+  const c = Calib.createCalibration(memStore());
+  c.record({ permitId: 'a', predictedVehHours: 100, observedVehHours: 110 });
+  c.record({ permitId: 'b', predictedVehHours: 100, observedVehHours: 120 });
+  c.record({ permitId: 'c', predictedVehHours: 100, observedVehHours: 130 });
+  assert.strictEqual(c.correctionFactor(), 1.2);
+  assert.strictEqual(c.status().n, 3);
+});
+
+test('calibration: rejects non-positive prediction, persists via store', () => {
+  const store = memStore();
+  const c = Calib.createCalibration(store);
+  assert.strictEqual(c.record({ permitId: 'x', predictedVehHours: 0, observedVehHours: 5 }), false);
+  assert.strictEqual(c.status().n, 0);
+  c.record({ permitId: 'y', predictedVehHours: 200, observedVehHours: 180 });
+  // a fresh instance over the same store sees the persisted record
+  const c2 = Calib.createCalibration(store);
+  assert.strictEqual(c2.status().n, 1);
+  assert.strictEqual(c2.correctionFactor(), 0.9);
+});
+
+// ---------------------------------------------------------------------------
+// corridor impact budget
+// ---------------------------------------------------------------------------
+
+test('corridorBudget: within / near / over verdicts', () => {
+  const base = { monthlyBudgetVehHours: 5000, consumedVehHours: 3000 };
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 500 }).verdict, 'ضمن الميزانية');
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 1500 }).verdict, 'قرب السقف');
+  assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 2500 }).verdict, 'تجاوز — يتطلب إعادة جدولة');
+});
+
+test('corridorBudget: remaining floors at 0, pct and consumedAfter honest', () => {
+  const r = Budget.corridorBudget({ monthlyBudgetVehHours: 5000, consumedVehHours: 4000, currentPermitVehHours: 3000 });
+  assert.strictEqual(r.consumedAfter, 7000);
+  assert.strictEqual(r.remaining, 0);
+  assert.strictEqual(r.pctUsed, 140);
+  assert.strictEqual(r.verdict, 'تجاوز — يتطلب إعادة جدولة');
 });
 
 // ---------------------------------------------------------------------------
