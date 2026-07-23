@@ -17,7 +17,7 @@
 ## الخريطة الجامعة
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 75, "rankSpacing": 95}, "themeVariables": {"fontSize": "22px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يصل طلب الحفر من منصة التصاريح"]
  B["2. يتحقق أثر من الموقع والمدة والإغلاق"]
@@ -51,7 +51,7 @@ flowchart TB
 التكامل الخارجي والنشر الوطني ليسا جزءًا منها بعد.
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يفتح المستخدم نموذج أثر"]
  B["2. يستعرض خريطة الممر والأعمال"]
@@ -82,7 +82,7 @@ flowchart TB
 ## مخطط الأطراف وحالات الاستخدام
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 70, "rankSpacing": 90}, "themeVariables": {"fontSize": "21px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 30, "rankSpacing": 44}, "themeVariables": {"fontSize": "14px"}}}%%
 flowchart LR
  APPLICANT["مقدم الطلب"]
  REVIEWER["مراجع التصريح"]
@@ -134,6 +134,7 @@ flowchart LR
 ## مخطط التسلسل التشغيلي المستهدف
 
 ```mermaid
+%%{init: {"sequence": {"useMaxWidth": true, "diagramMarginX": 15, "diagramMarginY": 12, "actorMargin": 25, "width": 105, "height": 38, "boxMargin": 4, "messageMargin": 16}, "themeVariables": {"fontSize": "14px"}}}%%
 sequenceDiagram
  autonumber
  actor A as مقدم الطلب
@@ -176,7 +177,7 @@ sequenceDiagram
 ## رحلة المراجع داخل شاشة القرار
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يفتح المراجع قائمة الطلبات"]
  B["2. يرتبها حسب الأثر والثقة والموعد"]
@@ -216,7 +217,7 @@ flowchart TB
 لا تُنسب إليها شاشة تنبؤ مروري غير ظاهرة في المصدر العام.
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يسجل مقدم الخدمة أو المقاول الدخول"]
  B["2. ينشئ طلب أعمال بنية تحتية"]
@@ -249,7 +250,7 @@ flowchart TB
 `Causeway one.network`
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. ينشئ منسق العمل حدثًا على الخريطة"]
  B["2. يحدد الموقع والمدة والإغلاق"]
@@ -283,7 +284,7 @@ flowchart TB
 `Road Works Planner`
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يسجل مقدم الطلب أو المشرف"]
  B["2. ينشئ طلب العمل أو إشعار الإغلاق"]
@@ -315,7 +316,7 @@ flowchart TB
 هذه رحلة محلل وليست رحلة مواطن أو مقدم تصريح.
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يعرف المحلل شبكة الطريق والطلب"]
  B["2. يعرف مناطق العمل ومراحلها"]
@@ -343,7 +344,7 @@ flowchart TB
 `Aimsun Live`
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يربط المشغل نموذج الشبكة بالحساسات"]
  B["2. يستقبل الأحجام والسرعات والحوادث"]
@@ -372,7 +373,7 @@ flowchart TB
 لا تعني أنها منتج واحد.
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. يعتمد إغلاق وتحويلة"]
  B["2. يحول القرار إلى حدث معياري"]
@@ -393,7 +394,7 @@ flowchart TB
 ## رحلة الحفر المشترك
 
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": false, "nodeSpacing": 80, "rankSpacing": 100}, "themeVariables": {"fontSize": "23px"}}}%%
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["1. تستقبل خطط أعمال الجهات"]
  B["2. توحد المواقع والفترات الزمنية"]

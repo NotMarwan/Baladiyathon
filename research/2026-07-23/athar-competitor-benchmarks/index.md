@@ -237,6 +237,7 @@
 ## معمار تجربة أثر المقترح
 
 ```mermaid
+%%{init: {"flowchart": {"useMaxWidth": true, "nodeSpacing": 32, "rankSpacing": 48}, "themeVariables": {"fontSize": "15px"}}}%%
 flowchart TB
  A["منصة التصاريح: الطلب والحالة والصلاحيات"] --> X["أثر: تقييم وترتيب وتفسير"]
  B["بيانات الحركة والنقل العام والأعمال"] --> X
