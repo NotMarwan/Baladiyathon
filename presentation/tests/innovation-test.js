@@ -13,6 +13,7 @@ const Boundary = require(path.join(__dirname, '..', 'athar-boundary.js'));
 const Budget = require(path.join(__dirname, '..', 'athar-budget.js'));
 const Reasons = require(path.join(__dirname, '..', 'athar-reasons.js'));
 const Conflict = require(path.join(__dirname, '..', 'athar-conflict.js'));
+const Memory = require(path.join(__dirname, '..', 'athar-memory.js'));
 
 let count = 0;
 
@@ -246,6 +247,61 @@ test('Dig-Once grouping responds to the supplied coordination window', () => {
   );
 
   assert.ok(wideLargest > narrowLargest);
+});
+
+test('calibration memory derives correction from observed and predicted totals', () => {
+  const result = Memory.calibrate(Demo.memoryRecords, {
+    successThresholdPct: 15,
+    provenance: Demo.meta,
+  });
+
+  assert.ok(
+    Math.abs(result.correctionFactor - 6130 / 5400) < 1e-12
+  );
+  assert.equal(result.method, 'sum(observedVehHours) / sum(predictedVehHours)');
+  assert.notEqual(result.correctionFactor, 0.35);
+  assert.notEqual(result.correctionFactor, 1.3);
+});
+
+test('calibration memory improves aggregate error without hiding regressions', () => {
+  const result = Memory.calibrate(Demo.memoryRecords, {
+    successThresholdPct: 15,
+    provenance: Demo.meta,
+  });
+
+  assert.equal(result.beforeMapePct, 21);
+  assert.ok(result.afterMapePct < result.beforeMapePct);
+  assert.ok(result.casesImproved > 0);
+  assert.ok(result.casesWorsened > 0);
+});
+
+test('calibration memory keeps successful and failed cases visible', () => {
+  const result = Memory.calibrate(Demo.memoryRecords, {
+    successThresholdPct: 15,
+    provenance: Demo.meta,
+  });
+
+  assert.ok(result.verdictCounts.before.success > 0);
+  assert.ok(result.verdictCounts.before.failure > 0);
+  assert.ok(result.verdictCounts.after.success > 0);
+  assert.ok(result.verdictCounts.after.failure > 0);
+  assert.ok(result.records.every((record) => record.beforeVerdict));
+  assert.ok(result.records.every((record) => record.afterVerdict));
+});
+
+test('calibration judgments respond to the supplied success threshold', () => {
+  const strict = Memory.calibrate(Demo.memoryRecords, {
+    successThresholdPct: 15,
+    provenance: Demo.meta,
+  });
+  const broad = Memory.calibrate(Demo.memoryRecords, {
+    successThresholdPct: 35,
+    provenance: Demo.meta,
+  });
+
+  assert.ok(
+    broad.verdictCounts.before.success > strict.verdictCounts.before.success
+  );
 });
 
 console.log(`ALL INNOVATION TESTS PASSED (${count})`);
