@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>أثر — حزمة قرار قبل التصريح</title>
+  <style>
+    :root {
+      --ink: #15211b;
+      --muted: #68746d;
+      --paper: #f3f2ec;
+      --surface: #fffef9;
+      --line: #d7dbd4;
+      --green: #0e6b4f;
+      --green-soft: #dcece5;
+      --amber: #a45e0d;
+      --amber-soft: #f7ead4;
+      --red: #a3392e;
+      --red-soft: #f7e2de;
+      --blue: #315a78;
+      --shadow: 0 18px 48px rgba(31, 43, 36, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, #e8eee8 0, transparent 24rem),
+        linear-gradient(145deg, #f7f5ee 0%, var(--paper) 60%, #eceee8 100%);
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 30px;
+    }
+
+    .masthead {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.65rem, 3vw, 2.7rem);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+
+    .honesty {
+      flex: 0 0 auto;
+      max-width: 290px;
+      padding: 11px 14px;
+      border: 1px solid #d8bc8f;
+      border-radius: 12px;
+      color: #6f4109;
+      background: var(--amber-soft);
+      font-size: 0.78rem;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .scenario-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .scenario-bar button {
+      min-height: 36px;
+      padding: 7px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255, 254, 249, 0.85);
+      transition: 150ms ease;
+    }
+
+    .scenario-bar button:hover,
+    .scenario-bar button:focus-visible {
+      border-color: var(--green);
+      color: var(--green);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(290px, 0.78fr) minmax(0, 2.22fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 254, 249, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .input-panel {
+      position: sticky;
+      top: 12px;
+      padding: 16px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-title h2,
+    .card h2,
+    .card h3 {
+      margin: 0;
+    }
+
+    .panel-title h2 {
+      font-size: 1rem;
+    }
+
+    .source-chip {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #f5f5f0;
+      font-size: 0.68rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 38px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--green);
+      outline: 3px solid rgba(14, 107, 79, 0.12);
+    }
+
+    input[readonly] {
+      color: var(--muted);
+      background: #f2f3ef;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .check-row input {
+      width: 16px;
+      min-height: 16px;
+      margin: 0;
+    }
+
+    .check-row label {
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .primary {
+      width: 100%;
+      min-height: 42px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 10px;
+      color: #fff;
+      background: var(--green);
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(14, 107, 79, 0.2);
+    }
+
+    .primary:hover,
+    .primary:focus-visible {
+      background: #095840;
+      outline: 3px solid rgba(14, 107, 79, 0.18);
+    }
+
+    .results {
+      display: grid;
+      gap: 12px;
+    }
+
+    .gate-row {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 12px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .status-card {
+      min-height: 128px;
+    }
+
+    .card-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 0 0 4px rgba(104, 116, 109, 0.12);
+    }
+
+    .status-card[data-status="ready"] .status-dot,
+    .status-card[data-status="recommended"] .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(14, 107, 79, 0.12);
+    }
+
+    .status-card[data-status="assumption-bound"] .status-dot,
+    .status-card[data-status="conditional"] .status-dot {
+      background: var(--amber);
+      box-shadow: 0 0 0 4px rgba(164, 94, 13, 0.12);
+    }
+
+    .status-card[data-status="blocked"] .status-dot {
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(163, 57, 46, 0.12);
+    }
+
+    .status-value {
+      font-size: 1.12rem;
+      font-weight: 900;
+    }
+
+    .status-detail {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .decision-card {
+      min-height: 182px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .decision-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -35px auto;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .decision-card h3 {
+      position: relative;
+      z-index: 1;
+      font-size: 0.94rem;
+    }
+
+    .metric {
+      position: relative;
+      z-index: 1;
+      margin: 12px 0 5px;
+      color: var(--green);
+      font-size: clamp(1.35rem, 2.5vw, 2.15rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .metric small {
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0;
+    }
+
+    .description {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.6;
+    }
+
+    .micro {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .micro span {
+      padding: 4px 7px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: #e6eef3;
+      font-size: 0.66rem;
+      font-weight: 700;
+    }
+
+    .evidence-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .list {
+      display: grid;
+      gap: 7px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 9px;
+      border: 1px solid #e4e6e1;
+      border-radius: 9px;
+      background: #fbfbf7;
+      font-size: 0.72rem;
+    }
+
+    .list strong {
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .list small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .footer-note {
+      margin: 0;
+      padding: 10px 13px;
+      border: 1px dashed #c9cec7;
+      border-radius: 10px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.45);
+      font-size: 0.7rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1040px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .input-panel {
+        position: static;
+      }
+
+      .decision-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+        padding-top: 14px;
+      }
+
+      .masthead,
+      .gate-row,
+      .decision-grid,
+      .evidence-row {
+        grid-template-columns: 1fr;
+      }
+
+      .masthead {
+        display: grid;
+      }
+
+      .honesty {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">قرار قابل للتدقيق قبل التصريح</p>
+        <h1>هل ننفّذ الإغلاق كما طُلب؟</h1>
+        <p class="subtitle">
+          شاشة واحدة تجمع أثر الحركة والبديل الزمني ومسار التحويل والتوقع
+          والتعارض، ثم تمتنع عن التوصية إذا كانت البيانات الحاسمة ناقصة.
+        </p>
+      </div>
+      <div class="honesty">
+        حالة توضيحية وليست نتيجة ميدانية. هندسة الشبكة من بيانات مفتوحة،
+        وقيم الحركة والسعة والسرعة الحرة افتراضات معلنة تحتاج إلى معايرة تشغيلية.
+      </div>
+    </header>
+
+    <nav class="scenario-bar" aria-label="حالات التحقق السريع">
+      <button id="scenario-morning" type="button">إغلاق صباحي</button>
+      <button id="scenario-night" type="button">إغلاق ليلي</button>
+      <button id="scenario-missing" type="button">حذف بيانات حاسمة</button>
+      <button id="scenario-conflict" type="button">تبديل التعارض</button>
+    </nav>
+
+    <div class="workspace">
+      <section class="panel input-panel" aria-labelledby="input-title">
+        <div class="panel-title">
+          <h2 id="input-title">بيانات التصريح</h2>
+          <span class="source-chip">مدخل واحد لكل الوحدات</span>
+        </div>
+
+        <form id="decision-form">
+          <div class="form-grid">
+            <div class="field">
+              <label for="permit-id">رقم التصريح</label>
+              <input id="permit-id" value="P-1042">
+            </div>
+
+            <div class="field">
+              <label for="segment-id">مقطع الإغلاق</label>
+              <select id="segment-id">
+                <option value="kf_2">الملك فهد — المقطع الثاني</option>
+                <option value="kf_3" selected>الملك فهد — المقطع الثالث</option>
+                <option value="kf_4">الملك فهد — المقطع الرابع</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="start-date">تاريخ البدء</label>
+              <input id="start-date" type="date" value="2026-08-04">
+            </div>
+
+            <div class="field">
+              <label for="start-hour">ساعة البدء</label>
+              <input id="start-hour" type="number" min="0" max="23" value="8">
+            </div>
+
+            <div class="field">
+              <label for="duration-hours">المدة بالساعات</label>
+              <input id="duration-hours" type="number" min="1" value="8">
+            </div>
+
+            <div class="field">
+              <label for="aadt">الحركة اليومية</label>
+              <input id="aadt" type="number" min="1" value="85000">
+            </div>
+
+            <div class="field">
+              <label for="lanes">المسارات الكلية</label>
+              <input id="lanes" type="number" min="1" value="4">
+            </div>
+
+            <div class="field">
+              <label for="lanes-closed">المسارات المغلقة</label>
+              <input id="lanes-closed" type="number" min="1" value="1">
+            </div>
+
+            <div class="field">
+              <label for="origin-node">بداية الممر</label>
+              <input id="origin-node" value="kf0" readonly>
+            </div>
+
+            <div class="field">
+              <label for="destination-node">نهاية الممر</label>
+              <input id="destination-node" value="kf5" readonly>
+            </div>
+
+            <div class="field wide">
+              <div class="check-row">
+                <input id="include-conflict" type="checkbox" checked>
+                <label for="include-conflict">
+                  تضمين تصريح متداخل على المقطع نفسه
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button class="primary" type="submit">إعادة حساب القرار</button>
+        </form>
+      </section>
+
+      <section class="results" aria-live="polite">
+        <div class="gate-row">
+          <article
+            id="quality-card"
+            class="card status-card"
+            data-status="blocked"
+          >
+            <p class="card-label">بوابة جودة البيانات</p>
+            <div class="status-line">
+              <span class="status-dot" aria-hidden="true"></span>
+              <strong id="quality-status" class="status-value">
+                جارٍ التحقق
+              </strong>
+            </div>
+            <p id="quality-detail" class="status-detail"></p>
+          </article>
+
+          <article
+            id="verdict-card"
+            class="card status-card"
+            data-status="blocked"
+          >
+            <p class="card-label">الحكم قبل التصريح</p>
+            <div class="status-line">
+              <span class="status-dot" aria-hidden="true"></span>
+              <strong id="verdict-status" class="status-value">
+                لا توصية بعد
+              </strong>
+            </div>
+            <p id="verdict-detail" class="status-detail"></p>
+          </article>
+        </div>
+
+        <div class="decision-grid">
+          <article id="schedule-card" class="card decision-card">
+            <p class="card-label">البديل الزمني الأعلى</p>
+            <h3 id="schedule-title">لا بديل</h3>
+            <p id="schedule-metric" class="metric">—</p>
+            <p id="schedule-detail" class="description"></p>
+            <div id="schedule-tags" class="micro"></div>
+          </article>
+
+          <article id="route-card" class="card decision-card">
+            <p class="card-label">مسار التحويل الأعلى</p>
+            <h3 id="route-title">لا مسار</h3>
+            <p id="route-metric" class="metric">—</p>
+            <p id="route-detail" class="description"></p>
+            <div id="route-tags" class="micro"></div>
+          </article>
+
+          <article id="conflicts-card" class="card decision-card">
+            <p class="card-label">التعارضات النشطة</p>
+            <h3 id="conflict-title">جارٍ التحليل</h3>
+            <p id="conflict-metric" class="metric">—</p>
+            <p id="conflict-detail" class="description"></p>
+            <div id="forecast-tags" class="micro"></div>
+          </article>
+        </div>
+
+        <div class="evidence-row">
+          <article class="card">
+            <div class="panel-title">
+              <h2>أسباب رقمية</h2>
+              <span class="source-chip">ثلاثة أسباب كحد أقصى</span>
+            </div>
+            <ul id="evidence-list" class="list"></ul>
+          </article>
+
+          <article class="card">
+            <div class="panel-title">
+              <h2>الافتراضات والمنشأ</h2>
+              <span class="source-chip">ظاهرة وليست مخفية</span>
+            </div>
+            <ul id="assumptions-list" class="list"></ul>
+          </article>
+        </div>
+
+        <p class="footer-note">
+          لا تصدر الشاشة تصريحاً ولا تستبدل المراجع البشري. توصيتها مدخل
+          للمراجعة، وتبقى محجوبة عند نقص البيانات. الشكل الشبكي من مساهمي
+          خريطة الشارع المفتوحة، والقيم التشغيلية توضيحية.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <script src="athar-engine.js"></script>
+  <script src="athar-routing.js"></script>
+  <script src="athar-forecast.js"></script>
+  <script src="athar-reasons.js"></script>
+  <script src="athar-conflict.js"></script>
+  <script src="athar-decision.js"></script>
+  <script>
+    'use strict';
+
+    const NETWORK_TEMPLATE = {
+      metadata: {
+        source: 'OpenStreetMap contributors',
+        license: 'ODbL 1.0',
+        note: 'Geometry is open data; capacities and demand are illustrative.',
+        area: 'King Fahd Road demo corridor, Riyadh',
+        aadtScale: 85000,
+        coordFormat: '[lat, lng]',
+      },
+      nodes: {
+        kf0: { lat: 24.6860, lng: 46.6815, name: 'الملك فهد × العروبة' },
+        kf1: { lat: 24.7000, lng: 46.6790, name: 'الملك فهد × التحلية' },
+        kf2: { lat: 24.7140, lng: 46.6765, name: 'الملك فهد × مكة' },
+        kf3: { lat: 24.7285, lng: 46.6740, name: 'الملك فهد × الأمير محمد' },
+        kf4: { lat: 24.7425, lng: 46.6742, name: 'الملك فهد × الملك عبدالله' },
+        kf5: { lat: 24.7565, lng: 46.6768, name: 'الملك فهد × الأمير سلطان' },
+        ol0: { lat: 24.6862, lng: 46.6870, name: 'العليا × العروبة' },
+        ol1: { lat: 24.7002, lng: 46.6848, name: 'العليا × التحلية' },
+        ol2: { lat: 24.7142, lng: 46.6825, name: 'العليا × مكة' },
+        ol3: { lat: 24.7287, lng: 46.6802, name: 'العليا × الأمير محمد' },
+        ol4: { lat: 24.7427, lng: 46.6805, name: 'العليا × الملك عبدالله' },
+        ol5: { lat: 24.7567, lng: 46.6830, name: 'العليا × الأمير سلطان' },
+        tk0: { lat: 24.6858, lng: 46.6752, name: 'التخصصي × العروبة' },
+        tk1: { lat: 24.6998, lng: 46.6730, name: 'التخصصي × التحلية' },
+        tk2: { lat: 24.7138, lng: 46.6706, name: 'التخصصي × مكة' },
+        tk3: { lat: 24.7283, lng: 46.6682, name: 'التخصصي × الأمير محمد' },
+        tk4: { lat: 24.7423, lng: 46.6684, name: 'التخصصي × الملك عبدالله' },
+        tk5: { lat: 24.7563, lng: 46.6710, name: 'التخصصي × الأمير سلطان' },
+      },
+      edges: [
+        { id: 'kf_1', from: 'kf0', to: 'kf1', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+        { id: 'kf_2', from: 'kf1', to: 'kf2', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+        { id: 'kf_3', from: 'kf2', to: 'kf3', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+        { id: 'kf_4', from: 'kf3', to: 'kf4', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+        { id: 'kf_5', from: 'kf4', to: 'kf5', name: 'طريق الملك فهد', lanes: 4, capacityPerLane: 1800, freeFlowKmh: 70, demandShare: 1.0 },
+        { id: 'ol_1', from: 'ol0', to: 'ol1', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+        { id: 'ol_2', from: 'ol1', to: 'ol2', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+        { id: 'ol_3', from: 'ol2', to: 'ol3', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+        { id: 'ol_4', from: 'ol3', to: 'ol4', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+        { id: 'ol_5', from: 'ol4', to: 'ol5', name: 'شارع العليا', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.55 },
+        { id: 'tk_1', from: 'tk0', to: 'tk1', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+        { id: 'tk_2', from: 'tk1', to: 'tk2', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+        { id: 'tk_3', from: 'tk2', to: 'tk3', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+        { id: 'tk_4', from: 'tk3', to: 'tk4', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+        { id: 'tk_5', from: 'tk4', to: 'tk5', name: 'طريق التخصصي', lanes: 3, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.65 },
+        { id: 'x0_kt', from: 'kf0', to: 'tk0', name: 'طريق العروبة', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+        { id: 'x0_ko', from: 'kf0', to: 'ol0', name: 'طريق العروبة', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+        { id: 'x1_kt', from: 'kf1', to: 'tk1', name: 'شارع التحلية', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.6 },
+        { id: 'x1_ko', from: 'kf1', to: 'ol1', name: 'شارع التحلية', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.6 },
+        { id: 'x2_kt', from: 'kf2', to: 'tk2', name: 'طريق مكة', lanes: 3, capacityPerLane: 1650, freeFlowKmh: 55, demandShare: 0.55 },
+        { id: 'x2_ko', from: 'kf2', to: 'ol2', name: 'طريق مكة', lanes: 3, capacityPerLane: 1650, freeFlowKmh: 55, demandShare: 0.55 },
+        { id: 'x3_kt', from: 'kf3', to: 'tk3', name: 'طريق الأمير محمد', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.5 },
+        { id: 'x3_ko', from: 'kf3', to: 'ol3', name: 'طريق الأمير محمد', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 50, demandShare: 0.5 },
+        { id: 'x4_kt', from: 'kf4', to: 'tk4', name: 'طريق الملك عبدالله', lanes: 4, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.6 },
+        { id: 'x4_ko', from: 'kf4', to: 'ol4', name: 'طريق الملك عبدالله', lanes: 4, capacityPerLane: 1700, freeFlowKmh: 60, demandShare: 0.6 },
+        { id: 'x5_kt', from: 'kf5', to: 'tk5', name: 'طريق الأمير سلطان', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+        { id: 'x5_ko', from: 'kf5', to: 'ol5', name: 'طريق الأمير سلطان', lanes: 3, capacityPerLane: 1600, freeFlowKmh: 55, demandShare: 0.5 },
+      ],
+      corridorEdges: ['kf_1', 'kf_2', 'kf_3', 'kf_4', 'kf_5'],
+      pois: [
+        { id: 'poi_hosp', kind: 'hospital', name: 'مستشفى توضيحي', lat: 24.7283, lng: 46.6682 },
+        { id: 'poi_school', kind: 'school', name: 'مدرسة توضيحية', lat: 24.7142, lng: 46.6825 },
+      ],
+    };
+
+    function numberFrom(id) {
+      const raw = document.getElementById(id).value.trim();
+      return raw === '' ? undefined : Number(raw);
+    }
+
+    function dayOfWeek(dateText) {
+      const date = new Date(`${dateText}T12:00:00+03:00`);
+      return Number.isNaN(date.getTime()) ? 0 : date.getUTCDay();
+    }
+
+    function permitWindow(input) {
+      const hour = String(input.startHour).padStart(2, '0');
+      const start = new Date(`${input.startDate}T${hour}:00:00+03:00`);
+      const end = new Date(
+        start.getTime() + input.durationHours * 3600000
+      );
+      return { start: start.toISOString(), end: end.toISOString() };
+    }
+
+    function engineInput(input) {
+      return {
+        ...input,
+        capacityPerLane: AtharEngine.DEFAULTS.capacityPerLane,
+        freeFlowMin: AtharEngine.DEFAULTS.freeFlowMin,
+      };
+    }
+
+    function networkFor(input) {
+      return {
+        ...NETWORK_TEMPLATE,
+        metadata: {
+          ...NETWORK_TEMPLATE.metadata,
+          aadtScale: input.aadt,
+        },
+      };
+    }
+
+    function scheduleId(item) {
+      return `schedule-${item.startHour}-${item.phases}`;
+    }
+
+    const dependencies = {
+      engine: {
+        score(input) {
+          return AtharEngine.score(engineInput(input));
+        },
+        optimize(input) {
+          return AtharEngine.optimize(engineInput(input)).top3.map((item) => ({
+            ...item,
+            id: scheduleId(item),
+          }));
+        },
+      },
+      routing: {
+        alternatives(input) {
+          const raw = AtharRouting.alternativeRoutes(
+            networkFor(input),
+            input.segmentId,
+            input.startHour,
+            { lanesClosed: input.lanesClosed, k: 3 }
+          );
+          return raw.alternatives.map((item) => ({
+            ...item,
+            id: `route-${item.edges.join('-')}`,
+            label: Array.from(new Set(item.streets)).join(' ← '),
+            viaClosureMin: raw.viaClosureMin,
+            baselineMin: raw.baselineMin,
+          }));
+        },
+      },
+      forecast: {
+        predict(input) {
+          const result = AtharForecast.forecast(
+            input.startHour,
+            dayOfWeek(input.startDate),
+            { calibrated: false }
+          );
+          return {
+            p50: result.demandFraction * input.aadt,
+            low: result.low * input.aadt,
+            high: result.high * input.aadt,
+            calibrated: result.calibrated,
+            dayName: result.dowName,
+          };
+        },
+      },
+      conflict: {
+        detect(input) {
+          const currentWindow = permitWindow(input);
+          const permits = [
+            {
+              id: input.permitId,
+              routeSegments: [input.segmentId],
+              start: currentWindow.start,
+              end: currentWindow.end,
+              delayVehHours: AtharEngine.score(engineInput(input)).delayVehHours,
+            },
+          ];
+
+          if (input.includeConflict) {
+            const secondStart = new Date(
+              new Date(currentWindow.start).getTime() + 3600000
+            );
+            const secondEnd = new Date(
+              secondStart.getTime() + Math.max(2, input.durationHours / 2) * 3600000
+            );
+            permits.push({
+              id: 'P-NEARBY-7',
+              routeSegments: [input.segmentId],
+              start: secondStart.toISOString(),
+              end: secondEnd.toISOString(),
+              delayVehHours: 120,
+            });
+          }
+
+          return AtharConflict.analyze(permits, {
+            coordinationWindowHours: 24,
+            provenance: 'AtharConflict.analyze',
+          }).conflicts.map((item) => ({
+            permitId: item.pair.find((id) => id !== input.permitId),
+            overlapHours: item.temporalOverlapHours,
+            sharedSegments: item.sharedSegments,
+          }));
+        },
+      },
+      reasons: {
+        explain(context) {
+          const input = context.input;
+          const baselineForecast = AtharForecast.forecast(
+            input.startHour,
+            dayOfWeek(input.startDate),
+            { calibrated: false }
+          );
+          const baselineFactors = {
+            demandVehPerHour: baselineForecast.demandFraction * input.aadt,
+            queueVehHours: context.baseline.delayVehHours,
+            busPersonHours: 0,
+            corridorConflicts: context.conflicts.length,
+          };
+          const candidateFactors = context.scheduleAlternatives.map((item) => {
+            const demand = AtharForecast.forecast(
+              item.startHour,
+              dayOfWeek(input.startDate),
+              { calibrated: false }
+            );
+            return {
+              ...item,
+              demandVehPerHour: demand.demandFraction * input.aadt,
+              queueVehHours: item.delayVehHours,
+              busPersonHours: 0,
+              corridorConflicts: context.conflicts.length,
+            };
+          });
+          const explanation = AtharReasons.explain(
+            baselineFactors,
+            candidateFactors,
+            'AtharReasons.explain'
+          );
+          const topCandidate = explanation.ranked[0];
+          const factors = topCandidate
+            ? topCandidate.factors
+                .filter((item) => Number.isFinite(item.delta))
+                .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))
+                .slice(0, 2)
+                .map((item) => ({
+                  label: item.label,
+                  contribution: item.delta,
+                  provenance: `AtharReasons.explain · ${item.unit}`,
+                }))
+            : [];
+          const route = context.routeAlternatives[0];
+          if (route) {
+            factors.push({
+              label: 'زيادة زمن التحويل عن المرور داخل الإغلاق',
+              contribution: route.travelMin - route.viaClosureMin,
+              provenance: 'AtharRouting.alternativeRoutes · دقيقة',
+            });
+          }
+          return factors.slice(0, 3);
+        },
+      },
+    };
+
+    const decisionService = AtharDecision.createDecisionService(dependencies);
+    const formatter = new Intl.NumberFormat('ar-SA', {
+      maximumFractionDigits: 1,
+    });
+
+    function formatNumber(value) {
+      return Number.isFinite(value) ? formatter.format(value) : '—';
+    }
+
+    function readInput() {
+      return {
+        permitId: document.getElementById('permit-id').value.trim() || undefined,
+        segmentId: document.getElementById('segment-id').value || undefined,
+        startDate: document.getElementById('start-date').value || undefined,
+        startHour: numberFrom('start-hour'),
+        durationHours: numberFrom('duration-hours'),
+        lanes: numberFrom('lanes'),
+        lanesClosed: numberFrom('lanes-closed'),
+        aadt: numberFrom('aadt'),
+        originNodeId:
+          document.getElementById('origin-node').value.trim() || undefined,
+        destinationNodeId:
+          document.getElementById('destination-node').value.trim() || undefined,
+        includeConflict: document.getElementById('include-conflict').checked,
+        assumptions: [
+          {
+            name: 'capacityPerLane',
+            value: AtharEngine.DEFAULTS.capacityPerLane,
+            source: 'افتراض توضيحي في محرك أثر',
+          },
+          {
+            name: 'freeFlowMin',
+            value: AtharEngine.DEFAULTS.freeFlowMin,
+            source: 'افتراض توضيحي في محرك أثر',
+          },
+          {
+            name: 'networkDemandShares',
+            value: 'local-demo-network',
+            source: 'هندسة مفتوحة وقيم تشغيلية توضيحية',
+          },
+          {
+            name: 'forecastCalibration',
+            value: 'uncalibrated',
+            source: 'لا توجد عدادات حركة ميدانية للحالة',
+          },
+        ],
+      };
+    }
+
+    function qualityText(gate) {
+      if (gate.status === 'ready') return 'جاهز للحكم';
+      if (gate.status === 'assumption-bound') {
+        return 'حكم مشروط بافتراضات';
+      }
+      return 'القرار محجوب';
+    }
+
+    function verdictText(verdict) {
+      if (!verdict) return 'لا توصية';
+      if (verdict.status === 'conditional') {
+        return 'مراجعة بشرية مشروطة';
+      }
+      return 'موصى به للمراجعة';
+    }
+
+    function renderQuality(result) {
+      const gate = result.qualityGate;
+      const card = document.getElementById('quality-card');
+      card.dataset.status = gate.status;
+      document.getElementById('quality-status').textContent =
+        qualityText(gate);
+
+      const details = [];
+      if (gate.missing.length) {
+        details.push(`حقول مفقودة: ${gate.missing.join('، ')}`);
+      }
+      if (gate.invalid.length) {
+        details.push(
+          `قيم غير صالحة: ${gate.invalid.map((item) => item.field).join('، ')}`
+        );
+      }
+      if (gate.status === 'assumption-bound') {
+        details.push(
+          `${formatNumber(gate.assumptions.length)} افتراضات معلنة تمنع وصف النتيجة بأنها ميدانية`
+        );
+      }
+      if (gate.status === 'ready') {
+        details.push('كل الحقول الحاسمة موجودة ولا توجد افتراضات مستبدلة');
+      }
+      document.getElementById('quality-detail').textContent =
+        details.join(' · ');
+    }
+
+    function renderVerdict(result) {
+      const verdict = result.verdict;
+      const card = document.getElementById('verdict-card');
+      card.dataset.status = verdict ? verdict.status : 'blocked';
+      document.getElementById('verdict-status').textContent =
+        verdictText(verdict);
+
+      const detail = verdict
+        ? verdict.status === 'conditional'
+          ? 'يوجد تداخل نشط. لا يعتمد البديل قبل التنسيق مع التصريح المتقاطع.'
+          : 'لا يظهر تعارض في حزمة العرض. يبقى الاعتماد النهائي للمراجع البشري.'
+        : 'أكمل البيانات أو أصلح المخرجات قبل مقارنة البدائل.';
+      document.getElementById('verdict-detail').textContent = detail;
+    }
+
+    function renderSchedule(result) {
+      const item = result.scheduleAlternatives[0];
+      document.getElementById('schedule-title').textContent =
+        item ? item.label : 'لا بديل صالح';
+      document.getElementById('schedule-metric').innerHTML = item
+        ? `${formatNumber(item.savedVehHours)} <small>ساعة مركبة أقل</small>`
+        : '—';
+      document.getElementById('schedule-detail').textContent = item
+        ? `الأثر المتوقع ${formatNumber(item.delayVehHours)} ساعة مركبة، بفارق ${formatNumber(item.savedPct)}٪ عن خط الطلب.`
+        : 'حُجبت المقارنة لأن حزمة الجدولة لم تعد ببديل صالح.';
+      document.getElementById('schedule-tags').innerHTML = item
+        ? `<span>بدء ${formatNumber(item.startHour)}:00</span><span>${formatNumber(item.phases)} مرحلة</span>`
+        : '';
+    }
+
+    function renderRoute(result) {
+      const item = result.routeAlternatives[0];
+      document.getElementById('route-title').textContent =
+        item ? item.label : 'لا مسار صالح';
+      document.getElementById('route-metric').innerHTML = item
+        ? `${formatNumber(item.travelMin)} <small>دقيقة</small>`
+        : '—';
+      document.getElementById('route-detail').textContent = item
+        ? `فرق ${formatNumber(item.extraMin)} دقيقة عن الطريق الطبيعي، وسعة متبقية توضيحية قبل تحميل الحركة المحولة ${formatNumber(item.residualCapacityPct)}٪.`
+        : 'حُجبت المقارنة لأن حزمة التوجيه لم تعد بمسار صالح.';
+      const poiCount = item ? item.nearPois.length : 0;
+      document.getElementById('route-tags').innerHTML = item
+        ? `<span>${formatNumber(item.edges.length)} مقاطع</span><span>${formatNumber(poiCount)} نقاط حساسة قريبة</span>`
+        : '';
+    }
+
+    function renderConflict(result) {
+      const count = result.conflicts.length;
+      const first = result.conflicts[0];
+      document.getElementById('conflict-title').textContent =
+        count > 0 ? 'تنسيق مطلوب قبل الاعتماد' : 'لا تعارض في حالة العرض';
+      document.getElementById('conflict-metric').innerHTML =
+        `${formatNumber(count)} <small>تعارض نشط</small>`;
+      document.getElementById('conflict-detail').textContent = first
+        ? `التصريح ${first.permitId} يتداخل ${formatNumber(first.overlapHours)} ساعة على المقطع نفسه.`
+        : 'لم يظهر تداخل زمني ومكاني مع التصريح التوضيحي الآخر.';
+
+      const forecast = result.forecast;
+      document.getElementById('forecast-tags').innerHTML = forecast
+        ? `<span>طلب متوقع ${formatNumber(forecast.p50)} مركبة/س</span><span>نطاق ${formatNumber(forecast.low)}–${formatNumber(forecast.high)}</span>`
+        : '';
+    }
+
+    function renderList(id, items, emptyText, renderItem) {
+      const list = document.getElementById(id);
+      if (!items.length) {
+        list.innerHTML = `<li class="empty">${emptyText}</li>`;
+        return;
+      }
+      list.innerHTML = items.map(renderItem).join('');
+    }
+
+    function renderEvidence(result) {
+      renderList(
+        'evidence-list',
+        result.evidence.slice(0, 3),
+        'لا دليل رقمي صالح؛ الحكم محجوب.',
+        (item) => `
+          <li>
+            <span>
+              ${item.label}
+              <small>${item.provenance}</small>
+            </span>
+            <strong>${formatNumber(item.value)}</strong>
+          </li>
+        `
+      );
+    }
+
+    function renderAssumptions(result) {
+      renderList(
+        'assumptions-list',
+        result.qualityGate.assumptions,
+        'لا توجد افتراضات مستبدلة.',
+        (item) => `
+          <li>
+            <span>
+              ${item.name}
+              <small>${item.source}</small>
+            </span>
+            <strong>${item.value}</strong>
+          </li>
+        `
+      );
+    }
+
+    function render(result) {
+      renderQuality(result);
+      renderVerdict(result);
+      renderSchedule(result);
+      renderRoute(result);
+      renderConflict(result);
+      renderEvidence(result);
+      renderAssumptions(result);
+    }
+
+    function evaluateCurrent() {
+      const input = readInput();
+      const result = decisionService.evaluate(input);
+      render(result);
+      return result;
+    }
+
+    document
+      .getElementById('decision-form')
+      .addEventListener('submit', (event) => {
+        event.preventDefault();
+        evaluateCurrent();
+      });
+
+    document
+      .getElementById('scenario-morning')
+      .addEventListener('click', () => {
+        document.getElementById('start-hour').value = '8';
+        document.getElementById('aadt').value = '85000';
+        evaluateCurrent();
+      });
+
+    document
+      .getElementById('scenario-night')
+      .addEventListener('click', () => {
+        document.getElementById('start-hour').value = '23';
+        document.getElementById('aadt').value = '85000';
+        evaluateCurrent();
+      });
+
+    document
+      .getElementById('scenario-missing')
+      .addEventListener('click', () => {
+        document.getElementById('aadt').value = '';
+        evaluateCurrent();
+      });
+
+    document
+      .getElementById('scenario-conflict')
+      .addEventListener('click', () => {
+        const toggle = document.getElementById('include-conflict');
+        toggle.checked = !toggle.checked;
+        if (document.getElementById('aadt').value === '') {
+          document.getElementById('aadt').value = '85000';
+        }
+        evaluateCurrent();
+      });
+
+    evaluateCurrent();
+  </script>
+</body>
+</html>

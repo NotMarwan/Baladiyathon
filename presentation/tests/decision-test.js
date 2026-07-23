@@ -350,6 +350,67 @@ test('no conflict returns a recommended verdict', () => {
   assert.strictEqual(result.verdict.status, 'recommended');
 });
 
+test('offline decision page exposes the complete one-screen contract', () => {
+  const pagePath = path.join(__dirname, '..', 'athar-decision.html');
+  assert.ok(fs.existsSync(pagePath), 'athar-decision.html must exist');
+
+  const source = fs.readFileSync(pagePath, 'utf8');
+  [
+    'decision-form',
+    'quality-status',
+    'verdict-status',
+    'schedule-card',
+    'route-card',
+    'conflicts-card',
+    'evidence-list',
+    'assumptions-list',
+    'scenario-morning',
+    'scenario-night',
+    'scenario-missing',
+    'scenario-conflict',
+  ].forEach((id) => {
+    assert.ok(source.includes(`id="${id}"`), `missing page id: ${id}`);
+  });
+
+  [
+    'athar-engine.js',
+    'athar-routing.js',
+    'athar-forecast.js',
+    'athar-reasons.js',
+    'athar-conflict.js',
+    'athar-decision.js',
+  ].forEach((scriptName) => {
+    assert.ok(source.includes(`src="${scriptName}"`), scriptName);
+  });
+
+  assert.ok(source.includes('AtharDecision.createDecisionService'));
+  assert.ok(!/\bfetch\s*\(/.test(source), 'offline page must not fetch data');
+  assert.ok(
+    !/\bXMLHttpRequest\b/.test(source),
+    'offline page must not use XMLHttpRequest'
+  );
+  assert.ok(
+    !source.includes('Math.pow('),
+    'page must not duplicate the traffic model'
+  );
+  assert.ok(
+    source.includes('route.travelMin - route.viaClosureMin'),
+    'route evidence must report a positive added-time convention'
+  );
+  assert.ok(
+    source.includes('زيادة زمن التحويل عن المرور داخل الإغلاق'),
+    'route evidence label must state the sign convention'
+  );
+  assert.ok(
+    !source.includes('route.viaClosureMin - route.travelMin'),
+    'route evidence must not invert the added-time sign'
+  );
+  assert.ok(
+    source.includes('قبل تحميل الحركة المحولة'),
+    'route capacity must disclose that diversion demand is not loaded yet'
+  );
+});
+
 test('owned production files contain no prohibited novelty claims', () => {
   const productionFiles = [
     path.join(__dirname, '..', 'athar-decision.js'),
