@@ -169,6 +169,109 @@ const validScoreInput = {
     });
   });
 
+  /* ---- دورة القرار عبر الواجهة ---- */
+
+  const validDecision = {
+    version: 2,
+    status: 'Approved',
+    action: 'approve',
+    actor: 'مراجع أول',
+    reason: 'الأثر ضمن الحد',
+    at: '2026-07-25T10:00:00Z',
+    inputs: { aadt: 80000, lanes: 4, lanesClosed: 2, startHour: 8, durationHours: 8 },
+  };
+
+  await test('decision endpoint stores a record and returns the trail', async () => {
+    await withServer(async (baseUrl) => {
+      const result = await post(baseUrl, '/api/works/p001/decisions', validDecision);
+      assert.strictEqual(result.status, 200);
+      assert.strictEqual(result.body.workId, 'p001');
+      assert.strictEqual(result.body.stored, 1);
+      assert.strictEqual(result.body.decisions[0].actor, 'مراجع أول');
+    });
+  });
+
+  await test('decision without an inputs snapshot is rejected', async () => {
+    await withServer(async (baseUrl) => {
+      const { inputs, ...withoutInputs } = validDecision;
+      const result = await post(baseUrl, '/api/works/p001/decisions', withoutInputs);
+      assert.strictEqual(result.status, 422);
+      assert.strictEqual(result.body.error, 'VALIDATION_ERROR');
+      assert.ok(result.body.fields.inputs, 'inputs must be flagged');
+    });
+  });
+
+  await test('decision version below two is rejected', async () => {
+    await withServer(async (baseUrl) => {
+      const result = await post(baseUrl, '/api/works/p001/decisions',
+        { ...validDecision, version: 1 });
+      assert.strictEqual(result.status, 422);
+      assert.ok(result.body.fields.version);
+    });
+  });
+
+  await test('missing actor or timestamp is rejected', async () => {
+    await withServer(async (baseUrl) => {
+      for (const field of ['actor', 'at', 'status', 'action']) {
+        const body = { ...validDecision };
+        delete body[field];
+        const result = await post(baseUrl, '/api/works/p001/decisions', body);
+        assert.strictEqual(result.status, 422, `${field} must be required`);
+        assert.ok(result.body.fields[field]);
+      }
+    });
+  });
+
+  await test('decisions accumulate by version and never silently drop', async () => {
+    await withServer(async (baseUrl) => {
+      await post(baseUrl, '/api/works/p007/decisions', validDecision);
+      await post(baseUrl, '/api/works/p007/decisions',
+        { ...validDecision, version: 3, action: 'schedule', status: 'Scheduled' });
+      const response = await fetch(`${baseUrl}/api/works/p007/decisions`);
+      const body = await response.json();
+      assert.strictEqual(response.status, 200);
+      assert.deepStrictEqual(body.decisions.map((d) => d.version), [2, 3]);
+    });
+  });
+
+  await test('re-posting the same version replaces it rather than duplicating', async () => {
+    await withServer(async (baseUrl) => {
+      await post(baseUrl, '/api/works/p009/decisions', validDecision);
+      const result = await post(baseUrl, '/api/works/p009/decisions',
+        { ...validDecision, actor: 'مراجع ثانٍ' });
+      assert.strictEqual(result.body.stored, 1);
+      assert.strictEqual(result.body.decisions[0].actor, 'مراجع ثانٍ');
+    });
+  });
+
+  await test('decisions of an untouched work read back empty, not 404', async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/works/p999/decisions`);
+      const body = await response.json();
+      assert.strictEqual(response.status, 200);
+      assert.deepStrictEqual(body.decisions, []);
+    });
+  });
+
+  await test('a malformed work id does not reach the decision store', async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/works/..%2F..%2Fetc/decisions`);
+      assert.strictEqual(response.status, 404);
+    });
+  });
+
+  await test('portfolio-wide decision ledger reports both counts', async () => {
+    await withServer(async (baseUrl) => {
+      await post(baseUrl, '/api/works/p001/decisions', validDecision);
+      await post(baseUrl, '/api/works/p002/decisions', validDecision);
+      await post(baseUrl, '/api/works/p002/decisions', { ...validDecision, version: 3 });
+      const response = await fetch(`${baseUrl}/api/decisions`);
+      const body = await response.json();
+      assert.strictEqual(body.counts.works, 2);
+      assert.strictEqual(body.counts.decisions, 3);
+    });
+  });
+
   console.log(`ALL SERVER TESTS PASSED (${passed})`);
 })().catch((error) => {
   console.error(error);

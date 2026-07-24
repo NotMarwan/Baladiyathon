@@ -192,9 +192,53 @@
       + (conflicts ? '<p class="desk-card-label">التعارض</p>'
         + '<ul class="desk-conflicts">' + conflicts + '</ul>'
         : '<p class="desk-none">لا تعارض على المقطع في النافذة نفسها.</p>')
+      + renderUnits(a.units)
       + '<p class="desk-source">المصدر: محرك أثر (BPR) على هندسة OpenStreetMap · '
       + 'قيم الحركة والسعة افتراضات معلنة.</p>'
       + '</section>';
+  }
+
+  /**
+   * الأثر بوحدات القرار لا بوحدات المرور.
+   * «ساعة-مركبة» لا تعني شيئاً لمن يوقّع؛ ساعات الناس والريال والكربون تعني.
+   * كل قيمة تُعرض بنطاقها لا برقم واحد: الإشغال وحصة قيمة الوقت واستهلاك الوقود
+   * كلها مدى معلن في المحرك، وطيّ المدى إلى رقم واحد ادعاء دقة غير موجودة.
+   */
+  function renderUnits(units) {
+    if (!units) return '';
+
+    var rows = [
+      {
+        label: 'ساعات الأشخاص',
+        value: range(units.personHoursLow, units.personHoursHigh),
+        note: 'إشغال ' + decimal(units.occLow) + '–' + decimal(units.occHigh) + ' راكب/مركبة',
+      },
+      {
+        label: 'قيمة الوقت',
+        value: units.sarLow === null || units.sarHigh === null
+          ? DASH
+          : range(units.sarLow, units.sarHigh) + ' ريال',
+        note: 'أجر ' + number(units.wageHourlySAR) + ' ريال/ساعة · حصة '
+          + Math.round(units.shareLow * 100) + '–' + Math.round(units.shareHigh * 100) + '٪',
+      },
+      {
+        label: 'انبعاثات كربون',
+        value: range(units.co2Low, units.co2High) + ' كجم',
+        note: 'تباطؤ ووقوف فقط — لا يشمل انبعاثات التنفيذ',
+      },
+    ];
+
+    return '<p class="desk-card-label">الأثر بوحدات القرار</p>'
+      + '<dl class="desk-units">' + rows.map(function (row) {
+        return '<div><dt>' + escapeHtml(row.label) + '</dt>'
+          + '<dd><span class="desk-figure">' + escapeHtml(row.value) + '</span>'
+          + '<span class="desk-unit-note">' + escapeHtml(row.note) + '</span></dd></div>';
+      }).join('') + '</dl>';
+  }
+
+  function range(low, high) {
+    if (!Number.isFinite(Number(low)) || !Number.isFinite(Number(high))) return DASH;
+    return number(low) + ' – ' + number(high);
   }
 
   function renderActions(feature) {

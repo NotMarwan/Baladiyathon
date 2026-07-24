@@ -185,6 +185,65 @@ ok('البطاقة تعرض الفرق عن الطلب الأصلي', () => {
   assert.ok(html.indexOf('نافذة ليلية') !== -1, 'البديل الفائز غير مسمّى');
 });
 
+ok('البطاقة تترجم الأثر إلى وحدات القرار بنطاقاتها', () => {
+  const html = File.renderSummary(feature(), {
+    scored: { delayPct: 42.5, delayVehHours: 940 },
+    alternatives: [{ label: 'كتلة ليلية', delayVehHours: 310 }],
+    reasons: [], conflicts: [], delta: -67,
+    units: {
+      personHoursLow: 1128, personHoursHigh: 1504, occLow: 1.2, occHigh: 1.6,
+      sarLow: 16359, sarHigh: 38171, wageHourlySAR: 36.25, shareLow: 0.4, shareHigh: 0.7,
+      co2Low: 1520, co2High: 2389,
+    },
+  });
+  ['ساعات الأشخاص', 'قيمة الوقت', 'انبعاثات كربون'].forEach((label) => {
+    assert.ok(html.indexOf(label) !== -1, `وحدة قرار مفقودة: ${label}`);
+  });
+  assert.ok(html.indexOf('–') !== -1, 'القيم مطويّة إلى رقم واحد بلا نطاق');
+  assert.ok(html.indexOf('ريال') !== -1 && html.indexOf('كجم') !== -1);
+});
+
+ok('كل وحدة قرار تحمل افتراضها معها', () => {
+  const html = File.renderSummary(feature(), {
+    scored: { delayPct: 10, delayVehHours: 100 },
+    alternatives: [{ label: 'x', delayVehHours: 90 }],
+    reasons: [], conflicts: [], delta: -10,
+    units: {
+      personHoursLow: 120, personHoursHigh: 160, occLow: 1.2, occHigh: 1.6,
+      sarLow: 1740, sarHigh: 4060, wageHourlySAR: 36.25, shareLow: 0.4, shareHigh: 0.7,
+      co2Low: 162, co2High: 254,
+    },
+  });
+  assert.ok(html.indexOf('إشغال') !== -1, 'نطاق الإشغال غير معلن');
+  assert.ok(html.indexOf('أجر') !== -1, 'سنة/قيمة الأجر غير معلنة');
+  assert.ok(html.indexOf('لا يشمل انبعاثات التنفيذ') !== -1, 'حدود حساب الكربون غير معلنة');
+});
+
+ok('غياب الوحدات لا يطبع قسماً فارغاً', () => {
+  const html = File.renderSummary(feature(), {
+    scored: { delayPct: 10, delayVehHours: 100 },
+    alternatives: [{ label: 'x', delayVehHours: 90 }],
+    reasons: [], conflicts: [], delta: -10,
+  });
+  assert.ok(html.indexOf('الأثر بوحدات القرار') === -1);
+  assert.ok(html.indexOf('NaN') === -1 && html.indexOf('undefined') === -1);
+});
+
+ok('قيمة الوقت غير المحسوبة تُعرض شرطة لا صفراً', () => {
+  const html = File.renderSummary(feature(), {
+    scored: { delayPct: 10, delayVehHours: 100 },
+    alternatives: [{ label: 'x', delayVehHours: 90 }],
+    reasons: [], conflicts: [], delta: -10,
+    units: {
+      personHoursLow: 120, personHoursHigh: 160, occLow: 1.2, occHigh: 1.6,
+      sarLow: null, sarHigh: null, wageHourlySAR: 36.25, shareLow: 0.4, shareHigh: 0.7,
+      co2Low: 162, co2High: 254,
+    },
+  });
+  assert.ok(html.indexOf('0 ريال') === -1, 'صفر مكان قيمة غير محسوبة');
+  assert.ok(html.indexOf('—') !== -1);
+});
+
 ok('العمل المُصعَّد لا يُعرض تأخيره رقماً دقيقاً', () => {
   const html = File.renderSummary(feature({ escalate: true, escalateReason: 'خارج النطاق' }), {
     scored: { delayPct: 1007.8, delayVehHours: 781148 },

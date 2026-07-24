@@ -235,6 +235,86 @@ async function handleApiDigOnce(req, res) {
   );
 }
 
+/**
+ * سجل القرارات في الذاكرة.
+ * ---------------------------------------------------------------------------
+ * الغرض معماري لا تشغيلي: يثبت أن دورة القرار تعبر واجهة، وأن الخادم يفرض
+ * القواعد نفسها التي تفرضها الواجهة. لا قاعدة بيانات — المحفظة توضيحية، وحفظها
+ * على القرص يوهم بديمومة لا وجود لها. المتصفح يحتفظ بنسخته محلياً كذلك، فسقوط
+ * الخادم لا يفقد المراجع قراره.
+ *
+ * السجل يخص نسخة الخادم لا الوحدة: خادمان في العملية نفسها لا يتشاركان قرارات،
+ * وإلا تسرّبت حالة اختبار إلى اختبار وحالة مستأجر إلى آخر.
+ */
+const DECISION_REQUIRED = ['version', 'status', 'action', 'actor', 'at'];
+
+function validateDecision(body) {
+  const fields = {};
+
+  DECISION_REQUIRED.forEach((field) => {
+    if (body[field] === undefined || body[field] === null || body[field] === '') {
+      fields[field] = 'required';
+    }
+  });
+
+  if (body.version !== undefined
+    && (!Number.isInteger(body.version) || body.version < 2)) {
+    // النسخة الأولى هي الطلب نفسه؛ أول قرار ينتج النسخة الثانية.
+    fields.version = 'must be an integer greater than 1';
+  }
+  if (body.at !== undefined && body.at !== null && Number.isNaN(Date.parse(body.at))) {
+    fields.at = 'must be an ISO date-time';
+  }
+  if (body.inputs !== undefined && !isPlainObject(body.inputs)) {
+    fields.inputs = 'must be an object';
+  }
+  if (!body.inputs || Object.keys(body.inputs).length === 0) {
+    // القاعدة نفسها التي يفرضها athar-desk-states: لا قرار بلا نسخة مدخلات.
+    fields.inputs = 'inputs snapshot is required — a decision without it is not explainable';
+  }
+
+  return { valid: Object.keys(fields).length === 0, fields };
+}
+
+function storeDecision(store, workId, record) {
+  const existing = store.get(workId) || [];
+  const merged = existing
+    .filter((item) => item.version !== record.version)
+    .concat([{ ...record, workId }])
+    .sort((a, b) => a.version - b.version);
+  store.set(workId, merged);
+  return merged;
+}
+
+function workIdFromPath(pathname) {
+  const match = pathname.match(/^\/api\/works\/([A-Za-z0-9_-]{1,64})\/decisions$/);
+  return match ? match[1] : null;
+}
+
+async function handleApiDecisionPost(req, res, store, workId) {
+  return handleJsonEndpoint(req, res, validateDecision, (body) => ({
+    workId,
+    stored: storeDecision(store, workId, body).length,
+    decisions: store.get(workId),
+  }));
+}
+
+function handleApiDecisionGet(res, store, workId) {
+  sendJson(res, 200, { workId, decisions: store.get(workId) || [] });
+}
+
+function handleApiDecisionsAll(res, store) {
+  const works = {};
+  store.forEach((records, workId) => { works[workId] = records; });
+  sendJson(res, 200, {
+    works,
+    counts: {
+      works: store.size,
+      decisions: Object.keys(works).reduce((total, id) => total + works[id].length, 0),
+    },
+  });
+}
+
 function handleApiWorks(req, res) {
   fs.readFile(WORKS_GEOJSON_PATH, 'utf8', (err, data) => {
     if (err) {
@@ -279,6 +359,8 @@ function serveStatic(req, res, pathname) {
 }
 
 function createServer() {
+  const decisions = new Map();
+
   return http.createServer((req, res) => {
     const parsedUrl = new URL(req.url, 'http://localhost');
     const pathname = parsedUrl.pathname || '/';
@@ -297,6 +379,20 @@ function createServer() {
     }
     if (pathname === '/api/works' && req.method === 'GET') {
       handleApiWorks(req, res);
+      return;
+    }
+    if (pathname === '/api/decisions' && req.method === 'GET') {
+      handleApiDecisionsAll(res, decisions);
+      return;
+    }
+
+    const decisionWorkId = workIdFromPath(pathname);
+    if (decisionWorkId && req.method === 'POST') {
+      handleApiDecisionPost(req, res, decisions, decisionWorkId);
+      return;
+    }
+    if (decisionWorkId && req.method === 'GET') {
+      handleApiDecisionGet(res, decisions, decisionWorkId);
       return;
     }
     if (pathname.startsWith('/api/')) {
@@ -324,4 +420,5 @@ module.exports = {
   createServer,
   validateScoreInput,
   validateDigOnceInput,
+  validateDecision,
 };

@@ -340,3 +340,37 @@ body {
 }
 
 .desk-beyond { color: var(--athar-warning); font-size: 0.78rem; }
+
+/* ---- سجل القرارات في الشريط ---- */
+.desk-ledger {
+  font-size: 0.74rem;
+  color: var(--athar-muted);
+  font-variant-numeric: tabular-nums;
+}
+.desk-reset {
+  font: inherit;
+  font-size: 0.72rem;
+  color: var(--athar-muted);
+  background: none;
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: color var(--athar-t-hover), border-color var(--athar-t-hover);
+}
+.desk-reset:hover { color: var(--athar-danger); border-color: var(--athar-danger); }
+.desk-reset:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
+
+/* ---- الأثر بوحدات القرار ---- */
+.desk-units { display: grid; gap: var(--athar-space-2); margin-top: 4px; }
+.desk-units div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--athar-space-3);
+  padding-bottom: 4px;
+  border-bottom: 1px dashed var(--athar-line);
+}
+.desk-units dt { font-size: 0.78rem; color: var(--athar-muted); white-space: nowrap; }
+.desk-units dd { display: grid; justify-items: end; text-align: end; }
+.desk-unit-note { font-size: 0.68rem; color: var(--athar-faint); line-height: 1.5; }

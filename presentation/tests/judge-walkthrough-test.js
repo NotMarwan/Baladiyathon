@@ -63,8 +63,35 @@ ok('لا إعادة إدخال: المكتب يقرأ المحفظة ولا يع
 });
 
 ok('القرار يترك أثراً: سجل تدقيق يُبنى من كل إجراء', () => {
-  assert.ok(desk.indexOf('auditByWork') !== -1, 'لا سجل تدقيق');
+  assert.ok(desk.indexOf('AtharDecisionRecord.create') !== -1, 'لا سجل قرار');
   assert.ok(desk.indexOf('renderAudit') !== -1, 'السجل لا يُعرض');
+});
+
+ok('القرار يبقى بعد تحديث الصفحة — لا يعيش في ذاكرة الجلسة', () => {
+  assert.ok(desk.indexOf('localStorage') !== -1, 'لا تخزين محلي');
+  assert.ok(desk.indexOf('AtharDecisionRecord.restore') !== -1,
+    'المحفظة لا تُبنى من السجل عند الإقلاع');
+  assert.ok(desk.indexOf('AtharDecisionRecord.serialize') !== -1, 'لا حفظ');
+});
+
+ok('نسخة المدخلات تُحفظ مع القرار — القاعدة التي لا تُكسر', () => {
+  assert.ok(/AtharDecisionRecord\.create\([^)]*analysis\.input/.test(desk.replace(/\s+/g, ' ')),
+    'القرار يُحفظ بلا نسخة مدخلاته');
+});
+
+ok('دورة القرار تعبر واجهة الخادم كذلك لا المتصفح وحده', () => {
+  assert.ok(/\/api\/works\/'\s*\+/.test(desk) || desk.indexOf('/decisions') !== -1,
+    'لا نقطة خدمة للقرار');
+  const server = fs.readFileSync(path.join(ROOT, 'server.js'), 'utf8');
+  assert.ok(server.indexOf('/decisions') !== -1, 'الخادم لا يعرف دورة القرار');
+  assert.ok(server.indexOf('inputs snapshot is required') !== -1,
+    'الخادم لا يفرض قاعدة نسخة المدخلات');
+});
+
+ok('الأثر يُترجم إلى وحدات القرار لا وحدات المرور وحدها', () => {
+  ['personHours', 'timeValueSAR', 'co2Range'].forEach((fn) => {
+    assert.ok(desk.indexOf('AtharEngine.' + fn) !== -1, `وحدة قرار غير محسوبة: ${fn}`);
+  });
 });
 
 ok('المكتب بلا أي مورد خارجي', () => {
