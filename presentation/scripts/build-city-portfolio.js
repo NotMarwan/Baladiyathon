@@ -87,6 +87,9 @@ function escalationReason(delayPct, lanes, lanesClosed, durationHours) {
 
 const ARABIC = /[؀-ۿ]/;
 
+/** تحويل تقريبي كافٍ داخل مدينة واحدة: درجة ≈ ١١١ كم. */
+const KM_PER_DEGREE = 111;
+
 /**
  * محاور الشوارع المسمّاة بالعربية، مرتّبة أبجدياً كي لا يتغيّر الترتيب بين
  * التشغيلات. الأسماء اللاتينية في OSM تُستبعد: واجهة عربية بأسماء إنجليزية
@@ -117,7 +120,7 @@ function namedCorridors() {
       aadt: road.aadt,
       chain: longestChain(road.parts),
     }))
-    .filter((road) => road.chain.length >= 2 && lengthOf(road.chain) > 0.004)
+    .filter((road) => road.chain.length >= 2 && lengthOf(road.chain) > 0.009)
     .sort((a, b) => a.name.localeCompare(b.name, 'ar'));
 }
 
@@ -159,9 +162,15 @@ function build() {
   permits.forEach((permit, index) => {
     const corridor = corridors[index % corridors.length];
 
-    // مقطع بين ٦٪ و٢٠٪ من طول المحور، لا يتجاوز طرفه.
-    const from = 0.06 + rand() * 0.70;
-    const span = Math.min(0.06 + rand() * 0.14, 0.96 - from);
+    /**
+     * المقطع يُقتطع بطول حقيقي لا بنسبة من المحور: التصريح يغطي امتداداً
+     * محدداً من الشارع، والنسبة تُنتج مقاطع بطول مئتي متر على محور قصير فتقرأ
+     * على الخريطة نقطةً لا عملاً. المدى ٤٠٠ متر إلى ١٫٦ كم.
+     */
+    const chainKm = lengthOf(corridor.chain) * KM_PER_DEGREE;
+    const targetKm = 0.4 + rand() * 1.2;
+    const span = Math.min(targetKm / chainKm, 0.9);
+    const from = rand() * (0.96 - span);
     const line = section(corridor.chain, from, from + span);
     if (line.length < 2) return;
 

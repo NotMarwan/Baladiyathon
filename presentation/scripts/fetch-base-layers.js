@@ -8,8 +8,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// نفس نطاق data/riyadh-roads.geojson
-const BBOX = { south: 24.5855, west: 46.6355, north: 24.759, east: 46.736 };
+// نفس النطاق الواسع في scripts/fetch-roads.js — الخلفية يجب أن تمتد مع الشبكة.
+const BBOX = { south: 24.545, west: 46.530, north: 24.880, east: 46.855 };
 // المرآة الرسمية تعيد 504 تحت الحمل — نجرب المرايا بالترتيب بدل الفشل من أول محاولة.
 const OVERPASS_MIRRORS = [
   'https://overpass-api.de/api/interpreter',
