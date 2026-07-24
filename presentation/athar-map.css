@@ -1,189 +1,52 @@
 /* ==========================================================================
-   أثر — خريطة غرفة التحكم (Dark Control Room)
-   نظام بصري كامل للخريطة: مسرح إسفلتي داكن، الطرق ضوء، الممر بطل المشهد.
-   بلا صور خارجية، بلا خطوط محملة — نظام التشغيل فقط. RTL أولاً.
+   أثر — خريطة الأعمال (لوحة فاتحة رسمية)
+   الخريطة نفسها تُرسم في WebGL من athar-worksmap-style.js؛ هذا الملف يغطي
+   ما حول اللوحة: الحاوية، النوافذ المنبثقة، عناصر التحكم. RTL أولاً.
    ========================================================================== */
 
-/* ---- 1. المسرح: مدينة ليلية لا فراغ بيج ---- */
+/* ---- 1. المسرح: أرضية فاتحة هادئة تقرأ كمستند رسمي ---- */
 #map {
-  background:
-    radial-gradient(130% 105% at 50% -12%, rgba(31, 107, 143, .22), rgba(31, 107, 143, 0) 58%),
-    repeating-linear-gradient(0deg, rgba(127, 179, 209, .05) 0 1px, transparent 1px 56px),
-    repeating-linear-gradient(90deg, rgba(127, 179, 209, .05) 0 1px, transparent 1px 56px),
-    linear-gradient(180deg, #0d2033 0%, #0a1826 100%);
-  box-shadow: inset 0 0 0 1px rgba(127, 179, 209, .08), inset 0 2px 22px rgba(2, 8, 14, .55);
+  background: #f3f2ef;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
 }
 
-/* فينييت يجلس فوق الطرق وتحت الممر والعلامات — العمق بدون ما يطفئ البطل */
+/* فينييت خفيف يجلس فوق الطرق وتحت الممر — عمق بلا تعتيم */
 .athar-vignette {
   position: absolute;
   inset: 0;
   z-index: 398;
   pointer-events: none;
-  background: radial-gradient(118% 102% at 50% 42%, transparent 56%, rgba(3, 9, 16, .58) 100%);
+  background: radial-gradient(118% 102% at 50% 42%, transparent 62%, rgba(30, 35, 45, .07) 100%);
 }
 
-/* ---- 2. طبقات الطرق (Panes) ---- */
-.leaflet-athar-glow-pane {
-  filter: blur(4px) brightness(1.55) saturate(1.15);
-  opacity: .85;
-  transition: filter .9s ease, opacity .9s ease;
-}
-.leaflet-athar-r1-pane,
-.leaflet-athar-r2-pane,
-.leaflet-athar-r3-pane {
-  transition: filter .9s ease;
-}
-.leaflet-athar-labels-pane { pointer-events: none; }
-
-/* دخول متدرج: السريع أولاً ثم الرئيسي ثم الفرعي — مرة واحدة عند التحميل */
-@keyframes atharPaneIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.leaflet-athar-glow-pane.athar-enter { animation: atharPaneIn .85s ease-out .05s backwards; }
-.leaflet-athar-r1-pane.athar-enter   { animation: atharPaneIn .85s ease-out .05s backwards; }
-.leaflet-athar-r2-pane.athar-enter   { animation: atharPaneIn .75s ease-out .34s backwards; }
-.leaflet-athar-r3-pane.athar-enter   { animation: atharPaneIn .75s ease-out .62s backwards; }
-
-/* ---- 3. أجواء اليوم: ذروة دافئة، ليل هادئ (يُضبط data-phase من الصفحة) ---- */
-#map[data-phase="peak"] .leaflet-athar-r1-pane,
-#map[data-phase="peak"] .leaflet-athar-r2-pane,
-#map[data-phase="peak"] .leaflet-athar-r3-pane {
-  filter: saturate(1.22) brightness(1.1);
-}
-#map[data-phase="peak"] .leaflet-athar-glow-pane {
-  filter: blur(4px) brightness(1.75) saturate(1.3);
-  opacity: 1;
-}
-#map[data-phase="night"] .leaflet-athar-r1-pane,
-#map[data-phase="night"] .leaflet-athar-r2-pane,
-#map[data-phase="night"] .leaflet-athar-r3-pane {
-  filter: brightness(.8) saturate(.92);
-}
-#map[data-phase="night"] .leaflet-athar-glow-pane {
-  filter: blur(4px) brightness(1.1) saturate(1);
-  opacity: .55;
-}
-
-/* ---- 4. أسماء الطرق — تايبوغرافي هادئ لا فوضى ---- */
-.leaflet-tooltip.athar-road-label {
-  background: rgba(9, 22, 35, .74);
-  border: 1px solid rgba(127, 179, 209, .3);
-  color: #cfe3ef;
-  font: 600 11.5px/1.5 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 1px 9px;
-  border-radius: 999px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
-  direction: rtl;
-  text-align: center;
-  white-space: nowrap;
-}
-.leaflet-tooltip.athar-road-label::before { display: none; }
-.leaflet-tooltip.athar-road-label.athar-label-major {
-  color: #f4d9a8;
-  border-color: rgba(232, 163, 61, .45);
-  font-size: 12px;
-}
-
-/* ---- 5. تلميح التحويم و النوافذ المنبثقة — زجاج داكن ---- */
-.leaflet-tooltip.athar-hover-tip {
-  background: rgba(7, 18, 29, .94);
-  border: 1px solid rgba(89, 214, 242, .4);
-  color: #eaf6fc;
-  font: 600 12px/1.5 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 4px 11px;
-  border-radius: 8px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, .5);
-  direction: rtl;
-}
-.leaflet-tooltip.athar-hover-tip::before { display: none; }
-
-.leaflet-popup-content-wrapper {
-  background: rgba(9, 22, 35, .96);
-  color: #e8f2f8;
-  border: 1px solid rgba(127, 179, 209, .3);
+/* ---- 2. النوافذ المنبثقة — بطاقة بيضاء بحدود رمادية ---- */
+.maplibregl-popup-content {
+  background: #ffffff;
+  color: #1d1d1f;
+  border: 1px solid #e2e0db;
   border-radius: 12px;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, .55);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.14);
   direction: rtl;
   text-align: right;
   font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.75;
+  padding: 11px 15px;
 }
-.leaflet-popup-tip {
-  background: rgba(9, 22, 35, .96);
-  border: 1px solid rgba(127, 179, 209, .3);
-  box-shadow: none;
-}
-.leaflet-popup-content { margin: 11px 15px; font-size: 13px; line-height: 1.75; }
-.leaflet-popup-content b { color: #9fdcf2; }
-a.leaflet-popup-close-button { color: #9fc0d4 !important; }
-a.leaflet-popup-close-button:hover { color: #fff !important; }
+.maplibregl-popup-content b { color: #1971c2; }
+.maplibregl-popup-tip { border-top-color: #ffffff; border-bottom-color: #ffffff; }
+.maplibregl-popup-close-button { color: #5b5b60; font-size: 17px; }
+.maplibregl-popup-close-button:hover { color: #1d1d1f; background: transparent; }
 
-/* ---- 6. عناصر التحكم — نظام زجاجي واحد ---- */
-.leaflet-bar {
-  border: 1px solid rgba(127, 179, 209, .28);
+/* ---- 3. عناصر التحكم ---- */
+.maplibregl-ctrl-group {
+  border: 1px solid #e2e0db;
   border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .42);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.10);
 }
-.leaflet-bar a,
-.leaflet-bar a:hover {
-  background: rgba(9, 22, 35, .92);
-  color: #cfe3ef;
-  border-bottom: 1px solid rgba(127, 179, 209, .16);
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-}
-.leaflet-bar a:hover { background: #1f6b8f; color: #fff; }
-.leaflet-bar a.leaflet-disabled { background: rgba(9, 22, 35, .6); color: #4d6478; }
-
-.leaflet-control-scale-line {
-  background: rgba(9, 22, 35, .82);
-  border: 1px solid rgba(127, 179, 209, .38);
-  border-top: none;
-  color: #cfe3ef;
+.maplibregl-ctrl-attrib {
+  background: rgb(255 255 255 / 0.86);
   font-size: 10.5px;
-  text-shadow: none;
-  box-shadow: none;
-}
-.leaflet-control-attribution {
-  background: rgba(7, 16, 25, .8) !important;
-  color: #8fa8ba !important;
-  font-size: 10.5px;
-  direction: rtl;
-  border-radius: 8px 0 0 0;
-  padding: 2px 8px;
-}
-.leaflet-control-attribution a { color: #9fc0d4 !important; }
-
-/* شارة البيانات التوضيحية — شرط الصدق، دائمة الظهور */
-.athar-demo-chip {
-  background: rgba(209, 146, 49, .14);
-  border: 1px solid rgba(209, 146, 49, .5);
-  color: #efbc6e;
-  font: 700 11px/1.6 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 3px 11px;
-  border-radius: 999px;
-  direction: rtl;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
-  white-space: nowrap;
-}
-
-/* بوصلة الشمال */
-.athar-north {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(9, 22, 35, .92);
-  border: 1px solid rgba(127, 179, 209, .32);
-  color: #efbc6e;
-  font: 800 14px/1 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .42);
-  cursor: default;
 }
 
 /* ---- 7. دليل الخريطة (قابل للطي) ---- */
@@ -307,182 +170,12 @@ a.leaflet-popup-close-button:hover { color: #fff !important; }
   filter: drop-shadow(0 0 9px rgba(52, 211, 153, .8));
 }
 
-/* طبقة الأعمال العامة على الداكن */
-.leaflet-interactive.athar-works-line { stroke-linecap: round; }
 
-/* تلميح التصريح المجاور على الداكن */
-.leaflet-tooltip.neighbor-tooltip {
-  background: rgba(9, 22, 35, .92);
-  color: #efbc6e;
-  border: 1px solid rgba(209, 146, 49, .55);
-  font-weight: 600;
-  font-size: 11.5px;
-  padding: 2px 9px;
-  border-radius: 6px;
-  direction: rtl;
-}
-.leaflet-tooltip.neighbor-tooltip::before { display: none; }
-
-/* ---- 8ب. وضع GL (MapLibre): نفس النظام البصري ---- */
-/* رقائق أسماء الطرق كعناصر DOM مستقلة (بلا بادئة leaflet) */
-.athar-road-label {
-  background: rgba(9, 22, 35, .74);
-  border: 1px solid rgba(127, 179, 209, .3);
-  color: #cfe3ef;
-  font: 600 11.5px/1.5 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 1px 9px;
-  border-radius: 999px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
-  direction: rtl;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.athar-road-label.athar-label-major {
-  color: #f4d9a8;
-  border-color: rgba(232, 163, 61, .45);
-  font-size: 12px;
-}
-
-.athar-gl-tip {
-  position: absolute;
-  z-index: 30;
-  pointer-events: none;
-  background: rgba(7, 18, 29, .94);
-  border: 1px solid rgba(89, 214, 242, .4);
-  color: #eaf6fc;
-  font: 600 12px/1.5 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 4px 11px;
-  border-radius: 8px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, .5);
-  direction: rtl;
-  white-space: nowrap;
-}
-
-.athar-neighbor-chip {
-  background: rgba(9, 22, 35, .92);
-  color: #efbc6e;
-  border: 1px solid rgba(209, 146, 49, .55);
-  font: 600 11.5px/1.6 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  padding: 2px 9px;
-  border-radius: 6px;
-  direction: rtl;
-  white-space: nowrap;
-}
-
-/* لوحة تحرير الطريق */
-.athar-edit-card {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 40;
-  width: 220px;
-  background: rgba(9, 22, 35, .95);
-  border: 1px solid rgba(89, 214, 242, .35);
-  border-radius: 12px;
-  padding: 12px 14px;
-  color: #dcebf4;
-  font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  direction: rtl;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, .55);
-}
-.athar-edit-card .aec-title {
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #9fdcf2;
-  margin-bottom: 9px;
-}
-.athar-edit-card label {
-  display: block;
-  font-size: 11.5px;
-  color: #9fb6c6;
-  margin-bottom: 8px;
-}
-.athar-edit-card input {
-  width: 100%;
-  margin-top: 3px;
-  background: rgba(16, 37, 53, .9);
-  border: 1px solid rgba(127, 179, 209, .35);
-  border-radius: 7px;
-  color: #eaf6fc;
-  font: 600 13px/1.4 ui-monospace, Consolas, monospace;
-  padding: 5px 8px;
-  direction: ltr;
-  text-align: right;
-  box-sizing: border-box;
-}
-.athar-edit-card .aec-note {
-  font-size: 10.5px;
-  color: #d8a95e;
-  margin: 2px 0 9px;
-}
-.athar-edit-card .aec-actions { display: flex; gap: 7px; }
-.athar-edit-card button {
-  flex: 1;
-  border: 1px solid rgba(127, 179, 209, .4);
-  background: rgba(31, 107, 143, .35);
-  color: #eaf6fc;
-  font: 700 12px/1.6 "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  border-radius: 8px;
-  padding: 5px 0;
-  cursor: pointer;
-}
-.athar-edit-card button:hover { background: #1f6b8f; }
-.athar-edit-card #aecClose { background: transparent; color: #9fb6c6; }
-
-/* عناصر تحكم MapLibre بنفس الزجاج الداكن */
-.maplibregl-ctrl-group {
-  background: rgba(9, 22, 35, .92) !important;
-  border: 1px solid rgba(127, 179, 209, .28);
-  border-radius: 10px !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .42) !important;
-  overflow: hidden;
-}
-.maplibregl-ctrl-group button {
-  background: transparent !important;
-  border-bottom: 1px solid rgba(127, 179, 209, .16) !important;
-}
-.maplibregl-ctrl-group button:hover { background: #1f6b8f !important; }
-.maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(.85) sepia(.1); }
-.maplibregl-ctrl-attrib {
-  background: rgba(7, 16, 25, .8) !important;
-  color: #8fa8ba !important;
-  font-size: 10.5px;
-  direction: rtl;
-  border-radius: 8px 0 0 0;
-}
-.maplibregl-ctrl-attrib a { color: #9fc0d4 !important; }
-.maplibregl-popup-content {
-  background: rgba(9, 22, 35, .96) !important;
-  color: #e8f2f8 !important;
-  border: 1px solid rgba(127, 179, 209, .3);
-  border-radius: 12px !important;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, .55) !important;
-  direction: rtl;
-  text-align: right;
-  font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.75;
-  padding: 11px 15px !important;
-}
-.maplibregl-popup-tip { border-top-color: rgba(9, 22, 35, .96) !important; }
-.maplibregl-popup-close-button { color: #9fc0d4 !important; font-size: 18px; }
+/* ---- 8ب. لوحة الرسم ---- */
 .maplibregl-canvas { outline: none; }
 
 /* ---- 9. إتاحة: احترام تقليل الحركة ---- */
 @media (prefers-reduced-motion: reduce) {
-  .leaflet-athar-glow-pane.athar-enter,
-  .leaflet-athar-r1-pane.athar-enter,
-  .leaflet-athar-r2-pane.athar-enter,
-  .leaflet-athar-r3-pane.athar-enter {
-    animation: none !important;
-  }
-  .leaflet-athar-glow-pane,
-  .leaflet-athar-r1-pane,
-  .leaflet-athar-r2-pane,
-  .leaflet-athar-r3-pane {
-    transition: none !important;
-  }
   .athar-dig-marker .ring,
   .athar-dig-marker .ring2,
   .athar-alt-flow {

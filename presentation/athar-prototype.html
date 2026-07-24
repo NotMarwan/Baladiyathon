@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>أثر — النموذج التفاعلي</title>
-<link rel="stylesheet" href="vendor/leaflet.css">
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
 <link rel="stylesheet" href="athar-map.css">
 <style>
@@ -47,7 +46,6 @@
 
   #map{height:420px;border-radius:8px;border:1px solid #22394e}
   .map-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-  .leaflet-interactive{transition:stroke .35s ease}
 
   .timeline-controls{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
   .timeline-slider-wrap{flex:1 1 260px;min-width:220px;position:relative;padding-bottom:20px}
@@ -156,7 +154,7 @@
   footer.foot-note{font-size:12px;color:var(--faint);text-align:center;padding-top:8px}
 
   @media (prefers-reduced-motion: reduce) {
-    .card, .card:hover, .opt-card, .opt-card:hover, button, .leaflet-interactive { transition: none !important; }
+    .card, .card:hover, .opt-card, .opt-card:hover, button { transition: none !important; }
   }
 
   /* Print-only TMP */
@@ -439,11 +437,14 @@
 </div>
 
 <script src="athar-nav.js"></script>
-<script src="vendor/leaflet.js"></script>
 <script src="vendor/maplibre-gl.js"></script>
 <script src="data/riyadh-roads.geojson.js"></script>
-<script src="athar-ownedmap.js"></script>
-<script src="athar-glmap.js"></script>
+<script src="data/riyadh-base.geojson.js"></script>
+<script src="athar-worksmap-style.js"></script>
+<script src="athar-worksmap-layers.js"></script>
+<script src="athar-worksmap-data.js"></script>
+<script src="athar-worksmap.js"></script>
+<script src="athar-worksmap-panel.js"></script>
 <script src="athar-engine.js"></script>
 <script src="athar-impact-calibration.js"></script>
 <script src="athar-impact-budget.js"></script>
@@ -691,37 +692,37 @@
     [24.7565, 46.6768],
   ];
 
-  // خريطة GL المملوكة أولاً (WebGL)؛ Leaflet مسار احتياطي كامل.
+  // خريطة الأعمال المملوكة: طرق ومعالم من GeoJSON محلي، بلا بلاط ولا إنترنت.
+  // بيانات الطرق والمعالم © مساهمو OpenStreetMap — رخصة ODbL.
   var hasOwnedRoadsPre = typeof RIYADH_ROADS !== 'undefined'
     && RIYADH_ROADS && RIYADH_ROADS.features && RIYADH_ROADS.features.length > 0;
   var GL = null;
   try {
-    if (typeof maplibregl !== 'undefined' && typeof AtharGlMap !== 'undefined' && hasOwnedRoadsPre) {
-      GL = AtharGlMap.init(document.getElementById('map'), RIYADH_ROADS, { scrollZoom: false });
+    if (typeof maplibregl !== 'undefined' && typeof AtharWorksMap !== 'undefined' && hasOwnedRoadsPre) {
+      GL = AtharWorksMap.init(document.getElementById('map'), RIYADH_ROADS, {
+        scrollZoom: false,
+        baseGeoJSON: typeof RIYADH_BASE !== 'undefined' ? RIYADH_BASE : null,
+        center: [46.685, 24.70],
+        zoom: 13,
+      });
     }
   } catch (glErr) { GL = null; }
   var GL_MODE = !!GL;
 
   var map = null;
-  var tileLayer = null;
-  if (!GL_MODE) {
-    map = L.map('map', { scrollWheelZoom: false }).setView([24.714, 46.678], 12);
-    tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors',
-    });
-  }
 
+  // الخريطة محلية بالكامل، فلا يوجد بلاط قد يسقط. الإشعار يبقى لحالة تعذر WebGL.
   var tileErrorShown = false;
   function showOfflineNotice() {
     if (tileErrorShown) return;
     tileErrorShown = true;
     var notice = document.createElement('div');
-    notice.textContent = 'وضع بدون اتصال — تفاصيل الخريطة معطلة، الممر والنتائج تعمل';
+    notice.textContent = 'تعذّر عرض الخريطة على هذا الجهاز — الممر والنتائج تعمل';
     notice.setAttribute('role', 'status');
     notice.style.cssText = 'position:absolute;z-index:1000;top:10px;left:50%;transform:translateX(-50%);'
-      + 'background:#15202B;color:#fff;font-size:12.5px;font-weight:600;padding:8px 14px;'
-      + 'border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);opacity:1;transition:opacity .6s ease;';
+      + 'background:#ffffff;color:#1d1d1f;border:1px solid #e2e0db;font-size:12.5px;font-weight:600;'
+      + 'padding:8px 14px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12);opacity:1;'
+      + 'transition:opacity .6s ease;';
     var mapEl = document.getElementById('map');
     mapEl.style.position = mapEl.style.position || 'relative';
     mapEl.appendChild(notice);
@@ -733,25 +734,7 @@
     }, 4000);
   }
 
-  // Gate tile requests on navigator.onLine: offline means zero tile requests
-  // issued (zero console errors) instead of relying on tileerror after the
-  // fact. The tileerror handler below still covers the online-but-tiles-down
-  // case (e.g. captive portal, DNS failure).
-  // الخريطة المملوكة: شبكة GeoJSON محلية بلا بلاط خارجي — تعمل دون إنترنت.
-  // بيانات الطرق © مساهمو OpenStreetMap — رخصة ODbL.
-  var hasOwnedRoads = typeof AtharOwnedMap !== 'undefined' && hasOwnedRoadsPre;
-  if (!GL_MODE) {
-    if (hasOwnedRoads) {
-      AtharOwnedMap.load(map, RIYADH_ROADS, L);
-      map.attributionControl.addAttribution('بيانات الطرق © مساهمو OpenStreetMap (ODbL)');
-      map.setView([24.70, 46.685], 13);
-    } else if (navigator.onLine) {
-      tileLayer.addTo(map);
-    } else {
-      showOfflineNotice();
-    }
-    tileLayer.on('tileerror', showOfflineNotice);
-  }
+  if (!GL_MODE) showOfflineNotice();
 
   var segCount = CORRIDOR_COORDS.length - 1;
   var midSegIndex = Math.floor(segCount / 2);
@@ -763,7 +746,7 @@
   var CORRIDOR_UNLOCKED = '#34d399';
 
   // ---------------------------------------------------------------
-  // طبقة توافق: نفس نداءات الرسم تعمل على GL أو Leaflet
+  // طبقة الرسم الزخرفي فوق الخريطة
   // ---------------------------------------------------------------
   function toLngLat(latlng) { return [latlng[1], latlng[0]]; }
 
@@ -832,46 +815,24 @@
       },
     };
   }
+  // مقبض فارغ: مسار واحد للرسم الآن (WebGL). إن تعذّرت الخريطة تُلغى الزخرفة
+  // بلا انهيار بقية الصفحة.
+  function noopHandle() {
+    return { remove: function () {}, setStyle: function () {} };
+  }
   function decoLine(latlngs, o) {
-    if (GL_MODE) return glDecoLine(latlngs, o);
-    var l = L.polyline(latlngs, {
-      color: o.color,
-      weight: o.weight || 3,
-      opacity: o.opacity == null ? 1 : o.opacity,
-      dashArray: o.dashed ? '2 6' : null,
-      className: o.className || '',
-      interactive: !!(o.popupHtml || o.tooltip),
-    }).addTo(map);
-    if (o.popupHtml) l.bindPopup(o.popupHtml);
-    if (o.tooltip) l.bindTooltip(o.tooltip, { direction: 'top' });
-    return {
-      remove: function () { map.removeLayer(l); },
-      setStyle: function (s) { l.setStyle(s); },
-    };
+    if (!GL_MODE) return noopHandle();
+    return glDecoLine(latlngs, o);
   }
   function decoMarker(latlng, o) {
-    if (GL_MODE) {
-      var el = document.createElement('div');
-      if (o.className) el.className = o.className;
-      el.innerHTML = o.html || '';
-      if (o.title) el.title = o.tooltip || o.title;
-      var mk = new maplibregl.Marker({ element: el }).setLngLat(toLngLat(latlng)).addTo(GL.map);
-      if (o.popupHtml) mk.setPopup(new maplibregl.Popup({ offset: 14 }).setHTML(o.popupHtml));
-      return { remove: function () { mk.remove(); } };
-    }
-    var m = L.marker(latlng, {
-      title: o.title || '',
-      alt: o.title || '',
-      icon: L.divIcon({
-        className: o.className || '',
-        html: o.html || '',
-        iconSize: o.size || [22, 22],
-        iconAnchor: o.anchor || [11, 11],
-      }),
-    }).addTo(map);
-    if (o.tooltip) m.bindTooltip(o.tooltip, { direction: 'top' });
-    if (o.popupHtml) m.bindPopup(o.popupHtml);
-    return { remove: function () { map.removeLayer(m); } };
+    if (!GL_MODE) return noopHandle();
+    var el = document.createElement('div');
+    if (o.className) el.className = o.className;
+    el.innerHTML = o.html || '';
+    if (o.title) el.title = o.tooltip || o.title;
+    var mk = new maplibregl.Marker({ element: el }).setLngLat(toLngLat(latlng)).addTo(GL.map);
+    if (o.popupHtml) mk.setPopup(new maplibregl.Popup({ offset: 14 }).setHTML(o.popupHtml));
+    return { remove: function () { mk.remove(); } };
   }
 
   // لوحة تحرير الطرق (GL): انقر أي طريق رئيسي وعدّل بياناته التوضيحية
@@ -919,31 +880,25 @@
       GL.api.onCorridorClick(function (idx) { selectClosure(idx); });
       glDecoSetup();
       setupGlEditPanel();
+
+      var panelEl = document.getElementById('athar-map-panel');
+      if (panelEl && typeof AtharWorksMapPanel !== 'undefined') {
+        AtharWorksMapPanel.mount(panelEl, GL.api, Date.now());
+      }
+
+      // طبقة الأعمال من نفس نقطة الـ API التي يخدمها server.js، مع رجوع
+      // إلى الملف المحلي كي تعمل الصفحة من القرص بلا خادم.
+      fetch('api/works')
+        .then(function (response) { return response.ok ? response.json() : Promise.reject(); })
+        .catch(function () {
+          return fetch('data/works.geojson').then(function (r) { return r.json(); });
+        })
+        .then(function (works) { GL.api.setWorks(works); })
+        .catch(function () { /* الخريطة تبقى صالحة بلا طبقة الأعمال */ });
     });
-  } else {
-    for (var i = 0; i < segCount; i += 1) {
-      var casing = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
-        color: '#08131f',
-        weight: 11,
-        opacity: 0.9,
-        interactive: false,
-        className: 'athar-corridor-casing',
-      }).addTo(map);
-      segmentCasings.push(casing);
-      var seg = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
-        color: CORRIDOR_CORE,
-        weight: 4.5,
-        className: 'athar-corridor-line',
-      }).addTo(map);
-      seg.on('click', (function (idx) {
-        return function () { selectClosure(idx); };
-      })(i));
-      segmentLayers.push(seg);
-    }
   }
 
   var closureMarker = null;
-  var worksLayerGroup = L.layerGroup();
 
   function midpoint(a, b) {
     return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
@@ -960,26 +915,6 @@
       for (var si = 0; si < segCount; si += 1) states.push(si === idx ? 'closed' : 'open');
       GL.api.setAllCorridorStates(states);
       GL.api.setDigSite(toLngLat(mid));
-    } else {
-      segmentLayers.forEach(function (layer, i) {
-        layer.setStyle({ color: i === idx ? CORRIDOR_CLOSED : CORRIDOR_CORE });
-      });
-      if (closureMarker) {
-        closureMarker.setLatLng(mid);
-      } else {
-        closureMarker = L.marker(mid, {
-          title: 'موقع الحفر',
-          alt: 'موقع الحفر المحدد',
-          icon: L.divIcon({
-            className: 'athar-dig-marker',
-            html: '<span class="ring"></span><span class="ring2"></span><span class="pin"></span>',
-            iconSize: [36, 36],
-            iconAnchor: [18, 18],
-          }),
-        }).addTo(map);
-        closureMarker.bindPopup('موقع الحفر المحدد');
-      }
-      closureMarker.openPopup();
     }
 
     recompute();
@@ -1055,15 +990,7 @@
         className: 'athar-alt-line',
         popupHtml: popupHtml,
       }));
-      if (isBestRecommended && !GL_MODE) {
-        var flow = L.polyline(latlngs, {
-          color: '#ffe1a8', weight: 2, opacity: 0.9,
-          dashArray: '8 18',
-          interactive: false,
-          className: 'athar-alt-flow',
-        }).addTo(map);
-        routeLayers.push({ remove: function () { map.removeLayer(flow); } });
-      } else if (isBestRecommended && GL_MODE) {
+      if (isBestRecommended) {
         routeLayers.push(decoLine(latlngs, {
           color: '#ffe1a8', weight: 1.6, opacity: 0.9, blur: 3,
         }));
@@ -1095,7 +1022,7 @@
       var m = /^kf_(\d+)$/.exec(eid);
       if (!m) return;
       var segIdx = parseInt(m[1], 10) - 1;
-      if (segIdx < 0 || segIdx >= segmentLayers.length) return;
+      if (segIdx < 0 || segIdx >= segCount) return;
       var vc = sw.overflow[eid];
       var intensity = Math.max(0, Math.min(0.6, (vc - 1) * 0.5 + 0.2));
       shockwaveLayers.push(decoLine(
@@ -1575,42 +1502,10 @@
     });
   }
 
-  // موجة التحول أحمر ← أخضر: خط متوهج يرسم نفسه على طول المقطع (~1.2s)
-  var sweepLine = null;
+  // موجة التحول أحمر ← أخضر يديرها الآن api.sweepUnlock داخل الخريطة نفسها.
   function sweepSegmentGreen(idx) {
-    if (idx === null) return;
-    if (GL_MODE) { GL.api.sweepUnlock(idx); return; }
-    if (!window.matchMedia
-      || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (sweepLine) { map.removeLayer(sweepLine); sweepLine = null; }
-    sweepLine = L.polyline([CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]], {
-      color: CORRIDOR_UNLOCKED, weight: 7, opacity: 0.95,
-      interactive: false, className: 'athar-sweep',
-    }).addTo(map);
-    var el = sweepLine.getElement();
-    if (!el || typeof el.getTotalLength !== 'function') return;
-    try {
-      var total = el.getTotalLength();
-      el.style.strokeDasharray = total + ' ' + total;
-      el.style.strokeDashoffset = String(total);
-      var start = null;
-      var DURATION = 1200;
-      function step(ts) {
-        if (start === null) start = ts;
-        var p = Math.min(1, (ts - start) / DURATION);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.style.strokeDashoffset = String(total * (1 - eased));
-        if (p < 1) {
-          requestAnimationFrame(step);
-        } else if (sweepLine) {
-          map.removeLayer(sweepLine);
-          sweepLine = null;
-        }
-      }
-      requestAnimationFrame(step);
-    } catch (err) {
-      if (sweepLine) { map.removeLayer(sweepLine); sweepLine = null; }
-    }
+    if (idx === null || !GL_MODE) return;
+    GL.api.sweepUnlock(idx);
   }
 
   function selectCandidate(candidate, container, cardEl) {
@@ -1747,7 +1642,7 @@
     }
     var startHour = schedule.windows[0].startHour;
     var startISO = '2026-07-27T' + String(startHour).padStart(2, '0') + ':00:00Z';
-    // إحداثيات المقطع المختار فعلاً على الخريطة (Leaflet يخزن [lat,lng]؛
+    // إحداثيات المقطع المختار فعلاً على الخريطة (CORRIDOR_COORDS يخزن [lat,lng]؛
     // WZDx/GeoJSON يتطلب [lon,lat] — لذا نعكس الترتيب).
     var segIdx = state.selectedSegIdx !== null ? state.selectedSegIdx : midSegIndex;
     var segA = CORRIDOR_COORDS[segIdx];
@@ -1886,21 +1781,13 @@
         var reqColor = requestedSet[hour] ? hourColor(congestionShare) : CORRIDOR_UNLOCKED;
         var chosenColor = chosenSet[hour] ? hourColor(congestionShare) : CORRIDOR_UNLOCKED;
         drawHalo(segIdx, reqColor);
-        if (GL_MODE) {
-          GL.api.setCorridorColor(segIdx, chosenColor);
-        } else {
-          segmentLayers[segIdx].setStyle({ color: chosenColor });
-        }
+        if (GL_MODE) GL.api.setCorridorColor(segIdx, chosenColor);
       }
     } else {
       compareRow.style.display = 'none';
       removeHalo();
-      if (segIdx !== null) {
-        if (GL_MODE) {
-          GL.api.setCorridorColor(segIdx, hourColor(congestionShare));
-        } else {
-          segmentLayers[segIdx].setStyle({ color: hourColor(congestionShare) });
-        }
+      if (segIdx !== null && GL_MODE) {
+        GL.api.setCorridorColor(segIdx, hourColor(congestionShare));
       }
     }
   }
