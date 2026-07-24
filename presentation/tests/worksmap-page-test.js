@@ -15,7 +15,7 @@ ok('الصفحة تحمّل وحدات الخريطة والبيانات الم�
   for (const file of [
     'athar-worksmap-style.js', 'athar-worksmap-layers.js', 'athar-worksmap-data.js',
     'athar-worksmap.js', 'athar-worksmap-panel.js', 'athar-worksmap-interactions.js',
-    'data/riyadh-roads.geojson.js', 'data/riyadh-base.geojson.js', 'data/works-city.geojson.js',
+    'data/riyadh-roads.geojson.js', 'data/riyadh-base.geojson.js', 'data/city-portfolio.geojson.js',
   ]) {
     assert.ok(html.indexOf(file) !== -1, `غير محمّل: ${file}`);
   }
@@ -52,9 +52,14 @@ ok('الصفحة لا تشارك تنسيق النموذج — تنسيقها م
   assert.ok(html.indexOf('athar-map.css') === -1, 'تنسيق النموذج يسرّب إلى الصفحة');
 });
 
-ok('بيانات المدينة كاملة وتغطي كل المجموعات', () => {
-  const raw = fs.readFileSync(path.join(ROOT, 'data', 'works-city.geojson'), 'utf8');
+ok('الخريطة تُغذّى من المحفظة الكاملة لا من عيّنة', () => {
+  assert.ok(html.indexOf('ATHAR_CITY_PORTFOLIO') !== -1, 'الصفحة ما زالت على العيّنة');
+  assert.ok(html.indexOf('ATHAR_WORKS_CITY') === -1, 'مرجع العيّنة القديمة باقٍ');
+
+  const raw = fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson'), 'utf8');
   const collection = JSON.parse(raw);
+  assert.ok(collection.features.length >= 120, 'محفظة أصغر من أن تملأ المدينة');
+
   const normalized = Data.normalizeWorks(collection);
   assert.strictEqual(normalized.features.length, collection.features.length);
 
@@ -65,14 +70,15 @@ ok('بيانات المدينة كاملة وتغطي كل المجموعات', 
 
   const split = Data.splitByGeometry(normalized);
   assert.ok(split.points.features.length > 0, 'لا نقاط — التجميع بلا معنى');
-  assert.ok(split.lines.features.length > 0, 'لا خطوط — لا مقاطع على الشوارع');
+  assert.ok(split.lines.features.length > 50, 'مقاطع قليلة على الشوارع');
 });
 
-ok('ملف البيانات ونسخته المضمّنة متطابقان', () => {
-  const raw = fs.readFileSync(path.join(ROOT, 'data', 'works-city.geojson'), 'utf8');
-  const wrapped = fs.readFileSync(path.join(ROOT, 'data', 'works-city.geojson.js'), 'utf8');
-  const embedded = wrapped.replace(/^window\.ATHAR_WORKS_CITY = /, '').replace(/;\s*$/, '');
-  assert.deepStrictEqual(JSON.parse(embedded), JSON.parse(raw));
+// فوق ١٢٫٥ يملأ حيّ العليا الإطار وتختفي بقية المحفظة؛ تحت ١٢ تظهر حواف بيضاء
+// خارج تغطية بيانات الطرق. الحد الأعلى هو ما يهم: ألا تُقدَّم المحفظة كحي واحد.
+ok('التقريب الافتتاحي يعرض المدينة لا الحي', () => {
+  const match = html.match(/zoom:\s*([\d.]+)/);
+  assert.ok(match, 'لا تقريب افتتاحي معلن');
+  assert.ok(Number(match[1]) <= 12.5, `تقريب ضيّق على محفظة مدينة: ${match[1]}`);
 });
 
 ok('الشدة الصريحة في البيانات تُحترم ولا تُستبدل', () => {

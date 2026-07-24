@@ -33,7 +33,7 @@
 <script src="vendor/maplibre-gl.js"></script>
 <script src="data/riyadh-roads.geojson.js"></script>
 <script src="data/riyadh-base.geojson.js"></script>
-<script src="data/works-city.geojson.js"></script>
+<script src="data/city-portfolio.geojson.js"></script>
 <script src="athar-worksmap-style.js"></script>
 <script src="athar-worksmap-layers.js"></script>
 <script src="athar-worksmap-data.js"></script>
@@ -66,14 +66,14 @@
   var GL = AtharWorksMap.init(container, window.RIYADH_ROADS, {
     baseGeoJSON: window.RIYADH_BASE,
     center: [46.6785, 24.7125],
-    zoom: 13.1,
+    zoom: 12.2,
   });
 
   GL.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
   GL.map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: 'metric' }), 'bottom-left');
 
   GL.api.onReady(function () {
-    var works = window.ATHAR_WORKS_CITY || { type: 'FeatureCollection', features: [] };
+    var works = window.ATHAR_CITY_PORTFOLIO || { type: 'FeatureCollection', features: [] };
     GL.api.setWorks(works);
 
     AtharWorksMapInteractions.install(GL.map, maplibregl, 'works');
