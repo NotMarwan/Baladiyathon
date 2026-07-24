@@ -21,9 +21,10 @@
 presentation/athar-prototype.html
 ```
 
-يعمل النموذج بالكامل بدون اتصال بالإنترنت باستثناء بلاط الخريطة (OSM
-tiles). في حال تعذّر تحميل البلاط تبقى الخريطة بخلفية رمادية وتستمر جميع
-البطاقات والحسابات بالعمل بلا أي أخطاء في الـ console.
+يعمل النموذج بالكامل بدون اتصال بالإنترنت — بما فيه الخريطة. الطرق والمعالم
+والخطوط والأيقونات كلها محلية تحت `data/` و`vendor/`، فلا يخرج أي طلب إلى
+الشبكة بعد تحميل الصفحة. اختبار `worksmap-style-test.js` يمنع تسرب أي رابط
+خارجي، واختبار `worksmap-wiring-test.js` يمنع تسربه من وسوم الصفحة.
 
 ## (ب) وضع الـ API (خادم محلي)
 
@@ -107,11 +108,23 @@ presentation/
 ├── athar-prototype.html    # النموذج التفاعلي (الخطوات السبع)
 ├── athar-pitch.html        # عرض الملعب (3 دقائق)
 ├── athar-merged.html       # نسخة التصميم المرجعية (design tokens)
+├── athar-worksmap.js       # الخريطة: التهيئة وعقد الـ API
+├── athar-worksmap-style.js # الخريطة الأساسية الفاتحة من GeoJSON محلي
+├── athar-worksmap-layers.js# ثلاثية casing/line/symbol + التجميع + الفلاتر
+├── athar-worksmap-data.js  # تطبيع works.geojson إلى مخطط الرسم
+├── athar-worksmap-panel.js # لوحة الفترة الزمنية وإظهار الطبقات
 ├── data/
-│   └── works.geojson       # خريطة الأعمال العامة (بيانات توضيحية)
+│   ├── works.geojson       # خريطة الأعمال العامة (بيانات توضيحية)
+│   ├── riyadh-roads.geojson# شبكة الطرق المحلية (OSM · ODbL)
+│   ├── riyadh-base.geojson # مياه ومساحات خضراء وأسماء أحياء (OSM · ODbL)
+│   └── corridor-geometry.js# هندسة الممر على محور طريق الملك فهد
+├── icons/                  # مصادر أيقونات الأعمال (SVG)
+├── scripts/                # بناة الأصول والهندسة (تُشغَّل مرة)
 ├── vendor/
-│   ├── leaflet.js
-│   └── leaflet.css
+│   ├── maplibre-gl.js      # محرك الخريطة
+│   ├── mapbox-gl-rtl-text.js # تشكيل العربية (0.2.3 — لا ترفعه، انظر أدناه)
+│   ├── glyphs/             # نطاقات Noto Sans المطلوبة فقط
+│   └── sprite/             # atlas الأيقونات
 ├── tests/
 │   ├── engine-test.js      # المحرك والنوافذ والتصدير
 │   ├── routing-test.js     # تحميل الحركة والسعة بعد التحويل
@@ -119,6 +132,41 @@ presentation/
 │   └── server-test.js      # تكامل الخادم والتحقق من المدخلات
 └── README-athar.md         # هذا الملف
 ```
+
+## (هـ) الخريطة
+
+`athar-worksmap.js` — خريطة الأعمال بلغة one.network البصرية فوق بيانات محلية:
+ثلاثية `casing/line/symbol` لكل نوع، خطوط متقطعة تتبع محور الشارع، تجميع
+للنقاط، ولوحة فترة زمنية وطبقات.
+
+| الملف | المسؤولية |
+|---|---|
+| `athar-worksmap-style.js` | الخريطة الأساسية الفاتحة من GeoJSON محلي |
+| `athar-worksmap-layers.js` | الثلاثية + التجميع + الفلاتر |
+| `athar-worksmap-data.js` | تطبيع `works.geojson` إلى مخطط الرسم |
+| `athar-worksmap-panel.js` | لوحة الفترة الزمنية وإظهار الطبقات |
+| `athar-worksmap.js` | التهيئة وعقد الـ API الذي يستهلكه النموذج |
+
+**الهندسة تتبع الإسفلت.** خط الأعمال المرسوم يدوياً يقطع الأحياء ويبدو عشوائياً،
+فكل ميزة تُثبَّت على مقطع من محور شارع مسمّى مأخوذ من `riyadh-roads.geojson`.
+والممر نفسه مبني من محور طريق الملك فهد لا من ست نقاط مستقيمة.
+
+**إعادة بناء الأصول والهندسة** (بعد تغيير الأيقونات أو النطاق أو مواضع الأعمال):
+
+```bash
+node scripts/build-sprite.js            # يحتاج: npm install --no-save sharp
+node scripts/fetch-glyphs.js            # مرة واحدة (شبكة)
+node scripts/fetch-rtl-plugin.js        # مرة واحدة (شبكة)
+node scripts/fetch-base-layers.js       # مرة واحدة (شبكة · Overpass)
+node scripts/snap-works-to-roads.js     # محلي — يثبّت الأعمال على المحاور
+node scripts/build-corridor-geometry.js # محلي — يبني هندسة الممر
+```
+
+**إضافة RTL مثبَّتة على 0.2.3 عن قصد.** الإصدار 0.4.0 مبني على WebAssembly
+ويفشل استيراده داخل عامل MapLibre، فتظهر العربية حروفاً منفصلة معكوسة. اختبار
+`worksmap-assets-test.js` يرفض بناء WebAssembly.
+
+بيانات الطرق والمعالم © مساهمو OpenStreetMap — رخصة ODbL.
 
 ## ملاحظة مصادر البيانات
 
