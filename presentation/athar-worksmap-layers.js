@@ -41,25 +41,30 @@
 
   var SIZES = { iconSize: 0.8, clusterSmall: 15, clusterMedium: 20, clusterLarge: 26 };
 
+  // أعرض قليلاً من الشارع نفسه: المقطع يجب أن «يبتلع» الإسفلت لا أن يعلوه كخيط.
   var LINE_WIDTH = [
     'interpolate', ['exponential', 1.5], ['zoom'],
-    10, 2, 13, 4, 15, 6.5, 17, 11, 20, 26,
+    10, 2.8, 13, 5.6, 15, 8.5, 17, 13, 20, 28,
   ];
 
   var CASING_WIDTH = [
     'interpolate', ['exponential', 1.5], ['zoom'],
-    10, 3.4, 13, 6.6, 15, 10, 17, 16, 20, 36,
+    10, 4.4, 13, 8.4, 15, 12.5, 17, 18, 20, 38,
   ];
 
   var DASH_PATTERN = [1.6, 2.2];
   var DASH_PATTERN_ROUTE = [2, 2];
 
-  /** line-dasharray خاصية cross-faded: تقبل step على التقريب لا interpolate. */
+  /**
+    * line-dasharray خاصية cross-faded: تقبل step على التقريب لا interpolate.
+    * الفجوة تبقى أوسع من الشرطة عند كل مستوى — بلا ذلك يُقرأ الخط سادّاً عند
+    * التقريب البعيد ويضيع تمييز «هذا مقطع معلَّم» عن «هذا شارع».
+    */
   function dashByZoom(pattern) {
     return [
       'step', ['zoom'],
-      ['literal', [1.5, 0.9]],
-      13, ['literal', [pattern[0] * 0.9, pattern[1] * 0.7]],
+      ['literal', [1.1, 1.3]],
+      13, ['literal', [pattern[0] * 0.95, pattern[1] * 0.9]],
       15, ['literal', pattern],
     ];
   }

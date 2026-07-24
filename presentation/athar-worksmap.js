@@ -260,8 +260,14 @@
     var maplibre = opts.maplibregl || (typeof maplibregl !== 'undefined' ? maplibregl : null);
     if (!maplibre) throw new Error('maplibregl غير متوفر');
 
+    // إضافة RTL تُحمَّل داخل عامل (worker) قاعدته blob:، فالمسار النسبي يفشل عنده.
+    // الحل: تحويله إلى مسار مطلق مقابل عنوان المستند قبل تمريره.
     if (maplibre.getRTLTextPluginStatus() === 'unavailable') {
-      maplibre.setRTLTextPlugin(opts.rtlPluginUrl || 'vendor/mapbox-gl-rtl-text.js', false);
+      var pluginUrl = opts.rtlPluginUrl || 'vendor/mapbox-gl-rtl-text.js';
+      if (typeof document !== 'undefined' && document.baseURI) {
+        pluginUrl = new URL(pluginUrl, document.baseURI).href;
+      }
+      maplibre.setRTLTextPlugin(pluginUrl, false);
     }
 
     var style = Style.buildStyle(roadsGeoJSON, opts.baseGeoJSON || featureCollection([]), {
@@ -292,10 +298,9 @@
       map.addSource('alternatives', { type: 'geojson', data: featureCollection([]) });
 
       var worksLayers = Layers.buildWorksLayers({ points: POINT_SOURCE, lines: LINE_SOURCE });
-      worksLayers.forEach(function (layer) {
-        if (layer.type === 'line') map.addLayer(layer, labelLayerId);
-      });
 
+      // ترتيب مقصود: الممر أولاً ثم الأعمال فوقه. الأعمال تقع على نفس الإسفلت،
+      // فإخفاؤها تحت الممر يُلغي الرسالة: هذا المقطع فيه عمل قائم.
       // هالة خافتة تحت الممر. اسمها جزء من العقد: النموذج يُدرج طبقاته الزخرفية قبلها.
       map.addLayer({
         id: 'corridor-glow', type: 'line', source: CORRIDOR_SOURCE,
@@ -322,6 +327,10 @@
         id: 'alternatives-line', type: 'line', source: 'alternatives',
         paint: { 'line-color': '#2f9e44', 'line-width': 4, 'line-dasharray': [2, 2] },
       }, labelLayerId);
+
+      worksLayers.forEach(function (layer) {
+        if (layer.type === 'line') map.addLayer(layer, labelLayerId);
+      });
 
       worksLayers.forEach(function (layer) {
         if (layer.type !== 'line') map.addLayer(layer);

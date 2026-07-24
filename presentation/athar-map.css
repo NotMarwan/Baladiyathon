@@ -184,6 +184,12 @@
 }
 
 /* ---- 10. لوحة التحكم بخريطة الأعمال ---- */
+/*
+ * اللوحة شقيقة للخريطة داخل غلاف مموضع، لا ابنة لها: MapLibre يتوقع حاوية
+ * فارغة، وأي عنصر سابق بداخلها يمنع رسم اللوحة الرسومية كلياً.
+ */
+.athar-map-shell { position: relative; }
+
 #athar-map-panel {
   position: absolute;
   inset-inline-start: 14px;

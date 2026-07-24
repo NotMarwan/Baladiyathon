@@ -196,8 +196,10 @@
   <section class="card">
     <div class="section-eyebrow">الخطوة ١–٢ · حدد موقع الحفر على الممر</div>
     <h2>خريطة الممر التفاعلية</h2>
-    <div id="map" role="application" aria-label="خريطة تفاعلية لطريق الملك فهد مقطع العليا"></div>
-    <aside id="athar-map-panel" aria-label="عناصر التحكم بالخريطة"></aside>
+    <div class="athar-map-shell">
+      <div id="map" role="application" aria-label="خريطة تفاعلية لطريق الملك فهد مقطع العليا"></div>
+      <aside id="athar-map-panel" aria-label="عناصر التحكم بالخريطة"></aside>
+    </div>
     <div class="map-actions">
       <button type="button" class="primary" id="btnSelectClosure" aria-label="حدد موقع الحفر على المقطع الأوسط من الطريق">حدد موقع الحفر</button>
       <button type="button" id="btnToggleWorks" aria-pressed="false" aria-label="إظهار أو إخفاء الخريطة العامة لأعمال الحفر">الخريطة العامة للأعمال</button>
@@ -440,6 +442,7 @@
 <script src="vendor/maplibre-gl.js"></script>
 <script src="data/riyadh-roads.geojson.js"></script>
 <script src="data/riyadh-base.geojson.js"></script>
+<script src="data/corridor-geometry.js"></script>
 <script src="athar-worksmap-style.js"></script>
 <script src="athar-worksmap-layers.js"></script>
 <script src="athar-worksmap-data.js"></script>
@@ -683,7 +686,9 @@
   // -------------------------------------------------------------------
   // Map setup
   // -------------------------------------------------------------------
-  var CORRIDOR_COORDS = [
+  // عقد الممر من محور طريق الملك فهد الحقيقي (scripts/build-corridor-geometry.js).
+  // المصفوفة المكتوبة تبقى احتياطاً لو فُتحت الصفحة بلا ملف الهندسة.
+  var CORRIDOR_COORDS = window.ATHAR_CORRIDOR_NODES || [
     [24.686, 46.6815],
     [24.700, 46.6790],
     [24.714, 46.6765],
@@ -702,8 +707,8 @@
       GL = AtharWorksMap.init(document.getElementById('map'), RIYADH_ROADS, {
         scrollZoom: false,
         baseGeoJSON: typeof RIYADH_BASE !== 'undefined' ? RIYADH_BASE : null,
-        center: [46.685, 24.70],
-        zoom: 13,
+        center: [46.681, 24.7095],
+        zoom: 12.7,
       });
     }
   } catch (glErr) { GL = null; }
@@ -872,9 +877,13 @@
 
   if (GL_MODE) {
     GL.api.onReady(function () {
-      var pairs = [];
-      for (var gi = 0; gi < segCount; gi += 1) {
-        pairs.push([toLngLat(CORRIDOR_COORDS[gi]), toLngLat(CORRIDOR_COORDS[gi + 1])]);
+      // مسار كل مقطع كما هو على الإسفلت؛ الوتر المستقيم يقطع الأحياء.
+      var pairs = window.ATHAR_CORRIDOR_SEGMENTS;
+      if (!pairs || pairs.length !== segCount) {
+        pairs = [];
+        for (var gi = 0; gi < segCount; gi += 1) {
+          pairs.push([toLngLat(CORRIDOR_COORDS[gi]), toLngLat(CORRIDOR_COORDS[gi + 1])]);
+        }
       }
       GL.api.setCorridor(pairs);
       GL.api.onCorridorClick(function (idx) { selectClosure(idx); });

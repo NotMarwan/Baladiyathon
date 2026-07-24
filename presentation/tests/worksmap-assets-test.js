@@ -38,10 +38,15 @@ ok('glyphs: النطاق العربي وأشكاله التقديمية موجو
   }
 });
 
-ok('إضافة RTL محفوظة محلياً', () => {
+ok('إضافة RTL محفوظة محلياً وبالبناء المتوافق', () => {
   const file = path.join(ROOT, 'vendor', 'mapbox-gl-rtl-text.js');
   assert.ok(fs.existsSync(file), 'vendor/mapbox-gl-rtl-text.js مفقود');
   assert.ok(fs.statSync(file).size > 50000, 'الملف يبدو مبتوراً');
+
+  const body = fs.readFileSync(file, 'utf8');
+  assert.ok(body.indexOf('registerRTLTextPlugin') !== -1, 'الملف لا يسجّل نفسه كإضافة');
+  // بناء WebAssembly (0.4.0) يفشل استيراده داخل عامل MapLibre فتنكسر العربية.
+  assert.ok(!/WebAssembly|\.wasm\b/.test(body), 'بناء WebAssembly غير متوافق مع MapLibre');
 });
 
 ok('الخادم يعرف نوع .pbf', () => {
