@@ -60,7 +60,10 @@
         ? properties.severity
         : (IMPACT_SEVERITY[impact] || 0),
       promoter: text(properties.promoter),
+      contractor: text(properties.contractor),
       road: text(properties.road),
+      // الشارع يبقى حقلاً مستقلاً: البحث العام يطابق عليه، والعنوان قد يتغير.
+      street: text(properties.street, text(properties.road)),
     };
   }
 

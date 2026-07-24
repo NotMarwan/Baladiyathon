@@ -117,11 +117,42 @@ function namedCorridors() {
     .map((road) => ({
       name: road.name,
       highway: road.highway,
+      roadClass: CLASS_BY_HIGHWAY[road.highway] || 'local',
       aadt: road.aadt,
       chain: longestChain(road.parts),
     }))
     .filter((road) => road.chain.length >= 2 && lengthOf(road.chain) > 0.009)
     .sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+}
+
+/**
+ * توزيع التصاريح على أصناف الطرق بحصص معلنة.
+ * الأخذ بالترتيب الأبجدي وحده يضع المحفظة كلها على أول ١٥٠ اسماً — كلها شوارع
+ * فرعية تبدأ بألف — فلا تلمس شرياناً واحداً يعرفه القارئ، ويفشل البحث عن
+ * «طريق الملك فهد». الخطوة المنتظمة داخل كل صنف تنشر التصاريح على المدينة
+ * كلها بدل تكديسها في زاوية من المعجم.
+ */
+var CLASS_SHARE = [
+  { roadClass: 'arterial', share: 0.40 },
+  { roadClass: 'major', share: 0.34 },
+  { roadClass: 'local', share: 0.26 },
+];
+
+function allocateCorridors(corridors, count) {
+  var picked = [];
+
+  CLASS_SHARE.forEach(function (slice) {
+    var pool = corridors.filter(function (road) { return road.roadClass === slice.roadClass; });
+    if (!pool.length) return;
+    var want = Math.round(count * slice.share);
+    for (var i = 0; i < want; i += 1) {
+      picked.push(pool[Math.floor((i * pool.length) / want) % pool.length]);
+    }
+  });
+
+  // تكملة أي نقص من الدوران على كل المحاور — لا تصريح بلا مكان.
+  for (var j = 0; picked.length < count; j += 1) picked.push(corridors[j % corridors.length]);
+  return picked.slice(0, count);
 }
 
 /** النسبة المئوية للتأخير: مرجّحة بالطلب على ساعات العمل كلها. */
@@ -157,10 +188,11 @@ function build() {
   if (!corridors.length) throw new Error('لا محاور مسمّاة صالحة — تحقق من riyadh-roads.geojson');
 
   const rand = Portfolio.mulberry32(Portfolio.SEED);
+  const assigned = allocateCorridors(corridors, permits.length);
   const features = [];
 
   permits.forEach((permit, index) => {
-    const corridor = corridors[index % corridors.length];
+    const corridor = assigned[index];
 
     /**
      * المقطع يُقتطع بطول حقيقي لا بنسبة من المحور: التصريح يغطي امتداداً
@@ -234,7 +266,7 @@ function build() {
         nextAction: NEXT_ACTION[status] || 'راجع',
         title: 'أعمال على ' + corridor.name,
         street: corridor.name,
-        roadClass: CLASS_BY_HIGHWAY[corridor.highway] || 'local',
+        roadClass: corridor.roadClass,
         sensitivity: SENSITIVITY[Math.floor(rand() * SENSITIVITY.length)],
         promoter: PROMOTERS[Math.floor(rand() * PROMOTERS.length)],
         contractor: CONTRACTORS[Math.floor(rand() * CONTRACTORS.length)],

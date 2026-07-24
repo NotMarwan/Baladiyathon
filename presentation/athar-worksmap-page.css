@@ -60,6 +60,24 @@ body.athar-nav-offset { padding-top: 44px; }
 
 .wm-bar-spacer { margin-inline-start: auto; }
 
+.wm-search input {
+  font: inherit;
+  font-size: 0.83rem;
+  color: var(--wm-text);
+  width: 230px;
+  padding: 6px 10px;
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: var(--athar-radius-sm);
+}
+.wm-search input:focus-visible { outline: 2px solid var(--wm-accent); outline-offset: 1px; }
+
+.wm-updated {
+  font-size: 0.74rem;
+  color: var(--wm-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .wm-stat {
   font-size: 0.78rem;
   color: var(--wm-muted);

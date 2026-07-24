@@ -47,6 +47,41 @@ ok('شارة الصدق باقية على الصفحة', () => {
   assert.ok(html.indexOf('بيانات توضيحية للعرض') !== -1);
 });
 
+/* ---- طبقة الشفافية العامة (المعيار ١٫٥) ---- */
+
+ok('الصفحة تتيح البحث باسم الشارع', () => {
+  assert.ok(html.indexOf('id="wmSearch"') !== -1, 'لا حقل بحث');
+  assert.ok(html.indexOf('visually-hidden') !== -1 || html.indexOf('<label') !== -1,
+    'حقل البحث بلا تسمية للقارئ الصوتي');
+});
+
+ok('الصفحة تعلن وقت آخر تحديث', () => {
+  assert.ok(html.indexOf('id="wmUpdated"') !== -1, 'لا عنصر لآخر تحديث');
+  assert.ok(html.indexOf('آخر تحديث') !== -1);
+});
+
+ok('الصفحة تعرّف نفسها بوصفها طبقة عامة للسكان لا أداة داخلية', () => {
+  assert.ok(html.indexOf('للسكان') !== -1 || html.indexOf('العامة') !== -1,
+    'الصفحة لا تعلن جمهورها');
+});
+
+ok('نتيجة البحث تُعلَن للقارئ الصوتي لا للعين وحدها', () => {
+  assert.ok(/id="wmStat"[^>]*role="status"/.test(html), 'عدّاد النتائج بلا role=status');
+});
+
+ok('بطاقة التفاصيل تذكر الجهة والمقاول — الساكن يعرف من يحفر', () => {
+  const interactions = fs.readFileSync(path.join(ROOT, 'athar-worksmap-interactions.js'), 'utf8');
+  assert.ok(interactions.indexOf('الجهة') !== -1, 'الجهة غير معروضة');
+  assert.ok(interactions.indexOf('المقاول') !== -1, 'المقاول غير معروض');
+});
+
+ok('البحث لا يحقن HTML من مدخل المستخدم', () => {
+  const Interactions = require(path.join(ROOT, 'athar-worksmap-interactions.js'));
+  const out = Interactions.popupHtml({ promoter: '<script>x</script>', contractor: '"onload="y' });
+  assert.ok(out.indexOf('<script>') === -1, 'تسرّب وسم');
+  assert.ok(out.indexOf('onload="y') === -1, 'تسرّب سمة');
+});
+
 ok('الصفحة لا تشارك تنسيق النموذج — تنسيقها مستقل', () => {
   assert.ok(html.indexOf('athar-worksmap-page.css') !== -1, 'تنسيق الصفحة غير محمّل');
   assert.ok(html.indexOf('athar-map.css') === -1, 'تنسيق النموذج يسرّب إلى الصفحة');

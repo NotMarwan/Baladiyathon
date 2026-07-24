@@ -65,9 +65,11 @@
       + '<h3>' + escapeHtml(p.title) + '</h3>'
       + (p.description ? '<p>' + escapeHtml(p.description) + '</p>' : '')
       + '<dl>'
+      + (p.street ? '<dt>الشارع</dt><dd>' + escapeHtml(p.street) + '</dd>' : '')
       + '<dt>من</dt><dd>' + escapeHtml(formatDate(p.start_ts)) + '</dd>'
       + '<dt>إلى</dt><dd>' + escapeHtml(formatDate(p.end_ts)) + '</dd>'
       + '<dt>الجهة</dt><dd>' + escapeHtml(p.promoter || '—') + '</dd>'
+      + '<dt>المقاول</dt><dd>' + escapeHtml(p.contractor || '—') + '</dd>'
       + '<dt>المرجع</dt><dd>' + escapeHtml(p.id || '—') + '</dd>'
       + '</dl></article>';
   }

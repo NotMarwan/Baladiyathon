@@ -10,9 +10,16 @@
 <body>
 
 <header class="wm-bar">
-  <h1>خريطة أعمال الطرق — الرياض</h1>
+  <h1>أعمال الطرق في الرياض — الخريطة العامة للسكان</h1>
   <span class="wm-badge">بيانات توضيحية للعرض</span>
+
+  <label class="wm-search">
+    <span class="visually-hidden">ابحث باسم الشارع</span>
+    <input id="wmSearch" type="search" placeholder="ابحث باسم الشارع…" autocomplete="off">
+  </label>
+
   <span class="wm-bar-spacer"></span>
+  <span class="wm-updated" id="wmUpdated">آخر تحديث: —</span>
   <span class="wm-stat" id="wmStat" role="status">جارٍ التحميل…</span>
 </header>
 
@@ -79,22 +86,86 @@
     AtharWorksMapInteractions.install(GL.map, maplibregl, 'works');
     AtharWorksMapPanel.mount(document.getElementById('control-panel'), GL.api, Date.now());
 
-    // العدّاد يتبع الفترة المختارة: الرقم المعروض هو ما تُظهره الخريطة فعلاً.
     var features = GL.api.getData().works.features;
     var select = document.getElementById('athar-date-preset');
+    var search = document.getElementById('wmSearch');
+    var updated = document.getElementById('wmUpdated');
 
+    /**
+     * حداثة البيانات معلنة: الساكن يحتاج أن يعرف متى قيلت له هذه المعلومة.
+     * أحدث سجل *بدأ فعلاً* — لا أحدث سجل مطلقاً: المحفظة تحوي أعمالاً تبدأ في
+     * المستقبل، وعرض تاريخها بوصفه «آخر تحديث» يقرأ كتاريخ مكذوب.
+     */
+    var now = Date.now();
+    var latest = features.reduce(function (max, feature) {
+      var at = Number(feature.properties.start_ts) || 0;
+      return at <= now && at > max ? at : max;
+    }, 0);
+    if (latest) {
+      updated.textContent = 'آخر تحديث: ' + new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
+        dateStyle: 'medium',
+      }).format(new Date(latest));
+    }
+
+    function matching() {
+      var needle = search ? search.value.trim() : '';
+      if (!needle) return features;
+      return features.filter(function (feature) {
+        var p = feature.properties;
+        return String(p.street || '').indexOf(needle) !== -1
+          || String(p.title || '').indexOf(needle) !== -1
+          || String(p.promoter || '').indexOf(needle) !== -1
+          || String(p.id || '').indexOf(needle) !== -1;
+      });
+    }
+
+    /** العدّاد يذكر ما تُظهره الخريطة فعلاً: البحث والفترة معاً، لا الفترة وحدها. */
     function refreshStat() {
       var range = AtharWorksMapPanel.toEpochRange(select ? select.value : 'today', Date.now());
+      var found = matching();
       var visible = range
-        ? features.filter(function (f) {
+        ? found.filter(function (f) {
             var p = f.properties;
             return p.start_ts < range.to && p.end_ts > range.from;
           }).length
-        : features.length;
-      stat.textContent = visible + ' من ' + features.length + ' سجلاً ضمن الفترة المختارة';
+        : found.length;
+
+      var needle = search ? search.value.trim() : '';
+      stat.textContent = needle
+        ? visible + ' نتيجة لـ «' + needle + '» ضمن الفترة المختارة'
+        : visible + ' من ' + features.length + ' سجلاً ضمن الفترة المختارة';
+    }
+
+    /**
+     * البحث يرشّح الخريطة نفسها ويضم كل النتائج في الإطار — لا يطير إلى الأولى
+     * فيخفي البقية، ولا يكتفي بتغيير رقم العدّاد.
+     */
+    function runSearch() {
+      var found = matching();
+      GL.api.setWorks({ type: 'FeatureCollection', features: found });
+      refreshStat();
+      if (!found.length || !search.value.trim()) return;
+
+      var west = Infinity, south = Infinity, east = -Infinity, north = -Infinity;
+      found.forEach(function (feature) {
+        var coords = feature.geometry.type === 'Point'
+          ? [feature.geometry.coordinates]
+          : feature.geometry.coordinates;
+        coords.forEach(function (point) {
+          west = Math.min(west, point[0]);
+          east = Math.max(east, point[0]);
+          south = Math.min(south, point[1]);
+          north = Math.max(north, point[1]);
+        });
+      });
+
+      GL.map.fitBounds([[west, south], [east, north]], {
+        padding: 120, maxZoom: 14.5, duration: 600,
+      });
     }
 
     if (select) select.addEventListener('change', refreshStat);
+    if (search) search.addEventListener('input', runSearch);
     refreshStat();
   });
 

@@ -48,6 +48,25 @@ ok('كل هندسة خط على شارع مسمّى موجود فعلاً في �
   });
 });
 
+ok('المحفظة تغطي الشرايين لا الشوارع الفرعية وحدها', () => {
+  const classes = {};
+  portfolio.features.forEach((f) => {
+    classes[f.properties.roadClass] = (classes[f.properties.roadClass] || 0) + 1;
+  });
+  assert.ok(classes.arterial >= 30,
+    `شرايين قليلة: ${classes.arterial || 0} — المحفظة على شوارع لا يعرفها أحد`);
+  assert.ok(classes.major >= 20, 'طرق رئيسية قليلة');
+  assert.ok(classes.local >= 10, 'لا تمثيل للشوارع الفرعية');
+});
+
+ok('البحث عن شريان معروف يجد نتيجة — الطبقة العامة تُستعمل بالاسم', () => {
+  const streets = portfolio.features.map((f) => f.properties.street);
+  ['الملك فهد', 'الدائري'].forEach((needle) => {
+    assert.ok(streets.some((street) => street.indexOf(needle) !== -1),
+      `لا تصريح على شارع يحوي «${needle}»`);
+  });
+});
+
 ok('كل اسم شارع بالعربية — لا أسماء لاتينية في واجهة عربية', () => {
   const latin = portfolio.features
     .map((f) => f.properties.street)
