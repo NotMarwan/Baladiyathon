@@ -31,7 +31,9 @@ class ResearchPackageTests(unittest.TestCase):
         self.assertEqual(metadata["counts"]["newEvidenceRecords"], 40)
         self.assertEqual(metadata["counts"]["competitors"], 16)
         self.assertEqual(metadata["counts"]["impactMetrics"], 26)
-        self.assertEqual(len(list((root / "reports").glob("*.md"))), 5)
+        reports = {path.name for path in (root / "reports").glob("*.md")}
+        self.assertEqual(len(reports), 6)
+        self.assertIn("crit12-decision-gap.md", reports)
 
 
 if __name__ == "__main__":

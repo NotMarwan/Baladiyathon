@@ -1,0 +1,139 @@
+{
+  "count": 19,
+  "errors": [],
+  "bounds": [
+    {
+      "slide": "1",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "2",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "3",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "4",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "5",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "6",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "7",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "8",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "9",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "10",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "11",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "12",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "13",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "14",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "15",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "16",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "17",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "18",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    },
+    {
+      "slide": "19",
+      "scrollWidth": 1600,
+      "scrollHeight": 900,
+      "clientWidth": 1600,
+      "clientHeight": 900
+    }
+  ]
+}

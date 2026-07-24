@@ -5,15 +5,17 @@
    RTL أولاً.
    ========================================================================== */
 
+@import url("athar-tokens.css");
+
 :root {
-  --wm-surface: #ffffff;
-  --wm-border: #e2e0db;
-  --wm-stage: #f3f2ef;
-  --wm-text: #1d1d1f;
-  --wm-muted: #5b5b60;
-  --wm-accent: #1971c2;
-  --wm-radius: 12px;
-  --wm-shadow: 0 6px 24px rgb(0 0 0 / 0.12);
+  --wm-surface: var(--athar-surface);
+  --wm-border: var(--athar-line);
+  --wm-stage: var(--athar-canvas);
+  --wm-text: var(--athar-ink);
+  --wm-muted: var(--athar-muted);
+  --wm-accent: var(--athar-primary);
+  --wm-radius: var(--athar-radius);
+  --wm-shadow: var(--athar-shadow);
   --wm-bar: 52px;
 }
 
@@ -49,9 +51,9 @@ body.athar-nav-offset { padding-top: 44px; }
 .wm-badge {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #8a6d1f;
-  background: #fff7e3;
-  border: 1px solid #f3e0b5;
+  color: var(--athar-accent);
+  background: var(--athar-accent-soft);
+  border: 1px solid var(--athar-line);
   border-radius: 999px;
   padding: 3px 10px;
 }
@@ -156,10 +158,10 @@ fieldset.athar-map-field legend { font-weight: 700; margin-bottom: 6px; }
   inset-inline: 18%;
   z-index: 4;
   padding: 16px;
-  background: #fff5f5;
-  border: 1px solid #ffc9c9;
+  background: var(--athar-danger-soft);
+  border: 1px solid var(--athar-danger);
   border-radius: var(--wm-radius);
-  color: #c92a2a;
+  color: var(--athar-danger);
 }
 
 @media (max-width: 640px) {

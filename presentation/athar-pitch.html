@@ -386,9 +386,11 @@
           <div class="value">25–33%</div><p>سياق دولي محدود لتنسيق القنوات والألياف، لا وعد محلي.</p>
           <a href="athar-sources.html#src-041">src-041 · التقرير الرقابي المباشر</a>
         </article>
-        <article class="metric" data-formula="annual-impact-blocked">
-          <div class="value">محجوب</div><p>لا أثر سنوي للمدينة قبل عينة مقاسة ومقام رسمي.</p>
+        <article class="metric" data-formula="portfolio-scenario">
+          <div class="value" id="portfolio-saved-veh-hours">—</div>
+          <p>سيناريو تمثيلي لمحفظة 150 تصريحاً: ساعات-مركبة موفرة سنوياً، مقاسة بالمحرك لا ادعاء ميداني. الأثر المقاس يبقى محكوماً بعينة الظل.</p>
           <a href="../docs/SHADOW-PILOT.md#design-parameters">شرط منع التعميم</a>
+          · <a href="athar-city-impact.html">لوحة أثر المدينة</a>
         </article>
       </div>
       <aside class="speaker-notes" hidden>الأثر لا يبدأ بإسقاط سنوي. يبدأ بفارق بين خط مضاد مثبت والواقع المرصود. نعرض النتيجة كنطاق مع عدم اليقين والانحياز. ونحتفظ بنطاق التقرير الأمريكي داخل سياقه المحدد، ولا نحوله إلى وعد محلي.</aside>
@@ -551,6 +553,18 @@
 </script>
 <script src="athar-engine.js"></script>
 <script src="athar-decision.js"></script>
+<script src="athar-portfolio.js"></script>
+<script>
+(function () {
+  'use strict';
+  // بطاقة السيناريو التمثيلي: الرقم من المحرك، لا رقم مكتوب يدوياً
+  var el = document.getElementById('portfolio-saved-veh-hours');
+  if (el && typeof AtharPortfolio !== 'undefined') {
+    var p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
+    el.textContent = Math.round(p.totals.savedVehHours).toLocaleString('ar-SA') + ' س-م';
+  }
+})();
+</script>
 <script>
 (function () {
   'use strict';

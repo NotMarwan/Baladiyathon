@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#dfe8eb;font-family:Tahoma,Arial,sans-serif;color:#102535}
+.diagram{width:1600px;height:900px;background:#fffdf8;padding:55px 62px;overflow:hidden;position:relative}
+.diagram h1{margin:0 0 28px;font-size:38px}.label{font-size:19px;font-weight:700}.muted{font-size:16px;color:#62717a}
+.box{background:#eef5f3;border:1px solid #c7d8df;border-radius:15px;padding:12px 14px}
+.human{background:#d8e9f2}.system{background:#f4e6d0}.athar{background:#dcefe4;border:2px solid #3f8562}
+.actors{display:grid;grid-template-columns:260px 1fr 260px;gap:28px;height:755px}.stack{display:grid;gap:12px;align-content:start}
+.core{padding:22px;border-radius:24px;background:#f0f8f3;border:3px solid #3f8562}.core h2{margin:0 0 18px;font-size:27px}.uses{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.loop{grid-column:1/-1;background:#b9e85b;border-radius:15px;padding:13px;text-align:center;font-weight:800;font-size:18px}
+.seq-head{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}.seq-head .box{text-align:center;font-size:16px;font-weight:800;min-height:62px;display:grid;place-items:center}
+.seq-body{position:relative;margin-top:12px;height:650px;border-top:1px solid #c7d8df}.lifelines{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}.life{border-right:2px dashed #c7d8df}
+.messages{position:relative;z-index:2;display:grid;gap:7px;padding-top:10px}.msg{height:38px;border-radius:10px;background:#eef1ef;padding:7px 20px;font-size:15px;display:flex;align-items:center}.msg.a{margin-right:2%;margin-left:62%}.msg.b{margin-right:26%;margin-left:49%}.msg.c{margin-right:26%;margin-left:24%}.msg.d{margin-right:50%;margin-left:12%}.msg.e{margin-right:26%;margin-left:12%;background:#fff4df}.msg.f{margin-right:14%;margin-left:25%;background:#dcefe4}.msg.g{margin-right:14%;margin-left:0;background:#d8e9f2}
+.review{display:grid;gap:20px}.review-row{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;align-items:stretch}.review-row .box{min-height:108px;display:grid;place-items:center;text-align:center;font-size:17px;font-weight:700}.gate{background:#fff4df;border:2px solid #d19231}.decision{background:#dcefe4;border:2px solid #3f8562}.save{grid-column:1/-1;background:#102535;color:#fff;padding:17px;border-radius:15px;text-align:center;font-size:20px;font-weight:800}
+.hint{position:absolute;bottom:22px;right:62px;color:#62717a;font-size:14px}
+</style>
+</head>
+<body>
+<section class="diagram" id="actors">
+  <h1>مخطط الأطراف وحالات الاستخدام</h1>
+  <div class="actors">
+    <div class="stack">
+      <div class="box human"><div class="label">مقدم الطلب</div></div><div class="box human"><div class="label">مراجع التصريح</div></div><div class="box human"><div class="label">مختص الحركة</div></div><div class="box human"><div class="label">المراقب الميداني</div></div><div class="box human"><div class="label">المستفيد</div></div>
+    </div>
+    <div class="core"><h2>نطاق أثر</h2><div class="uses">
+      <div class="box athar">استقبال بيانات الطلب</div><div class="box athar">تقييم الأثر</div><div class="box athar">مقارنة المسارات</div><div class="box athar">ترتيب الجداول</div><div class="box athar">شرح القرار</div><div class="box athar">فحص التعارض والحفر المشترك</div><div class="box athar">إصدار مسودة الخطة</div><div class="box athar">نشر الإغلاق</div><div class="box athar">مقارنة المتوقع بالمرصود</div><div class="box athar">تحديث المعايرة</div>
+      <div class="loop">حلقة التعلم: قياس ← مقارنة ← معايرة ← تقييم جديد</div>
+    </div></div>
+    <div class="stack">
+      <div class="box system"><div class="label">منصة التصاريح</div></div><div class="box system"><div class="label">مزود الحركة</div></div><div class="box system"><div class="label">بيانات النقل العام</div></div><div class="box system"><div class="label">محرك المحاكاة</div></div><div class="box system"><div class="label">قنوات الملاحة والإشعار</div></div><div class="box system"><div class="label">الأجهزة والحساسات</div></div>
+    </div>
+  </div>
+  <div class="hint">الأطراف البشرية ← نطاق أثر ← الأنظمة والبيانات</div>
+</section>
+
+<section class="diagram" id="sequence">
+  <h1>مخطط التسلسل التشغيلي المستهدف</h1>
+  <div class="seq-head"><div class="box human">مقدم الطلب</div><div class="box system">منصة التصاريح</div><div class="box athar">أثر</div><div class="box system">بيانات الحركة</div><div class="box human">مراجع التصريح</div><div class="box system">المحاكاة المتخصصة</div><div class="box system">قنوات النشر</div><div class="box system">القياس الميداني</div></div>
+  <div class="seq-body"><div class="lifelines"><div class="life"></div><div class="life"></div><div class="life"></div><div class="life"></div><div class="life"></div><div class="life"></div><div class="life"></div><div class="life"></div></div>
+    <div class="messages">
+      <div class="msg a">١ · إرسال موقع العمل ومدته وإغلاقه</div>
+      <div class="msg b">٢ · طلب تقييم الأثر</div>
+      <div class="msg c">٣ · طلب خط أساس وحركة مرصودة ← سرعات وأحجام وحوادث</div>
+      <div class="msg b">٤ · حساب الحالة الأساسية والإغلاق وتوليد البدائل</div>
+      <div class="msg e">٥ · عند أثر مرتفع أو عدم يقين واسع: تحقق بمحاكاة متخصصة</div>
+      <div class="msg f">٦ · بطاقة الأثر والبدائل والأسباب إلى المراجع</div>
+      <div class="msg f">٧ · إعادة للتعديل أو اعتماد البديل والخطة</div>
+      <div class="msg b">٨ · تثبيت النسخة المعتمدة</div>
+      <div class="msg g">٩ · نشر الإغلاق والتحويلة وإشعار الحالة</div>
+      <div class="msg g">١٠ · قياسات التنفيذ الفعلية</div>
+      <div class="msg c">١١ · مقارنة المتوقع بالمرصود</div>
+      <div class="msg f">١٢ · تقرير النتيجة ومعامل التصحيح</div>
+    </div>
+  </div>
+</section>
+
+<section class="diagram" id="reviewer">
+  <h1>رحلة المراجع داخل شاشة القرار</h1>
+  <div class="review">
+    <div class="review-row"><div class="box">١ · فتح قائمة الطلبات</div><div class="box">٢ · ترتيبها حسب الأثر والثقة</div><div class="box">٣ · فتح بطاقة الطلب</div><div class="box">٤ · مراجعة المصدر والافتراضات</div><div class="box">٥ · مقارنة أفضل ثلاثة بدائل</div></div>
+    <div class="review-row"><div class="box">٦ · مراجعة الخريطة والمسارات</div><div class="box">٧ · الأشخاص والنقل والمواقع الحساسة</div><div class="box">٨ · التعارضات وميزانية المحور</div><div class="box gate">٩ · هل توجد فجوة بيانات؟</div><div class="box">١٠ · طلب قياس أو مستند إضافي</div></div>
+    <div class="review-row"><div class="box gate">١١ · هل تحتاج الحالة مختصًا؟</div><div class="box">١٢ · التصعيد مع ملف الأدلة</div><div class="box gate">١٣ · ما القرار؟</div><div class="box decision">١٤ · اعتماد بلا تعديل</div><div class="box decision">١٥ · اعتماد البديل المقترح</div></div>
+    <div class="review-row"><div class="box decision">١٦ · إعادة جدولة أو تعديل الإغلاق</div><div class="box decision">١٧ · رفض مسبب</div><div class="box" style="grid-column:span 3">تعود فجوة البيانات إلى بطاقة الطلب، وتتقارب جميع القرارات في سجل واحد</div></div>
+    <div class="save">١٨ · حفظ القرار والنسخة والسبب</div>
+  </div>
+  <div class="hint">مسار العودة عند نقص البيانات محفوظ، والحالات المعقدة تُصعّد قبل القرار</div>
+</section>
+</body>
+</html>

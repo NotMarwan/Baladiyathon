@@ -246,4 +246,12 @@ test('pitch embeds live gate demo wired to real engine modules', () => {
   assert.ok(pitch.includes('AtharEngine.score'));
 });
 
+test('impact slide links the city portfolio dashboard with the representative label', () => {
+  assert.ok(pitch.includes('athar-city-impact.html'), 'pitch links city impact dashboard');
+  assert.ok(pitch.includes('سيناريو تمثيلي'), 'city metric carries representative label');
+  const Portfolio = require(path.join(presentationDir, 'athar-portfolio.js'));
+  assert.ok(pitch.includes('athar-portfolio.js'), 'pitch loads portfolio module for dynamic numbers');
+  assert.ok(Portfolio.buildPortfolio(Portfolio.SEED).totals.savedVehHours > 0);
+});
+
 console.log(`ALL PITCH INTEGRITY TESTS PASSED (${count})`);

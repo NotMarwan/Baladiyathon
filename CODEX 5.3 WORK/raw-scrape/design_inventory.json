@@ -1,0 +1,5303 @@
+{
+  "generatedAt": "2026-07-24T17:28:27.983205+00:00",
+  "method": {
+    "scope": "one request per official URL already cited in sources.md",
+    "storesFullText": false,
+    "storedSignals": [
+      "headings",
+      "navigation labels",
+      "calls to action",
+      "fields and forms",
+      "table dimensions",
+      "download and data links",
+      "structured data types",
+      "limited design tokens",
+      "capability keyword counts"
+    ],
+    "userAgent": "AtharPublicResearchBot/1.0 (+public product research; one page per cited URL)"
+  },
+  "coverage": {
+    "totalSourceUrls": 15,
+    "recordedUrls": 15,
+    "states": {
+      "error": 1,
+      "received": 14
+    }
+  },
+  "pages": [
+    {
+      "sourceIndex": 0,
+      "sourceUrl": "https://balady.gov.sa/ar/services/11722",
+      "checkedAt": "2026-07-24T17:27:37.390296+00:00",
+      "robotsAllowed": null,
+      "robotsNote": "robots.txt unavailable; single cited public page only",
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 224431,
+      "inventory": {
+        "language": "ar",
+        "title": "الخريطة التفاعلية | منصة بلدي",
+        "metaDescription": "الخريطة التفاعلية",
+        "headings": [
+          {
+            "level": "h2",
+            "text": "روابط المواقع الالكترونية الرسمية السعودية تنتهي .gov.sa"
+          },
+          {
+            "level": "h2",
+            "text": "المواقع الالكترونية الحكومية تستخدم بروتوكول HTTPS للتشفير و الأمان."
+          },
+          {
+            "level": "h2",
+            "text": "Main navigation"
+          },
+          {
+            "level": "h3",
+            "text": "البحث المتقدم"
+          },
+          {
+            "level": "h2",
+            "text": "اقتراحات شائعة"
+          },
+          {
+            "level": "h3",
+            "text": "الأوامر الصوتية"
+          },
+          {
+            "level": "h2",
+            "text": "مسار التنقل"
+          },
+          {
+            "level": "h1",
+            "text": "الخريطة التفاعلية"
+          },
+          {
+            "level": "h2",
+            "text": "الخريطة التفاعلية"
+          },
+          {
+            "level": "h2",
+            "text": "هل يمكن استعراض طبقات قاعدة البيانات الأرضية للجهة مالكة الطبقات و مكتب التنسيق ؟"
+          },
+          {
+            "level": "h2",
+            "text": "ما هي الخريطة التفاعلية؟"
+          },
+          {
+            "level": "h2",
+            "text": "خدمات ذات صلة"
+          },
+          {
+            "level": "h3",
+            "text": "طلب تنسيق مشروع مجدول"
+          },
+          {
+            "level": "h3",
+            "text": "تقارير التنسيق"
+          },
+          {
+            "level": "h3",
+            "text": "طلباتي - خدمات تنسيق المشروعات الكبرى"
+          },
+          {
+            "level": "h3",
+            "text": "طلب تنسيق مشروع طارئ"
+          },
+          {
+            "level": "h3",
+            "text": "طلب تعديل خطة مشروع"
+          },
+          {
+            "level": "h3",
+            "text": "طلب تنسيق مشروع غير مجدول"
+          },
+          {
+            "level": "h3",
+            "text": "طلب إلغاء تقرير تنسيق مشروع"
+          },
+          {
+            "level": "h3",
+            "text": "التعليقات والاقتراحات"
+          },
+          {
+            "level": "h2",
+            "text": "نظرة عامة"
+          },
+          {
+            "level": "h2",
+            "text": "روابط مهمة"
+          },
+          {
+            "level": "h2",
+            "text": "الدعم والمساعدة"
+          },
+          {
+            "level": "h2",
+            "text": "تواصل معنا"
+          },
+          {
+            "level": "h2",
+            "text": "تابعنا على"
+          },
+          {
+            "level": "h2",
+            "text": "أدوات الإتاحة والوصول"
+          },
+          {
+            "level": "h2",
+            "text": "حمل تطبيق بلدي"
+          },
+          {
+            "level": "h2",
+            "text": "copyright"
+          }
+        ],
+        "navigationLabels": [
+          "كيف تتحقق",
+          "أدوات سهولة الوصول",
+          "20250428339",
+          "Toggle navigation",
+          "عن بلدي",
+          "من نحن",
+          "الهيكل التنظيمي",
+          "الأنظمة واللوائح",
+          "السياسات والاستراتيجيات",
+          "المنافسات والمشتريات",
+          "الميزانية والمصروفات",
+          "التنمية المستدامة",
+          "الشراكات",
+          "المشاركة الإلكترونية",
+          "البيانات المفتوحة",
+          "الأخبار",
+          "الفعاليات",
+          "المبادرات",
+          "البيانات والإحصائيات",
+          "الوظائف",
+          "المساعدة والدعم",
+          "الخدمات",
+          "إدارة الطلبات",
+          "إدارة الرخص",
+          "إصدار رخصة تجارية",
+          "تجديد رخصة نشاط تجاري",
+          "إلغاء رخصة نشاط تجاري",
+          "إصدار رخصة بناء",
+          "خدمة إصدار رخصة تسوير أراضي فضاء",
+          "إصدار شهادة صحية",
+          "تجديد شهادة صحية",
+          "تسجيل طلب نقل وتجهيز الموتى",
+          "حجز مقبرة",
+          "عرض المزيد",
+          "الاستعلامات",
+          "الإبلاغ عن شبهة فساد",
+          "اتصل بنا",
+          "وسائل التواصل الإجتماعي",
+          "الأسئلة الشائعة",
+          "دليل فروع الوزارة / الأمانات",
+          "الأمانة الافتراضية",
+          "حجز موعد",
+          "الدعم الفني بلغة الإشارة",
+          "التواصل مع مكتب معالي الوزير",
+          "بلدي أعمال",
+          "بحث",
+          "إغلاق",
+          "البحث المتقدم",
+          "الرخص التجارية",
+          "الرخص الإنشائية",
+          "حجز المواعيد الإلكترونية",
+          "Close",
+          "English",
+          "العربية",
+          "تسجيل الدخول",
+          "الرئيسية",
+          "خدمات بلدي",
+          "خدمات تنسيق المشروعات الكبرى",
+          "حول بلدي",
+          "سياسة إخلاء المسؤولية"
+        ],
+        "callsToAction": [
+          {
+            "label": "إدارة الطلبات",
+            "href": "https://apps.balady.gov.sa/Eservices/Inquiries/Request",
+            "kind": "a"
+          },
+          {
+            "label": "تسجيل طلب نقل وتجهيز الموتى",
+            "href": "https://balady.gov.sa/ar/services/%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%B7%D9%84%D8%A8-%D9%86%D9%82%D9%84-%D9%88%D8%AA%D8%AC%D9%87%D9%8A%D8%B2-%D8%A7%D9%84%D9%85%D9%88%D8%AA%D9%89",
+            "kind": "a"
+          },
+          {
+            "label": "عرض المزيد",
+            "href": "https://balady.gov.sa/ar/all-products",
+            "kind": "a"
+          },
+          {
+            "label": "وسائل التواصل الإجتماعي",
+            "href": "https://balady.gov.sa/ar/help-and-support/social-media",
+            "kind": "a"
+          },
+          {
+            "label": "التواصل مع مكتب معالي الوزير",
+            "href": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AA%D9%88%D8%A7%D8%B5%D9%84-%D9%85%D8%B9-%D9%85%D9%83%D8%AA%D8%A8-%D9%85%D8%B9%D8%A7%D9%84%D9%8A-%D8%A7%D9%84%D9%88%D8%B2%D9%8A%D8%B1",
+            "kind": "a"
+          },
+          {
+            "label": "تسجيل الدخول",
+            "href": "https://balady.gov.sa/cstm_sso/verify",
+            "kind": "a"
+          },
+          {
+            "label": "الرجاء تسجيل الدخول لاستخدام المفضلة",
+            "href": "https://balady.gov.sa/cstm_sso/verify",
+            "kind": "a"
+          },
+          {
+            "label": "المتطلبات",
+            "href": null,
+            "kind": "button"
+          },
+          {
+            "label": "ما هي الخريطة التفاعلية؟",
+            "href": null,
+            "kind": "button"
+          },
+          {
+            "label": "عرض الكل",
+            "href": "https://balady.gov.sa/ar/all-services",
+            "kind": "a"
+          },
+          {
+            "label": "تواصل معنا",
+            "href": "https://balady.gov.sa/ar/form/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "خريطة الموقع",
+            "href": "https://balady.gov.sa/ar/sitemap",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "search_api_fulltext",
+            "label": "بحث",
+            "placeholder": "ابحث هنا",
+            "ariaLabel": "search",
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "submit",
+            "name": null,
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "name": "value",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "form_build_id",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "form_id",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "submit",
+            "name": "op",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": "search",
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "page_title",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "page_url",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "textarea",
+            "type": null,
+            "name": "feedback",
+            "label": "ملاحظات",
+            "placeholder": "أكتب ملاحظاتك هنا ...",
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "name": "webform_survy_question",
+            "label": "نعم",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "name": "webform_survy_question",
+            "label": "لا",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "tmknt_mn_alwswl_llm_lwmat_bshwlt",
+            "label": "المحتوى ذو صلة",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "syaght_almhtwy_mtqn_fy_hdhh_alsfht",
+            "label": "لقد كانت مكتوبة بشكل جيد",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "wjdt_alsfht_mfydt_wwadht",
+            "label": "جعل التخطيط من السهل القراءة",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "sbb_akhr",
+            "label": "شيء آخر",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "survey_page_title",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "survey_page_url",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "lm_atmkn_mn_ayjad_alm_lwmat_almrad_alhswl_lyha",
+            "label": "المحتوى غير ذي صلة",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "almhtwy_ghyr_mfhwm",
+            "label": "المحتوى غير دقيق",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "wjdt_s_wbt_fy_alqrat_nd_tsfh_hdhh_alsfht",
+            "label": "المحتوى طويل جدًا",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "sbb_akhr2",
+            "label": "شيء آخر",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "name": "gender",
+            "label": "ذكر",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "name": "gender",
+            "label": "انثى",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "textarea",
+            "type": null,
+            "name": "wsf_alsbb",
+            "label": "تعليق",
+            "placeholder": "أكتب تعليقك هنا ...",
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": null,
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          }
+        ],
+        "forms": [
+          {
+            "method": "get",
+            "action": "https://balady.gov.sa/ar/solr-serach-v1",
+            "fieldCount": 2,
+            "buttonLabels": [
+              ""
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+            "fieldCount": 8,
+            "buttonLabels": [
+              ""
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+            "fieldCount": 8,
+            "buttonLabels": [
+              ""
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+            "fieldCount": 6,
+            "buttonLabels": [
+              ""
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+            "fieldCount": 6,
+            "buttonLabels": [
+              ""
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://balady.gov.sa/ar/services/%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9-0",
+            "fieldCount": 19,
+            "buttonLabels": [
+              ""
+            ]
+          }
+        ],
+        "tables": [
+          {
+            "caption": null,
+            "rowCount": 1,
+            "maxColumnCount": 1
+          },
+          {
+            "caption": null,
+            "rowCount": 1,
+            "maxColumnCount": 2
+          },
+          {
+            "caption": null,
+            "rowCount": 1,
+            "maxColumnCount": 2
+          },
+          {
+            "caption": null,
+            "rowCount": 1,
+            "maxColumnCount": 1
+          },
+          {
+            "caption": null,
+            "rowCount": 1,
+            "maxColumnCount": 1
+          }
+        ],
+        "images": [
+          {
+            "alt": "الرئيسية",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/logo.svg"
+          },
+          {
+            "alt": "صورة الخدمة الداخلية",
+            "src": "https://balady.gov.sa/sites/default/files/service/%D8%B5%D9%88%D8%B1%20%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9_22.jpeg"
+          },
+          {
+            "alt": "التكلفة",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/icons/srv-icons/SR-new-icon.svg"
+          },
+          {
+            "alt": "logo",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/icons/srv-icons/Appstore.svg"
+          },
+          {
+            "alt": "logo",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/icons/srv-icons/Playstore.svg"
+          },
+          {
+            "alt": "طلب تنسيق مشروع مجدول",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%2832%29_3.png"
+          },
+          {
+            "alt": "تقارير التنسيق",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%286%29.png"
+          },
+          {
+            "alt": "طلباتي - خدمات تنسيق المشروعات الكبرى",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%283%29.png"
+          },
+          {
+            "alt": "طلب تنسيق مشروع طارئ",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%288%29.png"
+          },
+          {
+            "alt": "طلب تعديل خطة مشروع",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%284%29.png"
+          },
+          {
+            "alt": "طلب تنسيق مشروع غير مجدول",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%2833%29.png"
+          },
+          {
+            "alt": "طلب إلغاء تقرير تنسيق مشروع",
+            "src": "https://balady.gov.sa/sites/default/files/service/Style%3DStroke%2C%20Type%3DRounded%20%285%29.png"
+          },
+          {
+            "alt": "تطبيق بلدي متجر جوجل",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/Playstore.svg"
+          },
+          {
+            "alt": "تطبيق بلدي متجر أبل",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/Appstore.svg"
+          },
+          {
+            "alt": "balady",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/footer_logos.svg"
+          },
+          {
+            "alt": "يوم التأسيس",
+            "src": "https://balady.gov.sa/themes/custom/balady_new/images/SFD/SaudiFoundingDayLogo.svg"
+          },
+          {
+            "alt": "مسجل لدى هيئة الحكومة الرقمية",
+            "src": "https://raqmi.dga.gov.sa/platforms/DigitalStamp/GetStampFile/3313"
+          }
+        ],
+        "downloads": [
+          {
+            "label": "الرابط التالي",
+            "url": "https://balady.gov.sa/sites/default/files/service/%D8%AF%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%AE%D8%AF%D9%85%20%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%AA%D9%86%D8%B3%D9%8A%D9%82%20%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA%20%D8%A7%D9%84%D9%83%D8%A8%D8%B1%D9%89%20-%20%D8%A7%D9%84%D8%AE%D8%B1%D9%8A%D8%B7%D8%A9%20%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B9%D9%84%D9%8A%D8%A9.pdf"
+          },
+          {
+            "label": "RSS",
+            "url": "https://balady.gov.sa/en/rss.xml"
+          }
+        ],
+        "publicDataCandidates": [
+          {
+            "label": "RSS",
+            "url": "https://balady.gov.sa/en/rss.xml"
+          }
+        ],
+        "linkCounts": {
+          "internal": 100,
+          "external": 28
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "map": 25,
+          "workflow": 4,
+          "conflict": 25,
+          "realtime": 1,
+          "routing": 12,
+          "public_portal": 7,
+          "documents": 1
+        }
+      }
+    },
+    {
+      "sourceIndex": 1,
+      "sourceUrl": "https://www.balady.gov.sa/ar/services/%D8%AA%D8%B5%D8%A7%D8%B1%D9%8A%D8%AD-%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%A7%D9%84%D8%A8%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D8%AA%D8%AD%D8%AA%D9%8A%D9%87",
+      "checkedAt": "2026-07-24T17:27:55.824179+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 404,
+      "finalUrl": "https://www.balady.gov.sa/ar/services/%D8%AA%D8%B5%D8%A7%D8%B1%D9%8A%D8%AD-%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%A7%D9%84%D8%A8%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D8%AA%D8%AD%D8%AA%D9%8A%D9%87",
+      "contentType": "text/html",
+      "contentLength": null
+    },
+    {
+      "sourceIndex": 2,
+      "sourceUrl": "https://us.one.network/",
+      "checkedAt": "2026-07-24T17:27:58.497816+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://us.one.network/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 167575,
+      "inventory": {
+        "language": "en-GB",
+        "title": "Home - Causeway one.network",
+        "metaDescription": "Explore Causeway one.network: the intuitive platform transforming road management and enhancing work zone coordination for safer, smarter journeys.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "The intuitive road management platform"
+          },
+          {
+            "level": "h2",
+            "text": "Unlock the power of connected work zones across your road network"
+          },
+          {
+            "level": "h2",
+            "text": "Trusted by road agencies, utility companies and contractors around the world"
+          },
+          {
+            "level": "h2",
+            "text": "A connected platform built for collaboration"
+          },
+          {
+            "level": "h3",
+            "text": "State DOT"
+          },
+          {
+            "level": "h4",
+            "text": "Related products:"
+          },
+          {
+            "level": "h3",
+            "text": "City & County"
+          },
+          {
+            "level": "h3",
+            "text": "MPO | COG | MTA"
+          },
+          {
+            "level": "h3",
+            "text": "Toll Authority"
+          },
+          {
+            "level": "h2",
+            "text": "Why Causeway one.network?"
+          },
+          {
+            "level": "h3",
+            "text": "We enable positive change through digital transformation"
+          },
+          {
+            "level": "h2",
+            "text": "Unify planning"
+          },
+          {
+            "level": "h2",
+            "text": "Streamline workflows"
+          },
+          {
+            "level": "h2",
+            "text": "Connect to drivers"
+          },
+          {
+            "level": "h2",
+            "text": "Improve safety"
+          },
+          {
+            "level": "h2",
+            "text": "Join over"
+          },
+          {
+            "level": "h2",
+            "text": "Customer stories"
+          },
+          {
+            "level": "h2",
+            "text": "Transforming Event Traffic Management in Arlington, Texas"
+          },
+          {
+            "level": "h2",
+            "text": "Transforming Traffic Management and Public Safety in Altamonte Springs"
+          },
+          {
+            "level": "h2",
+            "text": "Activity Wales Events uses Causeway one.network to manage Europe’s biggest multisport event"
+          },
+          {
+            "level": "h2",
+            "text": "Keeping drivers on track: how Live Link enabled safer roads for the TT Races"
+          },
+          {
+            "level": "h2",
+            "text": "Digitalising processes: Flintshire County Council saves 25 days a year managing work zone permit applications & increases public inquiry resolution efficiency by 50%"
+          },
+          {
+            "level": "h2",
+            "text": "Improving journeys and driver safety in Derbyshire"
+          },
+          {
+            "level": "h2",
+            "text": "Reducing customer queries by 40% & streamlining coordination for Croydon"
+          },
+          {
+            "level": "h2",
+            "text": "Lighting the way: How Durham County Council used Causeway one.network to help manage the UK’s light art biennial"
+          },
+          {
+            "level": "h2",
+            "text": "Getting it right first time: Telent sees 166% ROI and increases first-time permit approvals by over 30%"
+          },
+          {
+            "level": "h2",
+            "text": "Communicating road closures in Cambridge with the tap of a button"
+          },
+          {
+            "level": "h2",
+            "text": "News & insight"
+          },
+          {
+            "level": "h2",
+            "text": "Keeping Augusta moving during Masters week"
+          },
+          {
+            "level": "h2",
+            "text": "Augusta Partners with Causeway Technologies to Revolutionize Traffic Management During Broad Street Improvement Project"
+          },
+          {
+            "level": "h2",
+            "text": "City of Tampa Teams with Causeway to Boost Work Zone Safety & Traffic Flow"
+          },
+          {
+            "level": "h2",
+            "text": "Winning on the Roads – How Better Collaboration and Planning Can Tackle World Cup Disruption"
+          },
+          {
+            "level": "h2",
+            "text": "Osceola County Launches New Traffic Management Advisory System Powered by Causeway one.network"
+          },
+          {
+            "level": "h2",
+            "text": "Causeway Technologies Joins AGīL Innovation Lab to Drive Smart Mobility in Altamonte Springs"
+          },
+          {
+            "level": "h2",
+            "text": "The Traffic Surge is Coming: Why World Cup Cities Need a New Playbook"
+          },
+          {
+            "level": "h2",
+            "text": "No Roadblocks Here: Arlington’s Formula for Event Traffic Success"
+          },
+          {
+            "level": "h2",
+            "text": "Utah Department of Transportation Awards Statewide Work Zone Safety and Planned Event Software Contract to Causeway one.network"
+          },
+          {
+            "level": "h2",
+            "text": "Causeway one.network Appoints Veteran Customer Success Leader Edward Constancio as Vice President of Sales, USA"
+          },
+          {
+            "level": "h2",
+            "text": "Interested?"
+          }
+        ],
+        "navigationLabels": [
+          "one.network home",
+          "uk",
+          "us",
+          "Toggle navigation",
+          "Product",
+          "Plan & Coordinate",
+          "Route Manager",
+          "Plan Share",
+          "Traffic Management",
+          "Communicate",
+          "Content Management",
+          "Live Link",
+          "Solutions",
+          "By Organization",
+          "State DOT",
+          "MPO | COG | MTA",
+          "City & County",
+          "Toll Authority",
+          "Company",
+          "News and insights",
+          "About us",
+          "Resources",
+          "Customer stories",
+          "Go",
+          "Sign in",
+          "Get in touch"
+        ],
+        "callsToAction": [
+          {
+            "label": "Sign in",
+            "href": "https://one.network/accounts/#sign-in",
+            "kind": "a"
+          },
+          {
+            "label": "Schedule a demo",
+            "href": "https://us.one.network/request-a-demo/",
+            "kind": "a"
+          },
+          {
+            "label": "View our customer stories",
+            "href": "https://us.one.network/customer-stories/",
+            "kind": "a"
+          },
+          {
+            "label": "Insight 13 Oct 2025 The Traffic Surge is Coming: Why World Cup Cities Need a New Playbook #Event Management #Live Link #Right of way Managem",
+            "href": "https://us.one.network/news-insights/the-traffic-surge-is-coming-why-world-cup-cities-need-a-new-playbook/",
+            "kind": "a"
+          },
+          {
+            "label": "Book a demo",
+            "href": "https://us.one.network/request-a-demo/",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "s",
+            "label": null,
+            "placeholder": "Search",
+            "ariaLabel": "Search",
+            "required": false
+          }
+        ],
+        "forms": [
+          {
+            "method": "get",
+            "action": "https://us.one.network/",
+            "fieldCount": 1,
+            "buttonLabels": []
+          }
+        ],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-MOP-GOG-MTA.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Plan-Share.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Traffic-Management.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Content-Management-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Live-Link-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/graphics-1024x709.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/ON538-hmpg-sub-header-@3x-1024x961.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/07/ON650-US-Logo-230x100-@2x.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/logo-hillsborough-col.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/logo-umatilla-col.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/logo-alta-col.png"
+          },
+          {
+            "alt": "Cambridgeshire County Council Logo",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Cambridgeshire-County-Council-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Derbyshire-Case-Study-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Durham-County-Council-Logo.png"
+          },
+          {
+            "alt": "Croydon Council logo",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Croydon-Council-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/logo-fdot-col.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/logo-thea-col.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/openreach-400x400-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/liverpool_city_region_400x400.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/surrey-logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/State-DOT-1-1024x729.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-State-DOT.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/City-and-council-1024x707.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-City-County.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/MPO-2-1024x707.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-MOP-GOG-MTA.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/toll-authority-2-1024x707.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-Toll-Authority.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/img-unify_planning@2x-1024x601.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/1-1024x646.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/img-streamline_workflows-1024x680.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/2-1024x683.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/img-connect-to-drivers-1024x683.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/connect-to-drivers.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/img-improve-safety-1-1024x684.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/streamline-1024x913.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/07/ON650-US-CS-Header-Image-Arlington-1.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/07/ON650-US-Logo-230x100-1.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/04/ON642-US-CS-Header-Image-Altamonte-TM-3.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/04/ON642-US-Logo-230x100-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/AWE-Case-Study-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/AWE-Case-Study-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/IoM-TT-Races-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/IoM-TT-Races-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Flintshire-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Flintshire-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Derbyshire-Case-Study-Header-Image.png"
+          },
+          {
+            "alt": "Street and buildings in Croydon",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Croydon-TM-Header-Image.png"
+          },
+          {
+            "alt": "Durham County Council light art biennial",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Durham-Events-Header-Image.png"
+          },
+          {
+            "alt": "Close-up of cables",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Telent-Pro-Header-Image.png"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 78,
+          "external": 7
+        },
+        "structuredDataTypes": [
+          "BreadcrumbList",
+          "EntryPoint",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PropertyValueSpecification",
+          "ReadAction",
+          "SearchAction",
+          "WebPage",
+          "WebSite"
+        ],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "#fff",
+              "occurrences": 2
+            },
+            {
+              "value": "#32373c",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(255,105,0)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(0, 0, 0, 0.2)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(0, 0, 0)",
+              "occurrences": 2
+            },
+            {
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(6,147,227)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(155,81,224)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(122,220,180)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(0,208,130)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(252,185,0)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(207,46,46)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(238,238,238)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [],
+          "cssVariables": [
+            {
+              "name": "--wp--preset--aspect-ratio--square",
+              "value": "1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--4-3",
+              "value": "4/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-4",
+              "value": "3/4",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-2",
+              "value": "3/2",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--2-3",
+              "value": "2/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--16-9",
+              "value": "16/9",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--9-16",
+              "value": "9/16",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--black",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--cyan-bluish-gray",
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--white",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-pink",
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-red",
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-orange",
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-amber",
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--light-green-cyan",
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-green-cyan",
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-cyan-blue",
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-cyan-blue",
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-purple",
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple",
+              "value": "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan",
+              "value": "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange",
+              "value": "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-orange-to-vivid-red",
+              "value": "linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray",
+              "value": "linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--cool-to-warm-spectrum",
+              "value": "linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--blush-light-purple",
+              "value": "linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--blush-bordeaux",
+              "value": "linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-dusk",
+              "value": "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--pale-ocean",
+              "value": "linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--electric-grass",
+              "value": "linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%)",
+              "occurrences": 1
+            }
+          ]
+        },
+        "capabilitySignals": {
+          "map": 3,
+          "permit": 6,
+          "workflow": 4,
+          "conflict": 8,
+          "realtime": 23,
+          "notification": 1,
+          "routing": 6,
+          "integration": 2
+        }
+      }
+    },
+    {
+      "sourceIndex": 3,
+      "sourceUrl": "https://us.one.network/product/traffic-management/",
+      "checkedAt": "2026-07-24T17:28:02.225210+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://us.one.network/product/traffic-management/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 96114,
+      "inventory": {
+        "language": "en-GB",
+        "title": "Traffic Management - Causeway one.network",
+        "metaDescription": "Traffic Management is an intuitive tool that has transformed how road agencies and contractors plan, coordinate and communicate any right of way intervention.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Traffic Management"
+          },
+          {
+            "level": "h2",
+            "text": "Unburden your teams with digital workflows that save time and create industry-leading data"
+          },
+          {
+            "level": "h3",
+            "text": "Enhance data to improve usability"
+          },
+          {
+            "level": "h3",
+            "text": "Standardize and automate workflows"
+          },
+          {
+            "level": "h3",
+            "text": "Influence journeys to boost safety"
+          },
+          {
+            "level": "h2",
+            "text": "Key features"
+          },
+          {
+            "level": "h2",
+            "text": "Increase efficiency through better collaboration"
+          },
+          {
+            "level": "h2",
+            "text": "Improve public and stakeholder engagement"
+          },
+          {
+            "level": "h2",
+            "text": "Reduce disruption and unnecessary congestion"
+          },
+          {
+            "level": "h2",
+            "text": "More features"
+          },
+          {
+            "level": "h3",
+            "text": "Communicate closures to drivers via nav-apps"
+          },
+          {
+            "level": "h3",
+            "text": "Integrate and simplify permitting workflows"
+          },
+          {
+            "level": "h3",
+            "text": "Manage and communicate disruption seamlessly"
+          },
+          {
+            "level": "h2",
+            "text": "Related customer stories"
+          },
+          {
+            "level": "h2",
+            "text": "Transforming Event Traffic Management in Arlington, Texas"
+          },
+          {
+            "level": "h2",
+            "text": "Transforming Traffic Management and Public Safety in Altamonte Springs"
+          },
+          {
+            "level": "h2",
+            "text": "Activity Wales Events uses Causeway one.network to manage Europe’s biggest multisport event"
+          },
+          {
+            "level": "h2",
+            "text": "Digitalising processes: Flintshire County Council saves 25 days a year managing work zone permit applications & increases public inquiry resolution efficiency by 50%"
+          },
+          {
+            "level": "h2",
+            "text": "Reducing customer queries by 40% & streamlining coordination for Croydon"
+          },
+          {
+            "level": "h2",
+            "text": "Lighting the way: How Durham County Council used Causeway one.network to help manage the UK’s light art biennial"
+          },
+          {
+            "level": "h2",
+            "text": "Explore it yourself"
+          },
+          {
+            "level": "h2",
+            "text": "Keep in touch"
+          }
+        ],
+        "navigationLabels": [
+          "one.network home",
+          "uk",
+          "us",
+          "Toggle navigation",
+          "Product",
+          "Plan & Coordinate",
+          "Route Manager",
+          "Plan Share",
+          "Traffic Management",
+          "Communicate",
+          "Content Management",
+          "Live Link",
+          "Solutions",
+          "By Organization",
+          "State DOT",
+          "MPO | COG | MTA",
+          "City & County",
+          "Toll Authority",
+          "Company",
+          "News and insights",
+          "About us",
+          "Resources",
+          "Customer stories",
+          "Go",
+          "Sign in",
+          "Get in touch"
+        ],
+        "callsToAction": [
+          {
+            "label": "Sign in",
+            "href": "https://one.network/accounts/#sign-in",
+            "kind": "a"
+          },
+          {
+            "label": "Schedule your demo",
+            "href": "https://us.one.network/request-a-demo/",
+            "kind": "a"
+          },
+          {
+            "label": "Book a demo",
+            "href": "https://us.one.network/request-a-demo/",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "s",
+            "label": null,
+            "placeholder": "Search",
+            "ariaLabel": "Search",
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "name": "email",
+            "label": "Email address",
+            "placeholder": "Email address",
+            "ariaLabel": null,
+            "required": false
+          }
+        ],
+        "forms": [
+          {
+            "method": "get",
+            "action": "https://us.one.network/",
+            "fieldCount": 1,
+            "buttonLabels": []
+          },
+          {
+            "method": "post",
+            "action": "https://us.one.network/product/traffic-management/",
+            "fieldCount": 1,
+            "buttonLabels": [
+              "Subscribe"
+            ]
+          }
+        ],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Solution-–-MOP-GOG-MTA.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Plan-Share.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Traffic-Management.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Content-Management-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Live-Link-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/header-image-1024x706.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Traffic-Management-Enhance-Data.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Traffic-Management-Automate-Workflow.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Product-–-Traffic-Management-Influence-Journeys-Boost-Saftey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/digital-enablement-1024x1024.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/seamless-communication-1024x1024.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/smarter-communication-1024x1024.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/more-features-1-1024x719.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/more-features-2-1024x776.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/more-features-3-1024x620.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/07/ON650-US-CS-Header-Image-Arlington-1.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/07/ON650-US-Logo-230x100-1.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/04/ON642-US-CS-Header-Image-Altamonte-TM-3.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2025/04/ON642-US-Logo-230x100-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/AWE-Case-Study-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/AWE-Case-Study-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Flintshire-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2024/04/Flintshire-Logo.png"
+          },
+          {
+            "alt": "Street and buildings in Croydon",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Croydon-TM-Header-Image.png"
+          },
+          {
+            "alt": "Croydon Council logo",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Croydon-Council-Logo.png"
+          },
+          {
+            "alt": "Durham County Council light art biennial",
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Durham-Events-Header-Image.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/09/Durham-County-Council-Logo.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/03/Monitor_01-2-1024x849.png"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/04/icon_twitter.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/04/icon_linkedin.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://us.one.network/wp-content/uploads/sites/4/2023/04/icon_youtube.svg"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 56,
+          "external": 6
+        },
+        "structuredDataTypes": [
+          "BreadcrumbList",
+          "EntryPoint",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PropertyValueSpecification",
+          "ReadAction",
+          "SearchAction",
+          "WebPage",
+          "WebSite"
+        ],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "#fff",
+              "occurrences": 2
+            },
+            {
+              "value": "#32373c",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(255,105,0)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(0, 0, 0, 0.2)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(0, 0, 0)",
+              "occurrences": 2
+            },
+            {
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(6,147,227)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(155,81,224)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(122,220,180)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(0,208,130)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(252,185,0)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(207,46,46)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(238,238,238)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [],
+          "cssVariables": [
+            {
+              "name": "--wp--preset--aspect-ratio--square",
+              "value": "1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--4-3",
+              "value": "4/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-4",
+              "value": "3/4",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-2",
+              "value": "3/2",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--2-3",
+              "value": "2/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--16-9",
+              "value": "16/9",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--9-16",
+              "value": "9/16",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--black",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--cyan-bluish-gray",
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--white",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-pink",
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-red",
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-orange",
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-amber",
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--light-green-cyan",
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-green-cyan",
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-cyan-blue",
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-cyan-blue",
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-purple",
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple",
+              "value": "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan",
+              "value": "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange",
+              "value": "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-orange-to-vivid-red",
+              "value": "linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray",
+              "value": "linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--cool-to-warm-spectrum",
+              "value": "linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--blush-light-purple",
+              "value": "linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--blush-bordeaux",
+              "value": "linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-dusk",
+              "value": "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--pale-ocean",
+              "value": "linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--electric-grass",
+              "value": "linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%)",
+              "occurrences": 1
+            }
+          ]
+        },
+        "capabilitySignals": {
+          "map": 6,
+          "permit": 7,
+          "workflow": 5,
+          "conflict": 8,
+          "realtime": 10,
+          "dashboard": 1,
+          "notification": 1,
+          "routing": 6,
+          "integration": 4,
+          "documents": 3
+        }
+      }
+    },
+    {
+      "sourceIndex": 4,
+      "sourceUrl": "https://www.symology.co.uk/aurora/",
+      "checkedAt": "2026-07-24T17:28:02.905979+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.symology.co.uk/aurora/",
+      "contentType": "text/html",
+      "contentLength": 31772,
+      "documentKind": "html",
+      "bytesRead": 230882,
+      "inventory": {
+        "language": "en-GB",
+        "title": "Introducing Aurora – Symology",
+        "metaDescription": "Introducing Aurora Symology's next generation Integrated Asset Management & Street Works Solution A",
+        "headings": [
+          {
+            "level": "h2",
+            "text": "Introducing Aurora"
+          },
+          {
+            "level": "h2",
+            "text": "A new, feature rich experience"
+          },
+          {
+            "level": "h4",
+            "text": "Cloud based"
+          },
+          {
+            "level": "h4",
+            "text": "Easy to use"
+          },
+          {
+            "level": "h4",
+            "text": "Built by experts"
+          },
+          {
+            "level": "h4",
+            "text": "Dashboards"
+          },
+          {
+            "level": "h4",
+            "text": "Support"
+          },
+          {
+            "level": "h4",
+            "text": "Security"
+          },
+          {
+            "level": "h2",
+            "text": "Aurora in 90 seconds"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora is already achieving impressive results"
+          },
+          {
+            "level": "h2",
+            "text": "Core features for today and tomorrow"
+          },
+          {
+            "level": "h3",
+            "text": "Street Works"
+          },
+          {
+            "level": "h3",
+            "text": "Asset Management"
+          },
+          {
+            "level": "h3",
+            "text": "Fully Geospatial"
+          },
+          {
+            "level": "h3",
+            "text": "Dashboards"
+          },
+          {
+            "level": "h3",
+            "text": "Mobile Working"
+          },
+          {
+            "level": "h3",
+            "text": "Connectivity at its Core"
+          },
+          {
+            "level": "h3",
+            "text": "Powerful Workflow"
+          },
+          {
+            "level": "h3",
+            "text": "Community Portal"
+          },
+          {
+            "level": "h3",
+            "text": "Easy to use"
+          },
+          {
+            "level": "h3",
+            "text": "Job Role Oriented Design"
+          },
+          {
+            "level": "h3",
+            "text": "Built by experts"
+          },
+          {
+            "level": "h3",
+            "text": "Cloud based"
+          },
+          {
+            "level": "h3",
+            "text": "Security"
+          },
+          {
+            "level": "h2",
+            "text": "Every year brings more successes"
+          },
+          {
+            "level": "h3",
+            "text": "July 2020"
+          },
+          {
+            "level": "h3",
+            "text": "2021"
+          },
+          {
+            "level": "h3",
+            "text": "2023"
+          },
+          {
+            "level": "h3",
+            "text": "2024"
+          },
+          {
+            "level": "h2",
+            "text": "Solution options"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Asset Management"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Street Works Authorities"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Street Works Promoters"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora Street Works Pay-Per-Works"
+          },
+          {
+            "level": "h4",
+            "text": "Tracking Cookies"
+          },
+          {
+            "level": "h4",
+            "text": "Third Party Requirements"
+          },
+          {
+            "level": "h4",
+            "text": "Privacy Policy"
+          },
+          {
+            "level": "h4",
+            "text": "Terms and Conditions"
+          }
+        ],
+        "navigationLabels": [
+          "Toggle Navigation",
+          "Home",
+          "News",
+          "Products",
+          "Open submenu of Products",
+          "Services",
+          "About Us",
+          "Contact Us",
+          "Careers",
+          "Customer Login",
+          "Privacy Policy",
+          "Security",
+          "Terms of Use",
+          "Modern Slavery Statement",
+          "Carbon Reduction Plan"
+        ],
+        "callsToAction": [
+          {
+            "label": "Contact Us",
+            "href": "https://www.symology.co.uk/contact/",
+            "kind": "a"
+          },
+          {
+            "label": "Customer Login",
+            "href": "http://aurora.symology.net",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "consents[]",
+            "label": "Vimeo",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "consents[]",
+            "label": "Google Maps",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          }
+        ],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://secure.leadforensics.com/7393.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Symology-White-278.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Aurora-Logo-300.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Insight300.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Street-Works-720x405-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Asset_Management.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Aurora-Mapping-720x405-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/dash-3-720x405-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/AdobeStock_267835864-720x405-1.jpeg"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/AdobeStock_128283170-720x405-1.jpeg"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/AdobeStock_274543760-720x405-1.jpeg"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/AdobeStock_192826481-720x405-1.jpeg"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/happuser2.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/jobrole.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/banner-3_applicationdevelop_1-720x405-1.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/azure.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/AdobeStock_199796751-720x405-1.jpeg"
+          },
+          {
+            "alt": null,
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27201%27%20height%3D%27301%27%20viewBox%3D%270%200%20201%20301%27%3E%3Crect%20width%3D%27201%27%20height%3D%27301%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "Proudly employee owned",
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/05/eoa-owned-100.png"
+          },
+          {
+            "alt": "Good Business Charter",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27120%27%20height%3D%27100%27%20viewBox%3D%270%200%20120%20100%27%3E%3Crect%20width%3D%27120%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "We are a Living Wage Employer",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27127%27%20height%3D%27100%27%20viewBox%3D%270%200%20127%20100%27%3E%3Crect%20width%3D%27127%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": null,
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%20viewBox%3D%270%200%20200%20100%27%3E%3Crect%20width%3D%27200%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "Cyber Essentials Certified Plus",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%27100%27%20viewBox%3D%270%200%2084%20100%27%3E%3Crect%20width%3D%2784%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "ISO 27001",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27133%27%20height%3D%27100%27%20viewBox%3D%270%200%20133%20100%27%3E%3Crect%20width%3D%27133%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "ISO 14001",
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/05/iso14001-10.png"
+          }
+        ],
+        "downloads": [
+          {
+            "label": "Modern Slavery Statement",
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/Slavery-and-Trafficking-Policy.pdf"
+          },
+          {
+            "label": "Carbon Reduction Plan",
+            "url": "https://www.symology.co.uk/wp-content/uploads/2025/03/Symology-Carbon-Reduction-Plan.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/Symology-Cyber-Essentials-Plus-Certificate.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/04/ISO27001.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/ISO-14001_2015-Certificate-30.01.2026.pdf"
+          }
+        ],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 66,
+          "external": 12
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "#000000",
+              "occurrences": 2
+            },
+            {
+              "value": "#ffffff",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(255,105,0)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(0, 0, 0, 0.2)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(0, 0, 0)",
+              "occurrences": 2
+            },
+            {
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "value": "#00fe97",
+              "occurrences": 1
+            },
+            {
+              "value": "#fe2dfe",
+              "occurrences": 1
+            },
+            {
+              "value": "#00c2c7",
+              "occurrences": 1
+            },
+            {
+              "value": "#3f41ba",
+              "occurrences": 1
+            },
+            {
+              "value": "#2c2d81",
+              "occurrences": 1
+            },
+            {
+              "value": "#444444",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(6,147,227)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(155,81,224)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(122,220,180)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [
+            {
+              "value": "inherit",
+              "occurrences": 1
+            }
+          ],
+          "cssVariables": [
+            {
+              "name": "--wp--preset--aspect-ratio--square",
+              "value": "1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--4-3",
+              "value": "4/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-4",
+              "value": "3/4",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-2",
+              "value": "3/2",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--2-3",
+              "value": "2/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--16-9",
+              "value": "16/9",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--9-16",
+              "value": "9/16",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--black",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--cyan-bluish-gray",
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--white",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-pink",
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-red",
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-orange",
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-amber",
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--light-green-cyan",
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-green-cyan",
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-cyan-blue",
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-cyan-blue",
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-purple",
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-1",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-2",
+              "value": "#00fe97",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-3",
+              "value": "#fe2dfe",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-4",
+              "value": "#00c2c7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-5",
+              "value": "#3f41ba",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-6",
+              "value": "#2c2d81",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-7",
+              "value": "#444444",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-8",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple",
+              "value": "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan",
+              "value": "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange",
+              "value": "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)",
+              "occurrences": 1
+            }
+          ]
+        },
+        "capabilitySignals": {
+          "map": 11,
+          "permit": 3,
+          "workflow": 15,
+          "conflict": 3,
+          "realtime": 10,
+          "dashboard": 8,
+          "notification": 3,
+          "inspection": 12,
+          "routing": 1,
+          "integration": 7,
+          "public_portal": 5,
+          "documents": 3
+        }
+      }
+    },
+    {
+      "sourceIndex": 5,
+      "sourceUrl": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/",
+      "checkedAt": "2026-07-24T17:28:06.660964+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/",
+      "contentType": "text/html",
+      "contentLength": 35019,
+      "documentKind": "html",
+      "bytesRead": 207964,
+      "inventory": {
+        "language": "en-GB",
+        "title": "Aurora for Street Works Authorities – Symology",
+        "metaDescription": "Symology have over 40 years of experience with Street Works; our dedication to this area means our name has become synonymous with providing the go-to Street Works solutions across the",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Aurora for Street Works Authorities"
+          },
+          {
+            "level": "h2",
+            "text": "Network Management"
+          },
+          {
+            "level": "h4",
+            "text": "Overview"
+          },
+          {
+            "level": "h4",
+            "text": "Comprehensive Dashboards"
+          },
+          {
+            "level": "h4",
+            "text": "Automatic Conflict Checking"
+          },
+          {
+            "level": "h4",
+            "text": "User-Definable Permit Checklist"
+          },
+          {
+            "level": "h4",
+            "text": "Additional Network Occupancy"
+          },
+          {
+            "level": "h4",
+            "text": "Standardised Licences Types"
+          },
+          {
+            "level": "h4",
+            "text": "Diversion Routes"
+          },
+          {
+            "level": "h4",
+            "text": "Licence Details and Documents"
+          },
+          {
+            "level": "h2",
+            "text": "Compliance Monitoring"
+          },
+          {
+            "level": "h4",
+            "text": "Inspection Management and Monitoring"
+          },
+          {
+            "level": "h4",
+            "text": "Section 74 Overrun Management"
+          },
+          {
+            "level": "h4",
+            "text": "Fixed Penalty Notice Management"
+          },
+          {
+            "level": "h4",
+            "text": "Charge Controls and Administration"
+          },
+          {
+            "level": "h2",
+            "text": "Mobile Operations"
+          },
+          {
+            "level": "h4",
+            "text": "Works Details On Site"
+          },
+          {
+            "level": "h4",
+            "text": "Inspection Recording"
+          },
+          {
+            "level": "h4",
+            "text": "Non-Inspection Functions"
+          },
+          {
+            "level": "h2",
+            "text": "Web-based ESRI Mapping"
+          },
+          {
+            "level": "h4",
+            "text": "Web-based Mapping"
+          },
+          {
+            "level": "h4",
+            "text": "External Sources"
+          },
+          {
+            "level": "h4",
+            "text": "Spatial Areas"
+          },
+          {
+            "level": "h2",
+            "text": "Comprehensive Reporting Tools"
+          },
+          {
+            "level": "h4",
+            "text": "Dynamic Dashboards"
+          },
+          {
+            "level": "h4",
+            "text": "Enquiry Reporting"
+          },
+          {
+            "level": "h4",
+            "text": "Adhoc Spatial Queries"
+          },
+          {
+            "level": "h4",
+            "text": "Alerts and notifications"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora Asset Management and Street Works Solutions"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Asset Management"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Street Works Authorities"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora for Street Works Promoters"
+          },
+          {
+            "level": "h3",
+            "text": "Aurora Street Works Pay-Per-Works"
+          },
+          {
+            "level": "h2",
+            "text": "See for yourself?"
+          },
+          {
+            "level": "h4",
+            "text": "Tracking Cookies"
+          },
+          {
+            "level": "h4",
+            "text": "Third Party Requirements"
+          },
+          {
+            "level": "h4",
+            "text": "Privacy Policy"
+          },
+          {
+            "level": "h4",
+            "text": "Terms and Conditions"
+          }
+        ],
+        "navigationLabels": [
+          "Toggle Navigation",
+          "Home",
+          "News",
+          "Products",
+          "Open submenu of Products",
+          "Services",
+          "About Us",
+          "Contact Us",
+          "Careers",
+          "Customer Login",
+          "Privacy Policy",
+          "Security",
+          "Terms of Use",
+          "Modern Slavery Statement",
+          "Carbon Reduction Plan"
+        ],
+        "callsToAction": [
+          {
+            "label": "Contact Us",
+            "href": "https://www.symology.co.uk/contact/",
+            "kind": "a"
+          },
+          {
+            "label": "Customer Login",
+            "href": "http://aurora.symology.net",
+            "kind": "a"
+          },
+          {
+            "label": "Overview",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-a298b559f7703bb9872",
+            "kind": "a"
+          },
+          {
+            "label": "Overview",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-255e8f54013612be261",
+            "kind": "a"
+          },
+          {
+            "label": "Overview",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-4cf459ba09d1856a58c",
+            "kind": "a"
+          },
+          {
+            "label": "Overview",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-0c11e6e96037520819a",
+            "kind": "a"
+          },
+          {
+            "label": "Web-based Mapping",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-cc681ae2478b4ae7f13",
+            "kind": "a"
+          },
+          {
+            "label": "Overview",
+            "href": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/#tab-1fec9fdadaedd51f719",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "consents[]",
+            "label": "Vimeo",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "consents[]",
+            "label": "Google Maps",
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          }
+        ],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://secure.leadforensics.com/7393.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Symology-White-278.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Aurora-Logo-300.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2023/10/Insight300.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Conflicts-with-Window-and-Background-640x470-1-200x147.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Works3-200x268.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Mobile-Screenshots2-720x720-1-200x200.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Event-Licence-with-Background-640x470-1-200x147.png"
+          },
+          {
+            "alt": null,
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/04/Street-Works-Reporting-640x687-1-200x215.png"
+          },
+          {
+            "alt": null,
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27201%27%20height%3D%27301%27%20viewBox%3D%270%200%20201%20301%27%3E%3Crect%20width%3D%27201%27%20height%3D%27301%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "Proudly employee owned",
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/05/eoa-owned-100.png"
+          },
+          {
+            "alt": "Good Business Charter",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27120%27%20height%3D%27100%27%20viewBox%3D%270%200%20120%20100%27%3E%3Crect%20width%3D%27120%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "We are a Living Wage Employer",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27127%27%20height%3D%27100%27%20viewBox%3D%270%200%20127%20100%27%3E%3Crect%20width%3D%27127%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": null,
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%20viewBox%3D%270%200%20200%20100%27%3E%3Crect%20width%3D%27200%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "Cyber Essentials Certified Plus",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%27100%27%20viewBox%3D%270%200%2084%20100%27%3E%3Crect%20width%3D%2784%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "ISO 27001",
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27133%27%20height%3D%27100%27%20viewBox%3D%270%200%20133%20100%27%3E%3Crect%20width%3D%27133%27%20height%3D%27100%27%20fill-opacity%3D%220%22%2F%3E%3C%2Fsvg%3E"
+          },
+          {
+            "alt": "ISO 14001",
+            "src": "https://www.symology.co.uk/wp-content/uploads/2024/05/iso14001-10.png"
+          }
+        ],
+        "downloads": [
+          {
+            "label": "Modern Slavery Statement",
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/Slavery-and-Trafficking-Policy.pdf"
+          },
+          {
+            "label": "Carbon Reduction Plan",
+            "url": "https://www.symology.co.uk/wp-content/uploads/2025/03/Symology-Carbon-Reduction-Plan.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/Symology-Cyber-Essentials-Plus-Certificate.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/04/ISO27001.pdf"
+          },
+          {
+            "label": null,
+            "url": "https://www.symology.co.uk/wp-content/uploads/2024/05/ISO-14001_2015-Certificate-30.01.2026.pdf"
+          }
+        ],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 91,
+          "external": 12
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "#000000",
+              "occurrences": 2
+            },
+            {
+              "value": "#ffffff",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(255,105,0)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(0, 0, 0, 0.2)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgb(0, 0, 0)",
+              "occurrences": 2
+            },
+            {
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "value": "#00fe97",
+              "occurrences": 1
+            },
+            {
+              "value": "#fe2dfe",
+              "occurrences": 1
+            },
+            {
+              "value": "#00c2c7",
+              "occurrences": 1
+            },
+            {
+              "value": "#3f41ba",
+              "occurrences": 1
+            },
+            {
+              "value": "#2c2d81",
+              "occurrences": 1
+            },
+            {
+              "value": "#444444",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(6,147,227)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(155,81,224)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgb(122,220,180)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [
+            {
+              "value": "inherit",
+              "occurrences": 1
+            }
+          ],
+          "cssVariables": [
+            {
+              "name": "--wp--preset--aspect-ratio--square",
+              "value": "1",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--4-3",
+              "value": "4/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-4",
+              "value": "3/4",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--3-2",
+              "value": "3/2",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--2-3",
+              "value": "2/3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--16-9",
+              "value": "16/9",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--aspect-ratio--9-16",
+              "value": "9/16",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--black",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--cyan-bluish-gray",
+              "value": "#abb8c3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--white",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-pink",
+              "value": "#f78da7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-red",
+              "value": "#cf2e2e",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-orange",
+              "value": "#ff6900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--luminous-vivid-amber",
+              "value": "#fcb900",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--light-green-cyan",
+              "value": "#7bdcb5",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-green-cyan",
+              "value": "#00d084",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--pale-cyan-blue",
+              "value": "#8ed1fc",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-cyan-blue",
+              "value": "#0693e3",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--vivid-purple",
+              "value": "#9b51e0",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-1",
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-2",
+              "value": "#00fe97",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-3",
+              "value": "#fe2dfe",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-4",
+              "value": "#00c2c7",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-5",
+              "value": "#3f41ba",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-6",
+              "value": "#2c2d81",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-7",
+              "value": "#444444",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--color--awb-color-8",
+              "value": "#000000",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple",
+              "value": "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan",
+              "value": "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+              "occurrences": 1
+            },
+            {
+              "name": "--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange",
+              "value": "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)",
+              "occurrences": 1
+            }
+          ]
+        },
+        "capabilitySignals": {
+          "map": 39,
+          "permit": 31,
+          "workflow": 20,
+          "conflict": 22,
+          "realtime": 3,
+          "dashboard": 16,
+          "notification": 21,
+          "inspection": 63,
+          "routing": 20,
+          "integration": 18,
+          "documents": 30
+        }
+      }
+    },
+    {
+      "sourceIndex": 6,
+      "sourceUrl": "https://www.myworksites.com/en-nz/",
+      "checkedAt": "2026-07-24T17:28:07.210678+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.myworksites.com/en-nz/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 83672,
+      "inventory": {
+        "language": "en-nz",
+        "title": "myWorksites - Roadwork Coordination Platform | Real-Time Control",
+        "metaDescription": "Streamline roadwork coordination with real-time network visibility. Manage permits, traffic plans & prevent conflicts. Trusted by NZTA & major authorities.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Take Real-Time Control of Your Road Network"
+          },
+          {
+            "level": "h2",
+            "text": "Complete Network Visibility"
+          },
+          {
+            "level": "h2",
+            "text": "Intelligent Conflict Prevention"
+          },
+          {
+            "level": "h2",
+            "text": "Streamlined Collaboration"
+          },
+          {
+            "level": "h2",
+            "text": "Minimise Public Impact"
+          },
+          {
+            "level": "h2",
+            "text": "myWorksites platform"
+          },
+          {
+            "level": "h3",
+            "text": "Secure by design"
+          },
+          {
+            "level": "h3",
+            "text": "Built for ANZ Standards"
+          },
+          {
+            "level": "h3",
+            "text": "Training & Onboarding"
+          },
+          {
+            "level": "h3",
+            "text": "Integration"
+          },
+          {
+            "level": "h3",
+            "text": "Development roadmap"
+          },
+          {
+            "level": "h3",
+            "text": "Support Included"
+          },
+          {
+            "level": "h2",
+            "text": "Ready to get complete network visibility with real-time control?"
+          }
+        ],
+        "navigationLabels": [
+          "Toggle Menu",
+          "Home",
+          "Toggle children for Resources",
+          "Main Menu (Press to Return)",
+          "Articles",
+          "Online Training",
+          "Help Centre",
+          "Contact",
+          "Login"
+        ],
+        "callsToAction": [
+          {
+            "label": "Contact",
+            "href": "https://www.myworksites.com/en-nz/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "Login",
+            "href": "https://manage.myworksites.co.nz/",
+            "kind": "a"
+          },
+          {
+            "label": "Quick Start Guide",
+            "href": "https://help.myworksites.co.nz",
+            "kind": "a"
+          },
+          {
+            "label": "Book a demo",
+            "href": "https://www.myworksites.com/en-nz/contact-us?hsLang=en-nz",
+            "kind": "a"
+          },
+          {
+            "label": "Login",
+            "href": "https://manage.myworksites.co.nz",
+            "kind": "a"
+          },
+          {
+            "label": "Roadmap",
+            "href": "https://roadmap.myworksites.com/roadmap",
+            "kind": "a"
+          },
+          {
+            "label": "Contact",
+            "href": "https://www.myworksites.com/en-nz/contact-us?hsLang=en-nz",
+            "kind": "a"
+          }
+        ],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://www.myworksites.com/hs-fs/hubfs/myWorksites-logo-for-light-background%20(1)-1.png?width=200&height=48&name=myWorksites-logo-for-light-background%20(1)-1.png"
+          },
+          {
+            "alt": "myWorksite - Take Real-Time Control of Your Road Network",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/island%20(1).png?width=450&height=450&name=island%20(1).png"
+          },
+          {
+            "alt": "NZTA Waka Kotahi",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/nzta-black.png?width=197&height=56&name=nzta-black.png"
+          },
+          {
+            "alt": "Auckland Transport",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/at-logo-sm-1.png?width=164&height=60&name=at-logo-sm-1.png"
+          },
+          {
+            "alt": "Christchurch City Council",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/ccc-black-1.png?width=181&height=56&name=ccc-black-1.png"
+          },
+          {
+            "alt": "NZTA ASM",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/Customer-logos/nzta-asm-black.png?width=141&height=72&name=nzta-asm-black.png"
+          },
+          {
+            "alt": "Pūhoi to Warkworth",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/puhoi-black.png?width=112&height=72&name=puhoi-black.png"
+          },
+          {
+            "alt": "Invercargill City Council",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/ICC-black.png?width=85&height=72&name=ICC-black.png"
+          },
+          {
+            "alt": "Southland District Council",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/sdc-black.png?width=196&height=56&name=sdc-black.png"
+          },
+          {
+            "alt": "Aerial view of large intersection at night",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/intersection-above.jpg?width=1139&height=987&name=intersection-above.jpg"
+          },
+          {
+            "alt": "Two people standing on an ipad shaking hands",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/collaboration-cropped.png?width=1222&height=1000&name=collaboration-cropped.png"
+          },
+          {
+            "alt": "Isometric illustration showing process of road works process",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/streamline.png?width=2322&height=1641&name=streamline.png"
+          },
+          {
+            "alt": "Isometric illustration of city scape showing traffic management in place",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/detour-cropped-1.png?width=2197&height=1475&name=detour-cropped-1.png"
+          },
+          {
+            "alt": "Aerial view of suburb",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/suburb-above.jpg?width=1352&height=865&name=suburb-above.jpg"
+          },
+          {
+            "alt": null,
+            "src": "https://www.myworksites.com/en-nz/{src=}"
+          },
+          {
+            "alt": "Auckland motorway with Sky Tower in the background",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/auckland-motorway.jpg?width=1352&height=865&name=auckland-motorway.jpg"
+          },
+          {
+            "alt": "Main street of Timaru",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/timaru-street.jpg?width=1352&height=865&name=timaru-street.jpg"
+          },
+          {
+            "alt": "Roadworks signage truck",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/road-works-truck.jpg?width=1352&height=865&name=road-works-truck.jpg"
+          },
+          {
+            "alt": "myWorksites-logo-for-light-background (1)-1",
+            "src": "https://www.myworksites.com/hs-fs/hubfs/myWorksites-logo-for-light-background%20(1)-1.png?width=236&height=49&name=myWorksites-logo-for-light-background%20(1)-1.png"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 9,
+          "external": 14
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "rgba(255, 255, 255, 1)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(3, 56, 100, 1)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(242, 242, 242, 1)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(20,76,122,1)",
+              "occurrences": 1
+            },
+            {
+              "value": "rgba(3,56,100,1)",
+              "occurrences": 1
+            },
+            {
+              "value": "#ffffff",
+              "occurrences": 1
+            },
+            {
+              "value": "#FFFFFF",
+              "occurrences": 1
+            },
+            {
+              "value": "rgba(114,145,172,1.0)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [
+            {
+              "value": "\"Fira Sans\"",
+              "occurrences": 4
+            }
+          ],
+          "cssVariables": [
+            {
+              "name": "--list-spacing",
+              "value": "25px",
+              "occurrences": 4
+            },
+            {
+              "name": "--bullet-image",
+              "value": "url(https://www.myworksites.com/hubfs/raw_assets/public/@marketplace/Lynton/Vertical/assets/icons/check-circle.svg)",
+              "occurrences": 4
+            },
+            {
+              "name": "--bullet-image-height",
+              "value": "32px",
+              "occurrences": 4
+            },
+            {
+              "name": "--bullet-image-width",
+              "value": "32px",
+              "occurrences": 4
+            },
+            {
+              "name": "--mobile-height",
+              "value": "35px",
+              "occurrences": 1
+            },
+            {
+              "name": "--desktop-height",
+              "value": "45px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-top-desktop",
+              "value": "70px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-bottom-desktop",
+              "value": "70px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-top-mobile",
+              "value": "40px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-bottom-mobile",
+              "value": "40px",
+              "occurrences": 1
+            },
+            {
+              "name": "--icon-height",
+              "value": "50px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-top-desktop",
+              "value": "30px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-right-desktop",
+              "value": "65px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-bottom-desktop",
+              "value": "30px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-left-desktop",
+              "value": "65px",
+              "occurrences": 1
+            },
+            {
+              "name": "--row-spacing",
+              "value": "70px",
+              "occurrences": 1
+            },
+            {
+              "name": "--col-spacing",
+              "value": "3vw",
+              "occurrences": 1
+            },
+            {
+              "name": "--icon-height",
+              "value": "30px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-top-desktop",
+              "value": "100px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-right-desktop",
+              "value": "25px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-bottom-desktop",
+              "value": "100px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-left-desktop",
+              "value": "25px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-top-mobile",
+              "value": "60px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-right-mobile",
+              "value": "25px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-bottom-mobile",
+              "value": "60px",
+              "occurrences": 1
+            },
+            {
+              "name": "--padding-left-mobile",
+              "value": "25px",
+              "occurrences": 1
+            },
+            {
+              "name": "--max-height",
+              "value": "20px",
+              "occurrences": 1
+            },
+            {
+              "name": "--icon-color",
+              "value": "#FFFFFF",
+              "occurrences": 1
+            }
+          ]
+        },
+        "capabilitySignals": {
+          "map": 7,
+          "workflow": 1,
+          "conflict": 12,
+          "realtime": 7,
+          "inspection": 1,
+          "routing": 1,
+          "integration": 6,
+          "public_portal": 1
+        }
+      }
+    },
+    {
+      "sourceIndex": 7,
+      "sourceUrl": "https://opengov.com/products/permitting-and-licensing/right-of-way-permitting/",
+      "checkedAt": "2026-07-24T17:28:08.837231+00:00",
+      "robotsAllowed": null,
+      "robotsNote": "robots.txt unavailable; single cited public page only",
+      "fetchState": "received",
+      "status": 403,
+      "finalUrl": "https://opengov.com/products/permitting-and-licensing/right-of-way-permitting/",
+      "contentType": "text/html",
+      "contentLength": null
+    },
+    {
+      "sourceIndex": 8,
+      "sourceUrl": "https://assetlifecycle.trimble.com/en/products/software/cityworks-permitting-licensing-land",
+      "checkedAt": "2026-07-24T17:28:10.051275+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://assetlifecycle.trimble.com/en/products/software/cityworks-permitting-licensing-land",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 79312,
+      "inventory": {
+        "language": "en",
+        "title": "Licensing & Permitting Software | Cityworks Rebranding to Unity Permit | Trimble | O&PS",
+        "metaDescription": "Empower local government and utilities with Trimble's GIS-centric land management software, streamlining permitting and land management.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Trimble Cityworks Permitting, Licensing & Land"
+          },
+          {
+            "level": "h3",
+            "text": "Paperless efficiency"
+          },
+          {
+            "level": "h2",
+            "text": "Product Summary"
+          },
+          {
+            "level": "h3",
+            "text": "Trimble Cityworks Permitting, Licensing & Land"
+          },
+          {
+            "level": "h2",
+            "text": "Cityworks Permitting, Licensing & Land Software"
+          },
+          {
+            "level": "h3",
+            "text": "Benefits at a glance"
+          },
+          {
+            "level": "h2",
+            "text": "Learn"
+          },
+          {
+            "level": "h3",
+            "text": "Resources"
+          },
+          {
+            "level": "h3",
+            "text": "Key Capabilities"
+          },
+          {
+            "level": "h2",
+            "text": "Cityworks Permitting, Licensing & Land"
+          },
+          {
+            "level": "h3",
+            "text": "A special solution for enhanced community engagement"
+          },
+          {
+            "level": "h4",
+            "text": "Public Access"
+          },
+          {
+            "level": "h3",
+            "text": "St. Louis, MO: Property Stabilization Using PLL"
+          },
+          {
+            "level": "h3",
+            "text": "Improve Your Permitting Workflow"
+          },
+          {
+            "level": "h3",
+            "text": "Still wondering if Trimble Cityworks Permitting, Licensing & Land is the right fit?"
+          },
+          {
+            "level": "h3",
+            "text": "More Asset Lifecycle Management Solutions"
+          },
+          {
+            "level": "h4",
+            "text": "Capital Program Management"
+          },
+          {
+            "level": "h4",
+            "text": "Enterprise Asset Management"
+          },
+          {
+            "level": "h4",
+            "text": "Utilities Asset Management"
+          },
+          {
+            "level": "h4",
+            "text": "Collaboration Platform"
+          },
+          {
+            "level": "h3",
+            "text": "Explore the Trimble ecosystem"
+          },
+          {
+            "level": "h4",
+            "text": "Training"
+          },
+          {
+            "level": "h4",
+            "text": "Professional Services"
+          },
+          {
+            "level": "h4",
+            "text": "Partner Network"
+          },
+          {
+            "level": "h4",
+            "text": "Customer Support"
+          },
+          {
+            "level": "h3",
+            "text": "Ready to advance your asset lifecycle management strategies?"
+          }
+        ],
+        "navigationLabels": [],
+        "callsToAction": [
+          {
+            "label": "Request demo",
+            "href": "https://assetlifecycle.trimble.com/en/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "Trimble Unity Permit Overview",
+            "href": "https://assetlifecycle.trimble.com/resources/en-US/docs/trimble-unity-permit-overview",
+            "kind": "a"
+          },
+          {
+            "label": "Cityworks Login",
+            "href": "https://cityworks.my.site.com/s/login/",
+            "kind": "a"
+          },
+          {
+            "label": "Learn more about permitting",
+            "href": "https://assetlifecycle.trimble.com/en/solutions/maintain/permitting",
+            "kind": "a"
+          },
+          {
+            "label": "Learn more about right of way management",
+            "href": "https://assetlifecycle.trimble.com/en/solutions/plan-and-design/right-of-way-management",
+            "kind": "a"
+          },
+          {
+            "label": "Learn more about community engagement",
+            "href": "https://assetlifecycle.trimble.com/en/solutions/maintain/community-engagement",
+            "kind": "a"
+          },
+          {
+            "label": "Get started",
+            "href": "https://assetlifecycle.trimble.com/en/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "Explore asset lifecycle management",
+            "href": "https://preview-opstrimbleproduction.gatsbyjs.io/en/solutions",
+            "kind": "a"
+          },
+          {
+            "label": "Explore e-Builder",
+            "href": "https://assetlifecycle.trimble.com/en/products/software/e-builder",
+            "kind": "a"
+          }
+        ],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": "Construction worker on tablet at job site",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/JsCtlW2IARTgaVn6C0vxi/b174c46b74a229182bfb9ac37ea2029a/OPS-products-pll-full-bg-3200x1120-v3.webp?fm=jpg&fl=progressive&w=50&h=50"
+          },
+          {
+            "alt": "Woman using Trimble Permitting & Licensing in an office",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/ZSCmNArejvebhcu6kF6Pv/738e771811444aacd0d06d124a8cfb8f/OPS-Permitting-Licensing-Woman-Using-PLL-950x950.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "OPS-products-pll-list-355x480-v2",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/6pqzeavB2AYRdtyvwzwYRb/c3ec1f7acedf23b08cb2953389b0fcd8/OPS-products-pll-list-355x480_v3.webp"
+          },
+          {
+            "alt": "OPS-Permitting-Licensing-st-louis-MO-640x640",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/TUELV4cyJCfevUMZerq3S/b6a429a275d4f10b3045433beeec7640/OPS-Permitting-Licensing-st-louis-MO-640x640.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "OPS-Permitting-Licensing-Virginia-640x640",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/6fPpTA3gQ3axwEtgsGHpCC/76e7e004ac68cc31b4b7f65afb58afc5/OPS-Permitting-Licensing-Virginia-640x640.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "Trimble Asset Lifecycle Management infinity loop",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/640vWfBgQ2KjZUyODT0O5W/cf3d94d2656a1adc306a6e92fe5a0da8/OPS-ALM-720x405-092823.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "Capital Program Management",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/46it0eFoNNNqmdKnDjaBmL/63a937a127084537afdfec2ee3a970c0/OPS-product-package-e-builders-544x362.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "Enterprise Asset Management",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/7fb1IiPpvI1pCUNwkCbvDv/28d0508cf25ff70a2eff838587667e4e/OPS-product-package-cityworks-ams-544x362.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "Utilities Asset Management",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/61oc19Mq7X3jA51QpztwkR/1dac1a3b8b23a4fc548a6bf752593754/OPS-product-package-AMS-544x362.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          },
+          {
+            "alt": "Collaboration Platform",
+            "src": "https://images.ctfassets.net/48pg1507y9dh/389NERj0iNKoJOMWTfhfln/d7f4687c19ca43b9bc9b7ec6be7c6f1a/OPS-product-package-Quadri-544x362.webp?fm=jpg&fl=progressive&w=50&h=50&q=90"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 19,
+          "external": 7
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "map": 9,
+          "permit": 41,
+          "workflow": 17,
+          "conflict": 3,
+          "realtime": 3,
+          "forecast": 2,
+          "dashboard": 4,
+          "inspection": 4,
+          "integration": 3,
+          "public_portal": 6,
+          "documents": 5
+        }
+      }
+    },
+    {
+      "sourceIndex": 9,
+      "sourceUrl": "https://www.waze.com/wazeforcities/",
+      "checkedAt": "2026-07-24T17:28:14.983499+00:00",
+      "robotsAllowed": null,
+      "robotsNote": "robots.txt unavailable; single cited public page only",
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.waze.com/wazeforcities/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 57280,
+      "inventory": {
+        "language": "en",
+        "title": "Waze for Cities: Real-Time Traffic Data for Smarter Urban Planning",
+        "metaDescription": "Partner with Waze for real-time traffic data, improving road safety, reducing congestion, and empowering smarter urban planning for your city.",
+        "headings": [
+          {
+            "level": "h2",
+            "text": "Safer roads, real-time insights"
+          },
+          {
+            "level": "h2",
+            "text": "Streamline traffic management"
+          },
+          {
+            "level": "h2",
+            "text": "Live reports from drivers"
+          },
+          {
+            "level": "h2",
+            "text": "Community-Driven Impact"
+          },
+          {
+            "level": "h2",
+            "text": "Crisis management"
+          },
+          {
+            "level": "h2",
+            "text": "Build a smarter city"
+          },
+          {
+            "level": "h2",
+            "text": "Frequently asked questions"
+          },
+          {
+            "level": "h2",
+            "text": "Select Language"
+          }
+        ],
+        "navigationLabels": [
+          "Home",
+          "Waze",
+          "Map editors community",
+          "Waze for Cities",
+          "Case Studies",
+          "Traffic Events",
+          "Waze Beacons",
+          "Partners",
+          "Product Partners",
+          "Live Map",
+          "Download",
+          "Log In",
+          "Support",
+          "Settings",
+          "Log Out"
+        ],
+        "callsToAction": [
+          {
+            "label": "Map editors community",
+            "href": "https://www.waze.com/map-editors",
+            "kind": "a"
+          },
+          {
+            "label": "Live Map",
+            "href": "https://www.waze.com/livemap?utm_source=waze_website&utm_campaign=waze_website&utm_medium=website_menu",
+            "kind": "a"
+          },
+          {
+            "label": "Download",
+            "href": "https://www.waze.com/waze-app",
+            "kind": "a"
+          },
+          {
+            "label": "Learn more",
+            "href": "https://www.waze.com/trafficevents",
+            "kind": "a"
+          },
+          {
+            "label": "Explore case studies",
+            "href": "https://www.waze.com/wazeforcities/casestudies",
+            "kind": "a"
+          },
+          {
+            "label": "Explore",
+            "href": "https://www.waze.com/wazeforcities/",
+            "kind": "a"
+          },
+          {
+            "label": "Google Maps Content Partners.",
+            "href": "https://contentpartners.maps.google.com/welcome",
+            "kind": "a"
+          },
+          {
+            "label": "Facebook",
+            "href": "https://www.facebook.com/Waze",
+            "kind": "a"
+          },
+          {
+            "label": "Fix a map issue",
+            "href": "https://support.google.com/waze/answer/7101380?hl=en",
+            "kind": "a"
+          },
+          {
+            "label": "Edit the map",
+            "href": "https://www.waze.com/editor",
+            "kind": "a"
+          },
+          {
+            "label": "Contact Us",
+            "href": "https://www.waze.com/contact",
+            "kind": "a"
+          }
+        ],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/H1eFWawFBy7kpIam11jCV12rk9g50eQzuR16tg5b1GE1Sm93bQ1mg7t9LBKJTpc8N8SXH_PguzGkysm3grJ-O8WpiLqf4a3rAoO8MB0CzqBxi82E_Zs=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/wTMYug7zrOb27qYxRSjNigg2BhGRKfVtQow1CPCjBPy0Q7VPTQWf9Ny1yLkEloZoWMbtiYJlCSeYHOnPia0uG2Wl-PQIoVpWREDxFuwFk04CgsBc0Ik=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/qG0dUCUTM00nh2WQSv29o_4F3yJLBijTwReAyAa5poF1pGSQc8NV26xm8vqT2n1oFP1mduxmDwKW6cHY4OE3qPuNqvPO0aC7qoytzcVGxsRbPNRzKDs=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/ksiV30dZ6vWAMahiJNO8x02Pnp09KWTwZz2DijOGfFVh6vWKaF8wxlJppNGkuokVTARECNv4oh-N2GMGNSTVfx3h_uozE5hSNs1cZEynY9lwT-mBh88=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/6yx03KEO43xhTrg1fr8a8EQtIKKLvjPH3C7I8CmkgoRxvd0PwEQV9EaEw9sq6__l0L8Zfe4KsDkAWSVpd3t1lkwP1qDCtuUkJTjyV9CCUwU4Kt7SHg=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/dtQqt_BgnxzLRVFyA6SDAk5esmO0Tn1NL4Oh-Yn-ZjmTvVpCyueVdjy4rD2Q8QEHQlICQcFlfeeKmMo4dssmfBhtmyR1QnnGgAA2xs51_peTagh0z0A=s500-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/fkqYHA-fcr-m1P5X3ut4_0kLcO1Jcfazv7Sgss_BL57Ms-MmZSmQA9jQkLV6SJjlgjAROgfe9ktVwHf4YoqMtmSDc4VFzOoGnZVEZVSuboxbJi8rBg=s1200-rw"
+          },
+          {
+            "alt": "Case Studies Image of bridge",
+            "src": "https://kstatic.googleusercontent.com/files/22d2908646b9346b18ed44e0a7c3fe5b6bdc873abf8dd60902b677dde0db4ce3d4d955e1e8f180f0162ea47b53b1e129ea10803604709787d5334689a1135174"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/1cey-4BEjdexgrhqnRvixbsWtCNmB-QIK8W4ybiQZAUdRTHwPAKcCdn3l71pFYIpqQ7Wui3QPc8HxZ3FJkrW1B2gc3CVERCjE8I9O_i4M-0lziAbMoI=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/xtVbYHLcqGn155OSTO-a_AU2-AShF7vrzIWQqXEbkRKsJ20NiaJ1i_ImulXaOc7GFsCzq9rhKM3IhBxw-lWJqqtNJMpTVjx0f0xOXoIqSSI91Ua-rA=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/2aUtNZmpRZAh_QV8R8LCKDNEIr85vUBJBJu6VTgu9bCEw2Lrbc8Ig3thFJ-JCfDs9fw5Ejsil0iNFEWRjhwHhe4rFWlA0uOEjbr1V76ldZD0aC0HVaE=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/_7tnqPZyQpHO6jCBP9vNHdspnPfycXiObB2tKjRbW2J35dC9TUAiJtVq9R3hTmrwNrJCwOkybIfDUQE1aRuuKqq55bHbuyawAshyVb1k2meG82XXCBUB=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/b3coLP--y1p9zRxSb-nG_i7vpIiLkLigCv-bbzXEB5fbKp1ec67eKVzESbOrATnaOb63OqEKAZTsJx6WyoJeCOtbnGRy8H985KUsSfyX3kxfhh3dSFg=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/RB0eyhy4FB2t3g80EAOyUgXtxolZ64bQnXIs4up4MRgRqiwkKSLiIYcIDhp5LSANrz4o1StNtVJz40XYbYKR1ez9H18_dMNpWCRBV1V0I_3t-OArGbY=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/zG5KER0p3KVF1bZnIgGF1UGd9l-zbO2Oko_ovWBKiMK8uqLfp-5qW5t-UglayklUpP9BuAEazVqiSnC6Aikm96OelXZvTdgpWVumCYy9oTD6pWs0X1Q=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/x7v0la7lKcq-KYwbKoq8YfUMKErmZ8V37pGy_CfxFbS_GLnBZvTIhOnvhMeixiPuoS47hAsf7E6TC2HRPRpzfrV7wMW3U4PTzygJLN1bfwk3PFwSGA=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://lh3.googleusercontent.com/uXLFX5rn-yu9QVFDL2E2ezzwlBzPwOPX8O_GweoTYzZqVQ_MxAxXLkk7qiNHSCP5KBdyzrh3JdF3V2pcDrrM_1AEBBxsrYISFNPB9P7lhq3Rj4_a3tg=390-rw"
+          },
+          {
+            "alt": null,
+            "src": "https://kstatic.googleusercontent.com/files/26e9518f46fc518623044f1fe89c7d7c289897d712ad232ef91bd5bf8b5604150dc4142273d03ca656a88bd9a4e1db77c2e9b3e6f98cbed5a81ab2a24cd174d6"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 66,
+          "external": 12
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "map": 23,
+          "workflow": 2,
+          "conflict": 1,
+          "realtime": 13,
+          "dashboard": 1,
+          "notification": 4,
+          "inspection": 1,
+          "routing": 7,
+          "integration": 3,
+          "public_portal": 6,
+          "documents": 2
+        }
+      }
+    },
+    {
+      "sourceIndex": 10,
+      "sourceUrl": "https://www.haasalert.com/",
+      "checkedAt": "2026-07-24T17:28:16.954206+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.haasalert.com/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 185268,
+      "inventory": {
+        "language": "en",
+        "title": "HAAS Alert Safety Cloud® | Digital Alerting for Connected Roads",
+        "metaDescription": "Safety Cloud® by HAAS Alert notifies drivers of incoming emergency vehicles, and connects vehicles for better visibility and faster response times.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Connect and protect your fleet"
+          },
+          {
+            "level": "h2",
+            "text": "369"
+          },
+          {
+            "level": "h2",
+            "text": "M"
+          },
+          {
+            "level": "h2",
+            "text": "309"
+          },
+          {
+            "level": "h2",
+            "text": "25"
+          },
+          {
+            "level": "h2",
+            "text": "DELIVERING ALERTS TO MILLIONS OF MOTORISTS WORLDWIDE"
+          },
+          {
+            "level": "h3",
+            "text": "Designed and Built in the Midwest"
+          },
+          {
+            "level": "h3",
+            "text": "Digital alerting with Safety Cloud®"
+          },
+          {
+            "level": "h3",
+            "text": "Safety Cloud digital alerts reduce speeds by 17%"
+          },
+          {
+            "level": "h4",
+            "text": "Fire"
+          },
+          {
+            "level": "h4",
+            "text": "Law Enforcement"
+          },
+          {
+            "level": "h4",
+            "text": "Towing"
+          },
+          {
+            "level": "h4",
+            "text": "Maintentance + Utility"
+          },
+          {
+            "level": "h4",
+            "text": "Construction"
+          },
+          {
+            "level": "h4",
+            "text": "Automotive"
+          },
+          {
+            "level": "h4",
+            "text": "Department of Transportation"
+          },
+          {
+            "level": "h4",
+            "text": "School Bus"
+          },
+          {
+            "level": "h4",
+            "text": "EMS"
+          },
+          {
+            "level": "h3",
+            "text": "Trusted to protect first responders, roadway workers, and drivers every day"
+          },
+          {
+            "level": "h2",
+            "text": "Activate Safety Cloud with your existing telematics or fleet GPS solution"
+          },
+          {
+            "level": "h3",
+            "text": "Connect and protect today"
+          },
+          {
+            "level": "h3",
+            "text": "An event is activated"
+          },
+          {
+            "level": "h3",
+            "text": "Safety Cloud does the rest"
+          },
+          {
+            "level": "h3",
+            "text": "Alerts reach drivers"
+          },
+          {
+            "level": "h3",
+            "text": "Drivers react sooner"
+          },
+          {
+            "level": "h3",
+            "text": "Trusted by safety experts worldwide"
+          },
+          {
+            "level": "h2",
+            "text": "Safety Cloud in action"
+          },
+          {
+            "level": "h2",
+            "text": "FAQs"
+          }
+        ],
+        "navigationLabels": [
+          "Digital Alerting Safety Cloud advanced collision prevention for safer roads",
+          "Integrations Safety Cloud for the safety telematics and fleet GPS solutions",
+          "Traffic Signal Preemption Safety Cloud clears intersections to reduce response times",
+          "Road Fusion Safety Cloud data feed for municipal and state DOTs",
+          "Dashboard Safety Cloud command center comes standard",
+          "Gateway Port your Safety Cloud data into other systems",
+          "Partners Safety Cloud; the world’s largest connected vehicle ecosystem",
+          "HAAS Alert and Australian Warning Systems Partner to Bring Safety Cloud Digital Alerting to Australia and New Zealand Ju",
+          "Monthly Roundup, June 2026 Jul 20, 2026",
+          "HAAS Alert, BMW Group, and Škoda Accelerate Europe's Road Safety By Making Live Hazard Warnings Available Across the DFR",
+          "Fire + EMS Reduce risk and improve response time",
+          "Law Enforcement Reduce risk of collision, improve response time",
+          "Towing + Recovery Keep roads clear for towing operators",
+          "DOTs Protection for work that keeps roads moving",
+          "Construction + Work Zone Keep roadway workers safe in the road",
+          "Maintenance + Utility Keep line crews safe in the road",
+          "Automotive Alerts drivers directly in vehicles for smarter and safer roads",
+          "School Bus Smart solutions for safer transportation",
+          "Public Safety Fire, EMS, and law enforcement",
+          "Roads DOT, maintenance, utility, construction, and work zone",
+          "Towing + Recovery Towing, recovery, and roadside assistance",
+          "Refer a Fleet Earn credits toward your service for referring fleets",
+          "News + Press The latest road safety and HAAS Alert news",
+          "Media Access our blog, webinars, case studies, Safety Cloud guides, and more",
+          "Trust Center HAAS Alert upholds the highest standards in security, privacy and performance",
+          "Support Get assistance with all Safety Cloud products and services",
+          "About Meet the team building the world’s largest connected vehicle platform",
+          "Giveback HAAS Alert supports organizations to help responders, road workers, and their families",
+          "Merch Store Gear up and help give back",
+          "Awards The only place we ever toot our own horn",
+          "Patents Meet HAAS Alert’s cutting-edge, proprietary tech",
+          "Careers Join us on our mission to make roads safer and smarter",
+          "Contact Us What’s on your mind?",
+          "book a demo"
+        ],
+        "callsToAction": [
+          {
+            "label": "Contact Us What’s on your mind?",
+            "href": "https://www.haasalert.com/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "book a demo",
+            "href": "https://www.haasalert.com/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "safetycloud login",
+            "href": "https://safetycloud.haasalert.com",
+            "kind": "a"
+          },
+          {
+            "label": "CONTACT SALES",
+            "href": "https://www.haasalert.com/contact-sales",
+            "kind": "a"
+          },
+          {
+            "label": "DOWNLOAD THE GUIDE",
+            "href": "https://www.haasalert.com/product-guide/safety-cloud-guide",
+            "kind": "a"
+          },
+          {
+            "label": "LEARN MORE",
+            "href": "https://www.haasalert.com/digital-alerting",
+            "kind": "a"
+          },
+          {
+            "label": "book a DEMO",
+            "href": "https://www.haasalert.com/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "Contact Us",
+            "href": "https://www.haasalert.com/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "safety cloud login link",
+            "href": "https://safetycloud.haasalert.com",
+            "kind": "a"
+          },
+          {
+            "label": "HAAS Alert Facebook",
+            "href": "https://www.facebook.com/haasalert",
+            "kind": "a"
+          }
+        ],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/65c7ca97167ea2c88c670a9e_Arrow-White.svg"
+          },
+          {
+            "alt": "HAAS Alert Logo",
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/696face4d3960dbd184b3b42_HAAS2026.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a40b293d6487bbf1de4a91_Group%2020207.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1618_icon-arrow-red.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1627_OEM_AlfaRomeo-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e162a_OEM_Chrysler-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1628_OEM_Dodge-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69b87113b2d60ec26aeecb27_fww.png"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1626_OEM_Jeep-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/6a2849c054fa8bc460c034ae_PPSA_grey.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1629_OEM_RAM-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a7f2df874a0e1396689724_skoda_grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1625_OEM_Waze-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/6a26f6a8ecc5dccfa8086ced_MIA_badge.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e161c_AlertHero2026-EVAhead-1200x1200.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1617_SC-gradient.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1623_Acetech-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1622_Ericsson-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1633_geotab-grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1634_motive-grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1621_Samsara-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1624_webfleet-grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1620_SC-grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1638_ConnectProtect-1-1200x625.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1640_ConnectProtect-2-1200x625.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e162e_ConnectProtect-3-1200x625.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1648_ConnectProtect-4-1200x625.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/65e488a19dfb1e57e73489f6_Group%2015704.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a367c19ad7d19fa43e9b94_icon-arrow-purple.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a72d418550551afad97969_HAAS-MadeInUSA.svg"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 99,
+          "external": 11
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "realtime": 14,
+          "dashboard": 4,
+          "notification": 71,
+          "inspection": 2,
+          "integration": 8,
+          "documents": 1
+        }
+      }
+    },
+    {
+      "sourceIndex": 11,
+      "sourceUrl": "https://www.haasalert.com/construction",
+      "checkedAt": "2026-07-24T17:28:21.084703+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.haasalert.com/construction",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 146767,
+      "inventory": {
+        "language": "en",
+        "title": "Safety Cloud® for Road Crews | HAAS Alert",
+        "metaDescription": "Protect your truck and your team in roadside workzones with the only in-vehicle digital alerting safety tool, Safety Cloud by HAAS Alert.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Customized solutions engineered to deter traffic"
+          },
+          {
+            "level": "h2",
+            "text": "DELIVERING ALERTS TO MILLIONS OF MOTORISTS WORLDWIDE"
+          },
+          {
+            "level": "h2",
+            "text": "Digital alerting"
+          },
+          {
+            "level": "h3",
+            "text": "Connected Safety at Scale: Year in Review 2025"
+          },
+          {
+            "level": "h2",
+            "text": "RFPs; Safety Cloud one-stop shop"
+          },
+          {
+            "level": "h2",
+            "text": "Connect and protect"
+          },
+          {
+            "level": "h4",
+            "text": "HA-7 Transponder"
+          },
+          {
+            "level": "h4",
+            "text": "HA-Direct"
+          },
+          {
+            "level": "h4",
+            "text": "Dashboard"
+          },
+          {
+            "level": "h2",
+            "text": "Trusted by road workers nationwide"
+          },
+          {
+            "level": "h2",
+            "text": "Make your work zones safer and smarter"
+          },
+          {
+            "level": "h2",
+            "text": "FAQs"
+          }
+        ],
+        "navigationLabels": [
+          "Digital Alerting Safety Cloud advanced collision prevention for safer roads",
+          "Integrations Safety Cloud for the safety telematics and fleet GPS solutions",
+          "Traffic Signal Preemption Safety Cloud clears intersections to reduce response times",
+          "Road Fusion Safety Cloud data feed for municipal and state DOTs",
+          "Dashboard Safety Cloud command center comes standard",
+          "Gateway Port your Safety Cloud data into other systems",
+          "Partners Safety Cloud; the world’s largest connected vehicle ecosystem",
+          "HAAS Alert and Australian Warning Systems Partner to Bring Safety Cloud Digital Alerting to Australia and New Zealand Ju",
+          "Monthly Roundup, June 2026 Jul 20, 2026",
+          "HAAS Alert, BMW Group, and Škoda Accelerate Europe's Road Safety By Making Live Hazard Warnings Available Across the DFR",
+          "Fire + EMS Reduce risk and improve response time",
+          "Law Enforcement Reduce risk of collision, improve response time",
+          "Towing + Recovery Keep roads clear for towing operators",
+          "DOTs Protection for work that keeps roads moving",
+          "Construction + Work Zone Keep roadway workers safe in the road",
+          "Maintenance + Utility Keep line crews safe in the road",
+          "Automotive Alerts drivers directly in vehicles for smarter and safer roads",
+          "School Bus Smart solutions for safer transportation",
+          "Public Safety Fire, EMS, and law enforcement",
+          "Roads DOT, maintenance, utility, construction, and work zone",
+          "Towing + Recovery Towing, recovery, and roadside assistance",
+          "Refer a Fleet Earn credits toward your service for referring fleets",
+          "News + Press The latest road safety and HAAS Alert news",
+          "Media Access our blog, webinars, case studies, Safety Cloud guides, and more",
+          "Trust Center HAAS Alert upholds the highest standards in security, privacy and performance",
+          "Support Get assistance with all Safety Cloud products and services",
+          "About Meet the team building the world’s largest connected vehicle platform",
+          "Giveback HAAS Alert supports organizations to help responders, road workers, and their families",
+          "Merch Store Gear up and help give back",
+          "Awards The only place we ever toot our own horn",
+          "Patents Meet HAAS Alert’s cutting-edge, proprietary tech",
+          "Careers Join us on our mission to make roads safer and smarter",
+          "Contact Us What’s on your mind?",
+          "book a demo"
+        ],
+        "callsToAction": [
+          {
+            "label": "Contact Us What’s on your mind?",
+            "href": "https://www.haasalert.com/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "book a demo",
+            "href": "https://www.haasalert.com/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "safetycloud login",
+            "href": "https://safetycloud.haasalert.com",
+            "kind": "a"
+          },
+          {
+            "label": "BOOK A DEMO",
+            "href": "https://www.haasalert.com/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "DOWNLOAD THE GUIDE",
+            "href": "https://www.haasalert.com/product-guide/safety-cloud-guide",
+            "kind": "a"
+          },
+          {
+            "label": "book a DEMO",
+            "href": "https://www.haasalert.com/request-a-demo",
+            "kind": "a"
+          },
+          {
+            "label": "Contact Us",
+            "href": "https://www.haasalert.com/contact-us",
+            "kind": "a"
+          },
+          {
+            "label": "safety cloud login link",
+            "href": "https://safetycloud.haasalert.com",
+            "kind": "a"
+          },
+          {
+            "label": "HAAS Alert Facebook",
+            "href": "https://www.facebook.com/haasalert",
+            "kind": "a"
+          }
+        ],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/65c7ca97167ea2c88c670a9e_Arrow-White.svg"
+          },
+          {
+            "alt": "HAAS Alert Logo",
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/696face4d3960dbd184b3b42_HAAS2026.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a40b293d6487bbf1de4a91_Group%2020207.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a7d6d80a8f77fcac6d4693_697b87f8ddb23e09f0c08df4_hero-workzone-2026.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1618_icon-arrow-red.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1627_OEM_AlfaRomeo-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e162a_OEM_Chrysler-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1628_OEM_Dodge-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69b87113b2d60ec26aeecb27_fww.png"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1626_OEM_Jeep-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/6a2849c054fa8bc460c034ae_PPSA_grey.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1629_OEM_RAM-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a7f2df874a0e1396689724_skoda_grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1625_OEM_Waze-Grey.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a7d746ef9968ca13037d51_697b804b3c64dd2e5e2bcbd5_AlertHero2026-WZAhead-1200x1200.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a36c33c6193059320e1617_SC-gradient.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a7d84fe1809f4134a56c32_699dd47b2403c4143b0028d6_RFP-1200x625.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a72e8ea4614db8f53c7a38_ha7.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a72d418550551afad97969_HAAS-MadeInUSA.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a72e7566a8dc199466e5b0_hadirect.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69aedd3dc8f754a80475e619_HADUtil.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a72ea52c93fb5d49ca9cac_dashboard.webp"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/65e488a19dfb1e57e73489f6_Group%2015704.svg"
+          },
+          {
+            "alt": null,
+            "src": "https://cdn.prod.website-files.com/65ba9670d732a9fcbfe647cf/69a367c19ad7d19fa43e9b94_icon-arrow-purple.svg"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [],
+        "linkCounts": {
+          "internal": 89,
+          "external": 11
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "permit": 2,
+          "workflow": 1,
+          "realtime": 11,
+          "dashboard": 6,
+          "notification": 63,
+          "inspection": 4,
+          "routing": 2,
+          "integration": 9,
+          "documents": 2
+        }
+      }
+    },
+    {
+      "sourceIndex": 12,
+      "sourceUrl": "https://prompt.lta.gov.sg/WebUIPWAS/",
+      "checkedAt": "2026-07-24T17:28:21.647521+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://prompt.lta.gov.sg/WebUIPWAS/",
+      "contentType": "text/html",
+      "contentLength": 6541,
+      "documentKind": "html",
+      "bytesRead": 32091,
+      "inventory": {
+        "language": "en",
+        "title": "Welcome to LTA.PROMPT",
+        "metaDescription": "LTA.PROMPT",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "LTA PROMPT"
+          },
+          {
+            "level": "h2",
+            "text": "What can you do?"
+          },
+          {
+            "level": "h2",
+            "text": "Our Partners"
+          },
+          {
+            "level": "h4",
+            "text": "Land Transport Authority"
+          }
+        ],
+        "navigationLabels": [
+          "Home",
+          "About LTA",
+          "Help & FAQs",
+          "Pay Fines",
+          "Pay Road Work Application",
+          "Register",
+          "Log in exit_to_app",
+          "Search"
+        ],
+        "callsToAction": [
+          {
+            "label": "Search",
+            "href": null,
+            "kind": "button"
+          },
+          {
+            "label": "View Guidelines",
+            "href": null,
+            "kind": "button"
+          },
+          {
+            "label": "Sign In",
+            "href": "https://prompt.lta.gov.sg/WebUIPWAS/",
+            "kind": "a"
+          },
+          {
+            "label": "Know more about us on Facebook",
+            "href": "https://www.facebook.com/WeKeepYourWorldMoving",
+            "kind": "a"
+          },
+          {
+            "label": "Contact Us",
+            "href": "https://prompt.lta.gov.sg/WebUIPWAS/Home/ContactUs",
+            "kind": "a"
+          },
+          {
+            "label": "Sitemap",
+            "href": "https://prompt.lta.gov.sg/WebUIPWAS/Home/SiteMap",
+            "kind": "a"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "name": null,
+            "label": null,
+            "placeholder": "Search site",
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "UserId",
+            "label": "User ID",
+            "placeholder": "User ID",
+            "ariaLabel": null,
+            "required": true
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "name": "Password",
+            "label": "Password",
+            "placeholder": "Password",
+            "ariaLabel": null,
+            "required": true
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "__RequestVerificationToken",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "MinLength",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "UserIdKey",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "UserIdHash",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "Vector",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "PasswordKey",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "PasswordHash",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "select",
+            "type": null,
+            "name": "AgencyGuides",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "AgencyGuide",
+            "label": null,
+            "placeholder": null,
+            "ariaLabel": null,
+            "required": false
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": null,
+            "label": "Verification Code",
+            "placeholder": "Enter OTP",
+            "ariaLabel": null,
+            "required": false
+          }
+        ],
+        "forms": [
+          {
+            "method": "post",
+            "action": "https://prompt.lta.gov.sg/WebUIPWAS/",
+            "fieldCount": 7,
+            "buttonLabels": [
+              "Log In exit_to_app"
+            ]
+          },
+          {
+            "method": "post",
+            "action": "https://prompt.lta.gov.sg/WebUIPWAS/Home/AgencyGuide",
+            "fieldCount": 2,
+            "buttonLabels": [
+              "View Guidelines"
+            ]
+          }
+        ],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-lta.png"
+          },
+          {
+            "alt": "SingPass logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo/Log_in_with_Singpass_White.png"
+          },
+          {
+            "alt": "Image of a road uder construction",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/img-lta-001.jpg"
+          },
+          {
+            "alt": "Image of a road uder construction",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/img-lta-002.jpg"
+          },
+          {
+            "alt": "Image of a road uder construction",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/img-lta-003.jpg"
+          },
+          {
+            "alt": "Image of a road uder construction",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/img-lta-004.jpg"
+          },
+          {
+            "alt": "Image of a road uder construction",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/img-lta-005.jpg"
+          },
+          {
+            "alt": "Placeholder",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/placeholder.jpg"
+          },
+          {
+            "alt": "HDB logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-hdb.png"
+          },
+          {
+            "alt": "JTC logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-jtc.png"
+          },
+          {
+            "alt": "NPB logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-npb.png"
+          },
+          {
+            "alt": "PUB logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-pub.png"
+          },
+          {
+            "alt": "SLA logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-sla.png"
+          },
+          {
+            "alt": "URA logo",
+            "src": "https://prompt.lta.gov.sg/WebUIPWAS/Content/images/logo-ura.png"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [
+          {
+            "label": "Feedback",
+            "url": "https://www.lta.gov.sg/feedback/"
+          }
+        ],
+        "linkCounts": {
+          "internal": 44,
+          "external": 15
+        },
+        "structuredDataTypes": [],
+        "designSignals": {
+          "colors": [],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "map": 4,
+          "permit": 7,
+          "notification": 2,
+          "inspection": 1,
+          "routing": 4,
+          "integration": 1,
+          "documents": 1
+        }
+      }
+    },
+    {
+      "sourceIndex": 13,
+      "sourceUrl": "https://us.ditto.site/",
+      "checkedAt": "2026-07-24T17:28:24.258612+00:00",
+      "robotsAllowed": null,
+      "robotsNote": "robots.txt unavailable; single cited public page only",
+      "fetchState": "error",
+      "error": "ConnectionError"
+    },
+    {
+      "sourceIndex": 14,
+      "sourceUrl": "https://ditto.site",
+      "checkedAt": "2026-07-24T17:28:24.794316+00:00",
+      "robotsAllowed": true,
+      "robotsNote": null,
+      "fetchState": "received",
+      "status": 200,
+      "finalUrl": "https://www.ditto.site/",
+      "contentType": "text/html",
+      "contentLength": null,
+      "documentKind": "html",
+      "bytesRead": 119743,
+      "inventory": {
+        "language": "en",
+        "title": "Ditto: Clone any website",
+        "metaDescription": "Point Ditto at any public URL and get a byte-stable copy as clean, componentized Next.js or Vite code in minutes — deterministic, no LLM guesswork, fidelity preserved. Open source, with a hosted REST API and MCP server.",
+        "headings": [
+          {
+            "level": "h1",
+            "text": "Clone any website."
+          },
+          {
+            "level": "h2",
+            "text": "Deterministic."
+          },
+          {
+            "level": "h2",
+            "text": "Three ways to use."
+          },
+          {
+            "level": "h3",
+            "text": "Open source"
+          },
+          {
+            "level": "h3",
+            "text": "REST API"
+          },
+          {
+            "level": "h3",
+            "text": "MCP server"
+          },
+          {
+            "level": "h2",
+            "text": "Code you'd be happy to maintain."
+          },
+          {
+            "level": "h2",
+            "text": "It's free lol go crazy"
+          },
+          {
+            "level": "h2",
+            "text": "It's open source. Go star it."
+          },
+          {
+            "level": "h2",
+            "text": "Product"
+          },
+          {
+            "level": "h2",
+            "text": "Build"
+          },
+          {
+            "level": "h2",
+            "text": "Open source"
+          }
+        ],
+        "navigationLabels": [
+          "ditto home",
+          "Deterministic",
+          "Use it",
+          "Output",
+          "Pricing",
+          "API key",
+          "Docs",
+          "ion-design/ditto.site on GitHub",
+          "Get API key Key",
+          "Ways to use it",
+          "Get API key",
+          "REST API",
+          "MCP server",
+          "GitHub",
+          "Issues",
+          "MIT license"
+        ],
+        "callsToAction": [],
+        "fields": [],
+        "forms": [],
+        "tables": [],
+        "images": [
+          {
+            "alt": null,
+            "src": "https://www.ditto.site/assets/ditto.svg?dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": null,
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Fhero-day.png&w=3840&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": "Ditto using its Transform move",
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Ftransform.png&w=384&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": "Ditto, the cloning slime mascot",
+            "src": "https://www.ditto.site/assets/ditto.svg?dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": null,
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Fitem-opensource.png&w=128&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": null,
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Fitem-api.png&w=128&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": null,
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Fitem-mcp.png&w=128&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          },
+          {
+            "alt": "Ditto, glowing",
+            "src": "https://www.ditto.site/_next/image?url=%2Fassets%2Ftransform.png&w=256&q=75&dpl=dpl_Hc7fdyAQYPjJ6LVmuwgayRGVdA8P"
+          }
+        ],
+        "downloads": [],
+        "publicDataCandidates": [
+          {
+            "label": "API key",
+            "url": "https://www.ditto.site/api-key"
+          },
+          {
+            "label": "Get API key Key",
+            "url": "https://www.ditto.site/api-key"
+          },
+          {
+            "label": "Get API key",
+            "url": "https://www.ditto.site/api-key"
+          },
+          {
+            "label": "MCP server",
+            "url": "https://api.ditto.site/mcp"
+          }
+        ],
+        "linkCounts": {
+          "internal": 18,
+          "external": 14
+        },
+        "structuredDataTypes": [
+          "Offer",
+          "Organization",
+          "SoftwareApplication"
+        ],
+        "designSignals": {
+          "colors": [
+            {
+              "value": "rgba(146,248,243,0.0)",
+              "occurrences": 2
+            },
+            {
+              "value": "rgba(146,248,243,0.55)",
+              "occurrences": 1
+            }
+          ],
+          "fontFamilies": [],
+          "cssVariables": []
+        },
+        "capabilitySignals": {
+          "map": 1,
+          "realtime": 1,
+          "routing": 1,
+          "integration": 17
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+:root {
+  --athar-canvas: #eceff2;
+  --athar-surface: #ffffff;
+  --athar-surface-raised: #f8fafb;
+  --athar-ink: #15202b;
+  --athar-muted: #5a6672;
+  --athar-faint: #8a929b;
+  --athar-line: #d8dee4;
+  --athar-primary: #1d4e77;
+  --athar-primary-hover: #163f5f;
+  --athar-primary-soft: #e9f1f7;
+  --athar-accent: #a9722b;
+  --athar-accent-soft: #f4ede1;
+  --athar-success: #2f7a57;
+  --athar-success-soft: #e4f1ea;
+  --athar-warning: #a9722b;
+  --athar-warning-soft: #f4ede1;
+  --athar-danger: #b23b32;
+  --athar-danger-soft: #f7e4e1;
+  --athar-info: #2c6e9d;
+  --athar-info-soft: #e6f0f7;
+
+  --athar-space-1: 4px;
+  --athar-space-2: 8px;
+  --athar-space-3: 12px;
+  --athar-space-4: 16px;
+  --athar-space-6: 24px;
+  --athar-space-8: 32px;
+  --athar-space-12: 48px;
+
+  --athar-radius-control: 6px;
+  --athar-radius-button: 8px;
+  --athar-radius-card: 10px;
+  --athar-radius-panel: 14px;
+  --athar-radius-pill: 999px;
+
+  --athar-font-arabic: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --athar-font-number: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --athar-motion-hover: 100ms;
+  --athar-motion-control: 160ms;
+  --athar-motion-panel: 240ms;
+  --athar-motion-map: 300ms;
+  --athar-motion-forecast: 400ms;
+  --athar-ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+[data-athar-workspace] {
+  min-height: 100dvh;
+  display: grid;
+  grid-template:
+    "topbar topbar topbar" 48px
+    "queue map detail" minmax(0, 1fr)
+    / 300px minmax(420px, 1fr) minmax(360px, 420px);
+  background: var(--athar-canvas);
+  color: var(--athar-ink);
+  font-family: var(--athar-font-arabic);
+}
+
+[data-athar-status] {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: var(--athar-space-2);
+  padding-inline: var(--athar-space-3);
+  border: 1px solid currentColor;
+  border-radius: var(--athar-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+[data-athar-status="danger"] {
+  color: var(--athar-danger);
+  background: var(--athar-danger-soft);
+}
+
+[data-athar-status="warning"] {
+  color: var(--athar-warning);
+  background: var(--athar-warning-soft);
+}
+
+[data-athar-status="success"] {
+  color: var(--athar-success);
+  background: var(--athar-success-soft);
+}
+
+[data-athar-card] {
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-card);
+  padding: var(--athar-space-4);
+}
+
+[data-athar-action] {
+  min-height: 40px;
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-button);
+  padding-inline: var(--athar-space-4);
+  font: 700 14px/1 var(--athar-font-arabic);
+  transition:
+    background var(--athar-motion-control) var(--athar-ease),
+    border-color var(--athar-motion-control) var(--athar-ease),
+    color var(--athar-motion-control) var(--athar-ease);
+}
+
+[data-athar-action="primary"] {
+  color: #fff;
+  background: var(--athar-primary);
+  border-color: var(--athar-primary);
+}
+
+[data-athar-action="primary"]:hover {
+  background: var(--athar-primary-hover);
+  border-color: var(--athar-primary-hover);
+}
+
+@media (max-width: 1100px) {
+  [data-athar-workspace] {
+    grid-template:
+      "topbar topbar" 48px
+      "map detail" minmax(0, 1fr)
+      "queue queue" auto
+      / minmax(420px, 1fr) minmax(340px, 40vw);
+  }
+}
+
+@media (max-width: 760px) {
+  [data-athar-workspace] {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --athar-motion-hover: 0ms;
+    --athar-motion-control: 0ms;
+    --athar-motion-panel: 0ms;
+    --athar-motion-map: 0ms;
+    --athar-motion-forecast: 0ms;
+  }
+}

@@ -6,27 +6,48 @@ const path = require('path');
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
-const pages = ['athar-prototype.html', 'athar-lab.html', 'athar-city-impact.html', 'athar-map.html'];
+const pages = [
+  'athar-desk.html',
+  'athar-decision.html',
+  'athar-map.html',
+  'athar-prototype.html',
+  'athar-lab.html',
+  'athar-city-impact.html',
+];
 const navJs = fs.readFileSync(path.join(__dirname, '..', 'athar-nav.js'), 'utf8');
 
-ok('nav module links exactly the four family pages', () => {
+ok('الشريط يربط صفحات العائلة الست', () => {
   for (const page of pages) {
     assert.ok(navJs.includes(`"${page}"`), `nav missing link to ${page}`);
   }
 });
 
-ok('all four pages load athar-nav.js', () => {
+ok('كل صفحة عائلة تحمّل athar-nav.js', () => {
   for (const page of pages) {
     const html = fs.readFileSync(path.join(__dirname, '..', page), 'utf8');
     assert.ok(html.includes('src="athar-nav.js"'), `${page} does not load nav`);
   }
 });
 
-ok('nav marks the current page and uses Arabic labels', () => {
+ok('الشريط يعلّم الصفحة الحالية بتسميات عربية', () => {
   assert.ok(navJs.includes('aria-current'));
-  for (const label of ['النموذج التفاعلي', 'مختبر الابتكار', 'لوحة أثر المدينة', 'الخريطة']) {
+  for (const label of ['مكتب المراجع', 'شاشة القرار', 'الخريطة', 'النموذج التفاعلي', 'مختبر الابتكار', 'لوحة أثر المدينة']) {
     assert.ok(navJs.includes(label), `missing label ${label}`);
   }
+});
+
+ok('لا صفحة يتيمة: كل صفحة عائلة يصلها الشريط', () => {
+  const orphans = pages.filter((page) => !navJs.includes(`"${page}"`));
+  assert.deepStrictEqual(orphans, [], `صفحات يتيمة: ${orphans.join(', ')}`);
+});
+
+ok('مكتب المراجع أول تبويب — المحكّم يفتح المنتج لا العرض', () => {
+  const order = pages
+    .map((page) => ({ page, at: navJs.indexOf(`"${page}"`) }))
+    .filter((entry) => entry.at !== -1)
+    .sort((a, b) => a.at - b.at)
+    .map((entry) => entry.page);
+  assert.strictEqual(order[0], 'athar-desk.html');
 });
 
 console.log(`ALL NAV TESTS PASSED (${passed})`);

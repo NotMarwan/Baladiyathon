@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أثر — لوحة أثر المدينة (سيناريو تمثيلي)</title>
+<style>
+  :root{--asphalt:#102535;--paper:#eef1ef;--surface:#fff;--ink:#17242c;--muted:#62717a;--blue:#1f6b8f;--amber:#d19231;--mint:#dcefe4;--line:#d4dcda;--red:#b23b3b;--green:#2e7d4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.75}
+  main{width:min(1080px,92vw);margin:auto;padding:76px 0 84px}
+  .badge-fixed{position:fixed;top:0;right:0;left:0;z-index:10;background:var(--amber);color:#231a08;text-align:center;font-weight:900;padding:9px 14px;font-size:14px}
+  header{background:var(--asphalt);color:#fff;border-radius:28px;padding:clamp(28px,5vw,54px)}
+  .kicker{color:#efbc6e;font-weight:900}
+  h1{font-size:clamp(34px,6vw,64px);line-height:1.15;margin:8px 0 14px}
+  h2{font-size:clamp(24px,4vw,38px);line-height:1.3;margin:0 0 12px;color:var(--asphalt)}
+  h3,p{margin:0}
+  header p{color:#d4e2e8;font-size:19px}
+  .hero{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(24px,4vw,42px);text-align:center}
+  .counter-label{color:var(--muted);font-weight:800;font-size:17px}
+  .counter{font:900 clamp(52px,10vw,104px)/1.1 ui-monospace,Consolas,monospace;color:var(--green);direction:ltr}
+  .counter-sub{color:var(--muted);font-size:17px;margin-top:8px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:18px}
+  .card{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface)}
+  .card h3{color:var(--asphalt);font-size:15px;margin-bottom:9px}
+  .card .value{font:900 20px/1.4 ui-monospace,Consolas,monospace;direction:ltr;text-align:right;color:var(--blue)}
+  .card .fine{font-size:12px;color:var(--muted);margin-top:8px}
+  section.story{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,38px)}
+  .legend{display:flex;gap:18px;justify-content:center;margin-top:10px;font-size:14px;color:var(--muted)}
+  .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-left:6px;vertical-align:middle}
+  .formula{direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;background:var(--asphalt);color:#d7e7ed;border-radius:14px;padding:18px;margin-top:16px}
+  .note{border-right:5px solid var(--amber);padding-right:14px;margin-top:16px;color:var(--muted)}
+  footer{padding:28px 0 0;display:flex;gap:10px;flex-wrap:wrap}
+  footer a{background:var(--asphalt);color:#fff;text-decoration:none;border-radius:999px;padding:9px 14px;font-weight:800}
+  @media(max-width:860px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="badge-representative" class="badge-fixed">سيناريو تمثيلي — مدخلات موسومة، حسابات المحرك حقيقية</div>
+<main>
+  <header>
+    <div class="kicker">أثر · لوحة أثر المدينة</div>
+    <h1>لو شغّلنا «أثر» على محفظة مدينة سنة كاملة</h1>
+    <p>150 تصريحاً تمثيلياً · 12 ممراً بثلاثة أصناف · كل رقم أدناه محسوب بمحرك أثر الحقيقي — لا رقم مكتوب يدوياً.</p>
+  </header>
+
+  <section class="hero">
+    <div class="counter-label">ساعات-مركبة موفرة سنوياً (سيناريو تمثيلي)</div>
+    <div id="counter-saved-veh-hours" class="counter">—</div>
+    <div id="counter-saved-pct" class="counter-sub"></div>
+  </section>
+
+  <div class="cards">
+    <div class="card" id="card-time-value">
+      <h3>قيمة الوقت (نطاق كود 203)</h3><div class="value"></div>
+      <p class="fine">40–70٪ من الأجر · أجر GASTAT ‏5,800 ر/شهر</p>
+    </div>
+    <div class="card" id="card-person-hours">
+      <h3>ساعات-أشخاص (إشغال 1.2–1.6)</h3><div class="value"></div>
+      <p class="fine">نطاق إشغال افتراضي موسوم</p>
+    </div>
+    <div class="card" id="card-co2">
+      <h3>CO₂ موفر (فيزيائي فقط)</h3><div class="value"></div>
+      <p class="fine">لا تحويل نقدي — كود 203</p>
+    </div>
+    <div class="card" id="card-dig-once">
+      <h3>تصاريح Dig-Once مدمجة</h3><div class="value"></div>
+      <p class="fine">نطاق GAO ‏25–33٪ · خندق تمثيلي 1 كم</p>
+    </div>
+  </div>
+
+  <section class="story">
+    <h2>قبل/بعد حسب صنف الممر</h2>
+    <svg id="chart-by-class" viewBox="0 0 700 300" style="width:100%;height:auto"></svg>
+    <div class="legend">
+      <span><i style="background:var(--red)"></i>كما قُدمت الطلبات</span>
+      <span><i style="background:var(--green)"></i>بعد الجدول الأمثل</span>
+    </div>
+  </section>
+
+  <section class="story" id="section-methodology">
+    <h2>كيف حُسب هذا</h2>
+    <div class="formula">annual impact = Σ (as-submitted delay − optimal-schedule delay) per permit</div>
+    <p style="margin-top:14px">المعادلة: الأثر السنوي = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل) لكل تصريح، مقاسة بمحرك أثر نفسه المستخدم في النموذج التفاعلي.</p>
+    <p class="note">البذرة الثابتة: 20260727 · عدد التصاريح: 150 · المدخلات تمثيلية موسومة ولا تمثل بيانات رسمية. النتائج نطاقات لا أرقاماً مفردة، وأي اعتماد للأثر يمر عبر بروتوكول تجربة الظل.</p>
+  </section>
+
+  <footer>
+    <a href="athar-prototype.html">النموذج التفاعلي</a>
+    <a href="athar-pitch.html">عرض الملعب</a>
+    <a href="athar-sources.html">سجل المصادر</a>
+  </footer>
+</main>
+
+<script src="athar-nav.js"></script>
+<script src="athar-engine.js"></script>
+<script src="athar-portfolio.js"></script>
+<script>
+(function () {
+  'use strict';
+  const p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
+  const fmt = (n) => Math.round(n).toLocaleString('ar-SA');
+  const fmtRange = (a, b) => fmt(a) + ' – ' + fmt(b);
+
+  const target = p.totals.savedVehHours;
+  const el = document.getElementById('counter-saved-veh-hours');
+  const t0 = performance.now();
+  function tick(t) {
+    const k = Math.min(1, (t - t0) / 1500);
+    el.textContent = fmt(target * (1 - Math.pow(1 - k, 3)));
+    if (k < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  document.getElementById('counter-saved-pct').textContent =
+    'وفر ' + p.totals.savedPct.toFixed(1) + '٪ من تأخير المحفظة كما قُدمت — ' +
+    p.permitCount + ' تصريحاً تمثيلياً';
+
+  document.querySelector('#card-time-value .value').textContent =
+    fmtRange(p.ranges.timeValue.lowSAR, p.ranges.timeValue.highSAR) + ' ﷼';
+  document.querySelector('#card-person-hours .value').textContent =
+    fmtRange(p.ranges.personHours.lowPersonHours, p.ranges.personHours.highPersonHours) + ' س-ش';
+  document.querySelector('#card-co2 .value').textContent =
+    fmtRange(p.ranges.co2.lowCo2Kg, p.ranges.co2.highCo2Kg) + ' كجم';
+  document.querySelector('#card-dig-once .value').textContent =
+    p.digOnceMerged.permits + ' تصريحاً / ' + p.digOnceMerged.groups + ' مجموعة · ' +
+    fmtRange(p.digOnceMerged.savedLowSAR, p.digOnceMerged.savedHighSAR) + ' ﷼';
+
+  const svg = document.getElementById('chart-by-class');
+  const classes = [['arterial', 'شرياني'], ['major', 'رئيسي'], ['local', 'فرعي']];
+  const max = Math.max.apply(null, classes.map(function (c) { return p.byClass[c[0]].baseline; }));
+  let marks = '';
+  classes.forEach(function (c, i) {
+    const x = 80 + i * 200;
+    const bh = 220 * (p.byClass[c[0]].baseline / max);
+    const oh = 220 * (p.byClass[c[0]].optimized / max);
+    marks +=
+      '<rect x="' + x + '" y="' + (250 - bh) + '" width="60" height="' + bh + '" rx="4" fill="#b23b3b"></rect>' +
+      '<rect x="' + (x + 70) + '" y="' + (250 - oh) + '" width="60" height="' + Math.max(oh, 2) + '" rx="4" fill="#2e7d4f"></rect>' +
+      '<text x="' + (x + 65) + '" y="275" text-anchor="middle" font-size="15" fill="#62717a">' + c[1] + '</text>';
+  });
+  svg.innerHTML = marks;
+})();
+</script>
+</body>
+</html>

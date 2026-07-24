@@ -1,0 +1,1179 @@
+[
+  {
+    "url": "https://balady.gov.sa/ar/services/11722",
+    "status": "error",
+    "error": "Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://balady.gov.sa/ar/services/11722\", waiting until \"domcontentloaded\"\n",
+    "title": null,
+    "meta_description": null,
+    "h1": [],
+    "top_sections": [],
+    "primary_links": [],
+    "cta_texts": [],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "fallback",
+        "file": "balady-gov-sa_ar_services_11722_error.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.balady.gov.sa/ar/services/%D8%AA%D8%B5%D8%A7%D8%B1%D9%8A%D8%AD-%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%A8%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D8%AA%D8%AD%D8%AA%D9%8A%D9%87",
+    "status": "404",
+    "error": null,
+    "title": "الصفحة غير موجودة | منصة بلدي",
+    "meta_description": "الصفحة غير موجودة | منصة بلدي",
+    "h1": [],
+    "top_sections": [
+      "mainHeader",
+      "navbar navbar-expand-lg position-static header-mobile-container",
+      "block-balady-new-main-navigation",
+      "mainFooter no-vote",
+      "block-balady-new-nzrtamt",
+      "block-balady-new-rwabtmhmt",
+      "block-balady-new-aldmwalmsadt",
+      "Accessibility Tools"
+    ],
+    "primary_links": [
+      "تجاوز إلى المحتوى الرئيسي",
+      "كيف تتحقق",
+      "20250428339\n\t\t\t\t\t\t\t\t\t\t(link is external)",
+      "عن بلدي",
+      "من نحن",
+      "الهيكل التنظيمي",
+      "الأنظمة واللوائح",
+      "السياسات والاستراتيجيات",
+      "المنافسات والمشتريات",
+      "الميزانية والمصروفات",
+      "التنمية المستدامة",
+      "الشراكات",
+      "المشاركة الإلكترونية",
+      "البيانات المفتوحة",
+      "الأخبار",
+      "الفعاليات",
+      "المبادرات",
+      "البيانات والإحصائيات",
+      "الوظائف",
+      "المساعدة والدعم"
+    ],
+    "cta_texts": [
+      "تجاوز إلى المحتوى الرئيسي",
+      "أدوات سهولة الوصول",
+      "20250428339 (link is external)",
+      "الهيكل التنظيمي",
+      "الأنظمة واللوائح",
+      "السياسات والاستراتيجيات",
+      "المنافسات والمشتريات",
+      "الميزانية والمصروفات",
+      "التنمية المستدامة",
+      "المشاركة الإلكترونية",
+      "البيانات المفتوحة",
+      "البيانات والإحصائيات",
+      "المساعدة والدعم",
+      "إدارة الطلبات(link is external)",
+      "إدارة الرخص(link is external)",
+      "إصدار رخصة تجارية",
+      "تجديد رخصة نشاط تجاري",
+      "إلغاء رخصة نشاط تجاري",
+      "إصدار رخصة بناء",
+      "خدمة إصدار رخصة تسوير أراضي فضاء"
+    ],
+    "theme_colors": [
+      "#ffc107",
+      "#0dcaf0",
+      "#fd7e14",
+      "#eaf6ef",
+      "#6c757d",
+      "#dee2e6",
+      "#84BC47",
+      "#198754",
+      "#0d6efd",
+      "#d63384",
+      "#6f42c1",
+      "#0a58ca",
+      "#e9ecef",
+      "#ced4da",
+      "#414042"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-balady-gov-sa_ar_services_d8aad8b5d8a7d8b1d98ad8ad_d8a3d8b9d985d8a7d984_d8a8d986d98ad8_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-balady-gov-sa_ar_services_d8aad8b5d8a7d8b1d98ad8ad_d8a3d8b9d985d8a7d984_d8a8d986d98ad8_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://us.one.network/",
+    "status": "200",
+    "error": null,
+    "title": "Home - Causeway one.network",
+    "meta_description": "Explore Causeway one.network: the intuitive platform transforming road management and enhancing work zone coordination for safer, smarter journeys.",
+    "h1": [
+      "The intuitive road management platform"
+    ],
+    "top_sections": [
+      "header",
+      "primary",
+      "hero-block_ec9908250cf1974ea591eac4eac27f15",
+      "image-text-side-by-side-block_d7ef6d3444ba3a0ca4a1d2cd88b82b9a",
+      "logo-scroller-block_ddc3090d1370d979bbce8e9e20166956",
+      "timed-tabs-block_5d07be4967b4a28523744301bbbead30",
+      "carousel-block_2ab98d86e79356886a29d5a538c2fd55",
+      "statistics-grid-block_2fb09aa8f73261f04569a39706162f47",
+      "case-study-carousel-block_bde0492e4f393a7bc80a8c150c958d5c",
+      "card-carousel-block_eab67a0266a24ff4aa659a94be84af06",
+      "cta footer body-push",
+      "footer body-push"
+    ],
+    "primary_links": [
+      "UK",
+      "US",
+      "Product",
+      "Solutions",
+      "Company",
+      "Resources",
+      "Sign in",
+      "Get in touch",
+      "Schedule a demo",
+      "View our customer stories",
+      "Discover more",
+      "Read case study",
+      "All customer stories",
+      "All news & insights",
+      "Book a demo",
+      "Plan & Coordinate",
+      "Route Manager",
+      "Plan Share",
+      "Traffic Management",
+      "Communicate"
+    ],
+    "cta_texts": [
+      "Sign in",
+      "Get in touch",
+      "Schedule a demo",
+      "View our customer stories",
+      "Discover more",
+      "Read case study",
+      "All customer stories",
+      "15 Apr 2026 Keeping Augusta moving during Masters week #event management #traffic management",
+      "31 Mar 2026 Augusta Partners with Causeway Technologies to Revolutionize Traffic Management During Broad Street Improvement Project #right of way management #work zone management",
+      "20 Nov 2025 City of Tampa Teams with Causeway to Boost Work Zone Safety & Traffic Flow #right of way management #work zone management",
+      "Insight 19 Nov 2025 Winning on the Roads – How Better Collaboration and Planning Can Tackle World Cup Disruption #event management #right of way management #traffic management #transit",
+      "17 Nov 2025 Osceola County Launches New Traffic Management Advisory System Powered by Causeway one.network #live link #traffic management",
+      "17 Nov 2025 Causeway Technologies Joins AGīL Innovation Lab to Drive Smart Mobility in Altamonte Springs #event management #live link",
+      "Insight 13 Oct 2025 The Traffic Surge is Coming: Why World Cup Cities Need a New Playbook #event management #live link #right of way management #traffic management",
+      "10 Oct 2025 No Roadblocks Here: Arlington’s Formula for Event Traffic Success #event management #right of way management #traffic management #work zone management",
+      "19 May 2025 Utah Department of Transportation Awards Statewide Work Zone Safety and Planned Event Software Contract to Causeway one.network #right of way management #traffic management #vision zero #work zone management",
+      "07 May 2025 Causeway one.network Appoints Veteran Customer Success Leader Edward Constancio as Vice President of Sales, USA",
+      "All news & insights",
+      "Book a demo",
+      "Plan & Coordinate"
+    ],
+    "theme_colors": [
+      "linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%)",
+      "#0693e3",
+      "6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0)",
+      "#005a87",
+      "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+      "linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%)",
+      "#9b51e0",
+      "#8ed1fc",
+      "#f78da7",
+      "#7a00df",
+      "#abb8c3",
+      "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)",
+      "linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%)",
+      "#fcb900",
+      "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "us-one-network_home_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "us-one-network_home_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://us.one.network/product/traffic-management/",
+    "status": "200",
+    "error": null,
+    "title": "Traffic Management - Causeway one.network",
+    "meta_description": "Traffic Management is an intuitive tool that has transformed how road agencies and contractors plan, coordinate and communicate any right of way intervention.",
+    "h1": [
+      "Traffic Management"
+    ],
+    "top_sections": [
+      "header",
+      "primary",
+      "hero-block_1475cbd78f78cf7bbd33fd907526cc94",
+      "pull-out-panels-block_916796b3c575495dc645a777b307c05c",
+      "large-title-block_56bdf32c04e4593c2aac50b39b4c2068",
+      "image-text-side-by-side-block_aa442f55d89110a7f517afba06958d60",
+      "image-text-side-by-side-block_39578762a3266b50fc24eaa90e41a40a",
+      "image-text-side-by-side-block_c43440e58541d7e50a31c137754e6f15",
+      "more-features-block_ce9a98d823bf1559157f9e98e20dcd0a",
+      "case-study-carousel-block_da89e134c77402625d4be9d73bc373ff",
+      "cta-block_4777fa4c3e9b8e2dcdd3b619c009435a",
+      "newsletter bg-navy body-push",
+      "footer body-push"
+    ],
+    "primary_links": [
+      "UK",
+      "US",
+      "Product",
+      "Solutions",
+      "Company",
+      "Resources",
+      "Sign in",
+      "Get in touch",
+      "Try Traffic Management",
+      "Read case study",
+      "All customer stories",
+      "Schedule your demo",
+      "Book a demo",
+      "Plan & Coordinate",
+      "Route Manager",
+      "Plan Share",
+      "Traffic Management",
+      "Communicate",
+      "Content Management",
+      "Live Link"
+    ],
+    "cta_texts": [
+      "Sign in",
+      "Get in touch",
+      "Try Traffic Management",
+      "Read case study",
+      "All customer stories",
+      "Schedule your demo",
+      "Book a demo",
+      "Plan & Coordinate",
+      "Route Manager",
+      "Traffic Management",
+      "Communicate",
+      "Content Management",
+      "By Organization",
+      "MPO | COG | MTA",
+      "City & County",
+      "Toll Authority",
+      "News and insights",
+      "Customer stories",
+      "CAUSEWAY ONE"
+    ],
+    "theme_colors": [
+      "linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%)",
+      "#0693e3",
+      "6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0)",
+      "#005a87",
+      "linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%)",
+      "linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%)",
+      "#9b51e0",
+      "#8ed1fc",
+      "#f78da7",
+      "#7a00df",
+      "#abb8c3",
+      "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)",
+      "linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%)",
+      "#fcb900",
+      "linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%)"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "us-one-network_product_traffic_management_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "us-one-network_product_traffic_management_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.symology.co.uk/aurora/",
+    "status": "200",
+    "error": null,
+    "title": "Introducing Aurora – Symology",
+    "meta_description": "Introducing Aurora \nSymology's next generation Integrated Asset Management & Street Works Solution    \nA",
+    "h1": [],
+    "top_sections": [
+      "Sym Main Menu",
+      "fusion-page-title-bar fusion-tb-page-title-bar",
+      "main",
+      "content",
+      "Footer Menu 3",
+      "to-top-container to-top-right to-top-floating"
+    ],
+    "primary_links": [
+      "Skip to content",
+      "Home",
+      "News",
+      "Products",
+      "Services",
+      "About Us",
+      "Contact Us",
+      "Careers",
+      "Customer Login",
+      "Jim Peacock",
+      "Street Works",
+      "Asset Management",
+      "Geospatial",
+      "Dashboards",
+      "Mobile working",
+      "Connectivity",
+      "Workflow",
+      "Community Portal",
+      "Easy to use",
+      "Job Role oriented"
+    ],
+    "cta_texts": [
+      "Skip to content",
+      "Toggle Navigation",
+      "Customer Login",
+      "Jim Peacock",
+      "Street Works",
+      "Asset Management",
+      "Mobile working",
+      "Connectivity",
+      "Community Portal",
+      "Easy to use",
+      "Job Role oriented",
+      "Built by experts",
+      "Cloud based",
+      "Privacy Policy",
+      "Terms of Use",
+      "Modern Slavery Statement",
+      "Carbon Reduction Plan",
+      "Page load link"
+    ],
+    "theme_colors": [
+      "#00fe97",
+      "#2c2d81",
+      "#000000",
+      "#00c2c7",
+      "#ffffff",
+      "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+      "#0693e3",
+      "#3f41ba",
+      "#fe2dfe",
+      "#444444",
+      "linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%)",
+      "6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0)",
+      "#9b51e0",
+      "#8ed1fc",
+      "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-symology-co-uk_aurora_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-symology-co-uk_aurora_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.symology.co.uk/project-items/aurora-for-street-works-authorities/",
+    "status": "200",
+    "error": null,
+    "title": "Aurora for Street Works Authorities – Symology",
+    "meta_description": "Symology have over 40 years of experience with Street Works; our dedication to this area means our name has become synonymous with providing the go-to Street Works solutions across the",
+    "h1": [
+      "Aurora for Street Works Authorities",
+      "Aurora for Street Works Authorities"
+    ],
+    "top_sections": [
+      "Sym Main Menu",
+      "fusion-page-title-bar fusion-tb-page-title-bar",
+      "main",
+      "content",
+      "Footer Menu 3",
+      "to-top-container to-top-right to-top-floating"
+    ],
+    "primary_links": [
+      "Skip to content",
+      "Home",
+      "News",
+      "Products",
+      "Services",
+      "About Us",
+      "Contact Us",
+      "Careers",
+      "Customer Login",
+      "Overview",
+      "Comprehensive Dashboards",
+      "Automatic Conflict Checking",
+      "User-Definable Permit Checklist",
+      "Additional Network Occupancy",
+      "Standardised Licences Types",
+      "Diversion Routes",
+      "Licence Details and Documents",
+      "Inspection Management and Monitoring",
+      "Section 74 Overrun Management",
+      "Fixed Penalty Notice Management"
+    ],
+    "cta_texts": [
+      "Skip to content",
+      "Toggle Navigation",
+      "Customer Login",
+      "Comprehensive Dashboards",
+      "Automatic Conflict Checking",
+      "User-Definable Permit Checklist",
+      "Additional Network Occupancy",
+      "Standardised Licences Types",
+      "Diversion Routes",
+      "Licence Details and Documents",
+      "Inspection Management and Monitoring",
+      "Section 74 Overrun Management",
+      "Fixed Penalty Notice Management",
+      "Charge Controls and Administration",
+      "Works Details On Site",
+      "Inspection Recording",
+      "Non-Inspection Functions",
+      "Web-based Mapping",
+      "External Sources",
+      "Spatial Areas"
+    ],
+    "theme_colors": [
+      "#00fe97",
+      "#2c2d81",
+      "#000000",
+      "#00c2c7",
+      "#ffffff",
+      "linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)",
+      "#0693e3",
+      "#3f41ba",
+      "#fe2dfe",
+      "#444444",
+      "linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%)",
+      "6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0)",
+      "#9b51e0",
+      "#8ed1fc",
+      "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%)"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-symology-co-uk_project_items_aurora_for_street_works_authorities_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-symology-co-uk_project_items_aurora_for_street_works_authorities_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.myworksites.com/en-nz/",
+    "status": "200",
+    "error": null,
+    "title": "myWorksites - Roadwork Coordination Platform | Real-Time Control",
+    "meta_description": "Streamline roadwork coordination with real-time network visibility. Manage permits, traffic plans & prevent conflicts. Trusted by NZTA & major authorities.",
+    "h1": [
+      "Take Real-Time Control of Your Road Network"
+    ],
+    "top_sections": [
+      "site-header",
+      "Main menu",
+      "body",
+      "site-footer"
+    ],
+    "primary_links": [
+      "Go Back Up",
+      "SKIP TO CONTENT",
+      "Home",
+      "Articles",
+      "Online Training",
+      "Help Centre",
+      "Contact",
+      "Login",
+      "Quick Start Guide",
+      "Log in",
+      "Book a demo",
+      "Online Training Portal",
+      "Register",
+      "Roadmap",
+      "Security",
+      "Privacy Policy"
+    ],
+    "cta_texts": [
+      "SKIP TO CONTENT",
+      "Toggle Menu",
+      "Toggle children for Resources",
+      "Main Menu (Press to Return)",
+      "Online Training",
+      "Help Centre",
+      "Login",
+      "Quick Start Guide",
+      "Book a demo",
+      "Online Training Portal",
+      "Privacy Policy"
+    ],
+    "theme_colors": [
+      "#033864",
+      "#31a8b6",
+      "#3b495c",
+      "#fff",
+      "#037c8f",
+      "#cecece",
+      "#7291ac",
+      "#f2f2f2"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-myworksites-com_en_nz_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-myworksites-com_en_nz_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://opengov.com/products/permitting-and-licensing/right-of-way-permitting/",
+    "status": "error",
+    "error": "Page.eval_on_selector: Failed to find element matching selector \"meta[name='description']\"",
+    "title": "Attention Required! | Cloudflare",
+    "meta_description": null,
+    "h1": [],
+    "top_sections": [],
+    "primary_links": [],
+    "cta_texts": [],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "fallback",
+        "file": "opengov-com_products_permitting_and_licensing_right_of_way_permitting_error.png"
+      }
+    ]
+  },
+  {
+    "url": "https://assetlifecycle.trimble.com/en/products/software/cityworks-permitting-licensing-land",
+    "status": "200",
+    "error": null,
+    "title": "Licensing & Permitting Software | Cityworks Rebranding to Unity Permit | Trimble | O&PS",
+    "meta_description": "Empower local government and utilities with Trimble's GIS-centric land management software, streamlining permitting and land management.",
+    "h1": [
+      "Trimble Cityworks Permitting, Licensing & Land"
+    ],
+    "top_sections": [
+      "luna-layout  \n          \n        luna-layout--new-nav",
+      "ter-navbar ter-navbar--is-showing ter-navbar--new-nav",
+      "t2-site-navigation",
+      "search-modal",
+      "ter-sub-nav",
+      "ter-jump-nav__container",
+      "page-content",
+      "product-template-sections",
+      "\n        luna-full-background-hero \n        luna-full-background-hero-variant-3 ",
+      "\n          luna-full-background-hero__image-wrapper \n          luna-full-backgro",
+      "super-hero-fullscreen super-hero-fullscreen-variant_8 super-hero-fullscreen--dat",
+      "super-hero-fullscreen__data-points super-hero-fullscreen__data-points--right",
+      "super-hero-fullscreen__data-points super-hero-fullscreen__data-points--mobile",
+      "default-layout   \n      default-layout--no-vertical-margin",
+      "default-layout__grid \n          \n        ",
+      "default-layout \n        no-vertical-margin \n         \n        grouped-component\n",
+      "ter-icon-text-list ",
+      "ter-icon-text-list__content-wrapper",
+      "mxp-products-package",
+      "mxp-products-package-container__right-section--text-area",
+      "mxp-products-package-container__left-section--card-container",
+      "default-layout \n         \n         \n        \n        default-layout--no-top-marg",
+      "default-layout \n        no-vertical-margin \n        dark-navy \n        \n        ",
+      "luna-super-hero luna-super-hero-variant_1-right undefined ",
+      "default-layout   bounded-cards-component\n      ",
+      "ter-bounded-cards ter-bounded-cards--4-cards",
+      "default-layout   icon-mini-blocks-component\n      ",
+      "default-layout__grid \n          default-layout__grid--no-margin\n        ",
+      "ter-icon-mini-blocks ",
+      "default-layout sales-cta grouped-component  \n      default-layout--no-vertical-m"
+    ],
+    "primary_links": [
+      "Skip to content",
+      "Owner & Public Sector",
+      "Request a Demo",
+      "Risk Assessment",
+      "Funding Allocation",
+      "Right of Way Management",
+      "Design Collaboration",
+      "Constructible Model",
+      "Bidding",
+      "Contract Management",
+      "Project Management",
+      "Cost Management",
+      "Asset Handover",
+      "Network Asset Monitoring",
+      "Network Monitoring",
+      "Event Management",
+      "Work Management",
+      "Customer Communications",
+      "Permitting",
+      "Work Order Management"
+    ],
+    "cta_texts": [
+      "Skip to content",
+      "Owner & Public Sector",
+      "Request a Demo",
+      "Asset Lifecycle Management SolutionsDigitally transform your asset management strategy to drive productivity, reduce risk and maximize the value of data.",
+      "Digital Project DeliveryMaximize productivity and deliver infrastructure projects with confidence",
+      "Connected Data EnvironmentAccess and share reliable asset data from multiple systems of record",
+      "Enterprise Asset Management Leverage a GIS-centric solution to streamline preventive maintenance",
+      "Plan & Design OverviewAssess existing assets, identify gaps and needs, and define the requirements for new or renewed assets.",
+      "Risk Assessment",
+      "Funding Allocation",
+      "Right of Way Management",
+      "Design Collaboration",
+      "Constructible Model",
+      "Build OverviewBuild trust by connecting stakeholders and using reliable data to deliver successful projects.",
+      "Contract Management",
+      "Project Management",
+      "Cost Management",
+      "Asset Handover",
+      "Operate OverviewKeep your community safe, informed and running smoothly with reliable utilities and asset operations.",
+      "Network Asset Monitoring"
+    ],
+    "theme_colors": [
+      "#252a2e",
+      "#fbad26"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "assetlifecycle-trimble-com_en_products_software_cityworks_permitting_licensing_land_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "assetlifecycle-trimble-com_en_products_software_cityworks_permitting_licensing_land_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.waze.com/wazeforcities/",
+    "status": "200",
+    "error": null,
+    "title": "Waze for Cities: Real-Time Traffic Data for Smarter Urban Planning",
+    "meta_description": "Partner with Waze for real-time traffic data, improving road safety, reducing congestion, and empowering smarter urban planning for your city.",
+    "h1": [],
+    "top_sections": [
+      "wz-nav",
+      "wz-menu",
+      "is-marketing-page /wazeforcities  ",
+      "/wazeforcities :safety and mobility",
+      "/wazeforcities :values",
+      "/wazeforcities :manage partnership",
+      "/wazeforcities :case-studies",
+      "/wazeforcities :partners",
+      "wz-footer"
+    ],
+    "primary_links": [
+      "Home",
+      "Waze",
+      "Map editors community",
+      "Waze for Cities",
+      "Case Studies",
+      "Traffic Events",
+      "Waze Beacons",
+      "Partners",
+      "Product Partners",
+      "Live Map",
+      "Download",
+      "Log In",
+      "Support",
+      "Settings",
+      "Log Out",
+      "Join now",
+      "Learn more",
+      "Explore case studies",
+      "Explore"
+    ],
+    "cta_texts": [
+      "Map editors community",
+      "Waze for Cities",
+      "Case Studies",
+      "Traffic Events",
+      "Waze Beacons",
+      "Product Partners",
+      "Download",
+      "Learn more",
+      "Explore case studies",
+      "Google Maps Content Partners.",
+      "Español-América Latina",
+      "Bahasa Indonesia",
+      "Português (Brasil)",
+      "Help Center",
+      "Fix a map issue",
+      "Community forums",
+      "Community wiki",
+      "Waze Academy",
+      "Plan a drive",
+      "Major events"
+    ],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-waze-com_wazeforcities_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-waze-com_wazeforcities_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.haasalert.com/",
+    "status": "200",
+    "error": null,
+    "title": "HAAS Alert Safety Cloud® | Digital Alerting for Connected Roads",
+    "meta_description": "Safety Cloud® by HAAS Alert notifies drivers of incoming emergency vehicles, and connects vehicles for better visibility and faster response times.",
+    "h1": [
+      "Connect and protect your fleet"
+    ],
+    "top_sections": [
+      "nav__menu-2 w-nav-menu",
+      "w-dropdown-list-0",
+      "w-dropdown-list-1",
+      "w-dropdown-list-2",
+      "w-dropdown-list-3",
+      "w-dropdown-list-4",
+      "main"
+    ],
+    "primary_links": [
+      "Cookie settings",
+      "News: Digital Alerts now in Semi Trucks",
+      "Digital AlertingSafety Cloud advanced collision prevention for safer roads",
+      "IntegrationsSafety Cloud for the safety telematics and fleet GPS solutions",
+      "Road FusionSafety Cloud data feed for municipal and state DOTs",
+      "DashboardSafety Cloud command center comes standard",
+      "GatewayPort your Safety Cloud data into other systems",
+      "PartnersSafety Cloud; the world’s largest connected vehicle ecosystem",
+      "Monthly Roundup, June 2026Jul 20, 2026",
+      "Fire + EMSReduce risk and improve response time",
+      "Law EnforcementReduce risk of collision, improve response time",
+      "Towing + RecoveryKeep roads clear for towing operators",
+      "DOTsProtection for work that keeps roads moving",
+      "Construction + Work ZoneKeep roadway workers safe in the road",
+      "Maintenance + UtilityKeep line crews safe in the road",
+      "Automotive Alerts drivers directly in vehicles for smarter and safer roads",
+      "School BusSmart solutions for safer transportation",
+      "Public SafetyFire, EMS, and law enforcement",
+      "RoadsDOT, maintenance, utility, construction, and work zone",
+      "Towing + RecoveryTowing, recovery, and roadside assistance"
+    ],
+    "cta_texts": [
+      "Allow only necessary",
+      "Adjust Choices",
+      "Cookie settings",
+      "News: Digital Alerts now in Semi Trucks",
+      "Digital AlertingSafety Cloud advanced collision prevention for safer roads",
+      "IntegrationsSafety Cloud for the safety telematics and fleet GPS solutions",
+      "Traffic Signal PreemptionSafety Cloud clears intersections to reduce response times",
+      "Road FusionSafety Cloud data feed for municipal and state DOTs",
+      "DashboardSafety Cloud command center comes standard",
+      "GatewayPort your Safety Cloud data into other systems",
+      "PartnersSafety Cloud; the world’s largest connected vehicle ecosystem",
+      "HAAS Alert and Australian Warning Systems Partner to Bring Safety Cloud Digital Alerting to Australia and New ZealandJul 20, 2026",
+      "Monthly Roundup, June 2026Jul 20, 2026",
+      "HAAS Alert, BMW Group, and Škoda Accelerate Europe's Road Safety By Making Live Hazard Warnings Available Across the DFRS EcosystemJul 16, 2026",
+      "Fire + EMSReduce risk and improve response time",
+      "Law EnforcementReduce risk of collision, improve response time",
+      "Towing + RecoveryKeep roads clear for towing operators",
+      "DOTsProtection for work that keeps roads moving",
+      "Construction + Work ZoneKeep roadway workers safe in the road",
+      "Maintenance + UtilityKeep line crews safe in the road"
+    ],
+    "theme_colors": [
+      "#455568",
+      "#f8f8f8",
+      "#363636",
+      "#f5f7f9",
+      "#6b7179",
+      "#e4e9f2",
+      "#ff865e",
+      "#bdc4d0",
+      "#d54414",
+      "#d7dcf8",
+      "#5a48ff",
+      "#070707",
+      "#050505",
+      "#ffb79f",
+      "#007aff"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-haasalert-com_home_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-haasalert-com_home_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.haasalert.com/construction",
+    "status": "200",
+    "error": null,
+    "title": "Safety Cloud® for Road Crews | HAAS Alert",
+    "meta_description": "Protect your truck and your team in roadside workzones with the only in-vehicle digital alerting safety tool, Safety Cloud by HAAS Alert.",
+    "h1": [
+      "Customized solutions engineered to deter traffic"
+    ],
+    "top_sections": [
+      "nav__menu-2 w-nav-menu",
+      "w-dropdown-list-0",
+      "w-dropdown-list-1",
+      "w-dropdown-list-2",
+      "w-dropdown-list-3",
+      "w-dropdown-list-4",
+      "main"
+    ],
+    "primary_links": [
+      "Cookie settings",
+      "News: Digital Alerts now in Semi Trucks",
+      "Digital AlertingSafety Cloud advanced collision prevention for safer roads",
+      "IntegrationsSafety Cloud for the safety telematics and fleet GPS solutions",
+      "Road FusionSafety Cloud data feed for municipal and state DOTs",
+      "DashboardSafety Cloud command center comes standard",
+      "GatewayPort your Safety Cloud data into other systems",
+      "PartnersSafety Cloud; the world’s largest connected vehicle ecosystem",
+      "Monthly Roundup, June 2026Jul 20, 2026",
+      "Fire + EMSReduce risk and improve response time",
+      "Law EnforcementReduce risk of collision, improve response time",
+      "Towing + RecoveryKeep roads clear for towing operators",
+      "DOTsProtection for work that keeps roads moving",
+      "Construction + Work ZoneKeep roadway workers safe in the road",
+      "Maintenance + UtilityKeep line crews safe in the road",
+      "Automotive Alerts drivers directly in vehicles for smarter and safer roads",
+      "School BusSmart solutions for safer transportation",
+      "Public SafetyFire, EMS, and law enforcement",
+      "RoadsDOT, maintenance, utility, construction, and work zone",
+      "Towing + RecoveryTowing, recovery, and roadside assistance"
+    ],
+    "cta_texts": [
+      "Allow only necessary",
+      "Adjust Choices",
+      "Cookie settings",
+      "News: Digital Alerts now in Semi Trucks",
+      "Digital AlertingSafety Cloud advanced collision prevention for safer roads",
+      "IntegrationsSafety Cloud for the safety telematics and fleet GPS solutions",
+      "Traffic Signal PreemptionSafety Cloud clears intersections to reduce response times",
+      "Road FusionSafety Cloud data feed for municipal and state DOTs",
+      "DashboardSafety Cloud command center comes standard",
+      "GatewayPort your Safety Cloud data into other systems",
+      "PartnersSafety Cloud; the world’s largest connected vehicle ecosystem",
+      "HAAS Alert and Australian Warning Systems Partner to Bring Safety Cloud Digital Alerting to Australia and New ZealandJul 20, 2026",
+      "Monthly Roundup, June 2026Jul 20, 2026",
+      "HAAS Alert, BMW Group, and Škoda Accelerate Europe's Road Safety By Making Live Hazard Warnings Available Across the DFRS EcosystemJul 16, 2026",
+      "Fire + EMSReduce risk and improve response time",
+      "Law EnforcementReduce risk of collision, improve response time",
+      "Towing + RecoveryKeep roads clear for towing operators",
+      "DOTsProtection for work that keeps roads moving",
+      "Construction + Work ZoneKeep roadway workers safe in the road",
+      "Maintenance + UtilityKeep line crews safe in the road"
+    ],
+    "theme_colors": [
+      "#455568",
+      "#f8f8f8",
+      "#363636",
+      "#f5f7f9",
+      "#6b7179",
+      "#e4e9f2",
+      "#ff865e",
+      "#bdc4d0",
+      "#d54414",
+      "#d7dcf8",
+      "#5a48ff",
+      "#070707",
+      "#050505",
+      "#ffb79f",
+      "#007aff"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-haasalert-com_construction_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-haasalert-com_construction_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://prompt.lta.gov.sg/WebUIPWAS/",
+    "status": "error",
+    "error": "Page.eval_on_selector: Failed to find element matching selector \"meta[name='description']\"",
+    "title": "Welcome to LTA.PROMPT",
+    "meta_description": null,
+    "h1": [],
+    "top_sections": [],
+    "primary_links": [],
+    "cta_texts": [],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "fallback",
+        "file": "prompt-lta-gov-sg_webuipwas_error.png"
+      }
+    ]
+  },
+  {
+    "url": "https://www.ditto.site",
+    "status": "200",
+    "error": null,
+    "title": "Ditto: Clone any website",
+    "meta_description": "Point Ditto at any public URL and get a byte-stable copy as clean, componentized Next.js or Vite code in minutes — deterministic, no LLM guesswork, fidelity preserved. Open source, with a hosted REST API and MCP server.",
+    "h1": [
+      "Clone any website."
+    ],
+    "top_sections": [
+      "fixed inset-x-0 top-9 z-[var(--z-nav)] transition-colors duration-300",
+      "container-px flex h-16 items-center justify-between gap-4",
+      "top",
+      "deterministic",
+      "ways",
+      "reveal flex h-full is-in",
+      "output",
+      "pricing",
+      "relative overflow-hidden py-24 sm:py-32",
+      "relative border-t-2 border-line bg-surface/70",
+      "Product",
+      "Build",
+      "Open source"
+    ],
+    "primary_links": [
+      "Skip to content",
+      "Built by ion.design",
+      "ditto",
+      "Deterministic",
+      "Use it",
+      "Output",
+      "Pricing",
+      "API key",
+      "Docs",
+      "927",
+      "Get API key",
+      "Star on GitHub",
+      "Contribute",
+      "ion-design/ditto.site",
+      "Ways to use it",
+      "REST API",
+      "MCP server",
+      "GitHub",
+      "Issues",
+      "MIT license"
+    ],
+    "cta_texts": [
+      "Skip to content",
+      "Built by ion.design",
+      "Deterministic",
+      "Get API key",
+      "Star on GitHub",
+      "ion-design/ditto.site",
+      "Ways to use it",
+      "MIT license"
+    ],
+    "theme_colors": [
+      "#0f2c40",
+      "#3c5b6a",
+      "#7fa6a8",
+      "#e9f7f3",
+      "#0e2a3d",
+      "#eef7f1",
+      "#e7f4ec",
+      "#0a7470",
+      "#ef5f5f",
+      "#14b3ad",
+      "#fff",
+      "#0c8a86",
+      "#c5e0d7",
+      "#c8870a",
+      "#557079"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "www-ditto-site_home_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "www-ditto-site_home_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://us.ditto.site/",
+    "status": "error",
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://us.ditto.site/\nCall log:\n  - navigating to \"https://us.ditto.site/\", waiting until \"domcontentloaded\"\n",
+    "title": null,
+    "meta_description": null,
+    "h1": [],
+    "top_sections": [],
+    "primary_links": [],
+    "cta_texts": [],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "fallback",
+        "file": "us-ditto-site_home_error.png"
+      }
+    ]
+  },
+  {
+    "url": "https://x.com/AbeerAlhasan/status/2080305047909302508?s=20",
+    "status": "200",
+    "error": null,
+    "title": "عبير الحسن ッ on X: \"مرّ عليك الحرامي المحترم؟ 😂 هذا هو. https://t.co/OyQy8afuDh تعطيه أي رابط موقع... وبعدها يسرق لك التصميم كامل، ويرجّعه لك كود مرتب ونظيف بـ Next.js أو Vite خلال دقائق. مو نسخ ولصق وبس، لا... يجيب لك المكونات، والأيقونات، والتفاعلات، وحتى حركة الـ Hover. غير إنه سريع، ثابت، واقتصادي، ومعه REST API مجانية وخادم MCP مفتوح المصدر. والله إنه حرامي... بس من النوع اللي إذا سرق، استفدت. 😅🚀\" / X",
+    "meta_description": "مرّ عليك الحرامي المحترم؟ 😂\n\nهذا هو.\nhttps://t.co/RK7U4k1U8B\nتعطيه أي رابط موقع... وبعدها يسرق لك التصميم كامل، ويرجّعه لك كود مرتب ونظيف بـ Next.js أو Vite خلال دقائق.\n\nمو نسخ ولصق وبس، لا... يجيب لك المكونات، والأيقونات، والتفاعلات، وحتى حركة الـ Hover.\n\nغير إنه  سريع، ثابت،",
+    "h1": [
+      "Join the conversation"
+    ],
+    "top_sections": [
+      "nav-xxl:w-[275px] sticky top-0 flex h-screen w-[88px] flex-col items-start gap-3",
+      "one-col:w-[600px] flex min-h-dvh w-full min-w-0 shrink flex-col border-x border-",
+      "flex flex-col gap-1",
+      "overflow-hidden rounded-md border border-border bg-background",
+      "Footer",
+      "Notifications alt+T"
+    ],
+    "primary_links": [
+      "Log in",
+      "Sign up",
+      "عبير الحسن ッ",
+      "@AbeerAlhasan",
+      "ditto.site",
+      "2:52 PM · Jul 23, 2026",
+      "92.8K\nViews",
+      "عزوز",
+      "@_Dettol99",
+      "20h",
+      "4.7K",
+      "Mohammed",
+      "@xAM7x",
+      "3h",
+      "Jul 23",
+      "278",
+      "mm",
+      "@d222266",
+      "8h",
+      "733"
+    ],
+    "cta_texts": [
+      "عبير الحسن ッ",
+      "@AbeerAlhasan",
+      "2:52 PM · Jul 23, 2026",
+      "92.8K Views",
+      "Read 3 more replies",
+      "Sign up with Apple",
+      "Create account",
+      "Terms of Service",
+      "Privacy Policy",
+      "Cookie Use.",
+      "عبير الحسن ッ @AbeerAlhasan",
+      "Accessibility"
+    ],
+    "theme_colors": [
+      "#0000000a",
+      "#fff6",
+      "#fff",
+      "#ffc692",
+      "#007e50",
+      "#ffd400",
+      "#262626",
+      "#ffeb6b",
+      "#0009",
+      "#fff0f1",
+      "#ffffffb3",
+      "#0000000d",
+      "#00c9d1",
+      "#333",
+      "#dcab00"
+    ],
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "height": 2400,
+        "file": "x-com_abeeralhasan_status_2080305047909302508_desktop.png"
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "height": 2200,
+        "file": "x-com_abeeralhasan_status_2080305047909302508_mobile.png"
+      }
+    ]
+  },
+  {
+    "url": "https://example.com/",
+    "status": "error",
+    "error": "Page.eval_on_selector: Failed to find element matching selector \"meta[name='description']\"",
+    "title": "Example Domain",
+    "meta_description": null,
+    "h1": [],
+    "top_sections": [],
+    "primary_links": [],
+    "cta_texts": [],
+    "theme_colors": [],
+    "screenshots": [
+      {
+        "viewport": "fallback",
+        "file": "example-com_home_error.png"
+      }
+    ]
+  }
+]
