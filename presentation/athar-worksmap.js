@@ -36,11 +36,13 @@
     'setDigSite', 'setAlternatives', 'sweepUnlock', 'setPhase',
     'updateRoad', 'onRoadClick', 'getData',
     'setWorks', 'setDateRange', 'toggleGroup',
+    'highlightWork', 'onWorkClick',
   ];
 
   var POINT_SOURCE = 'works';
   var LINE_SOURCE = 'works-lines';
   var CORRIDOR_SOURCE = 'corridor';
+  var HIGHLIGHT_SOURCE = 'work-highlight';
 
   // ألوان مشبعة تُقرأ فوق أرضية فاتحة — لا ألوان نيون مصممة للداكن.
   var CORRIDOR_STATE_COLORS = {
@@ -244,6 +246,62 @@
           map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
         });
       },
+
+      /**
+       * يبرز عملاً واحداً ويطير إليه. الربط بين القائمة والخريطة يمر من هنا:
+       * تمرير null يمسح الإبراز بدل أن يترك عملاً مضيئاً بلا تحديد.
+       */
+      highlightWork: function (id, options) {
+        var source = map.getSource(HIGHLIGHT_SOURCE);
+        if (!source || !source.setData) return null;
+
+        var found = null;
+        (works.features || []).forEach(function (feature) {
+          if (feature.properties.id === id) found = feature;
+        });
+
+        source.setData(featureCollection(found ? [found] : []));
+        if (!found || (options && options.fly === false)) return found;
+
+        var coords = found.geometry.type === 'Point'
+          ? [found.geometry.coordinates]
+          : found.geometry.coordinates;
+        var west = coords[0][0], east = coords[0][0];
+        var south = coords[0][1], north = coords[0][1];
+        coords.forEach(function (point) {
+          west = Math.min(west, point[0]);
+          east = Math.max(east, point[0]);
+          south = Math.min(south, point[1]);
+          north = Math.max(north, point[1]);
+        });
+
+        // maxZoom منخفض عمداً: المراجع يحتاج المقطع في سياق شبكته، لا مقطعاً
+        // يملأ الشاشة بمقياس مئة متر فيفقد الشوارع المجاورة والتعارض المحتمل.
+        if (west === east && south === north) {
+          map.easeTo({ center: [west, south], zoom: 14, duration: 500 });
+        } else {
+          map.fitBounds([[west, south], [east, north]], { padding: 180, maxZoom: 13.8, duration: 500 });
+        }
+        return found;
+      },
+
+      /** يبلّغ بمعرّف العمل المنقور على الخريطة — الاتجاه المعاكس للربط. */
+      onWorkClick: function (callback) {
+        var layers = [];
+        (Layers.LAYER_GROUPS || []).forEach(function (group) {
+          group.configs.forEach(function (config) {
+            layers.push(config.name + '-symbols');
+            layers.push(config.name + '-lines');
+          });
+        });
+
+        map.on('click', function (event) {
+          var available = layers.filter(function (id) { return map.getLayer(id); });
+          if (!available.length) return;
+          var hit = map.queryRenderedFeatures(event.point, { layers: available })[0];
+          if (hit) callback(hit.properties.id, hit);
+        });
+      },
     };
   }
 
@@ -296,6 +354,7 @@
       map.addSource(CORRIDOR_SOURCE, { type: 'geojson', data: featureCollection([]) });
       map.addSource('dig-site', { type: 'geojson', data: featureCollection([]) });
       map.addSource('alternatives', { type: 'geojson', data: featureCollection([]) });
+      map.addSource(HIGHLIGHT_SOURCE, { type: 'geojson', data: featureCollection([]) });
 
       var worksLayers = Layers.buildWorksLayers({ points: POINT_SOURCE, lines: LINE_SOURCE });
 
@@ -326,6 +385,27 @@
       map.addLayer({
         id: 'alternatives-line', type: 'line', source: 'alternatives',
         paint: { 'line-color': '#2f9e44', 'line-width': 4, 'line-dasharray': [2, 2] },
+      }, labelLayerId);
+
+      // هالة العمل المحدد تحت مقاطع الأعمال: تحيط بها ولا تحجبها.
+      map.addLayer({
+        id: 'work-highlight-glow', type: 'line', source: HIGHLIGHT_SOURCE,
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': '#1D4E77',
+          'line-width': ['interpolate', ['exponential', 1.5], ['zoom'], 10, 12, 15, 26, 20, 54],
+          'line-opacity': 0.22,
+          'line-blur': 6,
+        },
+      }, labelLayerId);
+      map.addLayer({
+        id: 'work-highlight-ring', type: 'line', source: HIGHLIGHT_SOURCE,
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': '#1D4E77',
+          'line-width': ['interpolate', ['exponential', 1.5], ['zoom'], 10, 6, 15, 15, 20, 44],
+          'line-opacity': 0.9,
+        },
       }, labelLayerId);
 
       worksLayers.forEach(function (layer) {

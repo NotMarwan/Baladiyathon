@@ -47,8 +47,18 @@
     return true;
   }
 
+  function pending(feature) {
+    return DECISION_STATUSES.indexOf(feature.properties.status) !== -1 ? 1 : 0;
+  }
+
   var SORTERS = {
+    /**
+     * صندوق وارد لا جدول بيانات: ما ينتظر قراراً يتقدّم دائماً، ثم الأثر داخل
+     * كل مجموعة. بلا هذا يفتح المكتب على عمل منتهٍ لأن أثره التراكمي أعلى.
+     */
     impact: function (a, b) {
+      var byPending = pending(b) - pending(a);
+      if (byPending !== 0) return byPending;
       return (b.properties.impactVehHours || 0) - (a.properties.impactVehHours || 0);
     },
     severity: function (a, b) {

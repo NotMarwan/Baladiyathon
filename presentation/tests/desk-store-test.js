@@ -101,6 +101,14 @@ ok('الفرز الافتراضي بالأثر تنازلياً — الأخطر
   assert.deepStrictEqual(store.getVisible().map((f) => f.properties.id), ['a', 'c', 'b']);
 });
 
+ok('ما ينتظر قراراً يتقدّم على ما لا ينتظر مهما علا أثره', () => {
+  const store = Store.createStore([
+    feature('done', { status: 'Completed', impactVehHours: 999999 }),
+    feature('wait', { status: 'StrategyReview', impactVehHours: 10 }),
+  ]);
+  assert.deepStrictEqual(store.getVisible().map((f) => f.properties.id), ['wait', 'done']);
+});
+
 ok('الفرز بتاريخ البدء يعمل ولا يسقط سجلاً', () => {
   const store = Store.createStore(sample);
   store.setSort('start');

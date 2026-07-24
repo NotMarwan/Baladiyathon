@@ -15,10 +15,21 @@ const REQUIRED = [
   'updateRoad', 'onRoadClick', 'getData',
 ];
 
+// ما يضيفه مكتب المراجع فوق العقد الأصلي — إضافة لا استبدال.
+const DESK_ADDITIONS = ['setWorks', 'setDateRange', 'toggleGroup', 'highlightWork', 'onWorkClick'];
+
 ok('العقد معلن في الوحدة', () => {
   for (const name of REQUIRED) {
     assert.ok(WorksMap.API_METHODS.indexOf(name) !== -1, `مفقود من العقد: ${name}`);
   }
+});
+
+ok('عقد المكتب مضاف بلا كسر العقد الأصلي', () => {
+  for (const name of DESK_ADDITIONS) {
+    assert.ok(WorksMap.API_METHODS.indexOf(name) !== -1, `مفقود من عقد المكتب: ${name}`);
+  }
+  assert.strictEqual(WorksMap.API_METHODS.length, REQUIRED.length + DESK_ADDITIONS.length,
+    'العقد يحمل دوالّ غير معلنة في أي من القائمتين');
 });
 
 ok('الوحدة تعمل في Node بلا maplibregl', () => {

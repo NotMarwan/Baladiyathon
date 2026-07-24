@@ -1,0 +1,332 @@
+/* ==========================================================================
+   أثر — مكتب المراجع
+   ثلاثة أعمدة RTL: صندوق الأعمال (يمين) · الخريطة (وسط) · ملف القرار (يسار).
+   كثافة «وضع المراجع» من نظام التصميم: صف ٥٦ بكسل، نص ١٤، لوحة ٣٨٤.
+   كل لون من athar-tokens.css — لا قيمة خام هنا.
+   ========================================================================== */
+
+@import url("athar-tokens.css");
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  font-family: var(--athar-font);
+  font-size: var(--athar-text);
+  color: var(--athar-ink);
+  background: var(--athar-canvas);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- شريط المنتج ---- */
+.desk-bar {
+  flex: 0 0 auto;
+  height: var(--athar-toolbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--athar-space-3);
+  padding-inline: var(--athar-space-4);
+  background: var(--athar-surface);
+  border-bottom: 1px solid var(--athar-line);
+  z-index: 3;
+}
+.desk-bar h1 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; }
+.desk-bar-spacer { margin-inline-start: auto; }
+.desk-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--athar-accent);
+  background: var(--athar-accent-soft);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-pill);
+  padding: 3px 10px;
+}
+.desk-actor { font-size: 0.78rem; color: var(--athar-muted); }
+
+/* ---- الشبكة ---- */
+.desk-shell {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--athar-panel-w) minmax(0, 1fr) var(--athar-panel-w);
+}
+
+.desk-pane {
+  min-height: 0;
+  background: var(--athar-surface);
+  display: flex;
+  flex-direction: column;
+}
+.desk-pane-inbox { border-inline-start: 1px solid var(--athar-line); }
+.desk-pane-file { border-inline-end: 1px solid var(--athar-line); }
+
+.desk-map-wrap { position: relative; min-height: 0; background: var(--athar-canvas); }
+#map { position: absolute; inset: 0; }
+
+/* ---- شريط أدوات الصندوق ---- */
+.desk-toolbar {
+  flex: 0 0 auto;
+  padding: var(--athar-space-3);
+  border-bottom: 1px solid var(--athar-line);
+  display: grid;
+  gap: var(--athar-space-2);
+  background: var(--athar-surface-raised);
+}
+.desk-field { display: grid; gap: 3px; font-size: 0.78rem; color: var(--athar-muted); }
+.desk-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--athar-space-2); }
+.desk-field input,
+.desk-field select {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--athar-ink);
+  padding: 7px 9px;
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+}
+.desk-field input:focus-visible,
+.desk-field select:focus-visible {
+  outline: 2px solid var(--athar-primary);
+  outline-offset: 1px;
+}
+.desk-counts {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: var(--athar-muted);
+  font-variant-numeric: tabular-nums;
+}
+.desk-counts strong { color: var(--athar-ink); font-family: var(--athar-font-mono); }
+.desk-pending strong { color: var(--athar-danger); }
+
+/* ---- قائمة الأعمال ---- */
+.desk-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.desk-list { list-style: none; }
+
+.desk-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "main meta" "figures next";
+  gap: 2px var(--athar-space-2);
+  min-height: var(--athar-row-h);
+  padding: var(--athar-space-2) var(--athar-space-3);
+  border-bottom: 1px solid var(--athar-line);
+  cursor: pointer;
+  transition: background var(--athar-t-hover);
+}
+.desk-row:hover,
+.desk-row[data-hover="true"] { background: var(--athar-primary-soft); }
+.desk-row:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: -2px; }
+.desk-row[aria-selected="true"] {
+  background: var(--athar-primary-soft);
+  box-shadow: inset 3px 0 0 var(--athar-primary);
+}
+
+.desk-row-main { grid-area: main; display: flex; align-items: baseline; gap: var(--athar-space-2); flex-wrap: wrap; }
+.desk-row-meta { grid-area: meta; display: flex; align-items: center; gap: var(--athar-space-2); }
+.desk-row-figures { grid-area: figures; display: flex; gap: var(--athar-space-3); font-size: 0.74rem; color: var(--athar-muted); }
+.desk-row-next { grid-area: next; font-size: 0.74rem; color: var(--athar-primary); font-weight: 700; text-align: end; }
+
+.desk-ref { font-family: var(--athar-font-mono); font-size: 0.72rem; color: var(--athar-faint); }
+.desk-street { font-weight: 700; font-size: 0.87rem; }
+.desk-window { font-size: 0.72rem; color: var(--athar-muted); font-variant-numeric: tabular-nums; }
+.desk-figure { font-family: var(--athar-font-mono); color: var(--athar-ink); font-weight: 700; }
+
+/* ---- وسوم الحالة: نبرة + رمز + نص ---- */
+.desk-tag,
+.desk-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.71rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--athar-radius-pill);
+  white-space: nowrap;
+}
+.desk-tag[data-tone="success"], .desk-flag[data-tone="success"] { color: var(--athar-success); background: var(--athar-success-soft); }
+.desk-tag[data-tone="warning"], .desk-flag[data-tone="warning"] { color: var(--athar-warning); background: var(--athar-warning-soft); }
+.desk-tag[data-tone="danger"],  .desk-flag[data-tone="danger"]  { color: var(--athar-danger);  background: var(--athar-danger-soft); }
+.desk-tag[data-tone="info"],    .desk-flag[data-tone="info"]    { color: var(--athar-info);    background: var(--athar-info-soft); }
+.desk-tag[data-tone="muted"],   .desk-flag[data-tone="muted"]   { color: var(--athar-muted);   background: var(--athar-canvas); }
+.desk-tag-icon { font-size: 0.8em; }
+.desk-flags { display: inline-flex; gap: 4px; }
+
+.desk-empty, .desk-none, .desk-hint {
+  padding: var(--athar-space-6) var(--athar-space-4);
+  color: var(--athar-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+.desk-none, .desk-hint { padding: var(--athar-space-2) 0; }
+
+/* ---- ملف القرار ---- */
+.desk-file-empty { padding: var(--athar-space-8) var(--athar-space-4); color: var(--athar-muted); line-height: 1.8; }
+
+.desk-file-head {
+  flex: 0 0 auto;
+  padding: var(--athar-space-4);
+  border-bottom: 1px solid var(--athar-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--athar-space-3);
+  background: var(--athar-surface-raised);
+}
+.desk-file-head h2 { font-size: 1rem; line-height: 1.4; margin: 2px 0; }
+.desk-file-sub { font-size: 0.78rem; color: var(--athar-muted); }
+.desk-file-badges { display: grid; gap: 4px; justify-items: end; }
+.desk-version { font-family: var(--athar-font-mono); font-size: 0.72rem; color: var(--athar-faint); }
+
+.desk-tabs {
+  flex: 0 0 auto;
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--athar-line);
+  background: var(--athar-surface);
+}
+.desk-tab {
+  font: inherit;
+  font-size: 0.79rem;
+  font-weight: 700;
+  color: var(--athar-muted);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: var(--athar-space-2) var(--athar-space-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--athar-t-hover), border-color var(--athar-t-hover);
+}
+.desk-tab:hover { color: var(--athar-primary); }
+.desk-tab:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: -2px; }
+.desk-tab[aria-selected="true"] { color: var(--athar-primary); border-bottom-color: var(--athar-primary); }
+
+.desk-file-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: var(--athar-space-4); display: grid; gap: var(--athar-space-4); }
+
+.desk-card {
+  padding: var(--athar-space-4);
+  background: var(--athar-surface-raised);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+}
+.desk-card-label { font-size: 0.72rem; font-weight: 700; color: var(--athar-faint); margin-bottom: 4px; }
+.desk-recommend { font-size: 1.05rem; color: var(--athar-primary); margin-bottom: var(--athar-space-3); }
+.desk-abstain { font-size: 0.92rem; font-weight: 700; color: var(--athar-warning); }
+
+.desk-figures { display: grid; grid-template-columns: 1fr 1fr; gap: var(--athar-space-2) var(--athar-space-3); }
+.desk-figures dt { font-size: 0.72rem; color: var(--athar-muted); }
+.desk-figures dd { font-size: 0.86rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.desk-delta { color: var(--athar-success); }
+
+.desk-reasons, .desk-conflicts { list-style: none; display: grid; gap: 4px; margin-top: 4px; }
+.desk-reasons li { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 4px 0; border-bottom: 1px dashed var(--athar-line); }
+.desk-conflicts li { font-size: 0.8rem; color: var(--athar-danger); }
+.desk-source { margin-top: var(--athar-space-3); font-size: 0.71rem; color: var(--athar-faint); line-height: 1.6; }
+
+/* ---- شريط الثقة ---- */
+.desk-confidence-bar {
+  padding: var(--athar-space-3);
+  border-radius: var(--athar-radius);
+  border-inline-start: 3px solid var(--athar-line);
+  background: var(--athar-canvas);
+  display: grid;
+  gap: 6px;
+  font-size: 0.79rem;
+  line-height: 1.6;
+}
+.desk-confidence-bar[data-tone="success"] { border-inline-start-color: var(--athar-success); background: var(--athar-success-soft); }
+.desk-confidence-bar[data-tone="warning"] { border-inline-start-color: var(--athar-warning); background: var(--athar-warning-soft); }
+.desk-confidence-bar[data-tone="danger"]  { border-inline-start-color: var(--athar-danger);  background: var(--athar-danger-soft); }
+.desk-confidence-level { font-size: 0.86rem; }
+.desk-confidence-why { list-style: none; display: grid; gap: 2px; color: var(--athar-muted); }
+.desk-confidence-why li::before { content: "— "; }
+.desk-confidence-lift, .desk-confidence-cal { color: var(--athar-muted); font-size: 0.75rem; }
+
+/* ---- العوائق والإجراءات ---- */
+.desk-blockers {
+  padding: var(--athar-space-3);
+  background: var(--athar-danger-soft);
+  border: 1px solid var(--athar-danger);
+  border-radius: var(--athar-radius);
+  font-size: 0.81rem;
+  line-height: 1.7;
+}
+.desk-blockers-title { font-weight: 800; color: var(--athar-danger); margin-bottom: 4px; }
+.desk-blockers ul { list-style: none; display: grid; gap: 3px; }
+.desk-blockers li::before { content: "◂ "; }
+
+.desk-foot {
+  flex: 0 0 auto;
+  padding: var(--athar-space-3) var(--athar-space-4);
+  border-top: 1px solid var(--athar-line);
+  background: var(--athar-surface-raised);
+}
+.desk-actions { display: flex; gap: var(--athar-space-2); flex-wrap: wrap; }
+.desk-action {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--athar-primary);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  padding: 9px 16px;
+  min-height: 40px;
+  cursor: pointer;
+  transition: background var(--athar-t-control), border-color var(--athar-t-control);
+}
+.desk-action:hover { background: var(--athar-primary-soft); border-color: var(--athar-primary); }
+.desk-action:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
+.desk-action.is-primary { color: #fff; background: var(--athar-primary); border-color: var(--athar-primary); }
+.desk-action.is-primary:hover { background: var(--athar-primary-hover); }
+.desk-actions-none { font-size: 0.8rem; color: var(--athar-muted); }
+
+/* ---- سجل التدقيق ---- */
+.desk-audit { list-style: none; display: grid; gap: var(--athar-space-2); }
+.desk-audit-item {
+  padding: var(--athar-space-2) var(--athar-space-3);
+  background: var(--athar-surface-raised);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  font-size: 0.79rem;
+  line-height: 1.6;
+}
+.desk-audit-move, .desk-audit-meta { color: var(--athar-muted); font-size: 0.74rem; }
+.desk-audit-reason { margin-top: 3px; }
+
+/* ---- الخريطة: ضبط عناصر MapLibre على الوسوم ---- */
+.maplibregl-popup-content {
+  font-family: var(--athar-font);
+  direction: rtl;
+  text-align: right;
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+  box-shadow: var(--athar-shadow);
+}
+.maplibregl-ctrl-attrib { font-size: 10px; }
+.maplibregl-canvas { outline: none; }
+
+/* ---- الاستجابة ---- */
+@media (max-width: 1180px) {
+  .desk-shell { grid-template-columns: 320px minmax(0, 1fr) 340px; }
+}
+@media (max-width: 900px) {
+  body { overflow: auto; }
+  .desk-shell { grid-template-columns: 1fr; }
+  .desk-map-wrap { height: 55vh; }
+  .desk-pane { max-height: 70vh; }
+  .desk-pane-inbox { border-inline-start: 0; border-top: 1px solid var(--athar-line); }
+  .desk-pane-file { border-inline-end: 0; border-top: 1px solid var(--athar-line); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.desk-beyond { color: var(--athar-warning); font-size: 0.78rem; }
