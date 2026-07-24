@@ -113,8 +113,11 @@ presentation/
 ├── athar-worksmap-layers.js# ثلاثية casing/line/symbol + التجميع + الفلاتر
 ├── athar-worksmap-data.js  # تطبيع works.geojson إلى مخطط الرسم
 ├── athar-worksmap-panel.js # لوحة الفترة الزمنية وإظهار الطبقات
+├── athar-worksmap-interactions.js # البوب-أب وفرد التجميعات
+├── athar-map.html          # صفحة الخريطة المستقلة (تبويب «الخريطة»)
 ├── data/
-│   ├── works.geojson       # خريطة الأعمال العامة (بيانات توضيحية)
+│   ├── works.geojson       # أعمال الممر (بيانات توضيحية)
+│   ├── works-city.geojson  # سجلات المدينة لصفحة الخريطة (بيانات توضيحية)
 │   ├── riyadh-roads.geojson# شبكة الطرق المحلية (OSM · ODbL)
 │   ├── riyadh-base.geojson # مياه ومساحات خضراء وأسماء أحياء (OSM · ODbL)
 │   └── corridor-geometry.js# هندسة الممر على محور طريق الملك فهد
@@ -135,6 +138,13 @@ presentation/
 
 ## (هـ) الخريطة
 
+صفحتان تستهلكان نفس الوحدات:
+
+| الصفحة | الدور |
+|---|---|
+| `athar-map.html` | **الخريطة** — صفحة مستقلة بملء الشاشة: كل الطبقات، بوب-أب التفاصيل، فرد التجميعات، دليل، مقياس رسم |
+| `athar-prototype.html` | الخريطة مضمّنة داخل مسار القرار (الممر وموقع الحفر والبدائل) |
+
 `athar-worksmap.js` — خريطة الأعمال بلغة one.network البصرية فوق بيانات محلية:
 ثلاثية `casing/line/symbol` لكل نوع، خطوط متقطعة تتبع محور الشارع، تجميع
 للنقاط، ولوحة فترة زمنية وطبقات.
@@ -146,6 +156,8 @@ presentation/
 | `athar-worksmap-data.js` | تطبيع `works.geojson` إلى مخطط الرسم |
 | `athar-worksmap-panel.js` | لوحة الفترة الزمنية وإظهار الطبقات |
 | `athar-worksmap.js` | التهيئة وعقد الـ API الذي يستهلكه النموذج |
+| `athar-worksmap-interactions.js` | بوب-أب التفاصيل وفرد التجميعات (صفحة الخريطة) |
+| `athar-worksmap-page.css` | تنسيق صفحة الخريطة المستقلة |
 
 **الهندسة تتبع الإسفلت.** خط الأعمال المرسوم يدوياً يقطع الأحياء ويبدو عشوائياً،
 فكل ميزة تُثبَّت على مقطع من محور شارع مسمّى مأخوذ من `riyadh-roads.geojson`.

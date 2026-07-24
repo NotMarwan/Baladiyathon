@@ -1,0 +1,175 @@
+/* ==========================================================================
+   أثر — صفحة الخريطة المستقلة
+   خريطة بملء الشاشة على لوحة فاتحة رسمية. الصفحة مستقلة عن النموذج:
+   تنسيقها هنا فقط ولا تشارك athar-map.css كي لا يشدّها تنسيق النموذج.
+   RTL أولاً.
+   ========================================================================== */
+
+:root {
+  --wm-surface: #ffffff;
+  --wm-border: #e2e0db;
+  --wm-stage: #f3f2ef;
+  --wm-text: #1d1d1f;
+  --wm-muted: #5b5b60;
+  --wm-accent: #1971c2;
+  --wm-radius: 12px;
+  --wm-shadow: 0 6px 24px rgb(0 0 0 / 0.12);
+  --wm-bar: 52px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; }
+
+body {
+  font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  color: var(--wm-text);
+  background: var(--wm-stage);
+  display: flex;
+  flex-direction: column;
+}
+
+/* شريط التنقل يُحقن من athar-nav.js بارتفاع ثابت */
+body.athar-nav-offset { padding-top: 44px; }
+
+.wm-bar {
+  flex: 0 0 auto;
+  height: var(--wm-bar);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-inline: 18px;
+  background: var(--wm-surface);
+  border-bottom: 1px solid var(--wm-border);
+  z-index: 3;
+}
+
+.wm-bar h1 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+
+.wm-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8a6d1f;
+  background: #fff7e3;
+  border: 1px solid #f3e0b5;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.wm-bar-spacer { margin-inline-start: auto; }
+
+.wm-stat {
+  font-size: 0.78rem;
+  color: var(--wm-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+main { position: relative; flex: 1 1 auto; min-height: 0; }
+
+#map { position: absolute; inset: 0; background: var(--wm-stage); }
+
+/* ---- لوحة التحكم ---- */
+#control-panel {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: 12px;
+  z-index: 2;
+  width: 262px;
+  padding: 14px;
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: var(--wm-radius);
+  box-shadow: var(--wm-shadow);
+  display: grid;
+  gap: 12px;
+}
+
+.athar-map-field { display: grid; gap: 6px; font-size: 0.85rem; }
+.athar-map-field select {
+  padding: 7px 9px;
+  font: inherit;
+  color: inherit;
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: 8px;
+}
+.athar-map-field select:focus-visible { outline: 2px solid var(--wm-accent); outline-offset: 1px; }
+fieldset.athar-map-field { border: 0; padding: 0; }
+fieldset.athar-map-field legend { font-weight: 700; margin-bottom: 6px; }
+.athar-map-toggle { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+.athar-map-toggle input { accent-color: var(--wm-accent); width: 16px; height: 16px; }
+.athar-map-swatch { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+
+/* ---- بطاقة التفاصيل ---- */
+.works-popup-kicker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--wm-accent);
+  margin-bottom: 0.3rem;
+}
+.works-popup h3 { font-size: 0.95rem; margin-bottom: 0.35rem; line-height: 1.4; }
+.works-popup p { font-size: 0.82rem; color: var(--wm-muted); margin-bottom: 0.55rem; }
+.works-popup dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.22rem 0.7rem;
+  font-size: 0.78rem;
+}
+.works-popup dt { font-weight: 700; color: var(--wm-muted); }
+
+.maplibregl-popup-content {
+  border: 1px solid var(--wm-border);
+  border-radius: var(--wm-radius);
+  box-shadow: var(--wm-shadow);
+  padding: 14px 16px;
+  direction: rtl;
+  text-align: right;
+}
+.maplibregl-popup-close-button { color: var(--wm-muted); font-size: 17px; }
+.maplibregl-popup-close-button:hover { color: var(--wm-text); background: transparent; }
+.maplibregl-ctrl-attrib { font-size: 10.5px; }
+.maplibregl-canvas { outline: none; }
+
+/* ---- الدليل ---- */
+/* الدليل أسفل اللوحة على الجانب نفسه — الطرف الآخر لمقياس الرسم. */
+.wm-legend {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-end: 18px;
+  z-index: 2;
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-border);
+  border-radius: var(--wm-radius);
+  box-shadow: var(--wm-shadow);
+  padding: 11px 13px;
+  font-size: 0.76rem;
+  display: grid;
+  gap: 6px;
+}
+.wm-legend h2 { font-size: 0.78rem; margin-bottom: 2px; }
+.wm-legend-row { display: flex; align-items: center; gap: 8px; color: var(--wm-muted); }
+.wm-legend-line { width: 26px; height: 0; border-top: 3px dashed currentColor; flex: 0 0 auto; }
+
+.wm-error {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline: 18%;
+  z-index: 4;
+  padding: 16px;
+  background: #fff5f5;
+  border: 1px solid #ffc9c9;
+  border-radius: var(--wm-radius);
+  color: #c92a2a;
+}
+
+@media (max-width: 640px) {
+  #control-panel { inset-inline: 12px; width: auto; }
+  .wm-legend { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

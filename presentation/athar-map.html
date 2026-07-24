@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر — الخريطة</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="athar-worksmap-page.css">
+</head>
+<body>
+
+<header class="wm-bar">
+  <h1>خريطة أعمال الطرق — الرياض</h1>
+  <span class="wm-badge">بيانات توضيحية للعرض</span>
+  <span class="wm-bar-spacer"></span>
+  <span class="wm-stat" id="wmStat" role="status">جارٍ التحميل…</span>
+</header>
+
+<main>
+  <div id="map" role="application" aria-label="خريطة أعمال الطرق والإغلاقات والحوادث"></div>
+  <aside id="control-panel" aria-label="عناصر التحكم بالخريطة"></aside>
+
+  <section class="wm-legend" aria-label="دليل الخريطة">
+    <h2>الدليل</h2>
+    <div class="wm-legend-row" style="color:#f0a020"><span class="wm-legend-line"></span><span>أعمال طرق</span></div>
+    <div class="wm-legend-row" style="color:#c92a2a"><span class="wm-legend-line"></span><span>إغلاق</span></div>
+    <div class="wm-legend-row" style="color:#f76707"><span class="wm-legend-line"></span><span>حادث</span></div>
+    <div class="wm-legend-row" style="color:#1c7ed6"><span class="wm-legend-line"></span><span>تحويلة</span></div>
+  </section>
+</main>
+
+<script src="athar-nav.js"></script>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="data/riyadh-roads.geojson.js"></script>
+<script src="data/riyadh-base.geojson.js"></script>
+<script src="data/works-city.geojson.js"></script>
+<script src="athar-worksmap-style.js"></script>
+<script src="athar-worksmap-layers.js"></script>
+<script src="athar-worksmap-data.js"></script>
+<script src="athar-worksmap.js"></script>
+<script src="athar-worksmap-panel.js"></script>
+<script src="athar-worksmap-interactions.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // صفحة الخريطة مستقلة عن النموذج: تبني الخريطة مباشرة بلا عقد الممر.
+  // البيانات محلية بالكامل (window globals) فتعمل من القرص كما تعمل من الخادم.
+  var container = document.getElementById('map');
+  var stat = document.getElementById('wmStat');
+
+  function fail(message) {
+    stat.textContent = 'تعذّر العرض';
+    var box = document.createElement('p');
+    box.className = 'wm-error';
+    box.setAttribute('role', 'alert');
+    box.textContent = message;
+    document.querySelector('main').appendChild(box);
+  }
+
+  if (typeof maplibregl === 'undefined' || typeof AtharWorksMap === 'undefined') {
+    fail('تعذّر تحميل محرك الخريطة.');
+    return;
+  }
+
+  var GL = AtharWorksMap.init(container, window.RIYADH_ROADS, {
+    baseGeoJSON: window.RIYADH_BASE,
+    center: [46.6785, 24.7125],
+    zoom: 13.1,
+  });
+
+  GL.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
+  GL.map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: 'metric' }), 'bottom-left');
+
+  GL.api.onReady(function () {
+    var works = window.ATHAR_WORKS_CITY || { type: 'FeatureCollection', features: [] };
+    GL.api.setWorks(works);
+
+    AtharWorksMapInteractions.install(GL.map, maplibregl, 'works');
+    AtharWorksMapPanel.mount(document.getElementById('control-panel'), GL.api, Date.now());
+
+    // العدّاد يتبع الفترة المختارة: الرقم المعروض هو ما تُظهره الخريطة فعلاً.
+    var features = GL.api.getData().works.features;
+    var select = document.getElementById('athar-date-preset');
+
+    function refreshStat() {
+      var range = AtharWorksMapPanel.toEpochRange(select ? select.value : 'today', Date.now());
+      var visible = range
+        ? features.filter(function (f) {
+            var p = f.properties;
+            return p.start_ts < range.to && p.end_ts > range.from;
+          }).length
+        : features.length;
+      stat.textContent = visible + ' من ' + features.length + ' سجلاً ضمن الفترة المختارة';
+    }
+
+    if (select) select.addEventListener('change', refreshStat);
+    refreshStat();
+  });
+
+  GL.map.on('error', function (event) {
+    if (event && event.error) console.error('[map]', event.error.message);
+  });
+
+  window.__atharWorksMap = GL;
+})();
+</script>
+
+</body>
+</html>

@@ -56,7 +56,9 @@
       description: span,
       start_ts: epoch(properties.start || properties.start_ts),
       end_ts: epoch(properties.end || properties.end_ts),
-      severity: IMPACT_SEVERITY[impact] || 0,
+      severity: typeof properties.severity === 'number'
+        ? properties.severity
+        : (IMPACT_SEVERITY[impact] || 0),
       promoter: text(properties.promoter),
       road: text(properties.road),
     };
