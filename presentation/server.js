@@ -26,6 +26,7 @@ const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.geojson': 'application/geo+json; charset=utf-8',
+  '.pbf': 'application/x-protobuf',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',

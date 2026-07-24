@@ -1,0 +1,82 @@
+{
+  "bus-stop": {
+    "x": 0,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "closure": {
+    "x": 28,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "diversion": {
+    "x": 56,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "incident": {
+    "x": 84,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-information": {
+    "x": 112,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-parking": {
+    "x": 140,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "roadworks": {
+    "x": 168,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "works-development": {
+    "x": 196,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "works-emergency": {
+    "x": 224,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "works-end": {
+    "x": 252,
+    "y": 0,
+    "width": 26,
+    "height": 26,
+    "pixelRatio": 1,
+    "sdf": false
+  }
+}
