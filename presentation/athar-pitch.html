@@ -6,22 +6,24 @@
 <title>أثر — قرار قابل للإثبات في ثلاث دقائق</title>
 <style>
   :root{
+    /* شرائح العرض تحتفظ بأسفلتها الداكن — خلفية قاعة لا واجهة تشغيل.
+       بقية الأدوار من athar-tokens.css كي لا تتفرّق الهوية عن المنتج. */
     --asphalt:#102535;
     --asphalt-2:#18384d;
-    --paper:#f3f0e8;
-    --surface:#fffdf8;
-    --ink:#17242c;
-    --muted:#62717a;
-    --blue:#1f6b8f;
-    --blue-soft:#dcebf1;
-    --amber:#d19231;
-    --amber-soft:#f4e6d0;
-    --mint:#cce8d8;
-    --red:#b34a42;
-    --line:#d7d3c8;
+    --paper:var(--athar-canvas);
+    --surface:var(--athar-surface);
+    --ink:var(--athar-ink);
+    --muted:var(--athar-muted);
+    --blue:var(--athar-primary);
+    --blue-soft:var(--athar-primary-soft);
+    --amber:var(--athar-accent);
+    --amber-soft:var(--athar-accent-soft);
+    --mint:var(--athar-success-soft);
+    --red:var(--athar-danger);
+    --line:var(--athar-line);
     --display:"Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
-    --body:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
-    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+    --body:var(--athar-font);
+    --mono:var(--athar-font-mono);
   }
   *{box-sizing:border-box}
   html,body{margin:0;width:100%;height:100%;background:var(--paper);color:var(--ink);font-family:var(--body)}
@@ -63,20 +65,20 @@
   h1{font-size:clamp(46px,8vw,92px);line-height:1}
   h2{font-size:clamp(30px,4.6vw,56px);line-height:1.2;max-width:18ch}
   h3{font-size:17px;color:var(--asphalt)}
-  .lead{font-size:clamp(18px,2.2vw,26px);line-height:1.7;max-width:72ch;color:#2d3c45}
+  .lead{font-size:clamp(18px,2.2vw,26px);line-height:1.7;max-width:72ch;color:var(--asphalt-2)}
   .quiet{font-size:14px;line-height:1.7;color:var(--muted)}
   .latin,.num{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:var(--mono)}
   .hero-lockup{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:44px}
   .hero-mark{border-right:7px solid var(--amber);padding-right:24px}
   .hero-mark p{margin-top:18px}
   .decision-card{
-    background:var(--asphalt);color:#f8fafb;border-radius:26px;padding:26px;
+    background:var(--asphalt);color:var(--surface);border-radius:26px;padding:26px;
     min-height:260px;display:grid;align-content:space-between;box-shadow:0 24px 60px rgba(16,37,53,.22)
   }
-  .decision-card .label{color:#b9d4e1;font-size:13px;font-weight:800}
+  .decision-card .label{color:var(--blue-soft);font-size:13px;font-weight:800}
   .decision-card .question{font-size:clamp(23px,3vw,36px);line-height:1.5;font-weight:800}
-  .decision-card .answer{display:flex;align-items:center;gap:10px;color:#d9eee2;font-size:14px}
-  .decision-card .answer::before{content:"";width:28px;height:2px;background:#d9eee2}
+  .decision-card .answer{display:flex;align-items:center;gap:10px;color:var(--mint);font-size:14px}
+  .decision-card .answer::before{content:"";width:28px;height:2px;background:var(--mint)}
   .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .metric{
     background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;
@@ -86,11 +88,11 @@
   .metric p{font-size:14px;color:var(--muted);line-height:1.55}
   .metric a{font-size:11px;color:var(--blue);font-weight:900;text-decoration:none}
   .metric a:hover{text-decoration:underline}
-  .metric.decision-card{background:var(--asphalt);color:#f8fafb;border-color:var(--asphalt)}
-  .metric.decision-card .value{color:#f1bd6b}
+  .metric.decision-card{background:var(--asphalt);color:var(--surface);border-color:var(--asphalt)}
+  .metric.decision-card .value{color:#f0bd6c}
   .metric.decision-card .question{color:#fff}
-  .metric.decision-card .answer{color:#d9eee2}
-  .metric.decision-card a{color:#bcd9e6}
+  .metric.decision-card .answer{color:var(--mint)}
+  .metric.decision-card a{color:var(--blue-soft)}
   .source-strip{display:flex;gap:10px;flex-wrap:wrap}
   .source-strip a{
     text-decoration:none;background:var(--surface);border:1px solid var(--line);
@@ -101,7 +103,7 @@
   .panel.strong{background:var(--asphalt);color:#fff;border-color:var(--asphalt)}
   .panel.strong h3{color:#fff}
   .panel p{margin-top:9px;line-height:1.65;color:var(--muted)}
-  .panel.strong p{color:#c9dae3}
+  .panel.strong p{color:var(--blue-soft)}
   .truth-list{display:grid;gap:10px}
   .truth-row{
     display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:start;
@@ -111,13 +113,13 @@
   .truth-row p{font-size:14px;line-height:1.6;color:var(--muted)}
   .compare{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
   .scenario{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;min-height:240px;display:grid;align-content:space-between}
-  .scenario.alt{border-color:#8bb8a0;background:#f0f8f3}
+  .scenario.alt{border-color:var(--mint);background:var(--mint)}
   .scenario .time{font-family:var(--mono);font-size:clamp(42px,6vw,72px);color:var(--asphalt);direction:ltr;text-align:right}
   .scenario .status{font-size:13px;color:var(--muted)}
-  .scenario .bar{height:10px;background:#ead7ba;border-radius:99px;overflow:hidden}
+  .scenario .bar{height:10px;background:var(--amber-soft);border-radius:99px;overflow:hidden}
   .scenario .bar span{display:block;height:100%;width:86%;background:var(--red)}
-  .scenario.alt .bar{background:#d5eadf}
-  .scenario.alt .bar span{width:38%;background:#3f8562}
+  .scenario.alt .bar{background:var(--mint)}
+  .scenario.alt .bar span{width:38%;background:var(--athar-success)}
   .arrow{font-size:38px;color:var(--blue)}
   .path{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
   .path-step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:150px}
@@ -129,25 +131,25 @@
     display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center
   }
   .formula .symbol{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:var(--asphalt);font-size:32px;font-weight:900}
-  .formula code{display:block;direction:ltr;text-align:right;color:#d8e9f2;font-family:var(--mono);font-size:clamp(14px,2vw,20px);white-space:normal}
-  .formula p{margin-top:8px;color:#c7d8e1;line-height:1.6}
+  .formula code{display:block;direction:ltr;text-align:right;color:var(--blue-soft);font-family:var(--mono);font-size:clamp(14px,2vw,20px);white-space:normal}
+  .formula p{margin-top:8px;color:var(--blue-soft);line-height:1.6}
   .gate{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
   .gate-list{display:grid;gap:10px}
   .gate-row{display:flex;justify-content:space-between;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
   .gate-row b{color:var(--asphalt)}
   .gate-row span{font-size:13px;color:var(--muted)}
-  .hard-stop{background:#3d2525;color:#fff;border-radius:18px;padding:22px;display:grid;align-content:center;gap:12px}
+  .hard-stop{background:var(--red);color:#fff;border-radius:18px;padding:22px;display:grid;align-content:center;gap:12px}
   .hard-stop strong{font-size:24px}
-  .hard-stop p{color:#f0ceca;line-height:1.65}
+  .hard-stop p{color:var(--red);line-height:1.65}
   #ask{background:var(--asphalt);color:#fff}
   #ask::before{opacity:.25}
   #ask h2{color:#fff;max-width:16ch}
-  #ask .lead{color:#d3e2e9}
+  #ask .lead{color:var(--blue-soft)}
   .ask-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
   .ask-box div{border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;background:rgba(255,255,255,.06)}
   .ask-box b{display:block;color:#f0bd6c;margin-bottom:7px}
-  .ask-box p{font-size:14px;line-height:1.6;color:#cfdee6}
-  .appendix{background:#e8ecec}
+  .ask-box p{font-size:14px;line-height:1.6;color:var(--blue-soft)}
+  .appendix{background:var(--line)}
   .appendix h2{max-width:none}
   .appendix-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
   .appendix-list a,.qa-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px;text-decoration:none}
@@ -204,10 +206,10 @@
 .gate-demo-buttons button:hover,.gate-demo-buttons button:focus-visible{background:rgba(255,255,255,.22);outline:2px solid #f0bd6c;outline-offset:2px}
 .gate-demo-output{margin-top:10px;min-height:52px;font-size:.92em}
 .gate-demo-hint{opacity:.7;margin:0}
-.gate-demo-blocked{border-right:4px solid #e0655c;padding:8px 12px;background:rgba(224,101,92,.12);border-radius:8px}
-.gate-demo-blocked b{color:#f2a29c}
-.gate-demo-decision{border-right:4px solid #6ccb8f;padding:8px 12px;background:rgba(108,203,143,.12);border-radius:8px}
-.gate-demo-decision b{color:#9fe0b8}
+.gate-demo-blocked{border-right:4px solid var(--red);padding:8px 12px;background:rgba(224,101,92,.12);border-radius:8px}
+.gate-demo-blocked b{color:var(--red)}
+.gate-demo-decision{border-right:4px solid var(--athar-success);padding:8px 12px;background:rgba(108,203,143,.12);border-radius:8px}
+.gate-demo-decision b{color:var(--mint)}
 .gate-demo-missing{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
 .gate-demo-missing li{border:1px solid rgba(224,101,92,.5);border-radius:6px;padding:2px 8px;font-size:.85em}
 .vision-line{margin-top:12px;font-size:.95em;opacity:.92}
@@ -340,13 +342,15 @@
         <div class="eyebrow">السؤال الرابع · ما مسار القرار؟</div>
         <div class="evidence-tag">قرار بشري الإشراف</div>
       </div>
-      <h2>مسار واحد قصير، وحدوده مكتوبة.</h2>
+      <h2>شاشة واحدة، ومسار مكتوب الحدود.</h2>
+      <p class="quiet">مكتب المراجع: صندوق الأعمال، والخريطة، وملف القرار — على مخزن حالة واحد.
+      مئة وخمسون تصريحاً على شوارع رياض مسمّاة، مرتّبة بما ينتظر قراراً أولاً.</p>
       <div class="path">
-        <div class="path-step"><b>01</b><p>استلام طلب توضيحي ومصادره.</p></div>
-        <div class="path-step"><b>02</b><p>حساب خط الأساس والبديل.</p></div>
-        <div class="path-step"><b>03</b><p>فحص النقل العام والوصول الحرج.</p></div>
-        <div class="path-step"><b>04</b><p>عرض التوصية وأسبابها للمراجع.</p></div>
-        <div class="path-step"><b>05</b><p>قياس النتيجة بعد التنفيذ من دون كتابة تلقائية.</p></div>
+        <div class="path-step"><b>01</b><p>يجد العمل ويرى موقعه وحالته.</p></div>
+        <div class="path-step"><b>02</b><p>يرى الأثر بساعات الناس والريال والكربون، ومعه سبب انخفاض الثقة.</p></div>
+        <div class="path-step"><b>03</b><p>يقارن ثلاثة بدائل ويقرأ سبب فوز الفائز.</p></div>
+        <div class="path-step"><b>04</b><p>يعتمد أو يُرجع — والنظام يمتنع إن نقصت نسخة المدخلات.</p></div>
+        <div class="path-step"><b>05</b><p>يبقى القرار بنسخته وتوقيعه بعد إغلاق المتصفح.</p></div>
       </div>
       <p class="quiet">المدخلات التوضيحية لا تصبح بيانات تصريح، والتوصية لا تصبح موافقة، والتكامل البلدي يبقى مسار نشر مقترحاً.</p>
       <div id="gate-demo" class="gate-demo" data-note="حالة توضيحية — المحرك الحقيقي يعمل الآن">
@@ -483,6 +487,35 @@
         <div class="qa-card"><h3>لماذا نثق بالأرقام؟</h3><p>كل رقم رسمي يفتح المصدر الذي يذكره، وكل رقم تصميم يفتح البروتوكول المحلي.</p></div>
         <div class="qa-card"><h3>ماذا لو أخفق؟</h3><p>ننشر الخطأ والمخالفة، ولا نغير العتبة بعد رؤية النتائج.</p></div>
       </div>
+    </div>
+  </section>
+  <section class="slide appendix" data-appendix="C">
+    <div class="slide-inner">
+      <div class="topline"><div class="eyebrow">Appendix C</div><div class="evidence-tag">خارج العداد والزمن</div></div>
+      <h2>ما الذي يبقى بعد الاعتماد</h2>
+      <div class="qa-grid">
+        <div class="qa-card">
+          <h3>نسخة مدخلات مثبّتة</h3>
+          <p>لا اعتماد بلا لقطة من الحركة والمسارات والنافذة. حارس في
+          <code>athar-desk-states.js</code> يمنع الفعل، والخادم يرفض الطلب بالرمز نفسه.</p>
+        </div>
+        <div class="qa-card">
+          <h3>رقم نسخة يعلو ولا يُعدَّل</h3>
+          <p>التصريح ثابت، والقرار نسخة جديدة في كل مرة. نتيجة قديمة تبقى قابلة للتفسير
+          حتى بعد تغيّر البيانات أو النموذج.</p>
+        </div>
+        <div class="qa-card">
+          <h3>سجل تدقيق لا يفقد حدثاً</h3>
+          <p>من قرر، ومتى، ولماذا، ومن أي حالة إلى أي حالة. الإضافة تراكم لا استبدال.</p>
+        </div>
+        <div class="qa-card">
+          <h3>ثبات على مستويين</h3>
+          <p>المتصفح مخزن مؤكّد يعمل من القرص، و<code>POST /api/works/:id/decisions</code>
+          مخزن ثانٍ يفرض القواعد نفسها. سقوط أحدهما لا يُسقط الآخر.</p>
+        </div>
+      </div>
+      <p class="quiet">هذا ما يفصل حاسبة عرض عن نظام قابل للتدقيق: ليس دقة الرقم، بل إمكان
+      الرجوع إليه بعد سنة ومعرفة على أي أساس اتُّخذ.</p>
     </div>
   </section>
 </main>

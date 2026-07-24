@@ -254,6 +254,24 @@ ok('العمل المُصعَّد لا يُعرض تأخيره رقماً دقي
   assert.ok(html.indexOf('خارج نطاق الفحص السريع') !== -1, 'لا إحالة معلنة');
 });
 
+ok('وحدات القرار المشتقّة من تقدير خارج النطاق تحمل تحفظه', () => {
+  const units = {
+    personHoursLow: 937378, personHoursHigh: 1249837, occLow: 1.2, occHigh: 1.6,
+    sarLow: 13591981, sarHigh: 31714623, wageHourlySAR: 36.25, shareLow: 0.4, shareHigh: 0.7,
+    co2Low: 1263117, co2High: 1984898,
+  };
+  const analysis = {
+    scored: { delayPct: 1007.8, delayVehHours: 781148 },
+    alternatives: [{ label: 'كتلة ليلية', delayVehHours: 2000 }],
+    reasons: [], conflicts: [], delta: -99.7, units: units,
+  };
+  const beyond = File.renderSummary(feature({ escalate: true, escalateReason: 'خارج النطاق' }), analysis);
+  assert.ok(beyond.indexOf('رتبة مقدار') !== -1, 'الريال يُقدَّم دقيقاً وأصله خارج النطاق');
+
+  const normal = File.renderSummary(feature({ escalate: false }), analysis);
+  assert.ok(normal.indexOf('رتبة مقدار') === -1, 'تحفظ على عمل داخل النطاق');
+});
+
 ok('لا توصية عند غياب البدائل — امتناع صريح', () => {
   const html = File.renderSummary(feature(), {
     scored: null, alternatives: [], reasons: [], conflicts: [], delta: null,

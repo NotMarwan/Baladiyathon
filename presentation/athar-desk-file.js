@@ -192,7 +192,7 @@
       + (conflicts ? '<p class="desk-card-label">التعارض</p>'
         + '<ul class="desk-conflicts">' + conflicts + '</ul>'
         : '<p class="desk-none">لا تعارض على المقطع في النافذة نفسها.</p>')
-      + renderUnits(a.units)
+      + renderUnits(a.units, p.escalate)
       + '<p class="desk-source">المصدر: محرك أثر (BPR) على هندسة OpenStreetMap · '
       + 'قيم الحركة والسعة افتراضات معلنة.</p>'
       + '</section>';
@@ -204,7 +204,7 @@
    * كل قيمة تُعرض بنطاقها لا برقم واحد: الإشغال وحصة قيمة الوقت واستهلاك الوقود
    * كلها مدى معلن في المحرك، وطيّ المدى إلى رقم واحد ادعاء دقة غير موجودة.
    */
-  function renderUnits(units) {
+  function renderUnits(units, beyondRange) {
     if (!units) return '';
 
     var rows = [
@@ -233,7 +233,13 @@
         return '<div><dt>' + escapeHtml(row.label) + '</dt>'
           + '<dd><span class="desk-figure">' + escapeHtml(row.value) + '</span>'
           + '<span class="desk-unit-note">' + escapeHtml(row.note) + '</span></dd></div>';
-      }).join('') + '</dl>';
+      }).join('') + '</dl>'
+      // القيم مشتقّة من ساعات-المركبة نفسها؛ فإن خرج أصلها عن النطاق خرجت معه.
+      // كتم النسبة وحدها وإبقاء الريال دقيقاً تناقض يُقرأ ثقةً زائفة.
+      + (beyondRange
+        ? '<p class="desk-beyond desk-units-caveat">مشتقّة من تقدير خارج نطاق الفحص السريع'
+          + ' — رتبة مقدار للفرز لا تقدير للاعتماد.</p>'
+        : '');
   }
 
   function range(low, high) {

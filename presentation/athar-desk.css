@@ -374,3 +374,4 @@ body {
 .desk-units dt { font-size: 0.78rem; color: var(--athar-muted); white-space: nowrap; }
 .desk-units dd { display: grid; justify-items: end; text-align: end; }
 .desk-unit-note { font-size: 0.68rem; color: var(--athar-faint); line-height: 1.5; }
+.desk-units-caveat { margin-top: 6px; font-size: 0.72rem; line-height: 1.6; }

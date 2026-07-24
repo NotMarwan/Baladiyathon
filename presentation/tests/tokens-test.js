@@ -65,6 +65,7 @@ const HEX_BUDGET = {
   'athar-decision.html': 13,
   'athar-lab.html': 3,
   'athar-prototype.html': 12,
+  'athar-pitch.html': 4,
 };
 
 ok('كل صفحة عائلة تستورد ملف الوسوم أو تحمّل الشريط الذي يحقنه', () => {
@@ -85,8 +86,12 @@ ok('انحراف اللوحة مسقوف في كل صفحة', () => {
   });
 });
 
-ok('لا صفحة تعيد تعريف الشريط الداكن القديم', () => {
+// شرائح العرض وحدها تحتفظ بالأسفلت الداكن: خلفية قاعة لا واجهة تشغيل.
+const DARK_ALLOWED = ['athar-pitch.html'];
+
+ok('لا صفحة تشغيل تعيد تعريف الشريط الداكن القديم', () => {
   Object.keys(HEX_BUDGET).forEach((page) => {
+    if (DARK_ALLOWED.indexOf(page) !== -1) return;
     const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
     assert.ok(html.indexOf('#102535') === -1, `${page} يحمل لون الشريط الداكن السابق`);
   });
