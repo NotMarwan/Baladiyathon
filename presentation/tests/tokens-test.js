@@ -50,4 +50,49 @@ ok('الوسوم تحمل الخط العربي أولاً والأحادي لل
   assert.ok(/--athar-font-mono:[^;]*monospace/.test(tokens), 'الخط الأحادي مفقود');
 });
 
+/* ---- التباين: يُحسب هنا لا يُفترض ---- */
+
+function hexOf(token) {
+  const match = tokens.match(new RegExp(token + ':\\s*(#[0-9a-fA-F]{6})'));
+  assert.ok(match, `لا قيمة سداسية للوسم ${token}`);
+  return match[1];
+}
+
+function luminance(hex) {
+  const channels = [1, 3, 5].map((at) => parseInt(hex.slice(at, at + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrast(a, b) {
+  const high = Math.max(luminance(a), luminance(b));
+  const low = Math.min(luminance(a), luminance(b));
+  return (high + 0.05) / (low + 0.05);
+}
+
+ok('كل لون نص يبلغ حد WCAG AA على السطوح الفاتحة', () => {
+  const surfaces = ['--athar-surface', '--athar-surface-raised', '--athar-canvas', '--athar-primary-soft'];
+  const inks = ['--athar-ink', '--athar-muted', '--athar-faint'];
+
+  inks.forEach((ink) => {
+    surfaces.forEach((surface) => {
+      const ratio = contrast(hexOf(ink), hexOf(surface));
+      assert.ok(ratio >= 4.5,
+        `${ink} على ${surface} = ${ratio.toFixed(2)}:1 — دون 4.5 المطلوبة للنص الصغير`);
+    });
+  });
+});
+
+ok('ألوان الحالة تُقرأ على خلفياتها الناعمة', () => {
+  ['success', 'warning', 'danger', 'info'].forEach((tone) => {
+    const ratio = contrast(hexOf('--athar-' + tone), hexOf('--athar-' + tone + '-soft'));
+    assert.ok(ratio >= 4.5, `نبرة ${tone} = ${ratio.toFixed(2)}:1 على خلفيتها`);
+  });
+});
+
+ok('نص الزر الأساسي يُقرأ على لون الهوية', () => {
+  const ratio = contrast('#ffffff', hexOf('--athar-primary'));
+  assert.ok(ratio >= 4.5, `أبيض على الأساسي = ${ratio.toFixed(2)}:1`);
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

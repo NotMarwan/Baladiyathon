@@ -53,7 +53,10 @@ body {
   grid-template-columns: var(--athar-panel-w) minmax(0, 1fr) var(--athar-panel-w);
 }
 
+/* min-width:0 إجباري: بلا هذا يمنع محتوى الشبكة الداخلي انكماش العمود، فيفيض
+   السطر على الجوال ويظهر تمرير أفقي. */
 .desk-pane {
+  min-width: 0;
   min-height: 0;
   background: var(--athar-surface);
   display: flex;
@@ -107,8 +110,9 @@ body {
 
 .desk-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas: "main meta" "figures next";
+  overflow-wrap: anywhere;
   gap: 2px var(--athar-space-2);
   min-height: var(--athar-row-h);
   padding: var(--athar-space-2) var(--athar-space-3);
@@ -129,7 +133,8 @@ body {
 .desk-row-figures { grid-area: figures; display: flex; gap: var(--athar-space-3); font-size: 0.74rem; color: var(--athar-muted); }
 .desk-row-next { grid-area: next; font-size: 0.74rem; color: var(--athar-primary); font-weight: 700; text-align: end; }
 
-.desk-ref { font-family: var(--athar-font-mono); font-size: 0.72rem; color: var(--athar-faint); }
+/* المرجع هو أول ما يقرأه المراجع — muted لا faint. */
+.desk-ref { font-family: var(--athar-font-mono); font-size: 0.72rem; color: var(--athar-muted); }
 .desk-street { font-weight: 700; font-size: 0.87rem; }
 .desk-window { font-size: 0.72rem; color: var(--athar-muted); font-variant-numeric: tabular-nums; }
 .desk-figure { font-family: var(--athar-font-mono); color: var(--athar-ink); font-weight: 700; }
@@ -310,12 +315,17 @@ body {
 .maplibregl-canvas { outline: none; }
 
 /* ---- الاستجابة ---- */
+/* تحت ١٣٠٠ تضيق الخريطة تحت النافع؛ اللوحتان تتقلصان قبلها لا بعدها. */
+@media (max-width: 1400px) {
+  .desk-shell { grid-template-columns: 340px minmax(0, 1fr) 356px; }
+}
 @media (max-width: 1180px) {
-  .desk-shell { grid-template-columns: 320px minmax(0, 1fr) 340px; }
+  .desk-shell { grid-template-columns: 300px minmax(0, 1fr) 320px; }
+  .desk-file-body { padding: var(--athar-space-3); }
 }
 @media (max-width: 900px) {
   body { overflow: auto; }
-  .desk-shell { grid-template-columns: 1fr; }
+  .desk-shell { grid-template-columns: minmax(0, 1fr); }
   .desk-map-wrap { height: 55vh; }
   .desk-pane { max-height: 70vh; }
   .desk-pane-inbox { border-inline-start: 0; border-top: 1px solid var(--athar-line); }

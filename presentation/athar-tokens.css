@@ -14,21 +14,26 @@
   /* ---- الحبر ---- */
   --athar-ink: #15202B;
   --athar-muted: #5A6672;
-  --athar-faint: #8A929B;
+  /* #8A929B كان يعطي 3.0:1 على الأبيض — دون حد WCAG AA للنص الصغير.
+     القيمة هنا تبلغ ≥4.5:1 على *كل* السطوح الأربعة، لا على الأبيض وحده:
+     الرمادي الفاتح --athar-canvas هو الحالة الحرجة. يحرسها tokens-test. */
+  --athar-faint: #626B76;
   --athar-line: #D8DEE4;
 
   /* ---- الهوية ---- */
   --athar-primary: #1D4E77;
   --athar-primary-hover: #163F5F;
   --athar-primary-soft: #E9F1F7;
-  --athar-accent: #A9722B;
+  --athar-accent: #8C5C1C;
   --athar-accent-soft: #F4EDE1;
 
   /* ---- الحالة ----
-     كل واحدة تُقرن دائماً برمز ونص. اللون وحده لا ينقل حالة. */
-  --athar-success: #2F7A57;
+     كل واحدة تُقرن دائماً برمز ونص. اللون وحده لا ينقل حالة.
+     كل نبرة داكنة بما يكفي لتبلغ 4.5:1 على خلفيتها الناعمة — القيم الأصلية في
+     وثيقة التصميم كانت 3.5 (تحذير) و4.47 (نجاح)، وكلاهما دون الحد. */
+  --athar-success: #2C7351;
   --athar-success-soft: #E4F1EA;
-  --athar-warning: #A9722B;
+  --athar-warning: #8C5C1C;
   --athar-warning-soft: #F4EDE1;
   --athar-danger: #B23B32;
   --athar-danger-soft: #F7E4E1;
