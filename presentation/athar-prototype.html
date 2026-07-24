@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>أثر — النموذج التفاعلي</title>
 <link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="athar-map.css">
 <style>
   :root{
     --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
@@ -43,10 +45,9 @@
   .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
   @media(max-width:900px){.grid2{grid-template-columns:1fr}}
 
-  #map{height:420px;border-radius:8px;border:1px solid var(--line);background:#E4E8EC}
+  #map{height:420px;border-radius:8px;border:1px solid #22394e}
   .map-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
   .leaflet-interactive{transition:stroke .35s ease}
-  .leaflet-tooltip.neighbor-tooltip{background:var(--ochre-soft);color:var(--ochre);border:1px solid var(--ochre);font-weight:600;font-size:11.5px;padding:2px 9px;border-radius:6px}
 
   .timeline-controls{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
   .timeline-slider-wrap{flex:1 1 260px;min-width:220px;position:relative;padding-bottom:20px}
@@ -198,6 +199,7 @@
     <div class="section-eyebrow">الخطوة ١–٢ · حدد موقع الحفر على الممر</div>
     <h2>خريطة الممر التفاعلية</h2>
     <div id="map" role="application" aria-label="خريطة تفاعلية لطريق الملك فهد مقطع العليا"></div>
+    <aside id="athar-map-panel" aria-label="عناصر التحكم بالخريطة"></aside>
     <div class="map-actions">
       <button type="button" class="primary" id="btnSelectClosure" aria-label="حدد موقع الحفر على المقطع الأوسط من الطريق">حدد موقع الحفر</button>
       <button type="button" id="btnToggleWorks" aria-pressed="false" aria-label="إظهار أو إخفاء الخريطة العامة لأعمال الحفر">الخريطة العامة للأعمال</button>
@@ -436,7 +438,12 @@
   </div>
 </div>
 
+<script src="athar-nav.js"></script>
 <script src="vendor/leaflet.js"></script>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="data/riyadh-roads.geojson.js"></script>
+<script src="athar-ownedmap.js"></script>
+<script src="athar-glmap.js"></script>
 <script src="athar-engine.js"></script>
 <script src="athar-impact-calibration.js"></script>
 <script src="athar-impact-budget.js"></script>
@@ -495,7 +502,7 @@
     ]
   };
 
-  var IMPACT_COLORS = { high: '#B23B32', medium: '#A9722B', low: '#2F7A57' };
+  var IMPACT_COLORS = { high: '#ff6f6a', medium: '#e8a33d', low: '#34d399' };
 
   // Local road network (digitized from OpenStreetMap © contributors, ODbL).
   // Embedded fallback so alternative routing works fully offline (file://).
@@ -684,12 +691,26 @@
     [24.7565, 46.6768],
   ];
 
-  var map = L.map('map', { scrollWheelZoom: false }).setView([24.714, 46.678], 12);
+  // خريطة GL المملوكة أولاً (WebGL)؛ Leaflet مسار احتياطي كامل.
+  var hasOwnedRoadsPre = typeof RIYADH_ROADS !== 'undefined'
+    && RIYADH_ROADS && RIYADH_ROADS.features && RIYADH_ROADS.features.length > 0;
+  var GL = null;
+  try {
+    if (typeof maplibregl !== 'undefined' && typeof AtharGlMap !== 'undefined' && hasOwnedRoadsPre) {
+      GL = AtharGlMap.init(document.getElementById('map'), RIYADH_ROADS, { scrollZoom: false });
+    }
+  } catch (glErr) { GL = null; }
+  var GL_MODE = !!GL;
 
-  var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors',
-  });
+  var map = null;
+  var tileLayer = null;
+  if (!GL_MODE) {
+    map = L.map('map', { scrollWheelZoom: false }).setView([24.714, 46.678], 12);
+    tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors',
+    });
+  }
 
   var tileErrorShown = false;
   function showOfflineNotice() {
@@ -716,26 +737,209 @@
   // issued (zero console errors) instead of relying on tileerror after the
   // fact. The tileerror handler below still covers the online-but-tiles-down
   // case (e.g. captive portal, DNS failure).
-  if (navigator.onLine) {
-    tileLayer.addTo(map);
-  } else {
-    showOfflineNotice();
+  // الخريطة المملوكة: شبكة GeoJSON محلية بلا بلاط خارجي — تعمل دون إنترنت.
+  // بيانات الطرق © مساهمو OpenStreetMap — رخصة ODbL.
+  var hasOwnedRoads = typeof AtharOwnedMap !== 'undefined' && hasOwnedRoadsPre;
+  if (!GL_MODE) {
+    if (hasOwnedRoads) {
+      AtharOwnedMap.load(map, RIYADH_ROADS, L);
+      map.attributionControl.addAttribution('بيانات الطرق © مساهمو OpenStreetMap (ODbL)');
+      map.setView([24.70, 46.685], 13);
+    } else if (navigator.onLine) {
+      tileLayer.addTo(map);
+    } else {
+      showOfflineNotice();
+    }
+    tileLayer.on('tileerror', showOfflineNotice);
   }
-  tileLayer.on('tileerror', showOfflineNotice);
 
   var segCount = CORRIDOR_COORDS.length - 1;
   var midSegIndex = Math.floor(segCount / 2);
   var segmentLayers = [];
+  var segmentCasings = [];
+  var mapContainerEl = document.getElementById('map');
+  var CORRIDOR_CORE = '#59d6f2';
+  var CORRIDOR_CLOSED = '#e5484d';
+  var CORRIDOR_UNLOCKED = '#34d399';
 
-  for (var i = 0; i < segCount; i += 1) {
-    var seg = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
-      color: '#1D4E77',
-      weight: 6,
+  // ---------------------------------------------------------------
+  // طبقة توافق: نفس نداءات الرسم تعمل على GL أو Leaflet
+  // ---------------------------------------------------------------
+  function toLngLat(latlng) { return [latlng[1], latlng[0]]; }
+
+  var glDecoId = 0;
+  var glDecoFeatures = new Map();
+  function glDecoSync() {
+    var src = GL.map.getSource('deco');
+    if (src) src.setData({ type: 'FeatureCollection', features: Array.from(glDecoFeatures.values()) });
+  }
+  function glDecoSetup() {
+    GL.map.addSource('deco', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    var paintCommon = {
+      'line-color': ['get', 'color'],
+      'line-width': ['get', 'weight'],
+      'line-opacity': ['get', 'opacity'],
+      'line-blur': ['coalesce', ['get', 'blur'], 0],
+    };
+    GL.map.addLayer({
+      id: 'deco-solid', type: 'line', source: 'deco',
+      filter: ['!', ['to-boolean', ['get', 'dashed']]],
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: paintCommon,
+    }, 'corridor-glow');
+    GL.map.addLayer({
+      id: 'deco-dashed', type: 'line', source: 'deco',
+      filter: ['to-boolean', ['get', 'dashed']],
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: Object.assign({}, paintCommon, { 'line-dasharray': [2, 2.5] }),
+    }, 'corridor-glow');
+    ['deco-solid', 'deco-dashed'].forEach(function (lid) {
+      GL.map.on('click', lid, function (e) {
+        var f = e.features && e.features[0];
+        if (f && f.properties.popupHtml) {
+          new maplibregl.Popup({ maxWidth: '280px' })
+            .setLngLat(e.lngLat).setHTML(f.properties.popupHtml).addTo(GL.map);
+        }
+      });
+      GL.map.on('mouseenter', lid, function () { GL.map.getCanvas().style.cursor = 'pointer'; });
+      GL.map.on('mouseleave', lid, function () { GL.map.getCanvas().style.cursor = ''; });
+    });
+  }
+  function glDecoLine(latlngs, o) {
+    var id = 'd' + (glDecoId++);
+    glDecoFeatures.set(id, {
+      type: 'Feature',
+      properties: {
+        color: o.color,
+        weight: o.weight || 3,
+        opacity: o.opacity == null ? 1 : o.opacity,
+        dashed: !!o.dashed,
+        blur: o.blur || 0,
+        popupHtml: o.popupHtml || '',
+      },
+      geometry: { type: 'LineString', coordinates: latlngs.map(toLngLat) },
+    });
+    glDecoSync();
+    return {
+      remove: function () { glDecoFeatures.delete(id); glDecoSync(); },
+      setStyle: function (s) {
+        var f = glDecoFeatures.get(id);
+        if (!f) return;
+        ['color', 'weight', 'opacity'].forEach(function (k) {
+          if (s[k] !== undefined) f.properties[k] = s[k];
+        });
+        glDecoSync();
+      },
+    };
+  }
+  function decoLine(latlngs, o) {
+    if (GL_MODE) return glDecoLine(latlngs, o);
+    var l = L.polyline(latlngs, {
+      color: o.color,
+      weight: o.weight || 3,
+      opacity: o.opacity == null ? 1 : o.opacity,
+      dashArray: o.dashed ? '2 6' : null,
+      className: o.className || '',
+      interactive: !!(o.popupHtml || o.tooltip),
     }).addTo(map);
-    seg.on('click', (function (idx) {
-      return function () { selectClosure(idx); };
-    })(i));
-    segmentLayers.push(seg);
+    if (o.popupHtml) l.bindPopup(o.popupHtml);
+    if (o.tooltip) l.bindTooltip(o.tooltip, { direction: 'top' });
+    return {
+      remove: function () { map.removeLayer(l); },
+      setStyle: function (s) { l.setStyle(s); },
+    };
+  }
+  function decoMarker(latlng, o) {
+    if (GL_MODE) {
+      var el = document.createElement('div');
+      if (o.className) el.className = o.className;
+      el.innerHTML = o.html || '';
+      if (o.title) el.title = o.tooltip || o.title;
+      var mk = new maplibregl.Marker({ element: el }).setLngLat(toLngLat(latlng)).addTo(GL.map);
+      if (o.popupHtml) mk.setPopup(new maplibregl.Popup({ offset: 14 }).setHTML(o.popupHtml));
+      return { remove: function () { mk.remove(); } };
+    }
+    var m = L.marker(latlng, {
+      title: o.title || '',
+      alt: o.title || '',
+      icon: L.divIcon({
+        className: o.className || '',
+        html: o.html || '',
+        iconSize: o.size || [22, 22],
+        iconAnchor: o.anchor || [11, 11],
+      }),
+    }).addTo(map);
+    if (o.tooltip) m.bindTooltip(o.tooltip, { direction: 'top' });
+    if (o.popupHtml) m.bindPopup(o.popupHtml);
+    return { remove: function () { map.removeLayer(m); } };
+  }
+
+  // لوحة تحرير الطرق (GL): انقر أي طريق رئيسي وعدّل بياناته التوضيحية
+  function setupGlEditPanel() {
+    var card = document.createElement('div');
+    card.className = 'athar-edit-card';
+    card.style.display = 'none';
+    card.innerHTML =
+      '<div class="aec-title"></div>'
+      + '<label>الطلب اليومي AADT <input type="number" id="aecAadt" min="1000" step="1000"></label>'
+      + '<label>عدد المسارات <input type="number" id="aecLanes" min="1" max="8" step="1"></label>'
+      + '<div class="aec-note">بيانات توضيحية قابلة للتحرير</div>'
+      + '<div class="aec-actions">'
+      + '<button type="button" id="aecApply">تطبيق</button>'
+      + '<button type="button" id="aecClose">إغلاق</button></div>';
+    document.getElementById('map').appendChild(card);
+    var currentRoad = null;
+    GL.api.onRoadClick(function (seg) {
+      currentRoad = seg;
+      card.querySelector('.aec-title').textContent = seg.name || seg.highway;
+      card.querySelector('#aecAadt').value = seg.aadt;
+      card.querySelector('#aecLanes').value = seg.lanes;
+      card.style.display = 'block';
+    });
+    card.querySelector('#aecClose').addEventListener('click', function () {
+      card.style.display = 'none';
+    });
+    card.querySelector('#aecApply').addEventListener('click', function () {
+      if (!currentRoad) return;
+      var aadt = Number(card.querySelector('#aecAadt').value);
+      var lanes = Number(card.querySelector('#aecLanes').value);
+      if (!(aadt > 0) || !(lanes >= 1)) return;
+      GL.api.updateRoad(currentRoad.osmId, { aadt: aadt, lanes: Math.round(lanes) });
+      card.style.display = 'none';
+    });
+  }
+
+  if (GL_MODE) {
+    GL.api.onReady(function () {
+      var pairs = [];
+      for (var gi = 0; gi < segCount; gi += 1) {
+        pairs.push([toLngLat(CORRIDOR_COORDS[gi]), toLngLat(CORRIDOR_COORDS[gi + 1])]);
+      }
+      GL.api.setCorridor(pairs);
+      GL.api.onCorridorClick(function (idx) { selectClosure(idx); });
+      glDecoSetup();
+      setupGlEditPanel();
+    });
+  } else {
+    for (var i = 0; i < segCount; i += 1) {
+      var casing = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
+        color: '#08131f',
+        weight: 11,
+        opacity: 0.9,
+        interactive: false,
+        className: 'athar-corridor-casing',
+      }).addTo(map);
+      segmentCasings.push(casing);
+      var seg = L.polyline([CORRIDOR_COORDS[i], CORRIDOR_COORDS[i + 1]], {
+        color: CORRIDOR_CORE,
+        weight: 4.5,
+        className: 'athar-corridor-line',
+      }).addTo(map);
+      seg.on('click', (function (idx) {
+        return function () { selectClosure(idx); };
+      })(i));
+      segmentLayers.push(seg);
+    }
   }
 
   var closureMarker = null;
@@ -750,18 +954,33 @@
     state.closureSelected = true;
     state.selectedSegIdx = idx;
 
-    segmentLayers.forEach(function (layer, i) {
-      layer.setStyle({ color: i === idx ? '#B23B32' : '#1D4E77' });
-    });
-
     var mid = midpoint(CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]);
-    if (closureMarker) {
-      closureMarker.setLatLng(mid);
+    if (GL_MODE) {
+      var states = [];
+      for (var si = 0; si < segCount; si += 1) states.push(si === idx ? 'closed' : 'open');
+      GL.api.setAllCorridorStates(states);
+      GL.api.setDigSite(toLngLat(mid));
     } else {
-      closureMarker = L.marker(mid, { title: 'موقع الحفر', alt: 'موقع الحفر المحدد' }).addTo(map);
-      closureMarker.bindPopup('موقع الحفر المحدد');
+      segmentLayers.forEach(function (layer, i) {
+        layer.setStyle({ color: i === idx ? CORRIDOR_CLOSED : CORRIDOR_CORE });
+      });
+      if (closureMarker) {
+        closureMarker.setLatLng(mid);
+      } else {
+        closureMarker = L.marker(mid, {
+          title: 'موقع الحفر',
+          alt: 'موقع الحفر المحدد',
+          icon: L.divIcon({
+            className: 'athar-dig-marker',
+            html: '<span class="ring"></span><span class="ring2"></span><span class="pin"></span>',
+            iconSize: [36, 36],
+            iconAnchor: [18, 18],
+          }),
+        }).addTo(map);
+        closureMarker.bindPopup('موقع الحفر المحدد');
+      }
+      closureMarker.openPopup();
     }
-    closureMarker.openPopup();
 
     recompute();
     drawComputedRoutes(idx, state.scrubHour);
@@ -774,11 +993,11 @@
   // Layers for computed alternative routes + POI markers.
   var routeLayers = [];
   var poiMarkers = [];
-  var ROUTE_COLORS = ['#A9722B', '#1D4E77', '#5A6672'];
+  var ROUTE_COLORS = ['#d19231', '#59d6f2', '#8fa3b8'];
   var state_lastRoutes = null;
 
   function clearRouteLayers() {
-    routeLayers.forEach(function (l) { map.removeLayer(l); });
+    routeLayers.forEach(function (l) { l.remove(); });
     routeLayers = [];
   }
 
@@ -788,20 +1007,17 @@
   }
 
   function renderPoiMarkers() {
-    poiMarkers.forEach(function (m) { map.removeLayer(m); });
+    poiMarkers.forEach(function (m) { m.remove(); });
     poiMarkers = [];
     (state.network.pois || []).forEach(function (poi) {
       var icon = poi.kind === 'hospital' ? '🏥' : '🏫';
-      var marker = L.marker([poi.lat, poi.lng], {
-        title: poi.name, alt: poi.name,
-        icon: L.divIcon({
-          className: 'poi-div-icon',
-          html: '<span style="font-size:18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">' + icon + '</span>',
-          iconSize: [22, 22], iconAnchor: [11, 11],
-        }),
-      }).addTo(map);
-      marker.bindTooltip(poi.name + ' — ' + poi.note, { direction: 'top' });
-      poiMarkers.push(marker);
+      poiMarkers.push(decoMarker([poi.lat, poi.lng], {
+        title: poi.name,
+        className: 'poi-div-icon',
+        html: '<span style="font-size:18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">' + icon + '</span>',
+        tooltip: poi.name + ' — ' + poi.note,
+        popupHtml: '<b>' + poi.name + '</b><br>' + poi.note,
+      }));
     });
   }
 
@@ -827,18 +1043,31 @@
       var latlngs = alt.path.map(nodeLatLng);
       var color = ROUTE_COLORS[i % ROUTE_COLORS.length];
       var isBestRecommended = i === bestRecommendedIndex;
-      var line = L.polyline(latlngs, {
-        color: color, weight: isBestRecommended ? 5 : 3.5,
-        opacity: isBestRecommended ? 0.95 : 0.7,
-        dashArray: isBestRecommended ? null : '7 6',
-      }).addTo(map);
-      line.bindPopup(
-        '<b>مسار بديل ' + (i + 1) + '</b><br>'
+      var popupHtml = '<b>مسار بديل ' + (i + 1) + '</b><br>'
         + 'زمن الرحلة بعد التحويل: ' + Math.round(alt.travelTimeAfterDiversion) + ' دقيقة<br>'
         + 'يضيف ' + Math.round(alt.extraMin) + ' دقيقة مقابل '
-        + Math.round(res.viaClosureMin) + ' دقيقة عبر الإغلاق'
-      );
-      routeLayers.push(line);
+        + Math.round(res.viaClosureMin) + ' دقيقة عبر الإغلاق';
+      routeLayers.push(decoLine(latlngs, {
+        color: color,
+        weight: isBestRecommended ? 5 : 3.5,
+        opacity: isBestRecommended ? 0.95 : 0.7,
+        dashed: !isBestRecommended,
+        className: 'athar-alt-line',
+        popupHtml: popupHtml,
+      }));
+      if (isBestRecommended && !GL_MODE) {
+        var flow = L.polyline(latlngs, {
+          color: '#ffe1a8', weight: 2, opacity: 0.9,
+          dashArray: '8 18',
+          interactive: false,
+          className: 'athar-alt-flow',
+        }).addTo(map);
+        routeLayers.push({ remove: function () { map.removeLayer(flow); } });
+      } else if (isBestRecommended && GL_MODE) {
+        routeLayers.push(decoLine(latlngs, {
+          color: '#ffe1a8', weight: 1.6, opacity: 0.9, blur: 3,
+        }));
+      }
     });
 
     renderRouteCards(res);
@@ -850,7 +1079,7 @@
   // after absorbing overflow). Deepening: shockwave propagation.
   var shockwaveLayers = [];
   function clearShockwave() {
-    shockwaveLayers.forEach(function (l) { map.removeLayer(l); });
+    shockwaveLayers.forEach(function (l) { l.remove(); });
     shockwaveLayers = [];
   }
   function drawShockwave(closedEdgeId, hour, lanesClosed) {
@@ -869,13 +1098,14 @@
       if (segIdx < 0 || segIdx >= segmentLayers.length) return;
       var vc = sw.overflow[eid];
       var intensity = Math.max(0, Math.min(0.6, (vc - 1) * 0.5 + 0.2));
-      var glow = L.polyline(
+      shockwaveLayers.push(decoLine(
         [CORRIDOR_COORDS[segIdx], CORRIDOR_COORDS[segIdx + 1]],
-        { color: '#B23B32', weight: 18, opacity: intensity }
-      ).addTo(map);
-      glow.bringToBack();
-      glow.bindTooltip('انتشار الطابور: v/c ≈ ' + vc.toFixed(2) + ' بعد امتصاص الفائض', { direction: 'top' });
-      shockwaveLayers.push(glow);
+        {
+          color: CORRIDOR_CLOSED, weight: 18, opacity: intensity,
+          blur: 10, className: 'athar-shockwave',
+          popupHtml: 'انتشار الطابور: v/c ≈ ' + vc.toFixed(2) + ' بعد امتصاص الفائض',
+        }
+      ));
     });
   }
 
@@ -952,26 +1182,36 @@
   // -------------------------------------------------------------------
   // Public works transparency layer (Step 8)
   // -------------------------------------------------------------------
-  function renderWorksLayer(geojson) {
-    worksLayerGroup.clearLayers();
-    (geojson.features || []).forEach(function (feature) {
+  var worksHandles = [];
+  var worksData = null;
+  function showWorks() {
+    hideWorks();
+    if (!worksData) return;
+    (worksData.features || []).forEach(function (feature) {
       var props = feature.properties || {};
-      var color = IMPACT_COLORS[props.impactLevel] || '#1D4E77';
+      var color = IMPACT_COLORS[props.impactLevel] || '#7fb3d1';
       var coords = (feature.geometry.coordinates || []).map(function (c) {
         return [c[1], c[0]];
       });
-      var line = L.polyline(coords, { color: color, weight: 4, opacity: 0.85, dashArray: '2 6' });
       var closureCount = props.closureCountThisYear;
       var closureLine = typeof closureCount === 'number' ? '<br>إغلاقات هذا العام: ' + closureCount : '';
       var priorityLine = typeof closureCount === 'number' && closureCount >= 3
         ? '<br>⚠ ممر متكرر الإزعاج — أولوية Dig-Once'
         : '';
-      line.bindPopup(
-        '<b>' + props.road + '</b><br>' + props.status + '<br>' + props.from + ' → ' + props.to
-          + closureLine + priorityLine
-      );
-      worksLayerGroup.addLayer(line);
+      worksHandles.push(decoLine(coords, {
+        color: color, weight: 4, opacity: 0.85, dashed: true,
+        popupHtml: '<b>' + props.road + '</b><br>' + props.status + '<br>' + props.from + ' → ' + props.to
+          + closureLine + priorityLine,
+      }));
     });
+  }
+  function hideWorks() {
+    worksHandles.forEach(function (h) { h.remove(); });
+    worksHandles = [];
+  }
+  function renderWorksLayer(geojson) {
+    worksData = geojson;
+    if (state.worksVisible) showWorks();
   }
 
   function loadWorks() {
@@ -995,9 +1235,9 @@
     state.worksVisible = !state.worksVisible;
     this.setAttribute('aria-pressed', String(state.worksVisible));
     if (state.worksVisible) {
-      worksLayerGroup.addTo(map);
+      showWorks();
     } else {
-      map.removeLayer(worksLayerGroup);
+      hideWorks();
     }
   });
 
@@ -1335,6 +1575,44 @@
     });
   }
 
+  // موجة التحول أحمر ← أخضر: خط متوهج يرسم نفسه على طول المقطع (~1.2s)
+  var sweepLine = null;
+  function sweepSegmentGreen(idx) {
+    if (idx === null) return;
+    if (GL_MODE) { GL.api.sweepUnlock(idx); return; }
+    if (!window.matchMedia
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (sweepLine) { map.removeLayer(sweepLine); sweepLine = null; }
+    sweepLine = L.polyline([CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]], {
+      color: CORRIDOR_UNLOCKED, weight: 7, opacity: 0.95,
+      interactive: false, className: 'athar-sweep',
+    }).addTo(map);
+    var el = sweepLine.getElement();
+    if (!el || typeof el.getTotalLength !== 'function') return;
+    try {
+      var total = el.getTotalLength();
+      el.style.strokeDasharray = total + ' ' + total;
+      el.style.strokeDashoffset = String(total);
+      var start = null;
+      var DURATION = 1200;
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / DURATION);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.style.strokeDashoffset = String(total * (1 - eased));
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else if (sweepLine) {
+          map.removeLayer(sweepLine);
+          sweepLine = null;
+        }
+      }
+      requestAnimationFrame(step);
+    } catch (err) {
+      if (sweepLine) { map.removeLayer(sweepLine); sweepLine = null; }
+    }
+  }
+
   function selectCandidate(candidate, container, cardEl) {
     state.selectedCandidate = candidate;
     updateExportAvailability();
@@ -1382,6 +1660,7 @@
     }
 
     renderTimeline();
+    sweepSegmentGreen(segIdx);
   }
 
   function animateBackTest(before, after) {
@@ -1497,7 +1776,7 @@
   // -------------------------------------------------------------------
   // 24-hour timeline scrubber (البعد الزمني) — Upgrade 1
   // -------------------------------------------------------------------
-  var COLOR_STOPS = [[47, 122, 87], [169, 114, 43], [178, 59, 50]]; // good -> ochre -> bad
+  var COLOR_STOPS = [[52, 179, 126], [232, 163, 61], [229, 72, 77]]; // good -> ochre -> bad (dark-tuned)
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -1544,20 +1823,24 @@
   }
 
   var haloLine = null;
+  var haloIdx = null;
   function drawHalo(idx, color) {
     var coords = [CORRIDOR_COORDS[idx], CORRIDOR_COORDS[idx + 1]];
-    if (haloLine) {
-      haloLine.setLatLngs(coords);
+    if (haloLine && haloIdx === idx) {
       haloLine.setStyle({ color: color });
-    } else {
-      haloLine = L.polyline(coords, { color: color, weight: 16, opacity: 0.3 }).addTo(map);
-      haloLine.bringToBack();
+      return;
     }
+    removeHalo();
+    haloIdx = idx;
+    haloLine = decoLine(coords, {
+      color: color, weight: 16, opacity: 0.3, blur: GL_MODE ? 9 : 0,
+    });
   }
   function removeHalo() {
     if (haloLine) {
-      map.removeLayer(haloLine);
+      haloLine.remove();
       haloLine = null;
+      haloIdx = null;
     }
   }
 
@@ -1568,6 +1851,14 @@
     var maxDelay = hourly.reduce(function (m, h) { return Math.max(m, h.delayVehHours); }, 0) || 1;
 
     document.getElementById('hourLabel').textContent = String(hour).padStart(2, '0') + ':00 — ' + getHourPhaseLabel(hour);
+
+    // أجواء الخريطة عبر CSS فقط: ذروة دافئة، ليل هادئ (athar-map.css)
+    if (mapContainerEl) {
+      mapContainerEl.dataset.phase =
+        (hour >= 7 && hour < 9) || (hour >= 16 && hour < 19) ? 'peak'
+          : (hour >= 21 || hour < 5) ? 'night' : 'day';
+      mapContainerEl.dataset.hour = String(hour);
+    }
     document.getElementById('hourDemand').textContent = formatArabicNumber(hourData.demand);
     document.getElementById('hourDelay').textContent = formatArabicNumber(hourData.delayVehHours);
 
@@ -1592,16 +1883,24 @@
       document.getElementById('hourChosenImpact').textContent = formatArabicNumber(chosenImpact);
 
       if (segIdx !== null) {
-        var reqColor = requestedSet[hour] ? hourColor(congestionShare) : '#2F7A57';
-        var chosenColor = chosenSet[hour] ? hourColor(congestionShare) : '#2F7A57';
+        var reqColor = requestedSet[hour] ? hourColor(congestionShare) : CORRIDOR_UNLOCKED;
+        var chosenColor = chosenSet[hour] ? hourColor(congestionShare) : CORRIDOR_UNLOCKED;
         drawHalo(segIdx, reqColor);
-        segmentLayers[segIdx].setStyle({ color: chosenColor });
+        if (GL_MODE) {
+          GL.api.setCorridorColor(segIdx, chosenColor);
+        } else {
+          segmentLayers[segIdx].setStyle({ color: chosenColor });
+        }
       }
     } else {
       compareRow.style.display = 'none';
       removeHalo();
       if (segIdx !== null) {
-        segmentLayers[segIdx].setStyle({ color: hourColor(congestionShare) });
+        if (GL_MODE) {
+          GL.api.setCorridorColor(segIdx, hourColor(congestionShare));
+        } else {
+          segmentLayers[segIdx].setStyle({ color: hourColor(congestionShare) });
+        }
       }
     }
   }
@@ -1669,19 +1968,21 @@
     var pA = [a[0] + offset, a[1] + offset * 0.5];
     var pB = [b[0] + offset, b[1] + offset * 0.5];
 
-    neighborLine = L.polyline([pA, pB], { color: '#8A929B', weight: 4, opacity: 0.85, dashArray: '3 5' }).addTo(map);
-    neighborConnector = L.polyline([midpoint(a, b), midpoint(pA, pB)], {
-      color: '#8A929B', weight: 1.5, dashArray: '2 4',
-    }).addTo(map);
-    neighborMarker = L.marker(midpoint(pA, pB), {
-      title: 'تصريح مجاور', alt: 'موقع تصريح مجاور على شارع موازٍ',
-    }).addTo(map);
-    neighborMarker.bindTooltip('تصريح مجاور', { permanent: true, direction: 'top', className: 'neighbor-tooltip' }).openTooltip();
+    neighborLine = decoLine([pA, pB], { color: '#9fb3c8', weight: 4, opacity: 0.85, dashed: true });
+    neighborConnector = decoLine([midpoint(a, b), midpoint(pA, pB)], {
+      color: '#9fb3c8', weight: 1.5, opacity: 0.8, dashed: true,
+    });
+    neighborMarker = decoMarker(midpoint(pA, pB), {
+      title: 'تصريح مجاور',
+      className: 'athar-neighbor-chip',
+      html: 'تصريح مجاور',
+      tooltip: 'تصريح مجاور على شارع موازٍ',
+    });
   }
 
   function removeNeighborPermitVisual() {
     [neighborLine, neighborConnector, neighborMarker].forEach(function (layer) {
-      if (layer) map.removeLayer(layer);
+      if (layer) layer.remove();
     });
     neighborLine = null;
     neighborConnector = null;
