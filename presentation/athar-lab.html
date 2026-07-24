@@ -6,22 +6,25 @@
   <title>مختبر أثر — خمس حلقات قرار</title>
   <style>
     :root {
-      --asphalt: #16252c;
+      /* المختبر صفحة سرد لا شاشة تشغيل: يحتفظ بلهجته البصرية (الفيروزي والمرجاني)
+         لكن كل دور بنيوي — الحبر والخط والسطح والظل — يأتي من athar-tokens.css،
+         فلا تتفرّق الهوية بين صفحة وأخرى في ما هو مشترك أصلاً. */
+      --asphalt: var(--athar-ink);
       --asphalt-soft: #263942;
-      --fog: #edf3f4;
-      --paper: #f8faf9;
-      --white: #ffffff;
+      --fog: var(--athar-canvas);
+      --paper: var(--athar-surface-raised);
+      --white: var(--athar-surface);
       --teal: #0c6e68;
       --teal-soft: #d8ebe8;
-      --amber: #d89a20;
-      --amber-soft: #fbebc7;
-      --coral: #c8533f;
-      --coral-soft: #f4dcd6;
-      --blue: #377a93;
-      --line: #c9d5d8;
-      --muted: #5f7078;
-      --shadow: 0 18px 45px rgba(22, 37, 44, 0.1);
-      --radius: 10px;
+      --amber: var(--athar-accent);
+      --amber-soft: var(--athar-accent-soft);
+      --coral: var(--athar-danger);
+      --coral-soft: var(--athar-danger-soft);
+      --blue: var(--athar-primary);
+      --line: var(--athar-line);
+      --muted: var(--athar-muted);
+      --shadow: var(--athar-shadow-lg);
+      --radius: var(--athar-radius);
     }
 
     * {
@@ -100,7 +103,7 @@
     }
 
     .brand small {
-      color: #b9c7cb;
+      color: var(--line);
       font-size: 0.68rem;
     }
 
@@ -114,7 +117,7 @@
 
     .loop-nav a {
       padding: 7px 10px;
-      color: #dce5e7;
+      color: var(--line);
       border-bottom: 2px solid transparent;
       text-decoration: none;
       white-space: nowrap;
@@ -148,7 +151,7 @@
     }
 
     .masthead .status-chip {
-      color: #9ed7d2;
+      color: var(--teal-soft);
     }
 
     main {
@@ -188,7 +191,7 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 20px;
-      color: #9ed7d2;
+      color: var(--teal-soft);
       font-size: 0.76rem;
       font-weight: 800;
       letter-spacing: 0.04em;
@@ -224,7 +227,7 @@
     .hero-copy {
       max-width: 670px;
       margin-bottom: 30px;
-      color: #cfdbde;
+      color: var(--line);
       font-size: clamp(1rem, 1.6vw, 1.25rem);
     }
 
@@ -234,14 +237,14 @@
       gap: 1px;
       max-width: 680px;
       overflow: hidden;
-      border: 1px solid #45606b;
-      background: #45606b;
+      border: 1px solid var(--muted);
+      background: var(--muted);
     }
 
     .hero-proof > div {
       min-height: 92px;
       padding: 16px;
-      background: #1c3039;
+      background: var(--asphalt);
     }
 
     .hero-proof strong {
@@ -252,7 +255,7 @@
     }
 
     .hero-proof span {
-      color: #9fb2b9;
+      color: var(--line);
       font-size: 0.72rem;
     }
 
@@ -262,11 +265,11 @@
       place-items: center;
       min-height: 480px;
       overflow: hidden;
-      border: 1px solid #47616a;
+      border: 1px solid var(--muted);
       background:
         linear-gradient(rgba(237, 243, 244, 0.1) 1px, transparent 1px),
         linear-gradient(90deg, rgba(237, 243, 244, 0.1) 1px, transparent 1px),
-        #1b3039;
+        var(--asphalt);
       background-size: 42px 42px;
       box-shadow: inset 0 0 0 14px rgba(22, 37, 44, 0.5);
     }
@@ -275,8 +278,8 @@
       position: absolute;
       width: 140%;
       height: 52px;
-      background: #31464f;
-      border-block: 2px solid #61747b;
+      background: var(--asphalt-soft);
+      border-block: 2px solid var(--muted);
       transform: rotate(-24deg);
     }
 
@@ -323,7 +326,7 @@
       inset: 18px 18px auto auto;
       max-width: 165px;
       padding: 9px 11px;
-      color: #c9d7da;
+      color: var(--line);
       background: rgba(22, 37, 44, 0.85);
       border-right: 3px solid var(--amber);
       font: 600 0.74rem/1.5 "Segoe UI", sans-serif;
@@ -453,7 +456,7 @@
 
     .controls {
       padding: 26px 30px;
-      background: #e6edef;
+      background: var(--fog);
       border-left: 1px solid var(--line);
     }
 
@@ -503,7 +506,7 @@
       width: 100%;
       height: 6px;
       appearance: none;
-      background: #bac9cd;
+      background: var(--line);
       border-radius: 999px;
       cursor: pointer;
     }
@@ -552,7 +555,7 @@
       margin: 16px 0;
       padding: 9px 12px;
       overflow-x: auto;
-      color: #d9ecea;
+      color: var(--teal-soft);
       background: var(--asphalt);
       border-right: 4px solid var(--teal);
       font: 700 0.76rem/1.5 "Consolas", monospace;
@@ -614,7 +617,7 @@
       height: 22px;
       margin: 20px 0 10px;
       overflow: hidden;
-      background: #dbe4e6;
+      background: var(--line);
       border: 1px solid var(--line);
     }
 
@@ -701,7 +704,7 @@
     .factor {
       min-width: 0;
       padding: 8px;
-      background: #edf3f4;
+      background: var(--fog);
     }
 
     .factor-name {
@@ -724,7 +727,7 @@
     .factor-weight {
       display: block;
       height: 4px;
-      background: #c4d2d5;
+      background: var(--line);
     }
 
     .factor-weight i {
@@ -766,7 +769,7 @@
     }
 
     .conflict-matrix td.active {
-      color: #7c271b;
+      color: var(--coral);
       background: var(--coral-soft);
       font-weight: 900;
     }
@@ -787,7 +790,7 @@
       padding: 7px 10px;
       color: var(--teal);
       background: var(--teal-soft);
-      border: 1px solid #a6d0cb;
+      border: 1px solid var(--teal-soft);
       font: 800 0.7rem/1 "Consolas", monospace;
     }
 
@@ -822,7 +825,7 @@
 
     .memory-table th {
       color: var(--muted);
-      background: #edf3f4;
+      background: var(--fog);
     }
 
     .memory-table td.numeric {
@@ -879,7 +882,7 @@
     }
 
     .competitive-position p {
-      color: #d8e8ee;
+      color: var(--teal-soft);
     }
 
     .position-stack {
@@ -904,7 +907,7 @@
     }
 
     .position-row span {
-      color: #e4eff2;
+      color: var(--fog);
       font-size: 0.83rem;
     }
 
@@ -956,7 +959,7 @@
 
     footer {
       padding: 22px 28px;
-      color: #b6c5ca;
+      color: var(--line);
       background: var(--asphalt);
       text-align: center;
       font-size: 0.72rem;
@@ -1465,10 +1468,10 @@
       'use strict';
 
       const Demo = window.AtharInnovationDemoData;
-      const number = new Intl.NumberFormat('ar-SA', {
+      const number = new Intl.NumberFormat('ar-SA-u-nu-latn', {
         maximumFractionDigits: 1,
       });
-      const integer = new Intl.NumberFormat('ar-SA', {
+      const integer = new Intl.NumberFormat('ar-SA-u-nu-latn', {
         maximumFractionDigits: 0,
       });
 
@@ -1477,7 +1480,7 @@
       }
 
       function formatDate(iso) {
-        return new Intl.DateTimeFormat('ar-SA', {
+        return new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',

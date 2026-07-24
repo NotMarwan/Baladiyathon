@@ -13,10 +13,11 @@ const pages = [
   'athar-prototype.html',
   'athar-lab.html',
   'athar-city-impact.html',
+  'athar-sources.html',
 ];
 const navJs = fs.readFileSync(path.join(__dirname, '..', 'athar-nav.js'), 'utf8');
 
-ok('الشريط يربط صفحات العائلة الست', () => {
+ok('الشريط يربط كل صفحات العائلة', () => {
   for (const page of pages) {
     assert.ok(navJs.includes(`"${page}"`), `nav missing link to ${page}`);
   }
@@ -31,7 +32,7 @@ ok('كل صفحة عائلة تحمّل athar-nav.js', () => {
 
 ok('الشريط يعلّم الصفحة الحالية بتسميات عربية', () => {
   assert.ok(navJs.includes('aria-current'));
-  for (const label of ['مكتب المراجع', 'شاشة القرار', 'الخريطة', 'النموذج التفاعلي', 'مختبر الابتكار', 'لوحة أثر المدينة']) {
+  for (const label of ['مكتب المراجع', 'شاشة القرار', 'الخريطة', 'النموذج التفاعلي', 'مختبر الابتكار', 'لوحة أثر المدينة', 'سجل المصادر']) {
     assert.ok(navJs.includes(label), `missing label ${label}`);
   }
 });

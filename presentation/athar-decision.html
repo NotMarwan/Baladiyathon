@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="athar-tokens.css">
   <style>
     :root {
-      --ink: #15211b;
-      --muted: #68746d;
-      --paper: #f3f2ec;
-      --surface: #fffef9;
-      --line: #d7dbd4;
-      --green: #0e6b4f;
-      --green-soft: #dcece5;
-      --amber: #a45e0d;
-      --amber-soft: #f7ead4;
-      --red: #a3392e;
-      --red-soft: #f7e2de;
-      --blue: #315a78;
-      --shadow: 0 18px 48px rgba(31, 43, 36, 0.09);
+      --ink: var(--athar-ink);
+      --muted: var(--athar-muted);
+      --paper: var(--athar-canvas);
+      --surface: var(--athar-surface);
+      --line: var(--athar-line);
+      --green: var(--athar-success);
+      --green-soft: var(--athar-success-soft);
+      --amber: var(--athar-warning);
+      --amber-soft: var(--athar-warning-soft);
+      --red: var(--athar-danger);
+      --red-soft: var(--athar-danger-soft);
+      --blue: var(--athar-primary);
+      --shadow: var(--athar-shadow-lg);
     }
 
     * {
@@ -935,7 +935,7 @@
     };
 
     const decisionService = AtharDecision.createDecisionService(dependencies);
-    const formatter = new Intl.NumberFormat('ar-SA', {
+    const formatter = new Intl.NumberFormat('ar-SA-u-nu-latn', {
       maximumFractionDigits: 1,
     });
 

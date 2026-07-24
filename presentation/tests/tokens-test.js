@@ -50,6 +50,48 @@ ok('الوسوم تحمل الخط العربي أولاً والأحادي لل
   assert.ok(/--athar-font-mono:[^;]*monospace/.test(tokens), 'الخط الأحادي مفقود');
 });
 
+/* ---- انتشار الهوية: كل صفحة داخل النظام، والانحراف مسقوف ---- */
+
+/**
+ * السقف لكل صفحة هو عدد الألوان الخام المسموح بها بعد التوحيد.
+ * صفر مستحيل: ألوان طبقات الخريطة وثوابت الرسم في JS لا تقرأ متغيّرات CSS.
+ * لكنها معدودة ومقصودة — ورفع أي سقف هنا قرار واعٍ لا انزلاق.
+ */
+const HEX_BUDGET = {
+  'athar-desk.html': 0,
+  'athar-map.html': 4,
+  'athar-sources.html': 4,
+  'athar-city-impact.html': 8,
+  'athar-decision.html': 13,
+  'athar-lab.html': 3,
+  'athar-prototype.html': 12,
+};
+
+ok('كل صفحة عائلة تستورد ملف الوسوم أو تحمّل الشريط الذي يحقنه', () => {
+  Object.keys(HEX_BUDGET).forEach((page) => {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    assert.ok(html.indexOf('athar-tokens.css') !== -1 || html.indexOf('athar-nav.js') !== -1,
+      `${page} خارج نظام الوسوم`);
+  });
+});
+
+ok('انحراف اللوحة مسقوف في كل صفحة', () => {
+  Object.keys(HEX_BUDGET).forEach((page) => {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    const distinct = new Set((html.match(/#[0-9a-fA-F]{3,8}\b/g) || []).map((h) => h.toLowerCase()));
+    assert.ok(distinct.size <= HEX_BUDGET[page],
+      `${page}: ${distinct.size} لوناً خاماً، السقف ${HEX_BUDGET[page]} — `
+      + [...distinct].join(' '));
+  });
+});
+
+ok('لا صفحة تعيد تعريف الشريط الداكن القديم', () => {
+  Object.keys(HEX_BUDGET).forEach((page) => {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    assert.ok(html.indexOf('#102535') === -1, `${page} يحمل لون الشريط الداكن السابق`);
+  });
+});
+
 /* ---- التباين: يُحسب هنا لا يُفترض ---- */
 
 function hexOf(token) {

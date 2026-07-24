@@ -4,8 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>أثر — لوحة أثر المدينة (سيناريو تمثيلي)</title>
-<style>
-  :root{--asphalt:#102535;--paper:#eef1ef;--surface:#fff;--ink:#17242c;--muted:#62717a;--blue:#1f6b8f;--amber:#d19231;--mint:#dcefe4;--line:#d4dcda;--red:#b23b3b;--green:#2e7d4f}
+<link rel="stylesheet" href="athar-tokens.css">
+  <style>
+  :root{
+    --asphalt:var(--athar-ink);
+    --paper:var(--athar-canvas);
+    --surface:var(--athar-surface);
+    --ink:var(--athar-ink);
+    --muted:var(--athar-muted);
+    --blue:var(--athar-primary);
+    --amber:var(--athar-accent);
+    --mint:var(--athar-success-soft);
+    --line:var(--athar-line);
+    --red:var(--athar-danger);
+    --green:var(--athar-success);
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.75}
   main{width:min(1080px,92vw);margin:auto;padding:76px 0 84px}
@@ -100,7 +113,7 @@
 (function () {
   'use strict';
   const p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
-  const fmt = (n) => Math.round(n).toLocaleString('ar-SA');
+  const fmt = (n) => Math.round(n).toLocaleString('ar-SA-u-nu-latn');
   const fmtRange = (a, b) => fmt(a) + ' – ' + fmt(b);
 
   const target = p.totals.savedVehHours;

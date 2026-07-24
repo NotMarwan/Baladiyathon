@@ -6,13 +6,16 @@
 <title>أثر — النموذج التفاعلي</title>
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
 <link rel="stylesheet" href="athar-map.css">
-<style>
+<link rel="stylesheet" href="athar-tokens.css">
+  <style>
   :root{
-    --ground:#ECEFF2; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6672;
-    --faint:#8A929B; --line:#D8DEE4; --navy:#1D4E77; --navy-soft:#E9F1F7;
-    --ochre:#A9722B; --ochre-soft:#F4EDE1; --good:#2F7A57; --bad:#B23B32;
-    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
-    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
+    --ground:var(--athar-canvas); --surface:var(--athar-surface); --ink:var(--athar-ink);
+    --muted:var(--athar-muted); --faint:var(--athar-faint); --line:var(--athar-line);
+    --navy:var(--athar-primary); --navy-soft:var(--athar-primary-soft);
+    --ochre:var(--athar-accent); --ochre-soft:var(--athar-accent-soft);
+    --good:var(--athar-success); --bad:var(--athar-danger);
+    --mono:var(--athar-font-mono);
+    --sans:var(--athar-font);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6;padding:32px 20px 64px}
@@ -30,9 +33,9 @@
   .badge-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .badge{display:inline-flex;align-items:center;gap:6px;background:var(--ochre-soft);color:var(--ochre);font-weight:600;font-size:12.5px;padding:5px 11px;border-radius:20px}
   .badge.api{background:var(--navy-soft);color:var(--navy)}
-  .badge.api.offline{background:#F4EDE1;color:var(--ochre)}
+  .badge.api.offline{background:var(--ochre-soft);color:var(--ochre)}
   .badge.link{background:var(--navy);color:#fff;text-decoration:none}
-  .badge.link:hover{background:#163f5f}
+  .badge.link:hover{background:var(--athar-primary-hover)}
   .badge-dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
 
   h2{font-size:19px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
@@ -44,7 +47,7 @@
   .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
   @media(max-width:900px){.grid2{grid-template-columns:1fr}}
 
-  #map{height:420px;border-radius:8px;border:1px solid #22394e}
+  #map{height:420px;border-radius:8px;border:1px solid var(--line)}
   .map-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 
   .timeline-controls{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
@@ -64,7 +67,7 @@
   button{font-family:var(--sans);cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 16px;font-size:14px;font-weight:600;transition:background .15s, color .15s, border-color .15s}
   button:hover{background:var(--navy-soft);border-color:var(--navy)}
   button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
-  button.primary:hover{background:#163f5f}
+  button.primary:hover{background:var(--athar-primary-hover)}
   button.ghost{background:transparent}
   button:disabled{opacity:.5;cursor:not-allowed}
 
@@ -77,9 +80,9 @@
   .impact-score{display:flex;align-items:center;gap:18px}
   .impact-score .big{font-family:var(--mono);font-size:52px;font-weight:700;line-height:1;color:var(--navy)}
   .chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700}
-  .chip.low{background:#E4F1EA;color:var(--good)}
+  .chip.low{background:var(--athar-success-soft);color:var(--good)}
   .chip.medium{background:var(--ochre-soft);color:var(--ochre)}
-  .chip.high{background:#F7E4E1;color:var(--bad)}
+  .chip.high{background:var(--athar-danger-soft);color:var(--bad)}
   .impact-detail{font-size:14px;color:var(--muted);margin-top:10px}
   .impact-detail b{color:var(--ink)}
 
@@ -100,7 +103,7 @@
   @media(max-width:900px){.value-row{grid-template-columns:1fr}}
   .value-card .num{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--navy)}
   .value-card .lab{font-size:13px;color:var(--muted);margin-top:6px}
-  .value-card.warn{border-color:var(--bad);background:#FBEFEE}
+  .value-card.warn{border-color:var(--bad);background:var(--athar-danger-soft)}
   .value-card.warn .num{color:var(--bad);font-size:15px}
 
   .assump-table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -116,7 +119,7 @@
   .route-cards{display:flex;flex-direction:column;gap:12px}
   .route-card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--ground);display:flex;flex-direction:column;gap:8px;transition:border-color .15s, box-shadow .15s}
   .route-card:hover{border-color:var(--navy);box-shadow:0 4px 14px rgba(21,32,43,.08)}
-  .route-card.best{border-color:var(--good);background:#F1F8F4}
+  .route-card.best{border-color:var(--good);background:var(--athar-success-soft)}
   .route-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   .route-rank{font-weight:700;color:var(--navy)}
   .route-time{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink)}
@@ -126,7 +129,7 @@
   .route-streets{font-size:13px;color:var(--muted)}
   .route-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
   .route-meta b{color:var(--ink);font-family:var(--mono)}
-  .route-poi{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--bad);background:#F7E4E1;padding:3px 9px;border-radius:14px}
+  .route-poi{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--bad);background:var(--athar-danger-soft);padding:3px 9px;border-radius:14px}
   .route-poi.school{color:var(--ochre);background:var(--ochre-soft)}
 
   /* Forecast heatmap */
@@ -141,7 +144,7 @@
   .heatmap .hm-cell{height:26px;border-radius:3px;cursor:default;transition:transform .1s}
   .heatmap .hm-cell:hover{transform:scale(1.15);outline:2px solid var(--navy);z-index:2}
   .heatmap-legend{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--muted)}
-  .heatmap-legend .legend-bar{flex:0 0 120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#2F7A57,#A9722B,#B23B32)}
+  .heatmap-legend .legend-bar{flex:0 0 120px;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--good),var(--ochre),var(--bad))}
   .heatmap-legend .legend-note{margin-inline-start:auto}
   .calibrate-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
   .calibrate-btn{display:inline-block;padding:8px 16px;border:1px solid var(--navy);background:transparent;color:var(--navy);border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600}
@@ -149,7 +152,7 @@
   .calibrate-status{font-size:13px;font-weight:600}
   .calibrate-status.ok{color:var(--good)}
   .calibrate-status.err{color:var(--bad)}
-  .badge.api.calibrated{background:#E4F1EA;color:var(--good)}
+  .badge.api.calibrated{background:var(--athar-success-soft);color:var(--good)}
 
   footer.foot-note{font-size:12px;color:var(--faint);text-align:center;padding-top:8px}
 
@@ -167,15 +170,15 @@
   }
   #tmp-view h2{font-size:22px}
   #tmp-view table{width:100%;border-collapse:collapse;margin:14px 0}
-  #tmp-view th,#tmp-view td{border:1px solid #999;padding:8px 10px;text-align:start;font-size:13px}
+  #tmp-view th,#tmp-view td{border:1px solid var(--line);padding:8px 10px;text-align:start;font-size:13px}
   .sig-line{margin-top:40px;display:flex;justify-content:space-between}
-  .sig-box{width:40%;border-top:1px solid #333;padding-top:6px;font-size:12px}
-  .src-badge{display:inline-block;font-size:.68rem;color:var(--muted, #667);background:var(--ground, #f2f4f6);border:1px solid var(--line, #dde);border-radius:6px;padding:1px 7px;margin-inline-start:6px;vertical-align:middle}
-  .wzdx-btn{margin-top:10px;padding:7px 16px;border:1px solid var(--navy, #1d4e77);background:transparent;color:var(--navy, #1d4e77);border-radius:8px;cursor:pointer;font-family:inherit;font-size:.85rem}
-  .wzdx-btn:hover{background:var(--navy, #1d4e77);color:#fff}
+  .sig-box{width:40%;border-top:1px solid var(--ink);padding-top:6px;font-size:12px}
+  .src-badge{display:inline-block;font-size:.68rem;color:var(--muted);background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-inline-start:6px;vertical-align:middle}
+  .wzdx-btn{margin-top:10px;padding:7px 16px;border:1px solid var(--navy);background:transparent;color:var(--navy);border-radius:8px;cursor:pointer;font-family:inherit;font-size:.85rem}
+  .wzdx-btn:hover{background:var(--navy);color:#fff}
   .wzdx-btn:disabled{cursor:not-allowed;opacity:.45;background:transparent;color:var(--muted)}
-  .cf-card{margin-top:12px;border:1px dashed var(--navy, #1d4e77);border-radius:10px;padding:12px 16px;background:var(--ground, #f7f9fb)}
-  .cf-card h4{margin:0 0 6px;font-size:.9rem;color:var(--navy, #1d4e77)}
+  .cf-card{margin-top:12px;border:1px dashed var(--navy);border-radius:10px;padding:12px 16px;background:var(--ground)}
+  .cf-card h4{margin:0 0 6px;font-size:.9rem;color:var(--navy)}
   .cf-card p{margin:0 0 8px;font-size:.8rem;line-height:1.7}
 </style>
 </head>
@@ -431,7 +434,7 @@
     <tr><th>تصاريح مُدمجة</th><td id="tmpMerged">—</td></tr>
     <tr><th>تاريخ الإصدار</th><td id="tmpDate">—</td></tr>
   </table>
-  <p style="font-size:12px;color:#555">جميع الأرقام المرورية بيانات توضيحية للعرض. المصادر: momah.gov.sa/ar/hackathon، balady.gov.sa، researchgate.net/publication/237896838.</p>
+  <p style="font-size:12px;color:var(--muted)">جميع الأرقام المرورية بيانات توضيحية للعرض. المصادر: momah.gov.sa/ar/hackathon، balady.gov.sa، researchgate.net/publication/237896838.</p>
   <div class="sig-line">
     <div class="sig-box">توقيع ضابط الترخيص</div>
     <div class="sig-box">توقيع المقاول المنفذ</div>
@@ -506,7 +509,8 @@
     ]
   };
 
-  var IMPACT_COLORS = { high: '#ff6f6a', medium: '#e8a33d', low: '#34d399' };
+  // نبرات الحالة نفسها في athar-tokens.css — لا لوحة ثانية للأثر.
+  var IMPACT_COLORS = { high: '#B23B32', medium: '#8C5C1C', low: '#2C7351' };
 
   // Local road network (digitized from OpenStreetMap © contributors, ODbL).
   // Embedded fallback so alternative routing works fully offline (file://).
@@ -671,8 +675,8 @@
     var fill = document.getElementById('budgetMeterFill');
     fill.style.width = Math.min(100, b.pctUsed) + '%';
     fill.style.background = b.verdict === 'ضمن الميزانية'
-      ? '#2e9e5b'
-      : (b.verdict === 'قرب السقف' ? '#d9a021' : '#d64545');
+      ? '#2C7351'
+      : (b.verdict === 'قرب السقف' ? '#8C5C1C' : '#B23B32');
   }
 
   function renderCalibration(rawVehHours) {
@@ -725,7 +729,7 @@
     notice.textContent = 'تعذّر عرض الخريطة على هذا الجهاز — الممر والنتائج تعمل';
     notice.setAttribute('role', 'status');
     notice.style.cssText = 'position:absolute;z-index:1000;top:10px;left:50%;transform:translateX(-50%);'
-      + 'background:#ffffff;color:#1d1d1f;border:1px solid #e2e0db;font-size:12.5px;font-weight:600;'
+      + 'background:#ffffff;color:var(--ink);border:1px solid var(--line);font-size:12.5px;font-weight:600;'
       + 'padding:8px 14px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12);opacity:1;'
       + 'transition:opacity .6s ease;';
     var mapEl = document.getElementById('map');
@@ -746,9 +750,12 @@
   var segmentLayers = [];
   var segmentCasings = [];
   var mapContainerEl = document.getElementById('map');
-  var CORRIDOR_CORE = '#59d6f2';
-  var CORRIDOR_CLOSED = '#e5484d';
-  var CORRIDOR_UNLOCKED = '#34d399';
+  // ألوان الممر مطابقة لـ CORRIDOR_STATE_COLORS في athar-worksmap.js: الحالة
+  // نفسها لا يجوز أن تحمل لونين في صفحتين. السماوي والنعناعي كانا بقية تصميم
+  // داكن سابق، ولا يُقرآن فوق أرضية فاتحة.
+  var CORRIDOR_CORE = '#1c7ed6';
+  var CORRIDOR_CLOSED = '#c92a2a';
+  var CORRIDOR_UNLOCKED = '#2f9e44';
 
   // ---------------------------------------------------------------
   // طبقة الرسم الزخرفي فوق الخريطة
@@ -937,7 +944,8 @@
   // Layers for computed alternative routes + POI markers.
   var routeLayers = [];
   var poiMarkers = [];
-  var ROUTE_COLORS = ['#d19231', '#59d6f2', '#8fa3b8'];
+  // البديل الأول بلون الهوية، ثم الكهرماني، ثم الرمادي — تدرّج أفضلية لا ثلاثة ألوان متساوية.
+  var ROUTE_COLORS = ['#1D4E77', '#8C5C1C', '#5A6672'];
   var state_lastRoutes = null;
 
   function clearRouteLayers() {
@@ -1001,7 +1009,7 @@
       }));
       if (isBestRecommended) {
         routeLayers.push(decoLine(latlngs, {
-          color: '#ffe1a8', weight: 1.6, opacity: 0.9, blur: 3,
+          color: '#F4EDE1', weight: 1.6, opacity: 0.9, blur: 3,
         }));
       }
     });
@@ -1125,7 +1133,7 @@
     if (!worksData) return;
     (worksData.features || []).forEach(function (feature) {
       var props = feature.properties || {};
-      var color = IMPACT_COLORS[props.impactLevel] || '#7fb3d1';
+      var color = IMPACT_COLORS[props.impactLevel] || '#5A6672';
       var coords = (feature.geometry.coordinates || []).map(function (c) {
         return [c[1], c[0]];
       });
@@ -1294,11 +1302,11 @@
   var neighborPermitsInput = document.getElementById('neighborPermits');
 
   function formatArabicNumber(n) {
-    return new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 }).format(Math.round(n));
+    return new Intl.NumberFormat('ar-SA-u-nu-latn', { maximumFractionDigits: 0 }).format(Math.round(n));
   }
 
   function formatPercent(n) {
-    return new Intl.NumberFormat('ar-SA', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
+    return new Intl.NumberFormat('ar-SA-u-nu-latn', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
   }
 
   // Show how many unofficial demo assumptions feed a headline number, with the
@@ -1864,9 +1872,9 @@
     var pA = [a[0] + offset, a[1] + offset * 0.5];
     var pB = [b[0] + offset, b[1] + offset * 0.5];
 
-    neighborLine = decoLine([pA, pB], { color: '#9fb3c8', weight: 4, opacity: 0.85, dashed: true });
+    neighborLine = decoLine([pA, pB], { color: '#8A929B', weight: 4, opacity: 0.85, dashed: true });
     neighborConnector = decoLine([midpoint(a, b), midpoint(pA, pB)], {
-      color: '#9fb3c8', weight: 1.5, opacity: 0.8, dashed: true,
+      color: '#8A929B', weight: 1.5, opacity: 0.8, dashed: true,
     });
     neighborMarker = decoMarker(midpoint(pA, pB), {
       title: 'تصريح مجاور',
@@ -1943,19 +1951,19 @@
     { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
     { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
     { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
-    { key: 'digOnceBand', label: 'نطاق وفر Dig-Once', value: '٢٥–٣٣٪', tag: 'src', note: 'GAO للمناطق الحضرية الكثيفة — مصدر #7' },
+    { key: 'digOnceBand', label: 'نطاق وفر Dig-Once', value: '25–33٪', tag: 'src', note: 'GAO للمناطق الحضرية الكثيفة — مصدر #7' },
     { key: 'trenchKmDemo', label: 'طول الخندق في حساب Dig-Once', value: '1.2 كم', tag: 'assume', note: 'قيمة العرض المستخدمة في بطاقة الوفر — تُستبدل بطول التصريح الفعلي' },
-    { key: 'workZoneFriction', label: 'معامل احتكاك منطقة العمل', value: '١٫١٠', tag: 'assume', note: 'أرضية: زمن الإغلاق ≥ ١١٠٪ من الأساس — يمنع تصفير تأخير الليل (مِراج ٩٩٫٦٪)' },
-    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: '٠٫٣٥', tag: 'assume', note: 'تطبيع درجة 0-100 — قابل لإعادة المعايرة من سجل back-test' },
-    { key: 'minCapacityFraction', label: 'أرضية السعة الدنيا', value: '٠٫٢٥', tag: 'assume', note: 'يمنع القسمة على صفر عند إغلاق كل المسارات' },
-    { key: 'compoundFactor', label: 'عامل التأثير المركّب', value: '١٫٣', tag: 'assume', note: 'تراكب تصريحين متجاورين نشطين معاً' },
-    { key: 'occupancyBand', label: 'نطاق الإشغال', value: '١٫٢–١٫٦ شخص/مركبة', tag: 'assume', note: 'كود 203 يشترط الإشغال لا عدّ المركبات (src-003) — لا رقم رياض رسمي' },
+    { key: 'workZoneFriction', label: 'معامل احتكاك منطقة العمل', value: '1.10', tag: 'assume', note: 'أرضية: زمن الإغلاق ≥ 110٪ من الأساس — يمنع تصفير تأخير الليل (مِراج 99.6٪)' },
+    { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: '0.35', tag: 'assume', note: 'تطبيع درجة 0-100 — قابل لإعادة المعايرة من سجل back-test' },
+    { key: 'minCapacityFraction', label: 'أرضية السعة الدنيا', value: '0.25', tag: 'assume', note: 'يمنع القسمة على صفر عند إغلاق كل المسارات' },
+    { key: 'compoundFactor', label: 'عامل التأثير المركّب', value: '1.3', tag: 'assume', note: 'تراكب تصريحين متجاورين نشطين معاً' },
+    { key: 'occupancyBand', label: 'نطاق الإشغال', value: '1.2–1.6 شخص/مركبة', tag: 'assume', note: 'كود 203 يشترط الإشغال لا عدّ المركبات (src-003) — لا رقم رياض رسمي' },
     { key: 'wageMonthlySAR', label: 'الأجر الشهري', value: formatArabicNumber(AtharEngine.DEFAULTS.wageMonthlySAR) + ' ﷼', tag: 'src', note: 'GASTAT الربع الأول 2026 (src-017)' },
-    { key: 'votShare', label: 'نصيب قيمة الوقت من الأجر', value: '٤٠–٧٠٪', tag: 'src', note: 'كود الطرق 203 (src-003): راكب مشارك → سفر بين المدن' },
-    { key: 'idleFuelBand', label: 'استهلاك التعطل (نطاق)', value: '٠٫٧–١٫١ لتر/ساعة-مركبة', tag: 'assume', note: 'نطاق تقديري بترتيب الحجم' },
-    { key: 'busService', label: 'خدمة الحافلات', value: '٩ مسارات فعلية × ٤ حافلات/ساعة', tag: 'assume', note: 'المسارات حقيقية (RCRC src-011)؛ التواتر افتراض للعرض' },
-    { key: 'ridersBand', label: 'ركاب/حافلة (نطاق)', value: '١٥–٤٠ راكب', tag: 'assume', note: 'نطاق افتراضي للعرض' },
-    { key: 'rcrcTransit', label: 'نقل عام ضمن ٢كم من الممر', value: '9 مسارات · 70 محطة · 6 محطات مترو', tag: 'src', note: 'لقطة حقيقية من RCRC Open Data بتاريخ 2026-07-23 — data/rcrc-corridor-transit.json' },
+    { key: 'votShare', label: 'نصيب قيمة الوقت من الأجر', value: '40–70٪', tag: 'src', note: 'كود الطرق 203 (src-003): راكب مشارك → سفر بين المدن' },
+    { key: 'idleFuelBand', label: 'استهلاك التعطل (نطاق)', value: '0.7–1.1 لتر/ساعة-مركبة', tag: 'assume', note: 'نطاق تقديري بترتيب الحجم' },
+    { key: 'busService', label: 'خدمة الحافلات', value: '9 مسارات فعلية × 4 حافلات/ساعة', tag: 'assume', note: 'المسارات حقيقية (RCRC src-011)؛ التواتر افتراض للعرض' },
+    { key: 'ridersBand', label: 'ركاب/حافلة (نطاق)', value: '15–40 راكب', tag: 'assume', note: 'نطاق افتراضي للعرض' },
+    { key: 'rcrcTransit', label: 'نقل عام ضمن 2كم من الممر', value: '9 مسارات · 70 محطة · 6 محطات مترو', tag: 'src', note: 'لقطة حقيقية من RCRC Open Data بتاريخ 2026-07-23 — data/rcrc-corridor-transit.json' },
   ];
 
   function renderAssumptions() {
@@ -2076,7 +2084,7 @@
       state.forecastProfile = result.profile;
       state.forecastCalibrated = true;
       status.className = 'calibrate-status ok';
-      status.textContent = '✓ تمّت المعايرة من ' + result.sampleCount + ' صف — تقلّص نطاق عدم اليقين إلى ±٨٪';
+      status.textContent = '✓ تمّت المعايرة من ' + result.sampleCount + ' صف — تقلّص نطاق عدم اليقين إلى ±8٪';
       setForecastBadge(true, result.sampleCount);
       renderHeatmap();
     };

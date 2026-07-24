@@ -561,7 +561,7 @@
   var el = document.getElementById('portfolio-saved-veh-hours');
   if (el && typeof AtharPortfolio !== 'undefined') {
     var p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
-    el.textContent = Math.round(p.totals.savedVehHours).toLocaleString('ar-SA') + ' س-م';
+    el.textContent = Math.round(p.totals.savedVehHours).toLocaleString('ar-SA-u-nu-latn') + ' س-م';
   }
 })();
 </script>
@@ -600,7 +600,7 @@
     destinationNodeId: 'n2',
   };
 
-  var formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 1 });
+  var formatter = new Intl.NumberFormat('ar-SA-u-nu-latn', { maximumFractionDigits: 1 });
 
   btnIncomplete.addEventListener('click', function () {
     var verdict = AtharDecision.validateDecisionInput(INCOMPLETE_INPUT);

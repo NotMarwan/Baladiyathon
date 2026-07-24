@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>أثر — سجل الأدلة المباشرة</title>
+  <link rel="stylesheet" href="athar-tokens.css">
   <style>
     :root{
-      --asphalt:#102535;
-      --blue:#1f6b8f;
-      --paper:#f3f0e8;
-      --card:#fffdf8;
-      --ink:#17242c;
-      --muted:#617079;
-      --line:#d7d3c8;
-      --amber:#c98524;
-      --mint:#d9eee2;
+      --asphalt:var(--athar-ink);
+      --blue:var(--athar-primary);
+      --paper:var(--athar-canvas);
+      --card:var(--athar-surface);
+      --ink:var(--athar-ink);
+      --muted:var(--athar-muted);
+      --line:var(--athar-line);
+      --amber:var(--athar-accent);
+      --mint:var(--athar-success-soft);
     }
     *{box-sizing:border-box}
     html{background:var(--paper)}
@@ -210,5 +211,6 @@
   });
 })();
 </script>
+  <script src="athar-nav.js"></script>
 </body>
 </html>

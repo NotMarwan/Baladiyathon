@@ -39,7 +39,7 @@
     var value = Number(ms);
     if (!value) return '—';
     try {
-      return new Intl.DateTimeFormat('ar-SA', { dateStyle: 'medium' }).format(new Date(value));
+      return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { dateStyle: 'medium' }).format(new Date(value));
     } catch (err) {
       return new Date(value).toISOString().slice(0, 10);
     }

@@ -14,6 +14,7 @@
     { file: "athar-prototype.html", label: 'النموذج التفاعلي' },
     { file: "athar-lab.html", label: 'مختبر الابتكار' },
     { file: "athar-city-impact.html", label: 'لوحة أثر المدينة' },
+    { file: "athar-sources.html", label: 'سجل المصادر' },
   ];
 
   var current = (window.location.pathname.split('/').pop() || '').toLowerCase();
