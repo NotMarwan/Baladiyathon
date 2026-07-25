@@ -108,15 +108,56 @@
     }).catch(function () { /* وضع الملف المحلي — لا خادم */ });
   }
 
+  /**
+   * الشريط يحمل حصيلة المراجع لا عدّاد تخزين.
+   * ---------------------------------------------------------------------------
+   * «12 قراراً محفوظاً» يصف الآلة؛ «قرّرت 12 · فرق متاح 4.2 مليون ساعة-مركبة»
+   * يصف عمل المراجع. الأول تفصيلة تنفيذ والثاني سبب فتح الأداة غداً. ومكان
+   * الحفظ يبقى مذكوراً — لكن حيث يليق، في التلميحة لا في العنوان.
+   */
   function renderLedger() {
     if (!ledgerEl) return;
+
     var counts = AtharDecisionRecord.counts(decisions);
     if (!counts.decisions) {
-      ledgerEl.textContent = '';
+      ledgerEl.innerHTML = '';
+      ledgerEl.hidden = true;
       return;
     }
-    ledgerEl.textContent = counts.decisions + ' قراراً محفوظاً على '
-      + counts.works + ' عملاً' + (serverLedger ? ' · متزامن مع الخادم' : ' · محفوظ محلياً');
+
+    ledgerEl.hidden = false;
+    ledgerEl.innerHTML = AtharDeskSession.renderBadge(AtharDeskSession.summarize(decisions));
+    ledgerEl.setAttribute('title', counts.decisions + ' قراراً على ' + counts.works + ' عملاً · '
+      + (serverLedger ? 'متزامن مع الخادم' : 'محفوظ محلياً'));
+  }
+
+  /* ---------- لوحة الحصيلة ---------- */
+
+  var sessionEl = document.getElementById('deskSession');
+  var sessionReturnFocus = null;
+
+  function toggleSession(open) {
+    if (!sessionEl) return;
+    var show = open === undefined ? sessionEl.hidden : open;
+
+    if (show) {
+      sessionReturnFocus = document.activeElement;
+      sessionEl.innerHTML = AtharDeskSession.render(
+        AtharDeskSession.summarize(decisions), AtharEngine, store.counts().needsDecision
+      );
+      sessionEl.hidden = false;
+      var close = document.getElementById('deskSessionClose');
+      if (close) {
+        close.addEventListener('click', function () { toggleSession(false); });
+        close.focus();
+      }
+      return;
+    }
+
+    sessionEl.hidden = true;
+    sessionEl.innerHTML = '';
+    if (sessionReturnFocus && sessionReturnFocus.focus) sessionReturnFocus.focus();
+    sessionReturnFocus = null;
   }
 
   /* ---------- التحليل: يُحسب من العمل المحدد لحظة تحديده ---------- */
@@ -554,14 +595,21 @@
     var resolved = AtharDeskKeys.resolve(event);
     if (!resolved) return;
 
-    if (helpEl && !helpEl.hidden && resolved.intent !== 'help') {
+    // لوحة مفتوحة تبتلع كل مفتاح إلا مفتاحها والهروب: مراجع فتح لوحة لا يجد
+    // ضغطته تنفّذ خلفها على عمل لا يراه.
+    var openPanel = (helpEl && !helpEl.hidden) ? { el: helpEl, intent: 'help', close: toggleHelp }
+      : (sessionEl && !sessionEl.hidden)
+        ? { el: sessionEl, intent: 'session', close: toggleSession } : null;
+
+    if (openPanel && resolved.intent !== openPanel.intent) {
       if (resolved.intent !== 'escape') return;
       event.preventDefault();
-      toggleHelp(false);
+      openPanel.close(false);
       return;
     }
 
     if (resolved.intent === 'help') { event.preventDefault(); toggleHelp(); return; }
+    if (resolved.intent === 'session') { event.preventDefault(); toggleSession(); return; }
 
     if (resolved.intent === 'search') {
       event.preventDefault();
@@ -740,6 +788,8 @@
   // مسح صريح: العرض التوضيحي يحتاج عودة إلى نقطة الصفر بلا فتح أدوات المطوّر.
   var keyhint = document.getElementById('deskKeyhint');
   if (keyhint) keyhint.addEventListener('click', function () { toggleHelp(true); });
+
+  if (ledgerEl) ledgerEl.addEventListener('click', function () { toggleSession(true); });
 
   var resetButton = document.getElementById('deskReset');
   if (resetButton) {

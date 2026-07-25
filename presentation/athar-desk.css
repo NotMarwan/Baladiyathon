@@ -524,10 +524,84 @@ kbd {
 .desk-beyond { color: var(--athar-warning); font-size: 0.78rem; }
 
 /* ---- سجل القرارات في الشريط ---- */
+/* الحصيلة: زرّ لا لافتة — تُفتح لتُقرأ بتفصيلها وحدودها. */
 .desk-ledger {
+  font: inherit;
   font-size: 0.74rem;
   color: var(--athar-muted);
   font-variant-numeric: tabular-nums;
+  background: var(--athar-primary-soft);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-pill);
+  padding: 3px 12px;
+  cursor: pointer;
+  transition: border-color var(--athar-t-hover), color var(--athar-t-hover);
+}
+.desk-ledger[hidden] { display: none; }
+.desk-ledger strong { color: var(--athar-primary); font-family: var(--athar-font-mono); }
+.desk-ledger:hover { border-color: var(--athar-primary); color: var(--athar-ink); }
+.desk-ledger:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
+
+/* ---- لوحة الحصيلة ---- */
+
+.desk-session-card {
+  width: min(34rem, 100%);
+  max-height: 84vh;
+  overflow-y: auto;
+  padding: var(--athar-space-6);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-lg);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--athar-ink) 22%, transparent);
+}
+.desk-session-card h2 { font-size: 1.05rem; margin-bottom: var(--athar-space-4); }
+.desk-session-sub {
+  font-size: 0.85rem;
+  margin-top: var(--athar-space-6);
+  padding-top: var(--athar-space-3);
+  border-top: 1px solid var(--athar-line);
+}
+.desk-session-empty { font-size: 0.86rem; color: var(--athar-muted); line-height: 1.8; }
+
+.desk-session-figures,
+.desk-session-units {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--athar-space-3);
+  margin-block: var(--athar-space-3);
+}
+.desk-session-figures dt,
+.desk-session-units dt { font-size: 0.72rem; color: var(--athar-muted); }
+.desk-session-figures dd {
+  font-family: var(--athar-font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--athar-primary);
+  line-height: 1.2;
+}
+/* العمود يتّسع لثمانية أرقام؛ والكسر يقع بين حدّي النطاق لا داخل رقم. */
+.desk-session-units { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+.desk-session-units dd {
+  font-family: var(--athar-font-mono);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.desk-num { white-space: nowrap; }
+.desk-session-line { font-size: 0.86rem; line-height: 1.8; }
+.desk-session-line strong { font-family: var(--athar-font-mono); }
+.desk-session-note,
+.desk-session-caveat {
+  font-size: 0.78rem;
+  color: var(--athar-muted);
+  line-height: 1.7;
+  margin-top: var(--athar-space-2);
+}
+.desk-session-caveat {
+  color: var(--athar-warning);
+  background: var(--athar-warning-soft);
+  border-radius: var(--athar-radius-sm);
+  padding: var(--athar-space-2) var(--athar-space-3);
 }
 .desk-reset {
   font: inherit;

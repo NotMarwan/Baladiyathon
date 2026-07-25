@@ -36,12 +36,21 @@
 
   var style = document.createElement('style');
   style.textContent =
+    // سبعة روابط لا تتّسع في 390 بكسل. بلا تمرير داخلي تفيض على الصفحة كلها
+    // فتُزيح الجسد أفقياً — والمكتب تحتها ينكسر بعرض لا علاقة له بمحتواه.
+    // التمرير داخل الشريط يحبس الفيض حيث نشأ.
     '.athar-nav{position:fixed;top:0;right:0;left:0;z-index:9;display:flex;gap:var(--athar-space-1);' +
-    'align-items:center;justify-content:center;background:var(--athar-surface);' +
+    'align-items:center;background:var(--athar-surface);' +
+    // safe center: يتوسّط ما دام يتّسع، ويعود إلى البداية حين يفيض. التوسيط
+    // الأعمى مع التمرير يقصّ أول عنصر خارج المدى فلا يُبلغ إليه أبداً.
+    'justify-content:center;justify-content:safe center;' +
     'border-bottom:1px solid var(--athar-line);box-shadow:var(--athar-shadow-sm);' +
-    'padding:var(--athar-space-2) var(--athar-space-3);font-family:var(--athar-font)}' +
+    'padding:var(--athar-space-2) var(--athar-space-3);font-family:var(--athar-font);' +
+    'overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}' +
+    '.athar-nav::-webkit-scrollbar{display:none}' +
     '.athar-nav a{color:var(--athar-muted);text-decoration:none;font-weight:700;font-size:13px;' +
     'border-radius:var(--athar-radius-sm);padding:6px 14px;border:1px solid transparent;' +
+    'white-space:nowrap;flex:0 0 auto;' +
     'transition:color var(--athar-t-hover),background var(--athar-t-hover)}' +
     '.athar-nav a:hover{background:var(--athar-primary-soft);color:var(--athar-primary)}' +
     '.athar-nav a:focus-visible{outline:2px solid var(--athar-primary);outline-offset:2px}' +

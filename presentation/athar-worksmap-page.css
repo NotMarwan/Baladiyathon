@@ -185,6 +185,18 @@ fieldset.athar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 @media (max-width: 640px) {
   #control-panel { inset-inline: 12px; width: auto; }
   .wm-legend { display: none; }
+
+  /* الشريط صفّ واحد بارتفاع ثابت: على 390 بكسل يدفع محتواه خارج الشاشة
+     فيُزيح الجسد كله أفقياً. يلتفّ هنا ويترك ارتفاعه يتبع ما فيه. */
+  .wm-bar {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding-block: 8px;
+    padding-inline: 12px;
+  }
+  .wm-bar-spacer { display: none; }
+  .wm-search { flex: 1 1 100%; min-width: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

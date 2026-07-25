@@ -19,7 +19,8 @@
   <h1>مكتب المراجع — محفظة تصاريح الحفر</h1>
   <span class="desk-badge">بيانات توضيحية للعرض</span>
   <span class="desk-bar-spacer"></span>
-  <span class="desk-ledger" id="deskLedger" role="status"></span>
+  <button type="button" class="desk-ledger" id="deskLedger" role="status"
+          aria-haspopup="dialog" hidden></button>
   <button type="button" class="desk-keyhint" id="deskKeyhint" aria-haspopup="dialog">
     اختصارات <kbd>؟</kbd>
   </button>
@@ -76,6 +77,9 @@
 <div class="desk-help" id="deskHelp" role="dialog" aria-modal="true"
      aria-labelledby="deskHelpTitle" hidden></div>
 
+<div class="desk-help" id="deskSession" role="dialog" aria-modal="true"
+     aria-labelledby="deskSessionTitle" hidden></div>
+
 <!--
   كلها defer. الفرق ليس في البايتات بل في متى تُدفع: سكربت متزامن يوقف
   محلّل HTML عنده، فيُفكّ 3.4 م.ب من الطرق قبل أن يرى المراجع صفاً واحداً.
@@ -101,6 +105,7 @@
 <script defer src="athar-desk-store.js"></script>
 <script defer src="athar-desk-inbox.js"></script>
 <script defer src="athar-desk-file.js"></script>
+<script defer src="athar-desk-session.js"></script>
 <script defer src="athar-desk-keys.js"></script>
 <script defer src="athar-desk-boot.js"></script>
 
