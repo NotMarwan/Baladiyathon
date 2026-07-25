@@ -132,8 +132,16 @@
     } catch (err) { /* تخزين ممتلئ — الجلسة تكمل بلا ثبات */ }
   }
 
+  /**
+   * ما كان المراجع يراه آخر مرة.
+   * ---------------------------------------------------------------------------
+   * يُقرأ قبل بناء المخزن كي تُطبَّق المرشحات على أول تصيير لا بعده: تطبيقها
+   * بعده يعرض القائمة كاملة لحظةً ثم يقصّها، فتقفز اللوحة أمام العين.
+   */
+  var savedView = AtharDeskRecall.read(calibrationStore);
+
   var store = AtharDeskStore.createStore(restored);
-  var activeTab = 'summary';
+  var activeTab = (savedView && savedView.tab) || 'summary';
   var blockers = [];
   var analysisCache = {};
   var serverLedger = false;
@@ -430,8 +438,7 @@
   function bindFile() {
     Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-tab'), function (tab) {
       tab.addEventListener('click', function () {
-        activeTab = tab.getAttribute('data-tab');
-        renderFile();
+        setTab(tab.getAttribute('data-tab'));
       });
     });
 
@@ -899,8 +906,7 @@
       var tab = AtharDeskFile.TABS[resolved.arg];
       if (!tab || !store.getSelected()) return;
       event.preventDefault();
-      activeTab = tab.id;
-      renderFile();
+      setTab(tab.id);
       announce('التبويب: ' + tab.label);
       return;
     }
@@ -1035,6 +1041,7 @@
       lastHighlighted = selectedId;
     }
     userDriven = false;
+    saveView();
     var selected = listEl.querySelector('[aria-selected="true"]');
     if (selected && selected.scrollIntoView) {
       selected.scrollIntoView({ block: 'nearest' });
@@ -1042,6 +1049,75 @@
   });
 
   // مسح صريح: العرض التوضيحي يحتاج عودة إلى نقطة الصفر بلا فتح أدوات المطوّر.
+  /* ---------- الاستئناف: عُد من حيث وقفت ---------- */
+
+  /**
+   * الحالة تُحفظ عند كل تغيّر، لا عند الإغلاق.
+   * مراجعٌ يُغلق التبويب أو ينقطع التيار لا يُطلق حدث إغلاق يُعتمد عليه؛
+   * والحفظ عند كل تغيّر يكلّف كتابةً صغيرة ويشتري ألّا يُفقد شيء أبداً.
+   */
+  function saveView() {
+    var state = store.getState();
+    AtharDeskRecall.write(calibrationStore, {
+      query: state.filters.query,
+      status: state.filters.status,
+      sort: state.sort,
+      selectedId: state.selectedId,
+      tab: activeTab,
+      decisions: AtharDecisionRecord.counts(decisions).decisions,
+      pending: store.counts().needsDecision,
+    }, new Date().toISOString());
+  }
+
+  /**
+   * تبديل التبويب في مكان واحد.
+   * التبويب ليس حالةَ مخزن فلا يبثّ عند تغيّره، وبلا حفظٍ صريح هنا يعود
+   * المراجع غداً إلى تبويب فرضه آخر قرار لا إلى التبويب الذي كان يقرؤه.
+   */
+  function setTab(id) {
+    activeTab = id;
+    renderFile();
+    saveView();
+  }
+
+  function hideResume() {
+    var bar = document.getElementById('deskResume');
+    if (!bar) return;
+    bar.hidden = true;
+    bar.innerHTML = '';
+  }
+
+  function showResume() {
+    var bar = document.getElementById('deskResume');
+    if (!bar) return;
+
+    var state = AtharDeskRecall.resume(savedView, new Date().toISOString(), {
+      decisions: AtharDecisionRecord.counts(decisions).decisions,
+      pending: store.counts().needsDecision,
+    });
+    if (!state.show) return;
+
+    var target = state.selectedId
+      ? store.getState().features.filter(function (f) {
+        return f.properties.id === state.selectedId;
+      })[0]
+      : null;
+
+    bar.innerHTML = AtharDeskRecall.render(state, target && target.properties.permitRef);
+    bar.hidden = false;
+
+    var go = document.getElementById('deskResumeGo');
+    if (go) {
+      go.addEventListener('click', function () {
+        selectRow(state.selectedId);
+        hideResume();
+      });
+    }
+
+    var close = document.getElementById('deskResumeClose');
+    if (close) close.addEventListener('click', hideResume);
+  }
+
   var keyhint = document.getElementById('deskKeyhint');
   if (keyhint) keyhint.addEventListener('click', function () { toggleHelp(true); });
 
@@ -1055,8 +1131,19 @@
     });
   }
 
+  /**
+   * استعادة ما كان معروضاً. التحديد يُطبَّق آخراً كي تكون القائمة المرشَّحة
+   * قائمة فعلاً حين يُبحث فيها عن العمل المحفوظ.
+   */
+  if (savedView) {
+    if (savedView.query) store.setFilter('query', savedView.query);
+    if (savedView.status) store.setFilter('status', savedView.status);
+    if (savedView.sort) store.setSort(savedView.sort);
+  }
+
   render();
   renderLedger();
+  showResume();
 
   window.__atharDesk = {
     store: store, map: GL, states: AtharDeskStates,

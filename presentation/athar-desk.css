@@ -791,3 +791,51 @@ kbd {
 .desk-confirm-undo:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 1px; }
 /* التالي يلي التراجع فلا يأخذ الهامش التلقائي مرتين. */
 .desk-confirm-undo + .desk-confirm-next { margin-inline-start: 0; }
+
+/* ---- شريط الاستئناف: يُقرأ مرة ثم يُخفى ---- */
+
+.desk-resume {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--athar-space-3);
+  padding: var(--athar-space-2) var(--athar-space-4);
+  background: var(--athar-primary-soft);
+  border-bottom: 1px solid var(--athar-line);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.desk-resume[hidden] { display: none; }
+.desk-resume-text { min-width: 0; }
+.desk-resume-text strong { font-family: var(--athar-font-mono); color: var(--athar-primary); }
+
+.desk-resume-go {
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--athar-surface);
+  background: var(--athar-primary);
+  border: 0;
+  border-radius: var(--athar-radius-sm);
+  padding: 5px 12px;
+  margin-inline-start: auto;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.desk-resume-go:hover { background: var(--athar-primary-hover); }
+.desk-resume-go:focus-visible { outline: 2px solid var(--athar-ink); outline-offset: 2px; }
+
+.desk-resume-close {
+  font: inherit;
+  font-size: 0.74rem;
+  color: var(--athar-muted);
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.desk-resume-close:hover { color: var(--athar-ink); }
+.desk-resume-close:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 1px; }
+/* بلا زرّ متابعة يأخذ الإخفاء الهامش التلقائي فلا يلتصق بالنص. */
+.desk-resume-text + .desk-resume-close { margin-inline-start: auto; }

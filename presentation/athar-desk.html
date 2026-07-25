@@ -31,6 +31,9 @@
 <!-- ما يُرى يُسمع: كل نتيجة مفتاح تُعلن هنا لقارئ الشاشة. -->
 <p class="visually-hidden" id="deskLive" role="status" aria-live="polite"></p>
 
+<!-- الاستئناف فوق الشبكة لا داخلها: يُقرأ مرة ثم يُخفى، ولا يزاحم لوحة. -->
+<div class="desk-resume" id="deskResume" role="status" hidden></div>
+
 <div class="desk-shell">
 
   <aside class="desk-pane desk-pane-inbox" aria-label="صندوق الأعمال">
@@ -109,6 +112,7 @@
 <script defer src="athar-desk-plan.js"></script>
 <script defer src="athar-impact-calibration.js"></script>
 <script defer src="athar-desk-measurement.js"></script>
+<script defer src="athar-desk-recall.js"></script>
 <script defer src="athar-desk-session.js"></script>
 <script defer src="athar-desk-keys.js"></script>
 <script defer src="athar-desk-boot.js"></script>
