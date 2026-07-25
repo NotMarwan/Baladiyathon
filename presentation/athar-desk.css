@@ -542,6 +542,49 @@ kbd {
 .desk-ledger:hover { border-color: var(--athar-primary); color: var(--athar-ink); }
 .desk-ledger:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
 
+/* ---- تبويب القياس ---- */
+
+.desk-measure-banner {
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--athar-warning);
+  background: var(--athar-warning-soft);
+  border-radius: var(--athar-radius-sm);
+  padding: var(--athar-space-2) var(--athar-space-3);
+  margin-bottom: var(--athar-space-3);
+}
+.desk-measure-predicted { font-size: 0.84rem; margin-bottom: var(--athar-space-3); }
+.desk-measure-predicted strong,
+.desk-measure-read strong { font-family: var(--athar-font-mono); }
+
+.desk-measure-pair {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--athar-space-3);
+  margin-bottom: var(--athar-space-2);
+}
+.desk-measure-pair dt { font-size: 0.72rem; color: var(--athar-muted); }
+.desk-measure-pair dd {
+  font-family: var(--athar-font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.desk-measure-read { font-size: 0.84rem; font-weight: 700; margin-bottom: var(--athar-space-3); }
+
+.desk-measure-factor {
+  margin-top: var(--athar-space-4);
+  padding-top: var(--athar-space-3);
+  border-top: 1px solid var(--athar-line);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  display: grid;
+  gap: var(--athar-space-2);
+  justify-items: start;
+}
+.desk-measure-factor strong { font-family: var(--athar-font-mono); }
+.desk-measure-note { font-size: 0.76rem; color: var(--athar-muted); }
+
 /* ---- لوحة الحصيلة ---- */
 
 .desk-session-card {

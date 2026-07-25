@@ -89,6 +89,49 @@
   var decisions = LEDGER.read();
   var restored = AtharDecisionRecord.restore(portfolio.features, decisions);
 
+  /**
+   * سجل المعايرة: التوقّع مقابل الرصد، عبر الجلسات.
+   * ---------------------------------------------------------------------------
+   * يعيش في التخزين المحلي كسجل القرار، ويُحقن مخزنه ولا يفترضه — فالوحدة
+   * نفسها تُختبر في Node بمخزن في الذاكرة. المتصفح الذي يمنع التخزين يحصل على
+   * مخزن مؤقّت: الصفحة تعمل والسجل لا يعبر التحديث، وهو أهون من صفحة تسقط.
+   */
+  var OBSERVATION_KEY = 'athar.observations.v1';
+
+  var calibrationStore = (function () {
+    try {
+      window.localStorage.setItem('athar.probe', '1');
+      window.localStorage.removeItem('athar.probe');
+      return window.localStorage;
+    } catch (err) {
+      var memory = {};
+      return {
+        getItem: function (key) { return memory[key] === undefined ? null : memory[key]; },
+        setItem: function (key, value) { memory[key] = value; },
+        removeItem: function (key) { delete memory[key]; },
+      };
+    }
+  })();
+
+  var calibration = AtharImpactCalibration.createCalibration(calibrationStore);
+
+  /** الرصدة المعروضة لكل عمل. السجل يحمل النسب؛ هذا يحمل ما يُعرض في التبويب. */
+  var observations = (function () {
+    try {
+      var raw = calibrationStore.getItem(OBSERVATION_KEY);
+      var parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (err) {
+      return {};
+    }
+  })();
+
+  function saveObservations() {
+    try {
+      calibrationStore.setItem(OBSERVATION_KEY, JSON.stringify(observations));
+    } catch (err) { /* تخزين ممتلئ — الجلسة تكمل بلا ثبات */ }
+  }
+
   var store = AtharDeskStore.createStore(restored);
   var activeTab = 'summary';
   var blockers = [];
@@ -286,7 +329,7 @@
 
     if (activeTab === 'impact') {
       return AtharDeskFile.renderSummary(feature, analysis)
-        + AtharDeskFile.renderConfidence(feature);
+        + AtharDeskFile.renderConfidence(feature, calibration.status());
     }
 
     if (activeTab === 'plan') {
@@ -303,12 +346,16 @@
     }
 
     if (activeTab === 'measurement') {
-      return '<p class="desk-none">لا قياس ميداني مستورد على هذا المحور. '
-        + 'حلقة المعايرة تعمل في مختبر الابتكار على بيانات تاريخية.</p>';
+      return AtharDeskMeasurement.render(
+        { status: p.status, statusLabel: statusLabel(p.status) },
+        analysis.scored.delayVehHours,
+        observations[p.id] || null,
+        calibration.status()
+      );
     }
 
     return AtharDeskFile.renderSummary(feature, analysis)
-      + AtharDeskFile.renderConfidence(feature);
+      + AtharDeskFile.renderConfidence(feature, calibration.status());
   }
 
   function renderFile() {
@@ -366,10 +413,14 @@
     });
 
     Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-action'), function (button) {
+      if (button.id === 'deskImportObservation') return;
       button.addEventListener('click', function () {
         runAction(button.getAttribute('data-action'));
       });
     });
+
+    var importButton = document.getElementById('deskImportObservation');
+    if (importButton) importButton.addEventListener('click', importObservation);
   }
 
   /** الإجراء يمر من الحارس دائماً: العائق يُعرض ولا يُنفَّذ شيء. */
@@ -484,6 +535,47 @@
   function selectRow(id) {
     userDriven = true;
     store.select(id);
+  }
+
+  /**
+   * استيراد رصدة وإدخالها في سجل المعايرة.
+   * ---------------------------------------------------------------------------
+   * الرصدة تركيبية ومشتقّة من معرّف التصريح، فهي ثابتة عبر التشغيلات. تُسجَّل
+   * مرة واحدة لكل عمل: تكرارها يضخّم عيّنة المعايرة برصدة واحدة معادة، فيبدو
+   * المعامل أوثق مما هو.
+   */
+  function importObservation() {
+    var feature = store.getSelected();
+    if (!feature) return;
+
+    var id = feature.properties.id;
+    if (observations[id]) return;
+
+    var predicted = analyze(feature).scored.delayVehHours;
+    var observed = AtharDeskMeasurement.syntheticObservation(feature.properties.permitRef, predicted);
+    if (!observed) {
+      flash({ tone: 'refused', mark: '⊘', text: 'لا توقّع صالح على هذا العمل — لا شيء يُقارَن به.' });
+      return;
+    }
+
+    calibration.record({
+      permitId: id,
+      predictedVehHours: predicted,
+      observedVehHours: observed.observedVehHours,
+    });
+
+    observations[id] = observed;
+    saveObservations();
+    renderFile();
+
+    var gap = AtharDeskMeasurement.deviation(predicted, observed.observedVehHours);
+    flash({
+      tone: 'success', mark: '◈',
+      text: 'رصد تركيبي مستورد · انحراف ' + (gap.pct > 0 ? '+' : '')
+        + gap.pct.toFixed(1) + '٪',
+      ref: feature.properties.permitRef,
+      tail: calibration.status().n + ' رصدة في السجل',
+    });
   }
 
   /* ---------- الفرز بلوحة المفاتيح ---------- */
@@ -805,6 +897,8 @@
   window.__atharDesk = {
     store: store, map: GL, states: AtharDeskStates,
     decisions: function () { return decisions; },
+    calibration: calibration,
+    observations: function () { return observations; },
     ledger: LEDGER,
   };
 })();

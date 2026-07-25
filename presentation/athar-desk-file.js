@@ -120,7 +120,13 @@
     return reasons;
   }
 
-  function renderConfidence(feature) {
+  /**
+   * @param {object} feature
+   * @param {{n:number, factor:number}} [calibration] حالة سجل المعايرة الحيّة.
+   *   حين تُمرَّر، يقول الشريط أين بلغت الحلقة فعلاً بدل نصّ ثابت — فوعد
+   *   «ما يرفعها: دورة معايرة» يصير قابلاً للتحقّق من الشاشة نفسها.
+   */
+  function renderConfidence(feature, calibration) {
     var p = (feature && feature.properties) || {};
     var meta = CONFIDENCE[p.confidence] || { label: DASH, tone: 'muted' };
     var reasons = confidenceReasons(p);
@@ -134,8 +140,24 @@
         : '<p class="desk-confidence-why">لا تحفظ مسجَّل على هذه المدخلات.</p>')
       + '<p class="desk-confidence-lift">ما يرفعها: قياس ميداني للطابور والسرعة على المقطع نفسه، '
       + 'ودورة معايرة واحدة بعد التنفيذ.</p>'
-      + '<p class="desk-confidence-cal">آخر معايرة: ' + escapeHtml(text(p.lastCalibration)) + '</p>'
+      + renderCalibrationLine(p, calibration)
       + '</section>';
+  }
+
+  /** سطر المعايرة: عدد الرصدات ومعاملها، أو غيابها صريحاً. */
+  function renderCalibrationLine(p, calibration) {
+    if (!calibration || !calibration.n) {
+      return '<p class="desk-confidence-cal">آخر معايرة: '
+        + escapeHtml(text(p.lastCalibration)) + ' · لا رصدات في السجل بعد.</p>';
+    }
+
+    var factor = calibration.factor.toFixed(2);
+    return '<p class="desk-confidence-cal">سجل المعايرة: <strong>' + calibration.n
+      + '</strong> رصدة · معامل <strong>' + factor + '×</strong>'
+      + (calibration.n < 30
+        ? ' — دون العتبة، لا يُطبَّق على التقدير المعروض.'
+        : ' — بلغ العتبة.')
+      + '</p>';
   }
 
   function renderBlockers(blockers) {
