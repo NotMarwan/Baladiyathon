@@ -545,7 +545,10 @@
           properties: {
             core_details: {
               event_type: 'work-zone',
-              data_source_id: 'athar-prototype',
+              // The producing surface names itself. A file exported from the
+              // reviewer desk that identifies as the prototype misattributes
+              // its own provenance in a format built for exchange.
+              data_source_id: input.dataSourceId || 'athar-prototype',
               road_names: [input.roadName],
               direction: input.direction,
             },

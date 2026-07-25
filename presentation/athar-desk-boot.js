@@ -356,9 +356,9 @@
     }
 
     if (activeTab === 'plan') {
-      return '<p class="desk-none">مسودة خطة إدارة المرور تُبنى من البديل الفائز: '
-        + (analysis.alternatives[0] ? analysis.alternatives[0].label : '—')
-        + '. التصدير متاح في النموذج التفاعلي (WZDx و PDF).</p>';
+      return AtharDeskPlan.renderTab(
+        AtharDeskPlan.build(feature, analysis, new Date().toISOString())
+      );
     }
 
     if (activeTab === 'publication') {
@@ -435,15 +435,29 @@
       });
     });
 
-    Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-action'), function (button) {
-      if (button.id === 'deskImportObservation') return;
-      button.addEventListener('click', function () {
-        runAction(button.getAttribute('data-action'));
+    /**
+     * الإجراء يُربط بما يحمل اسمه لا بما يشبهه شكلاً.
+     * -------------------------------------------------------------------------
+     * `.desk-action` صنف مظهر يستعمله التصدير والاستيراد أيضاً. الربط بالصنف
+     * وحده كان يمرّر أزراراً بلا `data-action` إلى runAction فتُستدعى بـ null،
+     * فيظهر «إجراء غير معروف» فوق تبويب صحيح. القائمة السوداء بالمعرّفات كانت
+     * ستتقادم مع أول زرّ جديد؛ الشرط على وجود السمة لا يتقادم.
+     */
+    Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-action[data-action]'),
+      function (button) {
+        button.addEventListener('click', function () {
+          runAction(button.getAttribute('data-action'));
+        });
       });
-    });
 
     var importButton = document.getElementById('deskImportObservation');
     if (importButton) importButton.addEventListener('click', importObservation);
+
+    var planButton = document.getElementById('deskExportPlan');
+    if (planButton) planButton.addEventListener('click', function () { exportPlan('document'); });
+
+    var wzdxButton = document.getElementById('deskExportWzdx');
+    if (wzdxButton) wzdxButton.addEventListener('click', function () { exportPlan('wzdx'); });
   }
 
   /** الإجراء يمر من الحارس دائماً: العائق يُعرض ولا يُنفَّذ شيء. */
@@ -569,6 +583,71 @@
    * مرة واحدة لكل عمل: تكرارها يضخّم عيّنة المعايرة برصدة واحدة معادة، فيبدو
    * المعامل أوثق مما هو.
    */
+  /**
+   * تنزيل مخرَج من المكتب.
+   * ---------------------------------------------------------------------------
+   * Blob محلي و ObjectURL يُلغى بعد الاستعمال: بلا إلغائه يبقى الملف في ذاكرة
+   * الصفحة إلى أن تُغلق، ومراجعٌ ينزّل خمسين خطة يحمل خمسين نسخة بلا سبب.
+   */
+  function download(name, content, mime) {
+    var blob = new Blob([content], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.setTimeout(function () { URL.revokeObjectURL(url); }, 0);
+  }
+
+  /**
+   * خطة إدارة المرور أو WZDx، كلاهما من النافذة الموصى بها.
+   * التصدير من المطلوب بدل الموصى به كان سيُخرج وثيقة تناقض التوصية المعروضة
+   * فوقها على الشاشة نفسها.
+   */
+  function exportPlan(kind) {
+    var feature = store.getSelected();
+    if (!feature) return;
+
+    var plan = AtharDeskPlan.build(feature, analyze(feature), new Date().toISOString());
+    if (!plan.recommendation) {
+      flash({ tone: 'refused', mark: '⊘',
+        text: 'لا نافذة موصى بها على هذا العمل — الخطة تُبنى منها.' });
+      return;
+    }
+
+    if (kind === 'wzdx') {
+      var coordinates = feature.geometry && feature.geometry.type === 'LineString'
+        ? feature.geometry.coordinates
+        : [feature.geometry.coordinates];
+
+      var collection = AtharEngine.wzdx({
+        dataSourceId: 'athar-reviewer-desk',
+        id: plan.permitRef,
+        roadName: plan.street,
+        direction: plan.direction,
+        lanes: plan.lanes,
+        lanesClosed: plan.lanesClosed,
+        startISO: plan.start,
+        durationHours: plan.windowHours,
+        windows: plan.windows,
+        coordinates: coordinates,
+      });
+
+      download(AtharDeskPlan.fileName(plan, 'geojson'),
+        JSON.stringify(collection, null, 2), 'application/geo+json');
+      flash({ tone: 'success', mark: '⬇', text: 'نُزّل WZDx', ref: plan.permitRef,
+        tail: collection.features.length + ' نافذة' });
+      return;
+    }
+
+    download(AtharDeskPlan.fileName(plan, 'html'),
+      AtharDeskPlan.toDocument(plan), 'text/html;charset=utf-8');
+    flash({ tone: 'success', mark: '⬇', text: 'نُزّلت خطة إدارة المرور',
+      ref: plan.permitRef, tail: 'تُفتح وتُطبع بلا برنامج' });
+  }
+
   function importObservation() {
     var feature = store.getSelected();
     if (!feature) return;

@@ -737,3 +737,35 @@ kbd {
   padding: 6px 10px;
   line-height: 1.6;
 }
+
+/* ---- تبويب الخطة: مخرَج لا إحالة ---- */
+
+.desk-plan { display: grid; gap: var(--athar-space-3); }
+
+.desk-plan-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
+.desk-plan-table th,
+.desk-plan-table td {
+  border-bottom: 1px solid var(--athar-line);
+  padding: 5px 8px;
+  text-align: start;
+}
+.desk-plan-table th { width: 45%; color: var(--athar-muted); font-weight: 600; }
+.desk-plan-table td { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.desk-plan-sub { font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; }
+.desk-plan-reasons ul,
+.desk-plan-gap ul { margin-inline-start: var(--athar-space-4); }
+.desk-plan-reasons li,
+.desk-plan-gap li { font-size: 0.78rem; line-height: 1.7; }
+
+/* النقص معروض بنبرته: قائمةٌ يقرؤها المراجع لا هامشٌ يتخطّاه. */
+.desk-plan-gap {
+  background: var(--athar-accent-soft);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  padding: var(--athar-space-2) var(--athar-space-3);
+}
+.desk-plan-gap .desk-plan-sub { color: var(--athar-accent); }
+
+.desk-plan-actions { display: flex; flex-wrap: wrap; gap: var(--athar-space-2); }
+.desk-plan-note { font-size: 0.74rem; color: var(--athar-muted); line-height: 1.7; }
