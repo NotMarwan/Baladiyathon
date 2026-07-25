@@ -769,3 +769,25 @@ kbd {
 
 .desk-plan-actions { display: flex; flex-wrap: wrap; gap: var(--athar-space-2); }
 .desk-plan-note { font-size: 0.74rem; color: var(--athar-muted); line-height: 1.7; }
+
+/* التراجع بنبرة محايدة بجوار التالي: تصحيحٌ عادي لا حالة خطأ. */
+.desk-confirm-undo {
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--athar-ink);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  padding: 4px 9px;
+  margin-inline-start: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.desk-confirm-undo:hover { border-color: var(--athar-ink); }
+.desk-confirm-undo:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 1px; }
+/* التالي يلي التراجع فلا يأخذ الهامش التلقائي مرتين. */
+.desk-confirm-undo + .desk-confirm-next { margin-inline-start: 0; }

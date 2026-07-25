@@ -221,6 +221,41 @@ const validScoreInput = {
     });
   });
 
+  await test('an undo is accepted without inputs — it recomputed nothing', async () => {
+    // Rejecting it would split the server ledger from the browser's and show
+    // a decision with no trace of the undo that reversed it.
+    await withServer(async (baseUrl) => {
+      const result = await post(baseUrl, '/api/works/p001/decisions', {
+        version: 3, status: 'StrategyReview', action: 'undo', actor: 'مناوب الفرز',
+        reason: 'تراجع عن «approve» (نسخة 2)', at: '2026-07-25T11:00:00Z', inputs: {},
+      });
+      assert.strictEqual(result.status, 200);
+      assert.strictEqual(result.body.decisions[0].action, 'undo');
+    });
+  });
+
+  await test('an undo that names nothing is rejected', async () => {
+    await withServer(async (baseUrl) => {
+      const result = await post(baseUrl, '/api/works/p001/decisions', {
+        version: 3, status: 'StrategyReview', action: 'undo', actor: 'م',
+        reason: '   ', at: '2026-07-25T11:00:00Z', inputs: {},
+      });
+      assert.strictEqual(result.status, 422);
+      assert.strictEqual(result.body.fields.reason,
+        'an undo must name the decision it reverses');
+    });
+  });
+
+  await test('the inputs rule still binds every deciding action', async () => {
+    await withServer(async (baseUrl) => {
+      for (const action of ['approve', 'reject', 'return', 'screen']) {
+        const result = await post(baseUrl, '/api/works/p001/decisions',
+          { ...validDecision, action, inputs: {} });
+        assert.strictEqual(result.status, 422, `${action} slipped through without inputs`);
+      }
+    });
+  });
+
   await test('decision without an inputs snapshot is rejected', async () => {
     await withServer(async (baseUrl) => {
       const { inputs, ...withoutInputs } = validDecision;

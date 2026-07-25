@@ -268,9 +268,28 @@ function validateDecision(body) {
   if (body.inputs !== undefined && !isPlainObject(body.inputs)) {
     fields.inputs = 'must be an object';
   }
-  if (!body.inputs || Object.keys(body.inputs).length === 0) {
-    // القاعدة نفسها التي يفرضها athar-desk-states: لا قرار بلا نسخة مدخلات.
+
+  /**
+   * قاعدة نسخة المدخلات، وحدُّها.
+   * ---------------------------------------------------------------------------
+   * القاعدة: لا قرار بلا نسخة مدخلاته — لأن قراراً لا يُعرف ما استُند إليه
+   * قرارٌ غير قابل للتفسير.
+   *
+   * والتراجع ليس قراراً بهذا المعنى: لم يُعد حساباً ولم يستند إلى مدخلات، بل
+   * يُبطل قراراً سابقاً ويستند إليه هو. اشتراط نسخة مدخلات له كان يدفع إلى
+   * أحد أمرين، كلاهما أسوأ من الاستثناء: إمّا أن يُلفَّق له مدخلات لم تُستعمل،
+   * أو أن يُرفض فينفصل سجل الخادم عن سجل المتصفح ويظهر القرار بلا تراجعه.
+   *
+   * فالبديل أن يُسأل التراجع عمّا يملكه فعلاً: أن يسمّي ما أبطله.
+   */
+  const isUndo = body.action === 'undo';
+
+  if (!isUndo && (!body.inputs || Object.keys(body.inputs).length === 0)) {
     fields.inputs = 'inputs snapshot is required — a decision without it is not explainable';
+  }
+
+  if (isUndo && !String(body.reason || '').trim()) {
+    fields.reason = 'an undo must name the decision it reverses';
   }
 
   return { valid: Object.keys(fields).length === 0, fields };

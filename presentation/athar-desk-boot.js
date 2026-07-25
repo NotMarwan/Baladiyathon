@@ -510,6 +510,7 @@
       text: AtharDeskStates.ACTION_LABELS[action],
       ref: applied.work.permitRef,
       tail: 'نسخة ' + applied.work.version,
+      undo: true,
       next: true,
     });
   }
@@ -539,11 +540,19 @@
         : '')
       + (opts.tail ? ' · ' + AtharDeskFile.escapeHtml(opts.tail) : '')
       + '</span>'
+      // التراجع يقع حيث يُطلب: في اللحظة التي يرى فيها المراجع ما فعله.
+      + (opts.undo
+        ? '<button type="button" class="desk-confirm-undo" id="deskConfirmUndo">'
+          + 'تراجع <kbd>U</kbd></button>'
+        : '')
       + (opts.next
         ? '<button type="button" class="desk-confirm-next" id="deskConfirmNext">'
-          + 'التالي الذي ينتظر قراراً <kbd>N</kbd></button>'
+          + 'التالي <kbd>N</kbd></button>'
         : '');
     bar.hidden = false;
+
+    var undoButton = document.getElementById('deskConfirmUndo');
+    if (undoButton) undoButton.addEventListener('click', undoLast);
 
     var next = document.getElementById('deskConfirmNext');
     if (next) {
@@ -551,6 +560,56 @@
         if (stepPending()) hideConfirmation();
       });
     }
+  }
+
+  /**
+   * التراجع عن آخر قرار على العمل المحدَّد.
+   * ---------------------------------------------------------------------------
+   * لا يُحذف سطر. التراجع نسخةٌ معوِّضة تُقيَّد باسمها، فمن يقرأ السجل يرى
+   * القرار والتراجع عنه — وهذا أصدق من سجلٍّ نظيف يُخفي أن خطأً وقع.
+   */
+  function undoLast() {
+    var feature = store.getSelected();
+    if (!feature) return;
+
+    var id = feature.properties.id;
+    var check = AtharDecisionRecord.undoSpec(decisions[id]);
+
+    if (!check.allowed) {
+      flash({ tone: 'refused', mark: '⊘', text: check.reason });
+      return;
+    }
+
+    var undo = AtharDecisionRecord.createUndo(
+      feature.properties, check.spec, ACTOR, new Date().toISOString()
+    );
+
+    decisions[id] = AtharDecisionRecord.append(decisions[id], undo);
+    LEDGER.write(decisions);
+    pushToServer(id, undo);
+
+    activeTab = 'history';
+    delete analysisCache[id];
+    mergeCache = {};
+
+    var reverted = JSON.parse(JSON.stringify(feature.properties));
+    reverted.status = check.spec.toStatus;
+    reverted.version = check.spec.nextVersion;
+    reverted.nextAction = AtharDeskStates.nextAction(check.spec.toStatus);
+    reverted.decidedAt = undo.at;
+    reverted.decidedBy = ACTOR;
+
+    store.replace({ type: 'Feature', geometry: feature.geometry, properties: reverted });
+    renderLedger();
+
+    flash({
+      tone: 'success',
+      mark: '↩',
+      text: 'تراجع عن «' + (AtharDeskStates.ACTION_LABELS[check.spec.undoneAction]
+        || check.spec.undoneAction) + '» — عاد إلى «' + statusLabel(check.spec.toStatus) + '»',
+      ref: feature.properties.permitRef,
+      tail: 'نسخة ' + check.spec.nextVersion + ' · السجل يحفظ الاثنين',
+    });
   }
 
   function hideConfirmation() {
@@ -827,6 +886,7 @@
     if (resolved.intent === 'next') { event.preventDefault(); step(1); return; }
     if (resolved.intent === 'prev') { event.preventDefault(); step(-1); return; }
     if (resolved.intent === 'nextPending') { event.preventDefault(); stepPending(); return; }
+    if (resolved.intent === 'undo') { event.preventDefault(); undoLast(); return; }
 
     if (resolved.intent === 'open') {
       event.preventDefault();

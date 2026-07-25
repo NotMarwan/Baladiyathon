@@ -171,4 +171,110 @@ ok('العدّاد يفصل الأعمال عن القرارات', () => {
   assert.strictEqual(counts.decisions, 3);
 });
 
+/* ---- التراجع: تصحيحٌ مقيَّد لا محوٌ ---- */
+
+ok('السجل يحفظ الحالة السابقة — بدونها لا تراجع', () => {
+  assert.strictEqual(Record.create(WORK, ANALYSIS, EVENT, INPUT).from, 'StrategyReview');
+});
+
+ok('التراجع يعيد العمل إلى حالته قبل القرار الأخير', () => {
+  const spec = Record.undoSpec([record()]);
+  assert.strictEqual(spec.allowed, true);
+  assert.strictEqual(spec.spec.toStatus, 'StrategyReview');
+  assert.strictEqual(spec.spec.fromStatus, 'Approved');
+  assert.strictEqual(spec.spec.undoneVersion, 2);
+  assert.strictEqual(spec.spec.nextVersion, 3);
+});
+
+ok('التراجع يستهدف آخر نسخة لا أيّ نسخة', () => {
+  // التراجع عن نسخة وسطى يترك ما بعدها معلّقاً على حالة لم تعد قائمة.
+  const trail = [
+    record({ version: 2, status: 'Approved', from: 'StrategyReview', action: 'approve' }),
+    record({ version: 3, status: 'Scheduled', from: 'Approved', action: 'schedule' }),
+  ];
+  assert.strictEqual(Record.undoSpec(trail).spec.undoneVersion, 3);
+  assert.strictEqual(Record.undoSpec(trail).spec.toStatus, 'Approved');
+});
+
+ok('الترتيب في المصفوفة لا يحدّد الأخير — رقم النسخة يحدّده', () => {
+  const shuffled = [
+    record({ version: 3, status: 'Scheduled', from: 'Approved' }),
+    record({ version: 2, status: 'Approved', from: 'StrategyReview' }),
+  ];
+  assert.strictEqual(Record.undoSpec(shuffled).spec.undoneVersion, 3);
+});
+
+ok('عمل بلا قرار لا يُتراجَع عنه ويُقال السبب', () => {
+  const none = Record.undoSpec([]);
+  assert.strictEqual(none.allowed, false);
+  assert.ok(none.reason.indexOf('لا قرار مسجَّل') !== -1);
+  assert.strictEqual(Record.undoSpec(null).allowed, false);
+});
+
+ok('سجل قديم بلا حالة سابقة يُرفض تراجعه بسبب مكتوب', () => {
+  // القرارات المقيَّدة قبل إتاحة التراجع لا تحمل from؛ التخمين هنا يكتب حالة
+  // لم تقع، والرفض المعلَّل أصدق.
+  const old = Record.undoSpec([record({ from: null })]);
+  assert.strictEqual(old.allowed, false);
+  assert.ok(old.reason.indexOf('قبل إتاحة التراجع') !== -1);
+});
+
+ok('سجل التراجع نسخة جديدة تُضاف ولا تحذف ما قبلها', () => {
+  const trail = [record()];
+  const spec = Record.undoSpec(trail).spec;
+  const undo = Record.createUndo(WORK, spec, 'مناوب الفرز', '2026-07-25T11:00:00Z');
+  const after = Record.append(trail, undo);
+
+  assert.strictEqual(after.length, 2, 'التراجع ابتلع القرار بدل أن يعوّضه');
+  assert.strictEqual(after[0].action, 'approve');
+  assert.strictEqual(after[1].action, 'undo');
+});
+
+ok('سجل التراجع يسمّي ما تراجع عنه ونسخته', () => {
+  const spec = Record.undoSpec([record()]).spec;
+  const undo = Record.createUndo(WORK, spec, 'مناوب الفرز', '2026-07-25T11:00:00Z');
+  assert.ok(undo.reason.indexOf('approve') !== -1, 'لا يذكر الإجراء المُتراجَع عنه');
+  assert.ok(undo.reason.indexOf('2') !== -1, 'لا يذكر النسخة');
+  assert.strictEqual(undo.actor, 'مناوب الفرز');
+});
+
+ok('التراجع لا يدّعي مدخلات ولا توصية — لم يُعد حساباً', () => {
+  const spec = Record.undoSpec([record()]).spec;
+  const undo = Record.createUndo(WORK, spec, 'م', '2026-07-25T11:00:00Z');
+  assert.deepStrictEqual(undo.inputs, {});
+  assert.strictEqual(undo.recommendation, null);
+  assert.strictEqual(undo.asked, null);
+});
+
+ok('سجل التراجع صالح ويعبر التخزين', () => {
+  const spec = Record.undoSpec([record()]).spec;
+  const undo = Record.createUndo(WORK, spec, 'م', '2026-07-25T11:00:00Z');
+  assert.strictEqual(Record.isValid(undo), true);
+
+  const back = Record.deserialize(Record.serialize({ p001: [record(), undo] }));
+  assert.strictEqual(back.p001.length, 2);
+  assert.strictEqual(back.p001[1].action, 'undo');
+});
+
+ok('الاستعادة تُرجع العمل إلى الحالة السابقة بعد التراجع', () => {
+  const spec = Record.undoSpec([record()]).spec;
+  const undo = Record.createUndo(WORK, spec, 'م', '2026-07-25T11:00:00Z');
+  const features = [{ type: 'Feature', geometry: null, properties: Object.assign({}, WORK) }];
+
+  const restored = Record.restore(features, { p001: [record(), undo] });
+  assert.strictEqual(restored[0].properties.status, 'StrategyReview');
+  assert.strictEqual(restored[0].properties.version, 3);
+});
+
+ok('التراجع عن التراجع يعيد القرار — ولا يفقد أثر أيّهما', () => {
+  const first = record();
+  const spec = Record.undoSpec([first]).spec;
+  const undo = Record.createUndo(WORK, spec, 'م', '2026-07-25T11:00:00Z');
+
+  const redoSpec = Record.undoSpec([first, undo]);
+  assert.strictEqual(redoSpec.allowed, true);
+  assert.strictEqual(redoSpec.spec.toStatus, 'Approved', 'لا يعود إلى القرار');
+  assert.strictEqual(redoSpec.spec.undoneAction, 'undo');
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

@@ -52,6 +52,9 @@
       workId: work.id,
       version: event.version,
       status: event.to,
+      // الحالة قبل القرار. بدونها لا يمكن التراجع: السجل يعرف إلى أين ذهب
+      // العمل ولا يعرف من أين جاء، فالتصحيح يصير تخميناً.
+      from: event.from || null,
       action: event.action,
       actor: event.actor || '',
       reason: event.reason || '',
@@ -161,11 +164,83 @@
     };
   }
 
+  /**
+   * التراجع عن آخر قرار.
+   * ---------------------------------------------------------------------------
+   * لا يُحذف شيء. سجل التدقيق هو ما يجعل القرار قابلاً للمساءلة، ومحوُ سطر منه
+   * يُسقط الخاصية التي بُني لأجلها — سجلٌّ يُمحى منه ليس سجلاً.
+   *
+   * فالتراجع خطوة معوِّضة: نسخةٌ جديدة تُعيد العمل إلى حالته السابقة، مقيَّدةً
+   * باسمها وسببها. من يقرأ السجل يرى القرار والتراجع عنه، ويعرف من فعل ماذا
+   * ومتى — وهذا أصدق من سجلٍّ نظيف يُخفي أن خطأً وقع.
+   *
+   * القيد الوحيد: آخر نسخة فقط. التراجع عن نسخة وسطى يترك ما بعدها معلّقاً
+   * على حالة لم تعد قائمة.
+   *
+   * @param {Array<object>} records سجلات عمل واحد
+   * @returns {{allowed:boolean, reason?:string, spec?:object}}
+   */
+  function undoSpec(records) {
+    var trail = (records || []).slice().sort(function (a, b) { return a.version - b.version; });
+    if (!trail.length) {
+      return { allowed: false, reason: 'لا قرار مسجَّل على هذا العمل بعد.' };
+    }
+
+    var last = trail[trail.length - 1];
+    if (!last.from) {
+      return {
+        allowed: false,
+        reason: 'السجل الأخير لا يحمل حالته السابقة — قرارٌ قُيّد قبل إتاحة التراجع.',
+      };
+    }
+
+    return {
+      allowed: true,
+      spec: {
+        undoneVersion: last.version,
+        undoneAction: last.action,
+        toStatus: last.from,
+        fromStatus: last.status,
+        nextVersion: last.version + 1,
+      },
+    };
+  }
+
+  /**
+   * يبني سجل التراجع. يرث نسخة مدخلات القرار المُتراجَع عنه: التراجع لا يعيد
+   * الحساب، فادّعاء مدخلات جديدة له يزوّر ما استُند إليه.
+   */
+  function createUndo(work, spec, actor, at) {
+    var undone = spec.undoneAction;
+    return {
+      schema: SCHEMA_VERSION,
+      permitRef: work.permitRef || work.id,
+      workId: work.id,
+      version: spec.nextVersion,
+      status: spec.toStatus,
+      from: spec.fromStatus,
+      action: 'undo',
+      actor: actor || '',
+      reason: 'تراجع عن «' + undone + '» (نسخة ' + spec.undoneVersion + ')',
+      at: at || null,
+      inputs: {},
+      recommendation: null,
+      asked: null,
+      delta: null,
+      reasons: [],
+      conflicts: [],
+      confidence: work.confidence || null,
+      escalated: Boolean(work.escalate),
+    };
+  }
+
   return {
     SCHEMA_VERSION: SCHEMA_VERSION,
     STORAGE_KEY: STORAGE_KEY,
     INPUT_FIELDS: INPUT_FIELDS,
     create: create,
+    undoSpec: undoSpec,
+    createUndo: createUndo,
     append: append,
     latest: latest,
     isValid: isValid,
