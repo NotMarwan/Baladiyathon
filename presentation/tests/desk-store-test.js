@@ -166,4 +166,67 @@ ok('المرشحات المعادة نسخة — تعديلها من الخار�
   assert.strictEqual(store.getVisible().length, 1);
 });
 
+/* ---- التنقّل في الطابور: العطب الذي يُخفي العمل ---- */
+
+function queue() {
+  return Store.createStore([
+    feature('a', { status: 'ImpactScreening', impactVehHours: 900 }),
+    feature('b', { status: 'StrategyReview', impactVehHours: 800 }),
+    feature('c', { status: 'Approved', impactVehHours: 700 }),
+    feature('d', { status: 'CompletenessReview', impactVehHours: 600 }),
+  ]);
+}
+
+ok('التالي يتخطّى ما لا ينتظر قراراً', () => {
+  const found = queue().nextPending('b');
+  assert.strictEqual(found.feature.properties.id, 'd', 'لم يتخطَّ المعتمد');
+  assert.strictEqual(found.wrapped, false);
+});
+
+ok('التالي يلتفّ من آخر القائمة إلى أولها ويُبلّغ بالالتفاف', () => {
+  const found = queue().nextPending('d');
+  assert.strictEqual(found.feature.properties.id, 'a');
+  assert.strictEqual(found.wrapped, true, 'الالتفاف وقع صامتاً');
+});
+
+ok('العمل الذي يُقرَّر لا يحبس المراجع في قاع القائمة', () => {
+  // العطب الحقيقي: الفرز يضع المنتظِر أولاً، فالمعتمد يهبط فوراً؛ وبحث أمامي
+  // من القاع كان يقول «فرغ الطابور» وفيه أعمال تنتظر.
+  const store = queue();
+  store.replace(feature('a', { status: 'Approved', impactVehHours: 900 }));
+
+  const found = store.nextPending('a');
+  assert.ok(found, 'الطابور بدا فارغاً وفيه عملان ينتظران');
+  assert.ok(['b', 'd'].indexOf(found.feature.properties.id) !== -1);
+});
+
+ok('التالي لا يعيد العمل نفسه ولو كان الوحيد المنتظِر', () => {
+  const store = Store.createStore([
+    feature('only', { status: 'ImpactScreening' }),
+    feature('done', { status: 'Approved' }),
+  ]);
+  assert.strictEqual(store.nextPending('only'), null,
+    'أعاد العمل نفسه — فتكرّر «التالي» على مكانه');
+});
+
+ok('قائمة بلا منتظِر ولا قائمة أصلاً تعيدان لا شيء بلا استثناء', () => {
+  assert.strictEqual(Store.createStore([]).nextPending(null), null);
+  assert.strictEqual(
+    Store.createStore([feature('x', { status: 'Closed' })]).nextPending(null), null);
+});
+
+ok('بلا تحديد سابق يبدأ من أول منتظِر لا من الوسط', () => {
+  const found = queue().nextPending(null);
+  assert.strictEqual(found.feature.properties.id, 'a');
+  assert.strictEqual(found.wrapped, false, 'بداية أُبلغت كالتفاف');
+});
+
+ok('التنقّل يحترم الترشيح — لا يقفز خارج ما يراه المراجع', () => {
+  const store = queue();
+  store.setFilter('status', 'StrategyReview');
+  const found = store.nextPending(null);
+  assert.strictEqual(found.feature.properties.id, 'b');
+  assert.strictEqual(store.nextPending('b'), null, 'خرج من نطاق الترشيح');
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

@@ -159,4 +159,39 @@ ok('كل حالة غير نهائية لها إجراء واحد على الأق
   });
 });
 
+/* ---- التوجيه مقابل الحكم: ما يجوز أتمتته ---- */
+
+ok('لا إجراء يترتّب عليه حكم يُصنَّف توجيهاً', () => {
+  // القاعدة: ما يمكن أتمتته هو ما لا يندم عليه المراجع.
+  ['approve', 'reject', 'return', 'escalate', 'schedule', 'publish', 'suspend', 'close']
+    .forEach((action) => {
+      assert.ok(!States.isRouting(action),
+        `${action} مصنّف توجيهاً — أتمتته تتخذ قراراً بالنيابة عن المراجع`);
+    });
+});
+
+ok('كل إجراء توجيه موجود فعلاً في جدول الانتقالات', () => {
+  States.ROUTING_ACTIONS.forEach((action) => {
+    assert.ok(States.ACTION_TARGET[action], `إجراء توجيه لا وجود له: ${action}`);
+    assert.ok(States.isRouting(action));
+  });
+});
+
+ok('التصنيف يقسم الحالات قسمين، ومراجعة القرار في اليدوي', () => {
+  // هذا هو العقد الذي يعتمد عليه مفتاح D في المكتب.
+  const auto = [];
+  const manual = [];
+
+  Object.keys(States.LABELS).forEach((status) => {
+    const actions = States.actionsFor(status);
+    if (!actions.length) return;
+    (actions.length === 1 || States.isRouting(actions[0]) ? auto : manual).push(status);
+  });
+
+  assert.ok(auto.length > 0 && manual.length > 0,
+    'التصنيف انهار إلى طرف واحد — إمّا كله آلي أو كله يدوي');
+  assert.ok(manual.indexOf('StrategyReview') !== -1,
+    'مراجعة القرار تُؤتمت — وهي بالضبط ما يجب أن يقف عنده المراجع');
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

@@ -33,6 +33,15 @@
     { id: 'measurement', label: 'القياس' },
   ];
 
+  /* الإجراءات ذات المفاتيح المسمّاة. ما ليس هنا يُنفَّذ بـ D حين يكون وحيداً. */
+  var ACTION_KEYS = {
+    approve: 'A',
+    return: 'R',
+    escalate: 'E',
+    coordinate: 'C',
+    screen: 'S',
+  };
+
   var CONFIDENCE = {
     high: { label: 'عالية', tone: 'success' },
     medium: { label: 'متوسطة', tone: 'warning' },
@@ -258,11 +267,21 @@
 
     /* الأول دائماً هو الإجراء الذي يدفع العمل للأمام — ترتيب ACTION_TARGET
        يتبع مسار الأنبوب، فلا حاجة لقائمة يدوية تفترق عنه. */
+    /* اختصار كل إجراء يُعرض على زره. الاكتشاف يقع حيث يقع الفعل: مراجع لا
+       يفتح لوحة المساعدة يتعلّم المفتاح من الزر الذي يضغطه اليوم. المصدر هو
+       ACTION_KEYS هنا لا نسخة ثانية في وحدة المفاتيح. */
+    // D يُعرض على الإجراء الوحيد فقط: عرضه حين تتعدّد الإجراءات وعدٌ كاذب،
+    // فـ D لا يخمّن بينها ولن يفعل شيئاً.
+    var soleAction = actions.length === 1;
+
     var buttons = actions.map(function (action, index) {
       var primary = index === 0;
+      var shortcut = ACTION_KEYS[action] || (soleAction ? 'D' : '');
       return '<button type="button" class="desk-action' + (primary ? ' is-primary' : '') + '"'
         + ' data-action="' + escapeHtml(action) + '">'
-        + escapeHtml(States.ACTION_LABELS[action] || action) + '</button>';
+        + escapeHtml(States.ACTION_LABELS[action] || action)
+        + (shortcut ? ' <kbd>' + shortcut + '</kbd>' : '')
+        + '</button>';
     }).join('');
 
     return '<div class="desk-actions">' + buttons + '</div>';
@@ -297,6 +316,9 @@
     renderSummary: renderSummary,
     renderActions: renderActions,
     renderAudit: renderAudit,
+    // يُصدَّر ليبقى ترميز HTML مصدراً واحداً: كل نص يمر من هنا أو لا يمر.
+    escapeHtml: escapeHtml,
+    ACTION_KEYS: ACTION_KEYS,
     TABS: TABS,
   };
 });

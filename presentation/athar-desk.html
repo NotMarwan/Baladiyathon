@@ -20,9 +20,15 @@
   <span class="desk-badge">بيانات توضيحية للعرض</span>
   <span class="desk-bar-spacer"></span>
   <span class="desk-ledger" id="deskLedger" role="status"></span>
+  <button type="button" class="desk-keyhint" id="deskKeyhint" aria-haspopup="dialog">
+    اختصارات <kbd>؟</kbd>
+  </button>
   <button type="button" class="desk-reset" id="deskReset">مسح القرارات المحفوظة</button>
   <span class="desk-actor" id="deskActor">المراجع: مناوب الفرز</span>
 </header>
+
+<!-- ما يُرى يُسمع: كل نتيجة مفتاح تُعلن هنا لقارئ الشاشة. -->
+<p class="visually-hidden" id="deskLive" role="status" aria-live="polite"></p>
 
 <div class="desk-shell">
 
@@ -60,10 +66,15 @@
   </main>
 
   <section class="desk-pane desk-pane-file" aria-label="ملف القرار">
+    <!-- التأكيد فوق الملف لا فوق الشاشة: يقع حيث وقع الفعل. -->
+    <div class="desk-confirm" id="deskConfirm" role="status" hidden></div>
     <div id="deskFile" class="desk-file-empty"></div>
   </section>
 
 </div>
+
+<div class="desk-help" id="deskHelp" role="dialog" aria-modal="true"
+     aria-labelledby="deskHelpTitle" hidden></div>
 
 <!--
   كلها defer. الفرق ليس في البايتات بل في متى تُدفع: سكربت متزامن يوقف
@@ -90,6 +101,7 @@
 <script defer src="athar-desk-store.js"></script>
 <script defer src="athar-desk-inbox.js"></script>
 <script defer src="athar-desk-file.js"></script>
+<script defer src="athar-desk-keys.js"></script>
 <script defer src="athar-desk-boot.js"></script>
 
 </body>

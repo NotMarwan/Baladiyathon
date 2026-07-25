@@ -367,6 +367,66 @@
     delete analysisCache[id];
     store.replace({ type: 'Feature', geometry: feature.geometry, properties: applied.work });
     renderLedger();
+
+    // التأكيد ثم التقدّم — بهذا الترتيب.
+    // -------------------------------------------------------------------------
+    // القفز الآلي إلى العمل التالي يخفي الدليل على أن القرار وقع، فيتركه
+    // المراجع شاكّاً هل ضغط أم لا. والبقاء بلا مخرج يقطع الإيقاع. فالشريط
+    // يثبت الوقوع، ويعرض التالي بضغطة واحدة.
+    flash({
+      tone: 'success',
+      mark: '✓',
+      text: AtharDeskStates.ACTION_LABELS[action],
+      ref: applied.work.permitRef,
+      tail: 'نسخة ' + applied.work.version,
+      next: true,
+    });
+  }
+
+  /**
+   * شريط واحد لكل ردّ فعل على مفتاح — وقوعاً كان أو رفضاً.
+   * ---------------------------------------------------------------------------
+   * الرفض المسموع وحده يترك المراجع المبصر أمام لوحة تبدو ميتة، والوقوع غير
+   * المرئي يتركه شاكّاً هل ضغط. فمخرج واحد يُرى ويُسمع معاً، وتُميّزه النبرة
+   * والرمز والنص — لا اللون وحده.
+   */
+  function flash(options) {
+    var bar = document.getElementById('deskConfirm');
+    if (!bar) return;
+
+    var opts = options || {};
+    announce([opts.text, opts.ref, opts.tail].filter(Boolean).join(' · '));
+
+    bar.setAttribute('data-tone', opts.tone || 'success');
+    bar.innerHTML = '<span class="desk-confirm-mark" aria-hidden="true">'
+      + (opts.mark || '✓') + '</span>'
+      + '<span class="desk-confirm-text">' + AtharDeskFile.escapeHtml(opts.text)
+      // المرجع لاتيني داخل جملة عربية: بلا bdi يقصّه محرّك الاتجاه الثنائي عند
+      // أول شرطة فيلتفّ «BLD-» سطراً و«2026-0129» سطراً — رقم واحد يُقرأ رقمين.
+      + (opts.ref
+        ? ' · <bdi class="desk-confirm-ref">' + AtharDeskFile.escapeHtml(opts.ref) + '</bdi>'
+        : '')
+      + (opts.tail ? ' · ' + AtharDeskFile.escapeHtml(opts.tail) : '')
+      + '</span>'
+      + (opts.next
+        ? '<button type="button" class="desk-confirm-next" id="deskConfirmNext">'
+          + 'التالي الذي ينتظر قراراً <kbd>N</kbd></button>'
+        : '');
+    bar.hidden = false;
+
+    var next = document.getElementById('deskConfirmNext');
+    if (next) {
+      next.addEventListener('click', function () {
+        if (stepPending()) hideConfirmation();
+      });
+    }
+  }
+
+  function hideConfirmation() {
+    var bar = document.getElementById('deskConfirm');
+    if (!bar) return;
+    bar.hidden = true;
+    bar.innerHTML = '';
   }
 
   /**
@@ -384,6 +444,218 @@
     userDriven = true;
     store.select(id);
   }
+
+  /* ---------- الفرز بلوحة المفاتيح ---------- */
+
+  /**
+   * المفاتيح تعمل على القائمة المرئية لا على المحفظة كلها: المراجع الذي رشّح
+   * «ينتظر قراراً» يتنقّل داخل ما رشّحه — وإلا فالترشيح زينة.
+   */
+  function visibleIds() {
+    return store.getVisible().map(function (feature) { return feature.properties.id; });
+  }
+
+  function step(delta) {
+    var ids = visibleIds();
+    if (!ids.length) return;
+    var at = ids.indexOf(store.getState().selectedId);
+    // بلا تحديد: J يبدأ من الأول، K من الأخير — لا قفزة عمياء إلى الوسط.
+    var next = at === -1 ? (delta > 0 ? 0 : ids.length - 1) : at + delta;
+    if (next < 0 || next >= ids.length) return;
+    selectRow(ids[next]);
+  }
+
+  /**
+   * التالي الذي ينتظر قراراً فعلاً — يتخطّى ما فُرغ منه، ويلتفّ.
+   * ---------------------------------------------------------------------------
+   * الالتفاف ليس ترفاً. الفرز يضع المنتظِر أولاً، فالعمل الذي يُعتمد يهبط إلى
+   * قاع القائمة فوراً؛ والبحث عمّا بعده من القاع لا يجد شيئاً. بلا التفاف يعلق
+   * المراجع بعد أول اعتماد ويظنّ الطابور فرغ وفيه مئة عمل ينتظر.
+   */
+  function stepPending() {
+    var found = store.nextPending(store.getState().selectedId);
+
+    if (!found) {
+      flash({ tone: 'refused', mark: '✓',
+        text: 'لا عمل آخر ينتظر قراراً في القائمة المعروضة.' });
+      return false;
+    }
+
+    selectRow(found.feature.properties.id);
+    // الالتفاف يُعلن: قفزة إلى الأعلى بلا خبر تُقرأ كفقد للمكان.
+    if (found.wrapped) announce('عاد الفرز إلى أعلى القائمة.');
+    return true;
+  }
+
+  /* ---------- الإعلان: ما يُرى يُسمع كذلك ---------- */
+
+  var liveEl = document.getElementById('deskLive');
+
+  function announce(message) {
+    if (liveEl) liveEl.textContent = message;
+  }
+
+  /** اسم الحالة عربياً. LABELS تحمل كائناً — الوصول المباشر يطبع [object Object]. */
+  function statusLabel(status) {
+    var entry = AtharDeskStates.LABELS[status];
+    return (entry && entry.label) || status;
+  }
+
+  /**
+   * الرفض يقول البديل لا الرفض وحده.
+   * «غير متاح» تترك المراجع يجرّب مفاتيح حتى يصيب؛ ذكر ما هو متاح على هذه
+   * الحالة يحوّل الرفض إلى إرشاد.
+   */
+  function refusalMessage(action, status, allowed) {
+    var wanted = AtharDeskStates.ACTION_LABELS[action] || action;
+    var options = (allowed || []).map(function (name) {
+      return '«' + (AtharDeskStates.ACTION_LABELS[name] || name) + '»';
+    });
+
+    return '«' + wanted + '» غير متاح على حالة «' + statusLabel(status) + '». '
+      + (options.length ? 'المتاح: ' + options.join('، ') + '.' : 'لا إجراء متاح على هذه الحالة.');
+  }
+
+  /* ---------- لوحة المساعدة ---------- */
+
+  var helpEl = document.getElementById('deskHelp');
+  var helpReturnFocus = null;
+
+  function toggleHelp(open) {
+    if (!helpEl) return;
+    var show = open === undefined ? helpEl.hidden : open;
+
+    if (show) {
+      helpReturnFocus = document.activeElement;
+      helpEl.innerHTML = AtharDeskKeys.renderHelp();
+      helpEl.hidden = false;
+      var close = document.getElementById('deskHelpClose');
+      if (close) {
+        close.addEventListener('click', function () { toggleHelp(false); });
+        close.focus();
+      }
+      return;
+    }
+
+    helpEl.hidden = true;
+    helpEl.innerHTML = '';
+    // البؤرة تعود من حيث جاءت: لوحة تُغلق وتترك البؤرة على الجسد تُفقد المكان.
+    if (helpReturnFocus && helpReturnFocus.focus) helpReturnFocus.focus();
+    helpReturnFocus = null;
+  }
+
+  /**
+   * مفتاح واحد على الوثيقة كلها.
+   * ---------------------------------------------------------------------------
+   * جدول المفاتيح في وحدته النقية؛ هنا الأثر وحده. الترتيب مقصود: المساعدة
+   * تُغلق قبل أيّ شيء آخر، فمراجعٌ فتحها لا يجد مفتاحه ينفّذ خلفها.
+   */
+  document.addEventListener('keydown', function (event) {
+    var resolved = AtharDeskKeys.resolve(event);
+    if (!resolved) return;
+
+    if (helpEl && !helpEl.hidden && resolved.intent !== 'help') {
+      if (resolved.intent !== 'escape') return;
+      event.preventDefault();
+      toggleHelp(false);
+      return;
+    }
+
+    if (resolved.intent === 'help') { event.preventDefault(); toggleHelp(); return; }
+
+    if (resolved.intent === 'search') {
+      event.preventDefault();
+      var search = document.getElementById('desk-search');
+      if (search) { search.focus(); search.select(); }
+      return;
+    }
+
+    if (resolved.intent === 'escape') {
+      var field = document.getElementById('desk-search');
+      if (field && document.activeElement === field) {
+        field.value = '';
+        store.setFilter('query', '');
+        field.blur();
+      }
+      return;
+    }
+
+    if (resolved.intent === 'next') { event.preventDefault(); step(1); return; }
+    if (resolved.intent === 'prev') { event.preventDefault(); step(-1); return; }
+    if (resolved.intent === 'nextPending') { event.preventDefault(); stepPending(); return; }
+
+    if (resolved.intent === 'open') {
+      event.preventDefault();
+      var firstTab = fileEl.querySelector('.desk-tab');
+      if (firstTab) firstTab.focus();
+      return;
+    }
+
+    if (resolved.intent === 'tab') {
+      var tab = AtharDeskFile.TABS[resolved.arg];
+      if (!tab || !store.getSelected()) return;
+      event.preventDefault();
+      activeTab = tab.id;
+      renderFile();
+      announce('التبويب: ' + tab.label);
+      return;
+    }
+
+    /**
+     * D — نفّذ المتاح.
+     * -------------------------------------------------------------------------
+     * كثير من الحالات لا تقبل إلا إجراءً واحداً (يحتاج تنسيقاً ← أعد الفرز)،
+     * وربطها كلها بمفاتيح مسمّاة يملأ اللوحة بحروف تُنسى. مفتاح واحد ينفّذ
+     * المتاح حين يكون وحيداً، ويعرض الخيارات حين تتعدّد — ولا يخمّن أبداً بين
+     * اعتماد وإرجاع.
+     */
+    if (resolved.intent === 'decide') {
+      var work = store.getSelected();
+      if (!work) return;
+      event.preventDefault();
+
+      var options = AtharDeskStates.actionsFor(work.properties.status);
+
+      // إجراء وحيد، أو إجراء أول يوجّه ولا يحكم: يُنفَّذ. غير ذلك: يقف ويسأل.
+      // فالمراجع يمرّ بـ N و D على خطوات التوجيه كلها، ويتوقف حيث يلزم حكمه.
+      if (options.length === 1 || (options.length && AtharDeskStates.isRouting(options[0]))) {
+        runAction(options[0]);
+        return;
+      }
+
+      flash({
+        tone: 'refused',
+        mark: '◆',
+        text: options.length
+          ? 'هذا القرار يحتاج حكمك — اختر: ' + options.map(function (name) {
+            var shortcut = AtharDeskFile.ACTION_KEYS[name];
+            return '«' + (AtharDeskStates.ACTION_LABELS[name] || name) + '»'
+              + (shortcut ? ' (' + shortcut + ')' : '');
+          }).join('، ')
+          : 'حالة نهائية — لا إجراء متاح على «' + statusLabel(work.properties.status) + '».',
+      });
+      return;
+    }
+
+    if (resolved.intent === 'action') {
+      var selected = store.getSelected();
+      if (!selected) return;
+      event.preventDefault();
+
+      // مفتاح لإجراء لا يسمح به الحارس يقول سببه، ولا يمر صامتاً كأن اللوحة
+      // معطّلة. الحارس نفسه هو الذي يجيب — لا نسخة ثانية من قواعده هنا.
+      var allowed = AtharDeskStates.actionsFor(selected.properties.status);
+      if (allowed.indexOf(resolved.arg) === -1) {
+        flash({
+          tone: 'refused',
+          mark: '⊘',
+          text: refusalMessage(resolved.arg, selected.properties.status, allowed),
+        });
+        return;
+      }
+      runAction(resolved.arg);
+    }
+  });
 
   listEl.addEventListener('click', function (event) {
     var row = event.target.closest('[data-work-id]');
@@ -452,8 +724,10 @@
     render();
 
     var selectedId = store.getState().selectedId;
-    if (GL && GL.api.highlightWork && selectedId !== lastHighlighted) {
-      GL.api.highlightWork(selectedId, { fly: userDriven });
+    if (selectedId !== lastHighlighted) {
+      // تأكيد قرارٍ سابق لا معنى له فوق عمل آخر.
+      hideConfirmation();
+      if (GL && GL.api.highlightWork) GL.api.highlightWork(selectedId, { fly: userDriven });
       lastHighlighted = selectedId;
     }
     userDriven = false;
@@ -464,6 +738,9 @@
   });
 
   // مسح صريح: العرض التوضيحي يحتاج عودة إلى نقطة الصفر بلا فتح أدوات المطوّر.
+  var keyhint = document.getElementById('deskKeyhint');
+  if (keyhint) keyhint.addEventListener('click', function () { toggleHelp(true); });
+
   var resetButton = document.getElementById('deskReset');
   if (resetButton) {
     resetButton.addEventListener('click', function () {

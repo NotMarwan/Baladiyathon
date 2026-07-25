@@ -156,6 +156,40 @@
         return state.selectedId ? find(state.selectedId) : null;
       },
 
+      /**
+       * العمل التالي الذي ينتظر قراراً ضمن المعروض، بالتفاف.
+       * -----------------------------------------------------------------------
+       * الالتفاف شرط صحة لا راحة: الفرز يضع المنتظِر أولاً، فالعمل الذي يُقرَّر
+       * يهبط إلى قاع القائمة في اللحظة نفسها. بحثٌ أمامي من القاع لا يجد شيئاً،
+       * فيُخبَر المراجع أن الطابور فرغ وفيه مئة عمل ينتظر — وهو أسوأ عطب ممكن
+       * في أداة طابور: لا تُخطئ الحساب بل تُخفي العمل.
+       *
+       * @param {string|null} fromId المعرّف الذي يُبدأ بعده. null يبدأ من الأول.
+       * @param {object} [options] {step:-1} للاتجاه المعاكس.
+       * @returns {{feature:object, wrapped:boolean}|null}
+       */
+      nextPending: function (fromId, options) {
+        var visible = getVisible();
+        if (!visible.length) return null;
+
+        var step = (options && options.step === -1) ? -1 : 1;
+        var at = visible.map(function (f) { return f.properties.id; }).indexOf(fromId);
+        var size = visible.length;
+
+        for (var offset = 1; offset <= size; offset += 1) {
+          var index = (((at + offset * step) % size) + size) % size;
+          var feature = visible[index];
+          if (feature.properties.id === fromId) continue;
+          if (DECISION_STATUSES.indexOf(feature.properties.status) === -1) continue;
+
+          // الالتفاف حقيقة يُبلَّغ بها المستدعي، لا قفزة صامتة تُفقد المكان.
+          var wrapped = step === 1 ? index <= at : index >= at;
+          return { feature: feature, wrapped: at !== -1 && wrapped };
+        }
+
+        return null;
+      },
+
       counts: function () {
         var byStatus = {};
         var needsDecision = 0;

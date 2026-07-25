@@ -70,6 +70,131 @@ body {
 .desk-map-wrap { position: relative; min-height: 0; background: var(--athar-canvas); }
 #map { position: absolute; inset: 0; }
 
+/* ---- الفرز بلوحة المفاتيح ---- */
+
+.desk-keyhint {
+  font: inherit;
+  font-size: 0.74rem;
+  color: var(--athar-muted);
+  background: none;
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-pill);
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: color var(--athar-t-hover), border-color var(--athar-t-hover);
+}
+.desk-keyhint:hover { color: var(--athar-primary); border-color: var(--athar-primary); }
+.desk-keyhint:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
+
+kbd {
+  font-family: var(--athar-font-mono);
+  font-size: 0.9em;
+  color: var(--athar-ink);
+  background: var(--athar-surface-raised);
+  border: 1px solid var(--athar-line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+/* شريط التأكيد: يثبت أن القرار وقع، ويقدّم التالي بضغطة. */
+.desk-confirm {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--athar-space-2);
+  padding: var(--athar-space-2) var(--athar-space-3);
+  border-bottom: 1px solid var(--athar-line);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  /* النبرة تُحمل بالسمة لا بالصنف: مخرج واحد يبدّل معناه بلا تبديل بنيته. */
+  background: var(--athar-success-soft);
+  color: var(--athar-success);
+}
+.desk-confirm[data-tone="refused"] {
+  background: var(--athar-warning-soft);
+  color: var(--athar-warning);
+}
+.desk-confirm[hidden] { display: none; }
+.desk-confirm-mark { font-weight: 800; flex: 0 0 auto; }
+.desk-confirm-text { font-weight: 700; min-width: 0; }
+.desk-confirm-ref {
+  font-family: var(--athar-font-mono);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.desk-confirm-next {
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--athar-primary);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  padding: 4px 9px;
+  margin-inline-start: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.desk-confirm-next:hover { border-color: var(--athar-primary); background: var(--athar-primary-soft); }
+.desk-confirm-next:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 1px; }
+
+/* لوحة الاختصارات */
+.desk-help {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: var(--athar-space-4);
+  background: color-mix(in srgb, var(--athar-ink) 42%, transparent);
+}
+.desk-help[hidden] { display: none; }
+
+.desk-help-card {
+  width: min(30rem, 100%);
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: var(--athar-space-6);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-lg);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--athar-ink) 22%, transparent);
+}
+.desk-help-card h2 { font-size: 1rem; margin-bottom: var(--athar-space-1); }
+.desk-help-note {
+  font-size: 0.78rem;
+  color: var(--athar-muted);
+  margin-bottom: var(--athar-space-4);
+  line-height: 1.6;
+}
+.desk-help-list {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--athar-space-2) var(--athar-space-3);
+  align-items: center;
+}
+.desk-help-list dt { text-align: start; }
+.desk-help-list dd { font-size: 0.84rem; color: var(--athar-ink); }
+.desk-help-close {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--athar-surface);
+  background: var(--athar-primary);
+  border: 0;
+  border-radius: var(--athar-radius-sm);
+  padding: 8px 18px;
+  margin-top: var(--athar-space-6);
+  cursor: pointer;
+}
+.desk-help-close:hover { background: var(--athar-primary-hover); }
+.desk-help-close:focus-visible { outline: 2px solid var(--athar-ink); outline-offset: 2px; }
+
 /* ---- الانتظار: هيكل يقول «هنا ستقع الصفوف» لا دوّار يقول «انتظر» ---- */
 
 .desk-skeleton { padding: var(--athar-space-1) 0; }
