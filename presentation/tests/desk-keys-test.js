@@ -82,6 +82,22 @@ ok('اختصارات المتصفح لا تُختطف', () => {
   });
 });
 
+ok('Ctrl+K و⌘K وحدهما يستثنيان — الرابط المتعارف عليه للوحة الأوامر', () => {
+  // منعه يعني أن يجرّبه المراجع ولا يجد شيئاً، وهو أسوأ من غياب اللوحة.
+  assert.strictEqual(Keys.resolve(press({ code: 'KeyK', ctrlKey: true })).intent, 'palette');
+  assert.strictEqual(Keys.resolve(press({ code: 'KeyK', metaKey: true })).intent, 'palette');
+  // ويعمل بلوحة عربية كذلك — القراءة من الموضع لا الحرف.
+  assert.strictEqual(Keys.resolve(press({ code: 'KeyK', key: 'ن', ctrlKey: true })).intent, 'palette');
+});
+
+ok('الاستثناء لا يتّسع: Ctrl+Alt+K ليس لوحة أوامر', () => {
+  assert.strictEqual(Keys.resolve(press({ code: 'KeyK', ctrlKey: true, altKey: true })), null);
+});
+
+ok('K وحده يبقى تنقّلاً لا لوحة', () => {
+  assert.strictEqual(Keys.resolve(press({ code: 'KeyK' })).intent, 'prev');
+});
+
 ok('Shift مع حرف لا ينفّذ الإجراء — الحرف الكبير ليس أمراً', () => {
   assert.strictEqual(Keys.resolve(press({ code: 'KeyA', shiftKey: true })), null);
 });
@@ -109,7 +125,7 @@ ok('لوحة المساعدة تعرض كل اختصار معرَّف', () => {
 ok('كل نيّة في الجدول لها سطر في المساعدة — لا اختصار سرّي', () => {
   // مفتاح يعمل ولا يُذكر في المساعدة اختصارٌ لا يعرفه أحد.
   const documented = Keys.HELP.map((row) => row.keys.toUpperCase()).join(' ');
-  ['J', 'K', 'N', 'D', 'A', 'R', 'E', 'C', '/', 'ESC', 'ENTER'].forEach((token) => {
+  ['J', 'K', 'N', 'D', 'A', 'R', 'E', 'C', '/', 'ESC', 'ENTER', 'CTRL'].forEach((token) => {
     assert.ok(documented.indexOf(token) !== -1, `مفتاح غير موثّق: ${token}`);
   });
 });

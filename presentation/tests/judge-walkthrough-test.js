@@ -60,8 +60,12 @@ ok('٧ — يُخرج خطة إدارة المرور من الشاشة نفسه�
   assert.ok(desk.indexOf('AtharDeskPlan.renderTab') !== -1, 'التبويب لا يبني خطة');
   assert.ok(desk.indexOf('AtharDeskPlan.toDocument') !== -1, 'لا وثيقة تُنزَّل');
   assert.ok(desk.indexOf('AtharEngine.wzdx') !== -1, 'لا تصدير معياري');
-  assert.ok(desk.indexOf('النموذج التفاعلي') === -1,
-    'ما زال يحيل إلى صفحة أخرى بدل أن يُخرج');
+  // الشرط على **تبويب الخطة** لا على السطح كله: اسم النموذج التفاعلي يظهر
+  // مشروعاً كوجهة تنقّل في لوحة الأوامر، ومنعه هناك يحرس صياغةً لا معنى.
+  const planModule = fs.readFileSync(path.join(ROOT, 'athar-desk-plan.js'), 'utf8');
+  assert.ok(planModule.indexOf('النموذج التفاعلي') === -1,
+    'تبويب الخطة ما زال يحيل إلى صفحة أخرى بدل أن يُخرج');
+  assert.ok(planModule.indexOf('نزّل خطة إدارة المرور') !== -1, 'لا زرّ تنزيل للخطة');
 });
 
 ok('زرّ بلا إجراء لا يمرّ إلى مسار الإجراءات', () => {

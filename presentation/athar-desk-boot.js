@@ -861,7 +861,9 @@
     // ضغطته تنفّذ خلفها على عمل لا يراه.
     var openPanel = (helpEl && !helpEl.hidden) ? { el: helpEl, intent: 'help', close: toggleHelp }
       : (sessionEl && !sessionEl.hidden)
-        ? { el: sessionEl, intent: 'session', close: toggleSession } : null;
+        ? { el: sessionEl, intent: 'session', close: toggleSession }
+        : (paletteEl && !paletteEl.hidden)
+          ? { el: paletteEl, intent: 'palette', close: togglePalette } : null;
 
     if (openPanel && resolved.intent !== openPanel.intent) {
       if (resolved.intent !== 'escape') return;
@@ -872,6 +874,7 @@
 
     if (resolved.intent === 'help') { event.preventDefault(); toggleHelp(); return; }
     if (resolved.intent === 'session') { event.preventDefault(); toggleSession(); return; }
+    if (resolved.intent === 'palette') { event.preventDefault(); togglePalette(); return; }
 
     if (resolved.intent === 'search') {
       event.preventDefault();
@@ -1116,6 +1119,135 @@
 
     var close = document.getElementById('deskResumeClose');
     if (close) close.addEventListener('click', hideResume);
+  }
+
+  /* ---------- لوحة الأوامر ---------- */
+
+  var paletteEl = document.getElementById('deskPalette');
+  var paletteReturnFocus = null;
+  var paletteResults = [];
+  var paletteActive = 0;
+
+  var PALETTE_PAGES = [
+    { file: 'athar-map.html', label: 'الخريطة العامة' },
+    { file: 'athar-decision.html', label: 'شاشة القرار' },
+    { file: 'athar-prototype.html', label: 'النموذج التفاعلي' },
+    { file: 'athar-lab.html', label: 'مختبر الابتكار' },
+    { file: 'athar-city-impact.html', label: 'لوحة أثر المدينة' },
+    { file: 'athar-sources.html', label: 'سجل المصادر' },
+  ];
+
+  /**
+   * الفهرس يُبنى عند الفتح لا مرة واحدة: الحالات تتغيّر مع كل قرار، وفهرسٌ
+   * مبنيّ عند الإقلاع يعرض إجراءات لم تعد متاحة.
+   *
+   * الترتيب مقصود — الإجراءات والتبويبات قبل 150 تصريحاً: نصٌّ فارغ يعرض ما
+   * يُفعل لا ما يُفتح.
+   */
+  function paletteIndex() {
+    var entries = [];
+    var selected = store.getSelected();
+
+    if (selected) {
+      AtharDeskStates.actionsFor(selected.properties.status).forEach(function (action) {
+        entries.push({
+          kind: 'action',
+          label: AtharDeskStates.ACTION_LABELS[action] || action,
+          hint: 'على ' + selected.properties.permitRef,
+          value: { type: 'action', action: action },
+        });
+      });
+
+      AtharDeskFile.TABS.forEach(function (tab) {
+        entries.push({ kind: 'tab', label: tab.label, value: { type: 'tab', id: tab.id } });
+      });
+    }
+
+    PALETTE_PAGES.forEach(function (page) {
+      entries.push({ kind: 'page', label: page.label, value: { type: 'page', file: page.file } });
+    });
+
+    store.getState().features.forEach(function (feature) {
+      var p = feature.properties;
+      entries.push({
+        kind: 'work',
+        label: p.street,
+        hint: p.permitRef + ' · ' + statusLabel(p.status),
+        value: { type: 'work', id: p.id },
+      });
+    });
+
+    return entries;
+  }
+
+  function paletteRender(query) {
+    paletteResults = AtharDeskPalette.search(paletteIndex(), query);
+    paletteActive = 0;
+    var box = document.getElementById('deskPaletteResults');
+    if (box) box.innerHTML = AtharDeskPalette.renderResults(paletteResults, paletteActive);
+  }
+
+  function paletteMove(delta) {
+    if (!paletteResults.length) return;
+    paletteActive = (paletteActive + delta + paletteResults.length) % paletteResults.length;
+    var box = document.getElementById('deskPaletteResults');
+    if (box) box.innerHTML = AtharDeskPalette.renderResults(paletteResults, paletteActive);
+    var option = document.getElementById('deskPaletteOption' + paletteActive);
+    if (option && option.scrollIntoView) option.scrollIntoView({ block: 'nearest' });
+  }
+
+  function paletteChoose(index) {
+    var entry = paletteResults[index === undefined ? paletteActive : index];
+    if (!entry) return;
+    var value = entry.value;
+    togglePalette(false);
+
+    if (value.type === 'work') { selectRow(value.id); return; }
+    if (value.type === 'tab') { setTab(value.id); return; }
+    if (value.type === 'page') { window.location.href = value.file; return; }
+    if (value.type === 'action') { runAction(value.action); }
+  }
+
+  function togglePalette(open) {
+    if (!paletteEl) return;
+    var show = open === undefined ? paletteEl.hidden : open;
+
+    if (!show) {
+      paletteEl.hidden = true;
+      paletteEl.innerHTML = '';
+      paletteResults = [];
+      if (paletteReturnFocus && paletteReturnFocus.focus) paletteReturnFocus.focus();
+      paletteReturnFocus = null;
+      return;
+    }
+
+    paletteReturnFocus = document.activeElement;
+    paletteEl.innerHTML = AtharDeskPalette.renderShell();
+    paletteEl.hidden = false;
+    paletteRender('');
+
+    var input = document.getElementById('deskPaletteInput');
+    if (input) {
+      input.addEventListener('input', function () { paletteRender(input.value); });
+
+      // مفاتيح اللوحة تُعالَج على الحقل نفسه: جدول المفاتيح العام يصمت داخل
+      // الحقول عمداً، وهو الصواب — الحرف داخل حقل حرف لا أمر.
+      input.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown') { event.preventDefault(); paletteMove(1); return; }
+        if (event.key === 'ArrowUp') { event.preventDefault(); paletteMove(-1); return; }
+        if (event.key === 'Enter') { event.preventDefault(); paletteChoose(); return; }
+        if (event.key === 'Escape') { event.preventDefault(); togglePalette(false); }
+      });
+      input.focus();
+    }
+
+    var box = document.getElementById('deskPaletteResults');
+    if (box) {
+      box.addEventListener('click', function (event) {
+        var option = event.target.closest('[data-index]');
+        if (option) paletteChoose(Number(option.getAttribute('data-index')));
+      });
+    }
   }
 
   var keyhint = document.getElementById('deskKeyhint');

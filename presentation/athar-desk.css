@@ -839,3 +839,82 @@ kbd {
 .desk-resume-close:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 1px; }
 /* بلا زرّ متابعة يأخذ الإخفاء الهامش التلقائي فلا يلتصق بالنص. */
 .desk-resume-text + .desk-resume-close { margin-inline-start: auto; }
+
+/* ---- لوحة الأوامر ---- */
+
+.desk-palette {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: 12vh var(--athar-space-4) var(--athar-space-4);
+  background: color-mix(in srgb, var(--athar-ink) 42%, transparent);
+}
+.desk-palette[hidden] { display: none; }
+
+.desk-palette-card {
+  width: min(34rem, 100%);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-lg);
+  box-shadow: 0 20px 56px color-mix(in srgb, var(--athar-ink) 28%, transparent);
+  overflow: hidden;
+}
+
+.desk-palette-input {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--athar-ink);
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--athar-line);
+  padding: var(--athar-space-4);
+  background: var(--athar-surface);
+}
+.desk-palette-input:focus { outline: none; }
+.desk-palette-input::placeholder { color: var(--athar-faint); }
+
+.desk-palette-results { max-height: 46vh; overflow-y: auto; }
+.desk-palette-list { list-style: none; }
+.desk-palette-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--athar-space-2);
+  padding: var(--athar-space-2) var(--athar-space-4);
+  cursor: pointer;
+  border-bottom: 1px solid var(--athar-line);
+}
+/* الإبراز بخلفية وشريط معاً: اللون وحده لا ينقل حالة. */
+.desk-palette-list li[aria-selected="true"] {
+  background: var(--athar-primary-soft);
+  box-shadow: inset 3px 0 0 var(--athar-primary);
+}
+.desk-palette-list li:hover { background: var(--athar-surface-raised); }
+
+.desk-palette-kind {
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--athar-muted);
+  background: var(--athar-canvas);
+  border-radius: var(--athar-radius-pill);
+  padding: 2px 8px;
+}
+.desk-palette-label { font-size: 0.88rem; font-weight: 700; min-width: 0; }
+.desk-palette-hint {
+  font-size: 0.74rem;
+  color: var(--athar-muted);
+  margin-inline-start: auto;
+  white-space: nowrap;
+  font-family: var(--athar-font-mono);
+}
+.desk-palette-empty { padding: var(--athar-space-6); color: var(--athar-muted); font-size: 0.86rem; }
+.desk-palette-foot {
+  padding: var(--athar-space-2) var(--athar-space-4);
+  border-top: 1px solid var(--athar-line);
+  background: var(--athar-surface-raised);
+  font-size: 0.72rem;
+  color: var(--athar-muted);
+}
