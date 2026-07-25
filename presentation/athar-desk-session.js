@@ -171,11 +171,18 @@
       + '</div>';
   }
 
-  /** السطر المختصر في شريط المنتج. يبقى صامتاً قبل أول قرار. */
+  /**
+   * السطر المختصر في شريط المنتج. يبقى صامتاً قبل أول قرار.
+   * حين لا يكون هناك فرق متاح — وهو وارد: بعض الأعمال لا بديل لها أفضل —
+   * تعرض الشارة ما تملكه فعلاً بدل صفرٍ صحيحٍ لا يقول شيئاً.
+   */
   function renderBadge(summary) {
     if (!summary.works) return '';
-    return 'قرّرت <strong>' + integer(summary.works) + '</strong> · فرق متاح <strong>'
-      + integer(summary.headroomVehHours) + '</strong> ساعة-مركبة';
+
+    var head = 'قرّرت <strong>' + integer(summary.works) + '</strong> · ';
+    return summary.headroomVehHours > 0
+      ? head + 'فرق متاح <strong>' + integer(summary.headroomVehHours) + '</strong> ساعة-مركبة'
+      : head + 'فحصت <strong>' + integer(summary.reviewedVehHours) + '</strong> ساعة-مركبة';
   }
 
   return { summarize: summarize, render: render, renderBadge: renderBadge, latestOf: latestOf };

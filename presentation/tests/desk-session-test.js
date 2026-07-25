@@ -152,4 +152,14 @@ ok('الشارة تصمت قبل أول قرار وتنطق بعده', () => {
   assert.ok(badge.indexOf('قرّرت') !== -1 && badge.indexOf('فرق متاح') !== -1);
 });
 
+ok('بلا فرق متاح تعرض الشارة ما فحصته لا صفراً', () => {
+  // صفرٌ صحيح لا يقول شيئاً؛ والانطباع الأول لا يُهدر على رقم فارغ.
+  const badge = Session.renderBadge(Session.summarize({
+    w1: [record({ recommendation: null, asked: { delayVehHours: 781148 } })],
+  }));
+  assert.ok(badge.indexOf('فحصت') !== -1, 'لم تسقط إلى ما تملكه');
+  assert.ok(badge.indexOf('781,148') !== -1);
+  assert.ok(badge.indexOf('فرق متاح') === -1, 'عرضت فرقاً صفرياً');
+});
+
 console.log(`\n${passed} اختبارات نجحت`);
