@@ -45,6 +45,7 @@
 <script src="athar-worksmap-layers.js"></script>
 <script src="athar-worksmap-data.js"></script>
 <script src="athar-worksmap.js"></script>
+<script src="athar-roads-lazy.js"></script>
 <script src="athar-worksmap-panel.js"></script>
 <script src="athar-worksmap-interactions.js"></script>
 <script>
@@ -80,6 +81,8 @@
   GL.map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: 'metric' }), 'bottom-left');
 
   GL.api.onReady(function () {
+    // الحلقة الثانية من الشبكة تلتحق عند أول خمول — الخريطة صالحة قبلها.
+    if (typeof AtharRoadsLazy !== 'undefined') AtharRoadsLazy.attach(GL.api);
     var works = window.ATHAR_CITY_PORTFOLIO || { type: 'FeatureCollection', features: [] };
     GL.api.setWorks(works);
 

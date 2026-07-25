@@ -16,6 +16,10 @@ for (const file of files) {
   } catch (error) {
     failed += 1;
     console.log('فشل');
+    // سبب الخروج قبل مخرجاته: حزمة تُقتل بإشارة تطبع مخرجات ناجحة كاملة ثم
+    // تُحسب ساقطة، فيبدو السقوط بلا سبب. الرمز والإشارة يفصلان الحالتين.
+    console.log(`  [خروج ${error.status === undefined ? '—' : error.status}`
+      + `${error.signal ? ' · إشارة ' + error.signal : ''}]`);
     process.stdout.write(String(error.stdout || '') + String(error.stderr || ''));
   }
 }

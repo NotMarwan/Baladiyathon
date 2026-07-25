@@ -1,0 +1,483 @@
+/**
+ * أثر — مُقلع مكتب المراجع.
+ * ---------------------------------------------------------------------------
+ * كان هذا سكربتاً داخل الصفحة. أُخرج ليُحمَّل بـ defer مع بقية الملفات، فيكتمل
+ * تحليل HTML ويُرسم الهيكل قبل أن يُفكّ أي بايت من شبكة الطرق. الترتيب محفوظ:
+ * سكربتات defer تُنفَّذ بترتيب ورودها قبل DOMContentLoaded، فكل ما يعتمد عليه
+ * هذا الملف يكون معرَّفاً حين يبدأ.
+ */
+(function () {
+  'use strict';
+
+  // مكتب المراجع: صندوق أعمال + خريطة + ملف قرار على مخزن حالة واحد.
+  // لا محرك يُعاد كتابته — كلها تُستهلك كما هي. البيانات محلية بالكامل.
+
+  var ACTOR = 'مناوب الفرز';
+
+  /**
+   * حالة الإقلاع.
+   * ---------------------------------------------------------------------------
+   * الغطاء يغطي الخريطة وحدها لا الشاشة: صندوق الأعمال يصبح صالحاً للعمل قبل
+   * أن ترسم الخريطة أول بلاطة، فالمراجع يبدأ الفرز بينما تكتمل الخلفية. وكل
+   * تبديل نص هنا مربوط بحدث حقيقي — لا مؤشر يدور يوهم بتقدّم لا يحدث.
+   */
+  var bootEl = document.getElementById('deskBoot');
+  var BOOT_CEILING_MS = 25000;
+  var bootTimer = null;
+
+  function bootStage(text) {
+    if (!bootEl) return;
+    var line = bootEl.querySelector('.desk-boot-status');
+    if (line) line.textContent = text;
+  }
+
+  function bootDone() {
+    if (bootTimer) { window.clearTimeout(bootTimer); bootTimer = null; }
+    if (!bootEl) return;
+    var node = bootEl;
+    bootEl = null;
+    node.setAttribute('data-done', 'true');
+    window.setTimeout(function () {
+      if (node.parentNode) node.parentNode.removeChild(node);
+    }, 240);
+  }
+
+  // غطاء لا ينزاح أسوأ من غياب الغطاء: سقف زمني يرفعه مهما حدث خلفه.
+  if (bootEl) bootTimer = window.setTimeout(bootDone, BOOT_CEILING_MS);
+  var portfolio = window.ATHAR_CITY_PORTFOLIO || { type: 'FeatureCollection', features: [] };
+
+  var listEl = document.getElementById('deskList');
+  var toolbarEl = document.getElementById('deskToolbar');
+  var fileEl = document.getElementById('deskFile');
+  var ledgerEl = document.getElementById('deskLedger');
+
+  /**
+   * ثبات القرار على مستويين.
+   * ---------------------------------------------------------------------------
+   * المتصفح هو المخزن المؤكّد: يعمل من القرص كما يعمل من الخادم، ولا يفقد
+   * المراجع قراره إن سقط الخادم. والخادم مخزن ثانٍ يثبت أن دورة القرار تعبر
+   * واجهة معيارية ويفرض القواعد نفسها. الفشل في أحدهما لا يُسقط الآخر ولا
+   * يُسقط الصفحة.
+   */
+  var LEDGER = {
+    read: function () {
+      try {
+        return AtharDecisionRecord.deserialize(
+          window.localStorage.getItem(AtharDecisionRecord.STORAGE_KEY)
+        );
+      } catch (err) {
+        return {};
+      }
+    },
+    write: function (byWork) {
+      try {
+        window.localStorage.setItem(
+          AtharDecisionRecord.STORAGE_KEY, AtharDecisionRecord.serialize(byWork)
+        );
+        return true;
+      } catch (err) {
+        return false;
+      }
+    },
+    clear: function () {
+      try {
+        window.localStorage.removeItem(AtharDecisionRecord.STORAGE_KEY);
+      } catch (err) { /* وضع خاص أو تخزين ممتلئ — الصفحة تبقى تعمل */ }
+    },
+  };
+
+  var decisions = LEDGER.read();
+  var restored = AtharDecisionRecord.restore(portfolio.features, decisions);
+
+  var store = AtharDeskStore.createStore(restored);
+  var activeTab = 'summary';
+  var blockers = [];
+  var analysisCache = {};
+  var serverLedger = false;
+
+  /** إرسال القرار إلى الخادم إن وُجد. الفشل صامت — التخزين المحلي هو المؤكّد. */
+  function pushToServer(workId, record) {
+    if (typeof fetch !== 'function') return;
+    fetch('/api/works/' + encodeURIComponent(workId) + '/decisions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(record),
+    }).then(function (response) {
+      serverLedger = response.ok;
+      renderLedger();
+    }).catch(function () { /* وضع الملف المحلي — لا خادم */ });
+  }
+
+  function renderLedger() {
+    if (!ledgerEl) return;
+    var counts = AtharDecisionRecord.counts(decisions);
+    if (!counts.decisions) {
+      ledgerEl.textContent = '';
+      return;
+    }
+    ledgerEl.textContent = counts.decisions + ' قراراً محفوظاً على '
+      + counts.works + ' عملاً' + (serverLedger ? ' · متزامن مع الخادم' : ' · محفوظ محلياً');
+  }
+
+  /* ---------- التحليل: يُحسب من العمل المحدد لحظة تحديده ---------- */
+
+  function inputsFor(p) {
+    var start = Date.parse(p.start);
+    var end = Date.parse(p.end);
+    var windowHours = Number(p.windowHours) > 0 ? Number(p.windowHours) : 8;
+    return {
+      aadt: Number(p.aadt) > 0 ? Number(p.aadt) : AtharEngine.DEFAULTS.aadt,
+      lanes: Number(p.lanes) || AtharEngine.DEFAULTS.lanes,
+      lanesClosed: Number(p.lanesClosed) || 1,
+      startHour: isNaN(start) ? 8 : new Date(start).getUTCHours(),
+      durationHours: windowHours,
+      capacityPerLane: AtharEngine.DEFAULTS.capacityPerLane,
+      freeFlowMin: AtharEngine.DEFAULTS.freeFlowMin,
+      workDays: Number(p.workDays) > 0 ? Number(p.workDays)
+        : Math.max(1, Math.ceil((end - start) / 86400000)),
+    };
+  }
+
+  function delayPercent(scored) {
+    var base = 0;
+    var closed = 0;
+    (scored.hourly || []).forEach(function (hour) {
+      base += hour.demand * hour.baseT;
+      closed += hour.demand * hour.closedT;
+    });
+    return base > 0 ? ((closed - base) / base) * 100 : 0;
+  }
+
+  /** أعمال أخرى على الشارع نفسه بنافذة زمنية متقاطعة. */
+  function overlapping(feature) {
+    var p = feature.properties;
+    var from = Date.parse(p.start);
+    var to = Date.parse(p.end);
+
+    return store.getState().features.filter(function (other) {
+      var q = other.properties;
+      if (q.id === p.id || q.street !== p.street) return false;
+      return Date.parse(q.start) < to && Date.parse(q.end) > from;
+    }).map(function (other) {
+      var q = other.properties;
+      var overlapMs = Math.min(to, Date.parse(q.end)) - Math.max(from, Date.parse(q.start));
+      return { withRef: q.permitRef, withId: q.id, overlapHours: Math.round(overlapMs / 3600000) };
+    });
+  }
+
+  function analyze(feature) {
+    var id = feature.properties.id;
+    if (analysisCache[id]) return analysisCache[id];
+
+    var input = inputsFor(feature.properties);
+    var scored = AtharEngine.score(input);
+
+    // optimize يعيد {top3, baseline}؛ وكل بديل يحمل أسبابه العربية بنفسه.
+    var optimized = AtharEngine.optimize(input) || {};
+    var alternatives = (optimized.top3 || []).slice(0, 3);
+    var best = alternatives[0];
+
+    var asked = scored.delayVehHours * input.workDays;
+    var bestTotal = best ? best.delayVehHours * input.workDays : null;
+
+    // الأثر بوحدات القرار: ساعات الناس والريال والكربون بنطاقاتها المعلنة.
+    var ph = AtharEngine.personHours(asked);
+    var vot = AtharEngine.timeValueSAR(ph);
+    var carbon = AtharEngine.co2Range(asked);
+
+    var result = {
+      scored: { delayVehHours: asked, delayPct: delayPercent(scored), level: scored.level },
+      alternatives: alternatives,
+      reasons: (best && best.reasons) || [],
+      conflicts: overlapping(feature),
+      delta: bestTotal !== null && asked > 0 ? ((bestTotal - asked) / asked) * 100 : null,
+      units: {
+        personHoursLow: ph.lowPersonHours,
+        personHoursHigh: ph.highPersonHours,
+        occLow: ph.occLow,
+        occHigh: ph.occHigh,
+        sarLow: vot.lowSAR,
+        sarHigh: vot.highSAR,
+        wageHourlySAR: vot.wageHourlySAR,
+        shareLow: vot.shareLow,
+        shareHigh: vot.shareHigh,
+        co2Low: carbon.lowCo2Kg,
+        co2High: carbon.highCo2Kg,
+      },
+      input: input,
+    };
+
+    analysisCache[id] = result;
+    return result;
+  }
+
+  /* ---------- التصيير ---------- */
+
+  function renderInbox() {
+    var state = store.getState();
+    var filters = { query: state.filters.query, status: state.filters.status, sort: state.sort };
+    toolbarEl.innerHTML = AtharDeskInbox.renderToolbar(store.counts(), filters);
+    listEl.innerHTML = AtharDeskInbox.renderList(store.getVisible(), state.selectedId);
+    bindToolbar();
+  }
+
+  function tabBody(feature, analysis) {
+    var p = feature.properties;
+
+    if (activeTab === 'history') {
+      // السجل يُقرأ من المخزن لا من ذاكرة الجلسة: ما يظهر هو ما سيبقى بعد التحديث.
+      return AtharDeskFile.renderAudit((decisions[p.id] || []).map(function (record) {
+        return {
+          action: record.action, from: null, to: record.status, actor: record.actor,
+          reason: record.reason, at: record.at, version: record.version,
+        };
+      }));
+    }
+
+    if (activeTab === 'conflict') {
+      if (!analysis.conflicts.length) {
+        return '<p class="desk-none">لا تعارض على «' + p.street + '» في النافذة نفسها.</p>';
+      }
+      return '<ul class="desk-conflicts">' + analysis.conflicts.map(function (conflict) {
+        return '<li>تعارض مع ' + conflict.withRef + ' — تداخل ' + conflict.overlapHours + ' ساعة</li>';
+      }).join('') + '</ul>';
+    }
+
+    if (activeTab === 'impact') {
+      return AtharDeskFile.renderSummary(feature, analysis)
+        + AtharDeskFile.renderConfidence(feature);
+    }
+
+    if (activeTab === 'plan') {
+      return '<p class="desk-none">مسودة خطة إدارة المرور تُبنى من البديل الفائز: '
+        + (analysis.alternatives[0] ? analysis.alternatives[0].label : '—')
+        + '. التصدير متاح في النموذج التفاعلي (WZDx و PDF).</p>';
+    }
+
+    if (activeTab === 'publication') {
+      var check = AtharDeskStates.guard(p, 'publish');
+      return check.allowed
+        ? '<p class="desk-none">جاهز للنشر: الاتجاه وزمن الانتهاء مثبتان.</p>'
+        : AtharDeskFile.renderBlockers(check.blockers);
+    }
+
+    if (activeTab === 'measurement') {
+      return '<p class="desk-none">لا قياس ميداني مستورد على هذا المحور. '
+        + 'حلقة المعايرة تعمل في مختبر الابتكار على بيانات تاريخية.</p>';
+    }
+
+    return AtharDeskFile.renderSummary(feature, analysis)
+      + AtharDeskFile.renderConfidence(feature);
+  }
+
+  function renderFile() {
+    var feature = store.getSelected();
+
+    if (!feature) {
+      fileEl.className = 'desk-file-empty';
+      fileEl.innerHTML = AtharDeskFile.renderEmpty();
+      return;
+    }
+
+    var analysis = analyze(feature);
+    fileEl.className = 'desk-pane-inner';
+    fileEl.innerHTML = AtharDeskFile.renderHeader(feature)
+      + AtharDeskFile.renderTabs(activeTab)
+      + '<div class="desk-file-body">'
+      + AtharDeskFile.renderBlockers(blockers)
+      + tabBody(feature, analysis)
+      + '</div>'
+      + '<div class="desk-foot">' + AtharDeskFile.renderActions(feature) + '</div>';
+    bindFile();
+  }
+
+  function render() {
+    renderInbox();
+    renderFile();
+  }
+
+  /* ---------- الربط ---------- */
+
+  function bindToolbar() {
+    var search = document.getElementById('desk-search');
+    if (search) {
+      search.addEventListener('input', function () {
+        store.setFilter('query', search.value);
+      });
+    }
+    var status = document.getElementById('desk-status');
+    if (status) {
+      status.addEventListener('change', function () {
+        if (status.value) store.setFilter('status', status.value);
+        else store.clearFilter('status');
+      });
+    }
+    var sort = document.getElementById('desk-sort');
+    if (sort) sort.addEventListener('change', function () { store.setSort(sort.value); });
+  }
+
+  function bindFile() {
+    Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-tab'), function (tab) {
+      tab.addEventListener('click', function () {
+        activeTab = tab.getAttribute('data-tab');
+        renderFile();
+      });
+    });
+
+    Array.prototype.forEach.call(fileEl.querySelectorAll('.desk-action'), function (button) {
+      button.addEventListener('click', function () {
+        runAction(button.getAttribute('data-action'));
+      });
+    });
+  }
+
+  /** الإجراء يمر من الحارس دائماً: العائق يُعرض ولا يُنفَّذ شيء. */
+  function runAction(action) {
+    var feature = store.getSelected();
+    if (!feature) return;
+
+    var check = AtharDeskStates.guard(feature.properties, action);
+    if (!check.allowed) {
+      blockers = check.blockers;
+      renderFile();
+      return;
+    }
+
+    blockers = [];
+    var id = feature.properties.id;
+    var analysis = analyze(feature);
+
+    var applied = AtharDeskStates.apply(
+      feature.properties, action, ACTOR,
+      AtharDeskStates.ACTION_LABELS[action] + ' من مكتب المراجع',
+      new Date().toISOString()
+    );
+
+    // السجل يُبنى قبل التصيير: القرار ونسخة مدخلاته يُحفظان معاً أو لا يُحفظان.
+    var record = AtharDecisionRecord.create(
+      feature.properties, analysis, applied.event, analysis.input
+    );
+    decisions[id] = AtharDecisionRecord.append(decisions[id], record);
+    LEDGER.write(decisions);
+    pushToServer(id, record);
+
+    // التبويب يتغيّر قبل الاستبدال: الاستبدال يبث فوراً ويعيد التصيير، فضبطه
+    // بعده يصل متأخراً بإطار كامل ويترك المراجع على تبويب لا يرى فيه أثر فعله.
+    activeTab = 'history';
+    delete analysisCache[id];
+    store.replace({ type: 'Feature', geometry: feature.geometry, properties: applied.work });
+    renderLedger();
+  }
+
+  /**
+   * الطيران يتبع نيّة المراجع لا كل تغيّر في المخزن.
+   * ---------------------------------------------------------------------------
+   * التحديد الأول آليّ — المكتب يفتح على أخطر عمل ينتظر قراراً — والطيران إليه
+   * يخطف المدينة من عين المراجع قبل أن يراها، فيفتح المكتب بمقياس خمسمئة متر
+   * على حي لا يعرف موقعه منه. لذلك: التحديد الآلي يُبرز ولا يطير، والنقر يطير.
+   * والفرز والترشيح لا يحرّكان الخريطة أصلاً — التحديد لم يتغيّر فلا سبب.
+   */
+  var userDriven = false;
+  var lastHighlighted = null;
+
+  function selectRow(id) {
+    userDriven = true;
+    store.select(id);
+  }
+
+  listEl.addEventListener('click', function (event) {
+    var row = event.target.closest('[data-work-id]');
+    if (row) selectRow(row.getAttribute('data-work-id'));
+  });
+
+  listEl.addEventListener('keydown', function (event) {
+    var row = event.target.closest('[data-work-id]');
+    if (!row) return;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      selectRow(row.getAttribute('data-work-id'));
+      return;
+    }
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      var rows = Array.prototype.slice.call(listEl.querySelectorAll('[data-work-id]'));
+      var next = rows[rows.indexOf(row) + (event.key === 'ArrowDown' ? 1 : -1)];
+      if (next) next.focus();
+    }
+  });
+
+  /* ---------- الخريطة ---------- */
+
+  var GL = null;
+
+  if (typeof maplibregl !== 'undefined' && typeof AtharWorksMap !== 'undefined') {
+    bootStage('جارٍ رسم شبكة الطرق…');
+    GL = AtharWorksMap.init(document.getElementById('map'), window.RIYADH_ROADS, {
+      baseGeoJSON: window.RIYADH_BASE,
+      center: [46.6872, 24.6902],
+      zoom: 11.7,
+    });
+
+    GL.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
+    GL.map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: 'metric' }), 'bottom-left');
+
+    GL.api.onReady(function () {
+      GL.api.setWorks(portfolio);
+      GL.api.onWorkClick(function (id) { selectRow(id); });
+
+      // المنظر الافتتاحي هو المحفظة كلها: التوزيع يُقرأ قبل أيّ حالة مفردة.
+      GL.api.frameWorks();
+
+      // أول تحديد: أخطر عمل ينتظر قراراً — الصندوق يفتح على عمل لا على فراغ.
+      var first = store.getVisible()[0];
+      if (first) store.select(first.properties.id);
+      bootDone();
+
+      // الحلقة الثانية بعد أن يصير المكتب صالحاً للعمل، لا قبله.
+      if (typeof AtharRoadsLazy !== 'undefined') AtharRoadsLazy.attach(GL.api);
+    });
+
+    GL.map.on('error', function (event) {
+      if (event && event.error) console.error('[map]', event.error.message);
+      bootDone();
+    });
+  } else {
+    bootDone();
+  }
+
+  store.subscribe(function () {
+    blockers = store.getSelected() && blockers.length ? blockers : blockers;
+    render();
+
+    var selectedId = store.getState().selectedId;
+    if (GL && GL.api.highlightWork && selectedId !== lastHighlighted) {
+      GL.api.highlightWork(selectedId, { fly: userDriven });
+      lastHighlighted = selectedId;
+    }
+    userDriven = false;
+    var selected = listEl.querySelector('[aria-selected="true"]');
+    if (selected && selected.scrollIntoView) {
+      selected.scrollIntoView({ block: 'nearest' });
+    }
+  });
+
+  // مسح صريح: العرض التوضيحي يحتاج عودة إلى نقطة الصفر بلا فتح أدوات المطوّر.
+  var resetButton = document.getElementById('deskReset');
+  if (resetButton) {
+    resetButton.addEventListener('click', function () {
+      LEDGER.clear();
+      window.location.reload();
+    });
+  }
+
+  render();
+  renderLedger();
+
+  window.__atharDesk = {
+    store: store, map: GL, states: AtharDeskStates,
+    decisions: function () { return decisions; },
+    ledger: LEDGER,
+  };
+})();

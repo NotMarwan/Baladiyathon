@@ -20,10 +20,19 @@
   var current = (window.location.pathname.split('/').pop() || '').toLowerCase();
 
   // الوسوم تُحقن قبل قواعد الشريط كي تتوفر المتغيّرات لصفحة لا تستوردها بنفسها.
-  var tokens = document.createElement('link');
-  tokens.rel = 'stylesheet';
-  tokens.href = 'athar-tokens.css';
-  document.head.appendChild(tokens);
+  // الصفحة التي تستوردها بنفسها لا تُحقن مرتين — الحقن احتياط لا قاعدة، وصفحة
+  // تستورد وسومها في رأسها تنالها عند أول رسم لا بعد وصول هذا الملف.
+  var hasTokens = Array.prototype.some.call(
+    document.querySelectorAll('link[rel="stylesheet"]'),
+    function (link) { return (link.getAttribute('href') || '').indexOf('athar-tokens.css') !== -1; }
+  );
+
+  if (!hasTokens) {
+    var tokens = document.createElement('link');
+    tokens.rel = 'stylesheet';
+    tokens.href = 'athar-tokens.css';
+    document.head.appendChild(tokens);
+  }
 
   var style = document.createElement('style');
   style.textContent =

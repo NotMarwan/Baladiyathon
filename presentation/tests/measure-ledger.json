@@ -1,0 +1,135 @@
+[
+ {
+  "label": "baseline-before-cycle1",
+  "at": "2026-07-25 02:52",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 1,
+    "load_s": 0.71,
+    "usable_s": 0.75,
+    "map_ready_s": 2.3,
+    "fcp_ms": 236,
+    "bytes_kb": 5377,
+    "errors": []
+   },
+   {
+    "page": "athar-desk.html",
+    "cpu": 6,
+    "load_s": 6.1,
+    "usable_s": 6.68,
+    "map_ready_s": 12.2,
+    "fcp_ms": 924,
+    "bytes_kb": 5377,
+    "errors": []
+   }
+  ]
+ },
+ {
+  "label": "after-cycle1-defer-skeleton",
+  "at": "2026-07-25 02:55",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 1,
+    "oriented_s": 0.21,
+    "load_s": 0.56,
+    "usable_s": 0.62,
+    "map_ready_s": 2.02,
+    "fcp_ms": 280,
+    "bytes_kb": 5397,
+    "errors": []
+   },
+   {
+    "page": "athar-desk.html",
+    "cpu": 6,
+    "load_s": 5.85,
+    "oriented_s": 6.25,
+    "usable_s": 6.44,
+    "map_ready_s": 12.32,
+    "fcp_ms": 972,
+    "bytes_kb": 5397,
+    "errors": []
+   }
+  ]
+ },
+ {
+  "label": "after-cycle1-shot",
+  "at": "2026-07-25 02:56",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 6,
+    "load_s": 4.77,
+    "usable_s": 5.35,
+    "shot": "athar-desk-cpu6-1500ms.png",
+    "map_ready_s": 10.21,
+    "fcp_ms": 840,
+    "bytes_kb": 5397,
+    "errors": []
+   }
+  ]
+ },
+ {
+  "label": "BEFORE-shot-baseline",
+  "at": "2026-07-25 02:57",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 6,
+    "load_s": 5.54,
+    "usable_s": 6.12,
+    "shot": "athar-desk-cpu6-1500ms.png",
+    "map_ready_s": 11.86,
+    "fcp_ms": 828,
+    "bytes_kb": 5377,
+    "errors": []
+   }
+  ]
+ },
+ {
+  "label": "after-cycle2-slim-split",
+  "at": "2026-07-25 03:02",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 1,
+    "load_s": 0.52,
+    "usable_s": 0.59,
+    "map_ready_s": 1.82,
+    "shot": "athar-desk-cpu1-1500ms.png",
+    "fcp_ms": 264,
+    "bytes_kb": 4192,
+    "errors": []
+   },
+   {
+    "page": "athar-desk.html",
+    "cpu": 6,
+    "load_s": 5.07,
+    "usable_s": 5.63,
+    "shot": "athar-desk-cpu6-1500ms.png",
+    "map_ready_s": 10.71,
+    "fcp_ms": 776,
+    "bytes_kb": 3490,
+    "errors": []
+   }
+  ]
+ },
+ {
+  "label": "after-cycle3-frame-portfolio",
+  "at": "2026-07-25 03:05",
+  "runs": [
+   {
+    "page": "athar-desk.html",
+    "cpu": 1,
+    "load_s": 1.05,
+    "usable_s": 1.21,
+    "map_ready_s": 3.58,
+    "shot": "athar-desk-cpu1-2600ms.png",
+    "fcp_ms": 480,
+    "bytes_kb": 4194,
+    "errors": []
+   }
+  ]
+ }
+]

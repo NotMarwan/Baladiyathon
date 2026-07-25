@@ -444,6 +444,7 @@
 <script src="athar-nav.js"></script>
 <script src="vendor/maplibre-gl.js"></script>
 <script src="data/riyadh-roads.geojson.js"></script>
+<script src="athar-roads-lazy.js"></script>
 <script src="data/riyadh-base.geojson.js"></script>
 <script src="data/corridor-geometry.js"></script>
 <script src="athar-worksmap-style.js"></script>
@@ -884,6 +885,9 @@
 
   if (GL_MODE) {
     GL.api.onReady(function () {
+      // الحلقة الثانية من الشبكة تلتحق عند أول خمول — النموذج صالح قبلها.
+      if (typeof AtharRoadsLazy !== 'undefined') AtharRoadsLazy.attach(GL.api);
+
       // مسار كل مقطع كما هو على الإسفلت؛ الوتر المستقيم يقطع الأحياء.
       var pairs = window.ATHAR_CORRIDOR_SEGMENTS;
       if (!pairs || pairs.length !== segCount) {

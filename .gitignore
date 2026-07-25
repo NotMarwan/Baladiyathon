@@ -2,3 +2,4 @@ fable-orchestrator/.pytest_cache/
 **/__pycache__/
 node_modules/
 presentation/server_log.txt
+presentation/tests/shots/

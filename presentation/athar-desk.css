@@ -5,7 +5,9 @@
    كل لون من athar-tokens.css — لا قيمة خام هنا.
    ========================================================================== */
 
-@import url("athar-tokens.css");
+/* الوسوم تُستورد بوسم <link> في رأس الصفحة لا بـ @import هنا: @import
+   يُكتشف بعد تحميل هذا الملف وتحليله، فيصير التحميلان متسلسلين بلا داع
+   ويؤخّر أول رسم بدورة شبكة كاملة. الوسم في الرأس يجعلهما متوازيين. */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
@@ -67,6 +69,61 @@ body {
 
 .desk-map-wrap { position: relative; min-height: 0; background: var(--athar-canvas); }
 #map { position: absolute; inset: 0; }
+
+/* ---- الانتظار: هيكل يقول «هنا ستقع الصفوف» لا دوّار يقول «انتظر» ---- */
+
+.desk-skeleton { padding: var(--athar-space-1) 0; }
+
+.desk-skeleton-row {
+  height: var(--athar-row-h);
+  margin: 1px var(--athar-space-3);
+  border-radius: var(--athar-radius-sm);
+  /* التدرّج يمسح من اليمين لأن القراءة من اليمين: الحركة تتبع العين. */
+  background: linear-gradient(270deg,
+    var(--athar-surface-raised) 0%,
+    var(--athar-line) 45%,
+    var(--athar-surface-raised) 90%);
+  background-size: 280% 100%;
+  animation: desk-sweep 1.4s ease-in-out infinite;
+}
+
+/* الصفوف الأبعد أخفت: الهيكل يتلاشى بدل أن ينتهي بخط حاد يُقرأ كنهاية قائمة. */
+.desk-skeleton-row:nth-child(n + 5) { opacity: 0.6; }
+.desk-skeleton-row:nth-child(n + 7) { opacity: 0.3; }
+
+@keyframes desk-sweep {
+  from { background-position: 0% 0; }
+  to { background-position: 100% 0; }
+}
+
+.desk-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--athar-space-2);
+  padding: var(--athar-space-6);
+  text-align: center;
+  background: var(--athar-canvas);
+  transition: opacity var(--athar-t-panel) ease;
+}
+.desk-boot[data-done="true"] { opacity: 0; pointer-events: none; }
+
+.desk-boot-status {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--athar-ink);
+}
+.desk-boot-note {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--athar-muted);
+}
 
 /* ---- شريط أدوات الصندوق ---- */
 .desk-toolbar {

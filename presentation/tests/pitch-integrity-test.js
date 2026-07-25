@@ -185,8 +185,10 @@ test('every source entry declares provenance type and an access date', () => {
   assert.ok(sourceEntries.length >= 6);
   sourceEntries.forEach((entry) => {
     assert.ok(['primary', 'secondary', 'local'].includes(entry[2]));
+    // الشكل لا القيمة: تثبيت تاريخ واحد يمنع إضافة مصدر جديد بتاريخ صحيح،
+    // وهو ما يجعل البوابة تحرس عمرها بدل أن تحرس الإسناد.
     assert.ok(
-      entry[3].includes('وصول 2026-07-23'),
+      /وصول \d{4}-\d{2}-\d{2}/.test(entry[3]),
       `${entry[1]} lacks an access date`
     );
   });

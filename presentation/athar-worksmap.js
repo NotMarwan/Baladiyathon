@@ -214,6 +214,23 @@
         }
       },
 
+      /**
+       * إلحاق حلقة طرق ثانية بالمعروضة.
+       * الحالة تُستبدل ولا تُحوَّر: المجموعة الواردة تبقى كما هي، والمرجع
+       * الجديد هو ما تراه getData بعدها — فلا يرى مستدعٍ سابق تغيّراً تحته.
+       * يُستدعى مرة أو مرات: الإلحاق تراكمي بطبيعته ولا يفترض حلقة واحدة.
+       */
+      appendRoads: function (collection) {
+        if (!collection || !collection.features || !collection.features.length) return 0;
+        roads = {
+          type: 'FeatureCollection',
+          features: (roads.features || []).concat(collection.features),
+        };
+        var source = map.getSource('roads');
+        if (source && source.setData) source.setData(roads);
+        return roads.features.length;
+      },
+
       onRoadClick: function (cb) { roadClickCb = cb; },
 
       _roadClicked: function (segment) {
@@ -283,6 +300,45 @@
           map.fitBounds([[west, south], [east, north]], { padding: 180, maxZoom: 13.8, duration: 500 });
         }
         return found;
+      },
+
+      /**
+       * يؤطّر المحفظة كلها.
+       * ---------------------------------------------------------------------
+       * المنظر الافتتاحي يجب أن يكون «تصاريحك الـ150 على المدينة» لا مقطعاً
+       * واحداً يملأ الشاشة: المراجع يقرأ التوزيع والتكتّل قبل أن يقرأ حالة.
+       * يُحسب من الأعمال المعروضة فعلاً — فالتأطير يتبع المرشِّح لا الأصل.
+       */
+      frameWorks: function (options) {
+        var opts = options || {};
+        var features = works.features || [];
+        if (!features.length) return null;
+
+        var west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
+
+        features.forEach(function (feature) {
+          var geometry = feature.geometry || {};
+          var points = geometry.type === 'Point'
+            ? [geometry.coordinates]
+            : (geometry.coordinates || []);
+          points.forEach(function (point) {
+            if (!point || point.length < 2) return;
+            west = Math.min(west, point[0]);
+            east = Math.max(east, point[0]);
+            south = Math.min(south, point[1]);
+            north = Math.max(north, point[1]);
+          });
+        });
+
+        if (west === Infinity) return null;
+
+        var bounds = [[west, south], [east, north]];
+        map.fitBounds(bounds, {
+          padding: opts.padding === undefined ? 56 : opts.padding,
+          maxZoom: opts.maxZoom === undefined ? 12.4 : opts.maxZoom,
+          duration: opts.duration === undefined ? 0 : opts.duration,
+        });
+        return bounds;
       },
 
       /** يبلّغ بمعرّف العمل المنقور على الخريطة — الاتجاه المعاكس للربط. */

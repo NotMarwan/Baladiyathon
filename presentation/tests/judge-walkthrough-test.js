@@ -14,7 +14,11 @@ let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
 const ROOT = path.join(__dirname, '..');
-const desk = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
+// سطح المكتب صار ملفين: الهيكل في HTML والسلوك في المُقلع. البوابة تقرأ
+// السطح كاملاً كما يراه المتصفح — إخراج السكربت لا يُعفيه من أيّ شرط هنا.
+const deskHtml = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
+const deskBoot = fs.readFileSync(path.join(ROOT, 'athar-desk-boot.js'), 'utf8');
+const desk = deskHtml + '\n' + deskBoot;
 
 ok('١ — يجد عملاً: الصندوق والبحث والمرشح والفرز على الشاشة', () => {
   assert.ok(desk.indexOf('deskList') !== -1, 'لا صندوق أعمال');
@@ -118,6 +122,69 @@ ok('كل صفحات العائلة داخل نظام الوسوم الواحد',
     assert.ok(html.indexOf('athar-tokens.css') !== -1 || html.indexOf('athar-nav.js') !== -1,
       `${page} خارج نظام الوسوم`);
   });
+});
+
+/* ---- عقد أول رسم: ما يراه المحكّم في الثانية الأولى ---- */
+
+ok('لا سكربت يحجب أول رسم على المكتب', () => {
+  const tags = deskHtml.match(/<script\b[^>]*>/g) || [];
+  tags.forEach((tag) => {
+    assert.ok(/\bdefer\b|\basync\b|\btype="module"/.test(tag),
+      `سكربت حاجب يوقف المحلّل قبل أول رسم: ${tag}`);
+  });
+  assert.ok(tags.length > 0, 'لا سكربتات على المكتب أصلاً');
+});
+
+ok('لا سكربت داخل صفحة المكتب — السلوك كله في ملف مؤجَّل', () => {
+  // سكربت داخل الصفحة لا يقبل defer، فينفَّذ قبل تبعياته ويكسر الترتيب.
+  assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>[\s\S]*?<\/script>/.test(deskHtml),
+    'ما زال في الصفحة سكربت داخلي — سيسبق كل ما يعتمد عليه');
+});
+
+ok('وسوم الهوية تصل قبل أول رسم لا بعد وصول سكربت', () => {
+  const head = deskHtml.slice(0, deskHtml.indexOf('</head>'));
+  assert.ok(head.indexOf('athar-tokens.css') !== -1,
+    'الوسوم محقونة بجافاسكربت — الهيكل سيُرسم بمتغيّرات غير معرَّفة');
+});
+
+ok('هيكل الانتظار مكتوب في الصفحة لا مُصيَّر بجافاسكربت', () => {
+  assert.ok(deskHtml.indexOf('desk-skeleton') !== -1, 'لا هيكل انتظار في الصندوق');
+  assert.ok(deskHtml.indexOf('desk-boot') !== -1, 'لا حالة تحميل على الخريطة');
+  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+  assert.ok(/\.desk-skeleton-row\s*\{[^}]*--athar-row-h/.test(css),
+    'الهيكل لا يطابق ارتفاع الصف الحقيقي — ستقفز اللوحة حين يحل محله');
+});
+
+ok('غطاء التحميل ينزاح دائماً — بحدث أو بسقف زمني', () => {
+  assert.ok(/bootTimer\s*=\s*window\.setTimeout\(\s*bootDone/.test(deskBoot),
+    'لا سقف زمني: خريطة تفشل بصمت تترك الغطاء إلى الأبد');
+  assert.ok(deskBoot.indexOf("GL.map.on('error'") !== -1 && /error[\s\S]{0,200}bootDone/.test(deskBoot),
+    'خطأ الخريطة لا يرفع الغطاء');
+  assert.ok(/\}\s*else\s*\{\s*bootDone\(\);/.test(deskBoot),
+    'صفحة بلا خريطة تبقى تحت الغطاء');
+});
+
+ok('المكتب يفتح على المدينة لا على مقطع — التحديد الآلي يُبرز ولا يطير', () => {
+  assert.ok(deskBoot.indexOf('GL.api.frameWorks()') !== -1,
+    'لا تأطير للمحفظة: المنظر الافتتاحي عشوائي');
+  assert.ok(/highlightWork\(selectedId,\s*\{\s*fly:\s*userDriven\s*\}\)/.test(deskBoot),
+    'الطيران لا يميّز التحديد الآلي من نقر المراجع');
+  assert.ok(/userDriven\s*=\s*true;\s*store\.select/.test(deskBoot.replace(/\s+/g, ' ')),
+    'النقر لا يعلن نيّته قبل التحديد');
+});
+
+ok('الفرز والترشيح لا يحرّكان الخريطة — التحديد لم يتغيّر', () => {
+  assert.ok(deskBoot.indexOf('selectedId !== lastHighlighted') !== -1,
+    'كل بثّ من المخزن يعيد الطيران ولو لم يتغيّر التحديد');
+});
+
+ok('الصندوق يبقى صالحاً للعمل تحت غطاء الخريطة', () => {
+  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+  const boot = css.slice(css.indexOf('.desk-boot {'));
+  assert.ok(/position:\s*absolute/.test(boot.slice(0, 220)),
+    'الغطاء ليس مطلقاً داخل لوحة الخريطة — قد يحجب الفرز');
+  assert.ok(deskHtml.indexOf('<div class="desk-boot"') > deskHtml.indexOf('desk-map-wrap'),
+    'الغطاء خارج لوحة الخريطة');
 });
 
 console.log(`\n${passed} اختبارات نجحت`);
