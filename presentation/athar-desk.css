@@ -542,6 +542,60 @@ kbd {
 .desk-ledger:hover { border-color: var(--athar-primary); color: var(--athar-ink); }
 .desk-ledger:focus-visible { outline: 2px solid var(--athar-primary); outline-offset: 2px; }
 
+/* ---- تبويب التعارض: من عرضٍ إلى اقتراح ---- */
+
+.desk-conflicts { list-style: none; display: grid; gap: 4px; margin-bottom: var(--athar-space-4); }
+.desk-conflicts li { font-size: 0.82rem; color: var(--athar-muted); }
+
+.desk-merge {
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+  background: var(--athar-surface-raised);
+  padding: var(--athar-space-3);
+  display: grid;
+  gap: var(--athar-space-2);
+}
+.desk-merge-title { font-size: 0.9rem; color: var(--athar-primary); }
+.desk-merge-lead { font-size: 0.84rem; line-height: 1.7; }
+.desk-merge-lead strong { font-family: var(--athar-font-mono); }
+
+.desk-merge-members { list-style: none; display: grid; gap: 3px; }
+.desk-merge-members li {
+  font-size: 0.76rem;
+  color: var(--athar-muted);
+  padding-inline-start: var(--athar-space-2);
+  border-inline-start: 2px solid var(--athar-line);
+}
+
+.desk-merge-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--athar-space-3);
+  padding-block: var(--athar-space-2);
+  border-block: 1px solid var(--athar-line);
+}
+.desk-merge-figures dt { font-size: 0.72rem; color: var(--athar-muted); }
+.desk-merge-figures dd {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--athar-success);
+}
+.desk-merge-figures bdi { font-family: var(--athar-font-mono); white-space: nowrap; }
+
+.desk-merge-basis,
+.desk-merge-note { font-size: 0.75rem; color: var(--athar-muted); line-height: 1.7; }
+.desk-merge-basis strong,
+.desk-merge-basis bdi { font-family: var(--athar-font-mono); color: var(--athar-ink); }
+
+.desk-merge-verify {
+  background: var(--athar-primary-soft);
+  border-radius: var(--athar-radius-sm);
+  padding: var(--athar-space-2) var(--athar-space-3);
+}
+.desk-merge-verify-title { font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; }
+.desk-merge-verify ul { margin-inline-start: var(--athar-space-4); }
+.desk-merge-verify li { font-size: 0.76rem; line-height: 1.7; }
+
 /* ---- تبويب القياس ---- */
 
 .desk-measure-banner {
@@ -674,3 +728,12 @@ kbd {
 .desk-units dd { display: grid; justify-items: end; text-align: end; }
 .desk-unit-note { font-size: 0.68rem; color: var(--athar-faint); line-height: 1.5; }
 .desk-units-caveat { margin-top: 6px; font-size: 0.72rem; line-height: 1.6; }
+
+.desk-merge-excluded {
+  font-size: 0.75rem;
+  color: var(--athar-warning);
+  background: var(--athar-warning-soft);
+  border-radius: var(--athar-radius-sm);
+  padding: 6px 10px;
+  line-height: 1.6;
+}

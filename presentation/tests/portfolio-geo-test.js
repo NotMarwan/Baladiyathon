@@ -100,7 +100,7 @@ ok('توزيع الحالات يشمل ما ينتظر قراراً — الصن
   });
   assert.ok(statuses.ImpactScreening >= 8, 'لا أعمال تنتظر الفرز');
   assert.ok(statuses.StrategyReview >= 8, 'لا أعمال تنتظر الاعتماد');
-  assert.ok(statuses.CoordinationRequired >= 3, 'لا تعارضات تحتاج تنسيقاً');
+  assert.ok(statuses.CoordinationRequired >= 3, 'لا أعمال بحالة «يحتاج تنسيقاً»');
   assert.ok(Object.keys(statuses).length >= 5, 'تنوّع حالات ضعيف');
 });
 
@@ -157,6 +157,56 @@ ok('النسخة المضمّنة مطابقة للملف', () => {
   const wrapped = fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson.js'), 'utf8');
   const embedded = wrapped.replace(/^window\.ATHAR_CITY_PORTFOLIO = /, '').replace(/;\s*$/, '');
   assert.deepStrictEqual(JSON.parse(embedded), JSON.parse(raw));
+});
+
+/* ---- التعارض حقيقة في البيانات لا حالة في السجل ---- */
+
+const DigOnce = require(path.join(ROOT, 'athar-desk-digonce.js'));
+
+ok('المحفظة تحتوي تصاريح تتشارك الممر فعلاً', () => {
+  // البوابة السابقة كانت تفحص وجود حالة «يحتاج تنسيقاً» وحدها، فمرّت محفظةٌ
+  // كل تصريح فيها على شارع خاص به: ثمانية وعشرون عملاً «تحتاج تنسيقاً»
+  // وتبويب التعارض يقول «لا تعارض» على كلٍّ منها. الحالة ليست دليلاً على
+  // الواقعة — تُفحص الواقعة.
+  const byStreet = {};
+  portfolio.features.forEach((feature) => {
+    const street = feature.properties.street;
+    (byStreet[street] = byStreet[street] || []).push(feature);
+  });
+
+  const shared = Object.values(byStreet).filter((list) => list.length > 1);
+  assert.ok(shared.length >= 10,
+    `${shared.length} شارعاً مشتركاً فقط — الحفر المشترك بلا مادة`);
+});
+
+ok('لكل تكتّل مرشّح دمج تقرأه وحدة الحفر المشترك', () => {
+  const withCandidates = portfolio.features.filter(
+    (feature) => DigOnce.candidates(feature, portfolio.features).length > 0
+  );
+  assert.ok(withCandidates.length >= 30,
+    `${withCandidates.length} عملاً له مرشّح — التبويب فارغ عملياً`);
+});
+
+ok('التكتّلات تعبر حدود الجهات — وإلا فالتنسيق داخل جهة واحدة', () => {
+  const crossPromoter = portfolio.features.filter((feature) => {
+    const members = DigOnce.candidates(feature, portfolio.features);
+    if (!members.length) return false;
+    const promoters = new Set(members.concat([feature]).map((m) => m.properties.promoter));
+    return promoters.size > 1;
+  });
+  assert.ok(crossPromoter.length >= 25,
+    `${crossPromoter.length} تكتّلاً بين جهات — الدمج لا يثبت فكرته`);
+});
+
+ok('نوافذ التكتّل متقاربة — ممر مشترك بفارق شهر ليس فرصة دمج', () => {
+  portfolio.features.forEach((feature) => {
+    DigOnce.candidates(feature, portfolio.features).forEach((other) => {
+      const here = Date.parse(feature.properties.start);
+      const there = Date.parse(other.properties.start);
+      const days = Math.abs(here - there) / 86400000;
+      assert.ok(days <= 40, `تكتّل بفارق ${Math.round(days)} يوماً`);
+    });
+  });
 });
 
 console.log(`\n${passed} اختبارات نجحت`);

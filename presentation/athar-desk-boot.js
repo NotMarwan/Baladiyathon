@@ -249,6 +249,25 @@
     });
   }
 
+  /**
+   * مرشّح الحفر مرة واحدة لهذا العمل.
+   * أثر كل عضو يُؤخذ من تحليله هو لا من تقدير جديد: رقمان لأثرٍ واحد على
+   * شاشتين مختلفتين يُسقطان الثقة في الاثنين.
+   */
+  var mergeCache = {};
+
+  function mergeFor(feature) {
+    var id = feature.properties.id;
+    if (mergeCache[id] !== undefined) return mergeCache[id];
+
+    var others = AtharDeskDigOnce.candidates(feature, store.getState().features);
+    mergeCache[id] = AtharDeskDigOnce.evaluate(feature, others, function (member) {
+      return analyze(member).scored.delayVehHours;
+    }, AtharEngine);
+
+    return mergeCache[id];
+  }
+
   function analyze(feature) {
     var id = feature.properties.id;
     if (analysisCache[id]) return analysisCache[id];
@@ -319,12 +338,16 @@
     }
 
     if (activeTab === 'conflict') {
-      if (!analysis.conflicts.length) {
-        return '<p class="desk-none">لا تعارض على «' + p.street + '» في النافذة نفسها.</p>';
-      }
-      return '<ul class="desk-conflicts">' + analysis.conflicts.map(function (conflict) {
-        return '<li>تعارض مع ' + conflict.withRef + ' — تداخل ' + conflict.overlapHours + ' ساعة</li>';
-      }).join('') + '</ul>';
+      // التعارض معروضٌ ثم متبوعٌ بما يُفعل به. القائمة وحدها تخبر المراجع
+      // بما يعرفه؛ الاقتراح يخبره بما يستطيع.
+      var overlaps = analysis.conflicts.length
+        ? '<ul class="desk-conflicts">' + analysis.conflicts.map(function (conflict) {
+          return '<li>تداخل مع <bdi class="desk-ref">' + conflict.withRef + '</bdi> — '
+            + conflict.overlapHours + ' ساعة</li>';
+        }).join('') + '</ul>'
+        : '';
+
+      return overlaps + AtharDeskDigOnce.render(mergeFor(feature), p.street);
     }
 
     if (activeTab === 'impact') {
@@ -457,6 +480,8 @@
     // بعده يصل متأخراً بإطار كامل ويترك المراجع على تبويب لا يرى فيه أثر فعله.
     activeTab = 'history';
     delete analysisCache[id];
+    // الدمج يعتمد على أثر كل عضو، وقرارٌ على أحدهم يغيّره — فالتخزين يُبطَل كله.
+    mergeCache = {};
     store.replace({ type: 'Feature', geometry: feature.geometry, properties: applied.work });
     renderLedger();
 

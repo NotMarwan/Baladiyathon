@@ -155,6 +155,50 @@ function allocateCorridors(corridors, count) {
   return picked.slice(0, count);
 }
 
+/**
+ * تكتّلات الممر الواحد.
+ * ---------------------------------------------------------------------------
+ * الخطوة المنتظمة تعطي كل تصريح شارعاً خاصاً به، فلا يتقاطع اثنان أبداً. وهذا
+ * لا يشبه أيّ مدينة: المياه والاتصالات والكهرباء تحفر الممر نفسه في الشهر
+ * نفسه، وهذا التكرار بالذات هو ما يجعل «احفر مرة واحدة» سؤالاً يستحق أداة.
+ *
+ * وأثر الغياب لم يكن تجميلياً: تبويب التعارض كان يقول «لا تعارض» على كل عمل
+ * من المئة والخمسين، بينما ثمانية وعشرون منها حالتها «يحتاج تنسيقاً» — تناقض
+ * ظاهر على الشاشة بين ما تقوله الحالة وما يقوله التبويب.
+ *
+ * الربع تقريباً يقع في تكتّلات من اثنين إلى ثلاثة، بنوافذ متقاربة (±يومان)
+ * وجهات مختلفة عمداً — فالتنسيق المطلوب تنسيق بين جهات لا داخل جهة.
+ */
+var CLUSTER_SHARE = 0.24;
+var CLUSTER_MIN = 2;
+var CLUSTER_MAX = 3;
+var CLUSTER_DAY_SPREAD = 2;
+
+function planClusters(count, rand) {
+  var follows = {};
+  var target = Math.round(count * CLUSTER_SHARE);
+  var placed = 0;
+  var at = 0;
+
+  while (placed < target && at < count - 1) {
+    var size = CLUSTER_MIN + Math.floor(rand() * (CLUSTER_MAX - CLUSTER_MIN + 1));
+
+    for (var member = 1; member < size && at + member < count; member += 1) {
+      if (placed >= target) break;
+      follows[at + member] = {
+        leader: at,
+        dayShift: Math.floor(rand() * (CLUSTER_DAY_SPREAD * 2 + 1)) - CLUSTER_DAY_SPREAD,
+      };
+      placed += 1;
+    }
+
+    // فجوة بين التكتّلات: بلا فراغ بينها تصير المحفظة تكتّلاً واحداً طويلاً.
+    at += size + 1 + Math.floor(rand() * 3);
+  }
+
+  return follows;
+}
+
 /** النسبة المئوية للتأخير: مرجّحة بالطلب على ساعات العمل كلها. */
 function delayPercent(scored) {
   let base = 0;
@@ -189,10 +233,14 @@ function build() {
 
   const rand = Portfolio.mulberry32(Portfolio.SEED);
   const assigned = allocateCorridors(corridors, permits.length);
+  const clusters = planClusters(permits.length, rand);
+  const promoterAt = {};
   const features = [];
 
   permits.forEach((permit, index) => {
-    const corridor = assigned[index];
+    // عضو التكتّل يرث ممر قائده — وهذا كل ما يصنع التعارض والحفر المشترك.
+    const follow = clusters[index];
+    const corridor = follow ? assigned[follow.leader] : assigned[index];
 
     /**
      * المقطع يُقتطع بطول حقيقي لا بنسبة من المحور: التصريح يغطي امتداداً
@@ -240,7 +288,28 @@ function build() {
     };
 
     const delayPct = delayPercent(scored);
-    const startDay = permit.startDay % WINDOW_SPREAD_DAYS;
+
+    /**
+     * عضو التكتّل ينزاح إلى جوار قائده زمنياً كذلك: ممر مشترك بنافذتين
+     * تفصلهما ثلاثة أسابيع ليس تعارضاً ولا فرصة دمج، بل تصريحان مستقلان
+     * صادف أن يجمعهما شارع.
+     */
+    const ownDay = permit.startDay % WINDOW_SPREAD_DAYS;
+    const startDay = follow
+      ? Math.max(0, Math.min(WINDOW_SPREAD_DAYS - 1,
+        (permits[follow.leader].startDay % WINDOW_SPREAD_DAYS) + follow.dayShift))
+      : ownDay;
+
+    /**
+     * جهة العضو تختلف عن جهة قائده عمداً: التنسيق المقصود بين جهات لا داخل
+     * جهة واحدة، ودمجٌ لا يعبر حدود الجهات لا يثبت الفكرة التي بُني لأجلها.
+     * الفهرسة بمعرّف التصريح لا بموضعه في مصفوفة الميزات — قد يُسقط مقطعٌ
+     * قصير ميزةً فتنزاح المواضع عن الفهارس.
+     */
+    const promoter = follow
+      ? PROMOTERS[(PROMOTERS.indexOf(promoterAt[follow.leader]) + 1) % PROMOTERS.length]
+      : PROMOTERS[Math.floor(rand() * PROMOTERS.length)];
+    promoterAt[index] = promoter;
     const escalate = escalationReason(delayPct, permit.lanes, permit.lanesClosed, windowHours);
 
     /**
@@ -268,7 +337,7 @@ function build() {
         street: corridor.name,
         roadClass: corridor.roadClass,
         sensitivity: SENSITIVITY[Math.floor(rand() * SENSITIVITY.length)],
-        promoter: PROMOTERS[Math.floor(rand() * PROMOTERS.length)],
+        promoter: promoter,
         contractor: CONTRACTORS[Math.floor(rand() * CONTRACTORS.length)],
         aadt: aadt,
         lanes: permit.lanes,
