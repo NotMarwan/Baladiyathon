@@ -4,6 +4,7 @@ const assert = require('node:assert');
 const { createServer, validateScoreInput } = require('../server.js');
 
 let passed = 0;
+let finished = false;
 
 async function test(name, fn) {
   await fn();
@@ -11,13 +12,42 @@ async function test(name, fn) {
   console.log(`  ok - ${name}`);
 }
 
-async function withServer(run) {
-  const server = createServer();
+/**
+ * يفتح منفذاً عابراً ويتأكّد أن النظام منحه فعلاً.
+ * ---------------------------------------------------------------------------
+ * تحت ضغط شديد يعود `address().port` صفراً، فيصير العنوان `127.0.0.1:0`
+ * ويرفضه undici بـ «bad port» — رسالة لا تدلّ على سببها. المحاولة الثانية
+ * تكفي دائماً: الفشل نفاد مورد لحظي لا عطب في المُختبَر.
+ */
+async function listenOnFreePort(server, attempt) {
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const address = server.address();
+  if (address && address.port) return address.port;
+
+  await new Promise((resolve) => server.close(resolve));
+  if (attempt >= 2) throw new Error('تعذّر الحصول على منفذ عابر بعد محاولتين');
+  return listenOnFreePort(server, attempt + 1);
+}
+
+async function withServer(run) {
+  const server = createServer();
+  const port = await listenOnFreePort(server, 1);
+  const address = { port };
   try {
     await run(`http://127.0.0.1:${address.port}`);
   } finally {
+    /**
+     * الإغلاق يقطع الاتصالات الحيّة أولاً.
+     * -----------------------------------------------------------------------
+     * `fetch` في Node يُبقي الاتصال مفتوحاً للاستعمال التالي، و`server.close`
+     * ينتظر انتهاء ما هو مفتوح — فلا يُستدعى نداؤه الراجع أبداً، ويبقى
+     * `await` معلّقاً. النتيجة تحت الضغط: العمليّة تخرج صامتة بعد أول
+     * اختبار، بلا رسالة ولا استثناء، فتُقرأ كفشل عشوائي بلا سبب.
+     *
+     * ظهرت مرة في كل ~12 تشغيلاً متوازياً — أي بالضبط حين يكون الجهاز مشغولاً،
+     * وهو الوقت الذي تُصدَّق فيه البوابة أقلّ ما تستحق.
+     */
+    if (typeof server.closeAllConnections === 'function') server.closeAllConnections();
     await new Promise((resolve, reject) =>
       server.close((error) => error ? reject(error) : resolve())
     );
@@ -256,6 +286,10 @@ const validScoreInput = {
   await test('a malformed work id does not reach the decision store', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/api/works/..%2F..%2Fetc/decisions`);
+      // The body must be drained even when unused: an unconsumed body keeps the
+      // connection checked out of the pool, and the server then waits on a
+      // socket that never ends.
+      await response.text();
       assert.strictEqual(response.status, 404);
     });
   });
@@ -272,8 +306,23 @@ const validScoreInput = {
     });
   });
 
+  finished = true;
   console.log(`ALL SERVER TESTS PASSED (${passed})`);
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
+});
+
+/**
+ * حارس الخروج الصامت.
+ * ---------------------------------------------------------------------------
+ * حين يبقى `await` معلّقاً بلا مقبض مفتوح، تُستنزف حلقة الأحداث وتخرج العمليّة
+ * برمز 0 بلا استثناء ولا رسالة — فتبدو الحزمة ناجحة وقد توقّفت في منتصفها.
+ * هذا الحارس يحوّل ذلك الصمت إلى فشل معلن يذكر أين توقّف.
+ */
+process.on('exit', () => {
+  if (finished) return;
+  process.exitCode = 1;
+  console.error(`\nSUITE DIED SILENTLY after ${passed} tests — `
+    + 'the event loop drained with a promise still pending.');
 });
