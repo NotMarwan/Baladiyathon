@@ -46,8 +46,14 @@
     { key: 'detourType', weight: 1, label: 'نوع التحويلة' },
   ];
 
-  /** درجات الدليل المسموحة في السجل، بترتيب القوة. */
-  var LEVELS = ['local-field', 'local-comparable', 'global-analog', 'context-only'];
+  /* درجات الدليل المسموحة في السجل، بترتيب القوة.
+     `global-field-measured` أُضيفت حين قُرئ تقرير ديلاوير 265: خمسة وعشرون
+     موقعاً مقيساً بكواشف على شرايين بإشارات ليسا كتوصيةٍ في دليل تصميم،
+     وجمعُهما في `global-analog` كان يُخفي أقوى ما في السجل. والقائمة هنا
+     مرآةٌ لسُلَّم `athar-route-evidence.js` — من أضاف درجة هناك يضيفها هنا،
+     وحزمةٌ تربط الاثنين كي لا ينفصلا. */
+  var LEVELS = ['local-field', 'local-comparable', 'global-field-measured',
+    'global-analog', 'context-only'];
 
   function cases() { return LEDGER.cases || []; }
 

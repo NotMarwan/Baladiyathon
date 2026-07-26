@@ -133,7 +133,7 @@
     },
     {
       "key": "portfolioDeltaVehHours",
-      "value": 462599.8379158891,
+      "value": 909686.9688661927,
       "unit": "ساعة-مركبة",
       "source": "athar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
@@ -141,7 +141,7 @@
     },
     {
       "key": "portfolioDeltaPct",
-      "value": 80.77957640257598,
+      "value": 89.20629845869914,
       "unit": "٪",
       "source": "athar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
@@ -173,7 +173,7 @@
     },
     {
       "key": "stabilityDecidable",
-      "value": 50,
+      "value": 54,
       "unit": "توصية",
       "source": "data/stability-report.json",
       "grade": "model-derived",
@@ -181,7 +181,7 @@
     },
     {
       "key": "stabilityAbstained",
-      "value": 100,
+      "value": 96,
       "unit": "توصية",
       "source": "data/stability-report.json",
       "grade": "model-derived",
@@ -189,7 +189,7 @@
     },
     {
       "key": "stabilityAbstainedShare",
-      "value": 67,
+      "value": 64,
       "unit": "٪",
       "source": "data/stability-report.json",
       "grade": "model-derived",
@@ -197,7 +197,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1188,
+      "value": 1189,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",

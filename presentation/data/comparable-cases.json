@@ -10,9 +10,19 @@
   },
   "acceptanceRule": {
     "requiredAttributes": [
-      "roadType", "lanes", "closureType", "closedLaneShare", "duration",
-      "timeOfDay", "urbanContext", "baselineMetric", "workZoneMetric",
-      "affectedLengthM", "detourType", "measurementMethod", "comparisonState"
+      "roadType",
+      "lanes",
+      "closureType",
+      "closedLaneShare",
+      "duration",
+      "timeOfDay",
+      "urbanContext",
+      "baselineMetric",
+      "workZoneMetric",
+      "affectedLengthM",
+      "detourType",
+      "measurementMethod",
+      "comparisonState"
     ],
     "minimumForCalibrationSet": 8,
     "belowMinimum": "مرجع سياقي فقط — لا يدخل في تضييق النطاقات",
@@ -31,7 +41,9 @@
       "closureType": "إغلاق حارة قصير الأمد",
       "measurementMethod": "قياس ميداني ونمذجة",
       "keyFinding": "قيمة سعة أساس 1600 مركبة-ركّاب/ساعة/حارة موصى بها لكل تشكيلات إغلاق الحارات قصيرة الأمد على الطرق السريعة، مع تعديلات لشدّة نشاط العمل ونسبة المركبات الثقيلة ووجود مداخل قريبة من بداية الإغلاق.",
-      "metric": { "workZoneCapacityPcphpl": 1600 },
+      "metric": {
+        "workZoneCapacityPcphpl": 1600
+      },
       "evidenceLevel": "global-analog",
       "similarityToAthar": {
         "roadTypeMatch": false,
@@ -94,7 +106,9 @@
       "accessedOn": "2026-07-26",
       "roadType": "rural highway",
       "keyFinding": "سعة قصوى مقترحة 1500 مركبة-ركّاب/ساعة/حارة عند تصميم مناطق عمل على الطرق الريفية في كانساس.",
-      "metric": { "workZoneCapacityPcphpl": 1500 },
+      "metric": {
+        "workZoneCapacityPcphpl": 1500
+      },
       "evidenceLevel": "global-analog",
       "similarityToAthar": {
         "roadTypeMatch": false,
@@ -107,18 +121,30 @@
       "key": "delaware-arterial",
       "country": "الولايات المتحدة",
       "region": "ديلاوير",
-      "agency": "جامعة ديلاوير — تقرير 265",
+      "agency": "جامعة ديلاوير — مركز ديلاوير للنقل، تقرير DCT 265 (أبريل 2017)",
       "title": "Determining Work Zone Lane Capacities along Multilane Signalized Corridors",
       "url": "https://bpb-us-w2.wpmucdn.com/sites.udel.edu/dist/1/1139/files/2013/10/Report-265-Workzone-Capacities-Li-185aoa4.pdf",
       "accessedOn": "2026-07-26",
       "roadType": "signalized multilane arterial",
-      "keyFinding": "غير مستخرَج — ملف PDF تعذّرت قراءته آلياً في هذه الجولة.",
-      "metric": {},
-      "evidenceLevel": "context-only",
-      "status": "معلَّق — يحتاج قراءة يدوية",
-      "whyItMatters": "هذا **أقرب نوع طريق إلى محفظة أثر** (شريان متعدد الحارات بإشارات). أي أن أهم حالة في السجل هي التي لم تُقرأ بعد، وليست التي قُرئت. تسجيلها معلَّقةً أصدق من إسقاطها وإظهار السجل مكتملاً.",
-      "usedFor": "لا شيء بعد.",
-      "doesNotProve": "لا شيء."
+      "closureType": "إغلاق حارة في مناطق عمل قائمة",
+      "urbanContext": "حضري وشبه حضري",
+      "measurementMethod": "قياس ميداني: تدفق وسرعة وكثافة وإشغال الحارة من كواشف على خمسة وعشرين موقعاً، وسعة مقدَّرة بطريقة التدفق المستدام لخمس عشرة دقيقة",
+      "sites": 25,
+      "keyFinding": "متوسط سعة الحارة في مناطق العمل على خمسة وعشرين محوراً بإشارات في ديلاوير = 1475 مركبة/ساعة/حارة (تدفق مستدام ١٥ دقيقة). وهو **أعلى** من قيمة 1240 مركبة/ساعة/حارة المبنية على دليل السعة والمستعملة فعلياً لدى إدارة نقل ديلاوير، وأدنى من معظم قيم المسح الوطني. والدراسة تقارن بستّ مناطق عمل على طرق سريعة في كاليفورنيا.",
+      "metric": {
+        "signalizedArterialMeanCapacityVphpl": 1475,
+        "agencyHcmBasedValueVphpl": 1240,
+        "sites": 25,
+        "method": "15-min sustained flow"
+      },
+      "evidenceLevel": "global-field-measured",
+      "similarityToAthar": {
+        "roadTypeMatch": true,
+        "note": "**أقرب نوع طريق إلى محفظة أثر في السجل كله**: شريان متعدد الحارات محكوم بإشارات، لا طريق سريع. وكل القيم الرقمية الأخرى في هذا السجل من طرق سريعة."
+      },
+      "whyItMatters": "كانت هذه الحالة معلَّقة بوصفها «تعذّرت قراءتها»، وهي أهم حالة في السجل. وقراءتها تغيّر شيئاً جوهرياً: سعة منطقة العمل على شريان بإشارات (1475) **أعلى** من الحدّ الأدنى المأخوذ من تصريف الرتل على طريق سريع (1072). أي أن النطاق المبني على الطرق السريعة يبالغ في التشاؤم عند طرفه الأدنى حين يُسقَط على شريان حضري.",
+      "usedFor": "أولوية سعة خاصة بنوع الطريق الصحيح — تُعرض بجوار النطاق الأوسع لا بدلاً منه.",
+      "doesNotProve": "سعة شريان في الرياض. ولا تُسقط على إشارة بعينها: الدراسة تعطي متوسطاً عبر خمسة وعشرين موقعاً، وتوزيعها نفسه واسع."
     },
     {
       "key": "fhwa-primer",
@@ -142,7 +168,9 @@
       "url": "https://www.arabnews.com/node/2580260/traffic-congestion-riyadh-needs-lifeline",
       "accessedOn": "2026-07-26",
       "keyFinding": "15٪ من مشكلات الاختناق نُسبت إلى أعمال الطرق والتحويلات، و42٪ إلى هندسة الطرق، و23٪ إلى تأخر النقل العام، و20٪ إلى قصور إدارة الحركة.",
-      "metric": { "roadworksShareOfCongestionPct": 15 },
+      "metric": {
+        "roadworksShareOfCongestionPct": 15
+      },
       "evidenceLevel": "context-only",
       "whyItMatters": "يثبت أن المشكلة التي يعالجها أثر مشكلة معترف بها محلياً بحجم معلَن. ولا يقيس أثر إغلاق واحد.",
       "usedFor": "سياق المشكلة في العرض — لا في النموذج.",
@@ -165,6 +193,21 @@
       "verdictOnCurrentRange": "نطاق `workZoneFriction` الحالي [1.00 – 1.25] **أضيق من الدليل وأكثر تفاؤلاً منه**. حدّه الأدنى (1.0 = لا احتكاك) لا تسنده أي حالة، وحدّه الأعلى (1.25) دون منتصف المدى المشاهَد.",
       "action": "يُوسَّع النطاق إلى [1.13 – 1.68] ويُعلَن مصدره. وهذا **يزيد** هشاشة التوصية ولا ينقصها — وهي النتيجة الصادقة: الدليل لم يأتِ ليطمئننا.",
       "doesNotProve": "قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي."
+    },
+    {
+      "parameter": "capacityPerLaneInWorkZone_signalizedArterial",
+      "unit": "مركبة/ساعة/حارة",
+      "priorLow": 1240,
+      "priorHigh": 1475,
+      "basis": [
+        "delaware-arterial (قيمة الجهة المبنية على دليل السعة 1240 — الحدّ الأدنى)",
+        "delaware-arterial (متوسط خمسة وعشرين موقعاً مقيساً 1475 — الحدّ الأعلى)"
+      ],
+      "evidenceLevel": "global-field-measured",
+      "roadTypeMatch": true,
+      "consequenceForAthar": "هذه هي الأولوية الوحيدة في السجل المأخوذة من **نوع الطريق الذي تعمل عليه أثر فعلاً**. ونسبة السعة داخل منطقة العمل إلى خارجها تقع من 1240/1800 = 0.69 إلى 1475/1800 = 0.82 — أضيق وأعلى من النطاق المبني على الطرق السريعة (0.60 إلى 0.89).",
+      "whyItDoesNotReplaceTheWiderRange": "تضييق نطاق قبل التحكيم يجعل التوصيات تبدو أكثر استقراراً، وهو بالضبط ما تمنعه قاعدة هذا السجل. فالنطاق الأوسع يبقى هو الذي يقود تحليل الحساسية، وهذه الأولوية تُعرض بوصفها أفضل مطابقة لنوع الطريق — ولا تُستعمل لتضييق أي نطاق قبل أن يُتخذ قرار مكتوب بذلك.",
+      "doesNotProve": "قيمة سعة على أي شارع في الرياض. الدراسة أمريكية، وسلوك السائق والإنفاذ وتصميم التقاطع تختلف."
     }
   ],
   "forbiddenUses": [

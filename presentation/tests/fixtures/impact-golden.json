@@ -17,9 +17,9 @@
     "startHour": 8,
     "durationHours": 142
    },
-   "delayVehHours": 6263.946043516907,
-   "score": 23,
-   "level": "low"
+   "delayVehHours": 12528.33733146713,
+   "score": 45,
+   "level": "medium"
   },
   {
    "id": "p002",
@@ -33,8 +33,8 @@
     "startHour": 9,
     "durationHours": 220
    },
-   "delayVehHours": 3419.2478593879273,
-   "score": 26,
+   "delayVehHours": 3885.228542194371,
+   "score": 30,
    "level": "medium"
   },
   {
@@ -49,8 +49,8 @@
     "startHour": 21,
     "durationHours": 50
    },
-   "delayVehHours": 384.9385525263245,
-   "score": 6,
+   "delayVehHours": 448.63698812302863,
+   "score": 7,
    "level": "low"
   },
   {
@@ -65,9 +65,9 @@
     "startHour": 14,
     "durationHours": 143
    },
-   "delayVehHours": 1744.6937814787825,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 2915.542045027839,
+   "score": 35,
+   "level": "medium"
   },
   {
    "id": "p005",
@@ -81,8 +81,8 @@
     "startHour": 20,
     "durationHours": 52
    },
-   "delayVehHours": 846.3698994672894,
-   "score": 6,
+   "delayVehHours": 1027.0766007325074,
+   "score": 8,
    "level": "low"
   },
   {
@@ -97,8 +97,8 @@
     "startHour": 8,
     "durationHours": 201
    },
-   "delayVehHours": 8098.218211443004,
-   "score": 30,
+   "delayVehHours": 15405.399838499714,
+   "score": 57,
    "level": "medium"
   },
   {
@@ -113,7 +113,7 @@
     "startHour": 23,
     "durationHours": 140
    },
-   "delayVehHours": 29064.32322200773,
+   "delayVehHours": 64565.79669259734,
    "score": 100,
    "level": "high"
   },
@@ -129,8 +129,8 @@
     "startHour": 7,
     "durationHours": 233
    },
-   "delayVehHours": 4490.993366607443,
-   "score": 30,
+   "delayVehHours": 6449.373135461544,
+   "score": 43,
    "level": "medium"
   },
   {
@@ -145,8 +145,8 @@
     "startHour": 8,
     "durationHours": 187
    },
-   "delayVehHours": 2767.673486581903,
-   "score": 23,
+   "delayVehHours": 2981.6017135862394,
+   "score": 24,
    "level": "low"
   },
   {
@@ -161,8 +161,8 @@
     "startHour": 19,
     "durationHours": 40
    },
-   "delayVehHours": 2159.066176192438,
-   "score": 7,
+   "delayVehHours": 4752.771024845622,
+   "score": 16,
    "level": "low"
   },
   {
@@ -193,8 +193,8 @@
     "startHour": 20,
     "durationHours": 35
    },
-   "delayVehHours": 1663.950037099054,
-   "score": 5,
+   "delayVehHours": 3466.3866929640035,
+   "score": 11,
    "level": "low"
   },
   {
@@ -209,7 +209,7 @@
     "startHour": 12,
     "durationHours": 24
    },
-   "delayVehHours": 170.00758017875464,
+   "delayVehHours": 180.91932636575277,
    "score": 3,
    "level": "low"
   },
@@ -225,8 +225,8 @@
     "startHour": 9,
     "durationHours": 151
    },
-   "delayVehHours": 5077.526945598663,
-   "score": 27,
+   "delayVehHours": 9812.979167028161,
+   "score": 52,
    "level": "medium"
   },
   {
@@ -241,8 +241,8 @@
     "startHour": 10,
     "durationHours": 111
    },
-   "delayVehHours": 797.2852593364835,
-   "score": 13,
+   "delayVehHours": 846.8992786588133,
+   "score": 14,
    "level": "low"
   },
   {
@@ -257,8 +257,8 @@
     "startHour": 14,
     "durationHours": 27
    },
-   "delayVehHours": 573.3941624763713,
-   "score": 4,
+   "delayVehHours": 862.1270735734128,
+   "score": 5,
    "level": "low"
   },
   {
@@ -273,8 +273,8 @@
     "startHour": 17,
     "durationHours": 36
    },
-   "delayVehHours": 1090.7904564270323,
-   "score": 6,
+   "delayVehHours": 2158.1883544876137,
+   "score": 12,
    "level": "low"
   },
   {
@@ -289,7 +289,7 @@
     "startHour": 22,
     "durationHours": 201
    },
-   "delayVehHours": 905581.7310547258,
+   "delayVehHours": 2012264.3813117258,
    "score": 100,
    "level": "high"
   },
@@ -305,9 +305,9 @@
     "startHour": 13,
     "durationHours": 192
    },
-   "delayVehHours": 1417.2745260541747,
-   "score": 23,
-   "level": "low"
+   "delayVehHours": 1567.2473992842213,
+   "score": 25,
+   "level": "medium"
   },
   {
    "id": "p020",
@@ -321,9 +321,9 @@
     "startHour": 13,
     "durationHours": 231
    },
-   "delayVehHours": 13909.937738522636,
-   "score": 46,
-   "level": "medium"
+   "delayVehHours": 30744.528775651484,
+   "score": 100,
+   "level": "high"
   },
   {
    "id": "p021",
@@ -337,8 +337,8 @@
     "startHour": 15,
     "durationHours": 209
    },
-   "delayVehHours": 2237.1500431862905,
-   "score": 28,
+   "delayVehHours": 3490.5872389245087,
+   "score": 44,
    "level": "medium"
   },
   {
@@ -353,8 +353,8 @@
     "startHour": 7,
     "durationHours": 73
    },
-   "delayVehHours": 1187.173137324629,
-   "score": 9,
+   "delayVehHours": 1422.1365381598455,
+   "score": 11,
    "level": "low"
   },
   {
@@ -369,9 +369,9 @@
     "startHour": 7,
     "durationHours": 222
    },
-   "delayVehHours": 13301.104236077912,
-   "score": 44,
-   "level": "medium"
+   "delayVehHours": 29300.744229554744,
+   "score": 97,
+   "level": "high"
   },
   {
    "id": "p024",
@@ -401,9 +401,9 @@
     "startHour": 11,
     "durationHours": 237
    },
-   "delayVehHours": 12017.52412472115,
-   "score": 41,
-   "level": "medium"
+   "delayVehHours": 25200.83644572039,
+   "score": 87,
+   "level": "high"
   },
   {
    "id": "p026",
@@ -417,8 +417,8 @@
     "startHour": 10,
     "durationHours": 28
    },
-   "delayVehHours": 432.04852010335304,
-   "score": 3,
+   "delayVehHours": 474.269356552948,
+   "score": 4,
    "level": "low"
   },
   {
@@ -433,8 +433,8 @@
     "startHour": 9,
     "durationHours": 70
    },
-   "delayVehHours": 3402.148823982031,
-   "score": 12,
+   "delayVehHours": 6964.584630936007,
+   "score": 24,
    "level": "low"
   },
   {
@@ -449,8 +449,8 @@
     "startHour": 21,
     "durationHours": 91
    },
-   "delayVehHours": 688.1351653261049,
-   "score": 11,
+   "delayVehHours": 798.3256390194039,
+   "score": 12,
    "level": "low"
   },
   {
@@ -465,8 +465,8 @@
     "startHour": 8,
     "durationHours": 212
    },
-   "delayVehHours": 5180.015175564812,
-   "score": 31,
+   "delayVehHours": 8966.672471312293,
+   "score": 53,
    "level": "medium"
   },
   {
@@ -481,9 +481,9 @@
     "startHour": 15,
     "durationHours": 84
    },
-   "delayVehHours": 4206.220188655389,
-   "score": 15,
-   "level": "low"
+   "delayVehHours": 8845.606907014617,
+   "score": 31,
+   "level": "medium"
   },
   {
    "id": "p031",
@@ -497,9 +497,9 @@
     "startHour": 17,
     "durationHours": 163
    },
-   "delayVehHours": 3046.7420131080507,
-   "score": 20,
-   "level": "low"
+   "delayVehHours": 4380.493465726252,
+   "score": 29,
+   "level": "medium"
   },
   {
    "id": "p032",
@@ -513,8 +513,8 @@
     "startHour": 11,
     "durationHours": 42
    },
-   "delayVehHours": 820.12082236866,
-   "score": 5,
+   "delayVehHours": 1231.037409814862,
+   "score": 8,
    "level": "low"
   },
   {
@@ -529,8 +529,8 @@
     "startHour": 7,
     "durationHours": 207
    },
-   "delayVehHours": 4299.210723272119,
-   "score": 28,
+   "delayVehHours": 6573.7911699425,
+   "score": 42,
    "level": "medium"
   },
   {
@@ -545,9 +545,9 @@
     "startHour": 8,
     "durationHours": 129
    },
-   "delayVehHours": 3308.662101376977,
-   "score": 19,
-   "level": "low"
+   "delayVehHours": 5799.238867799345,
+   "score": 34,
+   "level": "medium"
   },
   {
    "id": "p035",
@@ -561,9 +561,9 @@
     "startHour": 14,
     "durationHours": 116
    },
-   "delayVehHours": 5190.987352890275,
-   "score": 19,
-   "level": "low"
+   "delayVehHours": 10576.934247680929,
+   "score": 38,
+   "level": "medium"
   },
   {
    "id": "p036",
@@ -577,9 +577,9 @@
     "startHour": 22,
     "durationHours": 201
    },
-   "delayVehHours": 5752.987715860514,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 10764.524061497188,
+   "score": 60,
+   "level": "high"
   },
   {
    "id": "p037",
@@ -593,8 +593,8 @@
     "startHour": 10,
     "durationHours": 170
    },
-   "delayVehHours": 5656.093420620577,
-   "score": 30,
+   "delayVehHours": 10989.008764010792,
+   "score": 59,
    "level": "medium"
   },
   {
@@ -609,8 +609,8 @@
     "startHour": 12,
     "durationHours": 65
    },
-   "delayVehHours": 1416.2213628742,
-   "score": 9,
+   "delayVehHours": 2315.6769282549644,
+   "score": 14,
    "level": "low"
   },
   {
@@ -625,9 +625,9 @@
     "startHour": 14,
     "durationHours": 131
    },
-   "delayVehHours": 3643.5089169775188,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 6708.2996843273395,
+   "score": 38,
+   "level": "medium"
   },
   {
    "id": "p040",
@@ -641,9 +641,9 @@
     "startHour": 12,
     "durationHours": 124
    },
-   "delayVehHours": 4653.378788049762,
-   "score": 18,
-   "level": "low"
+   "delayVehHours": 8477.722215995218,
+   "score": 32,
+   "level": "medium"
   },
   {
    "id": "p041",
@@ -657,9 +657,9 @@
     "startHour": 14,
     "durationHours": 172
    },
-   "delayVehHours": 1551.1315406131505,
-   "score": 22,
-   "level": "low"
+   "delayVehHours": 2092.205930619736,
+   "score": 29,
+   "level": "medium"
   },
   {
    "id": "p042",
@@ -673,8 +673,8 @@
     "startHour": 14,
     "durationHours": 49
    },
-   "delayVehHours": 1032.272836127309,
-   "score": 7,
+   "delayVehHours": 1614.3639603641307,
+   "score": 10,
    "level": "low"
   },
   {
@@ -689,9 +689,9 @@
     "startHour": 23,
     "durationHours": 204
    },
-   "delayVehHours": 11093.000029493349,
-   "score": 37,
-   "level": "medium"
+   "delayVehHours": 23936.83509678842,
+   "score": 80,
+   "level": "high"
   },
   {
    "id": "p044",
@@ -705,9 +705,9 @@
     "startHour": 14,
     "durationHours": 118
    },
-   "delayVehHours": 3905.6226648825173,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 7639.530553048123,
+   "score": 41,
+   "level": "medium"
   },
   {
    "id": "p045",
@@ -721,9 +721,9 @@
     "startHour": 16,
     "durationHours": 234
    },
-   "delayVehHours": 12219.763954286362,
-   "score": 42,
-   "level": "medium"
+   "delayVehHours": 26064.652421521292,
+   "score": 89,
+   "level": "high"
   },
   {
    "id": "p046",
@@ -737,9 +737,9 @@
     "startHour": 12,
     "durationHours": 194
    },
-   "delayVehHours": 2995.8148487844405,
-   "score": 23,
-   "level": "low"
+   "delayVehHours": 3389.6451003279035,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p047",
@@ -769,8 +769,8 @@
     "startHour": 7,
     "durationHours": 82
    },
-   "delayVehHours": 630.1757974160204,
-   "score": 10,
+   "delayVehHours": 692.3777225017162,
+   "score": 11,
    "level": "low"
   },
   {
@@ -785,8 +785,8 @@
     "startHour": 23,
     "durationHours": 83
    },
-   "delayVehHours": 3059.6431734411703,
-   "score": 12,
+   "delayVehHours": 5780.905450682544,
+   "score": 22,
    "level": "low"
   },
   {
@@ -801,9 +801,9 @@
     "startHour": 15,
     "durationHours": 110
    },
-   "delayVehHours": 2793.5163489932597,
-   "score": 16,
-   "level": "low"
+   "delayVehHours": 5032.897028327063,
+   "score": 29,
+   "level": "medium"
   },
   {
    "id": "p051",
@@ -817,8 +817,8 @@
     "startHour": 7,
     "durationHours": 75
    },
-   "delayVehHours": 2779.673949577312,
-   "score": 11,
+   "delayVehHours": 5079.343677730489,
+   "score": 20,
    "level": "low"
   },
   {
@@ -833,9 +833,9 @@
     "startHour": 17,
     "durationHours": 143
    },
-   "delayVehHours": 3369.6143766023915,
-   "score": 20,
-   "level": "low"
+   "delayVehHours": 5748.50997367149,
+   "score": 34,
+   "level": "medium"
   },
   {
    "id": "p053",
@@ -849,8 +849,8 @@
     "startHour": 7,
     "durationHours": 119
    },
-   "delayVehHours": 1128.2540846341217,
-   "score": 15,
+   "delayVehHours": 1605.4792174394213,
+   "score": 22,
    "level": "low"
   },
   {
@@ -865,9 +865,9 @@
     "startHour": 11,
     "durationHours": 91
    },
-   "delayVehHours": 3608.9242912160566,
-   "score": 13,
-   "level": "low"
+   "delayVehHours": 6921.5206072920655,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p055",
@@ -897,7 +897,7 @@
     "startHour": 22,
     "durationHours": 121
    },
-   "delayVehHours": 636974.8559297147,
+   "delayVehHours": 1415463.116519969,
    "score": 100,
    "level": "high"
   },
@@ -913,9 +913,9 @@
     "startHour": 9,
     "durationHours": 75
    },
-   "delayVehHours": 3738.872111616259,
-   "score": 13,
-   "level": "low"
+   "delayVehHours": 7725.800473499169,
+   "score": 27,
+   "level": "medium"
   },
   {
    "id": "p058",
@@ -929,9 +929,9 @@
     "startHour": 14,
     "durationHours": 233
    },
-   "delayVehHours": 6661.184996356899,
-   "score": 37,
-   "level": "medium"
+   "delayVehHours": 12432.044282368517,
+   "score": 69,
+   "level": "high"
   },
   {
    "id": "p059",
@@ -945,8 +945,8 @@
     "startHour": 15,
     "durationHours": 171
    },
-   "delayVehHours": 4226.533760635535,
-   "score": 25,
+   "delayVehHours": 7372.769537495348,
+   "score": 43,
    "level": "medium"
   },
   {
@@ -961,7 +961,7 @@
     "startHour": 11,
     "durationHours": 24
    },
-   "delayVehHours": 370.8815075034137,
+   "delayVehHours": 421.21961084202155,
    "score": 3,
    "level": "low"
   },
@@ -993,8 +993,8 @@
     "startHour": 18,
     "durationHours": 33
    },
-   "delayVehHours": 859.4612087412254,
-   "score": 5,
+   "delayVehHours": 1597.6872736304822,
+   "score": 9,
    "level": "low"
   },
   {
@@ -1009,9 +1009,9 @@
     "startHour": 15,
     "durationHours": 215
    },
-   "delayVehHours": 13222.448339711134,
-   "score": 43,
-   "level": "medium"
+   "delayVehHours": 29436.898685271484,
+   "score": 96,
+   "level": "high"
   },
   {
    "id": "p064",
@@ -1025,9 +1025,9 @@
     "startHour": 12,
     "durationHours": 80
    },
-   "delayVehHours": 3811.2980760680143,
-   "score": 14,
-   "level": "low"
+   "delayVehHours": 7797.069116476143,
+   "score": 28,
+   "level": "medium"
   },
   {
    "id": "p065",
@@ -1041,9 +1041,9 @@
     "startHour": 10,
     "durationHours": 125
    },
-   "delayVehHours": 3150.4776489284045,
-   "score": 18,
-   "level": "low"
+   "delayVehHours": 5508.237176223959,
+   "score": 32,
+   "level": "medium"
   },
   {
    "id": "p066",
@@ -1089,7 +1089,7 @@
     "startHour": 19,
     "durationHours": 212
    },
-   "delayVehHours": 1331.4257632294125,
+   "delayVehHours": 1340.9522351832695,
    "score": 25,
    "level": "medium"
   },
@@ -1105,8 +1105,8 @@
     "startHour": 14,
     "durationHours": 44
    },
-   "delayVehHours": 2397.9172517637658,
-   "score": 8,
+   "delayVehHours": 5279.775395805273,
+   "score": 18,
    "level": "low"
   },
   {
@@ -1121,9 +1121,9 @@
     "startHour": 11,
     "durationHours": 109
    },
-   "delayVehHours": 5793.919590727562,
-   "score": 20,
-   "level": "low"
+   "delayVehHours": 12178.704258860509,
+   "score": 42,
+   "level": "medium"
   },
   {
    "id": "p071",
@@ -1137,9 +1137,9 @@
     "startHour": 14,
     "durationHours": 153
    },
-   "delayVehHours": 6627.552600547514,
-   "score": 24,
-   "level": "low"
+   "delayVehHours": 13157.368208915665,
+   "score": 48,
+   "level": "medium"
   },
   {
    "id": "p072",
@@ -1153,7 +1153,7 @@
     "startHour": 23,
     "durationHours": 71
    },
-   "delayVehHours": 18343.37117362703,
+   "delayVehHours": 40805.73076845977,
    "score": 100,
    "level": "high"
   },
@@ -1169,9 +1169,9 @@
     "startHour": 8,
     "durationHours": 230
    },
-   "delayVehHours": 12371.695327051386,
-   "score": 42,
-   "level": "medium"
+   "delayVehHours": 26270.69884284384,
+   "score": 90,
+   "level": "high"
   },
   {
    "id": "p074",
@@ -1185,8 +1185,8 @@
     "startHour": 10,
     "durationHours": 228
    },
-   "delayVehHours": 3582.1462507784713,
-   "score": 28,
+   "delayVehHours": 4075.9395410263423,
+   "score": 32,
    "level": "medium"
   },
   {
@@ -1201,7 +1201,7 @@
     "startHour": 22,
     "durationHours": 109
    },
-   "delayVehHours": 569648.7383783043,
+   "delayVehHours": 1265824.2105813827,
    "score": 100,
    "level": "high"
   },
@@ -1233,9 +1233,9 @@
     "startHour": 7,
     "durationHours": 112
    },
-   "delayVehHours": 7031.238644102561,
-   "score": 23,
-   "level": "low"
+   "delayVehHours": 15576.606694701153,
+   "score": 51,
+   "level": "medium"
   },
   {
    "id": "p078",
@@ -1249,9 +1249,9 @@
     "startHour": 22,
     "durationHours": 88
    },
-   "delayVehHours": 5215.68617549556,
-   "score": 17,
-   "level": "low"
+   "delayVehHours": 11541.157748250082,
+   "score": 37,
+   "level": "medium"
   },
   {
    "id": "p079",
@@ -1281,8 +1281,8 @@
     "startHour": 22,
     "durationHours": 131
    },
-   "delayVehHours": 2323.8913683321603,
-   "score": 16,
+   "delayVehHours": 3233.6564001033807,
+   "score": 22,
    "level": "low"
   },
   {
@@ -1297,8 +1297,8 @@
     "startHour": 12,
     "durationHours": 27
    },
-   "delayVehHours": 429.92060995801387,
-   "score": 3,
+   "delayVehHours": 492.2508722508168,
+   "score": 4,
    "level": "low"
   },
   {
@@ -1313,7 +1313,7 @@
     "startHour": 23,
     "durationHours": 236
    },
-   "delayVehHours": 33451.801734102744,
+   "delayVehHours": 75374.55546974989,
    "score": 100,
    "level": "high"
   },
@@ -1329,8 +1329,8 @@
     "startHour": 14,
     "durationHours": 155
    },
-   "delayVehHours": 2391.7240907908385,
-   "score": 19,
+   "delayVehHours": 2684.28313427375,
+   "score": 21,
    "level": "low"
   },
   {
@@ -1345,8 +1345,8 @@
     "startHour": 17,
     "durationHours": 210
    },
-   "delayVehHours": 7220.955424979193,
-   "score": 29,
+   "delayVehHours": 12703.934147324528,
+   "score": 50,
    "level": "medium"
   },
   {
@@ -1361,8 +1361,8 @@
     "startHour": 14,
     "durationHours": 179
    },
-   "delayVehHours": 5053.822524269245,
-   "score": 29,
+   "delayVehHours": 9354.726140039451,
+   "score": 53,
    "level": "medium"
   },
   {
@@ -1377,9 +1377,9 @@
     "startHour": 14,
     "durationHours": 168
    },
-   "delayVehHours": 3270.4258126726922,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 4835.8552257463425,
+   "score": 32,
+   "level": "medium"
   },
   {
    "id": "p087",
@@ -1393,8 +1393,8 @@
     "startHour": 15,
     "durationHours": 50
    },
-   "delayVehHours": 993.9010193448557,
-   "score": 6,
+   "delayVehHours": 1462.6667142887868,
+   "score": 10,
    "level": "low"
   },
   {
@@ -1409,8 +1409,8 @@
     "startHour": 10,
     "durationHours": 203
    },
-   "delayVehHours": 5528.95366134789,
-   "score": 32,
+   "delayVehHours": 10050.58828484301,
+   "score": 58,
    "level": "medium"
   },
   {
@@ -1425,8 +1425,8 @@
     "startHour": 14,
     "durationHours": 122
    },
-   "delayVehHours": 1815.8416625727557,
-   "score": 15,
+   "delayVehHours": 1975.2334814073047,
+   "score": 16,
    "level": "low"
   },
   {
@@ -1441,8 +1441,8 @@
     "startHour": 8,
     "durationHours": 235
    },
-   "delayVehHours": 1778.064874899805,
-   "score": 28,
+   "delayVehHours": 2005.5829753360129,
+   "score": 32,
    "level": "medium"
   },
   {
@@ -1457,9 +1457,9 @@
     "startHour": 20,
     "durationHours": 237
    },
-   "delayVehHours": 14726.16885519993,
-   "score": 47,
-   "level": "medium"
+   "delayVehHours": 32808.44075452286,
+   "score": 100,
+   "level": "high"
   },
   {
    "id": "p092",
@@ -1473,8 +1473,8 @@
     "startHour": 14,
     "durationHours": 44
    },
-   "delayVehHours": 2148.8554451460814,
-   "score": 8,
+   "delayVehHours": 4585.147509511146,
+   "score": 16,
    "level": "low"
   },
   {
@@ -1489,8 +1489,8 @@
     "startHour": 22,
     "durationHours": 88
    },
-   "delayVehHours": 1268.4717563769675,
-   "score": 10,
+   "delayVehHours": 1380.9097820696372,
+   "score": 11,
    "level": "low"
   },
   {
@@ -1505,9 +1505,9 @@
     "startHour": 22,
     "durationHours": 197
    },
-   "delayVehHours": 12199.107476635594,
-   "score": 39,
-   "level": "medium"
+   "delayVehHours": 27275.47038936816,
+   "score": 88,
+   "level": "high"
   },
   {
    "id": "p095",
@@ -1521,9 +1521,9 @@
     "startHour": 22,
     "durationHours": 158
    },
-   "delayVehHours": 1776.7624555783525,
-   "score": 22,
-   "level": "low"
+   "delayVehHours": 2861.8254506685917,
+   "score": 35,
+   "level": "medium"
   },
   {
    "id": "p096",
@@ -1537,8 +1537,8 @@
     "startHour": 15,
     "durationHours": 88
    },
-   "delayVehHours": 1660.0425548544079,
-   "score": 11,
+   "delayVehHours": 2456.5174502680966,
+   "score": 16,
    "level": "low"
   },
   {
@@ -1553,9 +1553,9 @@
     "startHour": 14,
     "durationHours": 203
    },
-   "delayVehHours": 6312.03107791653,
-   "score": 35,
-   "level": "medium"
+   "delayVehHours": 12047.056982043954,
+   "score": 66,
+   "level": "high"
   },
   {
    "id": "p098",
@@ -1569,8 +1569,8 @@
     "startHour": 16,
     "durationHours": 79
    },
-   "delayVehHours": 736.2619742709554,
-   "score": 10,
+   "delayVehHours": 1010.7915323625386,
+   "score": 14,
    "level": "low"
   },
   {
@@ -1585,8 +1585,8 @@
     "startHour": 13,
     "durationHours": 24
    },
-   "delayVehHours": 569.0397780128992,
-   "score": 3,
+   "delayVehHours": 970.6754786620811,
+   "score": 6,
    "level": "low"
   },
   {
@@ -1601,9 +1601,9 @@
     "startHour": 14,
     "durationHours": 90
    },
-   "delayVehHours": 3645.1831626923667,
-   "score": 13,
-   "level": "low"
+   "delayVehHours": 7183.408363554756,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p101",
@@ -1633,8 +1633,8 @@
     "startHour": 8,
     "durationHours": 189
    },
-   "delayVehHours": 4794.141588845645,
-   "score": 28,
+   "delayVehHours": 8502.596288755545,
+   "score": 50,
    "level": "medium"
   },
   {
@@ -1649,8 +1649,8 @@
     "startHour": 7,
     "durationHours": 159
    },
-   "delayVehHours": 1273.1009617582667,
-   "score": 20,
+   "delayVehHours": 1488.8600564706167,
+   "score": 23,
    "level": "low"
   },
   {
@@ -1681,8 +1681,8 @@
     "startHour": 17,
     "durationHours": 37
    },
-   "delayVehHours": 766.7423010468239,
-   "score": 5,
+   "delayVehHours": 1310.432496871363,
+   "score": 8,
    "level": "low"
   },
   {
@@ -1697,9 +1697,9 @@
     "startHour": 8,
     "durationHours": 86
    },
-   "delayVehHours": 3609.409806246851,
-   "score": 14,
-   "level": "low"
+   "delayVehHours": 6902.290741819217,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p107",
@@ -1713,8 +1713,8 @@
     "startHour": 23,
     "durationHours": 209
    },
-   "delayVehHours": 1485.9179988652038,
-   "score": 25,
+   "delayVehHours": 1599.384075150646,
+   "score": 26,
    "level": "medium"
   },
   {
@@ -1729,9 +1729,9 @@
     "startHour": 13,
     "durationHours": 151
    },
-   "delayVehHours": 9690.571284450747,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 21769.025699046855,
+   "score": 71,
+   "level": "high"
   },
   {
    "id": "p109",
@@ -1745,9 +1745,9 @@
     "startHour": 11,
     "durationHours": 62
    },
-   "delayVehHours": 4160.239279136991,
-   "score": 13,
-   "level": "low"
+   "delayVehHours": 9331.47471407247,
+   "score": 30,
+   "level": "medium"
   },
   {
    "id": "p110",
@@ -1761,9 +1761,9 @@
     "startHour": 12,
     "durationHours": 236
    },
-   "delayVehHours": 9336.12682284688,
-   "score": 35,
-   "level": "medium"
+   "delayVehHours": 17876.634058839456,
+   "score": 67,
+   "level": "high"
   },
   {
    "id": "p111",
@@ -1777,8 +1777,8 @@
     "startHour": 23,
     "durationHours": 60
    },
-   "delayVehHours": 9918.118112437658,
-   "score": 64,
+   "delayVehHours": 21981.659705303555,
+   "score": 100,
    "level": "high"
   },
   {
@@ -1793,8 +1793,8 @@
     "startHour": 19,
     "durationHours": 114
    },
-   "delayVehHours": 1656.3511096354,
-   "score": 13,
+   "delayVehHours": 1791.0395829757454,
+   "score": 14,
    "level": "low"
   },
   {
@@ -1809,8 +1809,8 @@
     "startHour": 15,
     "durationHours": 87
    },
-   "delayVehHours": 1249.2645472128231,
-   "score": 10,
+   "delayVehHours": 1362.6915657697618,
+   "score": 11,
    "level": "low"
   },
   {
@@ -1825,8 +1825,8 @@
     "startHour": 7,
     "durationHours": 73
    },
-   "delayVehHours": 1342.3982349507407,
-   "score": 9,
+   "delayVehHours": 1846.553224253848,
+   "score": 13,
    "level": "low"
   },
   {
@@ -1841,7 +1841,7 @@
     "startHour": 23,
     "durationHours": 118
    },
-   "delayVehHours": 29070.56036810744,
+   "delayVehHours": 66139.0375248752,
    "score": 100,
    "level": "high"
   },
@@ -1857,8 +1857,8 @@
     "startHour": 14,
     "durationHours": 52
    },
-   "delayVehHours": 591.1948238146186,
-   "score": 7,
+   "delayVehHours": 931.812439404716,
+   "score": 12,
    "level": "low"
   },
   {
@@ -1873,8 +1873,8 @@
     "startHour": 14,
     "durationHours": 117
    },
-   "delayVehHours": 886.9251655782115,
-   "score": 14,
+   "delayVehHours": 1019.0119760753737,
+   "score": 16,
    "level": "low"
   },
   {
@@ -1889,8 +1889,8 @@
     "startHour": 23,
     "durationHours": 161
    },
-   "delayVehHours": 1248.645364685731,
-   "score": 19,
+   "delayVehHours": 1469.3657781520897,
+   "score": 22,
    "level": "low"
   },
   {
@@ -1905,7 +1905,7 @@
     "startHour": 23,
     "durationHours": 123
    },
-   "delayVehHours": 543026.2685350316,
+   "delayVehHours": 1206646.1636171823,
    "score": 100,
    "level": "high"
   },
@@ -1921,9 +1921,9 @@
     "startHour": 10,
     "durationHours": 129
    },
-   "delayVehHours": 6780.944325549346,
-   "score": 23,
-   "level": "low"
+   "delayVehHours": 14231.079795092832,
+   "score": 49,
+   "level": "medium"
   },
   {
    "id": "p121",
@@ -1937,9 +1937,9 @@
     "startHour": 8,
     "durationHours": 171
    },
-   "delayVehHours": 1461.3413459283515,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 1862.561791126827,
+   "score": 27,
+   "level": "medium"
   },
   {
    "id": "p122",
@@ -1953,9 +1953,9 @@
     "startHour": 11,
     "durationHours": 128
    },
-   "delayVehHours": 5838.863046107225,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 11728.865563323128,
+   "score": 42,
+   "level": "medium"
   },
   {
    "id": "p123",
@@ -1969,8 +1969,8 @@
     "startHour": 18,
     "durationHours": 43
    },
-   "delayVehHours": 741.3520257653258,
-   "score": 5,
+   "delayVehHours": 1010.441613253889,
+   "score": 7,
    "level": "low"
   },
   {
@@ -1985,8 +1985,8 @@
     "startHour": 8,
     "durationHours": 27
    },
-   "delayVehHours": 462.67455843946493,
-   "score": 3,
+   "delayVehHours": 565.4413079040057,
+   "score": 4,
    "level": "low"
   },
   {
@@ -2001,7 +2001,7 @@
     "startHour": 12,
     "durationHours": 236
    },
-   "delayVehHours": 1502.1156600014026,
+   "delayVehHours": 1518.9471974755916,
    "score": 28,
    "level": "medium"
   },
@@ -2017,8 +2017,8 @@
     "startHour": 12,
     "durationHours": 73
    },
-   "delayVehHours": 797.4723781512929,
-   "score": 10,
+   "delayVehHours": 1242.186644578646,
+   "score": 16,
    "level": "low"
   },
   {
@@ -2033,8 +2033,8 @@
     "startHour": 20,
     "durationHours": 209
    },
-   "delayVehHours": 1460.4603875162054,
-   "score": 25,
+   "delayVehHours": 1551.97815001663,
+   "score": 26,
    "level": "medium"
   },
   {
@@ -2049,7 +2049,7 @@
     "startHour": 19,
     "durationHours": 93
    },
-   "delayVehHours": 649.1647255154124,
+   "delayVehHours": 688.9258512575966,
    "score": 11,
    "level": "low"
   },
@@ -2065,9 +2065,9 @@
     "startHour": 8,
     "durationHours": 121
    },
-   "delayVehHours": 6209.488722469564,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 13107.483548358869,
+   "score": 45,
+   "level": "medium"
   },
   {
    "id": "p130",
@@ -2081,8 +2081,8 @@
     "startHour": 8,
     "durationHours": 71
    },
-   "delayVehHours": 1187.918351484012,
-   "score": 9,
+   "delayVehHours": 1502.1292126701524,
+   "score": 11,
    "level": "low"
   },
   {
@@ -2097,9 +2097,9 @@
     "startHour": 11,
     "durationHours": 194
    },
-   "delayVehHours": 3457.396671053243,
-   "score": 24,
-   "level": "low"
+   "delayVehHours": 4618.924399722382,
+   "score": 32,
+   "level": "medium"
   },
   {
    "id": "p132",
@@ -2113,9 +2113,9 @@
     "startHour": 8,
     "durationHours": 130
    },
-   "delayVehHours": 6071.3755256400555,
-   "score": 22,
-   "level": "low"
+   "delayVehHours": 12241.432668712088,
+   "score": 44,
+   "level": "medium"
   },
   {
    "id": "p133",
@@ -2129,9 +2129,9 @@
     "startHour": 12,
     "durationHours": 195
    },
-   "delayVehHours": 9151.621117159639,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 18622.337669096076,
+   "score": 66,
+   "level": "high"
   },
   {
    "id": "p134",
@@ -2145,8 +2145,8 @@
     "startHour": 8,
     "durationHours": 38
    },
-   "delayVehHours": 972.8059296752908,
-   "score": 6,
+   "delayVehHours": 1623.0808637533955,
+   "score": 10,
    "level": "low"
   },
   {
@@ -2161,9 +2161,9 @@
     "startHour": 17,
     "durationHours": 156
    },
-   "delayVehHours": 1810.2619441848128,
-   "score": 22,
-   "level": "low"
+   "delayVehHours": 2974.5081204412777,
+   "score": 37,
+   "level": "medium"
   },
   {
    "id": "p136",
@@ -2177,8 +2177,8 @@
     "startHour": 17,
     "durationHours": 230
    },
-   "delayVehHours": 5605.096486973153,
-   "score": 33,
+   "delayVehHours": 9836.137062306163,
+   "score": 58,
    "level": "medium"
   },
   {
@@ -2193,9 +2193,9 @@
     "startHour": 14,
     "durationHours": 120
    },
-   "delayVehHours": 2999.584287093999,
-   "score": 18,
-   "level": "low"
+   "delayVehHours": 5286.521545969948,
+   "score": 31,
+   "level": "medium"
   },
   {
    "id": "p138",
@@ -2209,8 +2209,8 @@
     "startHour": 20,
     "durationHours": 61
    },
-   "delayVehHours": 3058.319409092461,
-   "score": 10,
+   "delayVehHours": 6508.001627064505,
+   "score": 22,
    "level": "low"
   },
   {
@@ -2225,9 +2225,9 @@
     "startHour": 11,
     "durationHours": 146
    },
-   "delayVehHours": 3404.5981158738086,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 5718.623557006703,
+   "score": 34,
+   "level": "medium"
   },
   {
    "id": "p140",
@@ -2241,8 +2241,8 @@
     "startHour": 11,
     "durationHours": 112
    },
-   "delayVehHours": 969.2439214077656,
-   "score": 14,
+   "delayVehHours": 1253.4010864075628,
+   "score": 18,
    "level": "low"
   },
   {
@@ -2257,8 +2257,8 @@
     "startHour": 10,
     "durationHours": 219
    },
-   "delayVehHours": 1650.542766927162,
-   "score": 26,
+   "delayVehHours": 1861.7302976991664,
+   "score": 29,
    "level": "medium"
   },
   {
@@ -2273,8 +2273,8 @@
     "startHour": 8,
     "durationHours": 91
    },
-   "delayVehHours": 655.4558170711717,
-   "score": 11,
+   "delayVehHours": 696.9164748661555,
+   "score": 12,
    "level": "low"
   },
   {
@@ -2289,7 +2289,7 @@
     "startHour": 16,
     "durationHours": 95
    },
-   "delayVehHours": 594.2010119232953,
+   "delayVehHours": 595.619514941128,
    "score": 11,
    "level": "low"
   },
@@ -2305,9 +2305,9 @@
     "startHour": 9,
     "durationHours": 127
    },
-   "delayVehHours": 4998.479416360466,
-   "score": 19,
-   "level": "low"
+   "delayVehHours": 9310.556003791748,
+   "score": 35,
+   "level": "medium"
   },
   {
    "id": "p145",
@@ -2321,9 +2321,9 @@
     "startHour": 7,
     "durationHours": 128
    },
-   "delayVehHours": 1327.7727547335046,
-   "score": 17,
-   "level": "low"
+   "delayVehHours": 1988.0520649153814,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p146",
@@ -2337,8 +2337,8 @@
     "startHour": 18,
     "durationHours": 77
    },
-   "delayVehHours": 2117.997369067918,
-   "score": 12,
+   "delayVehHours": 3902.205698107363,
+   "score": 22,
    "level": "low"
   },
   {
@@ -2353,7 +2353,7 @@
     "startHour": 21,
     "durationHours": 66
    },
-   "delayVehHours": 239695.0192970461,
+   "delayVehHours": 532590.8002513085,
    "score": 100,
    "level": "high"
   },
@@ -2401,8 +2401,8 @@
     "startHour": 13,
     "durationHours": 104
    },
-   "delayVehHours": 1602.2639878108846,
-   "score": 13,
+   "delayVehHours": 1762.007112291222,
+   "score": 14,
    "level": "low"
   }
  ]
