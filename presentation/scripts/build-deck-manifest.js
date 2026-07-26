@@ -30,6 +30,9 @@ global.window = global;
 const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
 const Cases = require(path.join(ROOT, 'athar-comparable-cases.js'));
 const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+/* يُقرأ ولا يُكتب: نقطة تشغيل السعة تُؤخذ من المحرك نفسه لا من نسخة عنها،
+   كي لا يبقى في الجرد رقمٌ صحيحٌ يوم كُتب وخاطئٌ بعد أول تعديل في المحرك. */
+const Engine = require(path.join(ROOT, 'athar-engine.js'));
 
 const OUT_JSON = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
 const OUT_HTML = path.join(REPO, 'output', 'submission', 'athar-judging-deck-text.html');
@@ -47,6 +50,17 @@ function figure(key, value, unit, source, grade, limit) {
   return { key, value, unit, source, grade, limit };
 }
 
+/**
+ * الحالة الواحدة التي يعرضها العرض بجانب العدّ.
+ *
+ * **وهي ليست الأسوأ عمداً.** ترتيبها التاسع من مئة واثنتي عشرة حالة فائضة،
+ * والأسوأ يصل إلى نسبة أعلى بكثير — وهي معروضة بجوارها في الجرد
+ * (`alternateWorstAfterShare`) كي لا يُقرأ المثال حدّاً أعلى وهو وسط.
+ * اختيار الحالة الأسوأ مثالاً يقلب معنى الشريحة من «هذا هو الحال» إلى
+ * «هذا أقصى ما وجدنا»، وهما ادّعاءان مختلفان.
+ */
+const EXAMPLE_PERMIT = 'BLD-2026-0045';
+
 function build() {
   const metrics = Canonical.metrics();
   const wzdx = read(path.join(ROOT, 'data', 'wzdx-conformance-summary.json'));
@@ -56,6 +70,9 @@ function build() {
   const casesSummary = Cases.summary();
   const readiness = read(path.join(ROOT, 'data', 'route-evidence', 'readiness.json'));
   const interop = read(path.join(ROOT, 'data', 'wzdx-interop-summary.json'));
+  const alternate = read(path.join(ROOT, 'data', 'alternate-load.json'));
+  const arterialPrior = Cases.priorFor('capacityPerLaneInWorkZone_signalizedArterial');
+  const delaware = Cases.cases().find((item) => item.key === 'delaware-arterial');
 
   const figures = [];
 
@@ -122,6 +139,76 @@ function build() {
     'صفر يعني أن المخطط الذي نصدّر عليه قبِل إنتاج جهة رسمية حقيقية. '
       + 'ولا يعني أن مُخرَجنا صحيح مرورياً: هذا اجتياز بنية لا قياس، '
       + 'ولا يقول شيئاً عن الرياض.'));
+
+  /* حمل البديل — الجواب على السؤال الثامن.
+     تعدادٌ على المحفظة كلها، بلا إسقاط: مجموع الأربعة يساوي
+     `portfolioPermitCount`، فلا تُقرأ نسبةٌ على مقام أصغر من المعلَن. */
+  const altSource = 'data/alternate-load.json — ساعة مرجعية '
+    + alternate.referenceHour;
+  figures.push(figure('alternateOverflows', alternate.tally.overflows, 'تصريح',
+    altSource, alternate.grade,
+    'الطلب المحوَّل يتجاوز طاقة البديل في النموذج. لا قياس ميداني: الحركة '
+    + 'المحوَّلة مقدَّرة، والسعة افتراض معلن، والنموذج لا يعرف أن السائق قد '
+    + 'يلغي رحلته أو يغيّر ساعتها.'));
+  figures.push(figure('alternateCarries', alternate.tally.carries, 'تصريح',
+    altSource, alternate.grade,
+    'يبقى دون طاقته في النموذج عند الساعة المرجعية وحدها. ساعة أخرى قد '
+    + 'تعطي حكماً آخر.'));
+  figures.push(figure('alternateNearCapacity', alternate.tally['near-capacity'],
+    'تصريح', altSource, alternate.grade,
+    'قريب من طاقته — حكمٌ حدّي يقلبه تغيّر صغير في الحركة المحوَّلة، فلا '
+    + 'يُقرأ نجاحاً.'));
+  figures.push(figure('alternateUncomputed', alternate.tally.unknown, 'تصريح',
+    altSource, alternate.grade,
+    'لم يُحسب له بديل — هندسة نقطية بلا خطّ يُحوَّل حوله. غياب حكم لا حكم '
+    + 'بالسلامة.'));
+
+  const example = alternate.permits[EXAMPLE_PERMIT];
+  if (!example || !example.ratioAfter) {
+    throw new Error(`${EXAMPLE_PERMIT}: الحالة المعروضة في العرض غير موجودة `
+      + 'أو بلا نسبة — العرض يعرض حالة زالت من البيانات');
+  }
+  const share = (ratio) => Math.round(ratio * 100);
+  const worstAfter = Object.keys(alternate.permits).reduce((worst, key) => {
+    const row = alternate.permits[key];
+    return row.verdict.key === 'overflows' && row.ratioAfter > worst
+      ? row.ratioAfter : worst;
+  }, 0);
+  const exampleSource = altSource + ' — التصريح ' + EXAMPLE_PERMIT
+    + '، المقطع المقيِّد: ' + example.bindingStreet;
+  figures.push(figure('alternateCaseBeforeShare', share(example.ratioBefore), '٪',
+    exampleSource, alternate.grade,
+    'نسبة الحجم إلى السعة على البديل قبل التحويل، عند ساعة مرجعية واحدة.'));
+  figures.push(figure('alternateCaseAfterShare', share(example.ratioAfter), '٪',
+    exampleSource, alternate.grade,
+    'النسبة نفسها بعد التحويل. فوق المئة تعني طابوراً في النموذج، لا زمن '
+    + 'تأخير مقيساً.'));
+  figures.push(figure('alternateCaseDiverted', example.divertedVehPerHour,
+    'مركبة/ساعة', exampleSource, alternate.grade,
+    'حركة محوَّلة مقدَّرة من حصة المسارات المغلقة، لا عدّاً مرورياً.'));
+  figures.push(figure('alternateWorstAfterShare', share(worstAfter), '٪',
+    altSource + ' — أعلى نسبة بعد التحويل في المحفظة', alternate.grade,
+    'موجود كي لا تُقرأ الحالة المعروضة حدّاً أعلى وهي وسط الترتيب. رقمٌ '
+    + 'نموذجي مثل غيره، لا قياس.'));
+
+  /* سعة منطقة العمل — نقطة تشغيل المحرك، وسندها.
+     الحارس هنا غرضه واحد: أن يسقط البناء إن انفصل ما يقوله العرض عن نقطة
+     تشغيل المحرك، بدل أن يبقى الجرد صادقاً عن نسخةٍ سابقة من الشيفرة. */
+  const engineCapacity = Engine.CALIBRATION.WORK_ZONE_LANE_CAPACITY;
+  if (engineCapacity !== arterialPrior.priorHigh) {
+    throw new Error('سعة منطقة العمل في المحرك (' + engineCapacity + ') لا '
+      + 'تطابق سند السجل (' + arterialPrior.priorHigh + ') — العرض سيعرض '
+      + 'رقماً بلا سنده');
+  }
+  figures.push(figure('workZoneLaneCapacity', engineCapacity, arterialPrior.unit,
+    'athar-engine.js — نقطة التشغيل، وسندها delaware-arterial في '
+    + 'data/comparable-cases.json', arterialPrior.evidenceLevel,
+    delaware.doesNotProve));
+  figures.push(figure('workZoneCapacitySites', delaware.sites, 'موقع مقيس',
+    'data/comparable-cases.json — delaware-arterial، ' + delaware.agency,
+    arterialPrior.evidenceLevel,
+    'متوسط عبر خمسة وعشرين موقعاً أمريكياً، وتوزيعها نفسه واسع. لا يُسقَط '
+    + 'على إشارة بعينها ولا على شارع في الرياض.'));
 
   figures.push(figure('providersReady',
     readiness.providers.filter((provider) => provider.ready).length, 'مزوّد',

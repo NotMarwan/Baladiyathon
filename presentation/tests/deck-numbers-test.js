@@ -11,8 +11,10 @@
  * العرض خمسٌ وعشرون صورة مضمَّنة وستة آلاف محرف نصّ. فأكثر ما يقرؤه المحكّم
  * **داخل الصور**، وأي رقم فيها لا يصل إليه هذا الفحص ولا أي فحص آلي.
  *
- * فما تثبته هذه الحزمة: أن كل رقم في **النصّ الظاهر** له واحد من ثلاثة —
- * مصدر رسمي، أو اشتقاق من تشغيل المشروع نفسه، أو وسم صريح بأنه مقترح.
+ * فما تثبته هذه الحزمة: أن كل رقم في **النصّ الظاهر** له واحد من أربعة —
+ * سطرٌ في `deck-manifest.json` بمصدره ودرجته وحدّه، أو اشتقاق من تشغيل
+ * المشروع نفسه، أو وسم صريح بأنه مقترح، أو أنه بنيةٌ لا كمّية (ترقيم، معرّف
+ * تصريح، رقم إصدار مواصفة).
  * وما لا تثبته: أرقام الصور. وللبوابة فحصٌ يحرس هذا الحدّ نفسه كي لا يُنسى:
  * إن ارتفع نصيب الصور فجأة، فذلك تحوّلٌ من محتوى مفحوص إلى محتوى لا يُفحص.
  *
@@ -28,6 +30,7 @@ const REPO = path.join(ROOT, '..');
 const DECK = path.join(REPO, 'output', 'submission',
   'athar-baladiyathon-judging-deck.html');
 const MANIFEST = path.join(__dirname, 'fixtures', 'test-manifest.json');
+const DECK_MANIFEST = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
 
 global.window = global;
 const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
@@ -70,6 +73,34 @@ const BLOCKS = visibleBlocks();
 const ARABIC_DIGITS = /[٠-٩]/;
 
 /**
+ * الجرد — مصدر القبول للأرقام الموضوعية.
+ *
+ * الفئات أدناه كانت كلها **بنيوية**: ترقيم، وسنة، ووسم «مقترح». أي أن العرض
+ * لم يكن يحمل رقماً موضوعياً واحداً خارج الصور — وهو عيبٌ مسجَّل في التدقيق
+ * لا ميزة. وإدخال رقم موضوعي يحتاج فئةً لا تتمدّد بالمزاج: الشرط أن يكون
+ * للرقم **سطرٌ في `deck-manifest.json`** بمصدره ودرجته وحدّه. فالفئة لا تقول
+ * «هذا الرقم مسموح»، بل «هذا الرقم مجرود، واذهب فاقرأ حدّه».
+ */
+const deckManifest = JSON.parse(fs.readFileSync(DECK_MANIFEST, 'utf8'));
+
+const toAscii = (text) => text.replace(/[٠-٩]/g,
+  (digit) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(digit)));
+
+/* الفاصل الألفي وعلامة النسبة لا تغيّران الكمّية. */
+function numbersIn(block) {
+  return toAscii(block).replace(/[٬,]/g, '').match(/\d+(?:\.\d+)?/g) || [];
+}
+
+/* القيمة تُعرض في العرض بدقّة تناسب معناها — والمقارنة تجري على الشكلين:
+   الصحيح، والمقرَّب. `present()` في الباني يفعل الشيء نفسه. */
+const MANIFEST_VALUES = new Set();
+deckManifest.figures.forEach((item) => {
+  if (typeof item.value !== 'number' || !Number.isFinite(item.value)) return;
+  MANIFEST_VALUES.add(String(item.value));
+  MANIFEST_VALUES.add(String(Math.round(item.value)));
+});
+
+/**
  * فئات الأرقام المقبولة — **بأسبابها لا كقائمة أرقام**.
  *
  * قائمةُ أرقامٍ مسموحة تتمدّد كلما أزعج الفحص أحداً. الفئة لا تتمدّد: رقمٌ
@@ -103,8 +134,36 @@ const ACCEPTED = [
   },
   {
     key: 'proposed',
+    /* هذه الفئة **لا تدخل الجرد عمداً**. عتبةُ بروتوكول لم تُعتمد ليست رقماً
+       له مصدر ودرجة دليل، ولا مصدرَ مولَّداً في المستودع يشتقّها. فإدخالها
+       في `deck-manifest.json` يقتضي كتابتها يدوياً في الباني — وهو بالضبط
+       ما يمنعه الجرد. تبقى هنا موسومة «مقترح»، والقرار مكتوب. */
     why: 'عتبة مقترحة داخل بروتوكول موسوم «مقترح» — لا نتيجة',
     matches: (block) => /مقترح|مقاسة على الأقل|منفعة كلية/.test(block),
+  },
+  {
+    key: 'permit-id',
+    /* `BLD-2026-0045` أربعة أرقام في اسم صفّ، لا كمّية تُسأل عن مصدرها.
+       والشرط ضيّق: إن بقي في الكتلة رقمٌ بعد نزع المعرّف، سقطت الفئة. */
+    why: 'معرّف تصريح في المحفظة التمثيلية — اسمٌ لا كمّية',
+    matches: (block) => /BLD-\d{4}-\d{4}/.test(block)
+      && !/[٠-٩\d]/.test(block.replace(/BLD-\d{4}-\d{4}/g, '')),
+  },
+  {
+    key: 'standard-version',
+    why: 'رقم إصدار مواصفة رسمية — واقعة لا قياس',
+    matches: (block) => /WZDx\s*4\.2/.test(block)
+      && !/[٠-٩\d]/.test(block.replace(/WZDx\s*4\.2/g, '')),
+  },
+  {
+    key: 'manifest-backed',
+    why: 'قيمة مجرودة — لكل رقم في الكتلة سطرٌ في deck-manifest.json '
+      + 'بمصدره ودرجته وحدّه',
+    matches: (block) => {
+      const found = numbersIn(block);
+      return found.length > 0
+        && found.every((number) => MANIFEST_VALUES.has(number));
+    },
   },
 ];
 
@@ -231,6 +290,88 @@ test('لا رقم موصوف «سنوياً» ولا مبلغ بالريال ف�
   ));
   assert.deepStrictEqual(offenders, [],
     `رقم سنوي أو مالي بلا مقام:\n    ${offenders.join('\n    ')}`);
+});
+
+// ---- العرض القصير سطحٌ مثل غيره ------------------------------------------
+
+test('عرض الدقائق الثلاث لا يحمل عدّ فحوص متقادماً', () => {
+  /* كان يقول «185 حالة آلية» والحقيقة أكثر من ألف — العيب نفسه الذي وقع في
+     العرض المصوَّر («١٧٧ فحصاً»)، وفي سطحٍ لم تكن تحرسه بوابة. الحارس هنا
+     يمنع تكراره في أي عدد مكتوب يدوياً، لا في هذا الرقم وحده. */
+  const pitch = fs.readFileSync(path.join(ROOT, 'athar-pitch.html'), 'utf8');
+  const testManifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
+
+  assert.ok(/أكثر من تسعمئة فحص/.test(pitch),
+    'العرض القصير لا يعرض عدد الفحوص بالصيغة الأرضية المفحوصة');
+  assert.ok(testManifest.checks >= 900,
+    `الأرضية المعلنة 900 فوق الواقع ${testManifest.checks}`);
+
+  const stale = (pitch.match(/(\d{2,4})\s*(?:حالة آلية|فحصاً|فحصًا|حالة اختبار)/g)
+    || []).filter((match) => Number(match.match(/\d+/)[0]) !== testManifest.checks);
+  assert.deepStrictEqual(stale, [],
+    `عدّ فحوص مكتوب يدوياً في العرض القصير: ${stale.join('، ')}`);
+});
+
+// ---- الاكتشافان اللذان دخلا العرض ----------------------------------------
+
+test('حكم حمل البديل معروض بعدده وحالته، ومطابق للجرد', () => {
+  /* الشريحة تحمل عدّاً وحالةً واحدة. والعدّ وحده يُقرأ إحصاءً بارداً،
+     والحالة وحدها تُقرأ استثناءً — فلا تُفصل إحداهما عن الأخرى. */
+  const text = BLOCKS.join(' ');
+  const toArabic = (value) => String(value).replace(/\d/g,
+    (digit) => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
+  const pinned = ['alternateOverflows', 'alternateCaseBeforeShare',
+    'alternateCaseAfterShare', 'alternateCaseDiverted'];
+  const missing = pinned.filter((key) => {
+    const item = deckManifest.figures.find((row) => row.key === key);
+    assert.ok(item, `${key}: غائب عن الجرد`);
+    return text.indexOf(toArabic(item.value)) === -1;
+  });
+  assert.deepStrictEqual(missing, [],
+    `أرقام في الجرد وغائبة عن الشريحة: ${missing.join('، ')}`);
+  assert.ok(/BLD-2026-0045/.test(text), 'الحالة المعروضة بلا معرّف تصريح');
+  assert.ok(/السويس/.test(text), 'المقطع المقيِّد غائب — النسبة بلا موضع');
+});
+
+test('الحالة المعروضة تُعلَن غير الأسوأ، والأسوأ معروض بجوارها', () => {
+  /* بلا هذا، تُقرأ الحالة حدّاً أعلى وهي وسط الترتيب — وهو تهوين لا مبالغة،
+     لكنه يبقى قراءةً خاطئة يمكن للجنة أن تكشفها بنفسها من البيانات. */
+  const text = BLOCKS.join(' ');
+  const worst = deckManifest.figures.find(
+    (row) => row.key === 'alternateWorstAfterShare');
+  const asArabic = String(worst.value).replace(/\d/g,
+    (digit) => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
+  assert.ok(text.indexOf(asArabic) !== -1,
+    'أعلى نسبة في المحفظة غائبة عن العرض');
+  assert.ok(/الأسوأ/.test(text), 'العرض لا يقول إن الحالة المعروضة ليست الأسوأ');
+});
+
+test('برهان التبادلية معروض بعدده وبحدّه معاً', () => {
+  const text = BLOCKS.join(' ');
+  const features = deckManifest.figures.find(
+    (row) => row.key === 'interopFeedFeatures');
+  const asArabic = String(features.value).replace(/\d/g,
+    (digit) => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
+  assert.ok(text.indexOf(asArabic) !== -1, 'عدد مناطق العمل غائب عن العرض');
+  assert.ok(/صفر أخطاء/.test(text), 'النتيجة معروضة بلا «صفر أخطاء»');
+  assert.ok(/تبادلية بنية لا قياس/.test(text),
+    'العدد معروض بلا حدّه — تبادلية بنيةٍ تُقرأ قياساً إن لم يُقيَّد');
+  assert.ok(/لا تقول شيئاً عن الرياض/.test(text),
+    'العرض لا يقيّد تغذية ولايةٍ أخرى بأنها لا تخصّ الرياض');
+});
+
+test('سعة منطقة العمل معروضة بسندها وبعدد مواقعه', () => {
+  const text = BLOCKS.join(' ');
+  const toArabic = (value) => String(value).replace(/\d/g,
+    (digit) => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
+  ['workZoneLaneCapacity', 'workZoneCapacitySites'].forEach((key) => {
+    const item = deckManifest.figures.find((row) => row.key === key);
+    assert.ok(item, `${key}: غائب عن الجرد`);
+    assert.ok(text.indexOf(toArabic(item.value)) !== -1,
+      `${key}: مجرود وغائب عن العرض`);
+  });
+  assert.ok(/لم تُعاير على الرياض/.test(text),
+    'قيمة مقيسة أجنبياً معروضة بلا الحدّ الذي يمنع قراءتها محلية');
 });
 
 console.log(`ALL TESTS PASSED (${count})`);

@@ -23,13 +23,22 @@ function test(name, fn) {
 const html = fs.readFileSync(htmlPath, 'utf8');
 const slides = html.match(/<section\b[^>]*class="[^"]*\bslide\b[^"]*"[^>]*>/g) || [];
 
-test('detailed judging deck has exactly 19 slides', () => {
-  if (slides.length !== 19) throw new Error(`expected 19 slides, found ${slides.length}`);
+/* تسعة عشر حتى ٢٦ يوليو ٢٠٢٦. صارت إحدى وعشرين بإضافة شريحتين: حكم حمل
+   البديل (١١٢ من ١٥٠)، وبرهان التبادلية (٥٧٦ منطقة عمل بصفر أخطاء). العدد
+   مثبَّت عمداً — شريحة تُضاف بلا قصد تغيّر مدة العرض ونصيب كل فكرة منه. */
+const EXPECTED_SLIDES = 21;
+
+test(`detailed judging deck has exactly ${EXPECTED_SLIDES} slides`, () => {
+  if (slides.length !== EXPECTED_SLIDES) {
+    throw new Error(`expected ${EXPECTED_SLIDES} slides, found ${slides.length}`);
+  }
 });
 
 test('every slide carries one Masar corner logo', () => {
   const logos = html.match(/class="corner-logo"/g) || [];
-  if (logos.length !== 19) throw new Error(`expected 19 logos, found ${logos.length}`);
+  if (logos.length !== EXPECTED_SLIDES) {
+    throw new Error(`expected ${EXPECTED_SLIDES} logos, found ${logos.length}`);
+  }
 });
 
 test('first slide contains all four team members', () => {
