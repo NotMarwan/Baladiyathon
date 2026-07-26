@@ -30,15 +30,9 @@ async function test(name, fn) {
   console.log(`  ok - ${name}`);
 }
 
-async function listenOnFreePort(server, attempt) {
-  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  const address = server.address();
-  if (address && address.port) return address.port;
-  await new Promise((resolve) => server.close(resolve));
-  if (attempt >= 5) throw new Error('تعذّر الحصول على منفذ عابر');
-  await new Promise((resolve) => setTimeout(resolve, attempt * 25));
-  return listenOnFreePort(server, attempt + 1);
-}
+/* المنفذ العابر: الحارس مشترك، وسبب السقوط العابر مُثبَت في `helpers/free-port.js`
+   — منفذٌ محظور في معيار fetch يمنحه نطاق المنافذ العابرة على هذا الجهاز. */
+const { listenOnFreePort } = require('./helpers/free-port.js');
 
 async function withServer(options, run) {
   /* سجل في الذاكرة ما لم يطلب الفحص غير ذلك — الثبات مفحوص في حزمته. */

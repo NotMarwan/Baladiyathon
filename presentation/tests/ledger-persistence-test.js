@@ -51,15 +51,9 @@ function scratchPath() {
   return file;
 }
 
-async function listenOnFreePort(server, attempt) {
-  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  const address = server.address();
-  if (address && address.port) return address.port;
-  await new Promise((resolve) => server.close(resolve));
-  if (attempt >= 5) throw new Error('تعذّر الحصول على منفذ عابر');
-  await new Promise((resolve) => setTimeout(resolve, attempt * 25));
-  return listenOnFreePort(server, attempt + 1);
-}
+/* المنفذ العابر: الحارس مشترك، وسبب السقوط العابر مُثبَت في `helpers/free-port.js`
+   — منفذٌ محظور في معيار fetch يمنحه نطاق المنافذ العابرة على هذا الجهاز. */
+const { listenOnFreePort } = require('./helpers/free-port.js');
 
 /**
  * يشغّل خادماً على مسار سجل، ثم يغلقه.
@@ -77,8 +71,10 @@ async function withServerOn(ledgerPath, run, extra) {
     ...(extra || {}),
   });
   const port = await listenOnFreePort(server, 1);
-  /* منفذٌ صفر يعطي «bad port» من undici — رسالة لا تدلّ على سببها، وقد
-     أضاعت وقتاً هنا فعلاً. الفشل يُسمّى عند مصدره. */
+  /* «bad port» من undici رسالةٌ لا تدلّ على سببها، وقد أضاعت وقتاً هنا فعلاً.
+     وسببها ليس منفذاً صفرياً كما قيل هنا سابقاً، بل منفذاً **محظوراً في معيار
+     fetch** يمنحه نطاق المنافذ العابرة — والحارس المشترك يمنعه الآن. الفشل
+     يُسمّى عند مصدره. */
   assert.ok(port > 0, `منفذ غير صالح: ${port}`);
   try {
     return await run(`http://127.0.0.1:${port}`, warnings);

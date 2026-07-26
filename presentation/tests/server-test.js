@@ -13,32 +13,15 @@ async function test(name, fn) {
 }
 
 /**
- * يفتح منفذاً عابراً ويتأكّد أن النظام منحه فعلاً.
+ * المنفذ العابر — الحارس صار مشتركاً، وسببه مُثبَت لا مُرجَّح.
  * ---------------------------------------------------------------------------
- * تحت ضغط شديد يعود `address().port` صفراً، فيصير العنوان `127.0.0.1:0`
- * ويرفضه undici بـ «bad port» — رسالة لا تدلّ على سببها.
- *
- * قيل هنا سابقاً إن «المحاولة الثانية تكفي دائماً». لم تكفِ: سقطت الحزمة مرة
- * في أربع تشغيلات متتالية على الجهاز نفسه. وبوابةٌ تسقط عشوائياً أسوأ من
- * بوابةٍ حمراء — الأولى تُعلَّم «معروفة» فتُهمَل قراءتها.
- *
- * خمس محاولات مع مهلة تصاعدية: النفاد لحظي، والانتظار بينهما هو ما كان
- * ناقصاً — إعادةُ المحاولة فوراً تصطدم بالحالة نفسها.
+ * كان هنا حارسٌ يعيد المحاولة حين يعود `address().port` **صفراً**، وقيل إن
+ * السبب ضغط بيئة. القياس نفى ذلك: صفر منفذ صفريّ في ثلاثة آلاف محاولة، بينما
+ * السقوط يقع بنحو 20٪ من التشغيلات الكاملة. السبب الحقيقي منفذٌ **محظور في
+ * معيار fetch** يمنحه نطاقُ المنافذ العابرة على هذا الجهاز (يبدأ من 1024).
+ * التفصيل والدليل في `helpers/free-port.js`.
  */
-const PORT_ATTEMPTS = 5;
-
-async function listenOnFreePort(server, attempt) {
-  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  const address = server.address();
-  if (address && address.port) return address.port;
-
-  await new Promise((resolve) => server.close(resolve));
-  if (attempt >= PORT_ATTEMPTS) {
-    throw new Error(`تعذّر الحصول على منفذ عابر بعد ${PORT_ATTEMPTS} محاولات`);
-  }
-  await new Promise((resolve) => setTimeout(resolve, attempt * 25));
-  return listenOnFreePort(server, attempt + 1);
-}
+const { listenOnFreePort } = require('./helpers/free-port.js');
 
 /* WP-D1: مفتاح ثابت للاختبار، ودلو رموز واسع كي لا يخلط حدُّ المعدّل نتائج
    حزمةٍ تُطلق عشرات الطلبات في ثوانٍ. الحدّ نفسه مفحوص في حزمة الأمن بدلوٍ
@@ -106,6 +89,21 @@ const validScoreInput = {
 };
 
 (async () => {
+  /* بوابة انحدار على سبب السقوط العابر نفسه.
+     المنفذ المحظور خاصية بيئة لا سلوك منتج، لكن الحارس الذي يتخطّاه جزءٌ من
+     خط الاختبار — وبلا هذه البوابة يعود الحارس القديم (الصفر وحده) بلا أن
+     ينبّه أحد، فتعود 20٪ من التشغيلات إلى السقوط بلا سبب مقروء. */
+  await test('حارس المنفذ يرفض ما يرفضه fetch لا الصفر وحده', async () => {
+    const { isFetchUsablePort } = require('./helpers/free-port.js');
+    assert.strictEqual(isFetchUsablePort(0), false, 'الصفر غير صالح');
+    assert.strictEqual(isFetchUsablePort(10080), false,
+      '10080 محظور في معيار fetch — وهو المنفذ الذي أسقط الحزمة فعلاً');
+    assert.strictEqual(isFetchUsablePort(6667), false, '6667 محظور');
+    assert.strictEqual(isFetchUsablePort(2049), false, '2049 محظور');
+    assert.strictEqual(isFetchUsablePort(10081), true, 'جارٌ غير محظور يمرّ');
+    assert.strictEqual(isFetchUsablePort(50000), true, 'المدى المعتاد يمرّ');
+  });
+
   await test('importing the server module does not open a port', async () => {
     const server = createServer();
     assert.strictEqual(server.listening, false);
