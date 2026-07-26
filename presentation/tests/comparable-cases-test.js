@@ -61,13 +61,30 @@ test('لا حالة سعودية بقياسات — والنتيجة معلَن�
   assert.match(outcome.consequence, /نظير عالمي/);
 });
 
-test('الحالة المعلَّقة تبقى معلَّقة ولا تُحذف لتبدو القائمة مكتملة', () => {
+test('الحالة المعلَّقة لا تُحذف ولا تُرفَّع بلا قراءة', () => {
+  /* كانت البوابة تشترط بقاء حالة معلَّقة واحدة على الأقل — وهو شرطٌ يجعل
+     **إنجاز** القراءة فشلاً. حالةُ ديلاوير كانت المعلَّقة الوحيدة، وقُرئت
+     فعلاً (خمسة وعشرون موقعاً، متوسط 1475 مركبة/ساعة/حارة)، فسقطت البوابة
+     على نجاح.
+     المحروس الحقيقي شيئان لا ثالث لهما:
+       · المعلَّق ما دام معلَّقاً يبقى `context-only` ولا يُستعمل في شيء.
+       · والخروج من التعليق يحتاج **قياساً وطريقة قياس** — لا رفعَ راية. */
   const pending = Cases.cases().filter((item) => item.status);
-  assert.ok(pending.length >= 1, 'لا حالة معلَّقة — هل حُذفت؟');
   pending.forEach((item) => {
     assert.strictEqual(item.evidenceLevel, 'context-only',
       `${item.key}: معلَّق ودرجته أعلى من سياقي`);
     assert.strictEqual(item.usedFor, 'لا شيء بعد.');
+  });
+
+  const resolved = Cases.cases().filter((item) => !item.status
+    && item.evidenceLevel === 'global-field-measured');
+  resolved.forEach((item) => {
+    assert.ok(item.metric && Object.keys(item.metric).length > 0,
+      `${item.key}: رُفع إلى قياس ميداني بلا رقم واحد`);
+    assert.ok(item.measurementMethod && item.measurementMethod.length > 10,
+      `${item.key}: قياس ميداني بلا طريقة قياس معلنة`);
+    assert.ok(item.doesNotProve && item.doesNotProve.length > 10,
+      `${item.key}: بلا حدّ مكتوب`);
   });
 });
 
@@ -138,31 +155,54 @@ test('كل حالة في السند موجودة فعلاً في السجل', ()
   });
 });
 
-test('نطاق الاحتكاك في وحدة الحساسية مشتقّ من السجل لا مكتوب فيها', () => {
-  const assumption = Sensitivity.ASSUMPTIONS
-    .find((item) => item.key === 'workZoneFriction');
+test('الدليل المقيس يحرّك محور السعة لا محور الأرضية', () => {
+  /* كانت هذه البوابة تؤكّد أن نطاق **الاحتكاك** مشتقّ من السجل بقسمة
+     1800 على طرفَي السعة. وكان ذلك يحرس اشتقاقاً ساقطاً بُعدياً: نسبة سعة
+     تُستعمل أرضيةَ نسبة زمن، وهما لا يتساويان تحت BPR.
+     فانتقل الحرس إلى موضعه: الدليل المقيس يدخل بوحدته الأصلية على محور
+     سعة الحارة داخل منطقة العمل، والأرضية تُعلَن بلا سند. */
+  const capacity = Sensitivity.ASSUMPTIONS
+    .find((item) => item.key === 'workZoneLaneCapacity');
   const prior = Cases.priorFor('capacityPerLaneInWorkZone');
-  const span = assumption.range();
-  const base = Engine.DEFAULTS.capacityPerLane;
+  const span = capacity.range();
 
-  assert.strictEqual(span.low, Math.round((base / prior.priorHigh) * 100) / 100);
-  assert.strictEqual(span.high, Math.round((base / prior.priorLow) * 100) / 100);
-  assert.ok(assumption.source && assumption.source.indexOf('comparable-cases') !== -1,
-    'النطاق بلا إشارة إلى مصدره');
+  assert.strictEqual(span.low, prior.priorLow, 'حدّ السعة الأدنى ليس من السجل');
+  assert.strictEqual(span.high, prior.priorHigh, 'حدّ السعة الأعلى ليس من السجل');
+  assert.strictEqual(capacity.unit, prior.unit,
+    'المحور يحرّك الدليل بوحدة غير وحدته — وهو ما كان العيب');
+  assert.ok(capacity.source && capacity.source.indexOf('comparable-cases') !== -1,
+    'محور السعة بلا إشارة إلى مصدره');
 });
 
-test('الدليل وسّع النطاق ولم يضيّقه — والتوسيع هو النتيجة لا العيب', () => {
-  /* النطاق القديم كان [1.00 – 1.25]. لو صار الجديد أضيق منه لكان ذلك علامة
-     على أن أحداً ضيّقه ليبدو القرار مستقراً. هذه البوابة تجعل ذلك فشلاً. */
+test('أرضية الزمن معلَنة بلا سند ولا تدّعي اشتقاقاً', () => {
+  const floor = Sensitivity.ASSUMPTIONS
+    .find((item) => item.key === 'workZoneFriction');
+  assert.strictEqual(floor.kind, 'افتراض معلن',
+    'الأرضية ما زالت تُعرض «محسوبة» — وهي بلا سند مقيس');
+  assert.ok(/بلا سند/.test(floor.why),
+    'تعليل الأرضية لا يقول إنها بلا سند');
+  assert.ok(!floor.source || floor.source.indexOf('comparable-cases') === -1,
+    'الأرضية تشير إلى سجل الحالات — وهو عدٌّ مزدوج للدليل نفسه');
+});
+
+test('المظروف المقيس لم يُضيَّق — والتضييق قبل التحكيم تلميع', () => {
+  /* حارسُ التضييق باقٍ، وانتقل معه إلى محور السعة حيث صار الدليل يعيش.
+     السجل يحمل أولوية أضيق وأقرب لنوع الطريق [1240 – 1475] من ديلاوير،
+     ولو استُعملت لتضييق المسح لبدت التوصيات أثبت مما هي. */
   const span = Sensitivity.ASSUMPTIONS
-    .find((item) => item.key === 'workZoneFriction').range();
-  const OLD = { low: 1.0, high: 1.25 };
-  assert.ok(span.high > OLD.high,
-    `الحدّ الأعلى ${span.high} لم يتجاوز القديم ${OLD.high} — هل ضُيّق النطاق؟`);
-  assert.ok(span.low > OLD.low,
-    `الحدّ الأدنى ${span.low} لم يرتفع عن «لا احتكاك» — وهو ما لا تسنده حالة`);
-  assert.ok(span.high - span.low > OLD.high - OLD.low,
-    'النطاق الجديد أضيق — تضييق بلا بيانات جديدة تلميعٌ لا معايرة');
+    .find((item) => item.key === 'workZoneLaneCapacity').range();
+  const wide = Cases.priorFor('capacityPerLaneInWorkZone');
+  const arterial = Cases.priorFor('capacityPerLaneInWorkZone_signalizedArterial');
+
+  assert.ok(arterial, 'أولوية الشريان بإشارات غابت عن السجل');
+  assert.ok(arterial.priorLow > wide.priorLow && arterial.priorHigh < wide.priorHigh,
+    'أولوية الشريان لم تعد أضيق من المظروف — راجع السجل');
+  assert.strictEqual(span.low, wide.priorLow,
+    'المسح ضُيّق إلى أولوية الشريان — تضييق بلا قرار مكتوب');
+  assert.strictEqual(span.high, wide.priorHigh,
+    'المسح ضُيّق من الأعلى — تضييق بلا قرار مكتوب');
+  assert.ok(arterial.whyItDoesNotReplaceTheWiderRange,
+    'الأولوية الأضيق بلا سبب مكتوب لعدم استعمالها في التضييق');
 });
 
 // ---- الادّعاءات الممنوعة --------------------------------------------------

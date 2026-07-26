@@ -67,9 +67,21 @@ function completeness(study) {
       why: 'بلا محور مقارنة ولا أيام مماثلة، الفرق المرصود يبقى ارتباطاً زمنياً '
         + 'لا أثراً سببياً.' });
   }
+  /* الغياب والفراغ سواء — ما لم يُعلَن الفحص صراحةً.
+     كان المصفوف الفارغ يمرّ بلا اعتراض، وهو أخطر من غيابه: الغياب يُقرأ
+     «لم يُسجَّل»، والفراغ يُقرأ «فُحص فلم يوجد شيء» — والاثنان لا يُفرَّق
+     بينهما من البيانات وحدها. وحادثٌ أو مدرسةٌ أو مطرٌ غير معلَن هو بالضبط
+     ما يفسد تفسير فرق قبل/بعد.
+     `confoundersReviewed` يفصلهما: من يضعه يشهد أنه بحث ولم يجد. */
+  var declaredNone = study && study.confoundersReviewed === true;
   if (!Array.isArray(study && study.confounders)) {
     degraded.push({ what: 'confounders',
       why: 'سجل العوامل المربكة غائب. وغيابه ليس «لا عوامل» — هو «لم يُسجَّل».' });
+  } else if (!study.confounders.length && !declaredNone) {
+    degraded.push({ what: 'confounders',
+      why: 'سجل العوامل المربكة فارغ بلا إعلان فحص. المصفوف الفارغ لا يقول '
+        + 'إن أحداً بحث — أضف `confoundersReviewed: true` إن كان البحث جرى '
+        + 'ولم يُعثر على شيء.' });
   }
   if (!at(study, ['closure', 'workExtentM'])) {
     degraded.push({ what: 'closure.workExtentM',

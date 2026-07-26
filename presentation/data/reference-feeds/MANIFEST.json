@@ -1,0 +1,23 @@
+{
+  "note": "تغذيات WZDx مرجعية من جهات رسمية أجنبية، مثبَّتة ببصماتها. مولَّد من `presentation/scripts/fetch-reference-wzdx.js` — لا يُحرَّر يدوياً.",
+  "registry": "https://data.transportation.gov/resource/69qe-yiui",
+  "fetchedAt": "2026-07-26T14:05:28.769Z",
+  "proves": "أن المخطط الذي نصدّر عليه يقبل إنتاج جهة رسمية حقيقية.",
+  "doesNotProve": "أي رقم مروري، ولا أي شيء عن الرياض.",
+  "feeds": [
+    {
+      "key": "wsdot",
+      "file": "wsdot.json",
+      "publisher": "Washington State DOT",
+      "country": "الولايات المتحدة",
+      "source": "https://wzdx.wsdot.wa.gov/api/v4/WorkZoneFeed",
+      "note": "تغذية تشغيلية عامة بلا مفتاح — مسجَّلة في سجل وزارة النقل الأمريكية.",
+      "declaredVersion": "4.2",
+      "feedVersion": "4.2",
+      "featureCount": 576,
+      "feedUpdateDate": "2026-07-25T00:00:10.6206396+00:00",
+      "bytes": 1195430,
+      "sha256": "5aaa26c547a3d370c561a9f639c4fba610177ed598983a7fea3e419ed31b4fab"
+    }
+  ]
+}

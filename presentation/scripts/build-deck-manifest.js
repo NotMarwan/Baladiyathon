@@ -55,6 +55,7 @@ function build() {
   const prior = Cases.priorFor('capacityPerLaneInWorkZone');
   const casesSummary = Cases.summary();
   const readiness = read(path.join(ROOT, 'data', 'route-evidence', 'readiness.json'));
+  const interop = read(path.join(ROOT, 'data', 'wzdx-interop-summary.json'));
 
   const figures = [];
 
@@ -105,6 +106,22 @@ function build() {
   figures.push(figure('localMeasuredCases', casesSummary.localMeasured, 'حالة',
     'data/comparable-cases.json', 'global-analog',
     'صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة.'));
+
+  /* التبادلية — الرقمان الوحيدان في الجرد المشتقّان من **إنتاج جهة أخرى**.
+     كل ما عداهما مشتقّ من أثر أو من ورقة. */
+  const interopPublishers = interop.rows.map((row) => row.publisher).join('، ');
+  const interopErrors = interop.rows.reduce((sum, row) => sum + row.errorCount, 0);
+  figures.push(figure('interopFeedFeatures', interop.totalFeatures, 'منطقة عمل',
+    'data/wzdx-interop-summary.json — تغذية ' + interopPublishers
+      + '، مثبَّتة ببصمتها', 'external-official',
+    'تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا '
+      + 'عن صحة أي رقم في أثر.'));
+  figures.push(figure('interopFeedErrors', interopErrors, 'خطأ',
+    'data/wzdx-interop-summary.json — نفس المحقق ونفس الالتزام '
+      + interop.validator.commit.slice(0, 7), 'external-official',
+    'صفر يعني أن المخطط الذي نصدّر عليه قبِل إنتاج جهة رسمية حقيقية. '
+      + 'ولا يعني أن مُخرَجنا صحيح مرورياً: هذا اجتياز بنية لا قياس، '
+      + 'ولا يقول شيئاً عن الرياض.'));
 
   figures.push(figure('providersReady',
     readiness.providers.filter((provider) => provider.ready).length, 'مزوّد',

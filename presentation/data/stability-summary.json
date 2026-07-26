@@ -2,17 +2,17 @@
   "total": 150,
   "counts": {
     "stable": 0,
-    "conditional": 50,
-    "fragile": 26,
-    "insufficient": 74
+    "conditional": 54,
+    "fragile": 17,
+    "insufficient": 79
   },
-  "decidable": 50,
-  "abstained": 100,
-  "abstainedShare": 67,
+  "decidable": 54,
+  "abstained": 96,
+  "abstainedShare": 64,
   "topAsk": {
-    "assumption": "residualCapacityFraction",
-    "flipsRecommendations": 82,
+    "assumption": "workZoneFriction",
+    "flipsRecommendations": 83,
     "flipsShare": 55,
-    "dataNeeded": "قياس تدفق على الحارات المفتوحة أثناء إغلاق جزئي."
+    "dataNeeded": "زمن رحلة مقيس عبر منطقة عمل في **ساعة منخفضة الطلب** مقارناً بالمقطع نفسه بلا إغلاق. هذه الأرضية بلا سند مقيس، ولا يغلقها قياس سعة: السعة تقيّد قرب التشبّع، والأرضية تعمل حين لا ازدحام. والسؤال الأكبر قبلها قرارٌ لا قياس: هل تبقى الأرضية أصلاً بعد أن صارت سعة منطقة العمل مقيسة داخل النموذج؟"
   }
 }

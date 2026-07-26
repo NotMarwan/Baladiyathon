@@ -92,13 +92,37 @@
   // BPR function never divides by (near) zero. افتراض توضيحي للعرض.
   const MIN_CAPACITY_FRACTION = 0.25;
 
+  /* سعة الحارة **داخل** منطقة العمل — مركبة/ساعة/حارة.
+     -----------------------------------------------------------------------
+     كان المحرك يفترض أن الحارات المفتوحة بجوار الإغلاق تعمل بسعتها الكاملة
+     (1800)، ثم يعوّض النقص بأرضيةٍ على الزمن. وهذا خطأ في موضعين معاً:
+       · الحارة المجاورة لإغلاق **لا** تعمل بسعتها الكاملة. تضيق، وتقترب من
+         الحاجز، ويتباطأ سائقوها. وهذا مقيسٌ لا مفترَض.
+       · والتعويض بأرضية زمن ليس تعويضاً عن سعة: قيد السعة لا يعمل إلا قرب
+         التشبّع، والأرضية تعمل عند كل مستويات الطلب — فتخترع تأخيراً في
+         الثالثة فجراً حيث لا ازدحام يبرّره.
+     القيمة هنا مقيسة على **نوع الطريق الصحيح**: تقرير ديلاوير DCT 265
+     (2017) قاس خمسة وعشرين منطقة عمل على محاور متعددة الحارات بإشارات،
+     ومتوسط السعة 1475 مركبة/ساعة/حارة بطريقة التدفق المستدام لخمس عشرة
+     دقيقة. وهو أعلى من قيمة إدارة نقل ديلاوير المبنية على دليل السعة (1240)،
+     وأدنى من معظم قيم المسح الوطني.
+     أمريكية لا سعودية — والحدّ معلَن في `data/comparable-cases.json`. */
+  const WORK_ZONE_LANE_CAPACITY = 1475;
+
   // Work-zone friction: lane shifts, tapers and merges slow traffic through an
   // active closure even when demand is far below capacity (e.g. empty night
   // hours). Modeled as a floor: the closed travel time is at least 10% above
   // free-flow-hour baseline. This stops the BPR^4 term from collapsing night
   // delay to ~0, which otherwise produced a physically impossible ~99.6%
   // "saving" that contradicts the cited −11.1% scheduling study (Ledger #5).
-  // افتراض توضيحي للعرض.
+  /* حدٌّ يجب أن يُقال: هذه الأرضية **افتراض نمذجة بلا سند مقيس**، وليست
+     مشتقّة من دراسات السعة. النطاق الذي كان يُعرض لها في تحليل الحساسية
+     مأخوذ من مقلوب نسبة السعة — وهي كميةٌ أخرى: تحت BPR تتراوح نسبة الزمن
+     الحقيقية لإغلاق حارة من 1.001 عند طلبٍ منخفض إلى 1.53 عند التشبّع، بينما
+     مقلوب نسبة السعة ثابت. فيبقى النطاق **مظروفاً واسعاً معلَناً** لا
+     اشتقاقاً محاذياً، والدليل المقيس ينتقل إلى موضعه الصحيح أعلاه.
+     رصده التدقيق المستقل — انظر
+     `docs/audits/final-independent-acceptance/FRICTION-DERIVATION-AUDIT.md`. */
   const WORK_ZONE_FRICTION = 1.10;
 
   // Candidate scheduling grid used by optimize().
@@ -328,6 +352,7 @@
     return {
       hourlyProfile: profile,
       workZoneFriction: positive('workZoneFriction', WORK_ZONE_FRICTION),
+      workZoneLaneCapacity: positive('workZoneLaneCapacity', WORK_ZONE_LANE_CAPACITY),
       minCapacityFraction: positive('minCapacityFraction', MIN_CAPACITY_FRACTION),
       scoreCalibration: positive('scoreCalibration', SCORE_CALIBRATION),
     };
@@ -352,7 +377,12 @@
     const fullCapacity = lanes * capacityPerLane;
     const minCapacity = CAL.minCapacityFraction * capacityPerLane;
     const openLanes = Math.max(0, lanes - lanesClosed);
-    const closedCapacityRaw = openLanes * capacityPerLane;
+    /* الحارة المفتوحة داخل منطقة العمل لا تحمل سعة الحارة الحرّة.
+       `Math.min` مقصود: إن أعطى المُدخل سعةً أساسية أدنى من سعة منطقة العمل
+       المقيسة، فالطريق نفسه أضيق — ورفعُ سعته لأننا قسنا شارعاً أوسع في
+       ديلاوير اختراعُ طاقةٍ لا وجود لها. */
+    const workZoneLaneCapacity = Math.min(capacityPerLane, CAL.workZoneLaneCapacity);
+    const closedCapacityRaw = openLanes * workZoneLaneCapacity;
     const closedCapacity = Math.max(closedCapacityRaw, minCapacity);
 
     let delayVehHours = 0;
@@ -1288,6 +1318,7 @@
     CALIBRATION: {
       SCORE_CALIBRATION,
       WORK_ZONE_FRICTION,
+      WORK_ZONE_LANE_CAPACITY,
       COMPOUND_FACTOR,
       MIN_CAPACITY_FRACTION,
     },

@@ -575,6 +575,17 @@ kbd {
   .desk-shell { grid-template-columns: minmax(0, 1fr); }
   .desk-map-wrap { height: 55vh; }
   .desk-pane { max-height: 70vh; }
+  /* سقفٌ بلا أرضية كان يطوي الصندوق إلى صفر.
+     في العمود المنفرد يصير صفّ الشبكة بارتفاع المحتوى، و`#deskList` يحمل
+     `flex: 1 1 auto` مع `min-height: 0` الموروث من `.desk-pane` — فلا أساس
+     يُوزَّع عليه، فينكمش إلى صفر بينما `scrollHeight` يزيد على ثلاثة عشر ألف
+     بكسل. أي أن التصاريح المئة والخمسين كانت في الشجرة ولا واحد منها مرئي:
+     على الجوال كان المراجع يفقد بوابة الدخول إلى المحفظة كلها، ولا يصل إلى
+     عمل إلا بالبحث عن مرجعه — وهو لا يعرفه قبل أن يراه.
+     الأرضية تُعاد هنا صراحةً. و`max-height` يبقى فوقها فلا يبتلع الصندوق
+     الشاشة. رصده التدقيق المستقل عند 390px. */
+  .desk-pane-inbox { min-height: 60vh; }
+  .desk-pane-inbox #deskList { min-height: 45vh; }
   .desk-pane-inbox { border-inline-start: 0; border-top: 1px solid var(--athar-line); }
   .desk-pane-file { border-inline-end: 0; border-top: 1px solid var(--athar-line); }
 }
@@ -1020,3 +1031,10 @@ kbd {
   border-bottom: 1px dashed var(--athar-line);
 }
 .desk-asks .desk-hint { padding: 0; font-size: 0.72rem; }
+
+/* حكم البديل: اللون يتبع المعنى لا الزينة — الفائض تحذير لأنه يعني
+   طابوراً ينتقل إلى حيّ، لا مجرد رقم أعلى. */
+.desk-alt-load { font-size: 0.84rem; line-height: 1.65; margin: var(--athar-space-2) 0; }
+.desk-alt-load.is-overflows { color: var(--athar-danger); }
+.desk-alt-load.is-near-capacity { color: var(--athar-warning); }
+.desk-alt-load.is-carries { color: var(--athar-success); }
