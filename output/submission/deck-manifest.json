@@ -1,0 +1,249 @@
+{
+  "generatedFrom": "presentation/scripts/build-deck-manifest.js",
+  "rule": "كل رقم في العرض النصّي مأخوذ من هنا. رقمٌ لا يوجد في هذا الجرد لا يجوز أن يظهر في شريحة.",
+  "grades": [
+    {
+      "key": "local-field",
+      "label": "دليل ميداني محلي",
+      "rank": 6,
+      "proves": "أثراً سببياً لهذه الحالة — ضمن حدود تصميم المقارنة.",
+      "notProves": "تعميماً على تصاريح أخرى بلا عيّنة."
+    },
+    {
+      "key": "local-route",
+      "label": "رصد محلي فوق المسار",
+      "rank": 5,
+      "proves": "سرعة وزمن رحلة فعليين على الطريق في ظرفه القائم.",
+      "notProves": "أثر الإغلاق. الطريق بلا إغلاق لا يقول ماذا يحدث معه."
+    },
+    {
+      "key": "local-historical",
+      "label": "سجل محلي تاريخي",
+      "rank": 4,
+      "proves": "خط أساس يقارَن به، وتمييز المعتاد من الشاذّ.",
+      "notProves": "سببية. الفرق عن الخط قد يكون طقساً أو فعالية."
+    },
+    {
+      "key": "local-comparable",
+      "label": "حالة محلية مشابهة",
+      "rank": 3,
+      "proves": "نطاقاً مرجعياً أقرب إلى ظرفنا من العالمي.",
+      "notProves": "قيمة معامل لهذا الطريق."
+    },
+    {
+      "key": "global-analog",
+      "label": "نظير عالمي",
+      "rank": 2,
+      "proves": "نطاقاً أولياً واسعاً، واتجاه الأثر المتوقَّع.",
+      "notProves": "أي رقم محلي. سلوك السائق والشبكة والإنفاذ يختلف."
+    },
+    {
+      "key": "model-derived",
+      "label": "مشتقّ من النموذج",
+      "rank": 1,
+      "proves": "ترتيباً داخلياً متسقاً بين بدائل تحت الافتراضات نفسها.",
+      "notProves": "قيمة مطلقة. الافتراض غير المعاير يحملها."
+    },
+    {
+      "key": "synthetic",
+      "label": "تركيبي",
+      "rank": 0,
+      "proves": "أن الشيفرة تعمل.",
+      "notProves": "أي شيء عن الرياض."
+    }
+  ],
+  "figures": [
+    {
+      "key": "portfolioPermitCount",
+      "value": 150,
+      "unit": "تصريح",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "حجم المحفظة التمثيلية"
+    },
+    {
+      "key": "portfolioMode",
+      "value": "synthetic",
+      "unit": "وضع",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "المحفظة مولَّدة ببذرة ثابتة — ليست بيانات رسمية"
+    },
+    {
+      "key": "portfolioSeed",
+      "value": 20260727,
+      "unit": "بذرة",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "بذرة التوليد الثابتة — شرط إعادة الإنتاج"
+    },
+    {
+      "key": "corridorCount",
+      "value": 12,
+      "unit": "ممر",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "ممرات المحفظة التجريدية"
+    },
+    {
+      "key": "coordinationGroupCount",
+      "value": 34,
+      "unit": "مجموعة",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "مجموعات التنسيق المكتشفة"
+    },
+    {
+      "key": "groupedPermitCount",
+      "value": 125,
+      "unit": "تصريح",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "التصاريح الواقعة داخل مجموعات تنسيق"
+    },
+    {
+      "key": "additionalPermitsInGroups",
+      "value": 91,
+      "unit": "تصريح",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "التصاريح الزائدة عن واحد داخل المجموعات — عدّ لا أثر"
+    },
+    {
+      "key": "duplicateTrenchKmEquivalent",
+      "value": 91,
+      "unit": "كم",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "طول حفر مكرر مكافئ بافتراض تداخل تام — لا هندسة محسوبة"
+    },
+    {
+      "key": "portfolioDeltaVehHours",
+      "value": 462599.8379158891,
+      "unit": "ساعة-مركبة",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "فرق نموذجي بين الجدول المقدَّم والأمثل — لا قياس ميداني"
+    },
+    {
+      "key": "portfolioDeltaPct",
+      "value": 80.77957640257598,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "فرق نموذجي بالنسبة — لا وفر مثبت"
+    },
+    {
+      "key": "wzdxPassed",
+      "value": 144,
+      "unit": "تصريح",
+      "source": "data/wzdx-conformance-report.json — ajv على المخطط الرسمي، التزام 42b98fc",
+      "grade": "model-derived",
+      "limit": "اجتياز بنيوي للمخطط. لا يعني أن البيانات صحيحة ميدانياً."
+    },
+    {
+      "key": "wzdxTotal",
+      "value": 150,
+      "unit": "تصريح",
+      "source": "data/wzdx-conformance-report.json",
+      "grade": "model-derived",
+      "limit": "المحفظة تمثيلية مولَّدة، لا سجل تصاريح حقيقي."
+    },
+    {
+      "key": "wzdxBlocked",
+      "value": 6,
+      "unit": "تصريح",
+      "source": "data/wzdx-conformance-report.json",
+      "grade": "model-derived",
+      "limit": "ممنوعة لنقص امتداد العمل في بيانات المصدر — لا لعيب في المُصدِّر."
+    },
+    {
+      "key": "stabilityDecidable",
+      "value": 50,
+      "unit": "توصية",
+      "source": "data/stability-report.json",
+      "grade": "model-derived",
+      "limit": "قابلة للقرار يعني أن ترتيب البدائل يصمد، لا أن الرقم صحيح."
+    },
+    {
+      "key": "stabilityAbstained",
+      "value": 100,
+      "unit": "توصية",
+      "source": "data/stability-report.json",
+      "grade": "model-derived",
+      "limit": "الامتناع نتيجة صالحة: البيانات لا تكفي لترتيب البدائل."
+    },
+    {
+      "key": "stabilityAbstainedShare",
+      "value": 67,
+      "unit": "٪",
+      "source": "data/stability-report.json",
+      "grade": "model-derived",
+      "limit": "نسبة الامتناع عبر المحفظة التمثيلية."
+    },
+    {
+      "key": "checksPassed",
+      "value": 1173,
+      "unit": "فحص",
+      "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
+      "grade": "model-derived",
+      "limit": "الفحوص تُثبت أن الشيفرة تفعل ما وُصفت به. لا تُثبت أن النموذج صحيح."
+    },
+    {
+      "key": "suitesPassed",
+      "value": 69,
+      "unit": "حزمة",
+      "source": "presentation/tests/fixtures/test-manifest.json",
+      "grade": "model-derived",
+      "limit": "عدد حزم الاختبار."
+    },
+    {
+      "key": "frictionPriorLow",
+      "value": 1072,
+      "unit": "مركبة/ساعة/حارة",
+      "source": "data/comparable-cases.json — missouri-breakdown (تصريف الرتل 1072 — الحدّ الأدنى)",
+      "grade": "global-analog",
+      "limit": "قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي."
+    },
+    {
+      "key": "frictionPriorHigh",
+      "value": 1600,
+      "unit": "مركبة/ساعة/حارة",
+      "source": "data/comparable-cases.json — tti-1108-5 (سعة أساس موصى بها 1600 — الحدّ الأعلى)",
+      "grade": "global-analog",
+      "limit": "قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي."
+    },
+    {
+      "key": "comparableCases",
+      "value": 7,
+      "unit": "حالة",
+      "source": "data/comparable-cases.json",
+      "grade": "global-analog",
+      "limit": "لا واحدة منها سعودية بقياسات — والنتيجة معلنة في السجل."
+    },
+    {
+      "key": "localMeasuredCases",
+      "value": 0,
+      "unit": "حالة",
+      "source": "data/comparable-cases.json",
+      "grade": "global-analog",
+      "limit": "صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة."
+    },
+    {
+      "key": "providersReady",
+      "value": 0,
+      "unit": "مزوّد",
+      "source": "data/route-evidence/readiness.json",
+      "grade": "synthetic",
+      "limit": "صفر: لا مفاتيح. المحوّلات جاهزة ولم تُشغَّل ببيانات حقيقية."
+    },
+    {
+      "key": "fieldCases",
+      "value": 0,
+      "unit": "حالة",
+      "source": "لا ملف — القيمة صفر لأن لا حالة ميدانية في المستودع",
+      "grade": "local-field",
+      "limit": "هذا هو السقف الحاكم لدرجة الأثر: بلا حالة ميدانية واحدة لا يُثبت أثر."
+    }
+  ]
+}

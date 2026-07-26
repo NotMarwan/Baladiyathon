@@ -1,0 +1,254 @@
+'use strict';
+/**
+ * جرد أرقام العرض، والعرض النصّي المولَّد منه.
+ * ---------------------------------------------------------------------------
+ * **المشكلة.**
+ *
+ * العرض التقديمي خمسٌ وعشرون صورة Base64 وثمانية وعشرون ألف محرف نصّ. أي أن
+ * أكثر ما يقرؤه المحكّم داخل الصور — وأي رقم فيها خارج كل فحص آلي، وخارج
+ * القراءة الدلالية إن كان التحكيم يستعين بأداة.
+ *
+ * فالعرض البصري يبقى للعين، ويُضاف بجانبه **عرض نصّي مولَّد**: كل رقم فيه
+ * مأخوذ من مصدر حاكم في المستودع، ومعه درجة دليله وحدّه.
+ *
+ * **ولماذا مولَّد لا مكتوب.**
+ *
+ * لأن الرقم المكتوب في شريحة يتقادم في أسبوع ولا ينبّه أحد — وهذا حدث فعلاً:
+ * كان العرض يقول «١٧٧ فحصاً» والحقيقة أكثر من ألف. المولَّد يتقادم مع مصدره
+ * أو لا يتقادم.
+ *
+ * التشغيل: node presentation/scripts/build-deck-manifest.js
+ */
+
+const fs = require('node:fs');
+const path = require('node:path');
+
+const ROOT = path.join(__dirname, '..');
+const REPO = path.join(ROOT, '..');
+global.window = global;
+
+const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
+const Cases = require(path.join(ROOT, 'athar-comparable-cases.js'));
+const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+
+const OUT_JSON = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
+const OUT_HTML = path.join(REPO, 'output', 'submission', 'athar-judging-deck-text.html');
+
+function read(file) {
+  return JSON.parse(fs.readFileSync(file, 'utf8'));
+}
+
+/**
+ * كل رقم في العرض النصّي يمرّ من هنا.
+ *
+ * الحقول الأربعة إلزامية، وأهمها `limit`: رقمٌ بلا حدّ مكتوب يُقرأ مطلقاً.
+ */
+function figure(key, value, unit, source, grade, limit) {
+  return { key, value, unit, source, grade, limit };
+}
+
+function build() {
+  const metrics = Canonical.metrics();
+  const wzdx = read(path.join(ROOT, 'data', 'wzdx-conformance-summary.json'));
+  const stability = read(path.join(ROOT, 'data', 'stability-summary.json'));
+  const tests = read(path.join(ROOT, 'tests', 'fixtures', 'test-manifest.json'));
+  const prior = Cases.priorFor('capacityPerLaneInWorkZone');
+  const casesSummary = Cases.summary();
+  const readiness = read(path.join(ROOT, 'data', 'route-evidence', 'readiness.json'));
+
+  const figures = [];
+
+  Object.keys(metrics).forEach((key) => {
+    figures.push(figure(key, metrics[key].value, metrics[key].unit,
+      'athar-canonical.js (محسوب من المحفظة)', 'model-derived',
+      metrics[key].meaning));
+  });
+
+  figures.push(figure('wzdxPassed', wzdx.passed, 'تصريح',
+    'data/wzdx-conformance-report.json — ajv على المخطط الرسمي، التزام '
+    + wzdx.commit.slice(0, 7), 'model-derived',
+    'اجتياز بنيوي للمخطط. لا يعني أن البيانات صحيحة ميدانياً.'));
+  figures.push(figure('wzdxTotal', wzdx.total, 'تصريح',
+    'data/wzdx-conformance-report.json', 'model-derived',
+    'المحفظة تمثيلية مولَّدة، لا سجل تصاريح حقيقي.'));
+  figures.push(figure('wzdxBlocked', wzdx.failed, 'تصريح',
+    'data/wzdx-conformance-report.json', 'model-derived',
+    'ممنوعة لنقص امتداد العمل في بيانات المصدر — لا لعيب في المُصدِّر.'));
+
+  figures.push(figure('stabilityDecidable', stability.decidable, 'توصية',
+    'data/stability-report.json', 'model-derived',
+    'قابلة للقرار يعني أن ترتيب البدائل يصمد، لا أن الرقم صحيح.'));
+  figures.push(figure('stabilityAbstained', stability.abstained, 'توصية',
+    'data/stability-report.json', 'model-derived',
+    'الامتناع نتيجة صالحة: البيانات لا تكفي لترتيب البدائل.'));
+  figures.push(figure('stabilityAbstainedShare', stability.abstainedShare, '٪',
+    'data/stability-report.json', 'model-derived',
+    'نسبة الامتناع عبر المحفظة التمثيلية.'));
+
+  figures.push(figure('checksPassed', tests.checks, 'فحص',
+    'presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر',
+    'model-derived',
+    'الفحوص تُثبت أن الشيفرة تفعل ما وُصفت به. لا تُثبت أن النموذج صحيح.'));
+  figures.push(figure('suitesPassed', tests.suites, 'حزمة',
+    'presentation/tests/fixtures/test-manifest.json', 'model-derived',
+    'عدد حزم الاختبار.'));
+
+  figures.push(figure('frictionPriorLow', prior.priorLow, prior.unit,
+    'data/comparable-cases.json — ' + prior.basis[0], 'global-analog',
+    prior.doesNotProve));
+  figures.push(figure('frictionPriorHigh', prior.priorHigh, prior.unit,
+    'data/comparable-cases.json — ' + prior.basis[1], 'global-analog',
+    prior.doesNotProve));
+  figures.push(figure('comparableCases', casesSummary.total, 'حالة',
+    'data/comparable-cases.json', 'global-analog',
+    'لا واحدة منها سعودية بقياسات — والنتيجة معلنة في السجل.'));
+  figures.push(figure('localMeasuredCases', casesSummary.localMeasured, 'حالة',
+    'data/comparable-cases.json', 'global-analog',
+    'صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة.'));
+
+  figures.push(figure('providersReady',
+    readiness.providers.filter((provider) => provider.ready).length, 'مزوّد',
+    'data/route-evidence/readiness.json', 'synthetic',
+    'صفر: لا مفاتيح. المحوّلات جاهزة ولم تُشغَّل ببيانات حقيقية.'));
+  figures.push(figure('fieldCases', 0, 'حالة',
+    'لا ملف — القيمة صفر لأن لا حالة ميدانية في المستودع', 'local-field',
+    'هذا هو السقف الحاكم لدرجة الأثر: بلا حالة ميدانية واحدة لا يُثبت أثر.'));
+
+  return {
+    generatedFrom: 'presentation/scripts/build-deck-manifest.js',
+    rule: 'كل رقم في العرض النصّي مأخوذ من هنا. رقمٌ لا يوجد في هذا الجرد '
+      + 'لا يجوز أن يظهر في شريحة.',
+    grades: Evidence.EVIDENCE_GRADES.map((grade) => ({
+      key: grade.key, label: grade.label, rank: grade.rank,
+      proves: grade.proves, notProves: grade.notProves,
+    })),
+    figures,
+  };
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[character]);
+}
+
+/**
+ * يعرض الرقم بدقّة تناسب معناه.
+ *
+ * `462599.8379158891` ساعة-مركبة دقّةٌ زائفة على رقم مشتقّ من افتراضات
+ * تتأرجح بمئات بالمئة. عشرُ خانات عشرية تُقرأ قياساً دقيقاً وهي ناتج قسمة.
+ */
+function present(value) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return value;
+  if (Number.isInteger(value)) return value;
+  return Math.abs(value) >= 100 ? Math.round(value) : Math.round(value * 10) / 10;
+}
+
+function gradeLabel(manifest, key) {
+  const grade = manifest.grades.find((item) => item.key === key);
+  return grade ? grade.label : key;
+}
+
+/**
+ * العرض النصّي.
+ *
+ * بلا صورة واحدة وبلا سكربت: كل ما فيه نصّ قابل للنسخ والفحص والقراءة الآلية.
+ * والجدول هو الشكل الصحيح — كل رقم في صفّه مع مصدره ودرجته وحدّه، فلا يُقرأ
+ * رقمٌ بمعزل عن قيده.
+ */
+function html(manifest) {
+  const rows = manifest.figures.map((item) => '<tr>'
+    + `<td><code>${escapeHtml(item.key)}</code></td>`
+    + `<td class="num">${escapeHtml(present(item.value))}</td>`
+    + `<td>${escapeHtml(item.unit)}</td>`
+    + `<td>${escapeHtml(gradeLabel(manifest, item.grade))}</td>`
+    + `<td>${escapeHtml(item.source)}</td>`
+    + `<td>${escapeHtml(item.limit)}</td>`
+    + '</tr>').join('\n');
+
+  const grades = manifest.grades.map((grade) => '<tr>'
+    + `<td>${escapeHtml(grade.label)}</td>`
+    + `<td class="num">${escapeHtml(grade.rank)}</td>`
+    + `<td>${escapeHtml(grade.proves)}</td>`
+    + `<td>${escapeHtml(grade.notProves)}</td>`
+    + '</tr>').join('\n');
+
+  return `<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<title>أثر — العرض النصّي القابل للتدقيق</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; --line: #d8d8d8; --muted: #5a5a5a; }
+  body { font: 16px/1.8 system-ui, "Segoe UI", Tahoma, sans-serif;
+         max-width: 60rem; margin: 0 auto; padding: 2rem 1.25rem; }
+  h1 { font-size: 1.7rem; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 1px solid var(--line);
+       padding-bottom: 0.35rem; }
+  p.lead { color: var(--muted); margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; margin-top: 0.75rem; }
+  th, td { border: 1px solid var(--line); padding: 0.45rem 0.6rem;
+           text-align: start; vertical-align: top; }
+  th { background: rgba(127,127,127,0.12); font-weight: 700; }
+  td.num { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  code { font-size: 0.85em; }
+  .wrap { overflow-x: auto; }
+  .note { border-inline-start: 3px solid var(--line); padding: 0.5rem 0.9rem;
+          color: var(--muted); font-size: 0.9rem; }
+</style>
+
+<h1>أثر — العرض النصّي القابل للتدقيق</h1>
+<p class="lead">كل رقم هنا مولَّد من مصدر حاكم في المستودع، ومعه درجة دليله وحدّه.
+لا صور، ولا سكربت، ولا رقم مكتوب يدوياً.</p>
+
+<h2>لماذا يوجد هذا الملف بجوار العرض المصوَّر</h2>
+<p>العرض التقديمي خمسٌ وعشرون صورة مضمَّنة وقرابة ثمانية وعشرين ألف محرف نصّ.
+فأكثر ما يقرؤه المحكّم داخل الصور، وأي رقم فيها خارج أي فحص آلي وخارج القراءة
+الدلالية. هذا الملف يجعل الأرقام نفسها قابلة للفحص: تُنسخ، وتُقارن بمصادرها،
+وتُقرأ آلياً.</p>
+
+<p class="note">${escapeHtml(manifest.rule)}</p>
+
+<h2>الأرقام ومصادرها</h2>
+<div class="wrap">
+<table>
+<thead><tr><th>المفتاح</th><th>القيمة</th><th>الوحدة</th><th>درجة الدليل</th>
+<th>المصدر</th><th>الحدّ — ما لا يقوله هذا الرقم</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+</div>
+
+<h2>درجات الدليل</h2>
+<p>الدرجة ليست وصفاً: هي ما يحدّد ما يجوز أن يُقال عن الرقم. رقمٌ بدرجة
+«مشتقّ من النموذج» لا يُوصف بأنه مرصود، ونظيرٌ عالمي لا يُوصف بأنه محلي.</p>
+<div class="wrap">
+<table>
+<thead><tr><th>الدرجة</th><th>الرتبة</th><th>ما تُثبته</th><th>ما لا تُثبته</th></tr></thead>
+<tbody>
+${grades}
+</tbody>
+</table>
+</div>
+
+<h2>الحدّ الحاكم</h2>
+<p class="note">لا حالة ميدانية واحدة في المستودع. أعلى درجة دليل متاحة اليوم
+لمعاملات النموذج هي «نظير عالمي»، ودرجة الأثر الميداني المثبت <strong>صفر</strong>.
+كل ما في الجدول أعلاه إمّا ناتج نموذج، أو حصيلة فحص شيفرة، أو نطاق مستنتج من
+دراسات خارجية. ولا شيء منها يُثبت أثر إغلاق في الرياض.</p>
+`;
+}
+
+function main() {
+  const manifest = build();
+  fs.writeFileSync(OUT_JSON, `${JSON.stringify(manifest, null, 2)}\n`);
+  fs.writeFileSync(OUT_HTML, html(manifest));
+  console.log(`${manifest.figures.length} رقماً مجروداً`);
+  console.log(OUT_JSON);
+  console.log(OUT_HTML);
+}
+
+if (require.main === module) main();
+
+module.exports = { build, html };

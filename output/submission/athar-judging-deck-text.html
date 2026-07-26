@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<title>أثر — العرض النصّي القابل للتدقيق</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; --line: #d8d8d8; --muted: #5a5a5a; }
+  body { font: 16px/1.8 system-ui, "Segoe UI", Tahoma, sans-serif;
+         max-width: 60rem; margin: 0 auto; padding: 2rem 1.25rem; }
+  h1 { font-size: 1.7rem; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 1px solid var(--line);
+       padding-bottom: 0.35rem; }
+  p.lead { color: var(--muted); margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; margin-top: 0.75rem; }
+  th, td { border: 1px solid var(--line); padding: 0.45rem 0.6rem;
+           text-align: start; vertical-align: top; }
+  th { background: rgba(127,127,127,0.12); font-weight: 700; }
+  td.num { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  code { font-size: 0.85em; }
+  .wrap { overflow-x: auto; }
+  .note { border-inline-start: 3px solid var(--line); padding: 0.5rem 0.9rem;
+          color: var(--muted); font-size: 0.9rem; }
+</style>
+
+<h1>أثر — العرض النصّي القابل للتدقيق</h1>
+<p class="lead">كل رقم هنا مولَّد من مصدر حاكم في المستودع، ومعه درجة دليله وحدّه.
+لا صور، ولا سكربت، ولا رقم مكتوب يدوياً.</p>
+
+<h2>لماذا يوجد هذا الملف بجوار العرض المصوَّر</h2>
+<p>العرض التقديمي خمسٌ وعشرون صورة مضمَّنة وقرابة ثمانية وعشرين ألف محرف نصّ.
+فأكثر ما يقرؤه المحكّم داخل الصور، وأي رقم فيها خارج أي فحص آلي وخارج القراءة
+الدلالية. هذا الملف يجعل الأرقام نفسها قابلة للفحص: تُنسخ، وتُقارن بمصادرها،
+وتُقرأ آلياً.</p>
+
+<p class="note">كل رقم في العرض النصّي مأخوذ من هنا. رقمٌ لا يوجد في هذا الجرد لا يجوز أن يظهر في شريحة.</p>
+
+<h2>الأرقام ومصادرها</h2>
+<div class="wrap">
+<table>
+<thead><tr><th>المفتاح</th><th>القيمة</th><th>الوحدة</th><th>درجة الدليل</th>
+<th>المصدر</th><th>الحدّ — ما لا يقوله هذا الرقم</th></tr></thead>
+<tbody>
+<tr><td><code>portfolioPermitCount</code></td><td class="num">150</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>حجم المحفظة التمثيلية</td></tr>
+<tr><td><code>portfolioMode</code></td><td class="num">synthetic</td><td>وضع</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>المحفظة مولَّدة ببذرة ثابتة — ليست بيانات رسمية</td></tr>
+<tr><td><code>portfolioSeed</code></td><td class="num">20260727</td><td>بذرة</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>بذرة التوليد الثابتة — شرط إعادة الإنتاج</td></tr>
+<tr><td><code>corridorCount</code></td><td class="num">12</td><td>ممر</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>ممرات المحفظة التجريدية</td></tr>
+<tr><td><code>coordinationGroupCount</code></td><td class="num">34</td><td>مجموعة</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>مجموعات التنسيق المكتشفة</td></tr>
+<tr><td><code>groupedPermitCount</code></td><td class="num">125</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>التصاريح الواقعة داخل مجموعات تنسيق</td></tr>
+<tr><td><code>additionalPermitsInGroups</code></td><td class="num">91</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>التصاريح الزائدة عن واحد داخل المجموعات — عدّ لا أثر</td></tr>
+<tr><td><code>duplicateTrenchKmEquivalent</code></td><td class="num">91</td><td>كم</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>طول حفر مكرر مكافئ بافتراض تداخل تام — لا هندسة محسوبة</td></tr>
+<tr><td><code>portfolioDeltaVehHours</code></td><td class="num">462600</td><td>ساعة-مركبة</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>فرق نموذجي بين الجدول المقدَّم والأمثل — لا قياس ميداني</td></tr>
+<tr><td><code>portfolioDeltaPct</code></td><td class="num">80.8</td><td>٪</td><td>مشتقّ من النموذج</td><td>athar-canonical.js (محسوب من المحفظة)</td><td>فرق نموذجي بالنسبة — لا وفر مثبت</td></tr>
+<tr><td><code>wzdxPassed</code></td><td class="num">144</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>data/wzdx-conformance-report.json — ajv على المخطط الرسمي، التزام 42b98fc</td><td>اجتياز بنيوي للمخطط. لا يعني أن البيانات صحيحة ميدانياً.</td></tr>
+<tr><td><code>wzdxTotal</code></td><td class="num">150</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>data/wzdx-conformance-report.json</td><td>المحفظة تمثيلية مولَّدة، لا سجل تصاريح حقيقي.</td></tr>
+<tr><td><code>wzdxBlocked</code></td><td class="num">6</td><td>تصريح</td><td>مشتقّ من النموذج</td><td>data/wzdx-conformance-report.json</td><td>ممنوعة لنقص امتداد العمل في بيانات المصدر — لا لعيب في المُصدِّر.</td></tr>
+<tr><td><code>stabilityDecidable</code></td><td class="num">50</td><td>توصية</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>قابلة للقرار يعني أن ترتيب البدائل يصمد، لا أن الرقم صحيح.</td></tr>
+<tr><td><code>stabilityAbstained</code></td><td class="num">100</td><td>توصية</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>الامتناع نتيجة صالحة: البيانات لا تكفي لترتيب البدائل.</td></tr>
+<tr><td><code>stabilityAbstainedShare</code></td><td class="num">67</td><td>٪</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>نسبة الامتناع عبر المحفظة التمثيلية.</td></tr>
+<tr><td><code>checksPassed</code></td><td class="num">1173</td><td>فحص</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر</td><td>الفحوص تُثبت أن الشيفرة تفعل ما وُصفت به. لا تُثبت أن النموذج صحيح.</td></tr>
+<tr><td><code>suitesPassed</code></td><td class="num">69</td><td>حزمة</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json</td><td>عدد حزم الاختبار.</td></tr>
+<tr><td><code>frictionPriorLow</code></td><td class="num">1072</td><td>مركبة/ساعة/حارة</td><td>نظير عالمي</td><td>data/comparable-cases.json — missouri-breakdown (تصريف الرتل 1072 — الحدّ الأدنى)</td><td>قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي.</td></tr>
+<tr><td><code>frictionPriorHigh</code></td><td class="num">1600</td><td>مركبة/ساعة/حارة</td><td>نظير عالمي</td><td>data/comparable-cases.json — tti-1108-5 (سعة أساس موصى بها 1600 — الحدّ الأعلى)</td><td>قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي.</td></tr>
+<tr><td><code>comparableCases</code></td><td class="num">7</td><td>حالة</td><td>نظير عالمي</td><td>data/comparable-cases.json</td><td>لا واحدة منها سعودية بقياسات — والنتيجة معلنة في السجل.</td></tr>
+<tr><td><code>localMeasuredCases</code></td><td class="num">0</td><td>حالة</td><td>نظير عالمي</td><td>data/comparable-cases.json</td><td>صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة.</td></tr>
+<tr><td><code>providersReady</code></td><td class="num">0</td><td>مزوّد</td><td>تركيبي</td><td>data/route-evidence/readiness.json</td><td>صفر: لا مفاتيح. المحوّلات جاهزة ولم تُشغَّل ببيانات حقيقية.</td></tr>
+<tr><td><code>fieldCases</code></td><td class="num">0</td><td>حالة</td><td>دليل ميداني محلي</td><td>لا ملف — القيمة صفر لأن لا حالة ميدانية في المستودع</td><td>هذا هو السقف الحاكم لدرجة الأثر: بلا حالة ميدانية واحدة لا يُثبت أثر.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>درجات الدليل</h2>
+<p>الدرجة ليست وصفاً: هي ما يحدّد ما يجوز أن يُقال عن الرقم. رقمٌ بدرجة
+«مشتقّ من النموذج» لا يُوصف بأنه مرصود، ونظيرٌ عالمي لا يُوصف بأنه محلي.</p>
+<div class="wrap">
+<table>
+<thead><tr><th>الدرجة</th><th>الرتبة</th><th>ما تُثبته</th><th>ما لا تُثبته</th></tr></thead>
+<tbody>
+<tr><td>دليل ميداني محلي</td><td class="num">6</td><td>أثراً سببياً لهذه الحالة — ضمن حدود تصميم المقارنة.</td><td>تعميماً على تصاريح أخرى بلا عيّنة.</td></tr>
+<tr><td>رصد محلي فوق المسار</td><td class="num">5</td><td>سرعة وزمن رحلة فعليين على الطريق في ظرفه القائم.</td><td>أثر الإغلاق. الطريق بلا إغلاق لا يقول ماذا يحدث معه.</td></tr>
+<tr><td>سجل محلي تاريخي</td><td class="num">4</td><td>خط أساس يقارَن به، وتمييز المعتاد من الشاذّ.</td><td>سببية. الفرق عن الخط قد يكون طقساً أو فعالية.</td></tr>
+<tr><td>حالة محلية مشابهة</td><td class="num">3</td><td>نطاقاً مرجعياً أقرب إلى ظرفنا من العالمي.</td><td>قيمة معامل لهذا الطريق.</td></tr>
+<tr><td>نظير عالمي</td><td class="num">2</td><td>نطاقاً أولياً واسعاً، واتجاه الأثر المتوقَّع.</td><td>أي رقم محلي. سلوك السائق والشبكة والإنفاذ يختلف.</td></tr>
+<tr><td>مشتقّ من النموذج</td><td class="num">1</td><td>ترتيباً داخلياً متسقاً بين بدائل تحت الافتراضات نفسها.</td><td>قيمة مطلقة. الافتراض غير المعاير يحملها.</td></tr>
+<tr><td>تركيبي</td><td class="num">0</td><td>أن الشيفرة تعمل.</td><td>أي شيء عن الرياض.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>الحدّ الحاكم</h2>
+<p class="note">لا حالة ميدانية واحدة في المستودع. أعلى درجة دليل متاحة اليوم
+لمعاملات النموذج هي «نظير عالمي»، ودرجة الأثر الميداني المثبت <strong>صفر</strong>.
+كل ما في الجدول أعلاه إمّا ناتج نموذج، أو حصيلة فحص شيفرة، أو نطاق مستنتج من
+دراسات خارجية. ولا شيء منها يُثبت أثر إغلاق في الرياض.</p>
