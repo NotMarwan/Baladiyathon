@@ -136,6 +136,24 @@ test('غياب سجل العوامل المربكة يُعلن «لم يُسجَ
   assert.ok(verdict.degraded.some((item) => /confounders/.test(item.what)));
 });
 
+test('المصفوف الفارغ لا يمرّ صامتاً — الفراغ ليس شهادةَ بحث', () => {
+  /* كان يمرّ. وهو أخطر من الغياب: الغياب يُقرأ «لم يُسجَّل»، والفراغ يُقرأ
+     «فُحص فلم يوجد» — ولا شيء في البيانات يفرّق بينهما. وحادثٌ أو مدرسةٌ
+     غير معلَنة هي بالضبط ما يفسد تفسير فرق قبل/بعد. */
+  const empty = clone(BASE);
+  empty.confounders = [];
+  const flagged = checks.completeness(empty);
+  assert.ok(flagged.degraded.some((item) => /confounders/.test(item.what)),
+    'مصفوف فارغ مرّ بلا اعتراض');
+
+  const declared = clone(BASE);
+  declared.confounders = [];
+  declared.confoundersReviewed = true;
+  const accepted = checks.completeness(declared);
+  assert.ok(!accepted.degraded.some((item) => /confounders/.test(item.what)),
+    'إعلان الفحص لم يُقبل — فلا سبيل لقول «بحثتُ فلم أجد»');
+});
+
 // ---- الجودة --------------------------------------------------------------
 
 test('حزمة سليمة تمرّ فحص الجودة', () => {

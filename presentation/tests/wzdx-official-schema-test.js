@@ -23,6 +23,7 @@
 const assert = require('node:assert');
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 
 const ROOT = path.join(__dirname, '..');
 global.window = global;
@@ -74,6 +75,41 @@ test('ملفات المخطط المثبَّتة هي الرسمية بمعرّ�
     'تعداد الاتجاه في المحرك خرج عن تعداد المخطط الرسمي');
   assert.deepStrictEqual(direction.enum, Mapping.WZDX_DIRECTIONS,
     'تعداد الاتجاه في جدول التحويل خرج عن تعداد المخطط الرسمي');
+});
+
+test('مخططات GeoJSON مثبَّتة ببصماتها — لا مرساة عند المنبع', () => {
+  /* `geojson.org` ينشر مخططاته على رابط بلا وسم ولا التزام. أي أن تثبيتنا
+     لها لا يملك مرساة زمنية عند المنبع كما تملك WZDx التزامها.
+     فالمرساة تُصنع هنا: بصمات سُحبت وقُورنت بايتاً ببايت، وبوابةٌ تجعل أي
+     تغيّر لاحق حدثاً يُرى بدل أن يمرّ. */
+  const dir = path.join(ROOT, 'vendor', 'geojson');
+  const file = path.join(dir, 'HASHES.txt');
+  assert.ok(fs.existsSync(file), 'مخططات GeoJSON بلا ملف بصمات');
+
+  const lines = fs.readFileSync(file, 'utf8').split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && line[0] !== '#');
+  assert.ok(lines.length >= 2, 'ملف البصمات شبه فارغ');
+
+  lines.forEach((line) => {
+    const parts = line.split(/\s+/);
+    const digest = parts[0];
+    const name = (parts[1] || '').replace(/^\*/, '');
+    assert.strictEqual(digest.length, 64, `${name}: بصمة ليست SHA-256`);
+    const target = path.join(dir, name);
+    assert.ok(fs.existsSync(target), `${name}: مذكور في البصمات وغير موجود`);
+    const actual = crypto.createHash('sha256')
+      .update(fs.readFileSync(target)).digest('hex');
+    assert.strictEqual(actual, digest,
+      `${name}: المخطط تغيّر عن المثبَّت — راجع قبل الاعتماد عليه`);
+  });
+
+  /* الملفان اللذان يحلّهما المحقق فعلاً يجب أن يكونا مثبَّتين، لا الزائدان
+     وحدهما. */
+  const named = lines.map((line) => line.split(/\s+/)[1].replace(/^\*/, ''));
+  ['LineString.json', 'MultiPoint.json'].forEach((one) => {
+    assert.ok(named.includes(one), `${one}: مستعمَل في التحقق وغير مثبَّت`);
+  });
 });
 
 test('المحقق يسقط على مُدخل معطوب متعمَّد — كل عطبٍ باسمه', () => {
