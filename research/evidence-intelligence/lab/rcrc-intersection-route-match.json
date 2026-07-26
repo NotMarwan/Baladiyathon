@@ -1,0 +1,1087 @@
+{
+  "generatedAt": "2026-07-26T11:27:46.739Z",
+  "source": {
+    "publisher": "الهيئة الملكية لمدينة الرياض",
+    "datasetId": "traffic-intersections-by-main-street-and-cross-street-2024",
+    "api": "https://opendata.rcrc.gov.sa/api/explore/v2.1/catalog/datasets/traffic-intersections-by-main-street-and-cross-street-2024/records",
+    "recordCount": 631,
+    "publicApiWorkedWithoutKey": true,
+    "fields": [
+      "intersection code",
+      "main street",
+      "cross street",
+      "point geometry",
+      "comments"
+    ],
+    "providesTrafficPerformance": false,
+    "providesWorkZoneTiming": false,
+    "purpose": "geometry support and field sensor placement only; it is not traffic evidence"
+  },
+  "method": {
+    "distance": "minimum equirectangular point-to-polyline distance in metres",
+    "thresholdsM": [
+      50,
+      100
+    ],
+    "warning": "A point near a modeled route supports field planning only. It does not validate route direction, topology, speed, volume, or impact."
+  },
+  "findings": {
+    "evaluatedRoutes": 21,
+    "routesWithIntersectionWithin50m": 12,
+    "routesWithIntersectionWithin100m": 13,
+    "workSegments": [
+      {
+        "groupId": "BLD-2026-0020",
+        "street": "المطار",
+        "roadClass": "arterial",
+        "routeId": "BLD-2026-0020-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "1401",
+          "nameAr": "شارع خالد بن الوليد - طريق الدمام الفرعي",
+          "nameEn": "Khalid Ibn Al Walid - Dammam Rd",
+          "distanceM": 2600,
+          "latitude": 24.80051,
+          "longitude": 46.740281
+        },
+        "within50m": [],
+        "within100m": []
+      },
+      {
+        "groupId": "BLD-2026-0063",
+        "street": "ابن العميد",
+        "roadClass": "major",
+        "routeId": "BLD-2026-0063-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "1435",
+          "nameAr": "شارع ابن ماجة/ ابن العميد",
+          "nameEn": "Ibn Majah - Ibn Al Amid",
+          "distanceM": 13,
+          "latitude": 24.66152,
+          "longitude": 46.835917
+        },
+        "within50m": [
+          {
+            "intersectionCode": "1435",
+            "nameAr": "شارع ابن ماجة/ ابن العميد",
+            "nameEn": "Ibn Majah - Ibn Al Amid",
+            "distanceM": 13,
+            "latitude": 24.66152,
+            "longitude": 46.835917
+          }
+        ],
+        "within100m": [
+          {
+            "intersectionCode": "1435",
+            "nameAr": "شارع ابن ماجة/ ابن العميد",
+            "nameEn": "Ibn Majah - Ibn Al Amid",
+            "distanceM": 13,
+            "latitude": 24.66152,
+            "longitude": 46.835917
+          },
+          {
+            "intersectionCode": "1453",
+            "nameAr": "ابن العميد - شارع اسطنبول",
+            "nameEn": "Ibn Al Amid - Istanbul St",
+            "distanceM": 78,
+            "latitude": 24.66007,
+            "longitude": 46.832897
+          }
+        ]
+      },
+      {
+        "groupId": "BLD-2026-0045",
+        "street": "طريق الملك فهد",
+        "roadClass": "arterial",
+        "routeId": "BLD-2026-0045-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "1063",
+          "nameAr": "طريق الملك فهد - طريق الملك سعود",
+          "nameEn": "King Fahd Rd - King Saud Rd",
+          "distanceM": 11,
+          "latitude": 24.64485,
+          "longitude": 46.703
+        },
+        "within50m": [
+          {
+            "intersectionCode": "1063",
+            "nameAr": "طريق الملك فهد - طريق الملك سعود",
+            "nameEn": "King Fahd Rd - King Saud Rd",
+            "distanceM": 11,
+            "latitude": 24.64485,
+            "longitude": 46.703
+          }
+        ],
+        "within100m": [
+          {
+            "intersectionCode": "1063",
+            "nameAr": "طريق الملك فهد - طريق الملك سعود",
+            "nameEn": "King Fahd Rd - King Saud Rd",
+            "distanceM": 11,
+            "latitude": 24.64485,
+            "longitude": 46.703
+          }
+        ]
+      },
+      {
+        "groupId": "BLD-2026-0025",
+        "street": "شارع العليا",
+        "roadClass": "arterial",
+        "routeId": "BLD-2026-0025-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 7,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        "within50m": [
+          {
+            "intersectionCode": "4017",
+            "nameAr": "شارع العليا - منتصف الكتلة",
+            "nameEn": "Olaya St - Mid-block",
+            "distanceM": 7,
+            "latitude": 24.72433,
+            "longitude": 46.669688
+          },
+          {
+            "intersectionCode": "4016",
+            "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+            "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+            "distanceM": 10,
+            "latitude": 24.72668,
+            "longitude": 46.66848
+          }
+        ],
+        "within100m": [
+          {
+            "intersectionCode": "4017",
+            "nameAr": "شارع العليا - منتصف الكتلة",
+            "nameEn": "Olaya St - Mid-block",
+            "distanceM": 7,
+            "latitude": 24.72433,
+            "longitude": 46.669688
+          },
+          {
+            "intersectionCode": "4016",
+            "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+            "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+            "distanceM": 10,
+            "latitude": 24.72668,
+            "longitude": 46.66848
+          },
+          {
+            "intersectionCode": "1065",
+            "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+            "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+            "distanceM": 80,
+            "latitude": 24.72176,
+            "longitude": 46.670858
+          }
+        ]
+      },
+      {
+        "groupId": "BLD-2026-0108",
+        "street": "عمر بن الخطاب",
+        "roadClass": "major",
+        "routeId": "BLD-2026-0108-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "6502",
+          "nameAr": "الأمير عبد العزيز بن تركي - بالقرب من هيئة السكك الحديدية السعودية",
+          "nameEn": "Prince Abdul Aziz Bin Turki - Near Saudi Railway Org",
+          "distanceM": 335,
+          "latitude": 24.64954,
+          "longitude": 46.739658
+        },
+        "within50m": [],
+        "within100m": []
+      },
+      {
+        "groupId": "BLD-2026-0133",
+        "street": "سعيد بن بيشان",
+        "roadClass": "local",
+        "routeId": "BLD-2026-0133-مقطع-العمل",
+        "role": "work-segment",
+        "nearest": {
+          "intersectionCode": "1538",
+          "nameAr": "شارع الأمير مقرن بن عبد العزيز - تركي بن ​​أحمد السديري",
+          "nameEn": "Prince Muqrin bin Abdulaziz - Turki ibn Ahmed",
+          "distanceM": 391,
+          "latitude": 24.7557,
+          "longitude": 46.70931
+        },
+        "within50m": [],
+        "within100m": []
+      }
+    ]
+  },
+  "matches": [
+    {
+      "groupId": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0020-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "7014",
+        "nameAr": "طريق العلمين - شارع أبي جعفر المنصور",
+        "nameEn": "Abi Jaafar Al Mansour St - Al DohaAllmin St",
+        "distanceM": 457,
+        "latitude": 24.78685,
+        "longitude": 46.730327
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0020-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "1401",
+        "nameAr": "شارع خالد بن الوليد - طريق الدمام الفرعي",
+        "nameEn": "Khalid Ibn Al Walid - Dammam Rd",
+        "distanceM": 2600,
+        "latitude": 24.80051,
+        "longitude": 46.740281
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0020-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "7014",
+        "nameAr": "طريق العلمين - شارع أبي جعفر المنصور",
+        "nameEn": "Abi Jaafar Al Mansour St - Al DohaAllmin St",
+        "distanceM": 457,
+        "latitude": 24.78685,
+        "longitude": 46.730327
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0063-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "1453",
+        "nameAr": "ابن العميد - شارع اسطنبول",
+        "nameEn": "Ibn Al Amid - Istanbul St",
+        "distanceM": 7,
+        "latitude": 24.66007,
+        "longitude": 46.832897
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 7,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        },
+        {
+          "intersectionCode": "1435",
+          "nameAr": "شارع ابن ماجة/ ابن العميد",
+          "nameEn": "Ibn Majah - Ibn Al Amid",
+          "distanceM": 8,
+          "latitude": 24.66152,
+          "longitude": 46.835917
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 7,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        },
+        {
+          "intersectionCode": "1435",
+          "nameAr": "شارع ابن ماجة/ ابن العميد",
+          "nameEn": "Ibn Majah - Ibn Al Amid",
+          "distanceM": 8,
+          "latitude": 24.66152,
+          "longitude": 46.835917
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0063-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "1435",
+        "nameAr": "شارع ابن ماجة/ ابن العميد",
+        "nameEn": "Ibn Majah - Ibn Al Amid",
+        "distanceM": 13,
+        "latitude": 24.66152,
+        "longitude": 46.835917
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1435",
+          "nameAr": "شارع ابن ماجة/ ابن العميد",
+          "nameEn": "Ibn Majah - Ibn Al Amid",
+          "distanceM": 13,
+          "latitude": 24.66152,
+          "longitude": 46.835917
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1435",
+          "nameAr": "شارع ابن ماجة/ ابن العميد",
+          "nameEn": "Ibn Majah - Ibn Al Amid",
+          "distanceM": 13,
+          "latitude": 24.66152,
+          "longitude": 46.835917
+        },
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 78,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0063-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1434",
+        "nameAr": "شارع ابن ماجة - شارع الحمراء",
+        "nameEn": "Ibn Majah - Al Hamra",
+        "distanceM": 8,
+        "latitude": 24.65868,
+        "longitude": 46.837653
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1434",
+          "nameAr": "شارع ابن ماجة - شارع الحمراء",
+          "nameEn": "Ibn Majah - Al Hamra",
+          "distanceM": 8,
+          "latitude": 24.65868,
+          "longitude": 46.837653
+        },
+        {
+          "intersectionCode": "1437",
+          "nameAr": "شارع الحمراء - الشبعانية",
+          "nameEn": "Al Hamra - Ash Shabaniyah",
+          "distanceM": 9,
+          "latitude": 24.66231,
+          "longitude": 46.84537
+        },
+        {
+          "intersectionCode": "1560",
+          "nameAr": "شبة الجزيرة - ابن العميد",
+          "nameEn": "Shibh Al Jazirah - Ibn Al Amid",
+          "distanceM": 10,
+          "latitude": 24.66981,
+          "longitude": 46.853675
+        },
+        {
+          "intersectionCode": "1452",
+          "nameAr": "شارع اسطنبول - شارع الحمراء",
+          "nameEn": "Istanbul St - Al Hamra",
+          "distanceM": 16,
+          "latitude": 24.65721,
+          "longitude": 46.834424
+        },
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 18,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1434",
+          "nameAr": "شارع ابن ماجة - شارع الحمراء",
+          "nameEn": "Ibn Majah - Al Hamra",
+          "distanceM": 8,
+          "latitude": 24.65868,
+          "longitude": 46.837653
+        },
+        {
+          "intersectionCode": "1437",
+          "nameAr": "شارع الحمراء - الشبعانية",
+          "nameEn": "Al Hamra - Ash Shabaniyah",
+          "distanceM": 9,
+          "latitude": 24.66231,
+          "longitude": 46.84537
+        },
+        {
+          "intersectionCode": "1560",
+          "nameAr": "شبة الجزيرة - ابن العميد",
+          "nameEn": "Shibh Al Jazirah - Ibn Al Amid",
+          "distanceM": 10,
+          "latitude": 24.66981,
+          "longitude": 46.853675
+        },
+        {
+          "intersectionCode": "1452",
+          "nameAr": "شارع اسطنبول - شارع الحمراء",
+          "nameEn": "Istanbul St - Al Hamra",
+          "distanceM": 16,
+          "latitude": 24.65721,
+          "longitude": 46.834424
+        },
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 18,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0063-بديل-2",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1434",
+        "nameAr": "شارع ابن ماجة - شارع الحمراء",
+        "nameEn": "Ibn Majah - Al Hamra",
+        "distanceM": 8,
+        "latitude": 24.65868,
+        "longitude": 46.837653
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1434",
+          "nameAr": "شارع ابن ماجة - شارع الحمراء",
+          "nameEn": "Ibn Majah - Al Hamra",
+          "distanceM": 8,
+          "latitude": 24.65868,
+          "longitude": 46.837653
+        },
+        {
+          "intersectionCode": "1437",
+          "nameAr": "شارع الحمراء - الشبعانية",
+          "nameEn": "Al Hamra - Ash Shabaniyah",
+          "distanceM": 9,
+          "latitude": 24.66231,
+          "longitude": 46.84537
+        },
+        {
+          "intersectionCode": "1560",
+          "nameAr": "شبة الجزيرة - ابن العميد",
+          "nameEn": "Shibh Al Jazirah - Ibn Al Amid",
+          "distanceM": 10,
+          "latitude": 24.66981,
+          "longitude": 46.853675
+        },
+        {
+          "intersectionCode": "1452",
+          "nameAr": "شارع اسطنبول - شارع الحمراء",
+          "nameEn": "Istanbul St - Al Hamra",
+          "distanceM": 16,
+          "latitude": 24.65721,
+          "longitude": 46.834424
+        },
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 18,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1434",
+          "nameAr": "شارع ابن ماجة - شارع الحمراء",
+          "nameEn": "Ibn Majah - Al Hamra",
+          "distanceM": 8,
+          "latitude": 24.65868,
+          "longitude": 46.837653
+        },
+        {
+          "intersectionCode": "1437",
+          "nameAr": "شارع الحمراء - الشبعانية",
+          "nameEn": "Al Hamra - Ash Shabaniyah",
+          "distanceM": 9,
+          "latitude": 24.66231,
+          "longitude": 46.84537
+        },
+        {
+          "intersectionCode": "1560",
+          "nameAr": "شبة الجزيرة - ابن العميد",
+          "nameEn": "Shibh Al Jazirah - Ibn Al Amid",
+          "distanceM": 10,
+          "latitude": 24.66981,
+          "longitude": 46.853675
+        },
+        {
+          "intersectionCode": "1452",
+          "nameAr": "شارع اسطنبول - شارع الحمراء",
+          "nameEn": "Istanbul St - Al Hamra",
+          "distanceM": 16,
+          "latitude": 24.65721,
+          "longitude": 46.834424
+        },
+        {
+          "intersectionCode": "1453",
+          "nameAr": "ابن العميد - شارع اسطنبول",
+          "nameEn": "Ibn Al Amid - Istanbul St",
+          "distanceM": 18,
+          "latitude": 24.66007,
+          "longitude": 46.832897
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0045-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "1063",
+        "nameAr": "طريق الملك فهد - طريق الملك سعود",
+        "nameEn": "King Fahd Rd - King Saud Rd",
+        "distanceM": 11,
+        "latitude": 24.64485,
+        "longitude": 46.703
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1063",
+          "nameAr": "طريق الملك فهد - طريق الملك سعود",
+          "nameEn": "King Fahd Rd - King Saud Rd",
+          "distanceM": 11,
+          "latitude": 24.64485,
+          "longitude": 46.703
+        },
+        {
+          "intersectionCode": "1062",
+          "nameAr": "طريق الملك فهد - شارع الوشم",
+          "nameEn": "King Fahd Rd - Al Washm St",
+          "distanceM": 45,
+          "latitude": 24.65028,
+          "longitude": 46.702283
+        },
+        {
+          "intersectionCode": "1128",
+          "nameAr": "طريق الملك فهد - طريق الإمام فيصل بن تركي بن عبدالله",
+          "nameEn": "King Fahd Rd - Al Imam Faisal Ibn Turki Ibn Abdullah Rd",
+          "distanceM": 49,
+          "latitude": 24.63768,
+          "longitude": 46.7038
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1063",
+          "nameAr": "طريق الملك فهد - طريق الملك سعود",
+          "nameEn": "King Fahd Rd - King Saud Rd",
+          "distanceM": 11,
+          "latitude": 24.64485,
+          "longitude": 46.703
+        },
+        {
+          "intersectionCode": "1062",
+          "nameAr": "طريق الملك فهد - شارع الوشم",
+          "nameEn": "King Fahd Rd - Al Washm St",
+          "distanceM": 45,
+          "latitude": 24.65028,
+          "longitude": 46.702283
+        },
+        {
+          "intersectionCode": "1128",
+          "nameAr": "طريق الملك فهد - طريق الإمام فيصل بن تركي بن عبدالله",
+          "nameEn": "King Fahd Rd - Al Imam Faisal Ibn Turki Ibn Abdullah Rd",
+          "distanceM": 49,
+          "latitude": 24.63768,
+          "longitude": 46.7038
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0045-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "1063",
+        "nameAr": "طريق الملك فهد - طريق الملك سعود",
+        "nameEn": "King Fahd Rd - King Saud Rd",
+        "distanceM": 11,
+        "latitude": 24.64485,
+        "longitude": 46.703
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1063",
+          "nameAr": "طريق الملك فهد - طريق الملك سعود",
+          "nameEn": "King Fahd Rd - King Saud Rd",
+          "distanceM": 11,
+          "latitude": 24.64485,
+          "longitude": 46.703
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1063",
+          "nameAr": "طريق الملك فهد - طريق الملك سعود",
+          "nameEn": "King Fahd Rd - King Saud Rd",
+          "distanceM": 11,
+          "latitude": 24.64485,
+          "longitude": 46.703
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0045-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1063",
+        "nameAr": "طريق الملك فهد - طريق الملك سعود",
+        "nameEn": "King Fahd Rd - King Saud Rd",
+        "distanceM": 244,
+        "latitude": 24.64485,
+        "longitude": 46.703
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0025-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "4017",
+        "nameAr": "شارع العليا - منتصف الكتلة",
+        "nameEn": "Olaya St - Mid-block",
+        "distanceM": 7,
+        "latitude": 24.72433,
+        "longitude": 46.669688
+      },
+      "within50m": [
+        {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 7,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 10,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        },
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 22,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 7,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 10,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        },
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 22,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0025-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "4017",
+        "nameAr": "شارع العليا - منتصف الكتلة",
+        "nameEn": "Olaya St - Mid-block",
+        "distanceM": 7,
+        "latitude": 24.72433,
+        "longitude": 46.669688
+      },
+      "within50m": [
+        {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 7,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 10,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 7,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 10,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        },
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 80,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0025-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1065",
+        "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+        "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+        "distanceM": 5,
+        "latitude": 24.72176,
+        "longitude": 46.670858
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 5,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 5,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 93,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "routeId": "BLD-2026-0025-بديل-2",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1065",
+        "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+        "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+        "distanceM": 5,
+        "latitude": 24.72176,
+        "longitude": 46.670858
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 5,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1065",
+          "nameAr": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "nameEn": "Olaya St - Prince Sultan Bin Salman Bin Abdulaziz St",
+          "distanceM": 5,
+          "latitude": 24.72176,
+          "longitude": 46.670858
+        },
+        {
+          "intersectionCode": "4017",
+          "nameAr": "شارع العليا - منتصف الكتلة",
+          "nameEn": "Olaya St - Mid-block",
+          "distanceM": 89,
+          "latitude": 24.72433,
+          "longitude": 46.669688
+        },
+        {
+          "intersectionCode": "4016",
+          "nameAr": "شارع العليا - في الوسط قريب من شارع 108 مدرسة نجد)",
+          "nameEn": "Olaya St - Mid-block (Near Najd School) (Stn 1B2)",
+          "distanceM": 93,
+          "latitude": 24.72668,
+          "longitude": 46.66848
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0108-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "6046",
+        "nameAr": "زيد بن الخطاب - طريق عمر بن الخطاب",
+        "nameEn": "Zayd ibn Al Khattab - OMAR IBN AL KHATTAB RD",
+        "distanceM": 4,
+        "latitude": 24.6534,
+        "longitude": 46.744372
+      },
+      "within50m": [
+        {
+          "intersectionCode": "6046",
+          "nameAr": "زيد بن الخطاب - طريق عمر بن الخطاب",
+          "nameEn": "Zayd ibn Al Khattab - OMAR IBN AL KHATTAB RD",
+          "distanceM": 4,
+          "latitude": 24.6534,
+          "longitude": 46.744372
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "6046",
+          "nameAr": "زيد بن الخطاب - طريق عمر بن الخطاب",
+          "nameEn": "Zayd ibn Al Khattab - OMAR IBN AL KHATTAB RD",
+          "distanceM": 4,
+          "latitude": 24.6534,
+          "longitude": 46.744372
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0108-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "6502",
+        "nameAr": "الأمير عبد العزيز بن تركي - بالقرب من هيئة السكك الحديدية السعودية",
+        "nameEn": "Prince Abdul Aziz Bin Turki - Near Saudi Railway Org",
+        "distanceM": 335,
+        "latitude": 24.64954,
+        "longitude": 46.739658
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "major",
+      "routeId": "BLD-2026-0108-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1450",
+        "nameAr": "شارع الأمير فهد بن إبراهيم آل سعود - طريق عمر بن الخطاب",
+        "nameEn": "Prince Fahd Bin Ibrahim - Omar Bin Khatab st",
+        "distanceM": 18,
+        "latitude": 24.64814,
+        "longitude": 46.728325
+      },
+      "within50m": [
+        {
+          "intersectionCode": "1450",
+          "nameAr": "شارع الأمير فهد بن إبراهيم آل سعود - طريق عمر بن الخطاب",
+          "nameEn": "Prince Fahd Bin Ibrahim - Omar Bin Khatab st",
+          "distanceM": 18,
+          "latitude": 24.64814,
+          "longitude": 46.728325
+        },
+        {
+          "intersectionCode": "1280",
+          "nameAr": "الأمير فهد بن إبراهيم آل سعود - علي بن محمد بن عبدالوهاب",
+          "nameEn": "Prince Fahd Ibn Ibrahim Al Saud - Ali Ibn Muhammad Ibn Abd Al Wahab",
+          "distanceM": 43,
+          "latitude": 24.65326,
+          "longitude": 46.729374
+        }
+      ],
+      "within100m": [
+        {
+          "intersectionCode": "1450",
+          "nameAr": "شارع الأمير فهد بن إبراهيم آل سعود - طريق عمر بن الخطاب",
+          "nameEn": "Prince Fahd Bin Ibrahim - Omar Bin Khatab st",
+          "distanceM": 18,
+          "latitude": 24.64814,
+          "longitude": 46.728325
+        },
+        {
+          "intersectionCode": "1280",
+          "nameAr": "الأمير فهد بن إبراهيم آل سعود - علي بن محمد بن عبدالوهاب",
+          "nameEn": "Prince Fahd Ibn Ibrahim Al Saud - Ali Ibn Muhammad Ibn Abd Al Wahab",
+          "distanceM": 43,
+          "latitude": 24.65326,
+          "longitude": 46.729374
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "routeId": "BLD-2026-0133-أساسي",
+      "role": "primary",
+      "nearest": {
+        "intersectionCode": "1548",
+        "nameAr": "شارع الأمير مقرن بن عبد العزيز - طريق عثمان بن عفان",
+        "nameEn": "Prince Muqrin Bin Abdulaziz - Uthman Ibn Affan Rd",
+        "distanceM": 387,
+        "latitude": 24.75928,
+        "longitude": 46.717489
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "routeId": "BLD-2026-0133-مقطع-العمل",
+      "role": "work-segment",
+      "nearest": {
+        "intersectionCode": "1538",
+        "nameAr": "شارع الأمير مقرن بن عبد العزيز - تركي بن ​​أحمد السديري",
+        "nameEn": "Prince Muqrin bin Abdulaziz - Turki ibn Ahmed",
+        "distanceM": 391,
+        "latitude": 24.7557,
+        "longitude": 46.70931
+      },
+      "within50m": [],
+      "within100m": []
+    },
+    {
+      "groupId": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "routeId": "BLD-2026-0133-بديل-1",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1548",
+        "nameAr": "شارع الأمير مقرن بن عبد العزيز - طريق عثمان بن عفان",
+        "nameEn": "Prince Muqrin Bin Abdulaziz - Uthman Ibn Affan Rd",
+        "distanceM": 52,
+        "latitude": 24.75928,
+        "longitude": 46.717489
+      },
+      "within50m": [],
+      "within100m": [
+        {
+          "intersectionCode": "1548",
+          "nameAr": "شارع الأمير مقرن بن عبد العزيز - طريق عثمان بن عفان",
+          "nameEn": "Prince Muqrin Bin Abdulaziz - Uthman Ibn Affan Rd",
+          "distanceM": 52,
+          "latitude": 24.75928,
+          "longitude": 46.717489
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "routeId": "BLD-2026-0133-بديل-2",
+      "role": "alternate",
+      "nearest": {
+        "intersectionCode": "1548",
+        "nameAr": "شارع الأمير مقرن بن عبد العزيز - طريق عثمان بن عفان",
+        "nameEn": "Prince Muqrin Bin Abdulaziz - Uthman Ibn Affan Rd",
+        "distanceM": 157,
+        "latitude": 24.75928,
+        "longitude": 46.717489
+      },
+      "within50m": [],
+      "within100m": []
+    }
+  ]
+}

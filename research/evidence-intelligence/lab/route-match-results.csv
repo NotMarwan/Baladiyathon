@@ -1,0 +1,22 @@
+groupId,street,roadClass,routeId,role,nearestCounterId,nearestRoadNo,nearestDistanceM,countersWithin100m,countersWithin500m,coveragePct,verdict
+BLD-2026-0020,المطار,arterial,BLD-2026-0020-أساسي,primary,MOT-13,513,22886,0,0,0,no-spatial-coverage
+BLD-2026-0020,المطار,arterial,BLD-2026-0020-مقطع-العمل,work-segment,MOT-13,513,26511,0,0,0,no-spatial-coverage
+BLD-2026-0020,المطار,arterial,BLD-2026-0020-بديل-1,alternate,MOT-13,513,22886,0,0,0,no-spatial-coverage
+BLD-2026-0063,ابن العميد,major,BLD-2026-0063-أساسي,primary,MOT-13,513,7031,0,0,0,no-spatial-coverage
+BLD-2026-0063,ابن العميد,major,BLD-2026-0063-مقطع-العمل,work-segment,MOT-13,513,7058,0,0,0,no-spatial-coverage
+BLD-2026-0063,ابن العميد,major,BLD-2026-0063-بديل-1,alternate,MOT-13,513,6717,0,0,0,no-spatial-coverage
+BLD-2026-0063,ابن العميد,major,BLD-2026-0063-بديل-2,alternate,MOT-13,513,6717,0,0,0,no-spatial-coverage
+BLD-2026-0045,طريق الملك فهد,arterial,BLD-2026-0045-أساسي,primary,MOT-13,513,14831,0,0,0,no-spatial-coverage
+BLD-2026-0045,طريق الملك فهد,arterial,BLD-2026-0045-مقطع-العمل,work-segment,MOT-13,513,14957,0,0,0,no-spatial-coverage
+BLD-2026-0045,طريق الملك فهد,arterial,BLD-2026-0045-بديل-1,alternate,MOT-13,513,14963,0,0,0,no-spatial-coverage
+BLD-2026-0025,شارع العليا,arterial,BLD-2026-0025-أساسي,primary,MOT-13,513,22256,0,0,0,no-spatial-coverage
+BLD-2026-0025,شارع العليا,arterial,BLD-2026-0025-مقطع-العمل,work-segment,MOT-13,513,22315,0,0,0,no-spatial-coverage
+BLD-2026-0025,شارع العليا,arterial,BLD-2026-0025-بديل-1,alternate,MOT-13,513,22184,0,0,0,no-spatial-coverage
+BLD-2026-0025,شارع العليا,arterial,BLD-2026-0025-بديل-2,alternate,MOT-13,513,22184,0,0,0,no-spatial-coverage
+BLD-2026-0108,عمر بن الخطاب,major,BLD-2026-0108-أساسي,primary,MOT-13,513,11777,0,0,0,no-spatial-coverage
+BLD-2026-0108,عمر بن الخطاب,major,BLD-2026-0108-مقطع-العمل,work-segment,MOT-13,513,12322,0,0,0,no-spatial-coverage
+BLD-2026-0108,عمر بن الخطاب,major,BLD-2026-0108-بديل-1,alternate,MOT-13,513,12283,0,0,0,no-spatial-coverage
+BLD-2026-0133,سعيد بن بيشان,local,BLD-2026-0133-أساسي,primary,MOT-13,513,21497,0,0,0,no-spatial-coverage
+BLD-2026-0133,سعيد بن بيشان,local,BLD-2026-0133-مقطع-العمل,work-segment,MOT-13,513,21573,0,0,0,no-spatial-coverage
+BLD-2026-0133,سعيد بن بيشان,local,BLD-2026-0133-بديل-1,alternate,MOT-13,513,21179,0,0,0,no-spatial-coverage
+BLD-2026-0133,سعيد بن بيشان,local,BLD-2026-0133-بديل-2,alternate,MOT-13,513,21179,0,0,0,no-spatial-coverage

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#08131F"/>
+  <style>
+    text { font-family: Tahoma, "Segoe UI", Arial, sans-serif; }
+  </style>
+  <rect x="70" y="58" width="12" height="92" rx="6" fill="#31D7D0" stroke="none" stroke-width="0"/>
+  <text x="1520" y="100" fill="#F5F7FA" font-size="42" font-weight="700" text-anchor="end">بطاقة دليل قابلة للتدقيق</text>
+  <text x="1520" y="143" fill="#A8BACB" font-size="22" font-weight="400" text-anchor="end">تظهر القوة والحد في المكان نفسه</text>
+  <rect x="100" y="185" width="1400" height="570" rx="28" fill="#102235" stroke="none" stroke-width="0"/><rect x="1235" y="225" width="210" height="70" rx="35" fill="#31D7D0" stroke="none" stroke-width="0"/><text x="1340" y="272" fill="#08131F" font-size="28" font-weight="800" text-anchor="middle">المستوى B</text><text x="1180" y="270" fill="#F5F7FA" font-size="31" font-weight="750" text-anchor="end">خط أساس محلي</text><line x1="160" y1="330" x2="1440" y2="330" stroke="#27435C" stroke-width="2"/><text x="1410" y="385" fill="#A8BACB" font-size="20" font-weight="500" text-anchor="end">المصدر</text><text x="1410" y="430" fill="#F5F7FA" font-size="24" font-weight="650" text-anchor="end">نفس المسار والاتجاه — ١٥ دقيقة — اكتمال ٩٦ من ١٠٠</text><rect x="820" y="490" width="590" height="165" rx="20" fill="#123829" stroke="none" stroke-width="0"/><text x="1375" y="535" fill="#51D88A" font-size="22" font-weight="750" text-anchor="end">ما يثبته</text><text x="1375" y="580" fill="#F5F7FA" font-size="22" font-weight="500" text-anchor="end">زمن الرحلة المعتاد في فترة القياس</text><text x="1375" y="620" fill="#F5F7FA" font-size="22" font-weight="500" text-anchor="end">ومدى تغيره حسب الساعة</text><rect x="190" y="490" width="590" height="165" rx="20" fill="#3A2628" stroke="none" stroke-width="0"/><text x="745" y="535" fill="#FF6B6B" font-size="22" font-weight="750" text-anchor="end">ما لا يثبته</text><text x="745" y="580" fill="#F5F7FA" font-size="22" font-weight="500" text-anchor="end">لا يثبت أثر الإغلاق</text><text x="745" y="620" fill="#F5F7FA" font-size="22" font-weight="500" text-anchor="end">ولا يوفر حجم الحركة</text>
+  <text x="1520" y="868" fill="#A8BACB" font-size="18" font-weight="400" text-anchor="end">منظومة استخبارات الأدلة — 26 يوليو 2026</text>
+</svg>

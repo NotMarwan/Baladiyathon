@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-07-26T11:59:02.697Z",
+  "passed": true,
+  "requiredMarkdownCount": 20,
+  "requiredVisualCount": 6,
+  "checkCount": 45,
+  "failureCount": 0,
+  "failures": [],
+  "checks": [
+    {
+      "name": "markdown:README.md",
+      "passed": true,
+      "details": "3443 characters"
+    },
+    {
+      "name": "markdown:EVIDENCE-DEMAND-REGISTER.md",
+      "passed": true,
+      "details": "4631 characters"
+    },
+    {
+      "name": "markdown:EVIDENCE-LADDER.md",
+      "passed": true,
+      "details": "3389 characters"
+    },
+    {
+      "name": "markdown:SAUDI-DATA-SOURCE-AUDIT.md",
+      "passed": true,
+      "details": "8664 characters"
+    },
+    {
+      "name": "markdown:ROUTE-EVIDENCE-FEASIBILITY.md",
+      "passed": true,
+      "details": "3882 characters"
+    },
+    {
+      "name": "markdown:TRAFFIC-PROVIDER-EVIDENCE.md",
+      "passed": true,
+      "details": "4781 characters"
+    },
+    {
+      "name": "markdown:SCIENTIFIC-EVIDENCE-CARDS.md",
+      "passed": true,
+      "details": "6078 characters"
+    },
+    {
+      "name": "markdown:GLOBAL-WORK-ZONE-CASEBOOK.md",
+      "passed": true,
+      "details": "3824 characters"
+    },
+    {
+      "name": "markdown:NEIGHBOURHOOD-DETOUR-EVIDENCE.md",
+      "passed": true,
+      "details": "2886 characters"
+    },
+    {
+      "name": "markdown:WORK-ZONE-FRICTION-EVIDENCE.md",
+      "passed": true,
+      "details": "4043 characters"
+    },
+    {
+      "name": "markdown:PARAMETER-TO-EVIDENCE-MATRIX.md",
+      "passed": true,
+      "details": "3303 characters"
+    },
+    {
+      "name": "markdown:REPRODUCIBLE-EVIDENCE-LAB.md",
+      "passed": true,
+      "details": "4156 characters"
+    },
+    {
+      "name": "markdown:FIRST-FIELD-CASE-PLAN.md",
+      "passed": true,
+      "details": "5476 characters"
+    },
+    {
+      "name": "markdown:DATA-ACQUISITION-TARGETS.md",
+      "passed": true,
+      "details": "4471 characters"
+    },
+    {
+      "name": "markdown:RUBRIC-EVIDENCE-LIFT-MATRIX.md",
+      "passed": true,
+      "details": "3236 characters"
+    },
+    {
+      "name": "markdown:VISUAL-EVIDENCE-HANDOFF.md",
+      "passed": true,
+      "details": "2748 characters"
+    },
+    {
+      "name": "markdown:IMPLEMENTATION-CARDS.md",
+      "passed": true,
+      "details": "4733 characters"
+    },
+    {
+      "name": "markdown:REJECTED-SOURCES.md",
+      "passed": true,
+      "details": "3318 characters"
+    },
+    {
+      "name": "markdown:SOURCE-LEDGER.md",
+      "passed": true,
+      "details": "9946 characters"
+    },
+    {
+      "name": "markdown:EXECUTIVE-EVIDENCE-BRIEF.md",
+      "passed": true,
+      "details": "4739 characters"
+    },
+    {
+      "name": "visual:evidence-ladder.svg",
+      "passed": true,
+      "details": "4551 bytes"
+    },
+    {
+      "name": "visual:before-during-after.svg",
+      "passed": true,
+      "details": "2950 bytes"
+    },
+    {
+      "name": "visual:counterfactual.svg",
+      "passed": true,
+      "details": "2775 bytes"
+    },
+    {
+      "name": "visual:assumption-evidence-matrix.svg",
+      "passed": true,
+      "details": "4723 bytes"
+    },
+    {
+      "name": "visual:route-source-coverage.svg",
+      "passed": true,
+      "details": "28955 bytes"
+    },
+    {
+      "name": "visual:evidence-card.svg",
+      "passed": true,
+      "details": "2634 bytes"
+    },
+    {
+      "name": "level:A",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "level:B",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "level:C",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "level:D",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "level:E",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "level:F",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما أقوى دليل وجدناه ويمكن استخدامه فوراً؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما أقوى دليل محلي محتمل لكنه يحتاج وصولاً؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما المعامل الأكثر حاجة إلى تصحيح؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما المسار الحالي الذي يمكن ربطه ببيانات فعلية أولاً؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما أقصر تجربة ميدانية قابلة للدفاع؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما أقوى تحسين ظاهري؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما أقوى تحسين باطني؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "executive:ما الذي لا يزال مستحيلاً إثباته؟",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ministry-route-test",
+      "passed": true,
+      "details": {
+        "routes": 21,
+        "within100m": 0,
+        "within500m": 0
+      }
+    },
+    {
+      "name": "rcrc-route-test",
+      "passed": true,
+      "details": {
+        "geocodedRecords": 631,
+        "routes": 21,
+        "within50m": 12,
+        "within100m": 13
+      }
+    },
+    {
+      "name": "king-fahd-target",
+      "passed": true,
+      "details": {
+        "intersectionCode": "1063",
+        "nameAr": "طريق الملك فهد - طريق الملك سعود",
+        "nameEn": "King Fahd Rd - King Saud Rd",
+        "distanceM": 11,
+        "latitude": 24.64485,
+        "longitude": 46.703
+      }
+    },
+    {
+      "name": "workbook-inspection",
+      "passed": true,
+      "details": "three official workbooks present"
+    },
+    {
+      "name": "source-decisions",
+      "passed": true,
+      "details": "45 decisions"
+    }
+  ]
+}
