@@ -1,0 +1,6 @@
+period,at_iso8601,segment_id,speed_kph,travel_time_sec,volume_veh_per_hour,occupancy_pct,sample_size,coverage,quality,source
+before,2026-09-01T06:00:00+03:00,SEG-KF-014,,,,,,,ok,
+before,2026-09-01T06:05:00+03:00,SEG-KF-014,,,,,,,ok,
+during,2026-09-08T06:00:00+03:00,SEG-KF-014,,,,,,,ok,
+after,2026-09-22T06:00:00+03:00,SEG-KF-014,,,,,,,ok,
+control,2026-09-08T06:00:00+03:00,SEG-CTRL-003,,,,,,,ok,

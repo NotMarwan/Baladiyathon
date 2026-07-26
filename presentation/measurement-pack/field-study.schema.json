@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://athar.local/schemas/field-study-1.0.json",
+  "title": "حزمة قياس ميداني لإغلاق واحد — أثر",
+  "description": "بنية بيانات حالة ميدانية واحدة: إغلاق فعلي بقياسات قبل وأثناء وبعد، مع حالة مقابلة. صُمّمت قبل وصول أي بيانات كي لا تُبنى منظومة القياس عند وصولها.",
+  "type": "object",
+  "required": ["study", "closure", "geometry", "series", "provenance"],
+  "properties": {
+    "study": {
+      "type": "object",
+      "required": ["studyId", "permitRef", "timezone", "dataMode"],
+      "properties": {
+        "studyId": { "type": "string", "minLength": 3 },
+        "permitRef": { "type": "string", "minLength": 3 },
+        "workId": { "type": "string" },
+        "authority": { "type": "string" },
+        "timezone": { "type": "string", "const": "Asia/Riyadh" },
+        "dataMode": {
+          "description": "درجة الدليل. الحزمة الحقيقية local-field؛ والمثال المرفق synthetic ولا يجوز غيره له.",
+          "enum": ["local-field", "synthetic"]
+        },
+        "synthetic": {
+          "type": "boolean",
+          "description": "true للمثال التركيبي. الفاحص يرفض احتساب أي أثر منه."
+        }
+      }
+    },
+    "closure": {
+      "type": "object",
+      "required": ["actualStart", "actualEnd", "closureType", "lanes", "lanesClosed", "direction"],
+      "properties": {
+        "actualStart": { "type": "string", "format": "date-time",
+          "description": "بداية الإغلاق الفعلية لا المصرَّح بها. الفرق بينهما هو أول ما يفسد المقارنة." },
+        "actualEnd": { "type": "string", "format": "date-time" },
+        "phases": {
+          "type": "array",
+          "description": "مراحل الفتح والإغلاق. إغلاق ليلي متكرر ليس إغلاقاً واحداً ممتداً.",
+          "items": {
+            "type": "object",
+            "required": ["start", "end", "state"],
+            "properties": {
+              "start": { "type": "string", "format": "date-time" },
+              "end": { "type": "string", "format": "date-time" },
+              "state": { "enum": ["closed", "partial", "open"] },
+              "lanesClosed": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "closureType": { "enum": ["full", "lane", "shoulder", "alternating", "ramp"] },
+        "lanes": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "lanesClosed": { "type": "integer", "minimum": 0 },
+        "direction": { "type": "string" },
+        "workExtentM": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": ["affectedSegment"],
+      "properties": {
+        "affectedSegment": { "$ref": "#/definitions/lineString" },
+        "alternates": { "type": "array", "items": { "$ref": "#/definitions/lineString" } },
+        "controlCorridor": {
+          "$ref": "#/definitions/lineString",
+          "description": "محور المقارنة غير المتأثر. غيابه يمنع الادعاء السببي ولا يمنع الاستيراد."
+        }
+      }
+    },
+    "series": {
+      "type": "object",
+      "required": ["before", "during"],
+      "description": "سلاسل زمنية. `after` مطلوبة للتعافي وليست شرطاً للمقارنة الأساسية.",
+      "properties": {
+        "before": { "$ref": "#/definitions/series" },
+        "during": { "$ref": "#/definitions/series" },
+        "after": { "$ref": "#/definitions/series" },
+        "control": {
+          "$ref": "#/definitions/series",
+          "description": "سلسلة المحور المقارن أو الأيام المماثلة غير المتأثرة."
+        }
+      }
+    },
+    "confounders": {
+      "type": "array",
+      "description": "الحوادث والطقس والفعاليات والعطل وتغييرات الإشارات. سجلٌّ فارغ ليس غياباً — الفاحص يفرّق بينهما.",
+      "items": {
+        "type": "object",
+        "required": ["kind", "start", "description"],
+        "properties": {
+          "kind": { "enum": ["incident", "weather", "event", "holiday", "signal-change", "other"] },
+          "start": { "type": "string", "format": "date-time" },
+          "end": { "type": "string", "format": "date-time" },
+          "description": { "type": "string", "minLength": 3 },
+          "affects": { "enum": ["treatment", "control", "both"] },
+          "excluded": { "type": "boolean" },
+          "exclusionReason": { "type": "string" }
+        }
+      }
+    },
+    "counterfactual": {
+      "type": "object",
+      "description": "تصميم الحالة المقابلة. بلا واحد منها لا يُحسب أثر سببي.",
+      "properties": {
+        "design": {
+          "enum": ["matched-days", "control-corridor", "historical-period",
+            "difference-in-differences", "matching", "none"]
+        },
+        "matchingRule": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["capturedAt", "importedAt", "sources"],
+      "properties": {
+        "capturedAt": { "type": "string", "format": "date-time" },
+        "importedAt": { "type": "string", "format": "date-time" },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["provider", "metric", "license"],
+            "properties": {
+              "provider": { "type": "string" },
+              "metric": { "enum": ["speed", "travelTime", "volume", "occupancy", "queue"] },
+              "sourceType": { "enum": ["probe", "sensor", "camera", "manual-count", "derived"] },
+              "license": { "type": "string" },
+              "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+              "knownLimits": { "type": "string" }
+            }
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["what", "reason"],
+            "properties": { "what": { "type": "string" }, "reason": { "type": "string" } }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "lineString": {
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "const": "LineString" },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "array", "minItems": 2, "items": { "type": "number" } }
+        }
+      }
+    },
+    "series": {
+      "type": "object",
+      "required": ["intervalMinutes", "samples"],
+      "properties": {
+        "intervalMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "الفاصل الزمني معلن لا مستنتج. سلسلة بفواصل مختلطة تُقارن ساعةً بربع ساعة."
+        },
+        "samples": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["at", "segmentId"],
+            "properties": {
+              "at": { "type": "string", "format": "date-time" },
+              "segmentId": { "type": "string" },
+              "speedKph": { "type": ["number", "null"] },
+              "travelTimeSec": { "type": ["number", "null"] },
+              "volumeVehPerHour": { "type": ["number", "null"] },
+              "occupancyPct": { "type": ["number", "null"] },
+              "sampleSize": { "type": ["number", "null"] },
+              "coverage": { "type": ["number", "null"] },
+              "quality": { "enum": ["ok", "partial", "stale", "failed"] },
+              "source": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

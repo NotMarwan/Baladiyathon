@@ -1,0 +1,6 @@
+kind,start_iso8601,end_iso8601,description,affects,excluded,exclusion_reason
+incident,,,,treatment,false,
+weather,,,,both,false,
+event,,,,both,false,
+holiday,,,,both,false,
+signal-change,,,,treatment,false,
