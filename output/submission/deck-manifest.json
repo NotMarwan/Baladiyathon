@@ -197,7 +197,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1189,
+      "value": 1196,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
@@ -205,7 +205,7 @@
     },
     {
       "key": "suitesPassed",
-      "value": 71,
+      "value": 72,
       "unit": "حزمة",
       "source": "presentation/tests/fixtures/test-manifest.json",
       "grade": "model-derived",

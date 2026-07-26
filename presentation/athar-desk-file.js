@@ -289,6 +289,7 @@
       + '</dl>'
       + (reasons ? '<p class="desk-card-label">أكبر ثلاثة أسباب</p>'
         + '<ul class="desk-reasons">' + reasons + '</ul>' : '')
+      + renderAlternateLoad(p.permitRef)
       + (conflicts ? '<p class="desk-card-label">التعارض</p>'
         + '<ul class="desk-conflicts">' + conflicts + '</ul>'
         : '<p class="desk-none">لا تعارض على المقطع في النافذة نفسها.</p>')
@@ -296,6 +297,54 @@
       + '<p class="desk-source">المصدر: محرك أثر (BPR) على هندسة OpenStreetMap · '
       + 'قيم الحركة والسعة افتراضات معلنة.</p>'
       + '</section>';
+  }
+
+  /**
+   * هل يتحمّل البديل الحركة المحوَّلة؟
+   *
+   * أهمّ سؤال يسأله من يقرأ خطة إغلاق، وكان بلا جواب في هذه البطاقة: إغلاقٌ
+   * بديلُه فارغ وإغلاقٌ بديلُه مشبَع يعطيان الرقم نفسه في ساعات-المركبة
+   * ويعنيان شيئين مختلفين على الأرض. والجواب كان محسوباً في محرك التوجيه
+   * ومعروضاً في الخريطة وحدها — والمراجع يقرّر من هنا.
+   *
+   * يُقرأ من ملخّص مولَّد لا يُحسب في الصفحة: رسم التوجيه يزيد على اثني عشر
+   * ميغابايت. وإن غاب الملخّص لا يُعرض شيء — بطاقةٌ صامتة أصدق من تقدير.
+   */
+  function renderAlternateLoad(permitRef) {
+    var host = (typeof window !== 'undefined' && window) || {};
+    var source = (host.ATHAR_ALTERNATE_LOAD && host.ATHAR_ALTERNATE_LOAD.permits)
+      || null;
+    var entry = source && source[permitRef];
+    if (!entry || !entry.verdict) return '';
+
+    var verdict = entry.verdict;
+    if (verdict.key === 'unknown') {
+      return '<p class="desk-card-label">هل يتحمّل البديل الحركة؟</p>'
+        + '<p class="desk-none">' + escapeHtml(entry.reason || verdict.plain) + '</p>';
+    }
+
+    /* النسبة قبل وبعد معاً. «١٫٩» وحدها لا تقول إن الطريق كان مزدحماً أصلاً
+       أم أن الإغلاق هو ما أغرقه — والفرق يحدّد هل الحلّ نافذة أخرى أم طريق
+       آخر. */
+    return '<p class="desk-card-label">هل يتحمّل البديل الحركة؟</p>'
+      + '<p class="desk-alt-load is-' + escapeHtml(verdict.key) + '">'
+      + '<strong>' + escapeHtml(verdict.label) + '</strong> — '
+      + escapeHtml(verdict.plain) + '</p>'
+      + '<dl class="desk-figures">'
+      + '<div><dt>حِمل البديل قبل التحويل</dt><dd>'
+      + escapeHtml(decimal(entry.ratioBefore * 100)) + '٪ من طاقته</dd></div>'
+      + '<div><dt>بعد التحويل</dt><dd>'
+      + escapeHtml(decimal(entry.ratioAfter * 100)) + '٪ من طاقته</dd></div>'
+      + '<div><dt>الحركة المحوَّلة</dt><dd>'
+      + escapeHtml(text(entry.divertedVehPerHour)) + ' مركبة/ساعة</dd></div>'
+      + (entry.bindingStreet
+        ? '<div><dt>أضيق مقطع على البديل</dt><dd>'
+          + escapeHtml(entry.bindingStreet) + '</dd></div>'
+        : '')
+      + '</dl>'
+      + '<p class="desk-source">مشتقّ من النموذج عند ساعة مرجعية واحدة — '
+      + 'الحركة المحوَّلة مقدَّرة من حصة المسارات المغلقة، والسعة افتراض معلن. '
+      + 'لا قياس ميداني.</p>';
   }
 
   /**

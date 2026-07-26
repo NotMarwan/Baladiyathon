@@ -357,6 +357,31 @@
       var baseValue = assumption.baseOf(input);
       var span = assumption.range(baseValue);
 
+      /* افتراضٌ بلا نطاق يُتخطّى، ولا يُمرَّر بحدٍّ فارغ.
+         كان المحور بلا سند يعيد `{low: null, high: null}` فيُمرَّر `null` إلى
+         المحرك، فيرفضه حارس المُدخلات ويسقط **تحليل الحساسية كله** — ومعه
+         بطاقة القرار، فلا يرى المراجع شيئاً. أي أن غياب سندٍ في ملف بيانات
+         كان يُطفئ سطحاً كاملاً في الواجهة.
+         والتخطّي يُبلَّغ لا يُخفى: الصف يبقى في الجدول بسببه، كي يُقرأ
+         «هذا الافتراض لم يُفحص» بدل أن يُقرأ «فُحص ولم يتحرك». */
+      if (!Number.isFinite(span.low) || !Number.isFinite(span.high)) {
+        return {
+          key: assumption.key,
+          label: assumption.label,
+          kind: assumption.kind,
+          unit: assumption.unit,
+          why: assumption.why,
+          skipped: true,
+          skipReason: 'بلا نطاق — سنده غائب عن سجل الحالات، فلم يُفحص.',
+          swingPct: 0,
+          lowImpactVehHours: base.impactVehHours,
+          highImpactVehHours: base.impactVehHours,
+          changesRecommendation: false,
+          changesLevel: false,
+          winners: { low: base.winner, high: base.winner },
+        };
+      }
+
       var low = measure(assumption.apply(input, span.low));
       var high = measure(assumption.apply(input, span.high));
 

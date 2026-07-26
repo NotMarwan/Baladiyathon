@@ -1031,3 +1031,10 @@ kbd {
   border-bottom: 1px dashed var(--athar-line);
 }
 .desk-asks .desk-hint { padding: 0; font-size: 0.72rem; }
+
+/* حكم البديل: اللون يتبع المعنى لا الزينة — الفائض تحذير لأنه يعني
+   طابوراً ينتقل إلى حيّ، لا مجرد رقم أعلى. */
+.desk-alt-load { font-size: 0.84rem; line-height: 1.65; margin: var(--athar-space-2) 0; }
+.desk-alt-load.is-overflows { color: var(--athar-danger); }
+.desk-alt-load.is-near-capacity { color: var(--athar-warning); }
+.desk-alt-load.is-carries { color: var(--athar-success); }
