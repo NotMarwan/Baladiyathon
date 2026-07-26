@@ -197,7 +197,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1196,
+      "value": 1198,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
