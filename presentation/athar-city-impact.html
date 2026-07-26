@@ -33,6 +33,12 @@
   .counter-label{color:var(--muted);font-weight:800;font-size:17px}
   .counter{font:900 clamp(52px,10vw,104px)/1.1 ui-monospace,Consolas,monospace;color:var(--green);direction:ltr}
   .counter-sub{color:var(--muted);font-size:17px;margin-top:8px}
+  .counter-fine{color:var(--muted);font-size:13.5px;margin-top:10px;opacity:.85;line-height:1.7}
+  /* سطر المصدر نصّ لا لون: قارئ الشاشة وضعيف تمييز الألوان يقرآن الحالة نفسها. */
+  .provenance{font-size:12.5px;border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+  .denominator-note{margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+  .denominator-note h3{margin:0 0 8px;font-size:15px}
+  .denominator-note p{margin:0 0 10px;font-size:13.5px;line-height:1.8;color:var(--muted)}
   .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:18px}
   .card{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface)}
   .card h3{color:var(--asphalt);font-size:15px;margin-bottom:9px}
@@ -43,6 +49,13 @@
   .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-left:6px;vertical-align:middle}
   .formula{direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;background:var(--asphalt);color:#d7e7ed;border-radius:14px;padding:18px;margin-top:16px}
   .note{border-right:5px solid var(--amber);padding-right:14px;margin-top:16px;color:var(--muted)}
+  .sensitivity-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:14px;min-width:720px}
+  .sensitivity-table th,.sensitivity-table td{text-align:right;padding:10px 12px;border-bottom:1px solid rgba(128,128,128,.28);vertical-align:top}
+  .sensitivity-table th{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+  .sensitivity-table tbody tr:first-child td{background:rgba(245,158,11,.10)}
+  .sensitivity-table .fine{display:block;font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+  #sensitivity-notes{margin-top:18px;padding-right:32px}
+  #sensitivity-notes li{margin-bottom:8px}
   footer{padding:28px 0 0;display:flex;gap:10px;flex-wrap:wrap}
   footer a{background:var(--asphalt);color:#fff;text-decoration:none;border-radius:999px;padding:9px 14px;font-weight:800}
   @media(max-width:860px){.cards{grid-template-columns:repeat(2,1fr)}}
@@ -54,14 +67,16 @@
 <main>
   <header>
     <div class="kicker">أثر · لوحة أثر المدينة</div>
-    <h1>لو شغّلنا «أثر» على محفظة مدينة سنة كاملة</h1>
+    <h1>«أثر» على محفظة تصاريح تمثيلية</h1>
     <p>150 تصريحاً تمثيلياً · 12 ممراً بثلاثة أصناف · كل رقم أدناه محسوب بمحرك أثر الحقيقي — لا رقم مكتوب يدوياً.</p>
   </header>
 
   <section class="hero">
-    <div class="counter-label">ساعات-مركبة موفرة سنوياً (سيناريو تمثيلي)</div>
+    <div class="counter-label">فرق ساعات-المركبة على هذه المحفظة — 150 تصريحاً تمثيلياً</div>
     <div id="counter-saved-veh-hours" class="counter">—</div>
     <div id="counter-saved-pct" class="counter-sub"></div>
+    <p id="counter-concentration" class="counter-fine"></p>
+    <p id="counter-provenance" class="counter-fine provenance"></p>
   </section>
 
   <div class="cards">
@@ -79,7 +94,7 @@
     </div>
     <div class="card" id="card-dig-once">
       <h3>تصاريح Dig-Once مدمجة</h3><div class="value"></div>
-      <p class="fine">نطاق GAO ‏25–33٪ · خندق تمثيلي 1 كم</p>
+      <p class="fine" id="dig-once-note">خندق تمثيلي 1 كم لكل تصريح</p>
     </div>
   </div>
 
@@ -92,10 +107,53 @@
     </div>
   </section>
 
+  <section class="story" id="section-sensitivity">
+    <h2>أي افتراض يحمل هذا الرقم؟</h2>
+    <p>وسم الافتراضات يقول «هذا افتراض». ولا يقول كم يتحرك الرقم إن تحرّك
+    الافتراض داخل نطاقه المعقول. الجدول أدناه يقيس ذلك: يُمرَّر كل حدّ إلى
+    المحرك نفسه، ويُقرأ الناتج. <strong>لا رقم فيه مكتوب مسبقاً.</strong></p>
+    <p class="note" id="sensitivity-case">—</p>
+    <div style="overflow-x:auto">
+      <table class="sensitivity-table">
+        <thead>
+          <tr>
+            <th>الافتراض</th><th>نوعه</th><th>المدى المفحوص</th>
+            <th>تحرُّك الأثر</th><th>تحرُّك المجموع المكافئ</th><th>هل يقلب التوصية؟</th>
+          </tr>
+        </thead>
+        <tbody id="sensitivity-rows"></tbody>
+      </table>
+    </div>
+    <ul class="note" id="sensitivity-notes"></ul>
+    <p class="note"><strong>ما لا يقوله هذا الجدول:</strong> إن الافتراضات
+    صحيحة. يقول كم يتحرك الرقم إن تحرّكت، لا أكثر. الصحة تحتاج قياساً ميدانياً
+    لا يملكه النموذج (WP-J2).</p>
+  </section>
+
   <section class="story" id="section-methodology">
     <h2>كيف حُسب هذا</h2>
-    <div class="formula">annual impact = Σ (as-submitted delay − optimal-schedule delay) per permit</div>
-    <p style="margin-top:14px">المعادلة: الأثر السنوي = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل) لكل تصريح، مقاسة بمحرك أثر نفسه المستخدم في النموذج التفاعلي.</p>
+    <div class="formula">portfolio impact = Σ (as-submitted delay − optimal-schedule delay) per permit</div>
+    <p style="margin-top:14px">المعادلة: أثر المحفظة = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل) لكل تصريح، مقاسة بمحرك أثر نفسه المستخدم في النموذج التفاعلي.</p>
+
+    <div class="denominator-note">
+      <h3>لماذا لا يوجد رقم سنوي</h3>
+      <p>كان هذا الرقم يُعرض «سنوياً». وحُذف الوصف (WP-T1). التوسيع من محفظة إلى
+      سنة يحتاج <strong>حجم تصاريح حفر سنوياً في الرياض من مصدر رسمي</strong>،
+      ولا يملك المشروع هذا الرقم. المحفظة نفسها مولَّدة: مئة وخمسون تصريحاً
+      بتواريخ بدء موزّعة عشوائياً على ثلاثمئة وخمسة وستين يوماً ببذرة ثابتة —
+      والعدد <em>مئة وخمسون</em> افتراض عرض، لا إحصاء.</p>
+      <p>ضربُ نتيجة المحفظة في مقام مفترض يعطي رقماً وطنياً يبدو مهيباً ولا
+      يُدافَع عنه أمام سؤال واحد: «كم تصريحاً تصدر الأمانة سنوياً؟» فيُعرض ما
+      هو محسوب — أثر هذه المحفظة، وأثر التصريح الواحد وسيطاً — ويُترك التوسيع
+      حتى يصل الرقم الرسمي (طلب بيانات خارجي، WP-J1).</p>
+      <p class="note">والنسبة المعروضة <strong>فرقٌ بين جدولين داخل النموذج
+      نفسه</strong>، لا وفرٌ مقيس ميدانياً. وإثباتها على الأرض يحتاج تجربة ظل
+      بقياس قبل وبعد (WP-J2).</p>
+    </div>
+    <p style="margin-top:14px"><strong>الأساس المقارن تصريحٌ تصدره بلدية.</strong> مولّد المحفظة يطبّق قيد إصدار:
+      لا يتجاوز الإغلاق النهاري (06:00–21:00) ثلث سعة الممر، وأدناه مسار واحد؛ والإغلاق الثقيل ليلي.
+      بلا هذا القيد يولّد المحرك إغلاق ثلاثة من أربعة مسارات على شريان في ذروة العصر، ومعادلة BPR أُسّية
+      فتعطي ملايين ساعات-المركبة من تصريح واحد — فيصير «الوفر» وفراً على تصريح ما كان ليُصدر.</p>
     <p class="note">البذرة الثابتة: 20260727 · عدد التصاريح: 150 · المدخلات تمثيلية موسومة ولا تمثل بيانات رسمية. النتائج نطاقات لا أرقاماً مفردة، وأي اعتماد للأثر يمر عبر بروتوكول تجربة الظل.</p>
   </section>
 
@@ -108,16 +166,91 @@
 
 <script src="athar-nav.js"></script>
 <script src="athar-engine.js"></script>
+<script src="athar-provenance.js"></script>
 <script src="athar-portfolio.js"></script>
+<script src="athar-sensitivity.js"></script>
 <script>
 (function () {
   'use strict';
   const p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
   const fmt = (n) => Math.round(n).toLocaleString('ar-SA-u-nu-latn');
+
+  /**
+   * جدول الحساسية — WP-E1.
+   *
+   * الحالة المفحوصة **وسيط المحفظة لا أسوأها ولا أهدأها**: أسوأ تصريح يعطي
+   * حساسية مبالغاً فيها، وأهدأه يعطي متانةً كاذبة. والوسيط يُنتقى بالحساب من
+   * المحفظة نفسها، فلا يُثبَّت تصريحٌ بعينه يصير خطأً كلما تغيّرت البذرة.
+   */
+  (function renderSensitivity() {
+    const rowsEl = document.getElementById('sensitivity-rows');
+    const notesEl = document.getElementById('sensitivity-notes');
+    const caseEl = document.getElementById('sensitivity-case');
+    if (!rowsEl || typeof AtharSensitivity === 'undefined') return;
+
+    const permits = AtharPortfolio.buildPermits();
+    const scored = permits.map((permit) => ({
+      permit: permit,
+      vehHours: AtharEngine.score({
+        aadt: permit.aadt,
+        lanes: permit.lanes,
+        lanesClosed: permit.lanesClosed,
+        startHour: permit.startHour,
+        durationHours: permit.durationHours,
+        capacityPerLane: AtharEngine.DEFAULTS.capacityPerLane,
+        freeFlowMin: AtharEngine.DEFAULTS.freeFlowMin,
+      }).delayVehHours,
+    })).sort((a, b) => a.vehHours - b.vehHours);
+    const median = scored[Math.floor(scored.length / 2)].permit;
+
+    const input = {
+      aadt: median.aadt,
+      lanes: median.lanes,
+      lanesClosed: median.lanesClosed,
+      startHour: median.startHour,
+      durationHours: median.durationHours,
+      capacityPerLane: AtharEngine.DEFAULTS.capacityPerLane,
+      freeFlowMin: AtharEngine.DEFAULTS.freeFlowMin,
+    };
+
+    const result = AtharSensitivity.tornado(input);
+    const num = (n) => Number(n.toFixed(2)).toLocaleString('ar-SA-u-nu-latn');
+
+    caseEl.textContent = 'الحالة المفحوصة: وسيط المحفظة — ' + median.id
+      + ' · حركة ' + fmt(median.aadt) + ' مركبة/يوم · إغلاق '
+      + median.lanesClosed + ' من ' + median.lanes + ' مسارات · '
+      + fmt(median.durationHours) + ' ساعة عمل. الأثر كما قُدّم: '
+      + fmt(result.base.impactVehHours) + ' ساعة-مركبة.';
+
+    rowsEl.innerHTML = result.rows.map((row) => {
+      const flip = row.changesRecommendation
+        ? '<strong>نعم</strong> — ' + row.winners.low + ' ↔ ' + row.winners.high
+        : 'لا';
+      return '<tr>'
+        + '<td>' + row.label + '<br><span class="fine">' + row.why + '</span></td>'
+        + '<td>' + row.kind + '</td>'
+        + '<td>' + num(row.lowValue) + ' – ' + num(row.highValue)
+        + '<br><span class="fine">' + row.unit + ' · الأساس ' + num(row.baseValue)
+        + '</span></td>'
+        + '<td>' + fmt(row.swingVehHours) + ' ساعة-مركبة<br><span class="fine">'
+        + row.swingPct.toFixed(1) + '٪ من الأثر</span></td>'
+        + '<td>' + row.swingEquivalentPct.toFixed(1) + '٪</td>'
+        + '<td>' + flip + '</td>'
+        + '</tr>';
+    }).join('');
+
+    notesEl.innerHTML = result.notes.map((note) => '<li>' + note + '</li>').join('');
+  }());
   const fmtRange = (a, b) => fmt(a) + ' – ' + fmt(b);
 
   const target = p.totals.savedVehHours;
   const el = document.getElementById('counter-saved-veh-hours');
+  /**
+   * الرقم يُكتب أولاً ثم يُحرَّك.
+   * requestAnimationFrame لا يُستدعى في تبويب لا يُركَّب — يُفتح العرض في تبويب
+   * خلفي فيبقى العدّاد شرطةً حتى ينتقل إليه الناظر. الحركة زينة، والرقم ليس كذلك.
+   */
+  el.textContent = fmt(target);
   const t0 = performance.now();
   function tick(t) {
     const k = Math.min(1, (t - t0) / 1500);
@@ -125,9 +258,78 @@
     if (k < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+  /* WP-T1: «وفر ٪» صار «فرق نموذج ٪». النسبة فرق بين جدولين داخل النموذج
+     نفسه، لا وفر مقيس ميدانياً — والفرق بين اللفظين هو الفرق بين ادعاء
+     يُدافَع عنه وادعاء لا يُدافَع عنه. */
   document.getElementById('counter-saved-pct').textContent =
-    'وفر ' + p.totals.savedPct.toFixed(1) + '٪ من تأخير المحفظة كما قُدمت — ' +
-    p.permitCount + ' تصريحاً تمثيلياً';
+    'فرق نموذجي ' + p.totals.savedPct.toFixed(1) + '٪ عن تأخير المحفظة كما قُدمت — '
+    + p.permitCount + ' تصريحاً تمثيلياً · مشتق، غير مقيس ميدانياً';
+
+  /**
+   * التركُّز معروض تحت الرقم لا في الحاشية.
+   * رقمٌ كبير بلا بيان مصدره يُقرأ ادّعاءً؛ وأول ما يسأل عنه المراجع: هل يقوده
+   * تصريح واحد؟ الجواب مكتوب قبل أن يُسأل، والوسيط بجانبه يثبت أن الإجمالي يصف
+   * الحالة النموذجية لا حالة شاذة.
+   */
+  const c = p.concentration;
+  document.getElementById('counter-concentration').textContent =
+    'أعلى تصريح ' + c.topPermitPct.toFixed(1) + '٪ من الرقم · أعلى خمسة '
+    + c.topFivePct.toFixed(1) + '٪ · وسيط التصريح ' + fmt(c.medianVehHours)
+    + ' مقابل متوسط ' + fmt(c.meanVehHours) + ' ساعة-مركبة · وسيط الوفر '
+    + c.medianSavedPct.toFixed(1) + '٪';
+
+  /* WP-T1: كل رقم رئيسي يحمل سطر مصدره تحته — نصّاً لا لوناً. */
+  const P = AtharProvenance;
+  const SEALED = {
+    savedVehHours: P.value({
+      value: p.totals.savedVehHours, unit: 'ساعة-مركبة', sourceType: 'derived',
+      derivedBy: 'Σ (تأخير كما قُدم − تأخير الجدول الأمثل) بمحرك أثر',
+      assumptions: ['محفظة مولَّدة ببذرة 20260727', 'معامل احتكاك منطقة العمل 1.10'],
+      limitations: 'محفظة تمثيلية — لا يُوسَّع إلى رقم سنوي بلا حجم تصاريح رسمي',
+    }),
+    timeValue: P.value({
+      value: p.ranges.timeValue.lowSAR, unit: '﷼', sourceType: 'derived',
+      sourceId: 'src-017 · src-003',
+      derivedBy: 'ساعات-أشخاص × أجر GASTAT الساعي × نصيب كود 203 (40–70٪)',
+      assumptions: ['إشغال 1.2–1.6 راكب/مركبة'],
+      limitations: 'قيمة وقت مُنمذَجة لا تدفّق نقدي',
+    }),
+    personHours: P.value({
+      value: p.ranges.personHours.lowPersonHours, unit: 'ساعة-شخص',
+      sourceType: 'derived', derivedBy: 'ساعات-مركبة × نطاق الإشغال',
+      assumptions: ['إشغال 1.2–1.6 راكب/مركبة — لا رقم رياض رسمي منشور'],
+      limitations: 'نطاق افتراضي معلن',
+    }),
+    co2: P.value({
+      value: p.ranges.co2.lowCo2Kg, unit: 'كجم', sourceType: 'derived',
+      sourceId: 'src-010',
+      derivedBy: 'وقود التعطّل × 2.31 كجم/لتر',
+      assumptions: ['استهلاك التعطّل 0.7–1.1 لتر/ساعة-مركبة'],
+      limitations: 'فيزيائي فقط — لا تحويل نقدي',
+    }),
+    digOnce: P.value({
+      value: p.digOnceMerged.duplicateTrenchKmEquivalent, unit: 'كم',
+      sourceType: 'estimated',
+      derivedBy: '(عدد أعضاء المجموعة − 1) × طول الخندق التمثيلي',
+      assumptions: ['تداخل تام بين مسارات المجموعة', 'خندق تمثيلي 1 كم لكل تصريح'],
+      limitations: 'طول مكافئ لا محسوب هندسياً — التقاطع الجزئي يخفضه',
+    }),
+  };
+
+  const bad = P.violations(SEALED);
+  if (bad.length) throw new Error('قيم بلا عقد مصدر: ' + bad.join(' · '));
+
+  function stamp(cardId, key) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    const line = document.createElement('p');
+    line.className = 'fine provenance';
+    line.textContent = P.caption(SEALED[key]);
+    card.appendChild(line);
+  }
+
+  document.getElementById('counter-provenance').textContent =
+    P.caption(SEALED.savedVehHours);
 
   document.querySelector('#card-time-value .value').textContent =
     fmtRange(p.ranges.timeValue.lowSAR, p.ranges.timeValue.highSAR) + ' ﷼';
@@ -135,9 +337,23 @@
     fmtRange(p.ranges.personHours.lowPersonHours, p.ranges.personHours.highPersonHours) + ' س-ش';
   document.querySelector('#card-co2 .value').textContent =
     fmtRange(p.ranges.co2.lowCo2Kg, p.ranges.co2.highCo2Kg) + ' كجم';
+  /* WP-A2: كان هنا نطاق بملايين الريالات مبنيّاً على كلفة خندق افتراضية لم
+     تكن تُعرض، ومضروبة في نطاق GAO الذي يقول سجل المصادر إنه لا يدعم تعميماً
+     على حفريات المدن. البديل كمية مادية محسوبة من بيانات التصاريح وحدها. */
+  /* عمليات الحفر المتجنَّبة سليمة مهما كان التداخل؛ الطول مكرر مكافئ تحت
+     افتراض تداخل تام، فيُسمّى كذلك ويحمل افتراضه (WP-A2). */
   document.querySelector('#card-dig-once .value').textContent =
     p.digOnceMerged.permits + ' تصريحاً / ' + p.digOnceMerged.groups + ' مجموعة · ' +
-    fmtRange(p.digOnceMerged.savedLowSAR, p.digOnceMerged.savedHighSAR) + ' ﷼';
+    p.digOnceMerged.additionalPermitsInGroups + ' تصريحاً إضافياً داخل المجموعات';
+  stamp('card-time-value', 'timeValue');
+  stamp('card-person-hours', 'personHours');
+  stamp('card-co2', 'co2');
+  stamp('card-dig-once', 'digOnce');
+
+  document.getElementById('dig-once-note').textContent =
+    'خندق تمثيلي 1 كم لكل تصريح · طول حفر مكرر مكافئ ' +
+    p.digOnceMerged.duplicateTrenchKmEquivalent.toFixed(0) + ' كم · ' +
+    p.digOnceMerged.overlapAssumption + ' ' + p.digOnceMerged.costNote;
 
   const svg = document.getElementById('chart-by-class');
   const classes = [['arterial', 'شرياني'], ['major', 'رئيسي'], ['local', 'فرعي']];

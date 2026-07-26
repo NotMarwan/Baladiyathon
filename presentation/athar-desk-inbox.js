@@ -136,6 +136,22 @@
     }).join('');
   }
 
+  /**
+   * سطر العدّادات وحده.
+   * ---------------------------------------------------------------------------
+   * مفصولٌ عن بقية الشريط لأنه الجزء الوحيد الذي يتغيّر مع كل ضغطة مفتاح في
+   * حقل البحث. الشريط كله كان يُعاد بناؤه ليتحدّث هذا السطر، فيُهدَم الحقل
+   * الذي يكتب فيه المراجع وتُفقد البؤرة بعد أول حرف — بحثٌ لا يُكتب فيه إلا
+   * حرف واحد. الآن: الشريط يُبنى مرة، وهذا السطر وحده يُستبدل.
+   */
+  function renderCounts(counts) {
+    var c = counts || {};
+    return '<span>يُعرض <strong>' + escapeHtml(number(c.visible)) + '</strong>'
+      + ' من ' + escapeHtml(number(c.total)) + '</span>'
+      + '<span class="desk-pending"><strong>' + escapeHtml(number(c.needsDecision))
+      + '</strong> ينتظر قراراً</span>';
+  }
+
   function renderToolbar(counts, filters) {
     var f = filters || {};
     return '<div class="desk-toolbar">'
@@ -148,12 +164,7 @@
       + '<label class="desk-field"><span>الترتيب</span>'
       + '<select id="desk-sort">' + sortOptions(f.sort) + '</select></label>'
       + '</div>'
-      + '<p class="desk-counts">'
-      + '<span>يُعرض <strong>' + escapeHtml(number(counts.visible)) + '</strong>'
-      + ' من ' + escapeHtml(number(counts.total)) + '</span>'
-      + '<span class="desk-pending"><strong>' + escapeHtml(number(counts.needsDecision))
-      + '</strong> ينتظر قراراً</span>'
-      + '</p>'
+      + '<p class="desk-counts" id="desk-counts" role="status">' + renderCounts(counts) + '</p>'
       + '</div>';
   }
 
@@ -161,6 +172,7 @@
     renderRow: renderRow,
     renderList: renderList,
     renderToolbar: renderToolbar,
+    renderCounts: renderCounts,
     statusTag: statusTag,
     escapeHtml: escapeHtml,
     SENSITIVITY_LABELS: SENSITIVITY_LABELS,

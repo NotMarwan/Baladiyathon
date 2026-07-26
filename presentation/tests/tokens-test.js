@@ -18,6 +18,7 @@ const REQUIRED = [
   '--athar-warning', '--athar-warning-soft',
   '--athar-danger', '--athar-danger-soft',
   '--athar-info', '--athar-info-soft',
+  '--athar-on-ink', '--athar-success-on-ink',
   '--athar-space-1', '--athar-space-2', '--athar-space-3',
   '--athar-space-4', '--athar-space-6', '--athar-space-8', '--athar-space-12',
   '--athar-radius-sm', '--athar-radius', '--athar-radius-lg',
@@ -58,6 +59,9 @@ ok('الوسوم تحمل الخط العربي أولاً والأحادي لل
  * لكنها معدودة ومقصودة — ورفع أي سقف هنا قرار واعٍ لا انزلاق.
  */
 const HEX_BUDGET = {
+  'athar-home.html': 0,
+  'athar-overview.html': 0,
+  'athar-advanced.html': 0,
   'athar-desk.html': 0,
   'athar-map.html': 4,
   'athar-sources.html': 4,
@@ -66,6 +70,8 @@ const HEX_BUDGET = {
   'athar-lab.html': 3,
   'athar-prototype.html': 12,
   'athar-pitch.html': 4,
+  // تبويب مؤقّت — يُحذف سطره هنا مع الصفحة. صفر: المخطط كله من الوسوم.
+  'athar-journey.html': 0,
 };
 
 ok('كل صفحة عائلة تستورد ملف الوسوم أو تحمّل الشريط الذي يحقنه', () => {
@@ -135,6 +141,16 @@ ok('ألوان الحالة تُقرأ على خلفياتها الناعمة', 
     const ratio = contrast(hexOf('--athar-' + tone), hexOf('--athar-' + tone + '-soft'));
     assert.ok(ratio >= 4.5, `نبرة ${tone} = ${ratio.toFixed(2)}:1 على خلفيتها`);
   });
+});
+
+ok('نصّا الشريط الداكن يبلغان الحد على الحبر', () => {
+  // الشريط الوحيد الداكن في المنتج. نبرة النجاح الفاتحة عليه رقمٌ كبير لا نص
+  // صغير، فيكفيها 3:1 — ونص الشريط العادي نصٌّ صغير يلزمه 4.5.
+  const ink = hexOf('--athar-ink');
+  const plain = contrast(hexOf('--athar-on-ink'), ink);
+  assert.ok(plain >= 4.5, `نص الشريط على الحبر = ${plain.toFixed(2)}:1`);
+  const figure = contrast(hexOf('--athar-success-on-ink'), ink);
+  assert.ok(figure >= 3, `رقم الشريط على الحبر = ${figure.toFixed(2)}:1`);
 });
 
 ok('نص الزر الأساسي يُقرأ على لون الهوية', () => {

@@ -114,7 +114,7 @@ function emptyFC() { return { type: 'FeatureCollection', features: [] }; }
 function makeFakeMap() {
   const layers = {};
   ['roadworks-realtime', 'closures-restrictions-realtime', 'incidents-realtime',
-   'diversion-routes', 'bus-routes', 'events-poi'].forEach((name) => {
+   'diversion-routes', 'events-poi'].forEach((name) => {
     ['-lines-casing', '-lines', '-symbols'].forEach((suffix) => {
       layers[name + suffix] = true;
     });

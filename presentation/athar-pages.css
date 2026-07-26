@@ -1,0 +1,337 @@
+/*
+ * أثر — تنسيق صفحات الفهرس الثلاث: الرئيسية والنظرة العامة والتفاصيل المتقدمة.
+ * ---------------------------------------------------------------------------
+ * ملف واحد لثلاث صفحات: نسخة تنسيق لكل صفحة كانت ستنحرف عن أختها بعد أول
+ * تعديل. وكل لون ومسافة من `athar-tokens.css` — لا لوحة ثانية هنا.
+ */
+
+body {
+  margin: 0;
+  background: var(--athar-canvas);
+  color: var(--athar-ink);
+  font-family: var(--athar-font);
+  line-height: 1.7;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* الوصول بلوحة المفاتيح: أول ما يُبلَغ رابطٌ يقفز إلى المحتوى. */
+.ac-skip {
+  position: absolute;
+  inset-inline-start: -9999px;
+  z-index: 20;
+  padding: 10px 16px;
+  background: var(--athar-primary);
+  color: var(--athar-on-ink);
+  border-radius: var(--athar-radius-sm);
+  font-weight: 700;
+}
+.ac-skip:focus { inset-inline-start: var(--athar-space-3); top: 56px; }
+
+.ac-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--athar-space-6) var(--athar-space-4) var(--athar-space-12);
+}
+
+/* ---- المقدّمة: هدف واحد وإجراء واحد ---- */
+
+.ac-hero {
+  padding: var(--athar-space-6) 0 var(--athar-space-4);
+  border-bottom: 1px solid var(--athar-line);
+  margin-bottom: var(--athar-space-6);
+}
+.ac-hero h1 {
+  margin: 0 0 var(--athar-space-3);
+  font-size: clamp(1.6rem, 1.1rem + 2vw, 2.4rem);
+  line-height: 1.35;
+  max-width: 22ch;
+}
+.ac-lead {
+  margin: 0 0 var(--athar-space-3);
+  max-width: 62ch;
+  font-size: 1.02rem;
+  color: var(--athar-ink);
+}
+.ac-context {
+  margin: var(--athar-space-3) 0 0;
+  font-size: 0.84rem;
+  color: var(--athar-muted);
+}
+.ac-note {
+  max-width: 68ch;
+  font-size: 0.9rem;
+  color: var(--athar-muted);
+}
+
+/* إجراء أساسي واحد لكل قسم، وما بعده ثانوي بوضوح. */
+.ac-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--athar-space-3);
+  align-items: center;
+  margin: var(--athar-space-4) 0 0;
+}
+.ac-cta,
+.ac-cta-secondary {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: var(--athar-radius-sm);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  transition: background var(--athar-t-hover), color var(--athar-t-hover);
+}
+.ac-cta { background: var(--athar-primary); color: var(--athar-on-ink); }
+.ac-cta:hover { background: var(--athar-primary-hover); }
+.ac-cta-secondary {
+  color: var(--athar-primary);
+  border: 1px solid var(--athar-line);
+  font-weight: 700;
+}
+.ac-cta-secondary:hover { background: var(--athar-primary-soft); }
+.ac-cta:focus-visible,
+.ac-cta-secondary:focus-visible {
+  outline: 2px solid var(--athar-primary);
+  outline-offset: 3px;
+}
+
+/* ---- الأقسام ---- */
+
+.ac-block { margin: 0 0 var(--athar-space-8); }
+.ac-block h2 {
+  margin: 0 0 var(--athar-space-2);
+  font-size: 1.25rem;
+  scroll-margin-top: 60px;
+}
+.ac-block h3 {
+  margin: var(--athar-space-4) 0 var(--athar-space-2);
+  font-size: 1rem;
+}
+.ac-block p { max-width: 72ch; }
+
+.ac-users { margin: 0; padding-inline-start: 1.1rem; max-width: 72ch; }
+.ac-users li { margin-bottom: var(--athar-space-1); }
+
+/* ---- الرحلة: أربع خطوات مرقّمة ---- */
+
+.ac-journey {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--athar-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  counter-reset: none;
+}
+.ac-step {
+  padding: var(--athar-space-3);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+}
+.ac-step-num {
+  margin: 0 0 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--athar-primary);
+  letter-spacing: 0.02em;
+}
+.ac-step h3 { margin: 0 0 6px; font-size: 0.98rem; }
+.ac-step h3 a { color: var(--athar-ink); text-decoration: none; }
+.ac-step h3 a:hover { color: var(--athar-primary); text-decoration: underline; }
+.ac-step p { margin: 0; font-size: 0.86rem; color: var(--athar-muted); }
+
+/* ---- القيمة ---- */
+
+.ac-values {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--athar-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.ac-values li {
+  padding: var(--athar-space-3);
+  background: var(--athar-surface-raised);
+  border-inline-start: 3px solid var(--athar-primary);
+  border-radius: var(--athar-radius-sm);
+}
+.ac-values h3 { margin: 0 0 6px; font-size: 0.98rem; }
+.ac-values p { margin: 0; font-size: 0.87rem; color: var(--athar-muted); }
+
+/* ---- وسم الحالة: نبرة ونص، لا لون وحده ---- */
+
+.ac-status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--athar-radius-sm);
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--athar-ink);
+  background: var(--athar-surface-raised);
+  border: 1px solid var(--athar-line);
+}
+.ac-status[data-tone="success"] { background: var(--athar-success-soft); }
+.ac-status[data-tone="warning"] { background: var(--athar-warning-soft); }
+.ac-status[data-tone="danger"] { background: var(--athar-danger-soft); }
+.ac-status[data-tone="info"] { background: var(--athar-info-soft); }
+
+.ac-status-strip {
+  list-style: none;
+  margin: var(--athar-space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--athar-space-2);
+}
+.ac-status-strip li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+}
+.ac-status-count { font-size: 0.82rem; color: var(--athar-muted); font-weight: 700; }
+
+/* ---- الكشف المتدرّج ---- */
+
+.ac-details {
+  margin: 0 0 var(--athar-space-2);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  scroll-margin-top: 60px;
+}
+.ac-details > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--athar-space-2);
+  flex-wrap: wrap;
+  padding: 10px var(--athar-space-3);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+.ac-details > summary:hover { background: var(--athar-primary-soft); }
+.ac-details > summary:focus-visible {
+  outline: 2px solid var(--athar-primary);
+  outline-offset: -2px;
+}
+.ac-summary-name { flex: 1 1 auto; }
+.ac-details[open] > summary { border-bottom: 1px solid var(--athar-line); }
+.ac-details > *:not(summary) { padding-inline: var(--athar-space-3); }
+.ac-details > p { margin: var(--athar-space-2) 0; font-size: 0.88rem; }
+.ac-details > dl { margin: var(--athar-space-2) 0; }
+
+.ac-dl { margin: 0; }
+.ac-pair {
+  display: grid;
+  grid-template-columns: minmax(120px, 170px) 1fr;
+  gap: var(--athar-space-2);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--athar-line);
+  font-size: 0.87rem;
+}
+.ac-pair:last-child { border-bottom: 0; }
+.ac-pair dt { color: var(--athar-muted); font-weight: 700; }
+.ac-pair dd { margin: 0; }
+
+.ac-files { margin: 0 0 var(--athar-space-3); padding-inline-start: 1.1rem; }
+.ac-files li { font-size: 0.84rem; }
+
+code {
+  font-family: var(--athar-font-mono);
+  font-size: 0.82em;
+  background: var(--athar-surface-raised);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* ---- الجداول: بيانات جدولية في جدول حقيقي ---- */
+
+.ac-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius-sm);
+  margin: var(--athar-space-2) 0 var(--athar-space-4);
+  background: var(--athar-surface);
+}
+.ac-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.ac-table th,
+.ac-table td {
+  text-align: start;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--athar-line);
+  vertical-align: top;
+}
+.ac-table thead th {
+  background: var(--athar-surface-raised);
+  color: var(--athar-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ac-table tbody tr:last-child th,
+.ac-table tbody tr:last-child td { border-bottom: 0; }
+.ac-table tbody th { font-weight: 700; }
+.ac-none { color: var(--athar-muted); }
+
+/* ---- فهرس الصفحة الطويلة ---- */
+
+.ac-toc {
+  margin: 0 0 var(--athar-space-6);
+  padding: var(--athar-space-3) var(--athar-space-4);
+  background: var(--athar-surface-raised);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+}
+.ac-toc h2 { margin: 0 0 var(--athar-space-2); font-size: 0.95rem; }
+.ac-toc ol {
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  columns: 2;
+  column-gap: var(--athar-space-6);
+  font-size: 0.88rem;
+}
+.ac-toc a { color: var(--athar-primary); }
+
+/* ---- بطاقات القسم المتقدم ---- */
+
+.ac-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--athar-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.ac-card {
+  padding: var(--athar-space-4);
+  background: var(--athar-surface);
+  border: 1px solid var(--athar-line);
+  border-radius: var(--athar-radius);
+}
+.ac-card h2 { margin: 0 0 8px; font-size: 1.02rem; }
+.ac-card h2 a { color: var(--athar-ink); text-decoration: none; }
+.ac-card h2 a:hover { color: var(--athar-primary); text-decoration: underline; }
+.ac-card p { margin: 0; font-size: 0.87rem; color: var(--athar-muted); }
+.ac-card .ac-status { margin-bottom: 8px; }
+
+@media (max-width: 640px) {
+  .ac-toc ol { columns: 1; }
+  .ac-pair { grid-template-columns: 1fr; gap: 2px; }
+}

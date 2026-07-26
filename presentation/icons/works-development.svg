@@ -1,6 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
-  <circle cx="13" cy="13" r="10.2" fill="#ffffff" stroke="#f0a020" stroke-width="2.2"/>
-  <rect x="7.4" y="12.6" width="4.2" height="6.2" rx="0.6" fill="#f0a020"/>
-  <rect x="12.8" y="8.4" width="5.4" height="10.4" rx="0.6" fill="#f0a020"/>
-  <rect x="14.4" y="10.2" width="2.2" height="2.2" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <radialGradient id="s" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#101828" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#101828" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="16" cy="17.1" r="13" fill="url(#s)"/>
+  <circle cx="16" cy="15.6" r="10.9" fill="#ffffff" stroke="#f0a020" stroke-width="2.4"/>
+  <g fill="#f0a020">
+    <rect x="9.8" y="13.8" width="6.0" height="6.9" rx="0.8"/>
+    <rect x="16.4" y="9.0" width="6.4" height="11.7" rx="0.9"/>
+    <rect x="8.8" y="20.5" width="14.4" height="2.0" rx="1"/>
+  </g>
+  <g fill="#ffffff">
+    <rect x="11.5" y="16.0" width="2.6" height="2.4" rx="0.4"/>
+    <rect x="18.3" y="11.2" width="2.6" height="2.4" rx="0.4"/>
+    <rect x="18.3" y="15.4" width="2.6" height="2.4" rx="0.4"/>
+  </g>
 </svg>

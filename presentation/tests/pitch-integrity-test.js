@@ -205,10 +205,36 @@ test('the idea card uses the four honest replacement claims', () => {
   });
 });
 
-test('team placeholders remain explicit instead of being invented or hidden', () => {
-  const placeholders = ideaCard.match(/\[الاسم\]/g) || [];
-  assert.ok(placeholders.length >= 1);
-  assert.ok(ideaCard.includes('مانع تسليم خارجي'));
+/*
+ * كان هذا الفحص يفرض **بقاء** العناصر النائبة، وكان محقاً: ما دامت الأسماء
+ * مجهولة، فإظهار `[الاسم]` أصدق من اختراع أربعة أسماء أو حذف القسم بصمت.
+ *
+ * القاعدة لم تتغيّر — سببها هو الذي انتهى. أصحاب المشروع قدّموا الأسماء
+ * والأدوار (2026-07-26 · WP-A4)، فلم تعد مخترَعة. والعنصر النائب بعد وصولها
+ * يصير هو الخطأ، وعبارة «مانع تسليم خارجي» تصير ادعاءً كاذباً.
+ *
+ * الفحص يُقلَب إلى الصيغة الأقوى من المبدأ نفسه: أسماء حقيقية، صفر عنصر نائب،
+ * ولا ادعاء مانعٍ زال. أما «لا تُختلق الأدوار» فمحفوظ: ثلاثة أعضاء لم يُصرَّح
+ * بتخصصهم يُوصفون «عضو الفريق» ولا يُمنحون دوراً هندسياً لم يقله أحد.
+ */
+test('team names are real, placeholders are gone, and no stale blocker claim remains', () => {
+  const placeholders = ideaCard.match(/\[الاسم\]|\[الدور\]/g) || [];
+  assert.strictEqual(placeholders.length, 0,
+    `${placeholders.length} عنصراً نائباً باقياً في بطاقة الفكرة`);
+
+  assert.ok(!ideaCard.includes('مانع تسليم خارجي'),
+    'البطاقة ما زالت تعلن مانع تسليم بعد أن وصلت البيانات — الادعاء صار كاذباً');
+
+  const teamSection = ideaCard.split('## أعضاء الفريق')[1] || '';
+  const members = (teamSection.split('##')[0].match(/^- .+ — .+$/gm) || []);
+  assert.strictEqual(members.length, 4,
+    `${members.length} عضواً مُدرجاً لا أربعة`);
+
+  assert.ok(/قائد الفريق/.test(teamSection),
+    'لا يظهر قائد الفريق — المسؤولية عن التسليم بلا اسم');
+
+  assert.ok(ideaCard.includes('لم يُختلق دور تخصصي لم يُصرَّح به'),
+    'البطاقة لا تعلن أن الأدوار غير المصرَّح بها لم تُختلق');
 });
 
 test('all local presentation links resolve to existing owned or project files', () => {

@@ -23,12 +23,22 @@ body {
 }
 
 /* ---- شريط المنتج ---- */
+/* WP-C1 — الشريط يلتف عند الضيق، ولا يُثبَّت ارتفاعه.
+   سبعة عناصر تحتاج 444 بكسلاً في نافذة 375، فكان الجسد كله يُزاح — وفي
+   واجهة تُقرأ من اليمين يعني ذلك أن أول كلمة تقع خارج الشاشة.
+   ظهر بعد WP-L1: زرّ السجل كان مخفياً ما دام السجل فارغاً، فلمّا صار
+   السجل ثابتاً ظهر عنصرٌ سابع وتجاوز المجموع. العيب كان قائماً وكانت
+   البيانات أقصر من أن تبلغه.
+   والارتفاع صار حدّاً أدنى لا قيمة ثابتة: شريطٌ ملتفّ بارتفاع مثبَّت يقصّ
+   صفّه الثاني. */
 .desk-bar {
   flex: 0 0 auto;
-  height: var(--athar-toolbar-h);
+  min-height: var(--athar-toolbar-h);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--athar-space-3);
+  gap: var(--athar-space-2) var(--athar-space-3);
+  padding-block: var(--athar-space-1);
   padding-inline: var(--athar-space-4);
   background: var(--athar-surface);
   border-bottom: 1px solid var(--athar-line);
@@ -250,6 +260,32 @@ kbd {
   color: var(--athar-muted);
 }
 
+/* ---- الخريطة متعذّرة: يُقال، ولا يُترك الفراغ يوحي بعطلٍ شامل ---- */
+.desk-map-down {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--athar-space-2);
+  padding: var(--athar-space-6);
+  text-align: center;
+  background: var(--athar-canvas);
+}
+.desk-map-down-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--athar-ink);
+}
+.desk-map-down-note {
+  margin: 0;
+  max-width: 36ch;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--athar-muted);
+}
+
 /* ---- شريط أدوات الصندوق ---- */
 .desk-toolbar {
   flex: 0 0 auto;
@@ -364,6 +400,35 @@ kbd {
 }
 .desk-file-head h2 { font-size: 1rem; line-height: 1.4; margin: 2px 0; }
 .desk-file-sub { font-size: 0.78rem; color: var(--athar-muted); }
+
+/* موقع التصريح من المسار: رقمٌ واسم، وسبب الخروج عن المسار حين يخرج. */
+.desk-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 0.74rem;
+}
+.desk-stage-count {
+  padding: 2px 8px;
+  border-radius: var(--athar-radius-sm);
+  background: var(--athar-primary-soft);
+  color: var(--athar-primary);
+  font-weight: 800;
+}
+.desk-stage-label { color: var(--athar-muted); font-weight: 700; }
+.desk-stage-note {
+  padding: 2px 8px;
+  border-radius: var(--athar-radius-sm);
+  background: var(--athar-warning-soft);
+  color: var(--athar-ink);
+  font-weight: 700;
+}
+.desk-stage[data-onpath="false"] .desk-stage-count {
+  background: var(--athar-warning-soft);
+  color: var(--athar-ink);
+}
 .desk-file-badges { display: grid; gap: 4px; justify-items: end; }
 .desk-version { font-family: var(--athar-font-mono); font-size: 0.72rem; color: var(--athar-faint); }
 
@@ -794,9 +859,16 @@ kbd {
 
 /* ---- شريط الاستئناف: يُقرأ مرة ثم يُخفى ---- */
 
+/* WP-C1 — الشريط يلتف ولا يدفع.
+   ظهر الفيض حين صار سجل القرارات ثابتاً (WP-L1): قبله كان النصّ «قرّرتَ 0»
+   فلا يظهر الشريط أصلاً، وبعده صار «قرّرتَ 12 عملاً · ما زال 110…» فدفع
+   الجسد أربعاً وخمسين بكسلاً عند 390.
+   عيبٌ كان قائماً ولم يكن مرئياً لأن البيانات لم تبلغه — والبوابة التقطته
+   في أول تشغيل بعد أن صارت البيانات حقيقية. */
 .desk-resume {
   flex: 0 0 auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--athar-space-3);
   padding: var(--athar-space-2) var(--athar-space-4);
@@ -804,9 +876,10 @@ kbd {
   border-bottom: 1px solid var(--athar-line);
   font-size: 0.8rem;
   line-height: 1.6;
+  min-width: 0;
 }
 .desk-resume[hidden] { display: none; }
-.desk-resume-text { min-width: 0; }
+.desk-resume-text { min-width: 0; flex: 1 1 12rem; overflow-wrap: anywhere; }
 .desk-resume-text strong { font-family: var(--athar-font-mono); color: var(--athar-primary); }
 
 .desk-resume-go {

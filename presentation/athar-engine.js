@@ -39,7 +39,11 @@
     valueOfTimeSAR: 45, // SAR/veh-hour — افتراض توضيحي للعرض (demo value-of-time for narrative use only)
     idleFuelLPerHour: 0.9, // L/vehicle-hour idling — افتراض توضيحي للعرض, order-of-magnitude idle consumption
     co2KgPerL: 2.31, // kg CO2 per liter gasoline — standard emissions factor, see sciencedirect.com/org/science/article/pii/S1556831824000285 (Sources Ledger #10)
-    trenchCostPerKmSAR: 850000, // SAR/km trenching cost — افتراض توضيحي للعرض, order-of-magnitude figure for narrative use
+    // WP-A2: حُذف trenchCostPerKmSAR (كان 850000، موسوماً «افتراض توضيحي»).
+    // كان يضرب في نطاق GAO 25–33٪ فينتج «وفر» بملايين الريالات لا مُدخل له
+    // معروض ولا مصدر. وسجل المصادر نفسه يقول إن نطاق GAO لا يدعم تعميماً على
+    // حفريات المدن. digOnce() صارت تعيد كمية مادية محسوبة بدل تقدير مالي —
+    // انظر رأس الدالة.
     // --- نطاقات المعيار الرابع (23 يوليو 2026) ---
     occupancyLow: 1.2, // شخص/مركبة — افتراض توضيحي للعرض؛ كود 203 يشترط الإشغال لا عدّ المركبات (src-003) ولا رقم رياض رسمي منشور
     occupancyHigh: 1.6, // شخص/مركبة — الحد الأعلى للنطاق، افتراض توضيحي للعرض
@@ -55,12 +59,22 @@
     ridersPerBusHigh: 40, // راكب/حافلة — حد أعلى، افتراض توضيحي للعرض
   };
 
-  // GAO dig-once savings band for dense urban areas (Sources Ledger #7):
-  // sharing a trench across merged permits saves 25-33% of the separate-dig
-  // cost. Reported as a range, verbatim from the source — no reverse
-  // calibration to a target test value.
-  const DIG_ONCE_SAVED_FRACTION_LOW = 0.25;
-  const DIG_ONCE_SAVED_FRACTION_HIGH = 0.33;
+  // WP-A2: حُذف نطاق GAO (25–33٪) من المحرك.
+  //
+  // النطاق نفسه صحيح ومصدره أوّليّ، لكنه يخصّ مدّ الألياف في مدن أمريكية
+  // كثيفة. سجل مصادر المشروع يقول في حقل «لا يدعم» إنه لا يدعم نسبة عامة لكل
+  // حفريات المدن — وكان المحرك يطبّقه على خندق بلدي سعودي، فيخالف تحذيره
+  // المكتوب. يبقى النطاق في athar-sources.html سياقاً مرجعياً، ولا يدخل حساباً.
+  //
+  // ما حلّ محلّه: كمية مادية محسوبة من بيانات التصريح وحدها — انظر digOnce().
+  const COST_NOTE = 'الوفر المالي = الطول المكرر × كلفة الخندق لدى الأمانة. '
+    + 'الكلفة مُدخل تشغيلي لا يملكه النموذج.';
+
+  // الطول المكرر يفترض تداخلاً تاماً بين مسارات المجموعة. الافتراض يسافر مع
+  // الرقم أينما عُرض، فلا يُقرأ الرقم حقيقةً هندسية. متى حُسب التداخل الفعلي
+  // سقط هذا النص وحلّ محلّ الرقم رقمٌ محسوب.
+  const OVERLAP_ASSUMPTION = 'بافتراض تداخل تام بين مسارات المجموعة — '
+    + 'التداخل الهندسي الفعلي غير محسوب، والتقاطع الجزئي يجعل الرقم أعلى من الواقع.';
 
   // Parallel-corridor superposition factor used by compound(): when two
   // nearby permits are active at once, their combined delay is modelled as
@@ -88,8 +102,92 @@
   const WORK_ZONE_FRICTION = 1.10;
 
   // Candidate scheduling grid used by optimize().
-  const CANDIDATE_START_HOURS = [22, 23, 0, 8, 10, 13];
+  //
+  // WP-B1 — لماذا اتّسعت الشبكة، ولماذا وحدها لا تكفي:
+  //
+  // الشبكة القديمة كانت ست ساعات × مرحلتين. وكانت تعطي `22p2` لمئة وخمسين
+  // تصريحاً من مئة وخمسين. توسيع الشبكة وحده لا يصلح ذلك، لأن السبب لم يكن
+  // ضيقها: الهدف كان واحداً (`delayVehHours`) فوق ملف طلب ساعي له قاعٌ ليلي
+  // عالمي. أي شبكة، مهما اتّسعت، بهدفٍ واحد كهذا تعطي الجواب نفسه بدقة أعلى.
+  //
+  // ولذلك أُضيف بُعدٌ ثالث (طول النافذة) **مع** ثلاثة تكاليف تنازع التأخير.
+  // البُعد الثالث هو ما يجعل المنازعة ذات معنى: نافذة قصيرة تخفض تأخير
+  // الليلة الواحدة وتزيد عدد الليالي، فتزيد الاحتكاك المتبقي وامتداد الموقع.
+  const CANDIDATE_START_HOURS = [20, 21, 22, 23, 0, 1, 9, 10, 13, 14];
   const CANDIDATE_PHASES = [1, 2];
+  const CANDIDATE_WINDOW_HOURS = [6, 8, 10, 12];
+
+  // نصيب السعة الباقية أثناء وجود موقع العمل دون إغلاق نشط.
+  //
+  // النموذج كان يفترض أن الطريق يعود طبيعياً 100٪ بين النوافذ الليلية. هذا غير
+  // صحيح ميدانياً: الألواح الفولاذية والمخاريط والتضييق تبقى. الافتراض القديم
+  // كان يمنح جدول «خمس عشرة ليلة» طريقاً مثالياً في أربع وعشرين يوماً-ساعة من
+  // كل يوم، فيفوز مجاناً على جدولٍ أقصر امتداداً.
+  //
+  // القيمة نفسها افتراض توضيحي معلن وقابل للتعديل عبر
+  // `input.residualCapacityFraction`. الأثر محسوب بنفس دالة BPR، لا بوزن.
+  const RESIDUAL_CAPACITY_FRACTION = 0.92;
+
+  // نطاق العمل الليلي: من الساعة 22 حتى 6 (شامل البداية، حصري النهاية).
+  const NIGHT_BAND = { from: 22, to: 6 };
+
+  // نطاقات الحساسية بحسب استعمال الأرض المجاور.
+  //
+  // **افتراض تفضيلي معلن، لا قياس.** لا مصدر ميداني سعودي منشور يربط ساعة عمل
+  // بجوار مستشفى بضررٍ مقدَّر. ولذلك لا يُخفى الوزن: `optimize()` يُرجع
+  // `switchPoints` — الوزن الذي تنقلب عنده التوصية — فيرى القارئ إن كانت
+  // التوصية قائمة على الوزن أم على الحساب.
+  const SENSITIVITY_BANDS = {
+    normal: [],
+    school: [
+      { from: 6, to: 14, why: 'ساعات الدراسة والدخول والانصراف' },
+    ],
+    transit: [
+      { from: 6, to: 9, why: 'ذروة النقل العام صباحاً' },
+      { from: 15, to: 19, why: 'ذروة النقل العام مساءً' },
+    ],
+    hospital: [
+      { from: 22, to: 6, why: 'راحة المنوَّمين — ضجيج العمل الليلي' },
+      { from: 7, to: 9, why: 'ذروة الوصول الإسعافي صباحاً' },
+      { from: 16, to: 19, why: 'ذروة الوصول الإسعافي مساءً' },
+    ],
+  };
+
+  // أوزان الأهداف — تفضيلات معلنة قابلة للتعديل، وليست قياسات.
+  //
+  // `sensitivity` و`nightPremium` بوحدة «ساعة-مركبة مكافئة لكل ساعة عمل».
+  // القيمة الافتراضية مختارة عمداً قريبةً من نقطة الانقلاب لا بعيدةً عنها:
+  // وزنٌ بعيد عن نقطة الانقلاب يجعل الحد زينةً لا يغيّر قراراً، ووزنٌ مبالغ
+  // فيه يفرض الجواب سلفاً. القرب من الانقلاب يجعل القرار **حساساً للمُدخل**،
+  // وهو المطلوب. ونقطة الانقلاب نفسها معروضة في المخرجات.
+  const OBJECTIVE_WEIGHTS = {
+    sensitivity: 6.0,
+    nightPremium: 1.5,
+  };
+
+  // سقف مدة الإغلاق المقبولة (ساعة) — سنة كاملة. أوسع من أي تصريح واقعي،
+  // وضيّق بما يمنع حلقةً تستنفد الذاكرة. انظر `requireInputs`.
+  const MAX_DURATION_HOURS = 8760;
+
+  // إصدار مواصفة WZDx المستهدَف. يظهر في `feed_info.version` ويفحصه
+  // `wzdx-schema-test.js`. تغييره قرار يُكتب، لا رقم يُحدَّث بصمت.
+  const WZDX_VERSION = '4.2';
+
+  /**
+   * تعداد `Direction.json` في 4.2 — مكتوب هنا حرفياً.
+   *
+   * السبب: المحرك بلا تبعيات، وجدول التحويل من العربية يعيش في
+   * `athar-wzdx-mapping.js`. فلو اكتفينا بالجدول لبقي المحرك قادراً على
+   * إخراج ملفٍ يحمل «شمال» في حقل تعداد مغلق حين ينساه مستدعٍ واحد — وهو
+   * بالضبط ما حدث: فشل تصدير **كل** التصاريح المئة والخمسين لهذا السبب.
+   * الحارس هنا يجعل ذلك مستحيلاً لا مستبعَداً.
+   */
+  const WZDX_DIRECTIONS = ['northbound', 'eastbound', 'southbound', 'westbound',
+    'undefined', 'unknown', 'inner-loop', 'outer-loop'];
+
+  /** تعداد `LocationMethod` — للسبب نفسه. */
+  const WZDX_LOCATION_METHODS = ['channel-device-method', 'sign-method',
+    'junction-method', 'other', 'unknown'];
 
   // Standard nightly work-window length (hours) used to model phases=2
   // candidates as real-world night-work schedules: the road stays open to
@@ -152,19 +250,107 @@
    * @param {object} input
    * @returns {{delayVehHours:number, score:number, level:string, hourly:Array}}
    */
+  /**
+   * يرفض المدخلات الناقصة بدل أن يُخرج رقماً.
+   *
+   * WP-B1 — لماذا أُضيف هذا:
+   * كان `capacityPerLane` الناقص يمرّ صامتاً، فتصير السعة `NaN`، فتسقط
+   * `bprTravelTime` إلى أرضية `1e-9`، فيُخرج المحرك تأخيراً بمرتبة `1e48`
+   * **ويبدو ناجحاً**. الأسوأ أن الترتيب يبقى «معقولاً» فيمرّ دون أن يُلاحَظ —
+   * وهذا بالضبط ما كان يقيسه اختبار تنوّع القرار قبل هذا الإصلاح.
+   *
+   * `capacityPerLane` وحده له افتراضي: هو معيار (1800 مركبة/ساعة/حارة) لا
+   * قياس موقعيّ. البقية بيانات الموقع، ونقصها نقصُ معرفة لا نقصُ إعداد.
+   */
+  function requireInputs(input) {
+    const required = {
+      aadt: (v) => Number.isFinite(v) && v > 0,
+      lanes: (v) => Number.isInteger(v) && v >= 1,
+      lanesClosed: (v) => Number.isInteger(v) && v >= 0,
+      freeFlowMin: (v) => Number.isFinite(v) && v > 0,
+      startHour: (v) => Number.isInteger(v) && v >= 0 && v <= 23,
+      /* WP-D1 — سقف المدة حماية لا معقولية.
+         `score` تدور مرة لكل ساعة. مدة بمليار ساعة لا تُبطئ العملية بل
+         **تقتلها**: أُثبت ذلك بـ`JavaScript heap out of memory` عند كتابة هذه
+         البوابة. والسقف هنا لا يغني عن سقف الخادم (2160): الخادم هو الحدّ عند
+         الطرف غير الموثوق، وهذا الحدّ عند من ينادي المحرك مباشرة. */
+      durationHours: (v) => Number.isFinite(v) && v > 0 && v <= MAX_DURATION_HOURS,
+    };
+    Object.keys(required).forEach((key) => {
+      if (!required[key](input[key])) {
+        throw new RangeError(
+          `مُدخل مفقود أو غير صالح: ${key}=${JSON.stringify(input[key])}`
+        );
+      }
+    });
+    if (input.lanesClosed > input.lanes) {
+      throw new RangeError(
+        `حارات مغلقة (${input.lanesClosed}) أكثر من حارات الطريق (${input.lanes})`
+      );
+    }
+  }
+
+  /**
+   * ثوابت المعايرة المستعمَلة في هذا النداء.
+   *
+   * WP-E1 — لماذا صارت قابلة للتجاوز:
+   * الثوابت كانت محبوسة في الوحدة، فلا سبيل لقياس أثرها إلا بإعادة كتابة
+   * الخوارزمية في سكربت تحقق — وذلك يكرّر الخطأ نفسه إن وُجد. جعلُها مُدخلاً
+   * اختيارياً يجعل تحليل الحساسية يمرّ بالمحرك الحقيقي لا بنسخة منه.
+   *
+   * والتجاوز مفحوص لا مقبول على علّاته: ملف طلبٍ لا يجمع إلى واحد يغيّر معنى
+   * كل رقم بعده بلا أن يُعلن.
+   */
+  function calibrationOf(input) {
+    const given = (input && input.calibration) || {};
+    const profile = Array.isArray(given.hourlyProfile)
+      ? given.hourlyProfile
+      : HOURLY_PROFILE;
+
+    if (profile !== HOURLY_PROFILE) {
+      if (profile.length !== 24 || !profile.every((v) => Number.isFinite(v) && v >= 0)) {
+        throw new RangeError('hourlyProfile: أربع وعشرون قيمة غير سالبة');
+      }
+      const sum = profile.reduce((total, v) => total + v, 0);
+      if (Math.abs(sum - 1) > 1e-6) {
+        throw new RangeError(`hourlyProfile: المجموع ${sum.toFixed(6)} لا 1`);
+      }
+    }
+
+    function positive(name, fallback) {
+      if (given[name] === undefined) return fallback;
+      if (!Number.isFinite(given[name]) || given[name] <= 0) {
+        throw new RangeError(`${name}: عدد موجب منتهٍ`);
+      }
+      return given[name];
+    }
+
+    return {
+      hourlyProfile: profile,
+      workZoneFriction: positive('workZoneFriction', WORK_ZONE_FRICTION),
+      minCapacityFraction: positive('minCapacityFraction', MIN_CAPACITY_FRACTION),
+      scoreCalibration: positive('scoreCalibration', SCORE_CALIBRATION),
+    };
+  }
+
   function score(input) {
+    requireInputs(input);
     const {
       aadt,
       lanes,
       lanesClosed,
-      capacityPerLane,
       freeFlowMin,
       startHour,
       durationHours,
     } = input;
+    const capacityPerLane = Number.isFinite(input.capacityPerLane)
+      && input.capacityPerLane > 0
+      ? input.capacityPerLane
+      : DEFAULTS.capacityPerLane;
+    const CAL = calibrationOf(input);
 
     const fullCapacity = lanes * capacityPerLane;
-    const minCapacity = MIN_CAPACITY_FRACTION * capacityPerLane;
+    const minCapacity = CAL.minCapacityFraction * capacityPerLane;
     const openLanes = Math.max(0, lanes - lanesClosed);
     const closedCapacityRaw = openLanes * capacityPerLane;
     const closedCapacity = Math.max(closedCapacityRaw, minCapacity);
@@ -176,13 +362,13 @@
       const hourOffset = Math.floor(elapsed);
       const segmentDuration = Math.min(1, durationHours - elapsed);
       const hour = (startHour + hourOffset) % 24;
-      const demand = aadt * HOURLY_PROFILE[hour];
+      const demand = aadt * CAL.hourlyProfile[hour];
 
       const baseT = bprTravelTime(freeFlowMin, demand, fullCapacity);
       const closedT = lanesClosed > 0
         ? Math.max(
             bprTravelTime(freeFlowMin, demand, closedCapacity),
-            baseT * WORK_ZONE_FRICTION,
+            baseT * CAL.workZoneFriction,
           )
         : baseT;
 
@@ -203,7 +389,7 @@
       elapsed += segmentDuration;
     }
 
-    const rawScore = (100 * delayVehHours) / (aadt * SCORE_CALIBRATION);
+    const rawScore = (100 * delayVehHours) / (aadt * CAL.scoreCalibration);
     const clampedScore = Math.min(100, Math.round(rawScore));
     const finalScore = lanesClosed > 0 ? clampedScore : 0;
 
@@ -220,10 +406,277 @@
     };
   }
 
+  // ---------------------------------------------------------------------
+  // WP-B1 — أهداف تنازع التأخير
+  // ---------------------------------------------------------------------
+
+  /** هل الساعة داخل نطاق قد يلتفّ حول منتصف الليل؟ */
+  function inBand(hour, band) {
+    const h = ((hour % 24) + 24) % 24;
+    return band.from <= band.to
+      ? (h >= band.from && h < band.to)
+      : (h >= band.from || h < band.to);
+  }
+
+  /**
+   * ساعات العمل الواقعة داخل نطاق زمني، محسوبةً بكسورها.
+   * @param {Array} windows
+   * @param {{from:number,to:number}} band
+   * @returns {number} ساعات
+   */
+  function hoursInBand(windows, band) {
+    let total = 0;
+    windows.forEach((window) => {
+      for (let elapsed = 0; elapsed < window.durationHours;) {
+        const segment = Math.min(1, window.durationHours - elapsed);
+        const hour = (window.startHour + Math.floor(elapsed)) % 24;
+        if (inBand(hour, band)) total += segment;
+        elapsed += segment;
+      }
+    });
+    return total;
+  }
+
+  /** عدد الأيام التقويمية التي يوجد فيها الموقع. */
+  function spanDaysOf(windows) {
+    let last = 0;
+    windows.forEach((window) => {
+      const end = window.dayOffset + Math.ceil(window.durationHours / 24);
+      if (end > last) last = end;
+    });
+    return Math.max(1, last);
+  }
+
+  /**
+   * تأخير الاحتكاك المتبقي: الموقع قائم والطريق «مفتوح».
+   *
+   * يُحسب بنفس دالة BPR لا بوزن: السعة أثناء وجود الموقع أقل من الكاملة
+   * بنسبة معلنة. ويُطرح منه نصيب الساعات المغلقة فعلاً كي لا يُحتسب التأخير
+   * مرتين — تلك الساعات محسوبة أصلاً في تأخير الإغلاق وهو أكبر.
+   *
+   * @returns {number} ساعة-مركبة
+   */
+  function residualDelayVehHours(input, windows) {
+    const aadt = input.aadt;
+    const lanes = input.lanes;
+    const capacityPerLane = input.capacityPerLane || DEFAULTS.capacityPerLane;
+    const freeFlowMin = input.freeFlowMin;
+    const fraction = typeof input.residualCapacityFraction === 'number'
+      ? input.residualCapacityFraction
+      : RESIDUAL_CAPACITY_FRACTION;
+
+    if (!(fraction > 0) || fraction >= 1) return 0;
+
+    const fullCapacity = lanes * capacityPerLane;
+    const siteCapacity = fullCapacity * fraction;
+
+    const perHour = [];
+    for (let hour = 0; hour < 24; hour += 1) {
+      const demand = aadt * HOURLY_PROFILE[hour];
+      const base = bprTravelTime(freeFlowMin, demand, fullCapacity);
+      const withSite = bprTravelTime(freeFlowMin, demand, siteCapacity);
+      perHour.push((demand * Math.max(0, withSite - base)) / 60);
+    }
+
+    const dayTotal = perHour.reduce((sum, value) => sum + value, 0);
+    let total = dayTotal * spanDaysOf(windows);
+
+    // طرح الساعات المغلقة فعلاً
+    windows.forEach((window) => {
+      for (let elapsed = 0; elapsed < window.durationHours;) {
+        const segment = Math.min(1, window.durationHours - elapsed);
+        const hour = (window.startHour + Math.floor(elapsed)) % 24;
+        total -= perHour[hour] * segment;
+        elapsed += segment;
+      }
+    });
+
+    return Math.max(0, total);
+  }
+
+  /** نطاقات الحساسية الفعّالة لمُدخل ما. */
+  function bandsFor(sensitivity) {
+    return SENSITIVITY_BANDS[sensitivity] || SENSITIVITY_BANDS.normal;
+  }
+
+  /**
+   * يقيس جدولاً واحداً على الأهداف الأربعة ويعيد التفصيل كاملاً.
+   *
+   * التفصيل ليس زينة: هو ما يجعل «لماذا اختلفت التوصية» قابلاً للإجابة. مجموعٌ
+   * بلا تفصيله مؤشر مركّب معتم، وهو بالضبط ما ترفضه بوابة الادعاءات.
+   *
+   * @returns {object} تفصيل الأهداف والمجموع المكافئ
+   */
+  function evaluateSchedule(input, windows) {
+    const weights = {
+      sensitivity: OBJECTIVE_WEIGHTS.sensitivity,
+      nightPremium: OBJECTIVE_WEIGHTS.nightPremium,
+      ...(input.weights || {}),
+    };
+
+    const closureDelayVehHours = scoreWindows(input, windows).delayVehHours;
+    const residual = residualDelayVehHours(input, windows);
+
+    const bands = bandsFor(input.sensitivity);
+    const exposure = bands.map((band) => ({
+      why: band.why,
+      hours: hoursInBand(windows, band),
+    }));
+    const sensitivityHours = exposure.reduce((sum, item) => sum + item.hours, 0);
+    const nightHours = hoursInBand(windows, NIGHT_BAND);
+
+    const sensitivityEquivalent = sensitivityHours * weights.sensitivity;
+    const nightPremiumEquivalent = nightHours * weights.nightPremium;
+
+    return {
+      closureDelayVehHours,
+      residualDelayVehHours: residual,
+      sensitivityHours,
+      sensitivityEquivalent,
+      sensitivityExposure: exposure.filter((item) => item.hours > 0),
+      nightHours,
+      nightPremiumEquivalent,
+      spanDays: spanDaysOf(windows),
+      weights,
+      totalEquivalentVehHours: closureDelayVehHours + residual
+        + sensitivityEquivalent + nightPremiumEquivalent,
+    };
+  }
+
+  /**
+   * نقطة انقلاب وزنٍ واحد: أصغر قيمة موجبة للوزن تتغيّر عندها التوصية.
+   *
+   * المجموع دالة خطّية في الوزن: `total(w) = ثابت + w × ساعات`. فالتقاطع
+   * بين مرشحَين محسوب بدقة لا بمسح عددي.
+   *
+   * الغاية: وزنٌ بلا مصدر يصير مقبولاً حين يُعرض المدى الذي لا يغيّر القرار
+   * داخله. وحين تكون نقطة الانقلاب قريبة جداً، فذلك إقرارٌ بأن التوصية هشّة.
+   *
+   * @returns {{weight:number, current:string, next:string}|null}
+   */
+  function switchPoint(candidates, key, hoursKey, currentWeight) {
+    if (!candidates.length) return null;
+    const constantOf = (candidate) => candidate.evaluation.totalEquivalentVehHours
+      - candidate.evaluation[hoursKey] * currentWeight;
+
+    const winner = candidates[0];
+    const winnerConstant = constantOf(winner);
+    const winnerHours = winner.evaluation[hoursKey];
+
+    let best = null;
+    candidates.slice(1).forEach((candidate) => {
+      const deltaHours = candidate.evaluation[hoursKey] - winnerHours;
+      if (Math.abs(deltaHours) < 1e-9) return;
+      const crossing = (winnerConstant - constantOf(candidate)) / deltaHours;
+      if (!(crossing > currentWeight) || !Number.isFinite(crossing)) return;
+      if (!best || crossing < best.weight) {
+        best = { weight: crossing, next: candidate };
+      }
+    });
+
+    if (!best) return null;
+    return {
+      key,
+      weight: best.weight,
+      current: labelOf(winner),
+      next: labelOf(best.next),
+    };
+  }
+
+  function labelOf(candidate) {
+    return `${candidate.startHour}p${candidate.phases}w${candidate.windowHours}`;
+  }
+
+  /** يبني فضاء الجداول المرشحة ويرتّبه على المجموع المكافئ. */
+  function buildCandidates(input) {
+    const totalDuration = input.durationHours;
+    const candidates = [];
+    const scheduleSignatures = new Set();
+
+    function addCandidate(startHour, phases, windowHours, windows) {
+      const signature = JSON.stringify(windows);
+      if (scheduleSignatures.has(signature)) return;
+      scheduleSignatures.add(signature);
+      candidates.push({
+        startHour,
+        phases,
+        windowHours,
+        windows,
+        evaluation: evaluateSchedule(input, windows),
+      });
+    }
+
+    CANDIDATE_START_HOURS.forEach((startHour) => {
+      CANDIDATE_PHASES.forEach((phases) => {
+        if (phases === 1) {
+          // Continuous block starting at the candidate's clock hour — the
+          // closure runs uninterrupted for the full requested duration.
+          addCandidate(startHour, phases, totalDuration, [{
+            dayOffset: 0,
+            startHour,
+            durationHours: totalDuration,
+          }]);
+          return;
+        }
+
+        // phases === 2: windowed work schedule. Each actual window is scored
+        // independently, so the open gap between windows is never counted as
+        // closure — لكنه يُحاسَب باحتكاك الموقع المتبقي.
+        CANDIDATE_WINDOW_HOURS.forEach((windowHours) => {
+          if (windowHours >= totalDuration) return; // نافذة تبتلع المدة = كتلة متواصلة
+          addCandidate(startHour, phases, windowHours,
+            buildNightWindows(startHour, totalDuration, windowHours));
+        });
+      });
+    });
+
+    /* الترتيب على المجموع المكافئ لا على التأخير وحده. الفارق مقصود ومعلن:
+       أقلّ الجداول تأخيراً ليس بالضرورة أفضلها حين يوجد جوار حسّاس أو حين
+       يمتدّ الموقع خمس عشرة ليلة بدل خمسة أيام. */
+    candidates.sort((a, b) => {
+      const delta = a.evaluation.totalEquivalentVehHours
+        - b.evaluation.totalEquivalentVehHours;
+      if (Math.abs(delta) > 1e-9) return delta;
+      if (a.evaluation.spanDays !== b.evaluation.spanDays) {
+        return a.evaluation.spanDays - b.evaluation.spanDays; // امتداد أقصر
+      }
+      if (a.phases !== b.phases) return a.phases - b.phases; // تنفيذ أبسط
+      return a.startHour - b.startHour; // فاصل حاسم ثابت — لا اعتماد على ترتيب البناء
+    });
+
+    return candidates;
+  }
+
+  /* نسب السعة المتبقية المفحوصة في المسح. الحد 1.0 يعني «الطريق يعود طبيعياً
+     تماماً بين النوافذ» — وهو الافتراض القديم، ووجوده في المسح يجعل أثر
+     تغييره مقروءاً بدل أن يكون قراراً صامتاً. */
+  const RESIDUAL_SWEEP = [1.0, 0.97, 0.95, 0.92, 0.88, 0.85];
+
+  /**
+   * هل الفائز معلَّق على نسبة السعة المتبقية غير المصدرية؟
+   *
+   * النسبة تدخل الحساب عبر BPR، فأثرها غير خطّي ولا تُحلّ نقطة انقلابها
+   * جبرياً كما تُحلّ الأوزان. المسح الصريح أصدق من ادعاء متانة.
+   */
+  function residualSweep(input, currentWinner) {
+    if (!currentWinner) return [];
+    return RESIDUAL_SWEEP.map((fraction) => {
+      const winner = buildCandidates({
+        ...input,
+        residualCapacityFraction: fraction,
+      })[0];
+      return {
+        residualCapacityFraction: fraction,
+        winner: winner ? labelOf(winner) : null,
+        changed: winner ? labelOf(winner) !== labelOf(currentWinner) : true,
+      };
+    });
+  }
+
   /**
    * Find the best scheduling windows for a planned closure.
    * @param {object} input - same shape as score(), startHour/durationHours are the requested baseline.
-   * @returns {{top3: Array, baseline: {delayVehHours:number}}}
+   * @returns {{top3: Array, baseline: object, switchPoints: Array}}
    */
   function optimize(input) {
     const totalDuration = input.durationHours;
@@ -233,75 +686,93 @@
       WORK_WINDOW_HOURS
     );
     const baselineResult = scoreWindows(input, baselineWindows);
+    // الأساس يُقاس بنفس الأهداف، وإلا قورن مرشحٌ متعدد الأهداف بأساسٍ أحادي.
+    const baselineEvaluation = evaluateSchedule(input, baselineWindows);
 
-    const candidates = [];
-    const scheduleSignatures = new Set();
-
-    function addCandidate(startHour, phases, windows) {
-      const signature = JSON.stringify(windows);
-      if (scheduleSignatures.has(signature)) return;
-      scheduleSignatures.add(signature);
-      candidates.push({
-        startHour,
-        phases,
-        windows,
-        delayVehHours: scoreWindows(input, windows).delayVehHours,
-      });
-    }
-
-    CANDIDATE_START_HOURS.forEach((startHour) => {
-      CANDIDATE_PHASES.forEach((phases) => {
-        if (phases === 1) {
-          // Continuous block starting at the candidate's clock hour — the
-          // closure runs uninterrupted for the full requested duration.
-          addCandidate(startHour, phases, [{
-            dayOffset: 0,
-            startHour,
-            durationHours: totalDuration,
-          }]);
-          return;
-        }
-
-        // phases === 2: windowed work schedule. Each actual window is scored
-        // independently, so the open daytime gap is never counted as closure.
-        addCandidate(
-          startHour,
-          phases,
-          buildNightWindows(startHour, totalDuration, WORK_WINDOW_HOURS)
-        );
-      });
-    });
-
-    candidates.sort((a, b) => {
-      if (a.delayVehHours !== b.delayVehHours) return a.delayVehHours - b.delayVehHours;
-      return a.phases - b.phases; // ties broken toward fewer phases (simpler execution)
-    });
+    const candidates = buildCandidates(input);
 
     const top3 = candidates.slice(0, 3).map((candidate) => {
-      const savedVehHours = Math.max(0, baselineResult.delayVehHours - candidate.delayVehHours);
+      const delayVehHours = candidate.evaluation.closureDelayVehHours;
+      /* `saved*` يبقى فرق **التأخير** وحده كما كان: كمية فيزيائية قابلة
+         للمقارنة عبر الإصدارات. المجموع المكافئ يُعرض منفصلاً كي لا يتسلّل
+         وزنٌ تفضيلي إلى رقمٍ يقرؤه القارئ كساعات مركبات. */
+      /* WP-B1 — أُزيل `Math.max(0, …)`.
+         كان يقصّ الفرق السالب إلى صفر، فتظهر توصيةٌ تأخيرها أعلى من المقدَّم
+         بوسم «لا وفر» بدل «تأخير أعلى بمئة وأحد عشر ساعة-مركبة، مقابل امتداد
+         موقعٍ أقصر». والقصّ يخفي المقايضة نفسها التي تبرّر التوصية.
+         خمسة تصاريح من مئة وخمسين تقع هنا اليوم. */
+      const savedVehHours = baselineResult.delayVehHours - delayVehHours;
       const savedPct = baselineResult.delayVehHours > 0
         ? (savedVehHours / baselineResult.delayVehHours) * 100
         : 0;
 
-      const reasons = buildReasons(input, candidate, baselineResult);
+      const reasons = buildReasons(input, candidate, baselineResult, baselineEvaluation);
 
       return {
         label: formatLabel(candidate.startHour, candidate.phases, candidate.windows),
         startHour: candidate.startHour,
         phases: candidate.phases,
+        windowHours: candidate.windowHours,
         windows: candidate.windows.map((window) => ({ ...window })),
-        delayVehHours: candidate.delayVehHours,
+        delayVehHours,
         savedVehHours,
         savedPct,
+        breakdown: {
+          closureDelayVehHours: candidate.evaluation.closureDelayVehHours,
+          residualDelayVehHours: candidate.evaluation.residualDelayVehHours,
+          sensitivityHours: candidate.evaluation.sensitivityHours,
+          sensitivityEquivalent: candidate.evaluation.sensitivityEquivalent,
+          sensitivityExposure: candidate.evaluation.sensitivityExposure,
+          nightHours: candidate.evaluation.nightHours,
+          nightPremiumEquivalent: candidate.evaluation.nightPremiumEquivalent,
+          spanDays: candidate.evaluation.spanDays,
+          weights: candidate.evaluation.weights,
+        },
+        totalEquivalentVehHours: candidate.evaluation.totalEquivalentVehHours,
         reasons,
       };
     });
+
+    const effectiveWeights = candidates.length
+      ? candidates[0].evaluation.weights
+      : { ...OBJECTIVE_WEIGHTS, ...(input.weights || {}) };
+
+    const switchPoints = [
+      switchPoint(candidates, 'sensitivity', 'sensitivityHours',
+        effectiveWeights.sensitivity),
+      switchPoint(candidates, 'nightPremium', 'nightHours',
+        effectiveWeights.nightPremium),
+    ].filter(Boolean);
 
     return {
       top3,
       baseline: {
         delayVehHours: baselineResult.delayVehHours,
+        totalEquivalentVehHours: baselineEvaluation.totalEquivalentVehHours,
+        breakdown: baselineEvaluation,
         windows: baselineWindows.map((window) => ({ ...window })),
+      },
+      switchPoints,
+      /* كم جدولاً فُحص فعلاً، وبأي ترتيب. ليس زينة: «أفضل ثلاثة» بلا مقام
+         لا تُقرأ. ومن دون هذه القائمة لا يستطيع فحصٌ خارجي أن يتأكد أن جدولاً
+         بعينه دخل المنافسة أصلاً بدل أن يكون قد سقط من الشبكة. */
+      candidateCount: candidates.length,
+      rankedLabels: candidates.map(labelOf),
+      /* هل الجواب معلَّق على نسبة السعة المتبقية غير المصدرية؟ مسحٌ صريح
+         بدل ادعاء المتانة. */
+      residualSensitivity: residualSweep(input, candidates[0]),
+      objective: {
+        unit: 'ساعة-مركبة مكافئة',
+        terms: [
+          { key: 'closureDelayVehHours', kind: 'محسوب', what: 'تأخير مستخدمي الطريق أثناء الإغلاق' },
+          { key: 'residualDelayVehHours', kind: 'محسوب', what: 'احتكاك الموقع القائم خارج ساعات العمل' },
+          { key: 'sensitivityEquivalent', kind: 'وزن معلن', what: 'ساعات العمل داخل نطاق جوار حسّاس' },
+          { key: 'nightPremiumEquivalent', kind: 'وزن معلن', what: 'علاوة العمل الليلي التشغيلية' },
+        ],
+        weights: effectiveWeights,
+        residualCapacityFraction: typeof input.residualCapacityFraction === 'number'
+          ? input.residualCapacityFraction
+          : RESIDUAL_CAPACITY_FRACTION,
       },
     };
   }
@@ -328,8 +799,57 @@
     return `عمل ليلي على ${windows.length} ليالٍ (${durations} س، تبدأ ${hourLabel})`;
   }
 
-  function buildReasons(input, candidate, baselineResult) {
+  /**
+   * أسباب التوصية.
+   *
+   * المطلوب ليس تنوّع الصياغة بل أن يقرأ المستخدم **الحدّ الذي رجّح**. ولذلك
+   * السبب الأول مشتقٌّ من تفصيل الأهداف: أي حدّ فرَّق هذا المرشح عن الأساس.
+   */
+  function buildReasons(input, candidate, baselineResult, baselineEvaluation) {
     const reasons = [];
+
+    if (candidate.evaluation && baselineEvaluation) {
+      const deltas = [
+        {
+          what: 'تأخير الإغلاق',
+          delta: baselineEvaluation.closureDelayVehHours
+            - candidate.evaluation.closureDelayVehHours,
+        },
+        {
+          what: 'احتكاك الموقع خارج ساعات العمل',
+          delta: baselineEvaluation.residualDelayVehHours
+            - candidate.evaluation.residualDelayVehHours,
+        },
+        {
+          what: 'التعرّض في نطاق الجوار الحسّاس',
+          delta: baselineEvaluation.sensitivityEquivalent
+            - candidate.evaluation.sensitivityEquivalent,
+        },
+        {
+          what: 'ساعات العمل الليلي',
+          delta: baselineEvaluation.nightPremiumEquivalent
+            - candidate.evaluation.nightPremiumEquivalent,
+        },
+      ].sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+
+      const top = deltas[0];
+      if (Math.abs(top.delta) >= 1) {
+        const direction = top.delta > 0 ? 'يخفض' : 'يرفع';
+        reasons.push(`الحدّ المرجِّح: ${top.what} — ${direction}ه بمقدار `
+          + `${Math.abs(Math.round(top.delta))} ساعة-مركبة مكافئة`);
+      } else {
+        reasons.push('لا حدّ مرجِّح واضح — الفروق دون ساعة-مركبة واحدة');
+      }
+
+      const exposure = candidate.evaluation.sensitivityExposure || [];
+      if (exposure.length) {
+        reasons.push(`تعرّض حسّاس: ${exposure
+          .map((item) => `${item.why} (${Math.round(item.hours)} س)`)
+          .join('، ')}`);
+      }
+      reasons.push(`امتداد الموقع ${candidate.evaluation.spanDays} يوماً · `
+        + `${Math.round(candidate.evaluation.nightHours)} ساعة عمل ليلي`);
+    }
 
     const candidateDemandFraction = HOURLY_PROFILE[candidate.startHour % 24];
     const baselineDemandFraction = HOURLY_PROFILE[input.startHour % 24];
@@ -466,41 +986,62 @@
   }
 
   /**
-   * Compare trenching cost for separately-dug vs. shared (dig-once) permits.
-   * Savings reported as the GAO 25-33% band (Sources Ledger #7). Single
-   * permit => no merge => zero saving.
+   * كمّ ما يوفّره دمج تصاريح متداخلة في خندق واحد — بالكيلومترات لا بالريال.
+   *
+   * كانت الدالة تعيد نطاقاً مالياً: طول الخندق × 850,000 ريال/كم × نطاق GAO
+   * (25–33٪). ثلاث مشكلات فيه، وكلٌّ منها كافية وحدها:
+   *
+   *   1. الكلفة 850,000 ريال/كم افتراض معلن، لا تسعيرة. لم تكن تُعرض بجانب
+   *      الرقم، فيقرأ المحكّم مجموعاً بملايين الريالات بلا مُدخل ظاهر.
+   *   2. نطاق GAO يخصّ مدّ الألياف في مدن أمريكية، وسجل مصادر المشروع نفسه
+   *      يقول صراحةً إنه **لا يدعم** نسبة عامة لكل حفريات المدن. فكان المنتج
+   *      يخالف تحذيره المكتوب.
+   *   3. المجموع كان يُعرض بلا معادلة، وذلك يخالف بوابة النشر الذاتية.
+   *
+   * البديل ليس إخفاء الريال، بل تغيير ما تقيسه الدالة. لكن التغيير يفرّق بين
+   * ادعاءين لا يتساويان في القوة، وخلطهما يستبدل رقماً مالياً لا يُدافَع عنه
+   * برقم مسافيّ يبدو دقيقاً وهو مفترَض:
+   *
+   *   `additionalPermitsInGroups = permitsMerged - 1` — **عدّ لا ادعاء أثر**.
+   *   يقول: هذا عدد التصاريح الزائدة عن واحد داخل مجموعات التنسيق. ولا يقول
+   *   إن عمليات حفر اختفت: المجموعة تُبنى بتجاور الشارع والنافذة الزمنية،
+   *   وقد تكون ثلاثة نطاقات مختلفة نُسّقت توقيتاً فقط. تحويل العدّ إلى
+   *   «حفريات متجنَّبة» يحتاج هندسة النطاقات وتفاصيل التنفيذ، وليست عندنا.
+   *
+   *   الطول — **مفترَض لا محسوب**. أن يوفّر الدمج (n−1)×trenchKm من الحفر
+   *   يستلزم أن تحفر التصاريح المسار نفسه بالكامل بأطوال متطابقة وتداخل تام.
+   *   وإن تقاطعت جزئياً فالطول المشترك أقلّ، والرقم مبالغ فيه وإن كانت
+   *   المعادلة صحيحة حسابياً.
+   *
+   * الحساب الهندسي للتداخل غير متاح: مسار المحفظة يستعمل طول خندق تمثيلياً
+   * موحداً بلا هندسة أصلاً. فالخيار الأمين هو التسمية الصريحة — يُسمّى الرقم
+   * `duplicateTrenchKmEquivalent` ويحمل افتراضه معه في `overlapAssumption`،
+   * ولا يُعرض بوصفه «طولاً متجنَّباً» قطعياً. متى توفّر حساب التداخل الفعلي
+   * حلّ محلّه رقم محسوب، وسقط الافتراض.
+   *
+   * تحويل أيٍّ من ذلك إلى مال يبقى خطوة يملكها المشغّل لا النموذج.
+   *
    * @param {{trenchKm:number, permitsMerged:number}} input
-   * @returns {{separateSAR:number, sharedLowSAR:number, sharedHighSAR:number,
-   *            savedLowSAR:number, savedHighSAR:number, savedPctLow:number,
-   *            savedPctHigh:number}}
+   * @returns {{permitsMerged:number, separateTrenchKm:number,
+   *            sharedTrenchKm:number, duplicateTrenchKmEquivalent:number,
+   *            additionalPermitsInGroups:number, overlapAssumption:string,
+   *            costNote:string}}
    */
   function digOnce(input) {
     const { trenchKm, permitsMerged } = input;
-    const cost = DEFAULTS.trenchCostPerKmSAR;
-    const separateSAR = permitsMerged * trenchKm * cost;
+    const separateTrenchKm = permitsMerged * trenchKm;
+    // تصريح واحد لا دمج فيه: الخندق المشترك هو الخندق المنفرد، والمكرر صفر.
+    const sharedTrenchKm = permitsMerged >= 1 ? trenchKm : 0;
+    const merged = permitsMerged > 1;
 
-    if (permitsMerged <= 1) {
-      return {
-        separateSAR,
-        sharedLowSAR: separateSAR,
-        sharedHighSAR: separateSAR,
-        savedLowSAR: 0,
-        savedHighSAR: 0,
-        savedPctLow: 0,
-        savedPctHigh: 0,
-      };
-    }
-
-    const savedLowSAR = separateSAR * DIG_ONCE_SAVED_FRACTION_LOW;
-    const savedHighSAR = separateSAR * DIG_ONCE_SAVED_FRACTION_HIGH;
     return {
-      separateSAR,
-      sharedLowSAR: separateSAR - savedHighSAR,
-      sharedHighSAR: separateSAR - savedLowSAR,
-      savedLowSAR,
-      savedHighSAR,
-      savedPctLow: DIG_ONCE_SAVED_FRACTION_LOW * 100,
-      savedPctHigh: DIG_ONCE_SAVED_FRACTION_HIGH * 100,
+      permitsMerged,
+      separateTrenchKm,
+      sharedTrenchKm,
+      duplicateTrenchKmEquivalent: Math.max(0, separateTrenchKm - sharedTrenchKm),
+      additionalPermitsInGroups: Math.max(0, permitsMerged - 1),
+      overlapAssumption: merged ? OVERLAP_ASSUMPTION : '',
+      costNote: COST_NOTE,
     };
   }
 
@@ -515,6 +1056,33 @@
    */
   function wzdx(input) {
     const baseStart = new Date(input.startISO);
+    if (Number.isNaN(baseStart.getTime())) {
+      throw new RangeError(`startISO غير صالح: ${input.startISO}`);
+    }
+
+    /* الحرّاس الثلاثة أدناه يمنعون إنتاج ملفٍ يفشل أمام المخطط الرسمي.
+       الرفض عند الإنتاج أرخص من ملفٍ يُنزَّل ثم يُرفض عند الجهة المستقبِلة. */
+    if (WZDX_DIRECTIONS.indexOf(input.direction) === -1) {
+      throw new RangeError(
+        `direction خارج تعداد WZDx ${WZDX_VERSION}: «${input.direction}» — `
+        + `المسموح: ${WZDX_DIRECTIONS.join(' | ')}. `
+        + 'حوِّل القيمة الداخلية عبر AtharWzdxMapping.mapDirection قبل التصدير.'
+      );
+    }
+    const locationMethod = input.locationMethod || 'other';
+    if (WZDX_LOCATION_METHODS.indexOf(locationMethod) === -1) {
+      throw new RangeError(
+        `location_method خارج تعداد WZDx ${WZDX_VERSION}: «${locationMethod}»`
+      );
+    }
+    /* الهندسة: `LineString` أو `MultiPoint` بنقطتين فأكثر. نقطةٌ واحدة لا
+       تصف امتداد عمل، ومدُّ خطٍ حولها لاجتياز المخطط يخترع موقعاً. */
+    if (!Array.isArray(input.coordinates) || input.coordinates.length < 2) {
+      throw new RangeError(
+        'coordinates تحتاج نقطتين على الأقل — WZDx لا يقبل هندسة نقطية للحدث. '
+        + 'أسنِد النقطة إلى مقطع الطريق الحقيقي قبل التصدير.'
+      );
+    }
     const windows = Array.isArray(input.windows) && input.windows.length > 0
       ? input.windows
       : [{
@@ -528,41 +1096,74 @@
     else if (input.lanesClosed >= input.lanes) vehicleImpact = 'all-lanes-closed';
     else vehicleImpact = 'some-lanes-closed';
 
+    const dataSourceId = input.dataSourceId || 'athar-prototype';
+
+    const features = windows.map((window, index) => {
+      const start = new Date(baseStart.getTime());
+      start.setUTCDate(baseStart.getUTCDate() + window.dayOffset);
+      start.setUTCHours(window.startHour, 0, 0, 0);
+      const end = new Date(start.getTime() + window.durationHours * 3600 * 1000);
+      return {
+        type: 'Feature',
+        id: windows.length === 1 ? input.id : `${input.id}-window-${index + 1}`,
+        geometry: {
+          type: 'LineString',
+          coordinates: input.coordinates,
+        },
+        properties: {
+          core_details: {
+            event_type: 'work-zone',
+            // The producing surface names itself. A file exported from the
+            // reviewer desk that identifies as the prototype misattributes
+            // its own provenance in a format built for exchange.
+            data_source_id: dataSourceId,
+            road_names: [input.roadName],
+            direction: input.direction,
+          },
+          start_date: start.toISOString(),
+          end_date: end.toISOString(),
+          /* حقول التحقق الأربعة **إلزامية** في مخطط WZDx 4.2، وغيابها كان
+             أربعاً من إحدى عشرة مخالفة سجّلها التحقق المعزول.
+             والقيم `false` صادقة لا متحفّظة: التواريخ من جدول مقترح لا من
+             تثبيت ميداني، والمواقع من هندسة الممر لا من مسح موقعي. */
+          is_start_date_verified: Boolean(input.startDateVerified),
+          is_end_date_verified: Boolean(input.endDateVerified),
+          is_start_position_verified: Boolean(input.startPositionVerified),
+          is_end_position_verified: Boolean(input.endPositionVerified),
+          location_method: locationMethod,
+          vehicle_impact: vehicleImpact,
+        },
+      };
+    });
+
+    /* WP-WZ1 — `dayOffset` و`durationHours` خرجا من `properties`.
+       ليسا من المواصفة، وهما دفترُ حسابٍ داخلي لا معنى له عند مستهلك خارجي.
+       بقاؤهما كان يمنع الحدث من مطابقة فرع المخطط. من احتاجهما يشتقّهما من
+       `start_date` و`end_date` — وهما المصدر الحاكم أصلاً. */
+
+    /* `update_date` مشتقّ من المُدخل أو من آخر نافذة — لا `Date.now()`.
+       المحرك نقيّ: ملفّان لنفس التصريح يجب أن يتطابقا بايتاً ببايت. */
+    const lastEnd = features.length
+      ? features[features.length - 1].properties.end_date
+      : baseStart.toISOString();
+
     return {
+      /* غياب `feed_info` كان أول المخالفات المسجَّلة. وهو إلزامي في 4.2:
+         تغذيةٌ بلا ناشر ولا إصدار ولا مصدر بيانات لا يعرف مستهلكها من
+         أصدرها ولا بأي إصدار يقرؤها. */
+      feed_info: {
+        publisher: input.publisher || 'أمانة منطقة الرياض (نموذج أثر)',
+        version: WZDX_VERSION,
+        update_date: input.updateDateISO || lastEnd,
+        license: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        data_sources: [{
+          data_source_id: dataSourceId,
+          organization_name: input.organizationName
+            || 'أمانة منطقة الرياض (نموذج أثر)',
+        }],
+      },
       type: 'FeatureCollection',
-      features: windows.map((window, index) => {
-        const start = new Date(baseStart.getTime());
-        start.setUTCDate(baseStart.getUTCDate() + window.dayOffset);
-        start.setUTCHours(window.startHour, 0, 0, 0);
-        const end = new Date(start.getTime() + window.durationHours * 3600 * 1000);
-        return {
-          type: 'Feature',
-          id: windows.length === 1 ? input.id : `${input.id}-window-${index + 1}`,
-          geometry: {
-            type: 'LineString',
-            coordinates: input.coordinates,
-          },
-          properties: {
-            core_details: {
-              event_type: 'work-zone',
-              // The producing surface names itself. A file exported from the
-              // reviewer desk that identifies as the prototype misattributes
-              // its own provenance in a format built for exchange.
-              data_source_id: input.dataSourceId || 'athar-prototype',
-              road_names: [input.roadName],
-              direction: input.direction,
-            },
-            start_date: start.toISOString(),
-            end_date: end.toISOString(),
-            dayOffset: window.dayOffset,
-            durationHours: window.durationHours,
-            vehicle_impact: vehicleImpact,
-            location_method: 'other',
-            start_date_accuracy: 'estimated',
-            end_date_accuracy: 'estimated',
-          },
-        };
-      }),
+      features,
     };
   }
 
@@ -627,7 +1228,10 @@
     score: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'WORK_ZONE_FRICTION'],
     timeValueSAR: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'occupancyBand', 'workHoursPerMonth'],
     co2: ['aadt', 'HOURLY_PROFILE', 'lanes', 'capacityPerLane', 'freeFlowMin', 'idleFuelLPerHour'],
-    digOnce: ['trenchCostPerKmSAR', 'trenchKm'],
+    // WP-A2: بعد حذف الكلفة والنطاق المستورد لم يبقَ في digOnce افتراض
+    // توضيحي واحد — الطول المتجنَّب يُشتقّ من طول الخندق وعدد التصاريح
+    // المدموجة، وكلاهما من بيانات التصريح. القائمة فارغة عن حقّ لا عن سهو.
+    digOnce: [],
     transitImpact: ['busRoutesOnSegment', 'busesPerHourPerRoute', 'ridersPerBus'],
   };
 
@@ -663,7 +1267,23 @@
     HOURLY_PROFILE,
     DEFAULTS,
     WORK_WINDOW_HOURS,
+    MAX_DURATION_HOURS,
+    WZDX_VERSION,
+    WZDX_DIRECTIONS,
+    WZDX_LOCATION_METHODS,
     buildNightWindows,
+    // WP-B1 — فضاء المرشحين والأهداف المنازِعة، مُصدَّرة كي تعرضها الواجهة
+    // وتفحصها الاختبارات بدل نسخها.
+    CANDIDATE_START_HOURS,
+    CANDIDATE_PHASES,
+    CANDIDATE_WINDOW_HOURS,
+    SENSITIVITY_BANDS,
+    NIGHT_BAND,
+    OBJECTIVE_WEIGHTS,
+    RESIDUAL_CAPACITY_FRACTION,
+    evaluateSchedule,
+    residualDelayVehHours,
+    hoursInBand,
     // ثوابت المعايرة غير المصدرية — مُصدَّرة كي يعرضها جدول الشفافية في الواجهة
     CALIBRATION: {
       SCORE_CALIBRATION,

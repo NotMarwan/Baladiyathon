@@ -18,7 +18,10 @@ const ROOT = path.join(__dirname, '..');
 // السطح كاملاً كما يراه المتصفح — إخراج السكربت لا يُعفيه من أيّ شرط هنا.
 const deskHtml = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
 const deskBoot = fs.readFileSync(path.join(ROOT, 'athar-desk-boot.js'), 'utf8');
-const desk = deskHtml + '\n' + deskBoot;
+// الحساب خرج من المُقلع إلى وحدة نقية تُختبر في Node؛ والبوابة تسأل عن السطح
+// كما يراه المتصفح، فتقرأ الوحدة معه — لا تُعفى خطوة لأنها انتقلت ملفاً.
+const deskAnalysis = fs.readFileSync(path.join(ROOT, 'athar-desk-analysis.js'), 'utf8');
+const desk = deskHtml + '\n' + deskBoot + '\n' + deskAnalysis;
 
 ok('١ — يجد عملاً: الصندوق والبحث والمرشح والفرز على الشاشة', () => {
   assert.ok(desk.indexOf('deskList') !== -1, 'لا صندوق أعمال');
@@ -35,12 +38,13 @@ ok('٢ — يفهم موقعه وحالته: الخريطة ووسم الحال�
 });
 
 ok('٣ — يرى الأثر والثقة: المحرك وشريط الثقة موصولان', () => {
-  assert.ok(desk.indexOf('AtharEngine.score') !== -1, 'الأثر غير محسوب');
+  assert.ok(deskBoot.indexOf('AtharDeskAnalysis.evaluate') !== -1, 'المكتب لا يستدعي التحليل');
+  assert.ok(desk.indexOf('Engine.score') !== -1, 'الأثر غير محسوب');
   assert.ok(desk.indexOf('renderConfidence') !== -1, 'لا شريط ثقة');
 });
 
 ok('٤ — يقارن البدائل: optimize مستدعى ونتيجته معروضة', () => {
-  assert.ok(desk.indexOf('AtharEngine.optimize') !== -1, 'لا بدائل');
+  assert.ok(desk.indexOf('Engine.optimize') !== -1, 'لا بدائل');
   assert.ok(desk.indexOf('alternatives') !== -1);
 });
 
@@ -59,7 +63,7 @@ ok('٧ — يُخرج خطة إدارة المرور من الشاشة نفسه�
   assert.ok(desk.indexOf("'plan'") !== -1, 'لا تبويب خطة');
   assert.ok(desk.indexOf('AtharDeskPlan.renderTab') !== -1, 'التبويب لا يبني خطة');
   assert.ok(desk.indexOf('AtharDeskPlan.toDocument') !== -1, 'لا وثيقة تُنزَّل');
-  assert.ok(desk.indexOf('AtharEngine.wzdx') !== -1, 'لا تصدير معياري');
+  assert.ok(desk.indexOf('AtharWzdxExport.buildFeed') !== -1, 'لا تصدير معياري');
   // الشرط على **تبويب الخطة** لا على السطح كله: اسم النموذج التفاعلي يظهر
   // مشروعاً كوجهة تنقّل في لوحة الأوامر، ومنعه هناك يحرس صياغةً لا معنى.
   const planModule = fs.readFileSync(path.join(ROOT, 'athar-desk-plan.js'), 'utf8');
@@ -108,7 +112,7 @@ ok('دورة القرار تعبر واجهة الخادم كذلك لا الم�
 
 ok('الأثر يُترجم إلى وحدات القرار لا وحدات المرور وحدها', () => {
   ['personHours', 'timeValueSAR', 'co2Range'].forEach((fn) => {
-    assert.ok(desk.indexOf('AtharEngine.' + fn) !== -1, `وحدة قرار غير محسوبة: ${fn}`);
+    assert.ok(desk.indexOf('Engine.' + fn) !== -1, `وحدة قرار غير محسوبة: ${fn}`);
   });
 });
 
@@ -172,10 +176,43 @@ ok('هيكل الانتظار مكتوب في الصفحة لا مُصيَّر �
 ok('غطاء التحميل ينزاح دائماً — بحدث أو بسقف زمني', () => {
   assert.ok(/bootTimer\s*=\s*window\.setTimeout\(\s*bootDone/.test(deskBoot),
     'لا سقف زمني: خريطة تفشل بصمت تترك الغطاء إلى الأبد');
-  assert.ok(deskBoot.indexOf("GL.map.on('error'") !== -1 && /error[\s\S]{0,200}bootDone/.test(deskBoot),
+  // المسارات الثلاثة كلها ترفع الغطاء: النجاح بـ bootDone مباشرة، والفشل
+  // وغياب المحرك عبر mapUnavailable — وأول ما تفعله رفعُ الغطاء.
+  assert.ok(deskBoot.indexOf("GL.map.on('error'") !== -1
+    && /error[\s\S]{0,200}mapUnavailable\(/.test(deskBoot),
     'خطأ الخريطة لا يرفع الغطاء');
-  assert.ok(/\}\s*else\s*\{\s*bootDone\(\);/.test(deskBoot),
+  assert.ok(/\}\s*else\s*\{\s*mapUnavailable\(/.test(deskBoot),
     'صفحة بلا خريطة تبقى تحت الغطاء');
+  assert.ok(/function mapUnavailable\([\s\S]{0,120}bootDone\(\);/.test(deskBoot),
+    'mapUnavailable لا يرفع الغطاء — الفشل يترك الشاشة تحته');
+});
+
+/**
+ * الخريطة تسقط والمكتب لا.
+ * ---------------------------------------------------------------------------
+ * غياب WebGL يترك مستطيلاً فارغاً وسط الشاشة. الفراغ يُقرأ عطلاً شاملاً،
+ * فيتوقف المراجع عن العمل وهو قادر عليه: الفرز والقرار والتصدير لا تحتاج
+ * الخريطة أصلاً. فالسبب يُقال، والمتاح يُقال معه.
+ */
+ok('تعذّر الخريطة يُعلَن ولا يُترك فراغاً', () => {
+  assert.ok(deskBoot.indexOf('desk-map-down') !== -1,
+    'لا لوحة تُعلن تعذّر الخريطة');
+  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+  assert.ok(css.indexOf('.desk-map-down') !== -1, 'لا تنسيق للوحة التعذّر');
+});
+
+/**
+ * أول تحديد لا يعلّق على الخريطة.
+ * ---------------------------------------------------------------------------
+ * كان داخل onReady: خريطة لا تجهز تترك ملف القرار فارغاً بلا سبب معلن — وهو
+ * أول ما يراه من يفتح الأداة. المكتب لا يحتاج بلاطة ليعمل.
+ */
+ok('المكتب يفتح على عمل لا على فراغ — ولو لم ترسم الخريطة', () => {
+  assert.ok(/function selectInitial\(\)/.test(deskBoot), 'لا تحديد أوّلي مستقل');
+  const inReady = deskBoot.slice(deskBoot.indexOf('GL.api.onReady'),
+    deskBoot.indexOf('GL.map.on(\'error\''));
+  assert.ok(inReady.indexOf('store.select(') === -1,
+    'التحديد الأول ما زال داخل جاهزية الخريطة');
 });
 
 ok('المكتب يفتح على المدينة لا على مقطع — التحديد الآلي يُبرز ولا يطير', () => {

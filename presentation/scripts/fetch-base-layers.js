@@ -17,19 +17,37 @@ const OVERPASS_MIRRORS = [
   'https://overpass.private.coffee/api/interpreter',
 ];
 
-const QUERY = `[out:json][timeout:90];
+const QUERY = `[out:json][timeout:120];
 (
   way["natural"="water"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
   way["landuse"~"^(grass|forest|recreation_ground|village_green)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
   way["leisure"~"^(park|garden|pitch)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
+  way["landuse"~"^(residential|construction)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
+  way["landuse"~"^(commercial|retail|industrial|education)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
+  way["natural"~"^(sand|scrub)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
   node["place"~"^(suburb|neighbourhood|quarter)$"](${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east});
 );
 out geom;`;
 
+/**
+ * الأرض الفضاء والحي السكني والمنطقة التجارية ثلاث درجات لا لون واحد.
+ * ---------------------------------------------------------------------------
+ * القاعدة السادة تجعل كل شبر خارج الشارع سواءً، فتُقرأ الخريطة ورقةً. تصنيف
+ * الاستعمال يعطي الكتل تفاوتها: السكني أدفأ قليلاً، التجاري أبرد، والرملي
+ * بلون الأرض الفعلي حول الرياض.
+ */
 function kindOf(element) {
   const tags = element.tags || {};
   if (tags.natural === 'water') return 'water';
-  if (tags.place) return 'place';
+  // `place` وسمٌ للنقاط هنا. مضلع سكني موسوم place أيضاً ليس تسمية حي: تصنيفه
+  // مكاناً ينتج ميزة بلا اسم تُرسم فراغاً في طبقة التسميات.
+  if (tags.place && element.type === 'node') return 'place';
+  if (tags.natural === 'sand' || tags.natural === 'scrub') return 'sand';
+  if (tags.landuse === 'residential' || tags.landuse === 'construction') return 'urban';
+  if (tags.landuse) {
+    const work = ['commercial', 'retail', 'industrial', 'education'];
+    if (work.indexOf(tags.landuse) !== -1) return 'work';
+  }
   return 'green';
 }
 
@@ -85,8 +103,12 @@ async function main() {
   }
 
   const out = { type: 'FeatureCollection', features };
-  const file = path.join(__dirname, '..', 'data', 'riyadh-base.geojson');
-  fs.writeFileSync(file, `${JSON.stringify(out)}\n`);
+  const dir = path.join(__dirname, '..', 'data');
+  const file = path.join(dir, 'riyadh-base.geojson');
+  const text = JSON.stringify(out);
+  fs.writeFileSync(file, `${text}\n`);
+  // التوأم المغلَّف: يعمل عبر file:// حيث يمنع fetch قراءة الملفات المحلية.
+  fs.writeFileSync(path.join(dir, 'riyadh-base.geojson.js'), `window.RIYADH_BASE = ${text};\n`);
   console.log(`base layers: ${features.length} ميزة → data/riyadh-base.geojson`);
 }
 

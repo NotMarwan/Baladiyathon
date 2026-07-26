@@ -147,6 +147,53 @@ ok('كل صفحة خريطة توصل الحلقة الثانية', () => {
   });
 });
 
+/* ---- الحلقة الثالثة: شوارع الأحياء ---- */
+
+const hood = loadGlobal('riyadh-roads-neighbourhood.geojson.js', 'RIYADH_ROADS_HOOD');
+const hoodRaw = JSON.parse(fs.readFileSync(
+  path.join(DATA, 'riyadh-roads-neighbourhood.geojson'), 'utf8'
+));
+
+ok('شوارع الأحياء تغطّي المدينة لا عيّنة منها', () => {
+  // التحدي يذكر «الأحياء والشوارع بين البيوت» صراحةً؛ عشرات الآلاف لا مئات.
+  assert.ok(hood.features.length > 40000, `${hood.features.length} مقطعاً فقط`);
+  assert.strictEqual(hood.features.length, hoodRaw.features.length, 'التنحيف أسقط مقاطع');
+});
+
+ok('الحلقة الثالثة سكنية خالصة — لا شريان فيها ولا ممرّ خدمة', () => {
+  const allowed = new Set(['residential', 'unclassified', 'living_street']);
+  hood.features.forEach((f) => {
+    assert.ok(allowed.has(f.properties.highway),
+      `تصنيف دخيل في شوارع الأحياء: ${f.properties.highway}`);
+  });
+});
+
+ok('وسوم التوجيه محفوظة بعد التنحيف — الاتجاه ليس زينة', () => {
+  // إسقاط `oneway` في التنحيف يفتح مساراتٍ عكس السير، ولا يُكتشف إلا على الأرض.
+  const raw = hoodRaw.features.filter((f) => f.properties.oneway).length;
+  const kept = hood.features.filter((f) => f.properties.oneway).length;
+  assert.strictEqual(kept, raw, 'اتجاهات ضاعت في التنحيف');
+  assert.ok(raw > 0, 'لا شارع باتجاه واحد — الوسم لم يُلتقط أصلاً');
+});
+
+ok('صفحة الخريطة تحمّل شوارع الأحياء بعد رسم التوجيه، والمباني خارج السلسلة', () => {
+  const page = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
+  const graphAt = page.indexOf('riyadh-route-graph.js');
+  const hoodAt = page.indexOf('riyadh-roads-neighbourhood.geojson.js');
+  assert.ok(hoodAt !== -1, 'شوارع الأحياء غير محمَّلة');
+  assert.ok(graphAt < hoodAt, 'الزينة قبل الميزة');
+  /**
+   * المباني لم تعد آخر حلقةٍ في السلسلة.
+   * كانت تنتظر ثلاث حمولاتٍ قبلها ثم تُنزِّل المدينة كلها دفعةً واحدة — 101
+   * ميغابايت، ولا مبنى مرسوم عند تقريب 500 متر حتى أربعين ثانية. الآن تبدأ
+   * مستقلّةً وتحمّل ما يخصّ الكاميرا الحالية وحده.
+   */
+  assert.ok(page.indexOf('attachBuildings') === -1,
+    'المدينة كلها ما زالت تُحمَّل دفعةً واحدة');
+  assert.ok(page.indexOf('AtharBuildingsLazy.install') !== -1,
+    'المباني بلا تحميلٍ حسب النطاق');
+});
+
 ok('الإلحاق تراكمي: نداءان يتراكمان ولا يستبدل الثاني الأول', () => {
   // محاكاة الواجهة كما يستعملها attach — الحالة داخلية والاستبدال لا التحوير.
   let roads = { type: 'FeatureCollection', features: [{ id: 'a' }] };

@@ -1,0 +1,8011 @@
+{
+ "note": "خط الأساس الذهبي قبل WP-B1. لا يُعاد توليده بعد بدء B1 — عندها يصير المرجع الذي يُقارَن به، لا نسخةً تُحدَّث.",
+ "capturedBefore": "WP-B1",
+ "permitCount": 150,
+ "settings": {
+  "HOURLY_PROFILE": [
+   0.01,
+   0.007,
+   0.005,
+   0.005,
+   0.007,
+   0.015,
+   0.035,
+   0.07,
+   0.08,
+   0.06,
+   0.045,
+   0.045,
+   0.048,
+   0.045,
+   0.045,
+   0.048,
+   0.058,
+   0.075,
+   0.09,
+   0.07,
+   0.05,
+   0.038,
+   0.028,
+   0.021
+  ],
+  "CALIBRATION": {
+   "SCORE_CALIBRATION": 0.35,
+   "WORK_ZONE_FRICTION": 1.1,
+   "COMPOUND_FACTOR": 1.3,
+   "MIN_CAPACITY_FRACTION": 0.25
+  },
+  "WORK_WINDOW_HOURS": 8,
+  "capacityPerLane": 1800,
+  "freeFlowMin": 6
+ },
+ "governingDigests": {
+  "athar-engine.js": "1fefba5a88387558",
+  "athar-provenance.js": "f2e6c819b906cd87",
+  "athar-canonical.js": "0c6b0610774554e8",
+  "athar-portfolio.js": "b151704ace4e5415",
+  "data/city-portfolio.geojson.js": "76f0b214756e6a12"
+ },
+ "distribution": {
+  "winners": {
+   "22p2": 150
+  },
+  "distinctWinners": 1,
+  "signatures": {
+   "22p2,23p2,0p2": 150
+  },
+  "distinctSignatures": 1
+ },
+ "permits": [
+  {
+   "id": "p001",
+   "permitRef": "BLD-2026-0001",
+   "input": {
+    "aadt": 79347,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 142,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 6263.946043516907,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.881055269040397e+51,
+     "savedPct": 99.5802995280613,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.632041330425948e+51,
+     "savedPct": 98.96650036582334,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.39086638279739e+53,
+     "savedPct": 68.96703212970866,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p002",
+   "permitRef": "BLD-2026-0002",
+   "input": {
+    "aadt": 36957,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 220,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3419.2478593879273,
+   "baselineScore": 26,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.418233974091449e+49,
+     "savedPct": 99.15909935561571,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.60997873497301e+50,
+     "savedPct": 97.89064692694465,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.8419370671517926e+51,
+     "savedPct": 36.56217557240925,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p003",
+   "permitRef": "BLD-2026-0003",
+   "input": {
+    "aadt": 18545,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 21,
+    "durationHours": 50,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 384.9385525263245,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.081971755273129e+47,
+     "savedPct": 77.94932523315427,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ26%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.1489968115589699e+48,
+     "savedPct": 50.14502988226881,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ45%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.4234264308038764e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p004",
+   "permitRef": "BLD-2026-0004",
+   "input": {
+    "aadt": 23620,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 143,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1744.6937814787825,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.3971043527710735e+48,
+     "savedPct": 99.80639607214322,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0835653461564765e+49,
+     "savedPct": 99.52290759946786,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.2569069440810576e+50,
+     "savedPct": 85.65988144810018,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p005",
+   "permitRef": "BLD-2026-0005",
+   "input": {
+    "aadt": 39095,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 20,
+    "durationHours": 52,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 846.3698994672894,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.1175440553471703e+49,
+     "savedPct": 94.65503385483397,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ44%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.784268113961734e+49,
+     "savedPct": 87.9238634804553,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ58%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.4253882001056726e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ80%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p006",
+   "permitRef": "BLD-2026-0006",
+   "input": {
+    "aadt": 76768,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 201,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 8098.218211443004,
+   "baselineScore": 30,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.2878561242126663e+51,
+     "savedPct": 99.57884571567197,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.765960323951376e+51,
+     "savedPct": 98.93858758512046,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.733855206863383e+53,
+     "savedPct": 68.08275918022352,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p007",
+   "permitRef": "BLD-2026-0007",
+   "input": {
+    "aadt": 45368,
+    "lanes": 3,
+    "lanesClosed": 2,
+    "startHour": 23,
+    "durationHours": 140,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 29064.32322200773,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.149450736921795e+50,
+     "savedPct": 59.39017300972198,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.8304743509421336e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.499034472128148e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p008",
+   "permitRef": "BLD-2026-0008",
+   "input": {
+    "aadt": 42761,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 233,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 4490.993366607443,
+   "baselineScore": 30,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4171600286621867e+50,
+     "savedPct": 99.66420182439596,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.585073355228121e+50,
+     "savedPct": 99.15051153875069,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0784718444390926e+52,
+     "savedPct": 74.44544931563965,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p009",
+   "permitRef": "BLD-2026-0009",
+   "input": {
+    "aadt": 35008,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 187,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2767.673486581903,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.194852768684616e+49,
+     "savedPct": 99.57852487937838,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.046501967399718e+50,
+     "savedPct": 98.94853391224297,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.145837815062809e+51,
+     "savedPct": 68.39239788204989,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p010",
+   "permitRef": "BLD-2026-0010",
+   "input": {
+    "aadt": 87377,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 19,
+    "durationHours": 40,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2159.066176192438,
+   "baselineScore": 7,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.477675304187067e+50,
+     "savedPct": 98.94005241214155,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.1966160006586887e+51,
+     "savedPct": 97.25361287403928,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.624091721233405e+52,
+     "savedPct": 17.180243524934916,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p011",
+   "permitRef": "BLD-2026-0011",
+   "input": {
+    "aadt": 13320,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 121,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 674.0662728164803,
+   "baselineScore": 14,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.202035552208406e+47,
+     "savedPct": 99.78918435927793,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.450825780659954e+47,
+     "savedPct": 99.47815586889061,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.6360054193384586e+49,
+     "savedPct": 84.3374222384051,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p012",
+   "permitRef": "BLD-2026-0012",
+   "input": {
+    "aadt": 87492,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 20,
+    "durationHours": 35,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1663.950037099054,
+   "baselineScore": 5,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.472148791043132e+50,
+     "savedPct": 94.65601301508373,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ44%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.801192937220494e+51,
+     "savedPct": 88.6385947045622,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ58%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.33433033942357e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ80%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p013",
+   "permitRef": "BLD-2026-0013",
+   "input": {
+    "aadt": 16978,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 24,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 170.00758017875464,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4088833209889395e+47,
+     "savedPct": 99.80690491207686,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.6505003257402e+47,
+     "savedPct": 99.49967916373129,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.100840974428138e+49,
+     "savedPct": 84.91237836520219,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p014",
+   "permitRef": "BLD-2026-0014",
+   "input": {
+    "aadt": 53813,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 151,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 5077.526945598663,
+   "baselineScore": 27,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.8492329111091624e+50,
+     "savedPct": 99.1631040701324,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.040327459835411e+50,
+     "savedPct": 97.93206747925086,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.116517398666696e+52,
+     "savedPct": 37.832221804970715,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p015",
+   "permitRef": "BLD-2026-0015",
+   "input": {
+    "aadt": 16884,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 111,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 797.2852593364835,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.379155252733512e+47,
+     "savedPct": 99.46101482148435,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.5488308539916284e+48,
+     "savedPct": 98.69136767917426,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.6507037673390465e+49,
+     "savedPct": 60.70544921776998,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p016",
+   "permitRef": "BLD-2026-0016",
+   "input": {
+    "aadt": 45305,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 27,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 573.3941624763713,
+   "baselineScore": 4,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.518744618850511e+49,
+     "savedPct": 99.75171914721625,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.059401724414196e+49,
+     "savedPct": 99.50127830931649,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.4894729667860608e+51,
+     "savedPct": 85.31778030911448,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p017",
+   "permitRef": "BLD-2026-0017",
+   "input": {
+    "aadt": 52026,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 36,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1090.7904564270323,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.299706048555508e+49,
+     "savedPct": 99.78711393492372,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.3391415686942742e+50,
+     "savedPct": 99.54746368014304,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.965889085228574e+51,
+     "savedPct": 86.59806480848671,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p018",
+   "permitRef": "BLD-2026-0018",
+   "input": {
+    "aadt": 84853,
+    "lanes": 4,
+    "lanesClosed": 3,
+    "startHour": 22,
+    "durationHours": 201,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 905581.7310547258,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.7745361210647354e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.512759690197008e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.860537879869613e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p019",
+   "permitRef": "BLD-2026-0019",
+   "input": {
+    "aadt": 17688,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 13,
+    "durationHours": 192,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1417.2745260541747,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3833307036104913e+48,
+     "savedPct": 99.8078693713828,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.5842919771325525e+48,
+     "savedPct": 99.50217813504992,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0808752556244448e+50,
+     "savedPct": 84.98773707704956,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p020",
+   "permitRef": "BLD-2026-0020",
+   "input": {
+    "aadt": 87054,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 13,
+    "durationHours": 231,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 13909.937738522636,
+   "baselineScore": 46,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.821143667080346e+51,
+     "savedPct": 99.80791686994436,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.2112735291121964e+52,
+     "savedPct": 99.51740660123014,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.6454397453242357e+53,
+     "savedPct": 85.47590519875187,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p021",
+   "permitRef": "BLD-2026-0021",
+   "input": {
+    "aadt": 22467,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 209,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2237.1500431862905,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.1025059497028474e+48,
+     "savedPct": 99.79753255688178,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.2873065033236569e+49,
+     "savedPct": 99.48919676173512,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.871421190420453e+50,
+     "savedPct": 84.63820018272023,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p022",
+   "permitRef": "BLD-2026-0022",
+   "input": {
+    "aadt": 38402,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 73,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1187.173137324629,
+   "baselineScore": 9,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.7178633461552503e+49,
+     "savedPct": 99.65138388128896,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.534673580466461e+49,
+     "savedPct": 99.16180754860676,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.9551730109905084e+51,
+     "savedPct": 74.92129884071323,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p023",
+   "permitRef": "BLD-2026-0023",
+   "input": {
+    "aadt": 86748,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 222,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 13301.104236077912,
+   "baselineScore": 44,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.573342453908165e+51,
+     "savedPct": 99.66989532454431,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.1472009665082989e+52,
+     "savedPct": 99.17194829263647,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.4501672161595376e+53,
+     "savedPct": 75.0966313886041,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p024",
+   "permitRef": "BLD-2026-0024",
+   "input": {
+    "aadt": 14384,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 145,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 867.6636217072967,
+   "baselineScore": 17,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.8486650986829795e+47,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.597973859506599e+47,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.882988788668368e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p025",
+   "permitRef": "BLD-2026-0025",
+   "input": {
+    "aadt": 83007,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 237,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 12017.52412472115,
+   "baselineScore": 41,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.931038967176927e+51,
+     "savedPct": 99.77145928762381,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.88244348032651e+51,
+     "savedPct": 99.42545960702262,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.9726479664555208e+53,
+     "savedPct": 82.717772844026,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p026",
+   "permitRef": "BLD-2026-0026",
+   "input": {
+    "aadt": 36343,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 28,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 432.04852010335304,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.368358802881428e+48,
+     "savedPct": 99.35488310455374,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.6806606855065547e+49,
+     "savedPct": 98.70437844591551,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.9477310374467e+50,
+     "savedPct": 61.8579346133948,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p027",
+   "permitRef": "BLD-2026-0027",
+   "input": {
+    "aadt": 82698,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 70,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3402.148823982031,
+   "baselineScore": 12,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.1543772471886674e+51,
+     "savedPct": 99.14326664404375,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.693598594896281e+51,
+     "savedPct": 98.00091714435239,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.049406399120338e+52,
+     "savedPct": 40.260473995230626,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p028",
+   "permitRef": "BLD-2026-0028",
+   "input": {
+    "aadt": 18692,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 21,
+    "durationHours": 91,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 688.1351653261049,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.088159881763105e+47,
+     "savedPct": 78.01750613332716,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ26%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.179438994407737e+48,
+     "savedPct": 47.28360311585845,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ45%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.528974352270209e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p029",
+   "permitRef": "BLD-2026-0029",
+   "input": {
+    "aadt": 48204,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 212,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 5180.015175564812,
+   "baselineScore": 31,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.336322753187002e+50,
+     "savedPct": 99.5793831706136,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.853379283810086e+50,
+     "savedPct": 98.94619447069381,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.7601942879570754e+52,
+     "savedPct": 68.31057098191454,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p030",
+   "permitRef": "BLD-2026-0030",
+   "input": {
+    "aadt": 82046,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 84,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 4206.220188655389,
+   "baselineScore": 15,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3570840277862489e+51,
+     "savedPct": 99.80049593280037,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.230345693996502e+51,
+     "savedPct": 99.5251089164579,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 9.670765007860649e+52,
+     "savedPct": 85.78306934208582,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p031",
+   "permitRef": "BLD-2026-0031",
+   "input": {
+    "aadt": 42607,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 163,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3046.7420131080507,
+   "baselineScore": 20,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.799407345048845e+49,
+     "savedPct": 99.78597925888609,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.4311776527927776e+50,
+     "savedPct": 99.46902662098931,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.304777019411714e+51,
+     "savedPct": 84.04624140707634,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p032",
+   "permitRef": "BLD-2026-0032",
+   "input": {
+    "aadt": 44171,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 42,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 820.12082236866,
+   "baselineScore": 5,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.3359214450179127e+49,
+     "savedPct": 99.73771292668802,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.357478400089551e+49,
+     "savedPct": 99.4215177100775,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.186918998737659e+51,
+     "savedPct": 82.80533300309227,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p033",
+   "permitRef": "BLD-2026-0033",
+   "input": {
+    "aadt": 44376,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 207,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 4299.210723272119,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4875217855517014e+50,
+     "savedPct": 99.67021622336563,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.7237634094610476e+50,
+     "savedPct": 99.17444115952259,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1204340060414685e+52,
+     "savedPct": 75.15996326434355,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p034",
+   "permitRef": "BLD-2026-0034",
+   "input": {
+    "aadt": 49073,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 129,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3308.662101376977,
+   "baselineScore": 19,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.5893101213716294e+50,
+     "savedPct": 99.57745247510962,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.945072724494472e+50,
+     "savedPct": 98.95112936560867,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1844187571640147e+52,
+     "savedPct": 68.51003416240384,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p035",
+   "permitRef": "BLD-2026-0035",
+   "input": {
+    "aadt": 79544,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 116,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 5190.987352890275,
+   "baselineScore": 19,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.586454383728232e+51,
+     "savedPct": 99.79713174254712,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.865677432067684e+51,
+     "savedPct": 99.50567551606775,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1596796978057107e+53,
+     "savedPct": 85.17056639570959,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p036",
+   "permitRef": "BLD-2026-0036",
+   "input": {
+    "aadt": 51603,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 201,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 5752.987715860514,
+   "baselineScore": 32,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.1398025008878873e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.913074801149519e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.3795040505707472e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p037",
+   "permitRef": "BLD-2026-0037",
+   "input": {
+    "aadt": 53522,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 170,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 5656.093420620577,
+   "baselineScore": 30,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.2107381749221565e+50,
+     "savedPct": 99.45961906221454,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.98328415562025e+50,
+     "savedPct": 98.65637920515698,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.399125911744775e+52,
+     "savedPct": 59.621686994597745,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p038",
+   "permitRef": "BLD-2026-0038",
+   "input": {
+    "aadt": 46406,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 65,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1416.2213628742,
+   "baselineScore": 9,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.28726513134735e+49,
+     "savedPct": 99.78877302249225,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.498296165268275e+50,
+     "savedPct": 99.4966323770519,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.478519619220264e+51,
+     "savedPct": 84.95396419405719,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p039",
+   "permitRef": "BLD-2026-0039",
+   "input": {
+    "aadt": 50240,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 131,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3643.5089169775188,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.8075787953332869e+50,
+     "savedPct": 99.7956423886878,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.437567900496517e+50,
+     "savedPct": 99.49830636510981,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.332111871522767e+52,
+     "savedPct": 84.93967727615292,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p040",
+   "permitRef": "BLD-2026-0040",
+   "input": {
+    "aadt": 74902,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 124,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 4653.378788049762,
+   "baselineScore": 18,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.25299746591225e+51,
+     "savedPct": 99.79552783465499,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.065267236851438e+51,
+     "savedPct": 99.49979002645166,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 9.198797737128826e+52,
+     "savedPct": 84.98881168516928,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p041",
+   "permitRef": "BLD-2026-0041",
+   "input": {
+    "aadt": 20462,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 172,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1551.1315406131505,
+   "baselineScore": 22,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.622936040354462e+48,
+     "savedPct": 99.80007927675234,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.520298290420831e+48,
+     "savedPct": 99.50302152627587,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.959439456632325e+50,
+     "savedPct": 85.06511225195611,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p042",
+   "permitRef": "BLD-2026-0042",
+   "input": {
+    "aadt": 45362,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 49,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1032.272836127309,
+   "baselineScore": 7,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.332324566855623e+49,
+     "savedPct": 99.78162861788866,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0058222203813397e+50,
+     "savedPct": 99.49301400429843,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.997692495884231e+51,
+     "savedPct": 84.8900920656056,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p043",
+   "permitRef": "BLD-2026-0043",
+   "input": {
+    "aadt": 85039,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 23,
+    "durationHours": 204,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 11093.000029493349,
+   "baselineScore": 37,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.844110974436481e+51,
+     "savedPct": 60.03327616523353,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.618278922058017e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.8920290378699197e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p044",
+   "permitRef": "BLD-2026-0044",
+   "input": {
+    "aadt": 53322,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 118,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3905.6226648825173,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.147488181586027e+50,
+     "savedPct": 99.80611165197335,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.232766175956441e+50,
+     "savedPct": 99.52755391244266,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5698095232882688e+52,
+     "savedPct": 85.8268009204093,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p045",
+   "permitRef": "BLD-2026-0045",
+   "input": {
+    "aadt": 83390,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 234,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 12219.763954286362,
+   "baselineScore": 42,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.021844729262516e+51,
+     "savedPct": 99.79404438037434,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0112409046872392e+52,
+     "savedPct": 99.48215119892541,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.041862373975797e+53,
+     "savedPct": 84.4228533864098,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p046",
+   "permitRef": "BLD-2026-0046",
+   "input": {
+    "aadt": 36804,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 194,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2995.8148487844405,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.610890707660968e+49,
+     "savedPct": 99.79950459513528,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.4021661985236276e+50,
+     "savedPct": 99.49896033569718,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.21558893461406e+51,
+     "savedPct": 84.93632732794687,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p047",
+   "permitRef": "BLD-2026-0047",
+   "input": {
+    "aadt": 12955,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 195,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1065.789720224758,
+   "baselineScore": 24,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.032649219407144e+47,
+     "savedPct": 99.79750399159414,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.577339441833361e+47,
+     "savedPct": 99.49404600390696,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.2780867859966575e+49,
+     "savedPct": 84.78876231334695,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p048",
+   "permitRef": "BLD-2026-0048",
+   "input": {
+    "aadt": 17754,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 82,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 630.1757974160204,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.435647409803334e+47,
+     "savedPct": 99.66328985013917,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.5325973516751106e+48,
+     "savedPct": 99.19815202558678,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.5883304506958047e+49,
+     "savedPct": 75.99406345177545,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p049",
+   "permitRef": "BLD-2026-0049",
+   "input": {
+    "aadt": 75692,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 23,
+    "durationHours": 83,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3059.6431734411703,
+   "baselineScore": 12,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.068586154587788e+50,
+     "savedPct": 57.99218568821085,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.1587855267306217e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.46284279650322e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p050",
+   "permitRef": "BLD-2026-0050",
+   "input": {
+    "aadt": 49175,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 110,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2793.5163489932597,
+   "baselineScore": 16,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3368563628878763e+50,
+     "savedPct": 99.80359711512874,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.242729058449231e+50,
+     "savedPct": 99.5235977778798,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 9.724184798531412e+51,
+     "savedPct": 85.71381338734699,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p051",
+   "permitRef": "BLD-2026-0051",
+   "input": {
+    "aadt": 73625,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 75,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 2779.673949577312,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 7.175974111166266e+50,
+     "savedPct": 99.66639459780747,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.6930838236432126e+51,
+     "savedPct": 99.21289862368197,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.064575746045406e+52,
+     "savedPct": 76.45518500317738,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p052",
+   "permitRef": "BLD-2026-0052",
+   "input": {
+    "aadt": 47659,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 143,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3369.6143766023915,
+   "baselineScore": 20,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4705911021586008e+50,
+     "savedPct": 99.78642489703037,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.6239339092803158e+50,
+     "savedPct": 99.47369322669395,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.08925738128224e+52,
+     "savedPct": 84.18062933834545,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p053",
+   "permitRef": "BLD-2026-0053",
+   "input": {
+    "aadt": 21111,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 119,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 1128.2540846341217,
+   "baselineScore": 15,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.0891260034310748e+48,
+     "savedPct": 99.67027957050051,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.0950742647398054e+48,
+     "savedPct": 99.1958598609453,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5303731225797035e+50,
+     "savedPct": 75.84658453139043,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p054",
+   "permitRef": "BLD-2026-0054",
+   "input": {
+    "aadt": 77068,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 91,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3608.9242912160566,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.0828481040417314e+51,
+     "savedPct": 99.75991491643225,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.5967868233752906e+51,
+     "savedPct": 99.42425001330228,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.779228788524933e+52,
+     "savedPct": 82.7521811525135,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p055",
+   "permitRef": "BLD-2026-0055",
+   "input": {
+    "aadt": 14450,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 94,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 564.9655660763576,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.5094239748367962e+47,
+     "savedPct": 99.79930612289597,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.017565361874079e+47,
+     "savedPct": 99.51873874828986,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.8026984218800557e+49,
+     "savedPct": 85.58272579029065,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p056",
+   "permitRef": "BLD-2026-0056",
+   "input": {
+    "aadt": 86889,
+    "lanes": 4,
+    "lanesClosed": 3,
+    "startHour": 22,
+    "durationHours": 121,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 636974.8559297147,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.600921215567813e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.43821050076339e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.932358085533127e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p057",
+   "permitRef": "BLD-2026-0057",
+   "input": {
+    "aadt": 82555,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 75,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 3738.872111616259,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.2719534948781117e+51,
+     "savedPct": 99.1253064700789,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.001019587366625e+51,
+     "savedPct": 97.93626698868607,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.977045792616998e+52,
+     "savedPct": 38.26689494367089,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p058",
+   "permitRef": "BLD-2026-0058",
+   "input": {
+    "aadt": 51157,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 233,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 6661.184996356899,
+   "baselineScore": 37,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.473001498330368e+50,
+     "savedPct": 99.80102771970269,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 8.785856842212356e+50,
+     "savedPct": 99.49664808060088,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.6429861525094723e+52,
+     "savedPct": 84.85802606731359,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p059",
+   "permitRef": "BLD-2026-0059",
+   "input": {
+    "aadt": 48449,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 171,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 4226.533760635535,
+   "baselineScore": 25,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.9518948264279367e+50,
+     "savedPct": 99.79700743368612,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.852326663475442e+50,
+     "savedPct": 99.49536920295306,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.458194640825911e+52,
+     "savedPct": 84.83511158907596,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p060",
+   "permitRef": "BLD-2026-0060",
+   "input": {
+    "aadt": 36871,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 24,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "arterial"
+   },
+   "baselineDelayVehHours": 370.8815075034137,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.805608530367124e+48,
+     "savedPct": 99.77800733201477,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.7633735730171614e+49,
+     "savedPct": 99.42480381823017,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.317610489481136e+50,
+     "savedPct": 82.65444545335197,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p061",
+   "permitRef": "BLD-2026-0061",
+   "input": {
+    "aadt": 14579,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 27,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 166.01894232345788,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.69144811120488e+46,
+     "savedPct": 99.34616073490943,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.7458509779985097e+47,
+     "savedPct": 98.6866332217521,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.139733860660912e+48,
+     "savedPct": 61.33486885938751,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p062",
+   "permitRef": "BLD-2026-0062",
+   "input": {
+    "aadt": 49415,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 18,
+    "durationHours": 33,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 859.4612087412254,
+   "baselineScore": 5,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.684146626930515e+49,
+     "savedPct": 99.72035483002138,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ69%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0346557476099015e+50,
+     "savedPct": 99.38230694840709,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ77%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.065709050130682e+51,
+     "savedPct": 81.69761118279524,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ89%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p063",
+   "permitRef": "BLD-2026-0063",
+   "input": {
+    "aadt": 87565,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 215,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 13222.448339711134,
+   "baselineScore": 43,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.621542400908914e+51,
+     "savedPct": 99.80346377410392,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.1584297721584205e+52,
+     "savedPct": 99.50736486732028,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.485868971106097e+53,
+     "savedPct": 85.17595486271621,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p064",
+   "permitRef": "BLD-2026-0064",
+   "input": {
+    "aadt": 79733,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 80,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3811.2980760680143,
+   "baselineScore": 14,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.0727824292453637e+51,
+     "savedPct": 99.80690491207687,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.7796429619591748e+51,
+     "savedPct": 99.4996791637313,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.382261590909455e+52,
+     "savedPct": 84.91237836520217,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p065",
+   "permitRef": "BLD-2026-0065",
+   "input": {
+    "aadt": 49017,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 125,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3150.4776489284045,
+   "baselineScore": 18,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.5039056451783873e+50,
+     "savedPct": 99.45614546393823,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.679056653284097e+50,
+     "savedPct": 98.66954974487147,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1040733239788811e+52,
+     "savedPct": 60.07360652473043,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p066",
+   "permitRef": "BLD-2026-0066",
+   "input": {
+    "aadt": 14097,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 68,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 397.37790741476243,
+   "baselineScore": 8,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.6614702981931834e+47,
+     "savedPct": 99.79987660883518,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.876793754954263e+47,
+     "savedPct": 99.53304184015101,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1585052950893734e+49,
+     "savedPct": 86.04585296602582,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p067",
+   "permitRef": "BLD-2026-0067",
+   "input": {
+    "aadt": 10584,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 18,
+    "durationHours": 64,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 274.29064625363935,
+   "baselineScore": 7,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.5372053215668715e+46,
+     "savedPct": 99.72253517278763,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ69%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.165108981151205e+46,
+     "savedPct": 99.28107216046165,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ77%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.7638204632963007e+48,
+     "savedPct": 78.32008895217828,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ89%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p068",
+   "permitRef": "BLD-2026-0068",
+   "input": {
+    "aadt": 15240,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 19,
+    "durationHours": 212,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1331.4257632294125,
+   "baselineScore": 25,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 7.37976078966622e+47,
+     "savedPct": 98.94135769238454,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.8489114514157522e+48,
+     "savedPct": 97.34769738303139,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.559939340889675e+49,
+     "savedPct": 20.241493162170308,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p069",
+   "permitRef": "BLD-2026-0069",
+   "input": {
+    "aadt": 84011,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 44,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 2397.9172517637658,
+   "baselineScore": 8,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.309861841679685e+50,
+     "savedPct": 99.78190807235877,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.831273804262044e+51,
+     "savedPct": 99.51938306361822,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.442865773213266e+52,
+     "savedPct": 85.715224741539,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p070",
+   "permitRef": "BLD-2026-0070",
+   "input": {
+    "aadt": 83255,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 109,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 5793.919590727562,
+   "baselineScore": 20,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.8595598099196855e+51,
+     "savedPct": 99.7634655484558,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.510562832532773e+51,
+     "savedPct": 99.42626018262092,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3525968061389168e+53,
+     "savedPct": 82.79508182561109,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p071",
+   "permitRef": "BLD-2026-0071",
+   "input": {
+    "aadt": 78172,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 153,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 6627.552600547514,
+   "baselineScore": 24,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.9217809006834323e+51,
+     "savedPct": 99.79835933499774,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.802070822432464e+51,
+     "savedPct": 99.49614820623994,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.4427188991757583e+53,
+     "savedPct": 84.86243680860518,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p072",
+   "permitRef": "BLD-2026-0072",
+   "input": {
+    "aadt": 47369,
+    "lanes": 3,
+    "lanesClosed": 2,
+    "startHour": 23,
+    "durationHours": 71,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 18343.37117362703,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 7.118368914232298e+49,
+     "savedPct": 57.21004863694867,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.6635608799450367e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.981967562374025e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p073",
+   "permitRef": "BLD-2026-0073",
+   "input": {
+    "aadt": 83615,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 230,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 12371.695327051386,
+   "baselineScore": 42,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.941087108360915e+51,
+     "savedPct": 99.58072509043063,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 9.897267398882005e+51,
+     "savedPct": 98.94707328725451,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.976855335261839e+53,
+     "savedPct": 68.33054644123115,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p074",
+   "permitRef": "BLD-2026-0074",
+   "input": {
+    "aadt": 36876,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 228,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3582.1462507784713,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.575213704201475e+49,
+     "savedPct": 99.46682715743862,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.6512316442994406e+50,
+     "savedPct": 98.6610444783629,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.966481803880563e+51,
+     "savedPct": 59.72764779930459,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p075",
+   "permitRef": "BLD-2026-0075",
+   "input": {
+    "aadt": 87445,
+    "lanes": 4,
+    "lanesClosed": 3,
+    "startHour": 22,
+    "durationHours": 109,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 569648.7383783043,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.3770232850282777e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.765726288726665e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.7289866592599383e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p076",
+   "permitRef": "BLD-2026-0076",
+   "input": {
+    "aadt": 11260,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 177,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 841.2219760394355,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3723986017281536e+47,
+     "savedPct": 99.15436857391371,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.445980972149475e+47,
+     "savedPct": 97.87668844891306,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0358251627441307e+49,
+     "savedPct": 36.17551719708879,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p077",
+   "permitRef": "BLD-2026-0077",
+   "input": {
+    "aadt": 86726,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 112,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 7031.238644102561,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.2866291918390287e+51,
+     "savedPct": 99.6701299988554,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.924791986178224e+51,
+     "savedPct": 99.14528724366969,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.7866739354490977e+53,
+     "savedPct": 74.22537352207918,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p078",
+   "permitRef": "BLD-2026-0078",
+   "input": {
+    "aadt": 88318,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 88,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 5215.68617549556,
+   "baselineScore": 17,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.967704779547866e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.098439900373005e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5374800841448703e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p079",
+   "permitRef": "BLD-2026-0079",
+   "input": {
+    "aadt": 14226,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 80,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 441.0035876645963,
+   "baselineScore": 9,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.939702603170613e+47,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.025884598976688e+47,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5156003850455815e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p080",
+   "permitRef": "BLD-2026-0080",
+   "input": {
+    "aadt": 42028,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 131,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 2323.8913683321603,
+   "baselineScore": 16,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 7.405300769463044e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.8179857538123135e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.457404729833384e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p081",
+   "permitRef": "BLD-2026-0081",
+   "input": {
+    "aadt": 37562,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 27,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 429.92060995801387,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.867269810061523e+48,
+     "savedPct": 99.74939201092108,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.9820382550363025e+49,
+     "savedPct": 99.49660379118683,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 5.835062248104461e+50,
+     "savedPct": 85.18016387211037,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p082",
+   "permitRef": "BLD-2026-0082",
+   "input": {
+    "aadt": 73698,
+    "lanes": 4,
+    "lanesClosed": 2,
+    "startHour": 23,
+    "durationHours": 236,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 33451.801734102744,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.1687536790922102e+51,
+     "savedPct": 60.2221064987547,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.4521581918970003e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.640016648928568e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p083",
+   "permitRef": "BLD-2026-0083",
+   "input": {
+    "aadt": 36403,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 155,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 2391.7240907908385,
+   "baselineScore": 19,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.248682776495636e+49,
+     "savedPct": 99.79728561979961,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.051730761245148e+50,
+     "savedPct": 99.49819518043812,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.1594518804145573e+51,
+     "savedPct": 84.92553190239603,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p084",
+   "permitRef": "BLD-2026-0084",
+   "input": {
+    "aadt": 72179,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 210,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 7220.955424979193,
+   "baselineScore": 29,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.7582757185575607e+51,
+     "savedPct": 99.7847298075044,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.4059524727494986e+51,
+     "savedPct": 99.4605679718347,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3249499176573639e+53,
+     "savedPct": 83.77829934117933,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p085",
+   "permitRef": "BLD-2026-0085",
+   "input": {
+    "aadt": 50575,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 179,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 5053.822524269245,
+   "baselineScore": 29,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.5295769544241156e+50,
+     "savedPct": 99.79848263852708,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.299997061302278e+50,
+     "savedPct": 99.49811418748877,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.8935387122235763e+52,
+     "savedPct": 84.91522764441771,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p086",
+   "permitRef": "BLD-2026-0086",
+   "input": {
+    "aadt": 43560,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 168,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3270.4258126726922,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.0964271395877976e+50,
+     "savedPct": 99.80610195248532,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.8409078101699518e+50,
+     "savedPct": 99.49759864776038,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.5670112120148e+51,
+     "savedPct": 84.84963854807165,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p087",
+   "permitRef": "BLD-2026-0087",
+   "input": {
+    "aadt": 43869,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 50,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 993.9010193448557,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.7643217083559254e+49,
+     "savedPct": 99.77479085715393,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 8.510857298833444e+49,
+     "savedPct": 99.49081852571183,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.5358028440561202e+51,
+     "savedPct": 84.82898037994858,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p088",
+   "permitRef": "BLD-2026-0088",
+   "input": {
+    "aadt": 49902,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 203,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 5528.95366134789,
+   "baselineScore": 32,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.6747443974628285e+50,
+     "savedPct": 99.46422440162834,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.692609143876478e+50,
+     "savedPct": 98.65940959736963,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.0123413653360243e+52,
+     "savedPct": 59.690974578219546,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p089",
+   "permitRef": "BLD-2026-0089",
+   "input": {
+    "aadt": 35477,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 122,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1815.8416625727557,
+   "baselineScore": 15,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.9858938543898567e+49,
+     "savedPct": 99.79422571611696,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.306774850697617e+49,
+     "savedPct": 99.49645016342883,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.1927965249384176e+51,
+     "savedPct": 84.88823928027341,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p090",
+   "permitRef": "BLD-2026-0090",
+   "input": {
+    "aadt": 17988,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 235,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1778.064874899805,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.87860353972784e+48,
+     "savedPct": 99.57910744935783,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.722843120152018e+48,
+     "savedPct": 98.94186855018299,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.4206402439633287e+50,
+     "savedPct": 68.17120359981537,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p091",
+   "permitRef": "BLD-2026-0091",
+   "input": {
+    "aadt": 88628,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 20,
+    "durationHours": 237,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 14726.16885519993,
+   "baselineScore": 47,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.4549214802671474e+51,
+     "savedPct": 94.63448437841615,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ44%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.3713411052008278e+52,
+     "savedPct": 86.51135098994173,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ58%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.125006488331996e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ80%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p092",
+   "permitRef": "BLD-2026-0092",
+   "input": {
+    "aadt": 81400,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 44,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 2148.8554451460814,
+   "baselineScore": 8,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 7.0963504798155206e+50,
+     "savedPct": 99.78190807235877,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.5638479901516356e+51,
+     "savedPct": 99.51938306361822,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.648029519285751e+52,
+     "savedPct": 85.71522474153899,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p093",
+   "permitRef": "BLD-2026-0093",
+   "input": {
+    "aadt": 35796,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 88,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1268.4717563769675,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.1522182465748312e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.576525247435391e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.681650990146161e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p094",
+   "permitRef": "BLD-2026-0094",
+   "input": {
+    "aadt": 88284,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 197,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 12199.107476635594,
+   "baselineScore": 39,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.4571856820624926e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.1136318090962546e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.3480612679028224e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p095",
+   "permitRef": "BLD-2026-0095",
+   "input": {
+    "aadt": 23135,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 22,
+    "durationHours": 158,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1776.7624555783525,
+   "baselineScore": 22,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.404925285047572e+48,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0903736478273903e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ25%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.2755456624106843e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p096",
+   "permitRef": "BLD-2026-0096",
+   "input": {
+    "aadt": 43355,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 88,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1660.0425548544079,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.609314168149468e+49,
+     "savedPct": 99.80322551871878,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.4534066017358675e+50,
+     "savedPct": 99.49014563710622,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.38287740563557e+51,
+     "savedPct": 84.6248863558003,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p097",
+   "permitRef": "BLD-2026-0097",
+   "input": {
+    "aadt": 52147,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 203,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 6312.03107791653,
+   "baselineScore": 35,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.3330295993802276e+50,
+     "savedPct": 99.79939346859005,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 8.339736834212046e+50,
+     "savedPct": 99.49805255870095,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.5076016015154225e+52,
+     "savedPct": 84.90738697515482,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p098",
+   "permitRef": "BLD-2026-0098",
+   "input": {
+    "aadt": 20420,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 79,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 736.2619742709554,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.177907793354857e+48,
+     "savedPct": 99.79943305325546,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.7827962279758586e+48,
+     "savedPct": 99.52616245006098,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.340188772519623e+49,
+     "savedPct": 85.79883581028811,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p099",
+   "permitRef": "BLD-2026-0099",
+   "input": {
+    "aadt": 47754,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 13,
+    "durationHours": 24,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 569.0397780128992,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.4802254353029623e+49,
+     "savedPct": 99.8078693713828,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.426411346205219e+49,
+     "savedPct": 99.50217813504992,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.9379417332330004e+51,
+     "savedPct": 84.98773707704956,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p100",
+   "permitRef": "BLD-2026-0100",
+   "input": {
+    "aadt": 77557,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 90,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3645.1831626923667,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.1172195173428997e+51,
+     "savedPct": 99.789922101503,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.680151848988247e+51,
+     "savedPct": 99.49603398495275,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.029177115209311e+52,
+     "savedPct": 84.90222710184082,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p101",
+   "permitRef": "BLD-2026-0101",
+   "input": {
+    "aadt": 13004,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 175,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 963.9188861294385,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.7192719571398775e+47,
+     "savedPct": 99.80591519385905,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.763804838759444e+47,
+     "savedPct": 99.51724146330452,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.0342831593593347e+49,
+     "savedPct": 85.48054557090529,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p102",
+   "permitRef": "BLD-2026-0102",
+   "input": {
+    "aadt": 48988,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 189,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 4794.141588845645,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.2508421662522053e+50,
+     "savedPct": 99.57997144530142,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.6150566106407405e+50,
+     "savedPct": 98.95217703485397,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.6879072940905822e+52,
+     "savedPct": 68.50204461992432,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p103",
+   "permitRef": "BLD-2026-0103",
+   "input": {
+    "aadt": 18475,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 159,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1273.1009617582667,
+   "baselineScore": 20,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4306379306808035e+48,
+     "savedPct": 99.67024212624037,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.543648513677149e+48,
+     "savedPct": 99.18319934473878,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0654917702996944e+50,
+     "savedPct": 75.44072520744582,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p104",
+   "permitRef": "BLD-2026-0104",
+   "input": {
+    "aadt": 13074,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 36,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 196.21011307581855,
+   "baselineScore": 4,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 6.313359287999354e+46,
+     "savedPct": 99.7970943869522,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.3420438660944485e+47,
+     "savedPct": 99.56867933383016,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.974484285206319e+48,
+     "savedPct": 87.22636977161129,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p105",
+   "permitRef": "BLD-2026-0105",
+   "input": {
+    "aadt": 46137,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 37,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 766.7423010468239,
+   "baselineScore": 5,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.4552317150948505e+49,
+     "savedPct": 99.78743330925572,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.344747343485073e+49,
+     "savedPct": 99.54814936713596,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.175134874217906e+51,
+     "savedPct": 86.61851764919078,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p106",
+   "permitRef": "BLD-2026-0106",
+   "input": {
+    "aadt": 76169,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 86,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 3609.409806246851,
+   "baselineScore": 14,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.358841650997217e+50,
+     "savedPct": 99.57958220461978,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.2277587104679087e+51,
+     "savedPct": 98.9992464445702,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.669364825220384e+52,
+     "savedPct": 70.03988569347389,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p107",
+   "permitRef": "BLD-2026-0107",
+   "input": {
+    "aadt": 17272,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 23,
+    "durationHours": 209,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 1485.9179988652038,
+   "baselineScore": 25,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3701598585746312e+48,
+     "savedPct": 60.362928824418724,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.456763625408148e+48,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0395805439596264e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p108",
+   "permitRef": "BLD-2026-0108",
+   "input": {
+    "aadt": 87705,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 13,
+    "durationHours": 151,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 9690.571284450747,
+   "baselineScore": 32,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.276526587959264e+51,
+     "savedPct": 99.80794190483311,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 8.096151079874507e+51,
+     "savedPct": 99.52543301180644,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.433927217241846e+53,
+     "savedPct": 85.73320214045845,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p109",
+   "permitRef": "BLD-2026-0109",
+   "input": {
+    "aadt": 88832,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 62,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 4160.239279136991,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4667482411383163e+51,
+     "savedPct": 99.75346094833354,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.3750266000705655e+51,
+     "savedPct": 99.43270710405983,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.0072750965206334e+53,
+     "savedPct": 83.06917028441649,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p110",
+   "permitRef": "BLD-2026-0110",
+   "input": {
+    "aadt": 76610,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 236,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 9336.12682284688,
+   "baselineScore": 35,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.632443322399657e+51,
+     "savedPct": 99.80100577631022,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.617855021199751e+51,
+     "savedPct": 99.49973664723207,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.9906598511931357e+53,
+     "savedPct": 84.95200985533474,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p111",
+   "permitRef": "BLD-2026-0111",
+   "input": {
+    "aadt": 44003,
+    "lanes": 3,
+    "lanesClosed": 2,
+    "startHour": 23,
+    "durationHours": 60,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "major"
+   },
+   "baselineDelayVehHours": 9918.118112437658,
+   "baselineScore": 64,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.3742585837983244e+49,
+     "savedPct": 56.5405423149635,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0065147649793209e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.0038937002171036e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p112",
+   "permitRef": "BLD-2026-0112",
+   "input": {
+    "aadt": 35531,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 19,
+    "durationHours": 114,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1656.3511096354,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.8201671073229033e+49,
+     "savedPct": 98.9395170904059,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.874085609244238e+49,
+     "savedPct": 97.41509987519484,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.0622340983469415e+51,
+     "savedPct": 22.45267980041171,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p113",
+   "permitRef": "BLD-2026-0113",
+   "input": {
+    "aadt": 35242,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 15,
+    "durationHours": 87,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1249.2645472128231,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.9845569076850435e+49,
+     "savedPct": 99.80381037547166,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.729862986750951e+49,
+     "savedPct": 99.53241449522169,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.4184343662547073e+51,
+     "savedPct": 85.97762026092649,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p114",
+   "permitRef": "BLD-2026-0114",
+   "input": {
+    "aadt": 41829,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 73,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1342.3982349507407,
+   "baselineScore": 9,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.167214069385906e+49,
+     "savedPct": 99.65138388128896,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.0019408710112794e+50,
+     "savedPct": 99.16180754860676,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.997805055581278e+51,
+     "savedPct": 74.92129884071326,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p115",
+   "permitRef": "BLD-2026-0115",
+   "input": {
+    "aadt": 82364,
+    "lanes": 4,
+    "lanesClosed": 2,
+    "startHour": 23,
+    "durationHours": 118,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 29070.56036810744,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.8883642909743663e+51,
+     "savedPct": 58.9607463934979,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.601361196966752e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3803904826240874e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p116",
+   "permitRef": "BLD-2026-0116",
+   "input": {
+    "aadt": 22822,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 52,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 591.1948238146186,
+   "baselineScore": 7,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4354724850038184e+48,
+     "savedPct": 99.78574651228904,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.243231337327355e+48,
+     "savedPct": 99.51592689324585,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 9.662635053726686e+49,
+     "savedPct": 85.57789659943425,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p117",
+   "permitRef": "BLD-2026-0117",
+   "input": {
+    "aadt": 18209,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 117,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 886.9251655782115,
+   "baselineScore": 14,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.972981718386667e+47,
+     "savedPct": 99.80419231298556,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.4300803653930598e+48,
+     "savedPct": 99.52288249488159,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.290070064535349e+49,
+     "savedPct": 85.68681064682805,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p118",
+   "permitRef": "BLD-2026-0118",
+   "input": {
+    "aadt": 18777,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 23,
+    "durationHours": 161,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1248.645364685731,
+   "baselineScore": 19,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.614369113117013e+48,
+     "savedPct": 60.05119029089945,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.041094402743246e+48,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.2143194866392174e+50,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p119",
+   "permitRef": "BLD-2026-0119",
+   "input": {
+    "aadt": 84161,
+    "lanes": 4,
+    "lanesClosed": 3,
+    "startHour": 23,
+    "durationHours": 123,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 543026.2685350316,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.243969533038553e+51,
+     "savedPct": 59.12452486324449,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.489769906113604e+51,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة زمنية بطلب مروري مماثل أو أعلى",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.6474732897957913e+53,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p120",
+   "permitRef": "BLD-2026-0120",
+   "input": {
+    "aadt": 82915,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 129,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 6780.944325549346,
+   "baselineScore": 23,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.1885734733670024e+51,
+     "savedPct": 99.45742092387026,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.4325970741826024e+51,
+     "savedPct": 98.65318046784128,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.6310142611124478e+53,
+     "savedPct": 59.564793153260155,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p121",
+   "permitRef": "BLD-2026-0121",
+   "input": {
+    "aadt": 19731,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 171,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1461.3413459283515,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.1866426174627626e+48,
+     "savedPct": 99.57825942529568,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.435899584622434e+48,
+     "savedPct": 98.95157105393211,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.633566779835648e+50,
+     "savedPct": 68.49318736204101,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p122",
+   "permitRef": "BLD-2026-0122",
+   "input": {
+    "aadt": 79331,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 128,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 5838.863046107225,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.6736157467159944e+51,
+     "savedPct": 99.77800733201477,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.336437757146706e+51,
+     "savedPct": 99.42480381823017,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3076915327096692e+53,
+     "savedPct": 82.65444545335193,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p123",
+   "permitRef": "BLD-2026-0123",
+   "input": {
+    "aadt": 41142,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 18,
+    "durationHours": 43,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 741.3520257653258,
+   "baselineScore": 5,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.3403719788777837e+49,
+     "savedPct": 99.72362091224247,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ69%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.158160589230452e+49,
+     "savedPct": 99.39086276411415,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ77%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5331113393940603e+51,
+     "savedPct": 81.89518942986055,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ89%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p124",
+   "permitRef": "BLD-2026-0124",
+   "input": {
+    "aadt": 38679,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 27,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 462.67455843946493,
+   "baselineScore": 3,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.1424301309515031e+49,
+     "savedPct": 99.56329446994249,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.2947991357681282e+49,
+     "savedPct": 99.12278970432402,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.755821069587829e+50,
+     "savedPct": 74.17518725008824,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p125",
+   "permitRef": "BLD-2026-0125",
+   "input": {
+    "aadt": 15361,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 236,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1502.1156600014026,
+   "baselineScore": 28,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 8.531574028351172e+47,
+     "savedPct": 99.80100577631022,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.1448028735066274e+48,
+     "savedPct": 99.49973664723207,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 6.451596409011822e+49,
+     "savedPct": 84.95200985533472,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p126",
+   "permitRef": "BLD-2026-0126",
+   "input": {
+    "aadt": 22599,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 73,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 797.4723781512929,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.918246926458362e+48,
+     "savedPct": 99.79078272652647,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.612122065986464e+48,
+     "savedPct": 99.4969700770722,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3799459874730012e+50,
+     "savedPct": 84.94935490015948,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p127",
+   "permitRef": "BLD-2026-0127",
+   "input": {
+    "aadt": 17021,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 20,
+    "durationHours": 209,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1460.4603875162054,
+   "baselineScore": 25,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.2734545569223848e+48,
+     "savedPct": 94.62437571738197,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ44%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.21278671494504e+48,
+     "savedPct": 86.43788725255331,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ58%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 9.662073901146397e+49,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ80%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p128",
+   "permitRef": "BLD-2026-0128",
+   "input": {
+    "aadt": 17165,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 19,
+    "durationHours": 93,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 649.1647255154124,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.935382821218752e+47,
+     "savedPct": 98.9431489395016,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.4232761004665592e+48,
+     "savedPct": 97.46572226009972,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 4.2636897298792533e+49,
+     "savedPct": 24.080970876048923,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p129",
+   "permitRef": "BLD-2026-0129",
+   "input": {
+    "aadt": 82702,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 121,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 6209.488722469564,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.0318107971051503e+51,
+     "savedPct": 99.57719855142004,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 5.0294586130441544e+51,
+     "savedPct": 98.95341515548705,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.5095366974437596e+53,
+     "savedPct": 68.58790674440927,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p130",
+   "permitRef": "BLD-2026-0130",
+   "input": {
+    "aadt": 39715,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 71,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1187.918351484012,
+   "baselineScore": 9,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.9490507325713924e+49,
+     "savedPct": 99.58077106155521,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.89192354426902e+49,
+     "savedPct": 99.02026311063587,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.0639665162746854e+51,
+     "savedPct": 70.65921986194681,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p131",
+   "permitRef": "BLD-2026-0131",
+   "input": {
+    "aadt": 41179,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 194,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 3457.396671053243,
+   "baselineScore": 24,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 9.838653793586889e+49,
+     "savedPct": 99.76955436228701,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.4586876678078783e+50,
+     "savedPct": 99.42411445769709,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.392002843169583e+51,
+     "savedPct": 82.68609867865476,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p132",
+   "permitRef": "BLD-2026-0132",
+   "input": {
+    "aadt": 80389,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 130,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 6071.3755256400555,
+   "baselineScore": 22,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.895469707297317e+51,
+     "savedPct": 99.57655430155454,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.654489896930158e+51,
+     "savedPct": 98.96019244321074,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3972548556658846e+53,
+     "savedPct": 68.78549121698346,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p133",
+   "permitRef": "BLD-2026-0133",
+   "input": {
+    "aadt": 80964,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 12,
+    "durationHours": 195,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 9151.621117159639,
+   "baselineScore": 32,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.8913114336762645e+51,
+     "savedPct": 99.79960224354834,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ42%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.224194616646702e+51,
+     "savedPct": 99.4992886700187,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ56%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.171915673302493e+53,
+     "savedPct": 84.9463802805011,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ79%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p134",
+   "permitRef": "BLD-2026-0134",
+   "input": {
+    "aadt": 46513,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 38,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 972.8059296752908,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.598441888079554e+49,
+     "savedPct": 99.57734181099622,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.649499526508588e+49,
+     "savedPct": 99.1015212369082,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.265472173829706e+51,
+     "savedPct": 73.39069530617454,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p135",
+   "permitRef": "BLD-2026-0135",
+   "input": {
+    "aadt": 23211,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 156,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1810.2619441848128,
+   "baselineScore": 22,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 4.4776914035381425e+48,
+     "savedPct": 99.78629177880262,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.108381308540797e+49,
+     "savedPct": 99.47099927951825,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.3296237907527585e+50,
+     "savedPct": 84.1085971888115,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p136",
+   "permitRef": "BLD-2026-0136",
+   "input": {
+    "aadt": 48434,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 17,
+    "durationHours": 230,
+    "freeFlowMin": 6,
+    "sensitivity": "school",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 5605.096486973153,
+   "baselineScore": 33,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.5700806432205776e+50,
+     "savedPct": 99.78627334052922,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ63%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.454253525297955e+50,
+     "savedPct": 99.46326740797876,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ72%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.9412811908149622e+52,
+     "savedPct": 83.85639979427195,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ87%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p137",
+   "permitRef": "BLD-2026-0137",
+   "input": {
+    "aadt": 48772,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 14,
+    "durationHours": 120,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 2999.584287093999,
+   "baselineScore": 18,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.378050749170632e+50,
+     "savedPct": 99.80610195248534,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.57061130172427e+50,
+     "savedPct": 99.49759864776038,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.076749725778277e+52,
+     "savedPct": 84.84963854807165,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p138",
+   "permitRef": "BLD-2026-0138",
+   "input": {
+    "aadt": 84570,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 20,
+    "durationHours": 61,
+    "freeFlowMin": 6,
+    "sensitivity": "transit",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 3058.319409092461,
+   "baselineScore": 10,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.1470500046951892e+51,
+     "savedPct": 94.65174762522093,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ44%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.6393300804041964e+51,
+     "savedPct": 87.69382039791836,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ58%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.876900907481874e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ80%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p139",
+   "permitRef": "BLD-2026-0139",
+   "input": {
+    "aadt": 47445,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 146,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 3404.5981158738086,
+   "baselineScore": 21,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.5173992153446638e+50,
+     "savedPct": 99.76674356783057,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.747789894128179e+50,
+     "savedPct": 99.42388523047549,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.125633657065912e+52,
+     "savedPct": 82.69662405767242,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p140",
+   "permitRef": "BLD-2026-0140",
+   "input": {
+    "aadt": 19926,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 11,
+    "durationHours": 112,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 969.2439214077656,
+   "baselineScore": 14,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.4640293807750162e+48,
+     "savedPct": 99.77800733201477,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.7933870404974324e+48,
+     "savedPct": 99.42480381823017,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.1439297393289584e+50,
+     "savedPct": 82.65444545335195,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p141",
+   "permitRef": "BLD-2026-0141",
+   "input": {
+    "aadt": 18032,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 10,
+    "durationHours": 219,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1650.542766927162,
+   "baselineScore": 26,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.7747603926646275e+48,
+     "savedPct": 99.46546822678667,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 4.4520005759690464e+48,
+     "savedPct": 98.65912279085371,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.3389213145536478e+50,
+     "savedPct": 59.67365581181699,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p142",
+   "permitRef": "BLD-2026-0142",
+   "input": {
+    "aadt": 16923,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 8,
+    "durationHours": 91,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 655.4558170711717,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 5.52820155964637e+47,
+     "savedPct": 99.57558232863626,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 1.3257225010110174e+48,
+     "savedPct": 98.98220053903101,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 3.971484510251505e+49,
+     "savedPct": 69.50964631966275,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ88%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p143",
+   "permitRef": "BLD-2026-0143",
+   "input": {
+    "aadt": 15023,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 16,
+    "durationHours": 95,
+    "freeFlowMin": 6,
+    "sensitivity": "hospital",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 594.2010119232953,
+   "baselineScore": 11,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.0482152396064386e+47,
+     "savedPct": 99.79931952336794,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ52%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.31783332665299e+47,
+     "savedPct": 99.51822749889003,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ64%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.1956406515828045e+49,
+     "savedPct": 85.54491143711849,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p144",
+   "permitRef": "BLD-2026-0144",
+   "input": {
+    "aadt": 76363,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "startHour": 9,
+    "durationHours": 127,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 4998.479416360466,
+   "baselineScore": 19,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.3801500043492057e+51,
+     "savedPct": 99.16133505320289,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 3.37914222647073e+51,
+     "savedPct": 97.94662310136407,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ65%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.015237988027748e+53,
+     "savedPct": 38.30782809603516,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ83%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p145",
+   "permitRef": "BLD-2026-0145",
+   "input": {
+    "aadt": 21953,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 128,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1327.7727547335046,
+   "baselineScore": 17,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.7158794970038554e+48,
+     "savedPct": 99.6701299988554,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.037005010127131e+48,
+     "savedPct": 99.1452872436697,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.122071705563616e+50,
+     "savedPct": 74.22537352207922,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p146",
+   "permitRef": "BLD-2026-0146",
+   "input": {
+    "aadt": 49706,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 18,
+    "durationHours": 77,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 2117.997369067918,
+   "baselineScore": 12,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.0065550788703127e+50,
+     "savedPct": 99.72349493727332,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ69%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.3746587113197425e+50,
+     "savedPct": 99.3476709126888,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ77%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 7.103316469403983e+51,
+     "savedPct": 80.48688037872346,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ89%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p147",
+   "permitRef": "BLD-2026-0147",
+   "input": {
+    "aadt": 82893,
+    "lanes": 4,
+    "lanesClosed": 3,
+    "startHour": 21,
+    "durationHours": 66,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 239695.0192970461,
+   "baselineScore": 100,
+   "baselineLevel": "high",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 1.1673291437989461e+51,
+     "savedPct": 77.95034458268792,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ26%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 2.725271910121145e+51,
+     "savedPct": 48.522396741427606,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ45%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 8.144297259305941e+52,
+     "savedPct": 0,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ74%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p148",
+   "permitRef": "BLD-2026-0148",
+   "input": {
+    "aadt": 10829,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 7,
+    "durationHours": 51,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 239.37657498540634,
+   "baselineScore": 6,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 3.4523984406005654e+46,
+     "savedPct": 99.6647592336409,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 7.800946598669725e+46,
+     "savedPct": 99.24249898699134,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 2.324174382648572e+48,
+     "savedPct": 77.43139980518117,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p149",
+   "permitRef": "BLD-2026-0149",
+   "input": {
+    "aadt": 12031,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "startHour": 19,
+    "durationHours": 233,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1154.2777605817946,
+   "baselineScore": 27,
+   "baselineLevel": "medium",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.498551258441868e+47,
+     "savedPct": 98.94102059880464,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ60%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.320732565233003e+47,
+     "savedPct": 97.32103731535183,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ70%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.9014205379904474e+49,
+     "savedPct": 19.410691458161995,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ86%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  },
+  {
+   "id": "p150",
+   "permitRef": "BLD-2026-0150",
+   "input": {
+    "aadt": 35569,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "startHour": 13,
+    "durationHours": 104,
+    "freeFlowMin": 6,
+    "sensitivity": "normal",
+    "roadClass": "local"
+   },
+   "baselineDelayVehHours": 1602.2639878108846,
+   "baselineScore": 13,
+   "baselineLevel": "low",
+   "top3": [
+    {
+     "startHour": 22,
+     "phases": 2,
+     "delayVehHours": 2.463898177728527e+49,
+     "savedPct": 99.8078693713828,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ38%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 23,
+     "phases": 2,
+     "delayVehHours": 6.384106452530917e+49,
+     "savedPct": 99.50217813504992,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ53%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    },
+    {
+     "startHour": 0,
+     "phases": 2,
+     "delayVehHours": 1.925184314736934e+51,
+     "savedPct": 84.98773707704956,
+     "reasons": [
+      "نافذة خارج الذروة (الطلب أقل بـ78%)",
+      "الطريق مفتوح بالكامل خارج نافذة العمل الليلية",
+      "تفادي ذروة الصباح 7-9"
+     ]
+    }
+   ],
+   "signature": "22p2,23p2,0p2"
+  }
+ ]
+}

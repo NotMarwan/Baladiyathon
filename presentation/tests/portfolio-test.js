@@ -100,7 +100,19 @@ ok('buildPortfolio: digOnce groups only same-corridor overlaps within 30 days', 
   const p = Portfolio.buildPortfolio(Portfolio.SEED);
   assert.ok(p.digOnceMerged.groups >= 1, 'with 150 permits on 12 corridors overlaps must exist');
   assert.ok(p.digOnceMerged.permits >= 2 * p.digOnceMerged.groups);
-  assert.ok(p.digOnceMerged.savedHighSAR > p.digOnceMerged.savedLowSAR);
+  // WP-A2: التجميع كمية مادية لا نطاق مالي. المجموعة التي تضمّ n تصريحاً
+  // تتجنّب n-1 حفرة، فمجموع الحفر المتجنَّبة = التصاريح المدموجة ناقص عدد
+  // المجموعات — علاقة حسابية تُفحص، لا مجرد «الحد الأعلى أكبر من الأدنى».
+  assert.strictEqual(p.digOnceMerged.additionalPermitsInGroups,
+    p.digOnceMerged.permits - p.digOnceMerged.groups);
+  assert.ok(p.digOnceMerged.duplicateTrenchKmEquivalent > 0);
+  assert.strictEqual(p.digOnceMerged.avoidedTrenchKm, undefined,
+    'الاسم القاطع عاد إلى تجميع المحفظة');
+  assert.ok(/تداخل تام/.test(p.digOnceMerged.overlapAssumption),
+    'التجميع يعرض طولاً مكافئاً بلا افتراضه');
+  assert.strictEqual(p.digOnceMerged.savedHighSAR, undefined,
+    'عاد حقل مالي إلى تجميع المحفظة');
+  assert.ok(/كلفة الخندق لدى الأمانة/.test(p.digOnceMerged.costNote));
 });
 
 console.log(`ALL PORTFOLIO TESTS PASSED (${passed})`);

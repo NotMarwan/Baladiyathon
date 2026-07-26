@@ -49,14 +49,40 @@
     return low + Math.floor(rand() * (high - low + 1));
   }
 
+  /**
+   * قيد الإصدار: كم مساراً يُسمح بإغلاقه نهاراً.
+   * ---------------------------------------------------------------------------
+   * بلا هذا القيد يولّد المحرك تصاريح لا تصدرها بلدية — إغلاق ثلاثة من أربعة
+   * مسارات على شريان يحمل ٨٧ ألف مركبة يومياً، ثماني ساعات من الثالثة عصراً،
+   * سبعة وعشرين يوماً. ومعادلة BPR أُسّية، فمثل هذا المدخل يعطي تأخيراً بمليونين
+   * ومئتي ألف ساعة-مركبة من تصريح واحد.
+   *
+   * الضرر ليس في الرقم بل في ما يبنى عليه: الأساس المقارن يصير رجل قشّ، فيصير
+   * «الوفر» الذي نعلنه وفراً على تصريح ما كان ليُصدر. ومحكّم يسأل سؤالاً واحداً
+   * — «كيف وفرتم ثمانية وتسعين بالمئة؟» — يسقط المصداقية كلها.
+   *
+   * السقف ثلث السعة نهاراً، وأدناه مسار واحد. الإغلاق الثقيل يبقى ممكناً لكن
+   * ليلاً — وهو حال الإصدار الفعلي. والتصاريح النهارية تبقى غير مثلى (مسار واحد
+   * في ذروة الصباح على شريان يظل مكلفاً)، فيبقى للمحرك ما يحسّنه فعلاً.
+   */
+  const DAY_WINDOW = { from: 6, to: 21 };
+  const MAX_DAYTIME_LANE_SHARE = 0.34;
+
+  function issuableLanesClosed(lanes, startHour, requested) {
+    const daytime = startHour >= DAY_WINDOW.from && startHour < DAY_WINDOW.to;
+    if (!daytime) return requested;
+    return Math.min(requested, Math.max(1, Math.floor(lanes * MAX_DAYTIME_LANE_SHARE)));
+  }
+
   function buildPermits(seed) {
     const rand = mulberry32(seed);
     const permits = [];
     for (let i = 0; i < PERMIT_COUNT; i += 1) {
       const corridor = CORRIDORS[intIn(rand, 0, CORRIDORS.length - 1)];
-      const lanesClosed = intIn(rand, 1, corridor.lanes - 1);
+      const requestedClosed = intIn(rand, 1, corridor.lanes - 1);
       const daytime = rand() < DAYTIME_SHARE;
       const startHour = daytime ? intIn(rand, 7, 15) : intIn(rand, 16, 23);
+      const lanesClosed = issuableLanesClosed(corridor.lanes, startHour, requestedClosed);
       permits.push({
         id: 'p' + String(i + 1).padStart(3, '0'),
         corridorId: corridor.id,
@@ -75,6 +101,35 @@
   const DIG_ONCE_WINDOW_DAYS = 30;
   const DIG_ONCE_TRENCH_KM = 1.0; // طول خندق تمثيلي موحد لكل مجموعة دمج
 
+  /**
+   * تركُّز الرقم: كم من الإجمالي يأتي من أعلى تصريح وأعلى خمسة.
+   * ---------------------------------------------------------------------------
+   * مجموعٌ يقوده شاذّ واحد رقمٌ صحيح حسابياً وكاذب دلالياً: يقول «هكذا تكون
+   * المحفظة» وهو يصف حالة واحدة. والفرق بين الوسيط والمتوسط يكشف ذلك في سطر.
+   *
+   * يُحسب ويُعرض دائماً، لا عند السوء فقط: الإفصاح عن التركُّز يكسب مصداقية،
+   * وإخفاؤه حتى مع رقم سليم يجعل السؤال عنه اتهاماً بدل أن يكون استيضاحاً.
+   */
+  function concentrationOf(perPermit, baselineTotal) {
+    const sorted = perPermit.map((row) => row.baseline).sort((a, b) => b - a);
+    const share = (n) => (baselineTotal > 0
+      ? (100 * sorted.slice(0, n).reduce((sum, value) => sum + value, 0)) / baselineTotal
+      : 0);
+    const ascending = sorted.slice().reverse();
+    const savedPcts = perPermit
+      .filter((row) => row.baseline > 0)
+      .map((row) => (100 * (row.baseline - row.best)) / row.baseline)
+      .sort((a, b) => a - b);
+
+    return {
+      topPermitPct: share(1),
+      topFivePct: share(5),
+      medianVehHours: ascending[Math.floor(ascending.length / 2)] || 0,
+      meanVehHours: perPermit.length ? baselineTotal / perPermit.length : 0,
+      medianSavedPct: savedPcts[Math.floor(savedPcts.length / 2)] || 0,
+    };
+  }
+
   function buildPortfolio(seed) {
     const permits = buildPermits(seed);
     const byClass = {
@@ -84,6 +139,7 @@
     };
     let baselineVehHours = 0;
     let optimizedVehHours = 0;
+    const perPermit = [];
 
     for (const permit of permits) {
       const input = {
@@ -104,6 +160,7 @@
       bucket.baseline += base;
       bucket.optimized += best;
       bucket.saved += Math.max(0, base - best);
+      perPermit.push({ baseline: base, best: best });
     }
 
     const savedVehHours = Math.max(0, baselineVehHours - optimizedVehHours);
@@ -117,8 +174,11 @@
     }
     let groups = 0;
     let mergedPermits = 0;
-    let savedLowSAR = 0;
-    let savedHighSAR = 0;
+    // WP-A2: كميات مادية بدل تقدير مالي. عدد عمليات الحفر المتجنَّبة سليم
+    // مهما كان تداخل المسارات؛ الطول مكرر مكافئ تحت افتراض تداخل تام، ومسار
+    // المحفظة يستعمل طول خندق تمثيلياً موحداً بلا هندسة، فلا تداخل يُحسب هنا.
+    let duplicateTrenchKmEquivalent = 0;
+    let additionalPermitsInGroups = 0;
     for (const list of byCorridor.values()) {
       const sorted = list.slice().sort((a, b) => a.startDay - b.startDay);
       let group = [sorted[0]];
@@ -135,8 +195,8 @@
             });
             groups += 1;
             mergedPermits += group.length;
-            savedLowSAR += digResult.savedLowSAR;
-            savedHighSAR += digResult.savedHighSAR;
+            duplicateTrenchKmEquivalent += digResult.duplicateTrenchKmEquivalent;
+            additionalPermitsInGroups += digResult.additionalPermitsInGroups;
           }
           group = current ? [current] : [];
         }
@@ -149,13 +209,19 @@
       seed,
       permitCount: permits.length,
       totals: { baselineVehHours, optimizedVehHours, savedVehHours, savedPct },
+      concentration: concentrationOf(perPermit, baselineVehHours),
       ranges: {
         personHours: personHoursRange,
         timeValue: AtharEngine.timeValueSAR(personHoursRange),
         co2: AtharEngine.co2Range(savedVehHours),
       },
       byClass,
-      digOnceMerged: { groups, permits: mergedPermits, savedLowSAR, savedHighSAR },
+      digOnceMerged: {
+        groups, permits: mergedPermits, duplicateTrenchKmEquivalent, additionalPermitsInGroups,
+        overlapAssumption: AtharEngine.digOnce({ trenchKm: 1, permitsMerged: 2 })
+          .overlapAssumption,
+        costNote: AtharEngine.digOnce({ trenchKm: 0, permitsMerged: 0 }).costNote,
+      },
     };
   }
 

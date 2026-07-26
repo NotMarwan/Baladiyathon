@@ -3,3 +3,6 @@ fable-orchestrator/.pytest_cache/
 node_modules/
 presentation/server_log.txt
 presentation/tests/shots/
+
+# WP-L1 — سجل القرارات الثابت: بيانات تشغيل لا مصدر.
+.athar/

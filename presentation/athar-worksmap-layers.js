@@ -7,7 +7,7 @@
  * 4) الحاشية بيضاء تحت كل خط متقطع؛ الداكنة تظهر من كل فجوة وتبدو منقّطة.
  * 5) نمط الشرطات يشتد تحت z15 — بلا ذلك يتفكك إلى نقاط متناثرة.
  * 6) عرض الخط يتدرج مع التقريب فيغطي عرض الشارع لا خيطاً فوقه.
- * 7) التجميع لنقاط فقط؛ supercluster يُسقط كل ما ليس Point.
+ * 7) الرمز يتبع نوع العمل واللون يتبع المجموعة — لا رمز احتياطي غير مقصود.
  * 8) baseFilters يحفظ شرط المجموعة كي لا يمحوه setFilter عند الفلترة الزمنية.
  * 9) كل الدوال نقية — تُختبر في Node بلا متصفح.
  *
@@ -29,31 +29,61 @@
     closure: '#c92a2a',
     incident: '#f76707',
     diversion: '#1c7ed6',
+    // لون `poi-information.svg` — الرمز الاحتياطي لنوعٍ لم يُعرَّف بعد. لا طبقة
+    // تستعمله اليوم، ويبقى في اللوحة كي لا ينزلق الأصل عن الطيف حين يُستعمل.
     info: '#1971c2',
     poi: '#2f9e44',
     poiCasing: '#ffffff',
     dashCasing: '#ffffff',
-    clusterSmall: '#f0a020',
-    clusterMedium: '#f76707',
-    clusterLarge: '#e03131',
-    clusterText: '#ffffff',
   };
 
-  var SIZES = { iconSize: 0.8, clusterSmall: 15, clusterMedium: 20, clusterLarge: 26 };
+  // لوحة الأيقونة 32 والشارة داخلها 26؛ 0.92 تضعها على الشاشة بـ ~24px —
+  // تُقرأ بنظرة ولا تبتلع الشارع تحتها.
+  /**
+   * حجم الشارة يتبع التقريب.
+   * ---------------------------------------------------------------------------
+   * حجمٌ ثابت (0.92 ≈ 24 بكسل) يعني أن شارة المنع عند تقريب المدينة تغطي تقاطعاً
+   * كاملاً بما فيه من شوارع وأسماء — ويقرؤها المستعمل بقعةً حمراء لا علامة.
+   * وعند تقريب الشارع يعني العكس: شارةٌ صغيرة على تقاطعٍ واسع.
+   *
+   * فتصغر عند المدينة وتكبر عند الشارع، كما تفعل كل خريطة ملاحة.
+   */
+  var SIZES = {
+    iconSize: [
+      'interpolate', ['linear'], ['zoom'],
+      10, 0.5, 13, 0.68, 15, 0.86, 18, 1,
+    ],
+  };
 
-  // أعرض قليلاً من الشارع نفسه: المقطع يجب أن «يبتلع» الإسفلت لا أن يعلوه كخيط.
+  /**
+   * عرض المقطع المعلَّم.
+   * ---------------------------------------------------------------------------
+   * كان يبلغ 8.5 بكسل عند التقريب الخامس عشر وحاشيته 12.5 — والشارع الرئيسي
+   * تحته 7. أي أن العلامة أعرض من الطريق الذي تعلّمه بالضعف تقريباً، فتبتلع
+   * الإسفلت واسم الشارع معاً، ويُقرأ الخط طريقاً مستقلاً لا حالةً على طريق.
+   *
+   * القاعدة الآن: العلامة أرفع من الشارع دائماً، فيبقى لون الطريق ظاهراً على
+   * جانبيها ويبقى اسمه مقروءاً. والحاشية تزيد 1.2 بكسل لا خمسة.
+   *
+   * (مرجع المقارنة: عرض `roads` عند z15 — شرياني 11، رئيسي 7، محلي 3.4.)
+   */
   var LINE_WIDTH = [
-    'interpolate', ['exponential', 1.5], ['zoom'],
-    10, 2.8, 13, 5.6, 15, 8.5, 17, 13, 20, 28,
+    'interpolate', ['exponential', 1.4], ['zoom'],
+    10, 1.6, 13, 2.4, 15, 3.2, 17, 4.2, 20, 6.5,
   ];
 
   var CASING_WIDTH = [
-    'interpolate', ['exponential', 1.5], ['zoom'],
-    10, 4.4, 13, 8.4, 15, 12.5, 17, 18, 20, 38,
+    'interpolate', ['exponential', 1.4], ['zoom'],
+    10, 2.8, 13, 3.6, 15, 4.4, 17, 5.4, 20, 7.7,
   ];
 
-  var DASH_PATTERN = [1.6, 2.2];
-  var DASH_PATTERN_ROUTE = [2, 2];
+  /**
+   * الشرطة والفجوة بوحدة عرض الخط لا بالبكسل — هكذا يعرّفها مواصف الأسلوب.
+   * عند عرضٍ 3.2 تعطي [2.6, 2.0] شرطةً بطول 8.3 بكسل وفجوةً 6.4: الطريق يظهر
+   * بين الشرطات، والنمط يُقرأ «مقطعٌ معلَّم» لا «خطٌّ مصمت».
+   */
+  var DASH_PATTERN = [2.6, 2.0];
+  var DASH_PATTERN_ROUTE = [2.2, 2.4];
 
   /**
     * line-dasharray خاصية cross-faded: تقبل step على التقريب لا interpolate.
@@ -77,12 +107,10 @@
   }
 
   var LINE_ONLY = ['==', ['geometry-type'], 'LineString'];
-  var NOT_CLUSTER = ['!', ['has', 'point_count']];
 
   function matchFilter(config) {
     var parts = [['==', ['get', 'group'], config.group]];
     if (config.subtype) parts.push(['==', ['get', 'subtype'], config.subtype]);
-    if (config.excludeSubtype) parts.push(['!=', ['get', 'subtype'], config.excludeSubtype]);
     return parts;
   }
 
@@ -93,7 +121,10 @@
     var dash = dashByZoom(config.dashPattern || DASH_PATTERN);
     var match = matchFilter(config);
     var lineFilter = ['all', LINE_ONLY].concat(match);
-    var symbolFilter = ['all', NOT_CLUSTER].concat(match);
+    // كان هنا `['!', ['has', 'point_count']]` — شرط استبعاد دوائر التجميع. مات
+    // يوم صار المصدر `cluster: false`: لا ميزة تحمل point_count أصلاً، فالشرط
+    // يُقيَّم على كل رمز في كل إطار ليعيد true دائماً.
+    var symbolFilter = ['all'].concat(match);
     var lineSource = config.lineSource || config.source;
 
     var casing = {
@@ -103,18 +134,21 @@
       paint: {
         'line-color': config.casingColor,
         'line-width': casingWidth,
-        'line-opacity': 0.9,
+        // الحاشية أخفت من الخط: دورها الفصل لا الإعلان.
+        'line-opacity': 0.55,
       },
     };
 
     var line = {
       id: config.name + '-lines', type: 'line', source: lineSource,
       filter: lineFilter,
-      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      layout: { 'line-cap': 'butt', 'line-join': 'round' },
       paint: {
         'line-color': config.lineColor,
         'line-width': lineWidth,
         'line-dasharray': dash,
+        // شفافية خفيفة تُبقي الإسفلت واسم الشارع مقروءين من تحت العلامة.
+        'line-opacity': 0.85,
       },
     };
 
@@ -124,7 +158,14 @@
       layout: {
         'icon-image': config.iconImage,
         'icon-size': SIZES.iconSize,
-        'icon-allow-overlap': true,
+        /**
+         * بلا تجميع، الازدحام يُحل بالتصادم لا بدائرة عدّاد: تحت z14 تختفي
+         * الأيقونة المتصادمة وتبقى الأعلى شدة — الخريطة تبقى مقروءة والرمز
+         * يبقى رمزاً. فوق z14 يتسع المكان فيُسمح بالتراكب ولا يُخفى سجل.
+         * symbol-sort-key يقرر من يبقى: الأدنى قيمةً يُرسم أولاً ويفوز.
+         */
+        'icon-allow-overlap': ['step', ['zoom'], false, 14, true],
+        'icon-padding': 3,
         'symbol-sort-key': ['-', 10, ['to-number', ['get', 'severity'], 0]],
       },
     };
@@ -138,6 +179,16 @@
     return [casing, line, symbol];
   }
 
+  /**
+   * الرمز يحمل نوع العمل، والشارة تحمل المجموعة.
+   * ---------------------------------------------------------------------------
+   * `works-<subtype>` أو `poi-<subtype>`: نفس الرسم في المجموعتين بلونين —
+   * المفتاح كهربائي في الطوارئ هنا وهناك، ويبقى الأخضر يقول «نقطة اهتمام»
+   * والكهرماني يقول «أعمال طرق». بلا هذا كانت ٢٢ صيانةً و١٦ نقطةَ اهتمام تقع
+   * كلها على رمز احتياطي واحد، فتُقرأ الخريطة نوعاً واحداً من العمل.
+   * الاحتياطي يبقى مقصوداً لا مستوراً: `roadworks` (المخروط) هو رسم
+   * `roadworks/default` عمداً، و`poi-information` رسم أي نوع لم يُعرَّف بعد.
+   */
   var iconByType = function (prefix, fallback) {
     return ['coalesce', ['image', ['concat', prefix, ['get', 'subtype']]], ['image', fallback]];
   };
@@ -167,20 +218,24 @@
         iconImage: 'incident',
       }],
     },
+    /**
+     * تحويلات فقط — بلا شقّ حافلات.
+     * -------------------------------------------------------------------------
+     * كان هنا تقسيمٌ ثانٍ: `bus-routes` على `subtype: 'bus'`، ومعه
+     * `excludeSubtype: 'bus'` على التحويلات. ولا سجل في المحفظة يحمل هذا النوع
+     * — أنواعها الأربعة maintenance و development و emergency و default —
+     * فالطبقة ترسم صفر ميزة، واللوحة مع ذلك تقول «والحافلات». وعدٌ بطبقةٍ لا
+     * بيانات تحتها أسوأ من غيابها: الساكن يقرأ الصفر انقطاعاً في الخدمة لا
+     * انقطاعاً في البيانات. حُذفت الطبقة وصُحّح العنوان؛ ويوم تصل بيانات نقل
+     * عام حقيقية تُضاف الطبقة ومعها ما ترسمه.
+     */
     {
-      id: 'diversions', label: 'مسارات التحويل والحافلات', swatch: WORKS_COLORS.diversion,
-      configs: [
-        {
-          name: 'diversion-routes', group: 'diversions', excludeSubtype: 'bus',
-          lineColor: WORKS_COLORS.diversion, casingColor: WORKS_COLORS.dashCasing,
-          iconImage: 'diversion', dashPattern: DASH_PATTERN_ROUTE, widthScale: 0.7,
-        },
-        {
-          name: 'bus-routes', group: 'diversions', subtype: 'bus',
-          lineColor: WORKS_COLORS.info, casingColor: WORKS_COLORS.dashCasing,
-          iconImage: 'bus-stop', dashPattern: DASH_PATTERN_ROUTE, widthScale: 0.55, minzoom: 11,
-        },
-      ],
+      id: 'diversions', label: 'مسارات التحويل', swatch: WORKS_COLORS.diversion,
+      configs: [{
+        name: 'diversion-routes', group: 'diversions',
+        lineColor: WORKS_COLORS.diversion, casingColor: WORKS_COLORS.dashCasing,
+        iconImage: 'diversion', dashPattern: DASH_PATTERN_ROUTE, widthScale: 0.7,
+      }],
     },
     {
       id: 'pois', label: 'نقاط الاهتمام', swatch: WORKS_COLORS.poi,
@@ -206,43 +261,15 @@
     return out;
   }
 
-  var CLUSTER_OPTIONS = {
-    cluster: true,
-    clusterRadius: 50,
-    clusterMaxZoom: 14,
-    clusterMinPoints: 2,
-    clusterProperties: { max_severity: ['max', ['to-number', ['get', 'severity'], 0]] },
-  };
-
-  function buildClusterLayers(source) {
-    return [
-      {
-        id: source + '-clusters', type: 'circle', source: source, filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': [
-            'step', ['get', 'point_count'],
-            WORKS_COLORS.clusterSmall, 10, WORKS_COLORS.clusterMedium, 50, WORKS_COLORS.clusterLarge,
-          ],
-          'circle-radius': [
-            'step', ['get', 'point_count'],
-            SIZES.clusterSmall, 10, SIZES.clusterMedium, 50, SIZES.clusterLarge,
-          ],
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#ffffff',
-        },
-      },
-      {
-        id: source + '-cluster-count', type: 'symbol', source: source, filter: ['has', 'point_count'],
-        layout: {
-          'text-field': ['get', 'point_count_abbreviated'],
-          'text-font': ['Noto Sans Regular'],
-          'text-size': 12,
-          'text-allow-overlap': true,
-        },
-        paint: { 'text-color': WORKS_COLORS.clusterText },
-      },
-    ];
-  }
+  /**
+   * مصدر النقاط بلا تجميع.
+   * ---------------------------------------------------------------------------
+   * دائرة العدّاد تقول «هنا سبعة» ولا تقول أيّ سبعة: تُخفي نوع العمل وشدته
+   * خلف رقم. المحفظة ١٥٠ سجلاً — عددٌ ترسمه الخريطة رموزاً فعلية، فيقرأ
+   * الساكن الطبقة من الشكل لا من الرقم. الازدحام يُدار بالتصادم في طبقة
+   * الرموز (icon-allow-overlap) لا بدمج السجلات.
+   */
+  var POINT_SOURCE_OPTIONS = { cluster: false };
 
   function baseFilters() {
     var result = {};
@@ -277,8 +304,7 @@
     LAYER_GROUPS: LAYER_GROUPS,
     buildTriple: buildTriple,
     buildWorksLayers: buildWorksLayers,
-    buildClusterLayers: buildClusterLayers,
-    CLUSTER_OPTIONS: CLUSTER_OPTIONS,
+    POINT_SOURCE_OPTIONS: POINT_SOURCE_OPTIONS,
     baseFilters: baseFilters,
     buildDateFilter: buildDateFilter,
     composeFilter: composeFilter,

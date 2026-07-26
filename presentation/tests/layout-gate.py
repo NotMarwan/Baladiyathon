@@ -21,7 +21,7 @@ WIDTHS = [390, 768, 1440]
 PAGES = [
     'athar-desk.html', 'athar-map.html', 'athar-decision.html',
     'athar-city-impact.html', 'athar-sources.html', 'athar-lab.html',
-    'athar-prototype.html', 'athar-pitch.html',
+    'athar-prototype.html', 'athar-pitch.html', 'athar-compare.html',
 ]
 
 LAUNCH_ARGS = [
@@ -60,6 +60,24 @@ async def main():
                 if overflow > 1:
                     failures.append(
                         {'page': name, 'width': width, 'overflowPx': overflow})
+
+                # WP-G2 — سمة نمط موجودة في الترميز ولم تُطبَّق.
+                #
+                # سياسة أمن المحتوى في WP-D1 حجبت ثلاثاً وثلاثين سمة `style=""`
+                # في صفحات المشروع **بصمت**: السمات الساكنة تُحجب دون سطر في
+                # الطرفية، فلم يلتقطها فحص الأخطاء أعلاه، ولم تُنتج فيضاً.
+                # عاشت البوابة خضراء فوق صفحات مكسورة.
+                #
+                # `element.style.length === 0` مع وجود السمة هو التوقيع الدقيق
+                # لهذه الحالة، ولا يقع في غيرها.
+                blocked = await page.evaluate(
+                    '() => [...document.querySelectorAll("[style]")]'
+                    '.filter(e => e.getAttribute("style").trim()'
+                    ' && e.style.length === 0)'
+                    '.map(e => e.tagName + "[" + e.getAttribute("style").slice(0, 40) + "]")')
+                if blocked:
+                    failures.append({'page': name, 'width': width,
+                                     'blockedInlineStyles': blocked[:3]})
 
                 loud = [message for message in errors if not tolerated(message)]
                 if loud:

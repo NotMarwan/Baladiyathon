@@ -15,9 +15,16 @@ ok('FeatureCollection صالح وغير فارغ', () => {
 });
 
 ok('كل ميزة تحمل kind من المجموعة المعروفة', () => {
-  const allowed = new Set(['water', 'green', 'place']);
+  const allowed = new Set(['water', 'green', 'place', 'urban', 'work', 'sand']);
   for (const feature of base.features) {
     assert.ok(allowed.has(feature.properties.kind), `kind غير معروف: ${feature.properties.kind}`);
+  }
+});
+
+ok('نسيج المدينة موجود: استعمال الأرض يفرّق الكتل عن الفضاء', () => {
+  const kinds = new Set(base.features.map((f) => f.properties.kind));
+  for (const kind of ['urban', 'work']) {
+    assert.ok(kinds.has(kind), `لا مساحات ${kind} — القاعدة ستُقرأ سادة`);
   }
 });
 

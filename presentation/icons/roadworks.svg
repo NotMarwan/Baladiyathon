@@ -1,5 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
-  <circle cx="13" cy="13" r="10.2" fill="#ffffff" stroke="#f0a020" stroke-width="2.2"/>
-  <path d="M13 7.6 L17.4 16.2 L8.6 16.2 Z" fill="#f0a020"/>
-  <rect x="8.2" y="17" width="9.6" height="1.6" rx="0.8" fill="#f0a020"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <radialGradient id="s" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#101828" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#101828" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="16" cy="17.1" r="13" fill="url(#s)"/>
+  <circle cx="16" cy="15.6" r="10.9" fill="#ffffff" stroke="#f0a020" stroke-width="2.4"/>
+  <path d="M16 7.8 L20.6 19.8 L11.4 19.8 Z" fill="#f0a020" stroke="#f0a020"
+        stroke-width="1.7" stroke-linejoin="round"/>
+  <path d="M13.85 13.4 L18.15 13.4 L18.9 15.5 L13.1 15.5 Z" fill="#ffffff"/>
+  <rect x="8.8" y="20.5" width="14.4" height="2.0" rx="1" fill="#f0a020"/>
 </svg>

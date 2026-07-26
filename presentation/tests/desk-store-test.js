@@ -75,6 +75,28 @@ ok('البحث النصي يطابق الشارع والمرجع', () => {
   assert.deepStrictEqual(store.getVisible().map((f) => f.properties.id), ['b']);
 });
 
+/**
+ * بحثٌ واحد في المنتج، لا بحثان.
+ * ---------------------------------------------------------------------------
+ * الصفحة العامة تطبّع الإملاء قبل المقارنة، والمكتب كان يقارن النص خاماً:
+ * «ابو عبيده» يعيد ثلاثة سجلات هناك وصفراً هنا، و«bld-2026-0001» كذلك.
+ * فالمراجع الذي لا يجد ما يعرف أنه موجود يفقد ثقته في الأداة قبل الرقم.
+ */
+ok('بحث الصندوق يطابق إملاء الساكن كبحث الصفحة العامة', () => {
+  const store = Store.createStore([
+    feature('x', { street: 'أبو عبيدة عامر بن الجراح', permitRef: 'BLD-2026-0001' }),
+    feature('y', { street: 'طريق الملك فهد', permitRef: 'BLD-2026-0002' }),
+  ]);
+
+  store.setFilter('query', 'ابو عبيده');
+  assert.deepStrictEqual(store.getVisible().map((f) => f.properties.id), ['x'],
+    'الإملاء الشائع بلا همزة ولا تاء مربوطة لا يطابق');
+
+  store.setFilter('query', 'bld-2026-0002');
+  assert.deepStrictEqual(store.getVisible().map((f) => f.properties.id), ['y'],
+    'المرجع بأحرف صغيرة لا يطابق');
+});
+
 ok('البحث الفارغ لا يُخفي شيئاً', () => {
   const store = Store.createStore(sample);
   store.setFilter('query', '   ');

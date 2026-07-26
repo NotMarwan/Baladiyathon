@@ -145,18 +145,103 @@
   var blockers = [];
   var analysisCache = {};
   var serverLedger = false;
+  var serverDenial = '';
+
+  /**
+   * مفتاح الكتابة (WP-D1).
+   *
+   * الخادم يشترط `X-Athar-Key` على الكتابة في سجل القرارات، ويسلّم المفتاح
+   * لطالبٍ من الحلقة المحلية. يُجلب مرة ويُحتفظ به في الذاكرة — لا في
+   * `localStorage`: مفتاحٌ مخزَّن على القرص يعيش بعد الجلسة بلا داعٍ.
+   *
+   * والقيمة الفارغة تُحفظ كذلك: غياب الخادم (وضع `file://`) لا يستحق محاولة
+   * جلبٍ عند كل قرار.
+   */
+  var serverKey = null;
+
+  function withServerKey(next) {
+    if (serverKey !== null) { next(serverKey); return; }
+    fetch('/api/session-key')
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (body) {
+        serverKey = (body && body.key) || '';
+        next(serverKey);
+      })
+      .catch(function () { serverKey = ''; next(''); });
+  }
+
+  /**
+   * قرارات الخادم عند الإقلاع (WP-L1).
+   *
+   * كان المكتب يكتب في سجل الخادم ولا يقرؤه أبداً — سجلٌّ أحاديّ الاتجاه.
+   * ونتيجته أن مراجعاً يفتح المكتب على متصفح آخر أو بعد مسح التخزين المحلي
+   * يرى صندوقاً فارغاً بينما الخادم يحمل تاريخ العمل كاملاً.
+   *
+   * الدمج **لا يُسقط المحلي**: التخزين المحلي هو المؤكّد لأنه يعمل بلا خادم.
+   * ما يأتي من الخادم يُضاف لما لا يعرفه المحلي وحده — ونسخةٌ موجودة في
+   * الاثنين تبقى على نسخة المحلي، فلا يُلغى قرار المراجع الحاضر بقرارٍ أقدم.
+   */
+  function mergeServerLedger(byWork) {
+    if (typeof fetch !== 'function') return;
+    fetch('/api/decisions')
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (body) {
+        if (!body || !body.works) return;
+        var added = 0;
+        Object.keys(body.works).forEach(function (workId) {
+          var local = byWork[workId] || [];
+          var known = {};
+          local.forEach(function (item) { known[item.version] = 1; });
+          body.works[workId].forEach(function (record) {
+            if (known[record.version]) return;
+            local = local.concat([record]);
+            added += 1;
+          });
+          if (local.length) {
+            byWork[workId] = local.sort(function (a, b) { return a.version - b.version; });
+          }
+        });
+        if (!added) { serverLedger = true; renderLedger(); return; }
+        decisions = byWork;
+        LEDGER.write(decisions);
+        serverLedger = true;
+        /* `store.replace` تستبدل سجلاً واحداً لا قائمة — تمريرُ مصفوفة إليها
+           يمرّ صامتاً ولا يستبدل شيئاً. */
+        AtharDecisionRecord.restore(portfolio.features, decisions)
+          .forEach(function (feature) { store.replace(feature); });
+        renderLedger();
+      })
+      .catch(function () { /* وضع الملف المحلي — لا خادم */ });
+  }
 
   /** إرسال القرار إلى الخادم إن وُجد. الفشل صامت — التخزين المحلي هو المؤكّد. */
   function pushToServer(workId, record) {
     if (typeof fetch !== 'function') return;
-    fetch('/api/works/' + encodeURIComponent(workId) + '/decisions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(record),
-    }).then(function (response) {
-      serverLedger = response.ok;
-      renderLedger();
-    }).catch(function () { /* وضع الملف المحلي — لا خادم */ });
+    withServerKey(function (key) {
+      fetch('/api/works/' + encodeURIComponent(workId) + '/decisions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Athar-Key': key },
+        body: JSON.stringify(record),
+      }).then(function (response) {
+        serverLedger = response.ok;
+        /* WP-D3 — الرفض بسبب الدور ليس «فشل مزامنة».
+           المكتب يحمل مفتاح الفاحص، والخادم يردّ 403 على الاعتماد. ابتلاع
+           ذلك يجعل الشاشة تقول «محفوظ محلياً» وكأن الخادم غائب، بينما هو
+           حاضر ورافض — والفرق هو كل معنى فصل الصلاحيات. */
+        serverDenial = '';
+        if (response.status === 403) {
+          return response.json().then(function (body) {
+            serverDenial = body && body.error === 'SEGREGATION_OF_DUTIES'
+              ? body.reason
+              : 'دورك الحالي (' + ((body && body.roleLabel) || 'فاحص الأثر')
+                + ') لا يجيز هذا الانتقال — يلزم مفتاح الدور المخوَّل';
+            renderLedger();
+          });
+        }
+        renderLedger();
+        return null;
+      }).catch(function () { /* وضع الملف المحلي — لا خادم */ });
+    });
   }
 
   /**
@@ -213,33 +298,6 @@
 
   /* ---------- التحليل: يُحسب من العمل المحدد لحظة تحديده ---------- */
 
-  function inputsFor(p) {
-    var start = Date.parse(p.start);
-    var end = Date.parse(p.end);
-    var windowHours = Number(p.windowHours) > 0 ? Number(p.windowHours) : 8;
-    return {
-      aadt: Number(p.aadt) > 0 ? Number(p.aadt) : AtharEngine.DEFAULTS.aadt,
-      lanes: Number(p.lanes) || AtharEngine.DEFAULTS.lanes,
-      lanesClosed: Number(p.lanesClosed) || 1,
-      startHour: isNaN(start) ? 8 : new Date(start).getUTCHours(),
-      durationHours: windowHours,
-      capacityPerLane: AtharEngine.DEFAULTS.capacityPerLane,
-      freeFlowMin: AtharEngine.DEFAULTS.freeFlowMin,
-      workDays: Number(p.workDays) > 0 ? Number(p.workDays)
-        : Math.max(1, Math.ceil((end - start) / 86400000)),
-    };
-  }
-
-  function delayPercent(scored) {
-    var base = 0;
-    var closed = 0;
-    (scored.hourly || []).forEach(function (hour) {
-      base += hour.demand * hour.baseT;
-      closed += hour.demand * hour.closedT;
-    });
-    return base > 0 ? ((closed - base) / base) * 100 : 0;
-  }
-
   /** أعمال أخرى على الشارع نفسه بنافذة زمنية متقاطعة. */
   function overlapping(feature) {
     var p = feature.properties;
@@ -276,47 +334,20 @@
     return mergeCache[id];
   }
 
+  /**
+   * الحصيلة من الوحدة النقية، والتعارض من المحفظة.
+   * ---------------------------------------------------------------------------
+   * الحساب كله في `athar-desk-analysis.js` كي يُختبر في Node مقابل الأرقام
+   * المنشورة مع كل تصريح — وهو الحارس الذي يمنع عودة الرقمين لكمية واحدة.
+   * التعارض وحده يبقى هنا: خاصيةُ محفظةٍ لا خاصيةُ تصريح، ولا تُعرف إلا من
+   * بقية السجلات.
+   */
   function analyze(feature) {
     var id = feature.properties.id;
     if (analysisCache[id]) return analysisCache[id];
 
-    var input = inputsFor(feature.properties);
-    var scored = AtharEngine.score(input);
-
-    // optimize يعيد {top3, baseline}؛ وكل بديل يحمل أسبابه العربية بنفسه.
-    var optimized = AtharEngine.optimize(input) || {};
-    var alternatives = (optimized.top3 || []).slice(0, 3);
-    var best = alternatives[0];
-
-    var asked = scored.delayVehHours * input.workDays;
-    var bestTotal = best ? best.delayVehHours * input.workDays : null;
-
-    // الأثر بوحدات القرار: ساعات الناس والريال والكربون بنطاقاتها المعلنة.
-    var ph = AtharEngine.personHours(asked);
-    var vot = AtharEngine.timeValueSAR(ph);
-    var carbon = AtharEngine.co2Range(asked);
-
-    var result = {
-      scored: { delayVehHours: asked, delayPct: delayPercent(scored), level: scored.level },
-      alternatives: alternatives,
-      reasons: (best && best.reasons) || [],
-      conflicts: overlapping(feature),
-      delta: bestTotal !== null && asked > 0 ? ((bestTotal - asked) / asked) * 100 : null,
-      units: {
-        personHoursLow: ph.lowPersonHours,
-        personHoursHigh: ph.highPersonHours,
-        occLow: ph.occLow,
-        occHigh: ph.occHigh,
-        sarLow: vot.lowSAR,
-        sarHigh: vot.highSAR,
-        wageHourlySAR: vot.wageHourlySAR,
-        shareLow: vot.shareLow,
-        shareHigh: vot.shareHigh,
-        co2Low: carbon.lowCo2Kg,
-        co2High: carbon.highCo2Kg,
-      },
-      input: input,
-    };
+    var result = AtharDeskAnalysis.evaluate(feature.properties, AtharEngine);
+    result.conflicts = overlapping(feature);
 
     analysisCache[id] = result;
     return result;
@@ -324,12 +355,50 @@
 
   /* ---------- التصيير ---------- */
 
+  /**
+   * الشريط يُبنى مرة، والقائمة تُعاد.
+   * ---------------------------------------------------------------------------
+   * إعادة بناء الشريط عند كل تغيّر كانت تهدم حقل البحث الذي يكتب فيه المراجع:
+   * `setFilter` يبثّ، والبثّ يُعيد التصيير، والتصيير يستبدل `innerHTML`
+   * فيُفقد العنصر ومعه البؤرة والمؤشّر. النتيجة أن البحث لا يقبل إلا حرفاً
+   * واحداً — تُكتب «الملك» فتبقى «ا». والخانتان تفقدان البؤرة كذلك، فالتنقل
+   * بلوحة المفاتيح ينقطع عند كل تغيير.
+   *
+   * فالشريط الآن يُبنى ويُربط مرة واحدة، ويتغيّر منه ما يتغيّر فعلاً: سطر
+   * العدّادات. وقيم الحقول تُزامَن مع المخزن فقط حين يغيّرها غير المستخدم
+   * (استئناف جلسة، لوحة أوامر) — ولا تُلمس أبداً وهي تحت البؤرة.
+   */
+  var toolbarBuilt = false;
+
   function renderInbox() {
     var state = store.getState();
     var filters = { query: state.filters.query, status: state.filters.status, sort: state.sort };
-    toolbarEl.innerHTML = AtharDeskInbox.renderToolbar(store.counts(), filters);
+
+    if (!toolbarBuilt) {
+      toolbarEl.innerHTML = AtharDeskInbox.renderToolbar(store.counts(), filters);
+      bindToolbar();
+      toolbarBuilt = true;
+    } else {
+      syncToolbar(filters);
+    }
+
     listEl.innerHTML = AtharDeskInbox.renderList(store.getVisible(), state.selectedId);
-    bindToolbar();
+  }
+
+  /** يحدّث العدّادات دائماً، وقيمة أي حقل ليس تحت البؤرة. */
+  function syncToolbar(filters) {
+    var counts = document.getElementById('desk-counts');
+    if (counts) counts.innerHTML = AtharDeskInbox.renderCounts(store.counts());
+
+    setFieldValue('desk-search', filters.query || '');
+    setFieldValue('desk-status', filters.status || '');
+    setFieldValue('desk-sort', filters.sort || '');
+  }
+
+  function setFieldValue(id, value) {
+    var field = document.getElementById(id);
+    if (!field || field === document.activeElement) return;
+    if (field.value !== value) field.value = value;
   }
 
   function tabBody(feature, analysis) {
@@ -337,9 +406,12 @@
 
     if (activeTab === 'history') {
       // السجل يُقرأ من المخزن لا من ذاكرة الجلسة: ما يظهر هو ما سيبقى بعد التحديث.
+      // الحالة السابقة محفوظة في السجل (`record.from`)، وإسقاطها هنا كان يطبع
+      // «— ← معتمد»: نصف الحركة. والسجل الذي لا يقول من أين جاء العمل لا يشرح
+      // القرار، وهو الغرض الوحيد من وجوده.
       return AtharDeskFile.renderAudit((decisions[p.id] || []).map(function (record) {
         return {
-          action: record.action, from: null, to: record.status, actor: record.actor,
+          action: record.action, from: record.from, to: record.status, actor: record.actor,
           reason: record.reason, at: record.at, version: record.version,
         };
       }));
@@ -372,7 +444,12 @@
     if (activeTab === 'publication') {
       var check = AtharDeskStates.guard(p, 'publish');
       return check.allowed
-        ? '<p class="desk-none">جاهز للنشر: الاتجاه وزمن الانتهاء مثبتان.</p>'
+        /* WP-A5: كانت «جاهز للنشر». العبارة تصف حالة سير عمل، لكنها تقع
+           بجوار تصدير WZDx فتُقرأ إقراراً بمطابقة المخطط — وهي غير مطابقة.
+           الصياغة صارت تسمّي ما ثبت بالضبط. */
+        ? '<p class="desk-none">الحالة تسمح بالنشر: الاتجاه وزمن الانتهاء'
+          + ' مثبتان. وبنية WZDx 4.2 مفحوصة داخلياً — المحقق الرسمي'
+          + ' لم يُشغَّل بعد.</p>'
         : AtharDeskFile.renderBlockers(check.blockers);
     }
 
@@ -684,27 +761,32 @@
     }
 
     if (kind === 'wzdx') {
-      var coordinates = feature.geometry && feature.geometry.type === 'LineString'
-        ? feature.geometry.coordinates
-        : [feature.geometry.coordinates];
-
-      var collection = AtharEngine.wzdx({
+      /* كان هنا سطرٌ يلفّ إحداثية النقطة في مصفوفة فيُنتج «خطاً» من نقطة
+         واحدة، ويمرّر الاتجاه العربي خاماً. الأول يخترع هندسة والثاني يكسر
+         تعداداً مغلقاً — وهما سبب فشل تصدير المحفظة كاملة أمام المخطط الرسمي.
+         المُصدِّر الآن يحوّل ما يمكن تحويله ويرفض ما لا يمكن، بسببٍ يُعرَض. */
+      var resolutions = (window.ATHAR_POINT_GEOMETRY
+        && window.ATHAR_POINT_GEOMETRY.resolutions) || {};
+      var built = AtharWzdxExport.buildFeed(feature, {
         dataSourceId: 'athar-reviewer-desk',
-        id: plan.permitRef,
-        roadName: plan.street,
-        direction: plan.direction,
-        lanes: plan.lanes,
-        lanesClosed: plan.lanesClosed,
-        startISO: plan.start,
-        durationHours: plan.windowHours,
         windows: plan.windows,
-        coordinates: coordinates,
+        resolution: resolutions[plan.permitRef],
       });
 
+      if (!built.ok) {
+        flash({ tone: 'refused', mark: '⊘',
+          text: built.outcome + ' — ' + built.blockers.join(' · '),
+          ref: plan.permitRef });
+        return;
+      }
+
       download(AtharDeskPlan.fileName(plan, 'geojson'),
-        JSON.stringify(collection, null, 2), 'application/geo+json');
+        JSON.stringify(built.feed, null, 2), 'application/geo+json');
       flash({ tone: 'success', mark: '⬇', text: 'نُزّل WZDx', ref: plan.permitRef,
-        tail: collection.features.length + ' نافذة' });
+        /* لا يُقال «اجتاز المخطط الرسمي» هنا: المتصفح لا يشغّل AJV، وكل ما
+           تعرفه هذه الشاشة أن حرّاس المُصدِّر مرّت. الاجتياز الرسمي يثبته
+           `tests/wzdx-official-schema-test.js` وتقرير المطابقة، ويُقرأ منهما. */
+        tail: built.feed.features.length + ' نافذة · بنية WZDx 4.2' });
       return;
     }
 
@@ -1015,25 +1097,59 @@
       // المنظر الافتتاحي هو المحفظة كلها: التوزيع يُقرأ قبل أيّ حالة مفردة.
       GL.api.frameWorks();
 
-      // أول تحديد: أخطر عمل ينتظر قراراً — الصندوق يفتح على عمل لا على فراغ.
-      var first = store.getVisible()[0];
-      if (first) store.select(first.properties.id);
+      // التحديد وقع قبل هذه اللحظة (انظر selectInitial أدناه)، فما بقي إبرازه
+      // على الخريطة — بلا طيران: المنظر الافتتاحي هو المحفظة كلها.
+      var selectedId = store.getState().selectedId;
+      if (selectedId && GL.api.highlightWork) GL.api.highlightWork(selectedId, { fly: false });
+
       bootDone();
 
       // الحلقة الثانية بعد أن يصير المكتب صالحاً للعمل، لا قبله.
-      if (typeof AtharRoadsLazy !== 'undefined') AtharRoadsLazy.attach(GL.api);
+      if (typeof AtharRoadsLazy !== 'undefined') {
+        AtharRoadsLazy.attach(GL.api);
+      }
+      /**
+       * المباني حسب النطاق المعروض — نفس علاج صفحة الخريطة.
+       * كانت هنا أيضاً تُنزَّل المدينة كلها (101 ميغابايت) دفعةً واحدة بعد
+       * حمولةٍ قبلها، فيبقى المكتب بلا نسيجٍ عشرات الثواني.
+       */
+      if (typeof AtharBuildingsLazy !== 'undefined') {
+        window.__atharBuildings = AtharBuildingsLazy.install(GL.map);
+      }
     });
 
     GL.map.on('error', function (event) {
       if (event && event.error) console.error('[map]', event.error.message);
-      bootDone();
+      mapUnavailable('تعذّر رسم الخريطة على هذا الجهاز.');
     });
   } else {
+    mapUnavailable('محرك الخريطة غير متاح في هذا المتصفح.');
+  }
+
+  /**
+   * الخريطة تسقط، والمكتب لا.
+   * ---------------------------------------------------------------------------
+   * غياب WebGL أو فشل الأصول يترك مستطيلاً فارغاً في وسط الشاشة بلا كلمة —
+   * والمراجع لا يعرف أيَنتظر أم يُكمل. الفرز نفسه لا يحتاج الخريطة: الصندوق
+   * والملف والقرار كلها تعمل بلا بلاطة واحدة. فيُقال ذلك صراحةً بدل أن يُترك
+   * الفراغ يوحي بعطلٍ شامل.
+   */
+  function mapUnavailable(reason) {
     bootDone();
+    var pane = document.getElementById('map');
+    if (!pane || pane.getAttribute('data-unavailable') === 'true') return;
+    pane.setAttribute('data-unavailable', 'true');
+    pane.innerHTML = '<div class="desk-map-down" role="status">'
+      + '<p class="desk-map-down-title">' + AtharDeskFile.escapeHtml(reason) + '</p>'
+      + '<p class="desk-map-down-note">الفرز والقرار والتصدير تعمل بلا خريطة — '
+      + 'ما ينقص هو الموقع على الأرض وحده.</p></div>';
   }
 
   store.subscribe(function () {
-    blockers = store.getSelected() && blockers.length ? blockers : blockers;
+    // العائق يخصّ عملاً بعينه: «لا ينشر إغلاق بلا اتجاه» قيلت عن هذا التصريح
+    // لا عن الذي بعده. إبقاؤه بعد تغيّر التحديد كان يعرض حجباً أحمر فوق ملف
+    // عملٍ لم يُطلب عليه إجراء أصلاً — تحذيرٌ عن غير صاحبه.
+    if (store.getState().selectedId !== lastHighlighted) blockers = [];
     render();
 
     var selectedId = store.getState().selectedId;
@@ -1273,9 +1389,29 @@
     if (savedView.sort) store.setSort(savedView.sort);
   }
 
+  /**
+   * أول تحديد لا ينتظر أول بلاطة.
+   * ---------------------------------------------------------------------------
+   * كان داخل `onReady` الخريطة: فإن تأخّر رسمها أو تعذّر، فتح المكتب على ملف
+   * قرار فارغ ولا يقول لماذا — وهو أول ما يراه من يفتح الأداة. والمكتب لا
+   * يحتاج الخريطة ليعمل: الصندوق مرتّب بالأثر، وأخطر عمل ينتظر قراراً في
+   * أعلاه. فيُحدَّد الآن، وتُبرزه الخريطة حين تجهز.
+   */
+  function selectInitial() {
+    if (store.getState().selectedId) return;
+    var first = store.getVisible()[0];
+    if (first) store.select(first.properties.id);
+  }
+
+  selectInitial();
   render();
   renderLedger();
   showResume();
+
+  /* WP-L1 — قراءة سجل الخادم **بعد** أول تصيير.
+     قبله كانت تحجب الرسم على طلب شبكة، وبعده تكمّل ما ينقص المحلي بلا أن
+     يشعر المراجع بانتظار. */
+  mergeServerLedger(decisions);
 
   window.__atharDesk = {
     store: store, map: GL, states: AtharDeskStates,

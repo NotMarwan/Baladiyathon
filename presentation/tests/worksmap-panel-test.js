@@ -34,10 +34,13 @@ ok('اللوحة لا تحقن HTML من العناوين', () => {
   assert.ok(html.indexOf('<img') === -1, 'تسرب HTML من العنوان');
 });
 
-ok('نطاق «اليوم» يمتد من منتصف ليل إلى منتصف ليل', () => {
+// منتصف ليل الرياض = 21:00 UTC من اليوم السابق. المدينة على +٣ بلا توقيت صيفي.
+const RIYADH_MIDNIGHT = (y, m, d) => Date.UTC(y, m, d) - 3 * 3600 * 1000;
+
+ok('نطاق «اليوم» يمتد من منتصف ليل إلى منتصف ليل بتوقيت الرياض', () => {
   const range = Panel.toEpochRange('today', Date.UTC(2026, 6, 24, 12, 0, 0));
-  assert.strictEqual(range.from, Date.UTC(2026, 6, 24));
-  assert.strictEqual(range.to, Date.UTC(2026, 6, 25));
+  assert.strictEqual(range.from, RIYADH_MIDNIGHT(2026, 6, 24));
+  assert.strictEqual(range.to, RIYADH_MIDNIGHT(2026, 6, 25));
 });
 
 ok('«كل التواريخ» يعيد null فلا يُطبق فلتر زمني', () => {

@@ -16,21 +16,44 @@ async function test(name, fn) {
  * يفتح منفذاً عابراً ويتأكّد أن النظام منحه فعلاً.
  * ---------------------------------------------------------------------------
  * تحت ضغط شديد يعود `address().port` صفراً، فيصير العنوان `127.0.0.1:0`
- * ويرفضه undici بـ «bad port» — رسالة لا تدلّ على سببها. المحاولة الثانية
- * تكفي دائماً: الفشل نفاد مورد لحظي لا عطب في المُختبَر.
+ * ويرفضه undici بـ «bad port» — رسالة لا تدلّ على سببها.
+ *
+ * قيل هنا سابقاً إن «المحاولة الثانية تكفي دائماً». لم تكفِ: سقطت الحزمة مرة
+ * في أربع تشغيلات متتالية على الجهاز نفسه. وبوابةٌ تسقط عشوائياً أسوأ من
+ * بوابةٍ حمراء — الأولى تُعلَّم «معروفة» فتُهمَل قراءتها.
+ *
+ * خمس محاولات مع مهلة تصاعدية: النفاد لحظي، والانتظار بينهما هو ما كان
+ * ناقصاً — إعادةُ المحاولة فوراً تصطدم بالحالة نفسها.
  */
+const PORT_ATTEMPTS = 5;
+
 async function listenOnFreePort(server, attempt) {
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const address = server.address();
   if (address && address.port) return address.port;
 
   await new Promise((resolve) => server.close(resolve));
-  if (attempt >= 2) throw new Error('تعذّر الحصول على منفذ عابر بعد محاولتين');
+  if (attempt >= PORT_ATTEMPTS) {
+    throw new Error(`تعذّر الحصول على منفذ عابر بعد ${PORT_ATTEMPTS} محاولات`);
+  }
+  await new Promise((resolve) => setTimeout(resolve, attempt * 25));
   return listenOnFreePort(server, attempt + 1);
 }
 
+/* WP-D1: مفتاح ثابت للاختبار، ودلو رموز واسع كي لا يخلط حدُّ المعدّل نتائج
+   حزمةٍ تُطلق عشرات الطلبات في ثوانٍ. الحدّ نفسه مفحوص في حزمة الأمن بدلوٍ
+   ضيّق خاص بها — فحصه هنا يجعل كل اختبار آخر رهينةً لتوقيته. */
+const TEST_KEY = 'test-key-athar-d1';
+/* WP-D3: الدور صار مشتقاً من المفتاح، فحزمة الخادم تستعمل مفتاح المعتمِد —
+   أفعالها اعتماد وإرجاع. الفصل نفسه مفحوص في حزمة الأمن لا هنا. */
+const TEST_KEYS = { screener: 'test-key-screener', approver: TEST_KEY,
+  coordinator: 'test-key-coordinator', publisher: 'test-key-publisher' };
+
 async function withServer(run) {
-  const server = createServer();
+  /* WP-L1: سجل في الذاكرة وحدها. بلا هذا تتقاسم الحزم ملفاً واحداً على
+     القرص فتتسرّب حالة اختبار إلى اختبار — وقد وقع فعلاً. */
+  const server = createServer({ roleKeys: TEST_KEYS, ledgerPath: null,
+    rateLimit: { capacity: 10000 } });
   const port = await listenOnFreePort(server, 1);
   const address = { port };
   try {
@@ -54,10 +77,10 @@ async function withServer(run) {
   }
 }
 
-async function postRaw(baseUrl, route, raw) {
+async function postRaw(baseUrl, route, raw, key) {
   const response = await fetch(baseUrl + route, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-Athar-Key': key || TEST_KEY },
     body: raw,
   });
   const text = await response.text();
@@ -70,8 +93,8 @@ async function postRaw(baseUrl, route, raw) {
   return { status: response.status, body };
 }
 
-async function post(baseUrl, route, body) {
-  return postRaw(baseUrl, route, JSON.stringify(body));
+async function post(baseUrl, route, body, key) {
+  return postRaw(baseUrl, route, JSON.stringify(body), key);
 }
 
 const validScoreInput = {
@@ -291,7 +314,10 @@ const validScoreInput = {
     await withServer(async (baseUrl) => {
       await post(baseUrl, '/api/works/p007/decisions', validDecision);
       await post(baseUrl, '/api/works/p007/decisions',
-        { ...validDecision, version: 3, action: 'schedule', status: 'Scheduled' });
+        /* WP-D3: تثبيت الجدول انتقالٌ إلى `Scheduled` — يخصّ الناشر لا
+           المعتمِد. مفتاح المعتمِد هنا يردّ 403 بحق. */
+        { ...validDecision, version: 3, action: 'schedule', status: 'Scheduled' },
+        TEST_KEYS.publisher);
       const response = await fetch(`${baseUrl}/api/works/p007/decisions`);
       const body = await response.json();
       assert.strictEqual(response.status, 200);

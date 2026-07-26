@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر — رحلة المستخدم (UML)</title>
+<!--
+  تبويب مؤقّت.
+  ---------------------------------------------------------------------------
+  موضعه بعد إعادة التنظيم: داخل «التفاصيل المتقدمة»، لا على الشريط الرئيسي.
+
+  للحذف — أربع خطوات، ولا خامسة:
+    1. امسح: athar-journey.html · athar-journey-model.js ·
+       athar-journey-diagram.js · athar-journey-boot.js · tests/journey-test.js
+    2. احذف مدخل athar-journey.html من ADVANCED في athar-catalog.js
+    3. احذف athar-journey.html من ADVANCED_PAGES في athar-nav.js
+    4. شغّل: node presentation/scripts/build-catalog-pages.js
+       (يزيل البطاقة من athar-advanced.html المبنيّة)
+    ثم احذف سطر athar-journey.html من HEX_BUDGET في tests/tokens-test.js.
+
+  المواضع الثلاثة التي تذكره محصورة ومحروسة في `journey-test.js`، فلا يبقى
+  بعد الحذف مرجعٌ معلّق. ولا يكتب في أي مخزن ولا يستورده المنتج.
+-->
+<link rel="stylesheet" href="athar-tokens.css">
+<style>
+  body {
+    margin: 0;
+    background: var(--athar-canvas);
+    color: var(--athar-ink);
+    font-family: var(--athar-font);
+  }
+
+  .journey-head {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--athar-space-6) var(--athar-space-4) var(--athar-space-3);
+  }
+  .journey-head h1 { margin: 0 0 var(--athar-space-2); font-size: 1.5rem; }
+  .journey-head p {
+    margin: 0 0 var(--athar-space-2);
+    max-width: 78ch;
+    line-height: 1.75;
+    font-size: 0.92rem;
+    color: var(--athar-muted);
+  }
+  .journey-temp {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--athar-radius-sm);
+    background: var(--athar-warning-soft);
+    color: var(--athar-ink);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  /* ---- الدليل: الشكل يُقرأ قبل النص ---- */
+  .journey-legend {
+    max-width: 1000px;
+    margin: 0 auto var(--athar-space-3);
+    padding: var(--athar-space-3) var(--athar-space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--athar-space-3);
+    list-style: none;
+  }
+  .journey-legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--athar-muted);
+  }
+  .journey-key {
+    width: 26px;
+    height: 16px;
+    border-radius: 5px;
+    border: 1.5px solid var(--athar-line);
+    flex: 0 0 auto;
+  }
+  .journey-key[data-kind="action"] { background: var(--athar-primary-soft); }
+  .journey-key[data-kind="system"] { background: var(--athar-info-soft); }
+  .journey-key[data-kind="error"] { background: var(--athar-danger-soft); }
+  .journey-key[data-kind="decision"] {
+    background: var(--athar-warning-soft);
+    width: 18px; height: 18px;
+    border-radius: 3px;
+    transform: rotate(45deg);
+  }
+  .journey-key[data-kind="terminal"] {
+    background: var(--athar-ink);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+  }
+
+  /* ---- اللوحة: تمرّر أفقياً داخل إطارها لا تدفع الصفحة ---- */
+  .journey-canvas {
+    margin: 0 var(--athar-space-3) var(--athar-space-8);
+    padding: var(--athar-space-3);
+    background: var(--athar-surface);
+    border: 1px solid var(--athar-line);
+    border-radius: var(--athar-radius-lg);
+    overflow-x: auto;
+  }
+  .journey-svg { display: block; min-width: 1420px; }
+
+  .jn-lane rect {
+    fill: var(--athar-surface-raised);
+    stroke: var(--athar-line);
+    stroke-width: 1;
+  }
+  .jn-lane-user rect { fill: var(--athar-primary-soft); fill-opacity: 0.35; }
+  .jn-lane-title {
+    fill: var(--athar-muted);
+    font-size: 15px;
+    font-weight: 800;
+    text-anchor: middle;
+    font-family: var(--athar-font);
+  }
+
+  .jn-box { stroke: var(--athar-line); stroke-width: 1.5; }
+  .jn-action { fill: var(--athar-primary-soft); }
+  .jn-system { fill: var(--athar-info-soft); }
+  .jn-error { fill: var(--athar-danger-soft); stroke: var(--athar-danger); }
+  .jn-decision { fill: var(--athar-warning-soft); stroke: var(--athar-warning); stroke-width: 1.5; }
+  .jn-disc { fill: var(--athar-ink); }
+  .jn-disc-inner { fill: var(--athar-surface); }
+  .jn-terminal { fill: var(--athar-success-soft); stroke: var(--athar-success); }
+
+  .jn-text {
+    fill: var(--athar-ink);
+    font-size: 12.5px;
+    text-anchor: middle;
+    font-family: var(--athar-font);
+  }
+  .jn-text-strong { font-weight: 800; }
+  .jn-text-decision { font-size: 12px; font-weight: 700; }
+  .jn-note {
+    fill: var(--athar-muted);
+    font-size: 10.5px;
+    text-anchor: middle;
+    font-family: var(--athar-font);
+  }
+  /* الهالة تُرسم أولاً ثم الحرف فوقها — بلا الترتيب يبتلع الحدُّ الحرفَ. */
+  .jn-note-halo {
+    stroke: var(--athar-surface-raised);
+    stroke-width: 3.5;
+    paint-order: stroke fill;
+  }
+
+  .jn-edge { fill: none; stroke: var(--athar-muted); stroke-width: 1.6; }
+  .jn-edge-back {
+    stroke: var(--athar-accent);
+    stroke-dasharray: 7 5;
+  }
+  .jn-arrow-head { fill: var(--athar-muted); }
+
+  .jn-edge-label rect {
+    fill: var(--athar-surface);
+    stroke: var(--athar-line);
+    stroke-width: 1;
+  }
+  .jn-edge-label text {
+    fill: var(--athar-ink);
+    font-size: 11px;
+    font-weight: 700;
+    text-anchor: middle;
+    font-family: var(--athar-font);
+  }
+
+  /* ---- جدول الإسناد: كل خطوة والرمز الذي ينفّذها ---- */
+  .journey-trace {
+    max-width: 1180px;
+    margin: 0 auto var(--athar-space-8);
+    padding: 0 var(--athar-space-4);
+  }
+  .journey-trace h2 { font-size: 1.1rem; margin: 0 0 var(--athar-space-2); }
+  .journey-trace p {
+    margin: 0 0 var(--athar-space-3);
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--athar-muted);
+    max-width: 78ch;
+  }
+  .journey-trace table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .journey-trace th,
+  .journey-trace td {
+    text-align: start;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--athar-line);
+    vertical-align: top;
+  }
+  .journey-trace th { color: var(--athar-muted); font-weight: 700; }
+  .journey-trace code {
+    font-family: var(--athar-font-mono);
+    font-size: 0.78rem;
+    color: var(--athar-ink);
+  }
+  .journey-kind {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--athar-radius-sm);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .journey-kind[data-kind="action"] { background: var(--athar-primary-soft); }
+  .journey-kind[data-kind="system"] { background: var(--athar-info-soft); }
+  .journey-kind[data-kind="error"] { background: var(--athar-danger-soft); }
+  .journey-kind[data-kind="decision"] { background: var(--athar-warning-soft); }
+  .journey-kind[data-kind="terminal"],
+  .journey-kind[data-kind="start"],
+  .journey-kind[data-kind="end"] { background: var(--athar-success-soft); }
+
+  .journey-fallback {
+    padding: var(--athar-space-6);
+    text-align: center;
+    color: var(--athar-muted);
+  }
+</style>
+</head>
+<body>
+
+<header class="journey-head">
+  <p><span class="journey-temp">تبويب مؤقّت — قابل للحذف بلا أثر</span></p>
+  <h1>رحلة المستخدم داخل أثر — مخطط نشاط UML</h1>
+  <p>
+    مسارٌ واحد من فتح الأداة إلى اعتماد القرار وتصدير الخطة، بمساري مسؤولية:
+    ما يفعله المراجع وما ينفّذه النظام. الفروع تشمل حالات النجاح والفشل ونقص
+    البيانات والإدخال غير الصحيح، والأسهم المتقطّعة عوداتٌ إلى خطوة سابقة.
+  </p>
+  <p>
+    كل نشاط في المخطط مربوط بالرمز الذي ينفّذه فعلاً — الجدول أسفل اللوحة يعرض
+    الإسناد كاملاً، ويفشل <code>tests/journey-test.js</code> إن أشار مرجعٌ إلى
+    ما ليس في الشيفرة، أو غابت عن المخطط خطوةٌ قائمة في المنتج.
+  </p>
+</header>
+
+<ul class="journey-legend">
+  <li><span class="journey-key" data-kind="terminal"></span> بداية / نهاية</li>
+  <li><span class="journey-key" data-kind="action"></span> نشاط المراجع</li>
+  <li><span class="journey-key" data-kind="system"></span> نشاط النظام</li>
+  <li><span class="journey-key" data-kind="decision"></span> قرار (معيّن)</li>
+  <li><span class="journey-key" data-kind="error"></span> حالة استثنائية أو فشل</li>
+</ul>
+
+<div class="journey-canvas" id="journeyCanvas">
+  <p class="journey-fallback">جارٍ رسم المخطط…</p>
+</div>
+
+<section class="journey-trace">
+  <h2>إسناد كل خطوة إلى الشيفرة</h2>
+  <p>
+    لا عقدة بلا مرجع. العمود الأخير هو الملف والرمز الذي ينفّذ الخطوة؛ وجودُه
+    مفحوصٌ آلياً، فلا يبقى في المخطط وعدٌ حُذف من المنتج.
+  </p>
+  <table id="journeyTrace">
+    <thead>
+      <tr><th>الخطوة</th><th>النوع</th><th>المسار</th><th>المرجع في الشيفرة</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<script defer src="athar-nav.js"></script>
+<script defer src="athar-journey-model.js"></script>
+<script defer src="athar-journey-diagram.js"></script>
+<script defer src="athar-journey-boot.js"></script>
+
+</body>
+</html>

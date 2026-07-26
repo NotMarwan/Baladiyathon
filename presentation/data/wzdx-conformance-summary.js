@@ -1,0 +1,1 @@
+window.ATHAR_WZDX_CONFORMANCE = {"total":150,"passed":144,"failed":6,"commit":"42b98fcdd837e897ae3e208780c45ce61f7fc12a","validator":"ajv@8.20.0","schema":"WZDx 4.2 — WorkZoneFeed.json (رسمي)","byOutcome":{"نجح أمام المخطط الرسمي":144,"غير قابل للنشر بسبب نقص بيانات المصدر":6}};

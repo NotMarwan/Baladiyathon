@@ -231,6 +231,20 @@
         return roads.features.length;
       },
 
+      /**
+       * نسيج المباني — يصل بعد أول إطار.
+       * ---------------------------------------------------------------------
+       * ٤٣ ألف مضلع لا تُنتظر قبل رسم الخريطة: القاعدة صالحة بدونها، والنسيج
+       * لا يُرى أصلاً قبل z13.5. الفشل صامت — خريطة بلا مبانٍ خريطة ناقصة
+       * زينة لا معنى.
+       */
+      setBuildings: function (collection) {
+        if (!collection || !collection.features) return 0;
+        var source = map.getSource('buildings');
+        if (source && source.setData) source.setData(collection);
+        return collection.features.length;
+      },
+
       onRoadClick: function (cb) { roadClickCb = cb; },
 
       _roadClicked: function (segment) {
@@ -404,7 +418,7 @@
 
     map.on('load', function () {
       map.addSource(POINT_SOURCE, Object.assign(
-        { type: 'geojson', data: featureCollection([]) }, Layers.CLUSTER_OPTIONS
+        { type: 'geojson', data: featureCollection([]) }, Layers.POINT_SOURCE_OPTIONS
       ));
       map.addSource(LINE_SOURCE, { type: 'geojson', data: featureCollection([]) });
       map.addSource(CORRIDOR_SOURCE, { type: 'geojson', data: featureCollection([]) });
@@ -470,9 +484,6 @@
 
       worksLayers.forEach(function (layer) {
         if (layer.type !== 'line') map.addLayer(layer);
-      });
-      Layers.buildClusterLayers(POINT_SOURCE).forEach(function (layer) {
-        map.addLayer(layer);
       });
 
       map.addLayer({

@@ -99,12 +99,16 @@ ok('التأخير بعد الدمج أثر أشدّ الأعضاء لا مجم�
   assert.strictEqual(merge.savedVehHours, 1000);
 });
 
-ok('وفر الحفر نطاق لا رقم، وحدّاه من نموذج المحرك', () => {
-  assert.ok(merge.savedLowSAR > 0);
-  assert.ok(merge.savedHighSAR > merge.savedLowSAR, 'الحدّان متساويان — فُقد النطاق');
+/* WP-A2: الوحدة كانت تنقل نطاقاً مالياً من المحرك. صارت تنقل كمية مادية. */
+ok('الكميات منقولة من المحرك، والافتراض يسافر معها', () => {
   const direct = Engine.digOnce({ trenchKm: merge.trenchKm, permitsMerged: 3 });
-  assert.strictEqual(merge.savedLowSAR, direct.savedLowSAR);
-  assert.strictEqual(merge.savedHighSAR, direct.savedHighSAR);
+  assert.strictEqual(merge.duplicateTrenchKmEquivalent,
+    direct.duplicateTrenchKmEquivalent);
+  assert.strictEqual(merge.additionalPermitsInGroups, direct.additionalPermitsInGroups);
+  assert.strictEqual(merge.additionalPermitsInGroups, 2, 'ثلاثة أعضاء = تصريحان إضافيان');
+  assert.ok(merge.duplicateTrenchKmEquivalent > 0);
+  assert.ok(/تداخل تام/.test(merge.overlapAssumption), 'الافتراض لم يُنقل');
+  assert.strictEqual(merge.savedLowSAR, undefined, 'حقل مالي عاد إلى الوحدة');
 });
 
 ok('النافذة المدمجة تمتد من أبكر بداية إلى آخر نهاية', () => {
@@ -155,9 +159,22 @@ ok('لا زرّ يجعل الدمج يبدو بضغطة', () => {
   assert.ok(html.indexOf('اقتراح للتنسيق لا أمر تنفيذ') !== -1);
 });
 
-ok('وفر الحفر يُعرض بنطاقه ونسبته المعلنة', () => {
-  assert.ok(html.indexOf('–') !== -1, 'عُرض رقم واحد بلا نطاق');
-  assert.ok(/\d+–\d+٪/.test(html), 'نسبة الوفر غير معلنة');
+/*
+ * WP-A2. كان الفحص يفرض عرض نطاق مالي بنسبته — وكان يحرس صياغة سليمة لرقم
+ * لا أساس له: النطاق مستورد من سياق آخر، والكلفة التي يضرب فيها افتراض غير
+ * معروض. عرضُ رقمٍ خاطئ بنطاقٍ أنيق يظل رقماً خاطئاً.
+ *
+ * البطاقة صارت تعرض كمية مادية ومعها من يملك مُدخل الكلفة، فيُفحص ذلك.
+ */
+ok('البطاقة تعرض كمية مادية وتسمّي مالك مُدخل الكلفة والافتراض', () => {
+  assert.ok(/تصريحاً/.test(html), 'عدد التصاريح الإضافية غير معروض');
+  assert.ok(!/متجنَّبة|أُلغيت|سقطت/.test(html),
+    'البطاقة تدّعي أثراً (حفريات متجنَّبة) بلا هندسة تثبته');
+  assert.ok(/مكرر مكافئ/.test(html), 'الطول غير مسمّى «مكرر مكافئ»');
+  assert.ok(/تداخل تام/.test(html), 'البطاقة تعرض الطول بلا افتراضه');
+  assert.ok(html.indexOf('كلفة الخندق لدى الأمانة') !== -1,
+    'البطاقة لا تسمّي من يملك مُدخل الكلفة');
+  assert.ok(!/﷼|ريال/.test(html), 'عاد رقم مالي إلى البطاقة');
 });
 
 ok('بلا مرشّح يقول ذلك صراحةً ولا يعرض فراغاً', () => {

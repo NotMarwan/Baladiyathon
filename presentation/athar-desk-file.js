@@ -79,6 +79,26 @@
       + '</div>';
   }
 
+  /**
+   * أين هذا التصريح من الطريق.
+   * ---------------------------------------------------------------------------
+   * وسم الحالة يقول ما هو، ولا يقول كم بقي. والمراجع الذي لا يعرف موقعه من
+   * المسار لا يعرف إن كان قراره يفتح المرحلة التالية أو ينهي الملف. السطر
+   * يقول الاثنين: الرقم من الكل، والاسم، وسببَ الخروج عن المسار إن خرج.
+   */
+  function renderStage(status) {
+    var stage = States.stage(status);
+    if (!stage.index) return '';
+
+    return '<p class="desk-stage" data-onpath="' + (stage.onPath ? 'true' : 'false') + '">'
+      + '<span class="desk-stage-count">المرحلة ' + stage.index + ' من ' + stage.total + '</span>'
+      + '<span class="desk-stage-label">' + escapeHtml(stage.label) + '</span>'
+      + (stage.note
+        ? '<span class="desk-stage-note">' + escapeHtml(stage.note) + '</span>'
+        : '')
+      + '</p>';
+  }
+
   function renderHeader(feature) {
     var p = (feature && feature.properties) || {};
     return '<header class="desk-file-head">'
@@ -87,6 +107,7 @@
       + '<h2>' + escapeHtml(text(p.title)) + '</h2>'
       + '<p class="desk-file-sub">' + escapeHtml(text(p.street))
       + ' · ' + escapeHtml(text(p.promoter)) + '</p>'
+      + renderStage(p.status)
       + '</div>'
       + '<div class="desk-file-badges">'
       + Inbox.statusTag(p.status)
@@ -332,6 +353,7 @@
   return {
     renderEmpty: renderEmpty,
     renderHeader: renderHeader,
+    renderStage: renderStage,
     renderTabs: renderTabs,
     renderConfidence: renderConfidence,
     renderBlockers: renderBlockers,

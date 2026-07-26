@@ -77,12 +77,49 @@ const CLASS_BY_HIGHWAY = {
 const ESCALATE_DELAY_PCT = 150;
 const ESCALATE_DURATION_HOURS = 72;
 
+/**
+ * عتبتا الشدة، بساعات-مركبة تراكمية على عمر التصريح.
+ * ---------------------------------------------------------------------------
+ * الشدة على مستوى التصريح لا على مستوى الساعة: إغلاق مسار واحد ثماني ساعات
+ * يومياً ثلاثة أسابيع على شريان ليس أثراً منخفضاً لمجرد أن كل يوم منه محتمَل.
+ *
+ * العتبتان مسنودتان إلى توزيع المحفظة تحت قيد الإصدار: الوسيط ٢٬٢٧٨ والمئين
+ * التسعون ٨٬٧٣٥. فما فوق ثمانية آلاف يقع في أعلى عُشر المحفظة ويستحق قراراً
+ * إدارياً لا فحصاً سريعاً، وما فوق ألفين وخمسمئة يتجاوز التصريح النموذجي.
+ * وأي تعديل على قيد الإصدار يوجب مراجعتهما — وإلا صارت طبقة كاملة خالية.
+ */
+const SEVERITY_HIGH_VEH_HOURS = 8000;
+const SEVERITY_MEDIUM_VEH_HOURS = 2500;
+
 function escalationReason(delayPct, lanes, lanesClosed, durationHours) {
   if (delayPct > ESCALATE_DELAY_PCT) return 'التأخير يتجاوز نطاق الفحص السريع المعلن';
   if (lanesClosed / lanes >= 0.5 && durationHours > ESCALATE_DURATION_HOURS) {
     return 'إغلاق نصف المسارات أو أكثر لمدة طويلة';
   }
   return null;
+}
+
+/**
+ * نص النافذة كما يُقرأ على بطاقة، لا كما يُسمّيه المحرك.
+ * ---------------------------------------------------------------------------
+ * تسمية المحرك تسرد كل ليلة على حدة: «عمل ليلي على 18 ليالٍ (8 + 8 + 8 + …)».
+ * صحيحة، وغير صالحة لبطاقة يقرؤها ساكن في ثانيتين. البطاقة تحتاج ساعتين وعدداً.
+ */
+function countedNoun(count, single, dual, few, many) {
+  if (count === 1) return single;
+  if (count === 2) return dual;
+  return count + ' ' + (count <= 10 ? few : many);
+}
+
+function windowText(startHour, windows) {
+  if (!windows || !windows.length) return '';
+  const span = windows[0].durationHours;
+  const clock = (hour) => String(((hour % 24) + 24) % 24).padStart(2, '0') + ':00';
+  const nightly = startHour >= 20 || startHour < 5;
+  const unit = nightly
+    ? countedNoun(windows.length, 'ليلة واحدة', 'ليلتان', 'ليالٍ', 'ليلة')
+    : countedNoun(windows.length, 'يوم واحد', 'يومان', 'أيام', 'يوماً');
+  return clock(startHour) + '–' + clock(startHour + span) + ' · ' + unit;
 }
 
 const ARABIC = /[؀-ۿ]/;
@@ -271,6 +308,12 @@ function build() {
     // حركة الشارع من بيانات الشبكة إن وُجدت — أدق من قيمة المحفظة المولّدة.
     const aadt = Number(corridor.aadt) > 0 ? Number(corridor.aadt) : permit.aadt;
 
+    /* WP-B1: الحساسية تُسحب **قبل** المحسّن لا بعده.
+       كانت تُولَّد داخل خصائص المَعْلَم، فتظهر «مستشفى» على البطاقة بينما
+       التوصية المكتوبة معها حُسبت وهي لا تعرف بالمستشفى. حقلٌ يُعرض ولا يدخل
+       الحساب أسوأ من حقل غائب: يوحي بأنه أثّر. */
+    const sensitivity = SENSITIVITY[Math.floor(rand() * SENSITIVITY.length)];
+
     const daily = Engine.score({
       aadt: aadt,
       lanes: permit.lanes,
@@ -281,10 +324,34 @@ function build() {
       freeFlowMin: Engine.DEFAULTS.freeFlowMin,
     });
 
+    /**
+     * التوصية تُحسب هنا لا في المتصفح.
+     * -------------------------------------------------------------------------
+     * صفحة الخريطة لا تحمّل المحرك — تحمّل شبكة وقاعدة ونسيجاً، وإضافة المحرك
+     * إليها لحساب مئة وخمسين تحسيناً عند كل فتح ثمنٌ يُدفع في المسار الحرج
+     * مقابل رقم لا يتغيّر بين زيارة وأخرى. فيُحسب مرة عند البناء ويُكتب مع
+     * التصريح، وتبقى الخريطة تعرض قراراً بلا أن تحسبه.
+     *
+     * والأساس المنشور هو أساس المحسِّن نفسه لا حساباً موازياً: رقمان لنفس
+     * الكمية على بطاقة واحدة يقرؤهما المراجع تناقضاً، ولو كان الفارق واحداً
+     * بالمئة.
+     */
+    const plan = Engine.optimize({
+      aadt: aadt,
+      lanes: permit.lanes,
+      lanesClosed: permit.lanesClosed,
+      startHour: permit.startHour,
+      durationHours: durationHours,
+      capacityPerLane: Engine.DEFAULTS.capacityPerLane,
+      freeFlowMin: Engine.DEFAULTS.freeFlowMin,
+      sensitivity: sensitivity,
+    });
+    const best = plan.top3[0];
+
     const scored = {
       level: daily.level,
       hourly: daily.hourly,
-      delayVehHours: daily.delayVehHours * workDays,
+      delayVehHours: plan.baseline.delayVehHours,
     };
 
     const delayPct = delayPercent(scored);
@@ -310,16 +377,28 @@ function build() {
       ? PROMOTERS[(PROMOTERS.indexOf(promoterAt[follow.leader]) + 1) % PROMOTERS.length]
       : PROMOTERS[Math.floor(rand() * PROMOTERS.length)];
     promoterAt[index] = promoter;
-    const escalate = escalationReason(delayPct, permit.lanes, permit.lanesClosed, windowHours);
+    // المدة الكلية لا النافذة اليومية: بوابة «٧٢ ساعة» تقيس طول التصريح، ونافذة
+    // العمل لا تتجاوز ثماني ساعات أصلاً — فمقارنتها بالعتبة تُبقي البوابة مغلقة
+    // دائماً، ويظهر النظام وكأن لا تصريح يستحق التصعيد.
+    const escalate = escalationReason(delayPct, permit.lanes, permit.lanesClosed, durationHours);
 
     /**
      * الشدة على مستوى التصريح لا على مستوى الساعة: إغلاق مسار واحد ثماني
      * ساعات يومياً لثلاثة أسابيع على شريان ليس أثراً منخفضاً لمجرد أن كل يوم
      * منه محتمَل. الحدّان مُعلنان ويقابلان ساعات-مركبة تراكمية.
      */
-    const severity = (scored.level === 'high' || escalate || scored.delayVehHours >= 40000)
+    /**
+     * الشدة حجم أثر، والتصعيد خروج عن نطاق الفحص — قراران لا قرار.
+     * -------------------------------------------------------------------------
+     * كانا مدموجين، فكان كل تصريح يستحق محاكاة متخصصة يُرسم أعلى شدة تلقائياً.
+     * والحالتان تفترقان: إغلاق نصف مسارات شارع فرعي هادئ أسبوعين يخرج عن نطاق
+     * الفحص السريع وأثره المروري يبقى صغيراً. دمجهما يملأ الطبقة العليا بما لا
+     * يخصّها فتفقد معناها، ويخفي الحاجة إلى المحاكاة خلف لون.
+     * `escalate` يبقى حقلاً مستقلاً يقرؤه مكتب المراجع.
+     */
+    const severity = (scored.level === 'high' || scored.delayVehHours >= SEVERITY_HIGH_VEH_HOURS)
       ? 3
-      : (scored.level === 'medium' || scored.delayVehHours >= 8000) ? 2 : 1;
+      : (scored.level === 'medium' || scored.delayVehHours >= SEVERITY_MEDIUM_VEH_HOURS) ? 2 : 1;
 
     features.push({
       type: 'Feature',
@@ -336,7 +415,7 @@ function build() {
         title: 'أعمال على ' + corridor.name,
         street: corridor.name,
         roadClass: corridor.roadClass,
-        sensitivity: SENSITIVITY[Math.floor(rand() * SENSITIVITY.length)],
+        sensitivity: sensitivity,
         promoter: promoter,
         contractor: CONTRACTORS[Math.floor(rand() * CONTRACTORS.length)],
         aadt: aadt,
@@ -347,10 +426,37 @@ function build() {
         end: isoAt(startDay + workDays, permit.startHour + windowHours),
         windowHours: windowHours,
         workDays: workDays,
+        // المدة الكلية رقماً لا نصاً في الوصف: عليها يُحسب الأثر والتوصية،
+        // و«نافذة × أيام» يقرّبها ولا يساويها — الليلة الأخيرة جزئية.
+        durationHours: durationHours,
         severity: severity,
         confidence: escalate ? 'low' : severity === 3 ? 'low' : severity === 2 ? 'medium' : 'high',
         impactVehHours: Math.round(scored.delayVehHours),
         delayPct: Math.round(delayPct * 10) / 10,
+        // الحل، محسوباً ومكتوباً مع المشكلة: بلا هذه الحقول تبقى الخريطة تشخيصاً.
+        bestVehHours: Math.round(best.delayVehHours),
+        savedVehHours: Math.round(best.savedVehHours),
+        savedPct: Math.round(best.savedPct * 10) / 10,
+        bestStartHour: best.startHour,
+        asIsWindow: windowText(permit.startHour, plan.baseline.windows),
+        bestWindow: windowText(best.startHour, best.windows),
+        bestReason: (best.reasons && best.reasons[0]) || '',
+        // WP-B1: المجموع المكافئ منفصلٌ عن التأخير عمداً. التأخير كمية
+        // فيزيائية، والمجموع يضم وزنين تفضيليين معلنين. خلطهما في حقل واحد
+        // يجعل الوزن يُقرأ ساعاتِ مركبات.
+        totalEquivalentVehHours: Math.round(best.totalEquivalentVehHours),
+        baselineEquivalentVehHours: Math.round(plan.baseline.totalEquivalentVehHours),
+        siteSpanDays: best.breakdown.spanDays,
+        // حين يكون تأخير التوصية أعلى من المقدَّم، لا يُكتفى بوفرٍ صفري:
+        // تُسمّى المقايضة صراحةً وإلا قُرئت التوصية خطأً.
+        tradeOff: best.delayVehHours > plan.baseline.delayVehHours
+          ? 'تأخير أعلى من المقدَّم بـ'
+            + Math.round(best.delayVehHours - plan.baseline.delayVehHours)
+            + ' ساعة-مركبة، مقابل انخفاض المجموع المكافئ بـ'
+            + Math.round(plan.baseline.totalEquivalentVehHours
+              - best.totalEquivalentVehHours)
+            + ' (امتداد موقع أقصر أو تعرّض حسّاس أقل)'
+          : '',
         escalate: Boolean(escalate),
         escalateReason: escalate || '',
         inputsVersion: 'v1',

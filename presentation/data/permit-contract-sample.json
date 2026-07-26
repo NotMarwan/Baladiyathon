@@ -1,0 +1,85 @@
+{
+  "note": "عيّنة توضّح عقد بيانات التصريح (WP-I1). بيانات تركيبية بالكامل — لا سجل حقيقي ولا مستخرَجة من منصة تصريح. الأسماء والجهات من عندنا.",
+  "synthetic": true,
+  "contractVersion": "1.0",
+  "records": [
+    {
+      "case": "سجل كامل — يمرّ بلا تحفّظ",
+      "record": {
+        "permitRef": "BLD-2026-0001",
+        "geometry": [
+          [
+            46.6753,
+            24.7136
+          ],
+          [
+            46.6801,
+            24.7192
+          ]
+        ],
+        "lanes": 4,
+        "lanesClosed": 1,
+        "startISO": "2026-08-01T22:00:00.000Z",
+        "durationHours": 8,
+        "aadt": 45000,
+        "street": "طريق الملك فهد",
+        "promoter": "شركة المياه الوطنية",
+        "subtype": "maintenance",
+        "sensitivity": "normal",
+        "workExtentM": 180
+      }
+    },
+    {
+      "case": "ينقصه ما يخفض الثقة ولا يمنع التشغيل",
+      "record": {
+        "permitRef": "BLD-2026-0002",
+        "geometry": [
+          [
+            46.71,
+            24.69
+          ],
+          [
+            46.7155,
+            24.6948
+          ]
+        ],
+        "lanes": 3,
+        "lanesClosed": 2,
+        "startISO": "2026-08-05T09:00:00.000Z",
+        "durationHours": 30,
+        "sensitivity": "hospital"
+      }
+    },
+    {
+      "case": "ينقصه ما يمنع التشغيل — بلا هندسة ولا مدة",
+      "record": {
+        "permitRef": "BLD-2026-0003",
+        "lanes": 2,
+        "lanesClosed": 1,
+        "startISO": "2026-08-09T21:00:00.000Z",
+        "street": "شارع التخصصي"
+      }
+    },
+    {
+      "case": "خارج المدى — إغلاق أكثر من عدد المسارات",
+      "record": {
+        "permitRef": "BLD-2026-0004",
+        "geometry": [
+          [
+            46.64,
+            24.74
+          ],
+          [
+            46.6455,
+            24.7455
+          ]
+        ],
+        "lanes": 2,
+        "lanesClosed": 5,
+        "startISO": "2026-08-12T22:00:00.000Z",
+        "durationHours": 12,
+        "aadt": 28000
+      }
+    }
+  ]
+}

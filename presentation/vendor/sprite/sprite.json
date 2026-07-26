@@ -2,80 +2,120 @@
   "bus-stop": {
     "x": 0,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "closure": {
-    "x": 28,
+    "x": 34,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "diversion": {
-    "x": 56,
+    "x": 68,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "incident": {
-    "x": 84,
+    "x": 102,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-default": {
+    "x": 136,
+    "y": 0,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-development": {
+    "x": 170,
+    "y": 0,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-emergency": {
+    "x": 204,
+    "y": 0,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "poi-information": {
-    "x": 112,
+    "x": 238,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "poi-maintenance": {
+    "x": 272,
+    "y": 0,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "poi-parking": {
-    "x": 140,
+    "x": 306,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "roadworks": {
-    "x": 168,
+    "x": 340,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "works-development": {
-    "x": 196,
+    "x": 374,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "works-emergency": {
-    "x": 224,
+    "x": 408,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   },
   "works-end": {
-    "x": 252,
+    "x": 442,
     "y": 0,
-    "width": 26,
-    "height": 26,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 1,
+    "sdf": false
+  },
+  "works-maintenance": {
+    "x": 476,
+    "y": 0,
+    "width": 32,
+    "height": 32,
     "pixelRatio": 1,
     "sdf": false
   }

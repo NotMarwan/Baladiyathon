@@ -148,6 +148,51 @@
     calibrate: 'معايرة',
   };
 
+  /**
+   * المسار الرئيس للتصريح — «أين أنا؟» بجواب واحد.
+   * ---------------------------------------------------------------------------
+   * آلة الحالة رسمٌ لا خطّ: سبع عشرة حالة وفروع رجوع وتحويل. والمراجع الذي
+   * يفتح ملفاً يرى وسم حالته ولا يرى موقعه من الطريق — «فحص الاكتمال» تقول
+   * ما هو، ولا تقول كم بقي.
+   *
+   * فالمسار الرئيس أحد عشر محطة متتابعة، كل انتقال بينها مشروع في TRANSITIONS
+   * (يفحصه `desk-states-test.js`، فلا يصير هذا الجدول وصفاً لطريق لا يسلكه
+   * النظام). وما خرج عنه — إرجاع، تنسيق، محاكاة، إيقاف، رفض — يُسنَد إلى
+   * محطته ويحمل سبب خروجه: «محال للتنسيق» أصدق من إخفائه أو من عدّه محطة.
+   */
+  var PIPELINE = [
+    'Submitted', 'CompletenessReview', 'ImpactScreening', 'StrategyReview',
+    'Approved', 'Scheduled', 'Deployed', 'Completed', 'ClearanceReview',
+    'Closed', 'Calibrated',
+  ];
+
+  var OFF_PATH = {
+    Draft: { at: 'Submitted', note: 'قبل الإرسال' },
+    Returned: { at: 'CompletenessReview', note: 'مُرجَع للتصحيح' },
+    CoordinationRequired: { at: 'ImpactScreening', note: 'محال للتنسيق' },
+    SpecialistSimulation: { at: 'ImpactScreening', note: 'محال لمحاكاة متخصصة' },
+    Suspended: { at: 'Deployed', note: 'موقوف' },
+    Rejected: { at: 'StrategyReview', note: 'مرفوض — مسار منتهٍ' },
+  };
+
+  /**
+   * موقع الحالة من المسار.
+   * @returns {{index:number, total:number, label:string, note:string, onPath:boolean}}
+   */
+  function stage(status) {
+    var onPath = PIPELINE.indexOf(status);
+    var anchor = onPath !== -1 ? status : (OFF_PATH[status] || {}).at;
+    var at = PIPELINE.indexOf(anchor);
+
+    return {
+      index: at === -1 ? 0 : at + 1,
+      total: PIPELINE.length,
+      label: labelOf(anchor || status),
+      note: onPath !== -1 ? '' : ((OFF_PATH[status] || {}).note || ''),
+      onPath: onPath !== -1,
+    };
+  }
+
   function can(from, to) {
     return (TRANSITIONS[from] || []).indexOf(to) !== -1;
   }
@@ -259,6 +304,9 @@
     LABELS: LABELS,
     ACTION_TARGET: ACTION_TARGET,
     ACTION_LABELS: ACTION_LABELS,
+    PIPELINE: PIPELINE,
+    OFF_PATH: OFF_PATH,
+    stage: stage,
     can: can,
     actionsFor: actionsFor,
     guard: guard,

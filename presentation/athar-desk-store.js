@@ -14,11 +14,11 @@
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory();
+    module.exports = factory(require('./athar-worksmap-data.js'));
   } else {
-    root.AtharDeskStore = factory();
+    root.AtharDeskStore = factory(root.AtharWorksMapData);
   }
-})(typeof self !== 'undefined' ? self : this, function () {
+})(typeof self !== 'undefined' ? self : this, function (Data) {
   'use strict';
 
   /** الحالات التي تنتظر فعلاً بشرياً — عدّادها هو ما يهم المراجع. */
@@ -26,15 +26,22 @@
     'CompletenessReview', 'ImpactScreening', 'CoordinationRequired', 'StrategyReview',
   ];
 
-  var SEARCH_FIELDS = ['street', 'permitRef', 'title', 'promoter', 'contractor', 'id'];
-
+  /**
+   * البحث في الصندوق هو بحث الصفحة العامة نفسه — لا نسخة ثانية منه.
+   * ---------------------------------------------------------------------------
+   * كان هنا `indexOf` خاماً على النص كما هو. أثره أن المكتب والصفحة العامة
+   * يجيبان جوابين مختلفين على السؤال نفسه: «ابو عبيده» يعيد ثلاثة سجلات على
+   * الخريطة وصفراً في المكتب، و«bld-2026-0001» يعيد التصريح على الخريطة
+   * وصفراً في المكتب. والمراجع الذي لا يجد ما يعرف أنه موجود يفقد ثقته في
+   * الأداة قبل أن يفقدها في الرقم.
+   *
+   * فالمطابقة تُستدعى من `athar-worksmap-data.js` — الوحدة التي تملك تطبيع
+   * الإملاء (همزة، تاء مربوطة، ألف مقصورة، تشكيل، تطويل، وخفض اللاتينية).
+   * حقول البحث هناك هي نفسها المطلوبة هنا: الشارع والعنوان والجهة والمقاول
+   * والمرجع والمفتاح.
+   */
   function matchesQuery(properties, query) {
-    var needle = String(query).trim();
-    if (!needle) return true;
-    for (var i = 0; i < SEARCH_FIELDS.length; i += 1) {
-      if (String(properties[SEARCH_FIELDS[i]] || '').indexOf(needle) !== -1) return true;
-    }
-    return false;
+    return Data.matchesQuery(properties, query);
   }
 
   function matches(feature, filters) {

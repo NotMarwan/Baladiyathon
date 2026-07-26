@@ -53,7 +53,9 @@ test('DEFAULTS carries expected demo constants', () => {
   assert.strictEqual(AtharEngine.DEFAULTS.valueOfTimeSAR, 45);
   assert.strictEqual(AtharEngine.DEFAULTS.idleFuelLPerHour, 0.9);
   assert.strictEqual(AtharEngine.DEFAULTS.co2KgPerL, 2.31);
-  assert.strictEqual(AtharEngine.DEFAULTS.trenchCostPerKmSAR, 850000);
+  // WP-A2: trenchCostPerKmSAR حُذف. غيابه شرطٌ لا سهو — الفحص الحارس في
+  // 'digOnce() reports zero money…' أدناه يمنع عودته.
+  assert.strictEqual(AtharEngine.DEFAULTS.trenchCostPerKmSAR, undefined);
 });
 
 // ---------------------------------------------------------------------------
@@ -235,7 +237,20 @@ test('lanesClosed == lanes applies capacity floor (0.25*capacityPerLane), stays 
   assert.ok(Number.isFinite(r.score));
 });
 
-test('lanesClosed > lanes is clamped to the same capacity floor as lanesClosed == lanes', () => {
+/* WP-B1 — انقلب هذا الفحص عن قصد.
+ *
+ * كان يثبّت أن `lanesClosed > lanes` يُقصَّ إلى أرضية السعة نفسها، أي أن
+ * المحرك يقبل «إغلاق ستّ حارات في طريق من أربع» ويعطيه رقماً معقولاً. لكن
+ * ذلك ليس إغلاقاً شديداً، بل **خطأ بيانات**، ورقمٌ معقول فوق مُدخل مستحيل هو
+ * أخطر من رفضٍ صريح.
+ *
+ * والأدلّ من ذلك: `server.js` كان يردّ 400 على المُدخل نفسه. فكان المحرك
+ * أكثر تساهلاً من واجهته. هذا الفحص يوحّدهما.
+ *
+ * أرضية السعة تبقى قائمة لحالتها الصحيحة — `lanesClosed === lanes` — وهي
+ * مفحوصة في الحزمة أعلاه.
+ */
+test('lanesClosed > lanes يُرفض ولا يُقصّ — مُدخل مستحيل لا يُعطى رقماً', () => {
   const base = {
     aadt: 85000,
     lanes: 4,
@@ -245,9 +260,32 @@ test('lanesClosed > lanes is clamped to the same capacity floor as lanesClosed =
     startHour: 8,
     durationHours: 2,
   };
-  const atLanes = AtharEngine.score({ ...base, lanesClosed: 4 }).delayVehHours;
-  const overLanes = AtharEngine.score({ ...base, lanesClosed: 6 }).delayVehHours;
-  assert.ok(Math.abs(atLanes - overLanes) < 1e-9, `expected floor clamp equal: ${atLanes} vs ${overLanes}`);
+  assert.ok(Number.isFinite(AtharEngine.score({ ...base, lanesClosed: 4 }).delayVehHours));
+  assert.throws(() => AtharEngine.score({ ...base, lanesClosed: 6 }),
+    /حارات مغلقة/);
+});
+
+/* الصمت عند نقص المُدخل كان يُخرج تأخيراً بمرتبة 1e48 ويبدو ناجحاً. */
+test('مُدخل ناقص يرفع خطأً ولا يُخرج رقماً', () => {
+  const full = {
+    aadt: 85000, lanes: 4, lanesClosed: 1, capacityPerLane: 1800,
+    freeFlowMin: 6, startHour: 8, durationHours: 2,
+  };
+  ['aadt', 'lanes', 'lanesClosed', 'freeFlowMin', 'startHour', 'durationHours']
+    .forEach((field) => {
+      const broken = { ...full };
+      delete broken[field];
+      assert.throws(() => AtharEngine.score(broken), new RegExp(field),
+        `${field} الناقص لم يُرفض`);
+    });
+  // السعة لكل حارة معيار (1800) لا قياس موقعيّ — فلها افتراضي معلن.
+  const withoutCapacity = { ...full };
+  delete withoutCapacity.capacityPerLane;
+  assert.strictEqual(
+    AtharEngine.score(withoutCapacity).delayVehHours,
+    AtharEngine.score(full).delayVehHours,
+    'السعة المعيارية الافتراضية لا تطابق الصريحة'
+  );
 });
 
 // ---------------------------------------------------------------------------
@@ -307,16 +345,20 @@ test('10-hour night schedule uses one full window and one 2-hour window', () => 
     startHour: 22,
     durationHours: 10,
   });
-  const night = result.top3.find((item) =>
-    Array.isArray(item.windows)
-    && item.windows.length === 2
-  );
-  assert.ok(night, 'expected a phased night candidate');
+  /* WP-B1 — كان الفحص يبحث عن الجدول المرحلي داخل «أفضل ثلاثة». بعد إضافة
+     الأهداف المنازِعة صار جدول عشر ساعات في ليلة واحدة يهزم تقسيمه على
+     ليلتين — وهو الجواب الصحيح، لا خلل. الخاصية المقصودة (تقسيم 10 على 8+2)
+     خاصية `buildNightWindows`، وبقاء الجدول **مفحوصاً** يُتحقَّق من قائمة
+     المرشحين لا من ترتيبها. */
   assert.deepStrictEqual(
-    night.windows.map((item) => item.durationHours),
+    AtharEngine.buildNightWindows(22, 10, 8).map((item) => item.durationHours),
     [8, 2]
   );
-  assert.strictEqual(totalWindowHours(night), 10);
+  assert.ok(result.rankedLabels.indexOf('22p2w8') !== -1,
+    `الجدول المرحلي لم يدخل المنافسة: ${result.rankedLabels.join(' ')}`);
+  result.top3.forEach((candidate) => {
+    assert.strictEqual(totalWindowHours(candidate), 10);
+  });
 });
 
 test('baseline and every candidate represent the same requested work hours', () => {
@@ -345,17 +387,23 @@ test('phased delay sums active windows only and excludes daytime gaps', () => {
     startHour: 8,
     durationHours: 10,
   };
-  const result = AtharEngine.optimize(input);
-  const phased = result.top3.find((candidate) => candidate.windows.length === 2);
-  assert.ok(phased, 'expected a phased candidate');
-  const expected = phased.windows.reduce((sum, window) => {
+  /* الخاصية المقصودة تخصّ الحساب لا الترتيب: تأخير جدول مرحلي = مجموع
+     نوافذه النشطة وحدها، والفجوة النهارية لا تُحتسب إغلاقاً. تُفحص على
+     الجدول مباشرة كي لا تتعلّق بفوزه. */
+  const windows = AtharEngine.buildNightWindows(input.startHour, input.durationHours, 8);
+  assert.strictEqual(windows.length, 2, 'المدة المختارة لا تنتج جدولاً مرحلياً');
+  const evaluation = AtharEngine.evaluateSchedule(input, windows);
+  const expected = windows.reduce((sum, window) => {
     return sum + AtharEngine.score({
       ...input,
       startHour: window.startHour,
       durationHours: window.durationHours,
     }).delayVehHours;
   }, 0);
-  assert.ok(Math.abs(phased.delayVehHours - expected) < 1e-9);
+  assert.ok(Math.abs(evaluation.closureDelayVehHours - expected) < 1e-9);
+  /* والفجوة النهارية ليست مجانية أيضاً: الموقع قائم فيها. */
+  assert.ok(evaluation.residualDelayVehHours > 0,
+    'الفجوة بين النوافذ تُعامل كطريق سليم تماماً');
 });
 
 test('top alternatives have distinct window schedules', () => {
@@ -425,8 +473,20 @@ test('optimize() each candidate has label, startHour, phases, reasons[3]', () =>
     assert.strictEqual(typeof c.savedVehHours, 'number');
     assert.strictEqual(typeof c.savedPct, 'number');
     assert.ok(Array.isArray(c.reasons));
-    assert.strictEqual(c.reasons.length, 3);
+    assert.ok(c.reasons.length >= 3, `${c.reasons.length} أسباب فقط`);
     c.reasons.forEach((r) => assert.strictEqual(typeof r, 'string'));
+    /* WP-B1: السبب الأول يسمّي الحدّ المرجِّح. توصية بلا حدّ مرجِّح مذكور
+       تُقرأ كمخرَج صندوق أسود. */
+    assert.ok(/الحدّ المرجِّح|لا حدّ مرجِّح/.test(c.reasons[0]),
+      `السبب الأول لا يسمّي الحدّ المرجِّح: ${c.reasons[0]}`);
+    /* والمجموع لا يُعرض بلا تفصيله. */
+    assert.ok(c.breakdown && typeof c.totalEquivalentVehHours === 'number');
+    const sum = c.breakdown.closureDelayVehHours
+      + c.breakdown.residualDelayVehHours
+      + c.breakdown.sensitivityEquivalent
+      + c.breakdown.nightPremiumEquivalent;
+    assert.ok(Math.abs(sum - c.totalEquivalentVehHours) < 1e-9,
+      'المجموع المكافئ لا يساوي حدوده — حدٌّ خفيّ');
   });
 });
 
@@ -512,12 +572,19 @@ test('optimize() candidate and baseline return windows as the schedule contract'
     durationHours: 48,
   };
   const result = AtharEngine.optimize(input);
-  const expectedKeys = ['label', 'startHour', 'phases', 'windows', 'delayVehHours', 'savedVehHours', 'savedPct', 'reasons'].sort();
+  /* العقد مثبَّت بالضبط لا بـ«يحتوي على»: حقلٌ يُضاف بصمت يغيّر ما تقرؤه
+     الواجهات دون أن يسقط فحص. توسّع العقد في WP-B1 عن قصد، فيُحدَّث هنا. */
+  const expectedKeys = ['label', 'startHour', 'phases', 'windowHours', 'windows',
+    'delayVehHours', 'savedVehHours', 'savedPct', 'breakdown',
+    'totalEquivalentVehHours', 'reasons'].sort();
   result.top3.forEach((c) => {
     assert.deepStrictEqual(Object.keys(c).sort(), expectedKeys);
   });
-  assert.deepStrictEqual(Object.keys(result.baseline).sort(), ['delayVehHours', 'windows']);
-  assert.deepStrictEqual(Object.keys(result).sort(), ['baseline', 'top3'].sort());
+  assert.deepStrictEqual(Object.keys(result.baseline).sort(),
+    ['breakdown', 'delayVehHours', 'totalEquivalentVehHours', 'windows']);
+  assert.deepStrictEqual(Object.keys(result).sort(),
+    ['baseline', 'candidateCount', 'objective', 'rankedLabels',
+      'residualSensitivity', 'switchPoints', 'top3'].sort());
 });
 
 // ---------------------------------------------------------------------------
@@ -627,22 +694,64 @@ test('optimize kills the 99.6% mirage: no candidate saves >=99% and best still h
 // digOnce()
 // ---------------------------------------------------------------------------
 
-test('digOnce(2 permits) saved pct fixed at GAO 25-33% band', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
-  assert.strictEqual(r.savedPctLow, 25);
-  assert.strictEqual(r.savedPctHigh, 33);
-  assert.ok(Math.abs(r.savedLowSAR - r.separateSAR * 0.25) < 1e-6);
-  assert.ok(Math.abs(r.savedHighSAR - r.separateSAR * 0.33) < 1e-6);
-  assert.ok(Math.abs(r.sharedLowSAR - (r.separateSAR - r.savedHighSAR)) < 1e-6);
-  assert.ok(Math.abs(r.sharedHighSAR - (r.separateSAR - r.savedLowSAR)) < 1e-6);
+/*
+ * WP-A2. كان الفحصان هنا يثبّتان نطاق GAO (25-33%) وضربه في كلفة خندق
+ * افتراضية. كانا يختبران المعادلة كما كُتبت، ولم يكونا يسألان إن كان لها حق
+ * أن تُكتب: الكلفة افتراض بترتيب الحجم لا تسعيرة، والنطاق يخصّ مدّ الألياف في
+ * مدن أمريكية — وسجل مصادر المشروع نفسه يقول إنه لا يدعم تعميماً على حفريات
+ * المدن. اختبارٌ يحرس معادلة لا ينبغي أن توجد يجعل الخطأ أصعب إزالة.
+ *
+ * البديل يقيس ما تقيسه الدالة الآن: كمية مادية مشتقّة من بيانات التصريح
+ * وحدها. ثلاثة تصاريح تحفر الكيلومتر نفسه منفصلة = ثلاثة كيلومترات؛ دمجها
+ * يجعلها كيلومتراً واحداً. لا تسعيرة ولا مصدر خارجي في المعادلة.
+ */
+
+test('digOnce: N grouped permits are N-1 additional permits — a count, not an effect', () => {
+  /* عدٌّ لا ادعاء أثر. المجموعة تُبنى بتجاور الشارع والنافذة الزمنية، وقد تكون
+     ثلاثة نطاقات مختلفة نُسّقت توقيتاً فقط. القول إن «حفرتين اختفتا» يحتاج
+     هندسة النطاقات وتفاصيل التنفيذ، وليست عندنا. */
+  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  assert.strictEqual(r.permitsMerged, 3);
+  assert.strictEqual(r.additionalPermitsInGroups, 2);
+  assert.ok(Math.abs(r.separateTrenchKm - 12.6) < 1e-6);
+  assert.ok(Math.abs(r.sharedTrenchKm - 4.2) < 1e-6);
 });
 
-test('digOnce() with 1 permit yields zero savings', () => {
+test('digOnce: the km figure is an equivalent, and carries its assumption', () => {
+  /* الادعاء المفترَض: (N-1)×trenchKm يستلزم تداخلاً تاماً بين المسارات.
+     التداخل الهندسي غير محسوب، فلا يُسمّى الرقم «طولاً متجنَّباً» قطعياً،
+     ولا يخرج من الدالة بلا افتراضه ملتصقاً به. */
+  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  assert.ok(Math.abs(r.duplicateTrenchKmEquivalent - 8.4) < 1e-6);
+  assert.strictEqual(r.avoidedTrenchKm, undefined,
+    'الاسم القاطع «طول متجنَّب» عاد — وهو يدّعي هندسةً غير محسوبة');
+  assert.ok(/تداخل تام/.test(r.overlapAssumption),
+    'الرقم المكافئ خرج بلا افتراضه');
+  assert.ok(/غير محسوب/.test(r.overlapAssumption),
+    'الافتراض لا يعلن أن التداخل الفعلي غير محسوب');
+});
+
+test('digOnce() with 1 permit drops nothing and asserts no overlap assumption', () => {
   const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
-  assert.strictEqual(r.savedLowSAR, 0);
-  assert.strictEqual(r.savedHighSAR, 0);
-  assert.strictEqual(r.savedPctLow, 0);
-  assert.strictEqual(r.savedPctHigh, 0);
+  assert.strictEqual(r.duplicateTrenchKmEquivalent, 0);
+  assert.strictEqual(r.additionalPermitsInGroups, 0);
+  assert.ok(Math.abs(r.sharedTrenchKm - r.separateTrenchKm) < 1e-6);
+  assert.strictEqual(r.overlapAssumption, '',
+    'بلا دمج لا افتراض تداخل — لا يُعلن افتراض لا يُستعمل');
+});
+
+test('digOnce() reports zero money and names who owns the cost input', () => {
+  /* الفحص الحارس: أي عودة لرقم مالي داخل المحرك تسقط هنا. */
+  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  Object.keys(r).forEach((key) => {
+    assert.ok(!/SAR|ريال/i.test(key), `digOnce أعاد حقلاً مالياً: ${key}`);
+  });
+  assert.ok(/كلفة الخندق لدى الأمانة/.test(r.costNote),
+    'costNote لا يسمّي من يملك مُدخل الكلفة');
+  assert.strictEqual(AtharEngine.DEFAULTS.trenchCostPerKmSAR, undefined,
+    'كلفة الخندق الافتراضية عادت إلى DEFAULTS');
+  assert.deepStrictEqual(AtharEngine.assumptionsUsed('digOnce'), [],
+    'digOnce صار بلا افتراضات توضيحية — القائمة يجب أن تكون فارغة');
 });
 
 // ---------------------------------------------------------------------------
@@ -875,12 +984,15 @@ test('wzdx emits one closure feature per selected schedule window', () => {
     coordinates: [[46.675, 24.700], [46.680, 24.735]],
   });
   assert.strictEqual(fc.features.length, windows.length);
+  /* WP-WZ1 — كان هنا فحصان على `dayOffset` و`durationHours` داخل
+     `properties`. الحقلان ليسا من مواصفة WZDx، وبقاؤهما كان يمنع الحدث من
+     مطابقة فرع المخطط. الخاصية المقصودة — نافذة لكل ليلة بمدّتها — تبقى
+     مفحوصة أدناه من `start_date` و`end_date`، وهما المصدر الحاكم أصلاً. */
   assert.deepStrictEqual(
-    fc.features.map((feature) => feature.properties.dayOffset),
-    [0, 1]
-  );
-  assert.deepStrictEqual(
-    fc.features.map((feature) => feature.properties.durationHours),
+    fc.features.map((feature) => (
+      (Date.parse(feature.properties.end_date)
+        - Date.parse(feature.properties.start_date)) / 3600000
+    )),
     [8, 2]
   );
   assert.deepStrictEqual(
@@ -891,10 +1003,12 @@ test('wzdx emits one closure feature per selected schedule window', () => {
     fc.features.map((feature) => feature.properties.end_date),
     ['2026-07-28T06:00:00.000Z', '2026-07-29T00:00:00.000Z']
   );
-  const exportedHours = fc.features.reduce(
-    (sum, feature) => sum + feature.properties.durationHours,
-    0
-  );
+  /* مجموع الساعات المصدَّرة يساوي المطلوب — مشتقاً من التواريخ لا من حقل
+     غير معياري. الخاصية هي نفسها: لا ساعة تُفقد ولا تُضاف في التصدير. */
+  const exportedHours = fc.features.reduce((sum, feature) => (
+    sum + (Date.parse(feature.properties.end_date)
+      - Date.parse(feature.properties.start_date)) / 3600000
+  ), 0);
   assert.strictEqual(exportedHours, 10);
 });
 

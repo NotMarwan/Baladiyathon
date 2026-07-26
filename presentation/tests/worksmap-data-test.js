@@ -48,10 +48,19 @@ ok('العنوان يجمع الطريق والمقطع', () => {
   assert.ok(props.description.indexOf('تقاطع طريق العروبة') !== -1);
 });
 
-ok('الحالة «مغلق» تنقل الميزة إلى مجموعة الإغلاقات', () => {
-  const closed = JSON.parse(JSON.stringify(raw));
-  closed.features[0].properties.status = 'مغلق';
-  assert.strictEqual(Data.normalizeWorks(closed).features[0].properties.group, 'closures');
+ok('المجموعة معلنة في البيانات ولا تُشتق من حالة المعاملة', () => {
+  // كان الاشتقاق: `status === 'مغلق'` ← إغلاقات. وحالات المحفظة حالاتُ سيرٍ
+  // إداري إنجليزية (ImpactScreening · Approved · Deployed) لا حالاتُ طريق،
+  // فالفرع لم يشتعل مرة واحدة. `group` هي المصدر الوحيد للتصنيف.
+  const explicit = JSON.parse(JSON.stringify(raw));
+  explicit.features[0].properties.group = 'closures';
+  explicit.features[0].properties.status = 'Approved';
+  assert.strictEqual(Data.normalizeWorks(explicit).features[0].properties.group, 'closures');
+
+  const inferred = JSON.parse(JSON.stringify(raw));
+  inferred.features[0].properties.status = 'مغلق';
+  assert.strictEqual(Data.normalizeWorks(inferred).features[0].properties.group, 'roadworks',
+    'الحالة ما زالت تعيد تصنيف الميزة من تحت البيانات');
 });
 
 ok('الهندسة تبقى كما هي', () => {
@@ -79,8 +88,41 @@ ok('الفصل حسب الهندسة: النقاط والخطوط مصدران',
     { type: 'Feature', geometry: { type: 'LineString', coordinates: [[46.6, 24.7], [46.7, 24.8]] }, properties: {} },
   ] };
   const split = Data.splitByGeometry(mixed);
-  assert.strictEqual(split.points.features.length, 1);
+  // نقطة أصلية + مرساة الخط: طبقة الرموز لا ترسم على LineString.
+  assert.strictEqual(split.points.features.length, 2);
   assert.strictEqual(split.lines.features.length, 1);
+});
+
+ok('كل خط يحصل على مرساة نقطية تحمل خصائصه', () => {
+  const line = { type: 'FeatureCollection', features: [{
+    type: 'Feature',
+    geometry: { type: 'LineString', coordinates: [[46.6, 24.7], [46.8, 24.7]] },
+    properties: { id: 'WORK-1', group: 'roadworks', severity: 3 },
+  }] };
+  const split = Data.splitByGeometry(line);
+  const anchor = split.points.features[0];
+  assert.strictEqual(anchor.geometry.type, 'Point');
+  assert.strictEqual(anchor.properties.id, 'WORK-1');
+  assert.strictEqual(anchor.properties.severity, 3);
+  assert.ok(Math.abs(anchor.geometry.coordinates[0] - 46.7) < 1e-9, 'المرساة ليست في المنتصف');
+});
+
+ok('المرساة تتبع منتصف الطول لا العنصر الأوسط من المصفوفة', () => {
+  // نقاط مكدسة في أول عشرة أمتار ثم قفزة طويلة — العنصر الأوسط يقع في الكدسة.
+  const positions = [[46.60, 24.70], [46.601, 24.70], [46.602, 24.70], [46.70, 24.70]];
+  const center = Data.midpoint(positions);
+  assert.ok(center[0] > 46.64, `المرساة عند ${center[0]} — انزلقت إلى كدسة النقاط`);
+});
+
+ok('محفظة المدينة كاملة تصل إلى مصدر النقاط', () => {
+  const portfolio = JSON.parse(fs.readFileSync(
+    path.join(__dirname, '..', 'data', 'city-portfolio.geojson'), 'utf8'));
+  const split = Data.splitByGeometry(Data.normalizeWorks(portfolio));
+  assert.strictEqual(
+    split.points.features.length,
+    portfolio.features.length,
+    'سجل بلا رمز على الخريطة'
+  );
 });
 
 ok('ملف البيانات الفعلي يمر بالتطبيع كاملاً', () => {

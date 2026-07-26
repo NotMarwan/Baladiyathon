@@ -114,6 +114,8 @@
   .tag-assume{color:var(--ochre);font-weight:600;font-size:12px}
   .sources{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
   .sources li{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-word}
+  .sources-ref{margin:10px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+  .sources-ref a{font-family:var(--mono);color:inherit}
 
   /* Alternative routes */
   .route-cards{display:flex;flex-direction:column;gap:12px}
@@ -339,8 +341,8 @@
             <div class="lab">وفر CO₂ من الجدولة المحسّنة (<span id="fuelNum">—</span> لتر موفّر) <span class="src-badge">من ساعات-مركبة موفّرة فقط</span></div>
           </div>
           <div class="card value-card">
-            <div class="num" id="digOnceNum">— ﷼</div>
-            <div class="lab">وفر Dig-Once (نطاق) <span class="src-badge">٢٥–٣٣٪ — GAO للمناطق الحضرية الكثيفة</span> <span class="src-badge" id="asmDigOnce" title="">افتراضات: —</span></div>
+            <div class="num" id="digOnceNum">— كم</div>
+            <div class="lab">حفر مكرر يسقط بالدمج <span class="src-badge">عدّ التصاريح محسوب · الطول مكافئ بافتراض تداخل تام</span> <span class="src-badge" id="asmDigOnce" title="">افتراضات: —</span></div>
           </div>
           <div class="card value-card" id="compoundCard" style="display:none">
             <div class="num" id="compoundNum">—</div>
@@ -400,20 +402,22 @@
       <tbody></tbody>
     </table>
     <div class="section-eyebrow" style="margin-top:16px">سجل المصادر</div>
-    <ul class="sources">
-      <li>momah.gov.sa/ar/hackathon — التحدي، المواعيد، الجوائز</li>
-      <li>gov.uk/.../new-digital-service-to-minimise-disruptive-roadworks — UK Street Manager</li>
-      <li>publications.parliament.uk/pa/cm5901/cmselect/cmtrans/522/report.html — 2.5M عملية أعمال/سنة في إنجلترا</li>
-      <li>nyc.gov/html/dot/html/infrastructure/permits.shtml — مكتب تنسيق وتخفيف أعمال البناء في نيويورك NYC OCMC — مراجعة خبيرة للتصاريح وتنسيق Dig-Once</li>
-      <li>researchgate.net/publication/237896838 — خفض تأخير الجدولة المُحسّنة −11.1% (بحث محكّم، 2009)</li>
-      <li>iaarc.org/.../ant_colony_optimization.html — ACO + VISUM (ISARC 2011)</li>
-      <li>fhwa.dot.gov/policy/otps/policy_brief_dig_once.pdf — الحفر حتى 90% من كلفة الألياف</li>
-      <li>broadbandnow.com/report/dig-once-digital-divide — GAO: توفير Dig-Once 25–33% في المناطق الحضرية الكثيفة</li>
-      <li>balady.gov.sa/en/services/excavation-permits — تصاريح الحفر: 150 يومًا للطرق الرئيسية / 300 يومًا للطرق العامة</li>
-      <li>balady.gov.sa/en/services/request-multiple-excavation-coordination — التنسيق قائم لكن بلا تحليل مروري (الفجوة)</li>
-      <li>sciencedirect.com/org/science/article/pii/S1556831824000285 — انبعاثات مواقع العمل (بحث محكّم)</li>
-      <li>roadworks.org / one.network — سابقة الخريطة العامة للأعمال في المملكة المتحدة</li>
-    </ul>
+    <!--
+      حُذفت القائمة التي كانت هنا (WP-A1). كانت تحمل ستة أرقام ومصادر إمّا
+      ثانوية وإمّا أُعلن حذفها في مواضع أخرى من المنتج: 2.5M مقابل 2.2 مليون
+      في سجل المصادر الحاكم، وبحثاً محكَّماً استُشهد به لرقم لا يقوله،
+      وbroadbandnow وسيطاً لتقرير GAO الأصلي، وخوارزمية مستعمرة نمل غير
+      منفَّذة، ومدداً نظامية لم تُتحقَّق.
+
+      تصحيحها في مكانها كان سيُبقي مصدرين للحقيقة. سجل المصادر الحاكم واحد:
+      athar-sources.html — ولكل مصدر فيه ناشرٌ وتاريخ تحديث وتاريخ وصول ورابط
+      مباشر، وحقلا «يدعم» و«لا يدعم». الإحالة إليه أصدق من نسخة مختصرة تتعفّن.
+    -->
+    <p class="sources-ref">
+      سجل المصادر الحاكم — بناشره وتاريخ تحديثه وتاريخ الوصول إليه، ولكل مصدر
+      ما يدعمه وما لا يدعمه —
+      <a href="athar-sources.html">athar-sources.html</a>.
+    </p>
   </section>
 
   <footer class="foot-note">أثر — نموذج تفاعلي توضيحي · بلدياتثون 2026 · جميع الأرقام المرورية بيانات توضيحية للعرض</footer>
@@ -434,7 +438,7 @@
     <tr><th>تصاريح مُدمجة</th><td id="tmpMerged">—</td></tr>
     <tr><th>تاريخ الإصدار</th><td id="tmpDate">—</td></tr>
   </table>
-  <p style="font-size:12px;color:var(--muted)">جميع الأرقام المرورية بيانات توضيحية للعرض. المصادر: momah.gov.sa/ar/hackathon، balady.gov.sa، researchgate.net/publication/237896838.</p>
+  <p style="font-size:12px;color:var(--muted)">جميع الأرقام المرورية بيانات توضيحية للعرض. سجل المصادر الحاكم: athar-sources.html.</p>
   <div class="sig-line">
     <div class="sig-box">توقيع ضابط الترخيص</div>
     <div class="sig-box">توقيع المقاول المنفذ</div>
@@ -610,7 +614,7 @@
     playing: false,
     playTimer: null,
     prevCo2Kg: 0,
-    prevDigOnceSAR: 0,
+    prevDigOnceKm: 0,
     calibration: null,
     network: NETWORK_FALLBACK,
     forecastDow: 2,
@@ -886,7 +890,11 @@
   if (GL_MODE) {
     GL.api.onReady(function () {
       // الحلقة الثانية من الشبكة تلتحق عند أول خمول — النموذج صالح قبلها.
-      if (typeof AtharRoadsLazy !== 'undefined') AtharRoadsLazy.attach(GL.api);
+      if (typeof AtharRoadsLazy !== 'undefined') {
+        AtharRoadsLazy.attach(GL.api, {
+          onDone: function () { AtharRoadsLazy.attachBuildings(GL.api); },
+        });
+      }
 
       // مسار كل مقطع كما هو على الإسفلت؛ الوتر المستقيم يقطع الأحياء.
       var pairs = window.ATHAR_CORRIDOR_SEGMENTS;
@@ -1407,14 +1415,18 @@
       permitsMerged: 1 + state.neighborPermits,
     });
     var digOnceNumEl = document.getElementById('digOnceNum');
+    /* WP-A2: كان يعرض نطاقاً بالريال مبنيّاً على كلفة خندق افتراضية غير
+       معروضة. صار يعرض الطول المتجنَّب — محسوب من بيانات التصريح وحدها. */
     if (state.neighborPermits > 0) {
       digOnceNumEl.textContent =
-        formatArabicNumber(digOnceResult.savedLowSAR) + ' – ' +
-        formatArabicNumber(digOnceResult.savedHighSAR) + ' ﷼';
+        formatArabicNumber(digOnceResult.additionalPermitsInGroups) + ' تصريح إضافي · '
+        + formatArabicNumber(
+          Math.round(digOnceResult.duplicateTrenchKmEquivalent * 10) / 10) + ' كم مكرر';
+      digOnceNumEl.title = digOnceResult.overlapAssumption;
     } else {
       digOnceNumEl.textContent = 'لا دمج — أضف تصريحاً مجاوراً';
     }
-    state.prevDigOnceSAR = digOnceResult.savedHighSAR;
+    state.prevDigOnceKm = digOnceResult.duplicateTrenchKmEquivalent;
 
     var compoundCard = document.getElementById('compoundCard');
     if (state.neighborPermits > 0) {
@@ -1954,8 +1966,10 @@
     { key: 'valueOfTimeSAR', label: 'قيمة الوقت', value: AtharEngine.DEFAULTS.valueOfTimeSAR + ' ﷼/ساعة-مركبة', tag: 'assume', note: 'للاستخدام السردي فقط' },
     { key: 'idleFuelLPerHour', label: 'استهلاك الوقود أثناء التعطل', value: AtharEngine.DEFAULTS.idleFuelLPerHour + ' لتر/ساعة-مركبة', tag: 'assume', note: 'استهلاك تقديري بترتيب الحجم' },
     { key: 'co2KgPerL', label: 'عامل انبعاثات CO₂', value: AtharEngine.DEFAULTS.co2KgPerL + ' كجم/لتر', tag: 'src', note: 'معامل قياسي — انظر مصدر الانبعاثات #10' },
-    { key: 'trenchCostPerKmSAR', label: 'كلفة الحفر لكل كم', value: formatArabicNumber(AtharEngine.DEFAULTS.trenchCostPerKmSAR) + ' ﷼/كم', tag: 'assume', note: 'رقم تقديري بترتيب الحجم للسرد' },
-    { key: 'digOnceBand', label: 'نطاق وفر Dig-Once', value: '25–33٪', tag: 'src', note: 'GAO للمناطق الحضرية الكثيفة — مصدر #7' },
+    /* WP-A2: حُذف صفّا «كلفة الحفر لكل كم» و«نطاق وفر Dig-Once». الأول
+       افتراض بترتيب الحجم لا تسعيرة، والثاني نطاق يخصّ مدّ الألياف في مدن
+       أمريكية — وسجل المصادر يقول إنه لا يدعم تعميماً على حفريات المدن.
+       بحذفهما لم يبقَ في حساب Dig-Once افتراض غير طول الخندق. */
     { key: 'trenchKmDemo', label: 'طول الخندق في حساب Dig-Once', value: '1.2 كم', tag: 'assume', note: 'قيمة العرض المستخدمة في بطاقة الوفر — تُستبدل بطول التصريح الفعلي' },
     { key: 'workZoneFriction', label: 'معامل احتكاك منطقة العمل', value: '1.10', tag: 'assume', note: 'أرضية: زمن الإغلاق ≥ 110٪ من الأساس — يمنع تصفير تأخير الليل (مِراج 99.6٪)' },
     { key: 'scoreCalibration', label: 'ثابت معايرة الدرجة', value: '0.35', tag: 'assume', note: 'تطبيع درجة 0-100 — قابل لإعادة المعايرة من سجل back-test' },

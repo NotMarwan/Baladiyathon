@@ -4,6 +4,9 @@ const path = require('path');
 
 const Plan = require(path.join(__dirname, '..', 'athar-desk-plan.js'));
 const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+/* الاتجاه الداخلي عربي والمعياري إنجليزي — التحويل عبر الجدول لا في موضع
+   الاستعمال. تمريره خاماً هو ما أفشل تصدير المحفظة كاملة. */
+const Mapping = require(path.join(__dirname, '..', 'athar-wzdx-mapping.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -154,7 +157,8 @@ ok('الأرقام لاتينية في الوثيقة والتبويب', () => {
 
 ok('WZDx يُبنى من نوافذ البديل الفائز لا من المطلوب', () => {
   const collection = Engine.wzdx({
-    id: plan.permitRef, roadName: plan.street, direction: plan.direction,
+    id: plan.permitRef, roadName: plan.street,
+    direction: Mapping.mapDirection(plan.direction).value,
     lanes: plan.lanes, lanesClosed: plan.lanesClosed,
     startISO: plan.start, durationHours: plan.windowHours,
     windows: plan.windows,
@@ -173,7 +177,8 @@ ok('WZDx يُبنى من نوافذ البديل الفائز لا من المط
 
 ok('المُصدِّر يسمّي نفسه — ملف تبادل لا يُنسب إلى سطح لم يُنتجه', () => {
   const named = Engine.wzdx({
-    dataSourceId: 'athar-reviewer-desk', id: 'x', roadName: 'ط', direction: 'شمال',
+    dataSourceId: 'athar-reviewer-desk', id: 'x', roadName: 'ط',
+    direction: Mapping.mapDirection('شمال').value,
     lanes: 3, lanesClosed: 1, startISO: '2026-07-19T06:00:00Z', durationHours: 6,
     coordinates: [[46.6, 24.7], [46.7, 24.8]],
   });
@@ -183,7 +188,8 @@ ok('المُصدِّر يسمّي نفسه — ملف تبادل لا يُنسب
 
 ok('إغلاق كل المسارات يُعلن كذلك في WZDx', () => {
   const all = Engine.wzdx({
-    id: 'x', roadName: 'ط', direction: 'شمال', lanes: 3, lanesClosed: 3,
+    id: 'x', roadName: 'ط', direction: Mapping.mapDirection('شمال').value,
+    lanes: 3, lanesClosed: 3,
     startISO: plan.start, durationHours: 6, coordinates: [[46.6, 24.7], [46.7, 24.8]],
   });
   assert.strictEqual(all.features[0].properties.vehicle_impact, 'all-lanes-closed');

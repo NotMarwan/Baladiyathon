@@ -164,11 +164,38 @@ function main() {
   console.log('الحلقة الأولى أخفّ بـ '
     + Math.round((1 - after.arterialBytes / before.bytes) * 100) + '٪');
 
+  /**
+   * شوارع الأحياء حلقة ثالثة.
+   * ---------------------------------------------------------------------------
+   * تُنحَّف بنفس التفاوت وتُكتب على حدة، ولا تُدمج في الحلقة الثانية: هي عشرات
+   * أضعافها حجماً، وضمُّها إليها يؤخّر ظهور الشوارع التجميعية خلف حمولةٍ لا
+   * تُقرأ قبل التقريب الخامس عشر.
+   *
+   * وهذه حمولة عرض فقط. رسم التوجيه يُبنى من الخام ويحمل هندسته بنفسه، فتبسيطٌ
+   * هنا لا يمسّ زمن مسارٍ ولا شكله — وهذا ما كان يربط الاثنين قبل أن يستقلّا.
+   */
+  const hoodSource = path.join(DATA, 'riyadh-roads-neighbourhood.geojson');
+  let hoodText = null;
+  if (fs.existsSync(hoodSource)) {
+    const hood = JSON.parse(fs.readFileSync(hoodSource, 'utf8'));
+    const hoodSlim = hood.features.map(slimFeature);
+    hoodText = 'window.RIYADH_ROADS_HOOD = JSON.parse('
+      + JSON.stringify(JSON.stringify(collection(hoodSlim))) + ');\n';
+    console.log('أحياء : ' + kb(Buffer.byteLength(hoodText)) + ' ك.ب · '
+      + hoodSlim.length + ' مقطعاً');
+  } else {
+    console.log('أحياء : مفقودة — شغّل scripts/fetch-neighbourhood-roads.js');
+  }
+
   if (dry) return;
 
   fs.writeFileSync(path.join(DATA, 'riyadh-roads.geojson.js'), arterialText);
   fs.writeFileSync(path.join(DATA, 'riyadh-roads-local.geojson.js'), localText);
   console.log('كُتبت data/riyadh-roads.geojson.js و data/riyadh-roads-local.geojson.js');
+  if (hoodText) {
+    fs.writeFileSync(path.join(DATA, 'riyadh-roads-neighbourhood.geojson.js'), hoodText);
+    console.log('كُتبت data/riyadh-roads-neighbourhood.geojson.js');
+  }
 }
 
 if (require.main === module) main();

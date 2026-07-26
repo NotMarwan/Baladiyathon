@@ -194,4 +194,52 @@ ok('التصنيف يقسم الحالات قسمين، ومراجعة القر�
     'مراجعة القرار تُؤتمت — وهي بالضبط ما يجب أن يقف عنده المراجع');
 });
 
+/* ---- المسار الرئيس: «أين أنا؟» ---- */
+
+/**
+ * جدول المراحل ليس وصفاً موازياً للآلة — هو مسارٌ داخلها.
+ * لو كُتب يدوياً ولم يُفحص، لعرض المكتب طريقاً لا يسلكه النظام: مراحل لا
+ * انتقال بينها، ورقمٌ من كلٍّ لا معنى له.
+ */
+ok('كل انتقال في المسار الرئيس مشروع في آلة الحالة', () => {
+  for (let i = 0; i + 1 < States.PIPELINE.length; i += 1) {
+    const from = States.PIPELINE[i];
+    const to = States.PIPELINE[i + 1];
+    assert.ok(States.can(from, to),
+      `المسار يزعم انتقالاً غير مشروع: ${from} ← ${to}`);
+  }
+});
+
+ok('كل حالة إمّا على المسار أو مسنَدة إليه بسبب معلن', () => {
+  Object.keys(States.TRANSITIONS).forEach((status) => {
+    const onPath = States.PIPELINE.indexOf(status) !== -1;
+    const off = States.OFF_PATH[status];
+    assert.ok(onPath || off, `حالة بلا موقع من المسار: ${status}`);
+    if (off) {
+      assert.ok(States.PIPELINE.indexOf(off.at) !== -1,
+        `${status}: مسنَدة إلى محطة ليست على المسار`);
+      assert.ok(off.note, `${status}: خارج المسار بلا سبب معلن`);
+    }
+  });
+});
+
+ok('موقع الحالة يُقرأ رقماً واسماً — والخارج عن المسار يقول سببه', () => {
+  const onPath = States.stage('StrategyReview');
+  assert.strictEqual(onPath.index, 4);
+  assert.strictEqual(onPath.total, States.PIPELINE.length);
+  assert.strictEqual(onPath.onPath, true);
+  assert.strictEqual(onPath.note, '');
+  assert.strictEqual(onPath.label, 'مراجعة القرار');
+
+  const off = States.stage('CoordinationRequired');
+  assert.strictEqual(off.onPath, false);
+  assert.ok(off.note, 'الخارج عن المسار بلا سبب');
+  assert.strictEqual(off.index, States.PIPELINE.indexOf('ImpactScreening') + 1);
+});
+
+ok('حالة مجهولة لا تكسر المؤشر', () => {
+  const unknown = States.stage('لا-توجد');
+  assert.strictEqual(unknown.index, 0);
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

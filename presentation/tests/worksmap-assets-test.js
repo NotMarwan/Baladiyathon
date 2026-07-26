@@ -7,9 +7,14 @@ const ROOT = path.join(__dirname, '..');
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
+// الرسم يقول نوع العمل واللون يقول المجموعة: `works-*` كهرمانية و `poi-*`
+// خضراء بنفس الرسوم. الأربعة الأخيرة بلا مستهلك اليوم — مفردات محفوظة، وسببها
+// مكتوب في رأس scripts/build-sprite.js لا متروك للتخمين.
 const REQUIRED_ICONS = [
-  'roadworks', 'works-emergency', 'works-development', 'works-end', 'closure',
-  'incident', 'diversion', 'bus-stop', 'poi-parking', 'poi-information',
+  'roadworks', 'works-maintenance', 'works-development', 'works-emergency',
+  'closure', 'incident', 'diversion',
+  'poi-default', 'poi-maintenance', 'poi-development', 'poi-emergency',
+  'poi-information', 'bus-stop', 'poi-parking', 'works-end',
 ];
 
 ok('sprite: يحوي كل أيقونة يشير إليها سجل الطبقات', () => {

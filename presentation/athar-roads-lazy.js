@@ -27,6 +27,13 @@
   var DEFAULT_GLOBAL = 'RIYADH_ROADS_LOCAL';
   var IDLE_TIMEOUT_MS = 1200;
 
+  /** نسيج المباني: نفس المنطق، حمل أثقل، وأهمية بصرية أقل — فيأتي أخيراً. */
+  var BUILDINGS = {
+    src: 'data/riyadh-buildings.geojson.js',
+    globalName: 'RIYADH_BUILDINGS',
+    apply: 'setBuildings',
+  };
+
   /** دمج مجموعتين في مجموعة ثالثة. لا تُعدَّل أيّ منهما. */
   function merge(first, second) {
     return {
@@ -54,17 +61,18 @@
   }
 
   /**
-   * @param {object} api واجهة AtharWorksMap — يجب أن تحمل appendRoads.
-   * @param {object} [options] {src, globalName, onDone}
+   * @param {object} api واجهة AtharWorksMap — يجب أن تحمل الدالة المطبِّقة.
+   * @param {object} [options] {src, globalName, apply, onDone}
    */
   function attach(api, options) {
     var opts = options || {};
     var src = opts.src || DEFAULT_SRC;
     var globalName = opts.globalName || DEFAULT_GLOBAL;
+    var applyName = opts.apply || 'appendRoads';
     var done = opts.onDone || function () {};
 
-    if (!api || typeof api.appendRoads !== 'function') {
-      done(new Error('الواجهة بلا appendRoads'));
+    if (!api || typeof api[applyName] !== 'function') {
+      done(new Error('الواجهة بلا ' + applyName));
       return;
     }
 
@@ -76,11 +84,49 @@
           done(new Error('الملف حُمّل بلا ' + globalName));
           return;
         }
-        api.appendRoads(collection);
+        api[applyName](collection);
         done(null, collection.features.length);
       });
     });
   }
 
-  return { attach: attach, merge: merge, DEFAULT_SRC: DEFAULT_SRC, DEFAULT_GLOBAL: DEFAULT_GLOBAL };
+  /**
+   * تحميل حمولة غير جغرافية عند الخمول — رسم التوجيه مثلاً.
+   * ---------------------------------------------------------------------------
+   * `attach` يشترط مجموعة ميزات لأنه يسلّمها لواجهة الخريطة. ورسم التوجيه ليس
+   * مجموعة ميزات بل عقد وأضلاع، ولا يذهب إلى الخريطة بل إلى المحسِّن. فالمشترك
+   * بينهما التأجيل لا التسليم، وهذا يعرضه وحده.
+   */
+  function load(src, globalName, done) {
+    var finish = done || function () {};
+    whenIdle(function () {
+      loadScript(src, function (err) {
+        if (err) { finish(err); return; }
+        var payload = window[globalName];
+        if (!payload) { finish(new Error('الملف حُمّل بلا ' + globalName)); return; }
+        finish(null, payload);
+      });
+    });
+  }
+
+  /** المباني بعد الطرق: الأثقل آخراً كي لا يزاحم ما يُقرأ قبله. */
+  function attachBuildings(api, options) {
+    var opts = options || {};
+    attach(api, {
+      src: opts.src || BUILDINGS.src,
+      globalName: opts.globalName || BUILDINGS.globalName,
+      apply: BUILDINGS.apply,
+      onDone: opts.onDone,
+    });
+  }
+
+  return {
+    attach: attach,
+    attachBuildings: attachBuildings,
+    load: load,
+    merge: merge,
+    DEFAULT_SRC: DEFAULT_SRC,
+    DEFAULT_GLOBAL: DEFAULT_GLOBAL,
+    BUILDINGS: BUILDINGS,
+  };
 });

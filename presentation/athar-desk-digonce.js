@@ -5,9 +5,17 @@
  * فائدة: المراجع يعرف أن هناك تعارضاً، وسؤاله هو ماذا يفعل به.
  *
  * هذه الوحدة تجيب: تجمع التصاريح المتجاورة على المقطع نفسه، وتحسب ما يوفّره
- * دمجها في حفرة واحدة — بالريال من نموذج الحفر، وبساعة-مركبة من فرق الإغلاق.
+ * دمجها — بعدد التصاريح الزائدة عن واحد، وبساعة-مركبة من فرق الإغلاق.
  *
  * النموذج مُعلن لا مضمر:
+ *
+ *   • **التصاريح الإضافية في المجموعة = الأعضاء ناقص واحد.** عدّ لا ادعاء
+ *     أثر: المجموعة تُبنى بتجاور الشارع والنافذة، وقد تكون نطاقات مختلفة
+ *     نُسّقت توقيتاً فقط. «حفريات متجنَّبة» تحتاج هندسة النطاقات.
+ *
+ *   • **الطول المكرر مفترَض لا محسوب.** يستلزم تداخلاً تاماً بين المسارات،
+ *     والتداخل الهندسي الفعلي غير محسوب هنا. لذلك يُسمّى «طول حفر مكرر مكافئ»
+ *     ويحمل افتراضه معه أينما عُرض (WP-A2).
  *
  *   • **طول الخندق المشترك = أقصر الأعضاء.** أطولها لا يشارك غيره إلا بقدر
  *     أقصرها؛ أخذُ الأطول يضخّم الوفر باختلاف لا يقع.
@@ -131,11 +139,14 @@
       trenchKm: trenchKm,
       longestKm: Math.max.apply(null, lengths),
       street: feature.properties.street,
-      separateSAR: dig.separateSAR,
-      savedLowSAR: dig.savedLowSAR,
-      savedHighSAR: dig.savedHighSAR,
-      savedPctLow: dig.savedPctLow,
-      savedPctHigh: dig.savedPctHigh,
+      // WP-A2: كمية مادية بدل تقدير مالي — وكلاهما عدٌّ لا ادعاء أثر:
+      // التصاريح الإضافية عدد، والطول مكافئ يحمل افتراض التداخل معه.
+      separateTrenchKm: dig.separateTrenchKm,
+      sharedTrenchKm: dig.sharedTrenchKm,
+      duplicateTrenchKmEquivalent: dig.duplicateTrenchKmEquivalent,
+      additionalPermitsInGroups: dig.additionalPermitsInGroups,
+      overlapAssumption: dig.overlapAssumption,
+      costNote: dig.costNote,
       separateVehHours: separateVehHours,
       mergedVehHours: mergedVehHours,
       savedVehHours: separateVehHours - mergedVehHours,
@@ -223,11 +234,19 @@
       + '<ul class="desk-merge-members">' + refs + '</ul>'
 
       + '<dl class="desk-merge-figures">'
-      + '<div><dt>وفر الحفر</dt><dd><bdi>' + integer(merge.savedLowSAR) + ' – '
-      + integer(merge.savedHighSAR) + '</bdi> ريال</dd></div>'
+      /* WP-A2: كان هنا نطاق «وفر الحفر … ريال». حُذف لأن مُدخله الوحيد كلفة
+         خندق افتراضية لم تكن تُعرض، ومضروبة في نطاق يقول سجل المصادر إنه لا
+         يدعم هذا الاستعمال. ما يحلّ محلّه محسوب من بيانات التصريح وحدها. */
+      + '<div><dt>تصاريح إضافية في المجموعة</dt><dd><bdi>'
+      + integer(merge.additionalPermitsInGroups) + '</bdi> تصريحاً</dd></div>'
+      + '<div><dt>طول حفر مكرر مكافئ</dt><dd><bdi>'
+      + decimal(merge.duplicateTrenchKmEquivalent, 2) + '</bdi> كم</dd></div>'
       + '<div><dt>وفر التأخير</dt><dd><bdi>' + integer(merge.savedVehHours)
       + '</bdi> ساعة-مركبة</dd></div>'
       + '</dl>'
+
+      + '<p class="desk-merge-cost-note">' + escapeHtml(merge.overlapAssumption)
+      + ' ' + escapeHtml(merge.costNote) + '</p>'
 
       + '<p class="desk-merge-basis">الأساس: خندق مشترك بطول <strong>'
       + decimal(merge.trenchKm, 2) + '</strong> كم — وهو أقصر الأعضاء، لأن أطولها '
