@@ -8,9 +8,9 @@
 
 | # | العيب | الشدة | الموضع | كلفة تقديرية |
 |---|---|---|---|---|
-| R1 | الواجهة تناقض المحرك في وثيقة رسمية | عالية | `athar-desk-plan.js:200` + `tests/gate1-closure-test.js:165` | دقائق |
-| R2 | صندوق الأعمال بارتفاع 0px عند 390px | عالية | `athar-desk.css` | دقائق–ساعة |
-| R3 | اشتقاق `workZoneFriction` غير قابل للدفاع | عالية | `data/comparable-cases.json` + `athar-sensitivity.js` + `athar-engine.js:102` | نصف يوم إلى يوم |
+| R1 | الواجهة تناقض المحرك في وثيقة رسمية | عالية | `masar-desk-plan.js:200` + `tests/gate1-closure-test.js:165` | دقائق |
+| R2 | صندوق الأعمال بارتفاع 0px عند 390px | عالية | `masar-desk.css` | دقائق–ساعة |
+| R3 | اشتقاق `workZoneFriction` غير قابل للدفاع | عالية | `data/comparable-cases.json` + `masar-sensitivity.js` + `masar-engine.js:102` | نصف يوم إلى يوم |
 | R4 | ادّعاء «212٪» غير قابل لإعادة الإنتاج | عالية | `docs/COLD-EVALUATION-2026-07-26.md:69` | دقائق |
 | R5 | اختبار غير المتخصص غير منفَّذ | عالية | خارج الشيفرة | ربع ساعة + شخص |
 | R6 | صياغة نتيجة المزوّدين أوسع من المتحقَّق | متوسطة | `data/traffic-provider-registry.json` → `criticalFinding` | دقائق |
@@ -23,7 +23,7 @@
 
 ## R1 — الواجهة تناقض المحرك
 
-**الموضع:** `presentation/athar-desk-plan.js:200`
+**الموضع:** `presentation/masar-desk-plan.js:200`
 
 ```js
 + 'للحقول الإلزامية؛ لم يُشغَّل عليه المحقق الرسمي بعد</strong>.</p>'
@@ -55,7 +55,7 @@ assert.ok(/لم يُشغَّل عليه المحقق الرسمي بعد/.test(p
 
 ## R2 — عطل الاستجابة عند 390px
 
-**الموضع:** `presentation/athar-desk.css` — قاعدة `aside.desk-pane-inbox`
+**الموضع:** `presentation/masar-desk.css` — قاعدة `aside.desk-pane-inbox`
 عند المقاسات الصغيرة.
 
 **القياسات (بعد إعادة تحميل نظيفة):**
@@ -87,9 +87,9 @@ assert.ok(/لم يُشغَّل عليه المحقق الرسمي بعد/.test(p
 
 **المواضع الثلاثة:**
 
-1. `data/comparable-cases.json` → `derivedPriors[0].consequenceForAthar`
-2. `athar-sensitivity.js:177-183` → دالة `range()`
-3. `athar-engine.js:102` → `WORK_ZONE_FRICTION = 1.10`
+1. `data/comparable-cases.json` → `derivedPriors[0].consequenceForMasar`
+2. `masar-sensitivity.js:177-183` → دالة `range()`
+3. `masar-engine.js:102` → `WORK_ZONE_FRICTION = 1.10`
 
 **العيب:** الكمية مشتقّة نسبةَ سعة (`1800/1600` … `1800/1072`) ومستعمَلة
 أرضيةَ نسبة زمن في `Math.max(bpr(...), baseT * friction)`. تحت BPR بـ`β = 4`
@@ -139,7 +139,7 @@ assert.ok(/لم يُشغَّل عليه المحقق الرسمي بعد/.test(p
 
 **الحالة:** `UNVERIFIED — no real non-expert participant was tested.`
 
-**البروتوكول:** شخص واحد لم يعمل على «أثر» · شاشة المكتب على تصريح ممثّل ·
+**البروتوكول:** شخص واحد لم يعمل على «مسار» · شاشة المكتب على تصريح ممثّل ·
 ستون ثانية بلا شرح شفهي · ثم الأسئلة السبعة · تسجيل الإجابات حرفياً ·
 النجاح 6 من 7 من داخل الواجهة، وبقسم تفاصيل واحد كحدّ أقصى.
 
@@ -212,7 +212,7 @@ assert.ok(/لم يُشغَّل عليه المحقق الرسمي بعد/.test(p
 1. **مفتاح مزوّد واحد** → يفتح رصد السرعة وزمن الرحلة على 21 مساراً، ويرفع
    درجة الدليل من `model-derived` إلى `local-route`.
 2. **حالة ميدانية واحدة بقياسات قبل/أثناء** → تفتح `local-field`، وهي وحدها
-   ما يجعل كلمة «أثر» قابلة للاستعمال.
+   ما يجعل كلمة «مسار» قابلة للاستعمال.
 
 الثاني أثمن. وحزمة القياس مبنية ومختبَرة وتنتظر أول ملف.
 

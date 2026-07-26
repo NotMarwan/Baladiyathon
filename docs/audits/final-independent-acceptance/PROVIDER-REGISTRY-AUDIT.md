@@ -9,7 +9,7 @@
 | `presentation/data/monitored-routes.json` | هندسات المسارات المرشَّحة للرصد |
 | `presentation/scripts/collect-route-evidence.js` | جامع الأدلة |
 | `presentation/scripts/build-monitored-routes.js` | بانِي المسارات |
-| `presentation/athar-route-evidence.js` | طبقة العرض ودرجات الدليل |
+| `presentation/masar-route-evidence.js` | طبقة العرض ودرجات الدليل |
 
 ## المزوّدون المدرَجون
 

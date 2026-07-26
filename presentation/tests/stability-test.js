@@ -16,9 +16,9 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Sensitivity = require(path.join(ROOT, 'athar-sensitivity.js'));
-const Stability = require(path.join(ROOT, 'athar-stability.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Sensitivity = require(path.join(ROOT, 'masar-sensitivity.js'));
+const Stability = require(path.join(ROOT, 'masar-stability.js'));
 
 let count = 0;
 function test(name, fn) {

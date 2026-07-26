@@ -1,6 +1,6 @@
 'use strict';
 /**
- * أثر — شوارع الأحياء من OpenStreetMap.
+ * مسار — شوارع الأحياء من OpenStreetMap.
  * ---------------------------------------------------------------------------
  * `fetch-roads.js` يقف عند `tertiary`. هذا يكفي لرسم هيكل المدينة، ولا يكفي
  * لتوجيهٍ يشبه الواقع: حين يُغلق شارع، السائق لا يدور حول الحيّ كله — يدخل
@@ -120,7 +120,7 @@ async function waitForSlot(endpoint) {
     let text;
     try {
       const response = await fetch(statusUrl, {
-        headers: { 'User-Agent': 'athar-roads-builder' },
+        headers: { 'User-Agent': 'masar-roads-builder' },
         signal: AbortSignal.timeout(20000),
       });
       text = await response.text();
@@ -148,7 +148,7 @@ async function ask(query) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': 'athar-roads-builder',
+            'User-Agent': 'masar-roads-builder',
           },
           body: new URLSearchParams({ data: query }).toString(),
           signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),

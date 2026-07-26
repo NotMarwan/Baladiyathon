@@ -1,1 +1,1 @@
-window.ATHAR_WZDX_INTEROP = {"feeds":1,"totalFeatures":576,"allValid":true,"errorCount":0,"commit":"42b98fcdd837e897ae3e208780c45ce61f7fc12a","validator":"ajv@8.20.0","publishers":["Washington State DOT"],"fetchedAt":"2026-07-26T14:05:28.769Z","grade":"external-official"};
+window.MASAR_WZDX_INTEROP = {"feeds":1,"totalFeatures":576,"allValid":true,"errorCount":0,"commit":"42b98fcdd837e897ae3e208780c45ce61f7fc12a","validator":"ajv@8.20.0","publishers":["Washington State DOT"],"fetchedAt":"2026-07-26T14:05:28.769Z","grade":"external-official"};

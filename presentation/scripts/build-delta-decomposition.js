@@ -33,7 +33,7 @@ const vm = require('node:vm');
 
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
-const ENGINE_PATH = path.join(ROOT, 'athar-engine.js');
+const ENGINE_PATH = path.join(ROOT, 'masar-engine.js');
 
 const OUT_JSON = path.join(DATA, 'delta-decomposition.json');
 const OUT_JS = path.join(DATA, 'delta-decomposition.js');
@@ -57,7 +57,7 @@ function loadEngineWith(find, replace) {
   const occurrences = source.split(find).length - 1;
   if (occurrences !== 1) {
     throw new Error(
-      `«${find}» ورد ${occurrences} مرة في athar-engine.js — الاستبدال يحتاج `
+      `«${find}» ورد ${occurrences} مرة في masar-engine.js — الاستبدال يحتاج `
       + 'مرة واحدة بالضبط. تغيّرت صياغة الثابت، فصحّح السكربت بدل أن يبلّغ '
       + 'رقماً من محرك لم يتغيّر.');
   }
@@ -65,14 +65,14 @@ function loadEngineWith(find, replace) {
   sandbox.exports = sandbox.module.exports;
   vm.createContext(sandbox);
   vm.runInContext(source.replace(find, replace), sandbox,
-    { filename: 'athar-engine.js<معدَّل>' });
+    { filename: 'masar-engine.js<معدَّل>' });
   return sandbox.module.exports;
 }
 
 /**
  * يجمع دلتا المحفظة كاملةً بمحرك معطى — الأساس، الأمثل، والنسبة.
  *
- * يعيد إنتاج حساب `athar-portfolio.js` بالمدخلات نفسها. التطابق مع الرقم
+ * يعيد إنتاج حساب `masar-portfolio.js` بالمدخلات نفسها. التطابق مع الرقم
  * الحاكم يُفحص أدناه قبل أي استنتاج: تفكيكٌ لرقمٍ غير الرقم المعروض لا قيمة له.
  *
  * @param {object} Engine
@@ -94,7 +94,7 @@ function portfolioDelta(Engine, permits) {
   };
 }
 
-/** مدخلات المحرك لتصريح واحد — مطابقة لما يبنيه `athar-portfolio.js`. */
+/** مدخلات المحرك لتصريح واحد — مطابقة لما يبنيه `masar-portfolio.js`. */
 function inputOf(Engine, permit) {
   return {
     aadt: permit.aadt,
@@ -131,8 +131,8 @@ function maxNightHoursOf(baselineWindows, durationHours) {
 
 function main() {
   const Engine = require(ENGINE_PATH);
-  global.AtharEngine = Engine;
-  const Portfolio = require(path.join(ROOT, 'athar-portfolio.js'));
+  global.MasarEngine = Engine;
+  const Portfolio = require(path.join(ROOT, 'masar-portfolio.js'));
 
   const permits = Portfolio.buildPermits(Portfolio.SEED);
   const governing = portfolioDelta(Engine, permits);
@@ -296,7 +296,7 @@ function main() {
 
   fs.writeFileSync(OUT_JSON, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
   fs.writeFileSync(OUT_JS,
-    `window.ATHAR_DELTA_DECOMPOSITION = ${JSON.stringify(report)};\n`, 'utf8');
+    `window.MASAR_DELTA_DECOMPOSITION = ${JSON.stringify(report)};\n`, 'utf8');
 
   console.log(`الدلتا ${report.governing.deltaPct.toFixed(1)}٪ — `
     + `${report.hourShift.lowPct.toFixed(1)}٪ إلى ${report.hourShift.highPct.toFixed(1)}٪ `

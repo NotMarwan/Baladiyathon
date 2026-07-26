@@ -11,7 +11,7 @@
  * يقول أين ذهب الحمل.
  *
  * والبدائل هنا **ليست مخترعة**: تُحسب بمحرك التوجيه نفسه الذي يعرضه المنتج
- * (`athar-city-routing.js`) على الرسم الكامل. أي أن ما نرصده هو ما نوصي به —
+ * (`masar-city-routing.js`) على الرسم الكامل. أي أن ما نرصده هو ما نوصي به —
  * ولو رصدنا مساراً آخر لقِسنا شيئاً لا يخصّ قرارنا.
  *
  * ولماذا الرصد يبدأ قبل وجود إغلاق: لأن خط الأساس لا يُبنى بأثر رجعي. ساعةُ
@@ -27,7 +27,7 @@ const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const OUT = path.join(DATA, 'monitored-routes.json');
 
-/** عدد التصاريح المرصودة افتراضياً — الأعلى أثراً أولاً. */
+/** عدد التصاريح المرصودة افتراضياً — الأعلى مساراً أولاً. */
 const DEFAULT_COUNT = 6;
 
 /** ساعة الحساب المرجعية للبدائل — الذروة الصباحية. */
@@ -63,7 +63,7 @@ function midpoint(line) {
 function main() {
   const wanted = Number(process.argv[2]) || DEFAULT_COUNT;
 
-  const Routing = require(path.join(ROOT, 'athar-city-routing.js'));
+  const Routing = require(path.join(ROOT, 'masar-city-routing.js'));
   const graph = loadGlobal('riyadh-route-graph.js', 'RIYADH_ROUTE_GRAPH');
   const portfolio = JSON.parse(fs.readFileSync(
     path.join(DATA, 'city-portfolio.geojson'), 'utf8'));

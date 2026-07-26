@@ -8,7 +8,7 @@ from scrapy.http import TextResponse
 
 
 class EvidenceSpider(scrapy.Spider):
-    name = "athar_evidence"
+    name = "masar_evidence"
     custom_settings = {
         "ROBOTSTXT_OBEY": True,
         "CONCURRENT_REQUESTS": 4,
@@ -17,7 +17,7 @@ class EvidenceSpider(scrapy.Spider):
         "AUTOTHROTTLE_ENABLED": True,
         "AUTOTHROTTLE_START_DELAY": 2.0,
         "AUTOTHROTTLE_MAX_DELAY": 30.0,
-        "USER_AGENT": "AtharEvidenceResearch/1.0 (+public research; respectful crawler)",
+        "USER_AGENT": "MasarEvidenceResearch/1.0 (+public research; respectful crawler)",
         "LOG_LEVEL": "WARNING",
         "FEED_EXPORT_ENCODING": "utf-8",
     }

@@ -203,7 +203,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0020",
         "street": "المطار",
         "roadClass": "arterial",
@@ -251,7 +251,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0020",
         "street": "المطار",
         "roadClass": "arterial",
@@ -595,7 +595,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0020",
         "street": "المطار",
         "roadClass": "arterial",
@@ -679,7 +679,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0063",
         "street": "ابن العميد",
         "roadClass": "major",
@@ -723,7 +723,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0063",
         "street": "ابن العميد",
         "roadClass": "major",
@@ -843,7 +843,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0063",
         "street": "ابن العميد",
         "roadClass": "major",
@@ -979,7 +979,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0063",
         "street": "ابن العميد",
         "roadClass": "major",
@@ -1175,7 +1175,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0045",
         "street": "طريق الملك فهد",
         "roadClass": "arterial",
@@ -1215,7 +1215,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0045",
         "street": "طريق الملك فهد",
         "roadClass": "arterial",
@@ -1367,7 +1367,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0045",
         "street": "طريق الملك فهد",
         "roadClass": "arterial",
@@ -1435,7 +1435,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0025",
         "street": "شارع العليا",
         "roadClass": "arterial",
@@ -1495,7 +1495,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0025",
         "street": "شارع العليا",
         "roadClass": "arterial",
@@ -1599,7 +1599,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0025",
         "street": "شارع العليا",
         "roadClass": "arterial",
@@ -1707,7 +1707,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0025",
         "street": "شارع العليا",
         "roadClass": "arterial",
@@ -1935,7 +1935,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0108",
         "street": "عمر بن الخطاب",
         "roadClass": "major",
@@ -2011,7 +2011,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0108",
         "street": "عمر بن الخطاب",
         "roadClass": "major",
@@ -2339,7 +2339,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0108",
         "street": "عمر بن الخطاب",
         "roadClass": "major",
@@ -2431,7 +2431,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0133",
         "street": "سعيد بن بيشان",
         "roadClass": "local",
@@ -2511,7 +2511,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0133",
         "street": "سعيد بن بيشان",
         "roadClass": "local",
@@ -2683,7 +2683,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0133",
         "street": "سعيد بن بيشان",
         "roadClass": "local",
@@ -2835,7 +2835,7 @@
         ]
       },
       "properties": {
-        "featureType": "athar-monitored-route",
+        "featureType": "masar-monitored-route",
         "groupId": "BLD-2026-0133",
         "street": "سعيد بن بيشان",
         "roadClass": "local",

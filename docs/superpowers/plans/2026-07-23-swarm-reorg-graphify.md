@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans (inline execution chosen — token-budget constraint from user). Steps use checkbox (`- [ ]`) syntax.
 
-**Goal:** All Baladiyathon 2026 (Athar) content under one folder `Baladiyathon/`; everything unrelated under `not related/`; knowledge graph over Baladiyathon content becomes the navigation engine, documented in root `README.md`.
+**Goal:** All Baladiyathon 2026 (Masar) content under one folder `Baladiyathon/`; everything unrelated under `not related/`; knowledge graph over Baladiyathon content becomes the navigation engine, documented in root `README.md`.
 
 **Architecture:** Pure file reorganization (PowerShell `Move-Item -LiteralPath`, non-destructive — nothing deleted), then graphify pipeline on `Baladiyathon/`, then README declaring graph-first navigation for agents.
 
@@ -57,7 +57,7 @@ Run: `Get-ChildItem $root | Select Name` — expect exactly: `.claude`, `Baladiy
 **Files:**
 - Create: `C:\Users\wasan\Downloads\Swarm\README.md`
 
-- [ ] **Step 1:** Write README (Arabic+English): structure map, rule "navigation via graphify" for agents (`graphify query/path/explain`, `graphify-out/graph.json` as machine-readable index), pointer to `Baladiyathon/SwarmingObsidian/00 Athar - Home.md` as source of truth.
+- [ ] **Step 1:** Write README (Arabic+English): structure map, rule "navigation via graphify" for agents (`graphify query/path/explain`, `graphify-out/graph.json` as machine-readable index), pointer to `Baladiyathon/SwarmingObsidian/00 Masar - Home.md` as source of truth.
 - [ ] **Step 2:** Verify README exists and paths in it resolve.
 
 ## Self-Review

@@ -28,12 +28,12 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 const REPO = path.join(ROOT, '..');
 const DECK = path.join(REPO, 'output', 'submission',
-  'athar-baladiyathon-judging-deck.html');
+  'masar-baladiyathon-judging-deck.html');
 const MANIFEST = path.join(__dirname, 'fixtures', 'test-manifest.json');
 const DECK_MANIFEST = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
 
 global.window = global;
-const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
+const Canonical = require(path.join(ROOT, 'masar-canonical.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -257,7 +257,7 @@ test('لا تفصيل مخترع لتوزيع الفحوص على الطبقات
 
 // ---- الاتساق مع المصدر الحاكم --------------------------------------------
 
-test('أي مؤشّر حاكم يظهر في العرض يطابق athar-canonical.js', () => {
+test('أي مؤشّر حاكم يظهر في العرض يطابق masar-canonical.js', () => {
   /* العرض سطحٌ مثل غيره. ظهور رقم المحفظة فيه بقيمة أخرى هو التناقض نفسه
      الذي بُني له المصدر الحاكم. */
   const metrics = Canonical.metrics();
@@ -298,7 +298,7 @@ test('عرض الدقائق الثلاث لا يحمل عدّ فحوص متقا�
   /* كان يقول «185 حالة آلية» والحقيقة أكثر من ألف — العيب نفسه الذي وقع في
      العرض المصوَّر («١٧٧ فحصاً»)، وفي سطحٍ لم تكن تحرسه بوابة. الحارس هنا
      يمنع تكراره في أي عدد مكتوب يدوياً، لا في هذا الرقم وحده. */
-  const pitch = fs.readFileSync(path.join(ROOT, 'athar-pitch.html'), 'utf8');
+  const pitch = fs.readFileSync(path.join(ROOT, 'masar-pitch.html'), 'utf8');
   const testManifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
 
   assert.ok(/أكثر من تسعمئة فحص/.test(pitch),

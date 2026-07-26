@@ -35,7 +35,7 @@ const OUT_MD = path.join(ROOT, '..', 'docs', 'WZDX-INTEROP.md');
 const validator = require('./lib/wzdx-validator.js');
 
 /**
- * يُحصي الفروع التي تمرّ عليها التغذية ولا يمرّ عليها مُخرَج أثر.
+ * يُحصي الفروع التي تمرّ عليها التغذية ولا يمرّ عليها مُخرَج مسار.
  *
  * هذا هو مربط الفرس: الرقم الذي يقول كم قيداً في المخطط فُحص لأول مرة.
  */
@@ -50,7 +50,7 @@ function coverageOf(feed) {
   };
   /* الحقول التي يُصدِّرها أثر اليوم. ما عداها في التغذية المرجعية هو سطحٌ
      من المخطط لم يكن مفحوصاً قبل هذا التقرير. */
-  const ATHAR_EXPORTS = new Set(['core_details', 'start_date', 'end_date',
+  const MASAR_EXPORTS = new Set(['core_details', 'start_date', 'end_date',
     'is_start_date_verified', 'is_end_date_verified',
     'is_start_position_verified', 'is_end_position_verified',
     'location_method', 'vehicle_impact']);
@@ -66,7 +66,7 @@ function coverageOf(feed) {
       seen.geometryTypes.add(feature.geometry.type);
     }
     for (const key of Object.keys(properties)) {
-      if (!ATHAR_EXPORTS.has(key)) seen.optionalFields.add(key);
+      if (!MASAR_EXPORTS.has(key)) seen.optionalFields.add(key);
     }
   }
   const out = {};
@@ -127,7 +127,7 @@ function main() {
       : `${rows.filter((r) => r.valid).length} من ${rows.length} تغذية اجتازت — `
         + 'التفصيل في التقرير.',
     forbiddenClaim: 'ممنوع قراءة هذه النتيجة قياساً مرورياً أو دليلاً على '
-      + 'صحة أي رقم في أثر. التبادلية بنية لا قياس، وتغذية ولايةٍ أخرى لا '
+      + 'صحة أي رقم في مسار. التبادلية بنية لا قياس، وتغذية ولايةٍ أخرى لا '
       + 'تقول شيئاً عن الرياض.',
     rows,
   };
@@ -148,7 +148,7 @@ function main() {
     grade: report.evidenceGrade,
   };
   fs.writeFileSync(OUT_JS,
-    `window.ATHAR_WZDX_INTEROP = ${JSON.stringify(summary)};\n`, 'utf8');
+    `window.MASAR_WZDX_INTEROP = ${JSON.stringify(summary)};\n`, 'utf8');
   fs.writeFileSync(OUT_MD, markdown(report));
 
   console.log(report.permittedClaim);
@@ -211,7 +211,7 @@ function markdown(report) {
   lines.push('');
   lines.push('## ما فُحص لأول مرة');
   lines.push('');
-  lines.push('مُخرَج أثر يمرّ على جزء من المخطط: حدثٌ واحد من نوع `work-zone`،');
+  lines.push('مُخرَج مسار يمرّ على جزء من المخطط: حدثٌ واحد من نوع `work-zone`،');
   lines.push('هندسة `LineString`، وتسعة حقول. التغذية المرجعية تمرّ على أكثر —');
   lines.push('وهذه هي الفروع التي لم تكن مفحوصة قبل هذا التقرير.');
   lines.push('');

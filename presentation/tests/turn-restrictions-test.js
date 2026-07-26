@@ -26,8 +26,8 @@ const ROOT = path.join(__dirname, '..');
 global.window = global;
 require(path.join(ROOT, 'data', 'riyadh-route-graph.js'));
 require(path.join(ROOT, 'data', 'riyadh-turn-restrictions.js'));
-const Routing = require(path.join(ROOT, 'athar-city-routing.js'));
-const Coverage = require(path.join(ROOT, 'athar-network-coverage.js'));
+const Routing = require(path.join(ROOT, 'masar-city-routing.js'));
+const Coverage = require(path.join(ROOT, 'masar-network-coverage.js'));
 
 const GRAPH = global.window.RIYADH_ROUTE_GRAPH;
 const prepared = Routing.prepare(GRAPH);
@@ -122,7 +122,7 @@ test('التغطية محسوبة من البيانات لا مكتوبة', () =
     facts.keptRelations, 'المطبَّق والمتعذّر لا يجمعان المستخرَج');
 
   const source = fs.readFileSync(
-    path.join(ROOT, 'athar-network-coverage.js'), 'utf8')
+    path.join(ROOT, 'masar-network-coverage.js'), 'utf8')
     .replace(/\/\*[\s\S]*?\*\//g, ' ')
     .replace(/^\s*\/\/[^\n]*/gm, ' ');
   const planted = source.match(/\b\d{2,}\b/g) || [];
@@ -161,8 +161,8 @@ test('الجملة المعروضة تقول الشطرين معاً', () => {
 
 test('الحدّ معروض في سطح يقرؤه المحكّم لا في تعليق', () => {
   /* تعليقٌ يشرح حدّاً لا يصل إلى أحد. الدرس نفسه المتعلَّم في WP-WZ1. */
-  const sources = fs.readFileSync(path.join(ROOT, 'athar-sources.html'), 'utf8');
-  assert.ok(sources.indexOf('athar-network-coverage.js') !== -1,
+  const sources = fs.readFileSync(path.join(ROOT, 'masar-sources.html'), 'utf8');
+  assert.ok(sources.indexOf('masar-network-coverage.js') !== -1,
     'صفحة المصادر لا تحمّل وحدة التغطية');
   assert.ok(/turn-restriction-coverage/.test(sources),
     'صفحة المصادر بلا موضع لعرض التغطية');

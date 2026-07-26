@@ -1,5 +1,5 @@
 /**
- * أثر — حارس «رقم واحد لكمية واحدة».
+ * مسار — حارس «رقم واحد لكمية واحدة».
  * ---------------------------------------------------------------------------
  * بطاقةُ السجل على الخريطة تقرأ ما كتبه `scripts/build-city-portfolio.js` مع
  * كل تصريح. وملفُ القرار في المكتب يحسبه في المتصفح. فإن اختلف الحسابان ولو
@@ -19,17 +19,17 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Analysis = require(path.join(ROOT, 'athar-desk-analysis.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Analysis = require(path.join(ROOT, 'masar-desk-analysis.js'));
 
-/* المحفظة ملف متصفح (`window.ATHAR_CITY_PORTFOLIO = …`) — يُقرأ بمضيف صغير. */
+/* المحفظة ملف متصفح (`window.MASAR_CITY_PORTFOLIO = …`) — يُقرأ بمضيف صغير. */
 function loadPortfolio() {
   const source = fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson.js'), 'utf8');
   const sandbox = { window: {}, self: undefined };
   sandbox.self = sandbox.window;
   // eslint-disable-next-line no-new-func
   new Function('window', 'self', source)(sandbox.window, sandbox.window);
-  return sandbox.window.ATHAR_CITY_PORTFOLIO;
+  return sandbox.window.MASAR_CITY_PORTFOLIO;
 }
 
 const portfolio = loadPortfolio();

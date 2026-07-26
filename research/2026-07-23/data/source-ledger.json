@@ -15,7 +15,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [1, 3, 5],
-    "limitations": "The thresholds govern development traffic studies; Athar should adapt them as explainable screening tiers for works rather than claim they are excavation-permit thresholds.",
+    "limitations": "The thresholds govern development traffic studies; Masar should adapt them as explainable screening tiers for works rather than claim they are excavation-permit thresholds.",
     "introducedChange": "Adds a Saudi-code-aligned three-tier analysis mode."
   },
   {
@@ -34,7 +34,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [1, 2, 3, 5],
-    "limitations": "The 10% rule is written for proposed development traffic; for work zones Athar must label its use as an adopted influence-area rule pending authority validation.",
+    "limitations": "The 10% rule is written for proposed development traffic; for work zones Masar must label its use as an adopted influence-area rule pending authority validation.",
     "introducedChange": "Defines a defensible impact boundary and capacity flags."
   },
   {
@@ -72,7 +72,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [3, 4, 5],
-    "limitations": "The monetary table is expressed in 2005 Saudi riyals per vehicle-kilometre and must be updated before monetary use; Athar should present physical emissions first.",
+    "limitations": "The monetary table is expressed in 2005 Saudi riyals per vehicle-kilometre and must be updated before monetary use; Masar should present physical emissions first.",
     "introducedChange": "Adds a code-aligned emissions method and a mandatory price-year warning."
   },
   {
@@ -130,7 +130,7 @@
     "confidence": "high",
     "supportsCriteria": [1, 3, 5],
     "limitations": "Confirm final legal status and any authority-specific template before production use.",
-    "introducedChange": "Defines the fields Athar can prefill in a permit-review dossier."
+    "introducedChange": "Defines the fields Masar can prefill in a permit-review dossier."
   },
   {
     "sourceId": "src-008",
@@ -149,7 +149,7 @@
     "confidence": "high",
     "supportsCriteria": [1, 2, 3, 6],
     "limitations": "Access can be permission-scoped; public evidence does not show pre-permit traffic prediction, quantified road-user cost, ranked schedules or post-work calibration.",
-    "introducedChange": "Prevents the false claim that Athar is the first excavation map or first coordination layer."
+    "introducedChange": "Prevents the false claim that Masar is the first excavation map or first coordination layer."
   },
   {
     "sourceId": "src-009",
@@ -283,7 +283,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [1, 4, 6],
-    "limitations": "National context cannot be attributed to excavation works and must not be used as Athar's claimed impact.",
+    "limitations": "National context cannot be attributed to excavation works and must not be used as Masar's claimed impact.",
     "introducedChange": "Adds official context while preserving causal discipline."
   },
   {
@@ -384,7 +384,7 @@
     "confidence": "high",
     "supportsCriteria": [2, 3, 4, 5],
     "limitations": "It is a data specification, not a traffic-impact or optimization engine.",
-    "introducedChange": "Defines Athar's outbound interoperability format."
+    "introducedChange": "Defines Masar's outbound interoperability format."
   },
   {
     "sourceId": "src-020",
@@ -422,7 +422,7 @@
     "confidence": "high",
     "supportsCriteria": [3, 4, 5],
     "limitations": "Thresholds must be set by the Saudi authority and local baseline conditions.",
-    "introducedChange": "Turns Athar's impact page into a defensible measurement protocol."
+    "introducedChange": "Turns Masar's impact page into a defensible measurement protocol."
   },
   {
     "sourceId": "src-022",
@@ -440,7 +440,7 @@
     "status": "new",
     "confidence": "medium-high",
     "supportsCriteria": [2, 4, 6],
-    "limitations": "This is an external precedent, not an Athar result and not directly transferable to Riyadh without a pilot.",
+    "limitations": "This is an external precedent, not an Masar result and not directly transferable to Riyadh without a pilot.",
     "introducedChange": "Provides a labeled external validation target for the smart-work-zone module."
   },
   {
@@ -459,7 +459,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [2, 3, 4],
-    "limitations": "Athar should prioritize WZDx for the prototype because the Saudi code names it, while keeping DATEX II as a future adapter.",
+    "limitations": "Masar should prioritize WZDx for the prototype because the Saudi code names it, while keeping DATEX II as a future adapter.",
     "introducedChange": "Adds a standards roadmap beyond the prototype."
   },
   {
@@ -498,7 +498,7 @@
     "confidence": "high",
     "supportsCriteria": [2, 3, 5],
     "limitations": "It is a specialist simulation tool, not a municipal excavation-permit and coordination workflow.",
-    "introducedChange": "Defines an advanced-simulation integration tier rather than a product Athar should imitate."
+    "introducedChange": "Defines an advanced-simulation integration tier rather than a product Masar should imitate."
   },
   {
     "sourceId": "src-026",
@@ -517,7 +517,7 @@
     "confidence": "high",
     "supportsCriteria": [2, 3, 5],
     "limitations": "It does not publicly present a Saudi excavation-permit workflow or code-specific benefit-cost screen.",
-    "introducedChange": "Sets the ceiling for Athar's future predictive engine and clarifies the prototype's lighter-weight scope."
+    "introducedChange": "Sets the ceiling for Masar's future predictive engine and clarifies the prototype's lighter-weight scope."
   },
   {
     "sourceId": "src-027",
@@ -598,7 +598,7 @@
     "status": "new",
     "confidence": "high",
     "supportsCriteria": [1, 2, 3, 5, 6],
-    "limitations": "This is a strong direct precedent; Athar must differentiate on network impact, quantified resident cost, schedule alternatives and learning after execution.",
+    "limitations": "This is a strong direct precedent; Masar must differentiate on network impact, quantified resident cost, schedule alternatives and learning after execution.",
     "introducedChange": "Raises the competitive bar and removes generic artificial-intelligence review as a unique claim."
   },
   {
@@ -617,7 +617,7 @@
     "status": "existing-confirmed",
     "confidence": "high",
     "supportsCriteria": [1, 3, 4, 6],
-    "limitations": "It proves digital coordination at scale but not Athar's impact or a Saudi annual permit volume.",
+    "limitations": "It proves digital coordination at scale but not Masar's impact or a Saudi annual permit volume.",
     "introducedChange": "Refreshes an existing benchmark with the current official service definition."
   },
   {

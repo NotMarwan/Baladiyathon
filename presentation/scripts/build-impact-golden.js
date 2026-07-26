@@ -17,9 +17,9 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
-const features = global.window.ATHAR_CITY_PORTFOLIO.features;
+const features = global.window.MASAR_CITY_PORTFOLIO.features;
 const DEFAULTS = Engine.DEFAULTS;
 
 const entries = [];

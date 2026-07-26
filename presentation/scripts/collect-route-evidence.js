@@ -29,7 +29,7 @@ const STORE = path.join(DATA, 'route-evidence');
 const ROUTES = path.join(DATA, 'monitored-routes.json');
 
 global.window = global;
-const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+const Evidence = require(path.join(ROOT, 'masar-route-evidence.js'));
 const providers = require('./lib/evidence-providers/index.js');
 
 /** أوسع فارق مقبول داخل اللقطة الواحدة (ثانية). */

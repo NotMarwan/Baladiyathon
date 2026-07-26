@@ -2,8 +2,8 @@
 const assert = require('assert');
 const path = require('path');
 
-const DigOnce = require(path.join(__dirname, '..', 'athar-desk-digonce.js'));
-const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+const DigOnce = require(path.join(__dirname, '..', 'masar-desk-digonce.js'));
+const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

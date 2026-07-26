@@ -18,10 +18,10 @@ const REPO = path.join(ROOT, '..');
 global.window = global;
 
 const builder = require(path.join(ROOT, 'scripts', 'build-deck-manifest.js'));
-const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+const Evidence = require(path.join(ROOT, 'masar-route-evidence.js'));
 
 const MANIFEST = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
-const TEXT_DECK = path.join(REPO, 'output', 'submission', 'athar-judging-deck-text.html');
+const TEXT_DECK = path.join(REPO, 'output', 'submission', 'masar-judging-deck-text.html');
 
 let count = 0;
 function test(name, fn) {
@@ -139,7 +139,7 @@ test('العرض المصوَّر ما زال أغلبه صوراً — والح
   /* لا يُدّعى أن الفجوة أُغلقت: الصور باقية وأرقامها خارج الفحص. ما تغيّر
      أن بجانبها ملفاً نصّياً مفحوصاً. */
   const visual = fs.readFileSync(path.join(REPO, 'output', 'submission',
-    'athar-baladiyathon-judging-deck.html'), 'utf8');
+    'masar-baladiyathon-judging-deck.html'), 'utf8');
   const images = (visual.match(/data:image/g) || []).length;
   assert.ok(images >= 20, `${images} صورة — تغيّر شكل العرض، راجع هذه البوابة`);
 });

@@ -103,7 +103,7 @@ function beforeDuringAfter(study) {
  * المتوقَّع مقابل المرصود — تقرير المعايرة.
  *
  * @param {object} study حزمة ميدانية.
- * @param {object} predicted `{ delayVehHours, source }` من محرك أثر.
+ * @param {object} predicted `{ delayVehHours, source }` من محرك مسار.
  */
 function expectedVsObserved(study, predicted) {
   const report = beforeDuringAfter(study);

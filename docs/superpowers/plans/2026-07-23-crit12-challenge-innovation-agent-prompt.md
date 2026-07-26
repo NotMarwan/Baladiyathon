@@ -61,12 +61,12 @@ C:\Users\wasan\Downloads\Swarm\Baladiyathon
 docs\FINAL-STRICT-EVALUATION.md
 docs\REPORT-crit1.md
 docs\REPORT-crit2.md
-presentation\athar-engine.js
-presentation\athar-routing.js
-presentation\athar-forecast.js
-presentation\athar-conflict.js
-presentation\athar-reasons.js
-presentation\athar-boundary.js
+presentation\masar-engine.js
+presentation\masar-routing.js
+presentation\masar-forecast.js
+presentation\masar-conflict.js
+presentation\masar-reasons.js
+presentation\masar-boundary.js
 بطاقة-الفكرة.md
 
 شغّل خط الأساس قبل التعديل:
@@ -81,8 +81,8 @@ node presentation/tests/innovation-test.js
 يمكنك إنشاء أو تعديل هذه الملفات فقط:
 
 research\2026-07-23\reports\crit12-decision-gap.md
-presentation\athar-decision.js
-presentation\athar-decision.html
+presentation\masar-decision.js
+presentation\masar-decision.html
 presentation\tests\decision-test.js
 docs\REPORT-crit12-final.md
 
@@ -90,7 +90,7 @@ docs\REPORT-crit12-final.md
 
 المجلد التالي مرجع قراءة فقط، وقد يحتوي عملاً غير مدموج:
 
-research\2026-07-23\athar-competitor-benchmarks
+research\2026-07-23\masar-competitor-benchmarks
 
 ممنوع تعديل أو حذف أو إضافة أي ملف داخله.
 
@@ -208,7 +208,7 @@ presentation\tests\decision-test.js
 استخدم هذا الهيكل الفعلي:
 
 const assert = require('node:assert');
-const Decision = require('../athar-decision.js');
+const Decision = require('../masar-decision.js');
 
 let count = 0;
 function test(name, fn) {
@@ -324,7 +324,7 @@ node presentation/tests/decision-test.js
 
 نفّذ الوحدة في:
 
-presentation\athar-decision.js
+presentation\masar-decision.js
 
 استخدم نمط التصدير التالي:
 
@@ -332,7 +332,7 @@ presentation\athar-decision.js
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
-    root.AtharDecision = factory();
+    root.MasarDecision = factory();
   }
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
@@ -444,7 +444,7 @@ presentation\athar-decision.js
 
 بعد نجاح الوحدة، ابن صفحة مستقلة في:
 
-presentation\athar-decision.html
+presentation\masar-decision.html
 
 يجب أن تعرض في شاشة واحدة، من الأعلى إلى الأسفل:
 
@@ -498,12 +498,12 @@ git commit -m "research: define defensible pre-permit decision gap"
 
 الدورة الثانية:
 
-git add presentation/athar-decision.js presentation/tests/decision-test.js
+git add presentation/masar-decision.js presentation/tests/decision-test.js
 git commit -m "feat: add evidence-gated permit decision service"
 
 الدورة الثالثة:
 
-git add presentation/athar-decision.html docs/REPORT-crit12-final.md
+git add presentation/masar-decision.html docs/REPORT-crit12-final.md
 git commit -m "docs: deliver challenge and innovation decision proof"
 
 قبل كل التزام، شغّل:

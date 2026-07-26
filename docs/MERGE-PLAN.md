@@ -5,9 +5,9 @@
 | الفرع | المجلد/المنفذ | المعيار | من → الهدف | الملكية |
 |---|---|---|---|---|
 | `crit4-impact` | claude 1 | الأثر والاستدامة | 4.5 → ≥9.0 | engine اقتصاديات + بطاقات الأثر/القيمة + اختباراتها |
-| `crit1-challenge` | claude 2 | معالجة التحدي | 6.5 → ≥9.0 | خريطة/مسار بديل/تنبؤ + `athar-routing.js` + `routing-test.js` |
-| `crit6-pitch` | GPT 1 | العرض التقديمي | 5.5 → ≥9.0 | pitch + merged + athar.html فقط |
-| `crit2-innovation` | GPT 2 | الابتكار | 6.0 → ≥9.0 | ملفات جديدة فقط + `athar-lab.html` + `innovation-test.js` |
+| `crit1-challenge` | claude 2 | معالجة التحدي | 6.5 → ≥9.0 | خريطة/مسار بديل/تنبؤ + `masar-routing.js` + `routing-test.js` |
+| `crit6-pitch` | GPT 1 | العرض التقديمي | 5.5 → ≥9.0 | pitch + merged + masar.html فقط |
+| `crit2-innovation` | GPT 2 | الابتكار | 6.0 → ≥9.0 | ملفات جديدة فقط + `masar-lab.html` + `innovation-test.js` |
 | `crit35-quality` | كلود المنسق (هذا الفرع) | الجدوى + النموذج | 7.0 + 7.0 → ≥9.0 | cf-card, WZDx ربط، اختبارات السلامة، FEASIBILITY.md |
 
 ## ترتيب الدمج في main (يقلل التصادم)

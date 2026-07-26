@@ -23,7 +23,7 @@
 
 ## هل التصنيف يقيس الترتيب أم الرقم؟
 
-`athar-sensitivity.js:328`:
+`masar-sensitivity.js:328`:
 
 ```js
 changesRecommendation: low.winner !== base.winner || high.winner !== base.winner

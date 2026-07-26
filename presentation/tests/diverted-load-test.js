@@ -6,7 +6,7 @@
  * فارغ** — أي زمن طريقٍ لن يوجد، لأن البديل هو بالضبط ما سيستقبل حركة
  * الإغلاق. بديلٌ لا يُحمَّل ليس بديلاً بل خطٌّ على خريطة.
  *
- * ومحرك الممر (`athar-routing.js`) كان ينفّذ التحويل منذ البداية. الفجوة
+ * ومحرك الممر (`masar-routing.js`) كان ينفّذ التحويل منذ البداية. الفجوة
  * كانت في محرك الخريطة وحده — وهو المحرك الذي يراه المحكّم.
  *
  * ما تفحصه هذه الحزمة سلوكٌ لا نصّ: تأخذ الشبكة الحقيقية والمحفظة الحقيقية،
@@ -22,8 +22,8 @@ const ROOT = path.join(__dirname, '..');
 global.window = global;
 require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
 require(path.join(ROOT, 'data', 'riyadh-route-graph.js'));
-const Routing = require(path.join(ROOT, 'athar-city-routing.js'));
-const Solution = require(path.join(ROOT, 'athar-worksmap-solution.js'));
+const Routing = require(path.join(ROOT, 'masar-city-routing.js'));
+const Solution = require(path.join(ROOT, 'masar-worksmap-solution.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -33,7 +33,7 @@ function test(name, fn) {
 }
 
 const prepared = Routing.prepare(global.window.RIYADH_ROUTE_GRAPH);
-const features = global.window.ATHAR_CITY_PORTFOLIO.features;
+const features = global.window.MASAR_CITY_PORTFOLIO.features;
 
 /** أول `n` تصاريح لها بدائل محسوبة — عيّنة لا مثال منتقى. */
 function solved(n, hour) {

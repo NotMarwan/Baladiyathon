@@ -5,13 +5,13 @@ tags: [MOC, index]
 
 # 🏛️ بلدياتثون 2026 — الفهرس
 
-> **الترشيح النهائي:** [[Athar|أثر — 9.0/10 🥇]] · [[Ideas Evaluation Final|بطاقة الحكم]]
+> **الترشيح النهائي:** [[Masar|مسار — 9.0/10 🥇]] · [[Ideas Evaluation Final|بطاقة الحكم]]
 
 ## 🖼️ الخريطة البصرية
 - [[Baladiyathon 2026.canvas|📊 افتح الـ Canvas (كل المشاريع والعلاقات)]]
 
 ## 🏆 المشاريع النهائية الثلاثة
-- 🥇 [[Athar|أثر · التحدي 3 · 9.0]] — RECOMMENDED — دوسيه: [athar.html](attachments/athar.html)
+- 🥇 [[Masar|أثر · التحدي 3 · 9.0]] — RECOMMENDED — دوسيه: [masar.html](attachments/masar.html)
 - 🥈 [[Raqib|رقيب · التحدي 2 · 8.4]] — دوسيه: [raqib.html](attachments/raqib.html)
 - 🥉 [[Mutabiq|مُطابِق · التحدي 1 · 8.3]] — دوسيه: [mutabiq.html](attachments/mutabiq.html)
 
@@ -32,7 +32,7 @@ tags: [MOC, index]
 - [[MUTABIQ_CORE]] · [[MURAQQIB]] · [[TAKHAYYAL]]
 ### مدموجة في [[Raqib]]
 - [[PRO-INSPECT]] · [[NADHEER]] (أقمار فقط) · [[BASEERA]] (تنبيه فقط)
-### مدموجة في [[Athar]]
+### مدموجة في [[Masar]]
 - [[HAFRA]] · [[MIRAT AL-MADINA]]
 ### مُقصاة كلياً
 - [[HURAS]] · Balady Twin (بقيت سرديةً، لا مشروعاً)

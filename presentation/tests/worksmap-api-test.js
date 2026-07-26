@@ -2,12 +2,12 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const WorksMap = require(path.join(__dirname, '..', 'athar-worksmap.js'));
+const WorksMap = require(path.join(__dirname, '..', 'masar-worksmap.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
-// عقد الـ API كما يستدعيه athar-prototype.html اليوم. كسره يكسر النموذج.
+// عقد الـ API كما يستدعيه masar-prototype.html اليوم. كسره يكسر النموذج.
 const REQUIRED = [
   'onReady', 'setCorridor', 'onCorridorClick', 'setCorridorState',
   'setAllCorridorStates', 'setCorridorColors', 'setCorridorColor',
@@ -37,7 +37,7 @@ ok('الوحدة تعمل في Node بلا maplibregl', () => {
 });
 
 ok('النموذج لا يستدعي دالة خارج العقد', () => {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'athar-prototype.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'masar-prototype.html'), 'utf8');
   const called = new Set();
   const pattern = /GL\.api\.([a-zA-Z]+)\(/g;
   let match;

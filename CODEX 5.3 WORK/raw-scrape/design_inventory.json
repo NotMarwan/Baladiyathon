@@ -14,7 +14,7 @@
       "limited design tokens",
       "capability keyword counts"
     ],
-    "userAgent": "AtharPublicResearchBot/1.0 (+public product research; one page per cited URL)"
+    "userAgent": "MasarPublicResearchBot/1.0 (+public product research; one page per cited URL)"
   },
   "coverage": {
     "totalSourceUrls": 15,

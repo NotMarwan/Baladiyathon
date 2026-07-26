@@ -4,16 +4,16 @@
 
 **Goal:** Close the two cold-arbitration gaps: (1) zero Vision 2030 mentions across presentation files despite criterion 4 requiring it; (2) weak WOW moment — turn the evidence gate into a live interactive rejection→decision demo inside the pitch.
 
-**Architecture:** No new slides — pitch-integrity-test.js enforces exactly 8 main slides, fixed story order, 180s total. Vision 2030 goes into the `supervised-ask` slide as a documented qualitative line backed by a new `src-045` ledger entry (official vision2030.gov.sa link, no fabricated numbers). The WOW widget goes into the `decision-path` slide: inline JS using `AtharDecision.validateDecisionInput` (blocked gate with missing fields) then `AtharEngine.score` (quantitative delay in vehicle-hours), driven by two buttons. TDD: extend pitch-integrity-test.js first.
+**Architecture:** No new slides — pitch-integrity-test.js enforces exactly 8 main slides, fixed story order, 180s total. Vision 2030 goes into the `supervised-ask` slide as a documented qualitative line backed by a new `src-045` ledger entry (official vision2030.gov.sa link, no fabricated numbers). The WOW widget goes into the `decision-path` slide: inline JS using `MasarDecision.validateDecisionInput` (blocked gate with missing fields) then `MasarEngine.score` (quantitative delay in vehicle-hours), driven by two buttons. TDD: extend pitch-integrity-test.js first.
 
-**Tech Stack:** Vanilla JS (UMD modules `athar-engine.js`, `athar-decision.js` already browser-ready), Node built-in test runner style used by existing tests.
+**Tech Stack:** Vanilla JS (UMD modules `masar-engine.js`, `masar-decision.js` already browser-ready), Node built-in test runner style used by existing tests.
 
 ## Global Constraints
 
 - Exactly 8 `section.slide.main` slides, `data-story` order fixed: permit-network, current-gap, evidence-boundary, baseline-alternative, decision-path, impact-range, shadow-gate, supervised-ask.
 - Slide timings continuous, total exactly 180 seconds.
 - Forbidden claims list in tests/pitch-integrity-test.js must not appear (no "أول منصة", no fabricated numbers).
-- Every number/claim must link to a source in athar-sources.html or a design-parameter doc.
+- Every number/claim must link to a source in masar-sources.html or a design-parameter doc.
 - Vision 2030 claim must stay QUALITATIVE (quality of life / infrastructure efficiency alignment) — no invented percentages.
 - All 185 existing tests must keep passing.
 
@@ -22,19 +22,19 @@
 ### Task 1: Vision 2030 documented line
 
 **Files:**
-- Modify: `presentation/athar-sources.html` (append src-045 article after src-044)
-- Modify: `presentation/athar-pitch.html` (supervised-ask slide, ~L414-433)
+- Modify: `presentation/masar-sources.html` (append src-045 article after src-044)
+- Modify: `presentation/masar-pitch.html` (supervised-ask slide, ~L414-433)
 - Test: `presentation/tests/pitch-integrity-test.js`
 
 **Interfaces:**
-- Produces: ledger anchor `id="src-045"` linked from pitch as `athar-sources.html#src-045`.
+- Produces: ledger anchor `id="src-045"` linked from pitch as `masar-sources.html#src-045`.
 
 - [ ] **Step 1: Write failing tests** — append to pitch-integrity-test.js before the final count log:
 
 ```js
 test('pitch links Vision 2030 qualitatively to src-045', () => {
   assert.ok(pitch.includes('رؤية 2030'), 'pitch must mention Vision 2030');
-  assert.ok(pitch.includes('athar-sources.html#src-045'), 'must cite src-045');
+  assert.ok(pitch.includes('masar-sources.html#src-045'), 'must cite src-045');
   assert.ok(!/رؤية 2030[^<]*[0-9٠-٩]+\s*[%٪]/.test(pitch), 'no invented 2030 percentage');
 });
 
@@ -46,7 +46,7 @@ test('sources ledger has official Vision 2030 entry', () => {
 
 - [ ] **Step 2: Run** `node tests/pitch-integrity-test.js` — expect FAIL on first new test.
 
-- [ ] **Step 3: Implement** — in athar-sources.html after `</article>` of src-044:
+- [ ] **Step 3: Implement** — in masar-sources.html after `</article>` of src-044:
 
 ```html
     <article id="src-045" data-type="primary">
@@ -57,11 +57,11 @@ test('sources ledger has official Vision 2030 entry', () => {
     </article>
 ```
 
-In athar-pitch.html supervised-ask slide, after `.ask-box` div add:
+In masar-pitch.html supervised-ask slide, after `.ask-box` div add:
 
 ```html
       <p class="vision-line">يخدم هذا المسار هدف <b>رؤية 2030</b> في تحسين جودة الحياة بالمدن وكفاءة البنية التحتية — ربط نوعي بلا أرقام مفترضة.
-        <a href="athar-sources.html#src-045">src-045 · المصدر الرسمي</a></p>
+        <a href="masar-sources.html#src-045">src-045 · المصدر الرسمي</a></p>
 ```
 
 Append same idea to that slide's speaker-notes text.
@@ -72,28 +72,28 @@ Append same idea to that slide's speaker-notes text.
 ### Task 2: Live gate WOW widget in decision-path slide
 
 **Files:**
-- Modify: `presentation/athar-pitch.html` (decision-path slide ~L323-342; script includes near end of body; small CSS block)
+- Modify: `presentation/masar-pitch.html` (decision-path slide ~L323-342; script includes near end of body; small CSS block)
 - Test: `presentation/tests/pitch-integrity-test.js`
 
 **Interfaces:**
-- Consumes: `AtharDecision.validateDecisionInput(input)` → `{status:'blocked'|..., missing:[], canDecide}` ; `AtharEngine.score({aadt,lanes,lanesClosed,startHour,durationHours,...})` → `{delayVehHours,...}` ; `AtharEngine.buildNightWindows(startHour,durationHours,maxNightHours)`.
+- Consumes: `MasarDecision.validateDecisionInput(input)` → `{status:'blocked'|..., missing:[], canDecide}` ; `MasarEngine.score({aadt,lanes,lanesClosed,startHour,durationHours,...})` → `{delayVehHours,...}` ; `MasarEngine.buildNightWindows(startHour,durationHours,maxNightHours)`.
 
 - [ ] **Step 1: Write failing tests**:
 
 ```js
 test('pitch embeds live gate demo wired to real engine modules', () => {
-  assert.ok(pitch.includes('src="athar-engine.js"'));
-  assert.ok(pitch.includes('src="athar-decision.js"'));
+  assert.ok(pitch.includes('src="masar-engine.js"'));
+  assert.ok(pitch.includes('src="masar-decision.js"'));
   assert.ok(pitch.includes('id="gate-demo"'));
   assert.ok(pitch.includes('id="gate-demo-incomplete"'));
   assert.ok(pitch.includes('id="gate-demo-complete"'));
-  assert.ok(pitch.includes('AtharDecision.validateDecisionInput'));
-  assert.ok(pitch.includes('AtharEngine.score'));
+  assert.ok(pitch.includes('MasarDecision.validateDecisionInput'));
+  assert.ok(pitch.includes('MasarEngine.score'));
 });
 ```
 
 - [ ] **Step 2: Run** — expect FAIL.
-- [ ] **Step 3: Implement** — widget markup inside decision-path slide, buttons trigger: incomplete input → red blocked panel listing missing fields from `validateDecisionInput`; complete input → `AtharEngine.score` baseline vs night alternative via `buildNightWindows`, green panel with vehicle-hours delta labeled "حالة توضيحية". Scripts `athar-engine.js` + `athar-decision.js` before `</body>`. Demo data labeled توضيحية (keeps honesty tests green).
+- [ ] **Step 3: Implement** — widget markup inside decision-path slide, buttons trigger: incomplete input → red blocked panel listing missing fields from `validateDecisionInput`; complete input → `MasarEngine.score` baseline vs night alternative via `buildNightWindows`, green panel with vehicle-hours delta labeled "حالة توضيحية". Scripts `masar-engine.js` + `masar-decision.js` before `</body>`. Demo data labeled توضيحية (keeps honesty tests green).
 - [ ] **Step 4: Run** pitch-integrity + ui-smoke tests — PASS.
 - [ ] **Step 5: Commit** `git commit -m "feat: live evidence-gate WOW demo in decision-path slide"`
 

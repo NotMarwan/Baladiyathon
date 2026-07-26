@@ -2,7 +2,7 @@
 const assert = require('assert');
 const path = require('path');
 
-const Palette = require(path.join(__dirname, '..', 'athar-desk-palette.js'));
+const Palette = require(path.join(__dirname, '..', 'masar-desk-palette.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

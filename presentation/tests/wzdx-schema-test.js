@@ -22,7 +22,7 @@
  * خارج المستودع.
  *
  * ولذلك **لا يُرفع** وصف «تجريبي» عن التصدير بمجرد خضرة هذه الحزمة. الوصف
- * يتغيّر ليقول ما صار صحيحاً بالضبط، لا أكثر — انظر `athar-desk-plan.js`.
+ * يتغيّر ليقول ما صار صحيحاً بالضبط، لا أكثر — انظر `masar-desk-plan.js`.
  *
  * التشغيل: node presentation/tests/wzdx-schema-test.js
  */
@@ -32,7 +32,7 @@ const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 global.window = global;
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -216,7 +216,7 @@ const INPUT = {
   startISO: '2026-08-01T22:00:00.000Z',
   durationHours: 8,
   coordinates: [[46.6753, 24.7136], [46.6801, 24.7192]],
-  dataSourceId: 'athar-reviewer-desk',
+  dataSourceId: 'masar-reviewer-desk',
 };
 
 // ---- المخالفات المسجَّلة زالت -------------------------------------------

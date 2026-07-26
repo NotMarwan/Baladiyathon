@@ -73,7 +73,7 @@ async function query() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'athar-basemap-builder',
+        'User-Agent': 'masar-basemap-builder',
       },
       body: new URLSearchParams({ data: QUERY }).toString(),
     }).catch((err) => ({ ok: false, status: err.message }));

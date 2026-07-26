@@ -2,8 +2,8 @@
 const assert = require('assert');
 const path = require('path');
 
-const Session = require(path.join(__dirname, '..', 'athar-desk-session.js'));
-const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+const Session = require(path.join(__dirname, '..', 'masar-desk-session.js'));
+const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

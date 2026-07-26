@@ -4,19 +4,19 @@
 
 ## 1) التغييرات (ملف:سطر)
 
-### `presentation/athar-engine.js`
+### `presentation/masar-engine.js`
 - حذف `SHARED_TRENCH_OVERHEAD=1.18` (المعاير عكسياً)، أُضيف `DIG_ONCE_SAVED_FRACTION_LOW/HIGH = 0.25/0.33` (~سطر 58).
 - `digOnce()` أعيدت كلياً: ترجع نطاق `savedLowSAR/savedHighSAR/savedPctLow/savedPctHigh/sharedLowSAR/sharedHighSAR` مشتق مباشرة من نطاق GAO؛ تصريح واحد = صفر وفر (~سطر 445).
 - `WORK_ZONE_FRICTION = 1.10` جديد (~سطر 82)، مطبَّق في `score()`: `closedT = max(bprClosed, baseT*1.10)` (~سطر 148) — يقتل مِراج 99.6%.
 - `assumptionsUsed(metric)` + جدول `METRIC_ASSUMPTIONS` جديد (~سطر 528)، مُصدَّر.
 
-### `presentation/athar-impact-calibration.js` (جديد)
-- `createCalibration(store)` — سجل back-test في localStorage تحت `athar-backtests-v1`، `correctionFactor()` = وسيط نِسَب observed/predicted، `status()→{n,factor}`، يرفض predicted≤0.
+### `presentation/masar-impact-calibration.js` (جديد)
+- `createCalibration(store)` — سجل back-test في localStorage تحت `masar-backtests-v1`، `correctionFactor()` = وسيط نِسَب observed/predicted، `status()→{n,factor}`، يرفض predicted≤0.
 
-### `presentation/athar-impact-budget.js` (جديد)
-- `corridorBudget()` — ميزانية أثر شهرية للمحور، أحكام ضمن/قرب السقف/تجاوز، `remaining` بأرضية 0 لكن `consumedAfter/pctUsed` صادقة.
+### `presentation/masar-impact-budget.js` (جديد)
+- `corridorBudget()` — ميزانية مسار شهرية للمحور، أحكام ضمن/قرب السقف/تجاوز، `remaining` بأرضية 0 لكن `consumedAfter/pctUsed` صادقة.
 
-### `presentation/athar-prototype.html`
+### `presentation/masar-prototype.html`
 - سطر 210: «انبعاثات متجنبة» → «انبعاثات **مضافة** بسبب الإغلاق» (إصلاح الوسم).
 - بطاقة CO₂ (خطوة 6): أُزيل الحساب من `delayVehHours`؛ يُملأ الآن في `selectCandidate` من `co2Range(candidate.savedVehHours)` فقط.
 - بطاقة Dig-Once: نطاق `savedLow–savedHigh ﷼` + شارة «٢٥–٣٣٪ GAO»؛ «لا دمج» عند غياب تصاريح مجاورة.
@@ -49,6 +49,6 @@
 
 ## 3) ما لم أُصلحه ولماذا
 - `SCORE_CALIBRATION=0.35` يبقى افتراضياً (لا مصدر) — لكنه الآن معلن في جدول الشفافية وقابل لإعادة المعايرة من السجل. تغييره يمس معيار الدقة (وكيل آخر) لا الأثر.
-- لم أمسّ `athar-pitch/merged/athar.html` ولا كود الخريطة/الجدول الزمني (حدود الملكية).
+- لم أمسّ `masar-pitch/merged/masar.html` ولا كود الخريطة/الجدول الزمني (حدود الملكية).
 
 ## 4) عدد دورات الحلقة: 6 (+ فحص نهائي). كل الكوميتات في `crit4-impact`.

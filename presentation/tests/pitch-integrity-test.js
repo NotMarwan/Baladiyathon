@@ -12,12 +12,12 @@ function read(file) {
 }
 
 const artifacts = [
-  { file: 'presentation/athar-pitch.html', html: read('presentation/athar-pitch.html') },
-  { file: 'presentation/athar.html', html: read('presentation/athar.html') },
-  { file: 'presentation/athar-merged.html', html: read('presentation/athar-merged.html') },
+  { file: 'presentation/masar-pitch.html', html: read('presentation/masar-pitch.html') },
+  { file: 'presentation/masar.html', html: read('presentation/masar.html') },
+  { file: 'presentation/masar-merged.html', html: read('presentation/masar-merged.html') },
 ];
 const pitch = artifacts[0].html;
-const sources = read('presentation/athar-sources.html');
+const sources = read('presentation/masar-sources.html');
 const ideaCard = read('بطاقة-الفكرة.md');
 const allOwnedNarrative = [...artifacts.map((item) => item.html), sources, ideaCard].join('\n');
 
@@ -118,7 +118,7 @@ test('every numeric metric card has a matching local source or formula link', ()
 
     if (sourceMatch) {
       assert.ok(
-        body.includes(`href="athar-sources.html#${sourceMatch[1]}"`),
+        body.includes(`href="masar-sources.html#${sourceMatch[1]}"`),
         `metric does not link to ${sourceMatch[1]}`
       );
     }
@@ -150,7 +150,7 @@ test('the current England roadworks figure is identical and uses one stable sour
   artifacts.forEach((artifact) => {
     assert.ok(artifact.html.includes('2.2 مليون'), `${artifact.file} missing current figure`);
     assert.ok(
-      artifact.html.includes('href="athar-sources.html#src-031"'),
+      artifact.html.includes('href="masar-sources.html#src-031"'),
       `${artifact.file} missing src-031`
     );
   });
@@ -255,7 +255,7 @@ test('all local presentation links resolve to existing owned or project files', 
 
 test('pitch links Vision 2030 qualitatively to src-045', () => {
   assert.ok(pitch.includes('رؤية 2030'), 'pitch must mention Vision 2030');
-  assert.ok(pitch.includes('athar-sources.html#src-045'), 'must cite src-045');
+  assert.ok(pitch.includes('masar-sources.html#src-045'), 'must cite src-045');
   assert.ok(!/رؤية 2030[^<]*[0-9٠-٩]+\s*[%٪]/.test(pitch), 'no invented 2030 percentage');
 });
 
@@ -265,20 +265,20 @@ test('sources ledger has official Vision 2030 entry', () => {
 });
 
 test('pitch embeds live gate demo wired to real engine modules', () => {
-  assert.ok(pitch.includes('src="athar-engine.js"'));
-  assert.ok(pitch.includes('src="athar-decision.js"'));
+  assert.ok(pitch.includes('src="masar-engine.js"'));
+  assert.ok(pitch.includes('src="masar-decision.js"'));
   assert.ok(pitch.includes('id="gate-demo"'));
   assert.ok(pitch.includes('id="gate-demo-incomplete"'));
   assert.ok(pitch.includes('id="gate-demo-complete"'));
-  assert.ok(pitch.includes('AtharDecision.validateDecisionInput'));
-  assert.ok(pitch.includes('AtharEngine.score'));
+  assert.ok(pitch.includes('MasarDecision.validateDecisionInput'));
+  assert.ok(pitch.includes('MasarEngine.score'));
 });
 
 test('impact slide links the city portfolio dashboard with the representative label', () => {
-  assert.ok(pitch.includes('athar-city-impact.html'), 'pitch links city impact dashboard');
+  assert.ok(pitch.includes('masar-city-impact.html'), 'pitch links city impact dashboard');
   assert.ok(pitch.includes('سيناريو تمثيلي'), 'city metric carries representative label');
-  const Portfolio = require(path.join(presentationDir, 'athar-portfolio.js'));
-  assert.ok(pitch.includes('athar-portfolio.js'), 'pitch loads portfolio module for dynamic numbers');
+  const Portfolio = require(path.join(presentationDir, 'masar-portfolio.js'));
+  assert.ok(pitch.includes('masar-portfolio.js'), 'pitch loads portfolio module for dynamic numbers');
   assert.ok(Portfolio.buildPortfolio(Portfolio.SEED).totals.savedVehHours > 0);
 });
 

@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const path = require('path');
-const Portfolio = require(path.join(__dirname, '..', 'athar-portfolio.js'));
+const Portfolio = require(path.join(__dirname, '..', 'masar-portfolio.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -86,7 +86,7 @@ ok('buildPortfolio: byClass covers 3 classes and sums to totals', () => {
 
 ok('buildPortfolio: ranges come from engine conversions of savedVehHours', () => {
   const p = Portfolio.buildPortfolio(Portfolio.SEED);
-  const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+  const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
   const ph = Engine.personHours(p.totals.savedVehHours);
   assert.strictEqual(p.ranges.personHours.lowPersonHours, ph.lowPersonHours);
   const co2 = Engine.co2Range(p.totals.savedVehHours);

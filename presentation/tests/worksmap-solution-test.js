@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Solution = require(path.join(ROOT, 'athar-worksmap-solution.js'));
+const Solution = require(path.join(ROOT, 'masar-worksmap-solution.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -146,11 +146,11 @@ ok('كل سجل في المحفظة يعطي بطاقة غير فارغة', () =
 
 /* ---- الوصل: الحل موصول بالسطح لا مبنيّ بجانبه ---- */
 
-const mapPage = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
+const mapPage = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
 
 ok('صفحة الخريطة تحمّل وحدة الحل قبل التفاعل', () => {
-  const solutionAt = mapPage.indexOf('athar-worksmap-solution.js');
-  const interactionsAt = mapPage.indexOf('athar-worksmap-interactions.js');
+  const solutionAt = mapPage.indexOf('masar-worksmap-solution.js');
+  const interactionsAt = mapPage.indexOf('masar-worksmap-interactions.js');
   assert.ok(solutionAt !== -1, 'الوحدة غير محمَّلة');
   assert.ok(solutionAt < interactionsAt, 'التفاعل يُحمَّل قبل الوحدة التي يقرؤها');
 });
@@ -159,7 +159,7 @@ ok('الشريط موجود ويُحدَّث مع كل تغيّر في المع�
   assert.ok(mapPage.indexOf('id="wmHero"') !== -1, 'لا شريط في الصفحة');
   // التحديث داخل refresh() نفسها: أي مسار آخر يترك الرقم متخلفاً عن الخريطة.
   const refreshAt = mapPage.indexOf('function refresh()');
-  const heroAt = mapPage.indexOf('AtharWorksMapSolution.barHtml');
+  const heroAt = mapPage.indexOf('MasarWorksMapSolution.barHtml');
   assert.ok(refreshAt !== -1 && heroAt > refreshAt, 'الشريط يُحدَّث خارج دورة العرض');
 });
 
@@ -169,12 +169,12 @@ ok('الشريط منطقةُ حالة معلنة — تغيّره يُنطق ل
 });
 
 ok('البطاقة تستدعي كتلة الحل', () => {
-  const interactions = fs.readFileSync(path.join(ROOT, 'athar-worksmap-interactions.js'), 'utf8');
+  const interactions = fs.readFileSync(path.join(ROOT, 'masar-worksmap-interactions.js'), 'utf8');
   assert.ok(interactions.indexOf('Solution.solutionHtml') !== -1, 'البطاقة بلا كتلة حل');
 });
 
 ok('التطبيع ينقل حقول التوصية — بلاها تصل البطاقة فارغة', () => {
-  const Data = require(path.join(ROOT, 'athar-worksmap-data.js'));
+  const Data = require(path.join(ROOT, 'masar-worksmap-data.js'));
   const source = JSON.parse(
     fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson'), 'utf8')
   );

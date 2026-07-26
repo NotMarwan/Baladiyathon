@@ -21,7 +21,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 const GOLDEN_PATH = path.join(__dirname, 'fixtures', 'impact-golden.json');
 const golden = JSON.parse(fs.readFileSync(GOLDEN_PATH, 'utf8'));

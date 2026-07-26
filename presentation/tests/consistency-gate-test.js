@@ -81,7 +81,7 @@ const BANNED = [
   },
   {
     /* صُحِّح: العلّة القديمة كانت «محرك المدينة لا يحمّل الحركة المحوَّلة —
-       صفر تطابق»، وهي **كاذبة**. `athar-city-routing.js` يحمّلها:
+       صفر تطابق»، وهي **كاذبة**. `masar-city-routing.js` يحمّلها:
        `divertedDemand` ثم `loadRoute`، ويستدعيهما `alternativesAround`،
        ومنه يخرج حكم البدائل في `scripts/build-alternate-load.js`.
 
@@ -94,14 +94,14 @@ const BANNED = [
        المحرك سقط، فلا تبقى العلّة معلَّقة في الهواء كما بقيت القديمة. */
     pattern: /الحركة المحو[لّ]ة مثبت/,
     why: 'التحميل نموذج بقاعدة عرض معلنة لا قياس، فكلمة «مثبت» تسبق دليلها. '
-      + 'والوصف المجرّد للتحميل صحيح ومسموح — athar-city-routing.js يحمّلها فعلاً.',
+      + 'والوصف المجرّد للتحميل صحيح ومسموح — masar-city-routing.js يحمّلها فعلاً.',
   },
 ];
 
 /* بقيّة الفحص المُنطاق القديم — كان يقيس السطح على قدرة محرك المدينة.
    انقلبت علّته في WP-R1 فحلّ محلَّه ما في آخر الملف، وبقي الاسم لأن الفحص
    الجديد يحتاجه. */
-const CITY_ENGINE = 'athar-city-routing.js';
+const CITY_ENGINE = 'masar-city-routing.js';
 
 /**
  * يجرّد تعليقات HTML الكتلية ويبقي أرقام الأسطر صحيحة.
@@ -138,7 +138,7 @@ test('أسطح العرض مفحوصة فعلاً — البوابة ترى ما
   assert.ok(surfaces.length >= 12,
     `${surfaces.length} ملفاً فقط — البوابة تفحص أقل مما ينبغي`);
   const names = surfaces.map((f) => path.basename(f));
-  ['athar-prototype.html', 'athar-desk.html', 'athar-map.html', 'README-athar.md']
+  ['masar-prototype.html', 'masar-desk.html', 'masar-map.html', 'README-masar.md']
     .forEach((required) => {
       assert.ok(names.includes(required), `${required} خارج نطاق الفحص`);
     });
@@ -211,7 +211,7 @@ test('عارض البدائل يعلن أن الزمن بعد التحويل و�
   /* الفحص المقابل: بعد أن صار التحميل منفَّذاً، غيابُ إعلانه عيبٌ كذلك.
      رقمٌ محمَّل يُعرض كأنه غير محمَّل يخفي أهم ما فيه.
      يُقرأ من الوحدة العارضة لا من الصفحة: النصّ يُولَّد وقت التشغيل. */
-  const renderer = visibleText(path.join(ROOT, 'athar-worksmap-solution.js'));
+  const renderer = visibleText(path.join(ROOT, 'masar-worksmap-solution.js'));
   assert.ok(/بعد تحميل البديل بالحركة المحوَّلة/.test(renderer),
     'عارض البدائل لا يعلن أن الزمن محسوب بعد التحويل');
   assert.ok(/قاعدة التحويل معلنة لا مقيسة/.test(renderer),
@@ -219,13 +219,13 @@ test('عارض البدائل يعلن أن الزمن بعد التحويل و�
 });
 
 test('النموذج يحيل إلى سجل المصادر الحاكم بدل نسخة مختصرة', () => {
-  const prototype = fs.readFileSync(path.join(ROOT, 'athar-prototype.html'), 'utf8');
-  assert.ok(prototype.indexOf('athar-sources.html') !== -1,
-    'athar-prototype.html لا يحيل إلى سجل المصادر — الحذف ترك فراغاً لا إحالة');
+  const prototype = fs.readFileSync(path.join(ROOT, 'masar-prototype.html'), 'utf8');
+  assert.ok(prototype.indexOf('masar-sources.html') !== -1,
+    'masar-prototype.html لا يحيل إلى سجل المصادر — الحذف ترك فراغاً لا إحالة');
 });
 
 test('README يسمّي قيد file:// صراحةً بدل أن يعد بما لا يفي به', () => {
-  const readme = fs.readFileSync(path.join(ROOT, 'README-athar.md'), 'utf8');
+  const readme = fs.readFileSync(path.join(ROOT, 'README-masar.md'), 'utf8');
   assert.ok(/file:\/\//.test(readme) && /الخريطة تتطلب الخادم المحلي/.test(readme),
     'README لا يذكر أن الخريطة تحتاج الخادم المحلي');
 });
@@ -270,9 +270,9 @@ test('كل ملف تحيل إليه بطاقة الفكرة موجود فعلا�
 test('بطاقة الفكرة تحيل إلى النسخة الحاكمة لا إلى نموذج متقاعد', () => {
   /* المكتب هو المنتج الفعلي — سبع تبويبات وقرار وسجل. توجيه المحكّم إلى
      صفحة أقدم يجعله يحكم على ما ليس المنتج. */
-  assert.ok(card.indexOf('athar-desk.html') !== -1,
-    'البطاقة لا تحيل إلى athar-desk.html — النموذج الحاكم');
-  assert.ok(card.indexOf('athar-sources.html') !== -1,
+  assert.ok(card.indexOf('masar-desk.html') !== -1,
+    'البطاقة لا تحيل إلى masar-desk.html — النموذج الحاكم');
+  assert.ok(card.indexOf('masar-sources.html') !== -1,
     'البطاقة لا تحيل إلى سجل المصادر');
 });
 

@@ -3,7 +3,7 @@
   if (typeof module === 'object' && module.exports) {
     module.exports = value;
   } else {
-    root.AtharInnovationDemoData = value;
+    root.MasarInnovationDemoData = value;
   }
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';

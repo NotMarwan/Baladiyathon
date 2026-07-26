@@ -45,13 +45,13 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
-`presentation/athar-desk-boot.js`
+`presentation/masar-desk-boot.js`
 
-`presentation/athar-decision.js`
+`presentation/masar-decision.js`
 
-`presentation/athar-catalog.js`
+`presentation/masar-catalog.js`
 
 `presentation/tests/`
 
@@ -90,11 +90,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
-`presentation/athar-desk-boot.js`
+`presentation/masar-desk-boot.js`
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
 `presentation/server.js`
 
@@ -135,9 +135,9 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
-`presentation/athar-desk-file.js`
+`presentation/masar-desk-file.js`
 
 `presentation/server.js`
 
@@ -177,11 +177,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk-plan.js`
+`presentation/masar-desk-plan.js`
 
-`presentation/athar-desk-file.js`
+`presentation/masar-desk-file.js`
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
 `presentation/tests/`
 
@@ -220,11 +220,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk-measurement.js`
+`presentation/masar-desk-measurement.js`
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
 `presentation/server.js`
 
@@ -265,11 +265,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-city-routing.js`
+`presentation/masar-city-routing.js`
 
-`presentation/athar-decision.js`
+`presentation/masar-decision.js`
 
-`presentation/athar-desk-plan.js`
+`presentation/masar-desk-plan.js`
 
 `presentation/tests/`
 
@@ -308,9 +308,9 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk-plan.js`
+`presentation/masar-desk-plan.js`
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
 `presentation/server.js`
 
@@ -333,7 +333,7 @@
 
 اعتبار قبول الطلب دليلًا على ظهور التغيير. يجب أن تبقى الحالتان منفصلتين.
 
-## الفرصة الثامنة: ميزانية أثر المحفظة
+## الفرصة الثامنة: ميزانية مسار المحفظة
 
 المرجع:
 
@@ -353,11 +353,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
-`presentation/athar-decision.js`
+`presentation/masar-decision.js`
 
-`presentation/athar-desk-plan.js`
+`presentation/masar-desk-plan.js`
 
 `presentation/server.js`
 
@@ -400,9 +400,9 @@
 
 `presentation/server.js`
 
-`presentation/athar-desk-boot.js`
+`presentation/masar-desk-boot.js`
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
 `presentation/tests/`
 
@@ -443,11 +443,11 @@
 
 ### الملفات المتوقعة
 
-`presentation/athar-decision.js`
+`presentation/masar-decision.js`
 
-`presentation/athar-city-routing.js`
+`presentation/masar-city-routing.js`
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
 `presentation/server.js`
 

@@ -1,0 +1,224 @@
+/**
+ * مسار — مخزن حالة مكتب المراجع.
+ * ---------------------------------------------------------------------------
+ * 1) مصدر حقيقة واحد: القائمة والخريطة وملف القرار تقرأ من هنا فقط. بلا هذا
+ *    يعود المكتب بطاقات منفصلة لا تشترك في حالة — وهو المرض الذي شخّصه بحث
+ *    المقارنات في النموذج السابق.
+ * 2) نقي بالكامل — لا DOM ولا خريطة — فيُختبر في Node.
+ * 3) المرشحات تتراكم؛ ضبط مرشح لا يمحو غيره.
+ * 4) الفرز الافتراضي بالأثر تنازلياً: الصندوق يفتح على أخطر عمل ينتظر قراراً.
+ * 5) لا يعدّل المصفوفة الواردة، ولا يسرّب حالته الداخلية للتعديل من الخارج.
+ *
+ * UMD بنفس نمط masar-engine.js.
+ */
+(function (root, factory) {
+  'use strict';
+  if (typeof module === 'object' && module.exports) {
+    module.exports = factory(require('./masar-worksmap-data.js'));
+  } else {
+    root.MasarDeskStore = factory(root.MasarWorksMapData);
+  }
+})(typeof self !== 'undefined' ? self : this, function (Data) {
+  'use strict';
+
+  /** الحالات التي تنتظر فعلاً بشرياً — عدّادها هو ما يهم المراجع. */
+  var DECISION_STATUSES = [
+    'CompletenessReview', 'ImpactScreening', 'CoordinationRequired', 'StrategyReview',
+  ];
+
+  /**
+   * البحث في الصندوق هو بحث الصفحة العامة نفسه — لا نسخة ثانية منه.
+   * ---------------------------------------------------------------------------
+   * كان هنا `indexOf` خاماً على النص كما هو. أثره أن المكتب والصفحة العامة
+   * يجيبان جوابين مختلفين على السؤال نفسه: «ابو عبيده» يعيد ثلاثة سجلات على
+   * الخريطة وصفراً في المكتب، و«bld-2026-0001» يعيد التصريح على الخريطة
+   * وصفراً في المكتب. والمراجع الذي لا يجد ما يعرف أنه موجود يفقد ثقته في
+   * الأداة قبل أن يفقدها في الرقم.
+   *
+   * فالمطابقة تُستدعى من `masar-worksmap-data.js` — الوحدة التي تملك تطبيع
+   * الإملاء (همزة، تاء مربوطة، ألف مقصورة، تشكيل، تطويل، وخفض اللاتينية).
+   * حقول البحث هناك هي نفسها المطلوبة هنا: الشارع والعنوان والجهة والمقاول
+   * والمرجع والمفتاح.
+   */
+  function matchesQuery(properties, query) {
+    return Data.matchesQuery(properties, query);
+  }
+
+  function matches(feature, filters) {
+    var p = feature.properties;
+    if (filters.status && p.status !== filters.status) return false;
+    if (filters.severity && Number(p.severity) !== Number(filters.severity)) return false;
+    if (filters.group && p.group !== filters.group) return false;
+    if (filters.sensitivity && p.sensitivity !== filters.sensitivity) return false;
+    if (filters.query !== undefined && !matchesQuery(p, filters.query)) return false;
+    return true;
+  }
+
+  function pending(feature) {
+    return DECISION_STATUSES.indexOf(feature.properties.status) !== -1 ? 1 : 0;
+  }
+
+  var SORTERS = {
+    /**
+     * صندوق وارد لا جدول بيانات: ما ينتظر قراراً يتقدّم دائماً، ثم الأثر داخل
+     * كل مجموعة. بلا هذا يفتح المكتب على عمل منتهٍ لأن أثره التراكمي أعلى.
+     */
+    impact: function (a, b) {
+      var byPending = pending(b) - pending(a);
+      if (byPending !== 0) return byPending;
+      return (b.properties.impactVehHours || 0) - (a.properties.impactVehHours || 0);
+    },
+    severity: function (a, b) {
+      return (b.properties.severity || 0) - (a.properties.severity || 0);
+    },
+    start: function (a, b) {
+      return Date.parse(a.properties.start || 0) - Date.parse(b.properties.start || 0);
+    },
+    street: function (a, b) {
+      return String(a.properties.street).localeCompare(String(b.properties.street), 'ar');
+    },
+  };
+
+  var DEFAULT_SORT = 'impact';
+
+  function createStore(features) {
+    var all = (features || []).slice();
+    var state = { selectedId: null, filters: {}, sort: DEFAULT_SORT };
+    var listeners = [];
+
+    function emit() {
+      // نسخة من القائمة: مستمع يلغي اشتراكه أثناء البث لا يزيح من بعده.
+      listeners.slice().forEach(function (fn) { fn(); });
+    }
+
+    function indexOf(id) {
+      for (var i = 0; i < all.length; i += 1) {
+        if (all[i].properties.id === id) return i;
+      }
+      return -1;
+    }
+
+    function find(id) {
+      var at = indexOf(id);
+      return at === -1 ? null : all[at];
+    }
+
+    function getVisible() {
+      var sorter = SORTERS[state.sort] || SORTERS[DEFAULT_SORT];
+      return all.filter(function (feature) {
+        return matches(feature, state.filters);
+      }).sort(sorter);
+    }
+
+    return {
+      getState: function () {
+        return {
+          selectedId: state.selectedId,
+          filters: JSON.parse(JSON.stringify(state.filters)),
+          sort: state.sort,
+          features: all.slice(),
+        };
+      },
+
+      subscribe: function (fn) {
+        listeners.push(fn);
+        return function () {
+          var at = listeners.indexOf(fn);
+          if (at !== -1) listeners.splice(at, 1);
+        };
+      },
+
+      select: function (id) {
+        state.selectedId = find(id) ? id : null;
+        emit();
+      },
+
+      setFilter: function (key, value) {
+        state.filters[key] = value;
+        emit();
+      },
+
+      clearFilter: function (key) {
+        delete state.filters[key];
+        emit();
+      },
+
+      setSort: function (key) {
+        state.sort = SORTERS[key] ? key : DEFAULT_SORT;
+        emit();
+      },
+
+      /** يستبدل سجلاً بنسخته الجديدة بعد قرار — لا يضيف سجلاً غير موجود. */
+      replace: function (feature) {
+        var at = indexOf(feature.properties.id);
+        if (at === -1) return;
+        all = all.slice();
+        all[at] = feature;
+        emit();
+      },
+
+      getVisible: getVisible,
+
+      getSelected: function () {
+        return state.selectedId ? find(state.selectedId) : null;
+      },
+
+      /**
+       * العمل التالي الذي ينتظر قراراً ضمن المعروض، بالتفاف.
+       * -----------------------------------------------------------------------
+       * الالتفاف شرط صحة لا راحة: الفرز يضع المنتظِر أولاً، فالعمل الذي يُقرَّر
+       * يهبط إلى قاع القائمة في اللحظة نفسها. بحثٌ أمامي من القاع لا يجد شيئاً،
+       * فيُخبَر المراجع أن الطابور فرغ وفيه مئة عمل ينتظر — وهو أسوأ عطب ممكن
+       * في أداة طابور: لا تُخطئ الحساب بل تُخفي العمل.
+       *
+       * @param {string|null} fromId المعرّف الذي يُبدأ بعده. null يبدأ من الأول.
+       * @param {object} [options] {step:-1} للاتجاه المعاكس.
+       * @returns {{feature:object, wrapped:boolean}|null}
+       */
+      nextPending: function (fromId, options) {
+        var visible = getVisible();
+        if (!visible.length) return null;
+
+        var step = (options && options.step === -1) ? -1 : 1;
+        var at = visible.map(function (f) { return f.properties.id; }).indexOf(fromId);
+        var size = visible.length;
+
+        for (var offset = 1; offset <= size; offset += 1) {
+          var index = (((at + offset * step) % size) + size) % size;
+          var feature = visible[index];
+          if (feature.properties.id === fromId) continue;
+          if (DECISION_STATUSES.indexOf(feature.properties.status) === -1) continue;
+
+          // الالتفاف حقيقة يُبلَّغ بها المستدعي، لا قفزة صامتة تُفقد المكان.
+          var wrapped = step === 1 ? index <= at : index >= at;
+          return { feature: feature, wrapped: at !== -1 && wrapped };
+        }
+
+        return null;
+      },
+
+      counts: function () {
+        var byStatus = {};
+        var needsDecision = 0;
+        all.forEach(function (feature) {
+          var status = feature.properties.status;
+          byStatus[status] = (byStatus[status] || 0) + 1;
+          if (DECISION_STATUSES.indexOf(status) !== -1) needsDecision += 1;
+        });
+        return {
+          total: all.length,
+          visible: getVisible().length,
+          byStatus: byStatus,
+          needsDecision: needsDecision,
+        };
+      },
+    };
+  }
+
+  return {
+    createStore: createStore,
+    DECISION_STATUSES: DECISION_STATUSES,
+    SORTERS: SORTERS,
+    DEFAULT_SORT: DEFAULT_SORT,
+  };
+});

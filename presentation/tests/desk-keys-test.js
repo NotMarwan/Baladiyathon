@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const Keys = require('../athar-desk-keys.js');
+const Keys = require('../masar-desk-keys.js');
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -137,7 +137,7 @@ ok('D نيّة مستقلة — لا يخمّن بين اعتماد وإرجاع
 });
 
 ok('اختصارات الأزرار وجدول المفاتيح مصدر واحد لا نسختان', () => {
-  const File = require('../athar-desk-file.js');
+  const File = require('../masar-desk-file.js');
   Object.keys(File.ACTION_KEYS).forEach((action) => {
     const letter = File.ACTION_KEYS[action];
     const got = Keys.resolve(press({ code: 'Key' + letter }));

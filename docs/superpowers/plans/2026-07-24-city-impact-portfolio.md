@@ -4,7 +4,7 @@
 
 **Goal:** Close the weakest judging criterion (الأثر) with a city-wide representative portfolio computed by the real engine, then replace OSM tiles with an owned editable GeoJSON map.
 
-**Architecture:** New pure module `athar-portfolio.js` (UMD, same pattern as `athar-engine.js`) generates 150 seeded representative permits, runs each through `AtharEngine.score()/optimize()`, aggregates totals + range conversions. A standalone RTL dashboard `athar-city-impact.html` renders it offline. Phase 2 swaps Leaflet tile layer for a local `riyadh-roads.geojson` render with editable per-road properties feeding `athar-routing.js`.
+**Architecture:** New pure module `masar-portfolio.js` (UMD, same pattern as `masar-engine.js`) generates 150 seeded representative permits, runs each through `MasarEngine.score()/optimize()`, aggregates totals + range conversions. A standalone RTL dashboard `masar-city-impact.html` renders it offline. Phase 2 swaps Leaflet tile layer for a local `riyadh-roads.geojson` render with editable per-road properties feeding `masar-routing.js`.
 
 **Tech Stack:** Vanilla JS (no deps), Node stdlib for tests (`node file.js` + `assert`), Leaflet (already vendored), existing engine API.
 
@@ -16,26 +16,26 @@
 - Every displayed number derives from `buildPortfolio(SEED)` — no hand-written result numbers anywhere.
 - Mandatory visible label on all portfolio output: `سيناريو تمثيلي — مدخلات موسومة، حسابات المحرك حقيقية`.
 - Fixed seed constant: `20260727`.
-- Engine API (verbatim, from `athar-engine.js`):
+- Engine API (verbatim, from `masar-engine.js`):
   - `score({aadt,lanes,lanesClosed,startHour,durationHours}) → {delayVehHours, score, level, hourly}`
   - `optimize(sameInput) → {top3:[{label,startHour,phases,windows,delayVehHours,savedVehHours,savedPct,reasons}], baseline:{delayVehHours,windows}}`
   - `personHours(vehHours) → {lowPersonHours, highPersonHours, occLow, occHigh}`
   - `timeValueSAR(phRange) → {lowSAR, highSAR, ...}`
   - `co2Range(vehHours) → {lowFuelL, highFuelL, lowCo2Kg, highCo2Kg}`
   - `digOnce({trenchKm, permitsMerged}) → {separateSAR, savedLowSAR, savedHighSAR, savedPctLow, savedPctHigh, ...}`
-- UMD wrapper identical to engine: `module.exports` under Node, `window.AtharPortfolio` in browser.
+- UMD wrapper identical to engine: `module.exports` under Node, `window.MasarPortfolio` in browser.
 - Tests follow house style: plain `node presentation/tests/x-test.js`, `assert`, `ok - <name>` lines, final `ALL ... PASSED (n)`.
 
 ---
 
-### Task 1: Seeded permit generator (`athar-portfolio.js` part 1)
+### Task 1: Seeded permit generator (`masar-portfolio.js` part 1)
 
 **Files:**
-- Create: `presentation/athar-portfolio.js`
+- Create: `presentation/masar-portfolio.js`
 - Create: `presentation/tests/portfolio-test.js`
 
 **Interfaces:**
-- Produces: `AtharPortfolio.SEED` (number, 20260727), `AtharPortfolio.CORRIDORS` (array of 12), `AtharPortfolio.mulberry32(seed) → () => float[0,1)`, `AtharPortfolio.buildPermits(seed) → permit[150]` where permit = `{id, corridorId, corridorClass, aadt, lanes, lanesClosed, startHour, durationHours, startDay}`.
+- Produces: `MasarPortfolio.SEED` (number, 20260727), `MasarPortfolio.CORRIDORS` (array of 12), `MasarPortfolio.mulberry32(seed) → () => float[0,1)`, `MasarPortfolio.buildPermits(seed) → permit[150]` where permit = `{id, corridorId, corridorClass, aadt, lanes, lanesClosed, startHour, durationHours, startDay}`.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -43,7 +43,7 @@
 'use strict';
 const assert = require('assert');
 const path = require('path');
-const Portfolio = require(path.join(__dirname, '..', 'athar-portfolio.js'));
+const Portfolio = require(path.join(__dirname, '..', 'masar-portfolio.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -100,24 +100,24 @@ console.log(`ALL PORTFOLIO TESTS PASSED (${passed})`);
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `node presentation/tests/portfolio-test.js`
-Expected: FAIL — `Cannot find module '.../athar-portfolio.js'`
+Expected: FAIL — `Cannot find module '.../masar-portfolio.js'`
 
 - [ ] **Step 3: Write minimal implementation**
 
 ```js
 /**
- * أثر — مولد محفظة المدينة التمثيلية
+ * مسار — مولد محفظة المدينة التمثيلية
  * سيناريو تمثيلي: مدخلات موسومة، حسابات المحرك حقيقية.
- * وحدة صرفة بلا DOM وبلا شبكة — نفس نمط athar-engine.js (UMD).
+ * وحدة صرفة بلا DOM وبلا شبكة — نفس نمط masar-engine.js (UMD).
  */
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('./athar-engine.js'));
+    module.exports = factory(require('./masar-engine.js'));
   } else {
-    root.AtharPortfolio = factory(root.AtharEngine);
+    root.MasarPortfolio = factory(root.MasarEngine);
   }
-})(typeof self !== 'undefined' ? self : this, function (AtharEngine) {
+})(typeof self !== 'undefined' ? self : this, function (MasarEngine) {
   'use strict';
 
   const SEED = 20260727;
@@ -199,12 +199,12 @@ Expected: `ALL PORTFOLIO TESTS PASSED (6)`
 ### Task 2: Portfolio aggregation (`buildPortfolio`)
 
 **Files:**
-- Modify: `presentation/athar-portfolio.js` (add `buildPortfolio`, export it)
+- Modify: `presentation/masar-portfolio.js` (add `buildPortfolio`, export it)
 - Modify: `presentation/tests/portfolio-test.js` (append tests)
 
 **Interfaces:**
 - Consumes: Task 1 `buildPermits`, engine `score/optimize/personHours/timeValueSAR/co2Range/digOnce`.
-- Produces: `AtharPortfolio.buildPortfolio(seed) → { label, seed, permitCount, totals:{baselineVehHours, optimizedVehHours, savedVehHours, savedPct}, ranges:{personHours:{lowPersonHours,highPersonHours}, timeValue:{lowSAR,highSAR}, co2:{lowCo2Kg,highCo2Kg}}, byClass:{arterial:{baseline,optimized,saved}, major:{...}, local:{...}}, digOnceMerged:{groups, permits, savedLowSAR, savedHighSAR} }`.
+- Produces: `MasarPortfolio.buildPortfolio(seed) → { label, seed, permitCount, totals:{baselineVehHours, optimizedVehHours, savedVehHours, savedPct}, ranges:{personHours:{lowPersonHours,highPersonHours}, timeValue:{lowSAR,highSAR}, co2:{lowCo2Kg,highCo2Kg}}, byClass:{arterial:{baseline,optimized,saved}, major:{...}, local:{...}}, digOnceMerged:{groups, permits, savedLowSAR, savedHighSAR} }`.
 
 - [ ] **Step 1: Append failing tests to `portfolio-test.js`** (before the final `console.log`)
 
@@ -243,7 +243,7 @@ ok('buildPortfolio: byClass covers 3 classes and sums to totals', () => {
 
 ok('buildPortfolio: ranges come from engine conversions of savedVehHours', () => {
   const p = Portfolio.buildPortfolio(Portfolio.SEED);
-  const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+  const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
   const ph = Engine.personHours(p.totals.savedVehHours);
   assert.strictEqual(p.ranges.personHours.lowPersonHours, ph.lowPersonHours);
   const co2 = Engine.co2Range(p.totals.savedVehHours);
@@ -263,7 +263,7 @@ ok('buildPortfolio: digOnce groups only same-corridor overlaps within 30 days', 
 Run: `node presentation/tests/portfolio-test.js`
 Expected: FAIL — `Portfolio.buildPortfolio is not a function`
 
-- [ ] **Step 3: Implement `buildPortfolio` in `athar-portfolio.js`** (before the `return`, and add to exports)
+- [ ] **Step 3: Implement `buildPortfolio` in `masar-portfolio.js`** (before the `return`, and add to exports)
 
 ```js
   const DIG_ONCE_WINDOW_DAYS = 30;
@@ -287,7 +287,7 @@ Expected: FAIL — `Portfolio.buildPortfolio is not a function`
         startHour: permit.startHour,
         durationHours: permit.durationHours,
       };
-      const result = AtharEngine.optimize(input);
+      const result = MasarEngine.optimize(input);
       const base = result.baseline.delayVehHours;
       const best = result.top3[0].delayVehHours;
       baselineVehHours += base;
@@ -321,7 +321,7 @@ Expected: FAIL — `Portfolio.buildPortfolio is not a function`
           group.push(current);
         } else {
           if (group.length >= 2) {
-            const digResult = AtharEngine.digOnce({
+            const digResult = MasarEngine.digOnce({
               trenchKm: DIG_ONCE_TRENCH_KM,
               permitsMerged: group.length,
             });
@@ -335,7 +335,7 @@ Expected: FAIL — `Portfolio.buildPortfolio is not a function`
       }
     }
 
-    const personHoursRange = AtharEngine.personHours(savedVehHours);
+    const personHoursRange = MasarEngine.personHours(savedVehHours);
     return {
       label: LABEL,
       seed,
@@ -343,8 +343,8 @@ Expected: FAIL — `Portfolio.buildPortfolio is not a function`
       totals: { baselineVehHours, optimizedVehHours, savedVehHours, savedPct },
       ranges: {
         personHours: personHoursRange,
-        timeValue: AtharEngine.timeValueSAR(personHoursRange),
-        co2: AtharEngine.co2Range(savedVehHours),
+        timeValue: MasarEngine.timeValueSAR(personHoursRange),
+        co2: MasarEngine.co2Range(savedVehHours),
       },
       byClass,
       digOnceMerged: { groups, permits: mergedPermits, savedLowSAR, savedHighSAR },
@@ -360,18 +360,18 @@ Run: `node presentation/tests/portfolio-test.js`
 Expected: `ALL PORTFOLIO TESTS PASSED (12)`
 Also run regression: `node presentation/tests/engine-test.js` → still `ALL TESTS PASSED (62)`.
 
-**Note:** check `timeValueSAR` return field names in `athar-engine.js` (~line 453) before writing the dashboard — test above only pins `personHours`/`co2Range`; mirror actual field names (`lowSAR`/`highSAR` or as defined) everywhere.
+**Note:** check `timeValueSAR` return field names in `masar-engine.js` (~line 453) before writing the dashboard — test above only pins `personHours`/`co2Range`; mirror actual field names (`lowSAR`/`highSAR` or as defined) everywhere.
 
 ---
 
-### Task 3: City impact dashboard `athar-city-impact.html`
+### Task 3: City impact dashboard `masar-city-impact.html`
 
 **Files:**
-- Create: `presentation/athar-city-impact.html`
+- Create: `presentation/masar-city-impact.html`
 - Create: `presentation/tests/city-impact-smoke-test.js`
 
 **Interfaces:**
-- Consumes: `athar-engine.js`, `athar-portfolio.js` via `<script>` tags (`window.AtharPortfolio.buildPortfolio(AtharPortfolio.SEED)`).
+- Consumes: `masar-engine.js`, `masar-portfolio.js` via `<script>` tags (`window.MasarPortfolio.buildPortfolio(MasarPortfolio.SEED)`).
 - Produces: standalone page; elements with ids `badge-representative`, `counter-saved-veh-hours`, `card-time-value`, `card-co2`, `card-person-hours`, `card-dig-once`, `chart-by-class`, `section-methodology`.
 
 - [ ] **Step 1: Write failing smoke test** (house pattern: static HTML content checks, like `ui-smoke-test.js`)
@@ -383,10 +383,10 @@ const fs = require('fs');
 const path = require('path');
 
 const html = fs.readFileSync(
-  path.join(__dirname, '..', 'athar-city-impact.html'),
+  path.join(__dirname, '..', 'masar-city-impact.html'),
   'utf8'
 );
-const Portfolio = require(path.join(__dirname, '..', 'athar-portfolio.js'));
+const Portfolio = require(path.join(__dirname, '..', 'masar-portfolio.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -397,8 +397,8 @@ ok('page carries the mandatory representative-scenario badge', () => {
 });
 
 ok('page loads engine then portfolio scripts', () => {
-  const engineAt = html.indexOf('athar-engine.js');
-  const portfolioAt = html.indexOf('athar-portfolio.js');
+  const engineAt = html.indexOf('masar-engine.js');
+  const portfolioAt = html.indexOf('masar-portfolio.js');
   assert.ok(engineAt !== -1 && portfolioAt !== -1 && engineAt < portfolioAt);
 });
 
@@ -438,11 +438,11 @@ console.log(`ALL CITY IMPACT SMOKE TESTS PASSED (${passed})`);
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `node presentation/tests/city-impact-smoke-test.js`
-Expected: FAIL — `ENOENT ... athar-city-impact.html`
+Expected: FAIL — `ENOENT ... masar-city-impact.html`
 
 - [ ] **Step 3: Build the page**
 
-Structure (copy design tokens — colors, fonts, card styles — from `athar-merged.html`; page must visually match the family):
+Structure (copy design tokens — colors, fonts, card styles — from `masar-merged.html`; page must visually match the family):
 
 ```html
 <!doctype html>
@@ -450,13 +450,13 @@ Structure (copy design tokens — colors, fonts, card styles — from `athar-mer
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أثر — لوحة أثر المدينة (سيناريو تمثيلي)</title>
-<style>/* tokens from athar-merged.html + grid layout for cards */</style>
+<title>مسار — لوحة مسار المدينة (سيناريو تمثيلي)</title>
+<style>/* tokens from masar-merged.html + grid layout for cards */</style>
 </head>
 <body>
   <div id="badge-representative" class="badge-fixed">سيناريو تمثيلي — مدخلات موسومة، حسابات المحرك حقيقية</div>
 
-  <header><h1>لو شغّلنا «أثر» على محفظة مدينة سنة كاملة</h1>
+  <header><h1>لو شغّلنا «مسار» على محفظة مدينة سنة كاملة</h1>
     <p>150 تصريحاً تمثيلياً · 12 ممراً · حسابات المحرك الحقيقي</p></header>
 
   <section class="hero">
@@ -476,16 +476,16 @@ Structure (copy design tokens — colors, fonts, card styles — from `athar-mer
 
   <section id="section-methodology">
     <h2>كيف حُسب هذا</h2>
-    <p>المعادلة: الأثر السنوي = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل) لكل تصريح، مقاسة بمحرك أثر.</p>
+    <p>المعادلة: الأثر السنوي = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل) لكل تصريح، مقاسة بمحرك مسار.</p>
     <p>البذرة الثابتة: 20260727 · عدد التصاريح: 150 · المدخلات تمثيلية موسومة، لا تمثل بيانات رسمية.</p>
   </section>
 
-  <script src="athar-engine.js"></script>
-  <script src="athar-portfolio.js"></script>
+  <script src="masar-engine.js"></script>
+  <script src="masar-portfolio.js"></script>
   <script>
     (function () {
       'use strict';
-      const p = AtharPortfolio.buildPortfolio(AtharPortfolio.SEED);
+      const p = MasarPortfolio.buildPortfolio(MasarPortfolio.SEED);
       const fmt = (n) => Math.round(n).toLocaleString('ar-SA');
       const fmtRange = (a, b) => fmt(a) + ' – ' + fmt(b);
 
@@ -539,14 +539,14 @@ Structure (copy design tokens — colors, fonts, card styles — from `athar-mer
 
 Run: `node presentation/tests/city-impact-smoke-test.js`
 Expected: `ALL CITY IMPACT SMOKE TESTS PASSED (6)`
-Manual: open `presentation/athar-city-impact.html` in browser — counter animates, no console errors, works offline.
+Manual: open `presentation/masar-city-impact.html` in browser — counter animates, no console errors, works offline.
 
 ---
 
 ### Task 4: Pitch slide + idea card update + integrity test
 
 **Files:**
-- Modify: `presentation/athar-pitch.html` (add one slide summarizing the city dashboard, linking `athar-city-impact.html`)
+- Modify: `presentation/masar-pitch.html` (add one slide summarizing the city dashboard, linking `masar-city-impact.html`)
 - Modify: `Baladiyathon/بطاقة-الفكرة.md` («الأثر والاستدامة» section)
 - Modify: `presentation/tests/pitch-integrity-test.js` (guard the new slide)
 
@@ -557,7 +557,7 @@ Manual: open `presentation/athar-city-impact.html` in browser — counter animat
 
 ```js
 // الشريحة الجديدة: أثر المدينة — لا رقم بلا وسم
-assert.ok(pitchHtml.includes('athar-city-impact.html'), 'pitch links city impact dashboard');
+assert.ok(pitchHtml.includes('masar-city-impact.html'), 'pitch links city impact dashboard');
 assert.ok(pitchHtml.includes('سيناريو تمثيلي'), 'city slide carries representative label');
 ```
 
@@ -566,14 +566,14 @@ assert.ok(pitchHtml.includes('سيناريو تمثيلي'), 'city slide carries
 Run: `node presentation/tests/pitch-integrity-test.js`
 Expected: FAIL on the two new assertions.
 
-- [ ] **Step 3: Add the slide to `athar-pitch.html`**
+- [ ] **Step 3: Add the slide to `masar-pitch.html`**
 
 Follow the deck's existing slide markup. Content:
 
 - Title: «الأثر على مستوى المدينة — سيناريو تمثيلي»
-- Dynamic numbers (same script pattern: load `athar-engine.js` + `athar-portfolio.js`, fill spans from `buildPortfolio(SEED)`): ساعات-مركبة موفرة (نطاق٪)، ريالات (نطاق)، CO₂ (نطاق)، عدد تصاريح Dig-Once.
+- Dynamic numbers (same script pattern: load `masar-engine.js` + `masar-portfolio.js`, fill spans from `buildPortfolio(SEED)`): ساعات-مركبة موفرة (نطاق٪)، ريالات (نطاق)، CO₂ (نطاق)، عدد تصاريح Dig-Once.
 - One line: المعادلة + «مدخلات موسومة، حسابات المحرك حقيقية».
-- Link/button → `athar-city-impact.html`.
+- Link/button → `masar-city-impact.html`.
 - Vision 2030 line: «يدعم مستهدفات جودة الحياة وكفاءة الإنفاق في رؤية 2030 — عبر تقليل ساعات التأخير وتنسيق الحفر».
 
 - [ ] **Step 4: Update `بطاقة-الفكرة.md` «الأثر والاستدامة»**
@@ -581,9 +581,9 @@ Follow the deck's existing slide markup. Content:
 Keep the existing honest bullets (no measured field result). Append:
 
 ```markdown
-- سيناريو تمثيلي لمحفظة مدينة: 150 تصريحاً تمثيلياً على 12 ممراً مُررت عبر محرك أثر الحقيقي
+- سيناريو تمثيلي لمحفظة مدينة: 150 تصريحاً تمثيلياً على 12 ممراً مُررت عبر محرك مسار الحقيقي
   (بذرة ثابتة 20260727). المعادلة: الأثر = مجموع (تأخير كما قُدم − تأخير الجدول الأمثل).
-  النتائج نطاقات لا أرقاماً مفردة، والمدخلات موسومة «تمثيلية» — انظر `presentation/athar-city-impact.html`.
+  النتائج نطاقات لا أرقاماً مفردة، والمدخلات موسومة «تمثيلية» — انظر `presentation/masar-city-impact.html`.
 - الربط برؤية 2030: تقليل ساعات التأخير يدعم مؤشر جودة الحياة، ودمج الحفريات (Dig-Once)
   يدعم كفاءة الإنفاق الحكومي.
 ```
@@ -607,13 +607,13 @@ Expected: all pass.
 
 **Files:**
 - Create: `presentation/data/riyadh-roads.geojson`
-- Create: `presentation/athar-ownedmap.js`
-- Modify: `presentation/athar-prototype.html` (swap tile layer; fallback preserved)
+- Create: `presentation/masar-ownedmap.js`
+- Modify: `presentation/masar-prototype.html` (swap tile layer; fallback preserved)
 - Create: `presentation/tests/ownedmap-test.js`
 
 **Interfaces:**
-- Consumes: Leaflet (vendored), `athar-routing.js` graph-building (inspect `buildGraph()` signature in `athar-routing.js` first).
-- Produces: `AtharOwnedMap.load(map, geojson) → {layers, roads[]}`, `AtharOwnedMap.toRoutingSegments(roads) → segments` compatible with `athar-routing.js` input.
+- Consumes: Leaflet (vendored), `masar-routing.js` graph-building (inspect `buildGraph()` signature in `masar-routing.js` first).
+- Produces: `MasarOwnedMap.load(map, geojson) → {layers, roads[]}`, `MasarOwnedMap.toRoutingSegments(roads) → segments` compatible with `masar-routing.js` input.
 
 - [ ] **Step 1: Extract roads GeoJSON (one-time, needs internet once)**
 
@@ -632,7 +632,7 @@ Convert to GeoJSON FeatureCollection (small Node script: each way → `LineStrin
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const OwnedMap = require(path.join(__dirname, '..', 'athar-ownedmap.js'));
+const OwnedMap = require(path.join(__dirname, '..', 'masar-ownedmap.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -668,7 +668,7 @@ ok('toRoutingSegments: converts features to finite-length segments', () => {
 console.log(`ALL OWNED MAP TESTS PASSED (${passed})`);
 ```
 
-- [ ] **Step 3: Implement `athar-ownedmap.js`** (UMD, no Leaflet dependency in Node paths)
+- [ ] **Step 3: Implement `masar-ownedmap.js`** (UMD, no Leaflet dependency in Node paths)
 
 ```js
 (function (root, factory) {
@@ -676,7 +676,7 @@ console.log(`ALL OWNED MAP TESTS PASSED (${passed})`);
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
-    root.AtharOwnedMap = factory();
+    root.MasarOwnedMap = factory();
   }
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
@@ -744,10 +744,10 @@ console.log(`ALL OWNED MAP TESTS PASSED (${passed})`);
 Run: `node presentation/tests/ownedmap-test.js`
 Expected: `ALL OWNED MAP TESTS PASSED (3)`
 
-- [ ] **Step 5: Wire into `athar-prototype.html`**
+- [ ] **Step 5: Wire into `masar-prototype.html`**
 
 - Replace `L.tileLayer(...)` with: try `fetch('data/riyadh-roads.geojson')` (works under server mode) OR inline `<script src="data/riyadh-roads.geojson.js">` fallback for file:// mode (wrap the JSON as `window.RIYADH_ROADS = {...}` in a sibling `.js` copy generated in Step 1).
-- On success: pale solid background (`.leaflet-container{background:#f3f1ec}`), `AtharOwnedMap.load(map, geojson, L)`, click-to-edit panel updates road properties and rebuilds routing graph via existing `athar-routing.js` entry point.
+- On success: pale solid background (`.leaflet-container{background:#f3f1ec}`), `MasarOwnedMap.load(map, geojson, L)`, click-to-edit panel updates road properties and rebuilds routing graph via existing `masar-routing.js` entry point.
 - On failure: keep current embedded network + gray background (existing behavior) — no regression.
 - Keep ODbL attribution line in map corner.
 

@@ -4,14 +4,14 @@
 
 **Goal:** رفع درجة معيار «الأثر المتوقع والاستدامة» من 4.5 إلى ≥9.0 بإصلاح الخصومات الخمس + تعميقين.
 
-**Architecture:** كل الرياضيات في `presentation/athar-engine.js` (UMD, pure). وحدتان جديدتان `athar-impact-calibration.js` و`athar-impact-budget.js` بنفس نمط UMD. الواجهة `athar-prototype.html` تعرض فقط. الاختبارات في `presentation/tests/engine-test.js` (node, بلا مكتبات).
+**Architecture:** كل الرياضيات في `presentation/masar-engine.js` (UMD, pure). وحدتان جديدتان `masar-impact-calibration.js` و`masar-impact-budget.js` بنفس نمط UMD. الواجهة `masar-prototype.html` تعرض فقط. الاختبارات في `presentation/tests/engine-test.js` (node, بلا مكتبات).
 
 **Tech Stack:** Vanilla JS (UMD), Node `assert` tests, `file://` browser demo.
 
 ## Global Constraints
 
 - فرع git: `crit4-impact` فقط، لا main.
-- ممنوع: `athar-pitch.html`, `athar-merged.html`, `athar.html`, كود الخريطة/المسار البديل/الجدول الزمني في prototype، دوال `score/optimize/bprTravelTime` إلا لضرورة المعيار مع توثيق في REPORT.md (المهمة 3 تضطر لتعديل `score` — يوثق).
+- ممنوع: `masar-pitch.html`, `masar-merged.html`, `masar.html`, كود الخريطة/المسار البديل/الجدول الزمني في prototype، دوال `score/optimize/bprTravelTime` إلا لضرورة المعيار مع توثيق في REPORT.md (المهمة 3 تضطر لتعديل `score` — يوثق).
 - كل رقم تركيبي موسوم «افتراض توضيحي للعرض». لا رقم تصاريح سنوي، لا مجاميع وطنية، لا نسبة ازدحام مدينة.
 - كل دورة: `node presentation/tests/engine-test.js` كلها تنجح + صفر أخطاء console + فحص الفخاخ الثلاثة + commit.
 
@@ -20,9 +20,9 @@
 ### Task 1: digOnce داخل نطاق GAO 25–33%
 
 **Files:**
-- Modify: `presentation/athar-engine.js` (حذف `SHARED_TRENCH_OVERHEAD`, إعادة `digOnce`)
+- Modify: `presentation/masar-engine.js` (حذف `SHARED_TRENCH_OVERHEAD`, إعادة `digOnce`)
 - Modify: `presentation/tests/engine-test.js:409-430`
-- Modify: `presentation/athar-prototype.html` (بطاقة Dig-Once تعرض نطاقاً)
+- Modify: `presentation/masar-prototype.html` (بطاقة Dig-Once تعرض نطاقاً)
 
 **Interfaces:**
 - Produces: `digOnce({trenchKm, permitsMerged})` ترجع `{separateSAR, sharedLowSAR, sharedHighSAR, savedLowSAR, savedHighSAR, savedPctLow, savedPctHigh}`. الحقلان القديمان `savedSAR/savedPct` يُحذفان.
@@ -31,7 +31,7 @@
 
 ```js
 test('digOnce(2 permits) saved pct fixed at GAO 25-33% band', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 2 });
   assert.strictEqual(r.savedPctLow, 25);
   assert.strictEqual(r.savedPctHigh, 33);
   assert.ok(Math.abs(r.savedLowSAR - r.separateSAR * 0.25) < 1e-6);
@@ -40,7 +40,7 @@ test('digOnce(2 permits) saved pct fixed at GAO 25-33% band', () => {
 });
 
 test('digOnce() with 1 permit yields zero savings', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
   assert.strictEqual(r.savedLowSAR, 0);
   assert.strictEqual(r.savedPctHigh, 0);
 });
@@ -81,22 +81,22 @@ function digOnce(input) {
 ### Task 2: إصلاح إشارة CO₂
 
 **Files:**
-- Modify: `presentation/athar-prototype.html:210,240-241,733-738` + `selectCandidate`
+- Modify: `presentation/masar-prototype.html:210,240-241,733-738` + `selectCandidate`
 
 **Interfaces:**
 - Consumes: `co2Range(vehHours)` كما هي. `candidate.savedVehHours` من optimize.
 
 - [ ] Step 1: سطر 210: الوسم يصبح «انبعاثات **مضافة** بسبب الإغلاق (نطاق)» — الحساب من `delayVehHours` صحيح، الوسم كان الخطأ.
-- [ ] Step 2: بطاقة الخطوة 6 (`co2Num`): احذف الحساب من `renderScore` (السطور 733-738). قبل اختيار جدولة: «— اختر جدولة محسّنة أولاً». في `selectCandidate`: `var savedCo2 = AtharEngine.co2Range(candidate.savedVehHours)` واعرض `lowCo2Kg – highCo2Kg كجم` بوسم «وفر CO₂ من الجدولة المحسّنة (من ساعات-مركبة موفّرة فقط)».
+- [ ] Step 2: بطاقة الخطوة 6 (`co2Num`): احذف الحساب من `renderScore` (السطور 733-738). قبل اختيار جدولة: «— اختر جدولة محسّنة أولاً». في `selectCandidate`: `var savedCo2 = MasarEngine.co2Range(candidate.savedVehHours)` واعرض `lowCo2Kg – highCo2Kg كجم` بوسم «وفر CO₂ من الجدولة المحسّنة (من ساعات-مركبة موفّرة فقط)».
 - [ ] Step 3: فحص الفخ (أ): لا وسم «وفر» فوق رقم ضرر في الصفحة كلها. متصفح بلا أخطاء.
 - [ ] Step 4: commit `fix: CO2 sign — savings only from savedVehHours; closure emissions labeled as added`.
 
 ### Task 3: أرضية احتكاك منطقة العمل (قتل وفر 99.6%)
 
 **Files:**
-- Modify: `presentation/athar-engine.js` (`score`) — تعديل موثق في REPORT.md
+- Modify: `presentation/masar-engine.js` (`score`) — تعديل موثق في REPORT.md
 - Modify: `presentation/tests/engine-test.js`
-- Modify: `presentation/athar-prototype.html` (بطاقات optimize: الأرقام المطلقة أولاً)
+- Modify: `presentation/masar-prototype.html` (بطاقات optimize: الأرقام المطلقة أولاً)
 
 **Interfaces:**
 - Produces: ثابت `WORK_ZONE_FRICTION = 1.10`؛ سلوك `score`: عند `lanesClosed>0`, `closedT = max(bprClosed, baseT*1.10)`.
@@ -105,13 +105,13 @@ function digOnce(input) {
 
 ```js
 test('night closure still produces nonzero delay (work-zone friction floor)', () => {
-  const r = AtharEngine.score({ aadt: 85000, lanes: 4, lanesClosed: 1,
+  const r = MasarEngine.score({ aadt: 85000, lanes: 4, lanesClosed: 1,
     capacityPerLane: 1800, freeFlowMin: 6, startHour: 2, durationHours: 4 });
   assert.ok(r.delayVehHours > 0, `expected >0, got ${r.delayVehHours}`);
 });
 
 test('optimize savings pct stays below 95% (no 99.6% mirage)', () => {
-  const r = AtharEngine.optimize({ aadt: 85000, lanes: 4, lanesClosed: 2,
+  const r = MasarEngine.optimize({ aadt: 85000, lanes: 4, lanesClosed: 2,
     capacityPerLane: 1800, freeFlowMin: 6, startHour: 8, durationHours: 48 });
   r.top3.forEach((c) => assert.ok(c.savedPct < 95, `savedPct ${c.savedPct}`));
 });
@@ -135,9 +135,9 @@ const closedT = lanesClosed > 0
 ### Task 4: عدّاد الافتراضات + إكمال جدول الشفافية
 
 **Files:**
-- Modify: `presentation/athar-engine.js` (`assumptionsUsed`)
+- Modify: `presentation/masar-engine.js` (`assumptionsUsed`)
 - Modify: `presentation/tests/engine-test.js`
-- Modify: `presentation/athar-prototype.html` (شارات + صفوف ASSUMPTIONS)
+- Modify: `presentation/masar-prototype.html` (شارات + صفوف ASSUMPTIONS)
 
 **Interfaces:**
 - Produces: `assumptionsUsed(metric)` ترجع مصفوفة أسماء الافتراضات أو `null` لمقياس مجهول. المقاييس: `'timeValueSAR'|'co2'|'digOnce'|'transitImpact'|'score'`.
@@ -146,9 +146,9 @@ const closedT = lanesClosed > 0
 
 ```js
 test('assumptionsUsed counts unofficial assumptions per metric', () => {
-  assert.strictEqual(AtharEngine.assumptionsUsed('timeValueSAR').length, 7);
-  assert.ok(AtharEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
-  assert.strictEqual(AtharEngine.assumptionsUsed('nope'), null);
+  assert.strictEqual(MasarEngine.assumptionsUsed('timeValueSAR').length, 7);
+  assert.ok(MasarEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
+  assert.strictEqual(MasarEngine.assumptionsUsed('nope'), null);
 });
 ```
 
@@ -170,19 +170,19 @@ function assumptionsUsed(metric) {
 
 - [ ] Step 3: الواجهة: شارة `عدد الافتراضات في هذا الرقم: N` بجانب قيمة الوقت وCO₂ وdig-once وأثر الحافلات، مع `title` يسرد الأسماء. Step 4: أضف إلى ASSUMPTIONS صفوف: `COMPOUND_FACTOR 1.3`, `SCORE_CALIBRATION 0.35`, `MIN_CAPACITY_FRACTION 0.25`, `WORK_ZONE_FRICTION 1.10`, نطاق الإشغال 1.2–1.6، أجر 5800 (مصدر)، نصيب 40–70% (مصدر)، وقود 0.7–1.1، حافلات 3×4، ركاب 15–40. Step 5: اختبارات + متصفح + commit `feat: per-metric assumption counter + complete transparency table`.
 
-### Task 5: آلية معايرة فعلية (athar-impact-calibration.js)
+### Task 5: آلية معايرة فعلية (masar-impact-calibration.js)
 
 **Files:**
-- Create: `presentation/athar-impact-calibration.js`
-- Modify: `presentation/tests/engine-test.js`, `presentation/athar-prototype.html`
+- Create: `presentation/masar-impact-calibration.js`
+- Modify: `presentation/tests/engine-test.js`, `presentation/masar-prototype.html`
 
 **Interfaces:**
-- Produces: UMD `AtharImpactCalibration` = `createCalibration(store)` حيث `store` كائن `{getItem(k), setItem(k,v)}` (localStorage أو Map للاختبار). الكائن الراجع: `record({permitId, predictedVehHours, observedVehHours})`, `records()`, `correctionFactor()` (وسيط observed/predicted، 1 إن فارغ), `status()` → `{n, factor}`.
+- Produces: UMD `MasarImpactCalibration` = `createCalibration(store)` حيث `store` كائن `{getItem(k), setItem(k,v)}` (localStorage أو Map للاختبار). الكائن الراجع: `record({permitId, predictedVehHours, observedVehHours})`, `records()`, `correctionFactor()` (وسيط observed/predicted، 1 إن فارغ), `status()` → `{n, factor}`.
 
 - [ ] Step 1: اختبارات:
 
 ```js
-const Calib = require('../athar-impact-calibration.js');
+const Calib = require('../masar-impact-calibration.js');
 test('calibration: empty store => factor 1, n 0', () => {
   const c = Calib.createCalibration(memStore());
   assert.deepStrictEqual(c.status(), { n: 0, factor: 1 });
@@ -199,21 +199,21 @@ test('calibration: median of observed/predicted ratios', () => {
 
 مع `memStore = () => { const m = new Map(); return { getItem: k => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, v) }; }`.
 
-- [ ] Step 2: تنفيذ UMD يخزن JSON تحت مفتاح `athar-backtests-v1`، تجاهل سجل predicted<=0. Step 3: الواجهة: عند التحميل أنشئ من localStorage، ازرع 3 حالات تركيبية موسومة إن فارغ، واعرض على بطاقة التأثير: «التوقع المصحح: X س-م — معايرة من N حالة <span class=src-badge>حالات تركيبية موسومة للعرض</span>»، وفي `selectCandidate` سجّل back-test الحالة المقابلة في المخزن (يكبر N فعلياً). Step 4: اختبارات + متصفح + commit `feat: real calibration loop — back-test log + median correction factor`.
+- [ ] Step 2: تنفيذ UMD يخزن JSON تحت مفتاح `masar-backtests-v1`، تجاهل سجل predicted<=0. Step 3: الواجهة: عند التحميل أنشئ من localStorage، ازرع 3 حالات تركيبية موسومة إن فارغ، واعرض على بطاقة التأثير: «التوقع المصحح: X س-م — معايرة من N حالة <span class=src-badge>حالات تركيبية موسومة للعرض</span>»، وفي `selectCandidate` سجّل back-test الحالة المقابلة في المخزن (يكبر N فعلياً). Step 4: اختبارات + متصفح + commit `feat: real calibration loop — back-test log + median correction factor`.
 
-### Task 6: ميزانية أثر تراكمية للمحور (athar-impact-budget.js)
+### Task 6: ميزانية مسار تراكمية للمحور (masar-impact-budget.js)
 
 **Files:**
-- Create: `presentation/athar-impact-budget.js`
-- Modify: `presentation/tests/engine-test.js`, `presentation/athar-prototype.html`
+- Create: `presentation/masar-impact-budget.js`
+- Modify: `presentation/tests/engine-test.js`, `presentation/masar-prototype.html`
 
 **Interfaces:**
-- Produces: UMD `AtharImpactBudget.corridorBudget({monthlyBudgetVehHours, consumedVehHours, currentPermitVehHours})` → `{budget, consumedBefore, consumedAfter, remaining, pctUsed, verdict}`؛ verdict: `'ضمن الميزانية'` إذا pctUsed<80، `'قرب السقف'` <100، `'تجاوز — يتطلب إعادة جدولة'` خلاف ذلك. `remaining` لا يقل عن 0 في العرض لكن `consumedAfter` حقيقي.
+- Produces: UMD `MasarImpactBudget.corridorBudget({monthlyBudgetVehHours, consumedVehHours, currentPermitVehHours})` → `{budget, consumedBefore, consumedAfter, remaining, pctUsed, verdict}`؛ verdict: `'ضمن الميزانية'` إذا pctUsed<80، `'قرب السقف'` <100، `'تجاوز — يتطلب إعادة جدولة'` خلاف ذلك. `remaining` لا يقل عن 0 في العرض لكن `consumedAfter` حقيقي.
 
 - [ ] Step 1: اختبارات:
 
 ```js
-const Budget = require('../athar-impact-budget.js');
+const Budget = require('../masar-impact-budget.js');
 test('corridorBudget: within / near / over verdicts', () => {
   const base = { monthlyBudgetVehHours: 5000, consumedVehHours: 3000 };
   assert.strictEqual(Budget.corridorBudget({ ...base, currentPermitVehHours: 500 }).verdict, 'ضمن الميزانية');
@@ -222,7 +222,7 @@ test('corridorBudget: within / near / over verdicts', () => {
 });
 ```
 
-- [ ] Step 2: تنفيذ pure. Step 3: بطاقة جديدة في الخطوة 6: شريط عدّاد (div عرض نسبة) «ميزانية أثر المحور الشهرية: مستهلك A من B س-م — <verdict>» بوسم «ميزانية واستهلاك سابق: افتراض توضيحي للعرض»، تتحدث مع كل recompute (currentPermit = delayVehHours الحالي أو المصحح). Step 4: اختبارات + متصفح + commit `feat: cumulative corridor impact budget with visible meter`.
+- [ ] Step 2: تنفيذ pure. Step 3: بطاقة جديدة في الخطوة 6: شريط عدّاد (div عرض نسبة) «ميزانية مسار المحور الشهرية: مستهلك A من B س-م — <verdict>» بوسم «ميزانية واستهلاك سابق: افتراض توضيحي للعرض»، تتحدث مع كل recompute (currentPermit = delayVehHours الحالي أو المصحح). Step 4: اختبارات + متصفح + commit `feat: cumulative corridor impact budget with visible meter`.
 
 ### Task 7: REPORT.md + التقييم الذاتي العدائي
 

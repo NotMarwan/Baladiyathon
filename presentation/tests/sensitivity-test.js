@@ -18,8 +18,8 @@ const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 global.window = global;
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Sensitivity = require(path.join(ROOT, 'athar-sensitivity.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Sensitivity = require(path.join(ROOT, 'masar-sensitivity.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -91,13 +91,13 @@ test('كل صفّ يعيد إنتاج نفسه عند تمرير حدّه إلى
 });
 
 test('لا رقم من ثلاث خانات مكتوب في الوحدة', () => {
-  /* نفس الحارس المستعمل في athar-canonical.js: جدولٌ يُفترض أن يحسب كل شيء
+  /* نفس الحارس المستعمل في masar-canonical.js: جدولٌ يُفترض أن يحسب كل شيء
      لا يحتاج ثابتاً كبيراً.
      استثناءان معلنان لا أكثر:
        · 1600 و2000 — حدّا سعة الحارة، نطاق HCM معلَّل في `why`.
        · 100 — تحويل كسر إلى نسبة مئوية، لا مُدخل.
      أي رقم آخر من ثلاث خانات يعني قيمة دخلت الجدول بلا حساب. */
-  const source = fs.readFileSync(path.join(ROOT, 'athar-sensitivity.js'), 'utf8')
+  const source = fs.readFileSync(path.join(ROOT, 'masar-sensitivity.js'), 'utf8')
     .replace(/\/\*[\s\S]*?\*\//g, ' ')
     .replace(/^\s*\/\/[^\n]*/gm, ' ');
   const ALLOWED = ['1600', '2000', '100'];

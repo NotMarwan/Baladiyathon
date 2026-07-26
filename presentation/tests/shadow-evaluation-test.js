@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('node:assert');
-const Shadow = require('../athar-shadow-evaluation.js');
+const Shadow = require('../masar-shadow-evaluation.js');
 
 let count = 0;
 function test(name, fn) {

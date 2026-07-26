@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://athar.local/schemas/field-study-1.0.json",
+  "$id": "https://masar.local/schemas/field-study-1.0.json",
   "title": "حزمة قياس ميداني لإغلاق واحد — أثر",
   "description": "بنية بيانات حالة ميدانية واحدة: إغلاق فعلي بقياسات قبل وأثناء وبعد، مع حالة مقابلة. صُمّمت قبل وصول أي بيانات كي لا تُبنى منظومة القياس عند وصولها.",
   "type": "object",

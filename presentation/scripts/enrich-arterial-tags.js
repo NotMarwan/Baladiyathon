@@ -1,6 +1,6 @@
 'use strict';
 /**
- * أثر — وسوم الاتجاه والسرعة للشرايين.
+ * مسار — وسوم الاتجاه والسرعة للشرايين.
  * ---------------------------------------------------------------------------
  * `fetch-roads.js` نزّل الشرايين قبل أن يكون التوجيه على الشبكة الحقيقية
  * مطروحاً، فأخذ ما تحتاجه الخريطة: التصنيف والاسم وعدد المسارات. والتوجيه
@@ -48,7 +48,7 @@ async function ask() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': 'athar-roads-builder',
+          'User-Agent': 'masar-roads-builder',
         },
         body: new URLSearchParams({ data: QUERY }).toString(),
       });

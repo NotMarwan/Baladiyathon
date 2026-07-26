@@ -23,7 +23,7 @@ const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 const Server = require(path.join(ROOT, 'server.js'));
-const { createLedger } = require(path.join(ROOT, 'athar-ledger.js'));
+const { createLedger } = require(path.join(ROOT, 'masar-ledger.js'));
 
 const KEYS = {
   screener: 'ledger-key-screener',
@@ -45,7 +45,7 @@ async function test(name, fn) {
 function scratchPath() {
   scratchIndex += 1;
   const file = path.join(os.tmpdir(),
-    `athar-ledger-${process.pid}-${scratchIndex}.jsonl`);
+    `masar-ledger-${process.pid}-${scratchIndex}.jsonl`);
   scratchFiles.push(file);
   if (fs.existsSync(file)) fs.unlinkSync(file);
   return file;
@@ -96,7 +96,7 @@ const decision = (status, actor, version) => ({
 const write = (base, work, body, key) => fetch(
   `${base}/api/works/${work}/decisions`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Athar-Key': key },
+    headers: { 'Content-Type': 'application/json', 'X-Masar-Key': key },
     body: JSON.stringify(body),
   });
 
@@ -277,7 +277,7 @@ const read = async (base, work) => (
        تعليق الرأس** فلم يُنفَّذ أبداً. الحزم الثماني والخمسون بقيت خضراء —
        لا حزمة تُحمّل هذا الملف — وكشفَه المتصفح وحده.
        تعريفٌ بلا نداء دالةٌ ميتة تبدو ميزةً في مراجعة الشيفرة. */
-    const boot = fs.readFileSync(path.join(ROOT, 'athar-desk-boot.js'), 'utf8');
+    const boot = fs.readFileSync(path.join(ROOT, 'masar-desk-boot.js'), 'utf8');
     const visible = boot
       .replace(/\/\*[\s\S]*?\*\//g, ' ')
       .replace(/^\s*\/\/[^\n]*/gm, ' ');
@@ -291,7 +291,7 @@ const read = async (base, work) => (
   });
 
   await test('المسار يُضبط بمتغيّر بيئة', () => {
-    assert.ok(/ATHAR_LEDGER/.test(
+    assert.ok(/MASAR_LEDGER/.test(
       fs.readFileSync(path.join(ROOT, 'server.js'), 'utf8')
     ), 'مسار السجل غير قابل للضبط من البيئة');
   });
@@ -300,7 +300,7 @@ const read = async (base, work) => (
   await test('فشل الكتابة يُبلَّغ ولا يُسقط القرار من الذاكرة', async () => {
     /* قرصٌ ممتلئ أو صلاحية مفقودة عطلُ وسيط، لا سببٌ لإسقاط قرار المراجع.
        المسار هنا مجلدٌ لا ملف — الكتابة تفشل حتماً. */
-    const impossible = path.join(os.tmpdir(), `athar-ledger-dir-${process.pid}`);
+    const impossible = path.join(os.tmpdir(), `masar-ledger-dir-${process.pid}`);
     fs.mkdirSync(impossible, { recursive: true });
     const messages = [];
     const ledger = createLedger(impossible, { onWarn: (m) => messages.push(m) });

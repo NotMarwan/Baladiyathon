@@ -28,7 +28,7 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 const MIN_SIGNATURES = 5;
 const MIN_WINNERS = 3;
@@ -61,7 +61,7 @@ function signatureOf(result) {
     .join(',');
 }
 
-const permits = global.window.ATHAR_CITY_PORTFOLIO.features
+const permits = global.window.MASAR_CITY_PORTFOLIO.features
   .map((feature) => feature.properties)
   .filter((p) => p.aadt && p.lanes);
 

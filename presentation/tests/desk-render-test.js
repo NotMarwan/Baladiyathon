@@ -1,8 +1,8 @@
 'use strict';
 const assert = require('assert');
 const path = require('path');
-const Inbox = require(path.join(__dirname, '..', 'athar-desk-inbox.js'));
-const File = require(path.join(__dirname, '..', 'athar-desk-file.js'));
+const Inbox = require(path.join(__dirname, '..', 'masar-desk-inbox.js'));
+const File = require(path.join(__dirname, '..', 'masar-desk-file.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

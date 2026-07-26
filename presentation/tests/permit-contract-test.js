@@ -21,9 +21,9 @@ const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 global.window = global;
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Contract = require(path.join(ROOT, 'athar-permit-contract.js'));
-const Compare = require(path.join(ROOT, 'athar-compare-data.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Contract = require(path.join(ROOT, 'masar-permit-contract.js'));
+const Compare = require(path.join(ROOT, 'masar-compare-data.js'));
 
 const SAMPLE = JSON.parse(fs.readFileSync(
   path.join(ROOT, 'data', 'permit-contract-sample.json'), 'utf8'));
@@ -201,13 +201,13 @@ test('العقد لا يُقرأ تكاملاً منفَّذاً في أي سط�
      الادعاء الذي بُني الجدول ليمنعه. */
   const permitCycle = Compare.DIMENSIONS.find((dim) => dim.key === 'permit-cycle');
   assert.ok(permitCycle, 'بُعد دورة التصريح غائب من المقارنة');
-  assert.strictEqual(permitCycle.athar.state, 'absent',
+  assert.strictEqual(permitCycle.masar.state, 'absent',
     'المقارنة ترفع حالة دورة التصريح لأثر — العقد وصفٌ لا تنفيذ');
   assert.ok(permitCycle.betterElsewhere.length >= 3,
     'دورة التصريح لم تعد محسوبة تفوّقاً لغيرنا');
 
   const header = fs.readFileSync(
-    path.join(ROOT, 'athar-permit-contract.js'), 'utf8').slice(0, 1400);
+    path.join(ROOT, 'masar-permit-contract.js'), 'utf8').slice(0, 1400);
   assert.ok(/ليس تكاملاً/.test(header),
     'الوحدة لا تعلن أنها ليست تكاملاً — عنوانٌ يُقرأ أكبر مما فيه');
 });

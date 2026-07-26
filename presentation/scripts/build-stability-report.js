@@ -14,8 +14,8 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Stability = require(path.join(ROOT, 'athar-stability.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Stability = require(path.join(ROOT, 'masar-stability.js'));
 
 const PORTFOLIO = path.join(ROOT, 'data', 'city-portfolio.geojson');
 const OUT_JSON = path.join(ROOT, 'data', 'stability-report.json');
@@ -104,7 +104,7 @@ function main() {
     topAsk: asks[0] || null,
   };
   fs.writeFileSync(OUT_SHIM,
-    `window.ATHAR_STABILITY = ${JSON.stringify(summary)};\n`);
+    `window.MASAR_STABILITY = ${JSON.stringify(summary)};\n`);
   fs.writeFileSync(path.join(ROOT, 'data', 'stability-summary.json'),
     `${JSON.stringify(summary, null, 2)}\n`);
   fs.writeFileSync(OUT_MD, markdown(report));

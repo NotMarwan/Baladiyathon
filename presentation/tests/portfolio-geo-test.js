@@ -2,7 +2,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const Data = require(path.join(__dirname, '..', 'athar-worksmap-data.js'));
+const Data = require(path.join(__dirname, '..', 'masar-worksmap-data.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -155,13 +155,13 @@ ok('التطبيع لا يُسقط أي سجل', () => {
 
 ok('النسخة المضمّنة مطابقة للملف', () => {
   const wrapped = fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson.js'), 'utf8');
-  const embedded = wrapped.replace(/^window\.ATHAR_CITY_PORTFOLIO = /, '').replace(/;\s*$/, '');
+  const embedded = wrapped.replace(/^window\.MASAR_CITY_PORTFOLIO = /, '').replace(/;\s*$/, '');
   assert.deepStrictEqual(JSON.parse(embedded), JSON.parse(raw));
 });
 
 /* ---- التعارض حقيقة في البيانات لا حالة في السجل ---- */
 
-const DigOnce = require(path.join(ROOT, 'athar-desk-digonce.js'));
+const DigOnce = require(path.join(ROOT, 'masar-desk-digonce.js'));
 
 ok('المحفظة تحتوي تصاريح تتشارك الممر فعلاً', () => {
   // البوابة السابقة كانت تفحص وجود حالة «يحتاج تنسيقاً» وحدها، فمرّت محفظةٌ

@@ -16,9 +16,9 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Cases = require(path.join(ROOT, 'athar-comparable-cases.js'));
-const Sensitivity = require(path.join(ROOT, 'athar-sensitivity.js'));
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Cases = require(path.join(ROOT, 'masar-comparable-cases.js'));
+const Sensitivity = require(path.join(ROOT, 'masar-sensitivity.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 let count = 0;
 function test(name, fn) {

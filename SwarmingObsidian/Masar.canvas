@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    {"id":"a000000000000001","type":"file","file":"01 Masar/Masar - Master.md","x":-260,"y":-120,"width":520,"height":240,"color":"4"},
+
+    {"id":"a000000000000010","type":"text","x":-320,"y":220,"width":640,"height":190,"color":"5","text":"## المحرّك\n1. scorer أثر قبل الترخيص\n2. محاكاة SUMO + بديل BPR سريع\n3. مُحسِّن الجدولة والدمج (خنادق مشتركة)\n4. كاشف التأثير المتراكم\n5. مولّد خطة مرور عربية PDF\n6. تغذية مفتوحة للملاحة"},
+
+    {"id":"a000000000000002","type":"file","file":"01 Masar/Merges & Fixes.md","x":-980,"y":-160,"width":320,"height":140,"color":"2"},
+    {"id":"a000000000000003","type":"file","file":"01 Masar/New Capabilities (research).md","x":-980,"y":40,"width":320,"height":120,"color":"3"},
+    {"id":"a000000000000004","type":"file","file":"01 Masar/Demo Script.md","x":-980,"y":200,"width":320,"height":120,"color":"6"},
+
+    {"id":"a000000000000005","type":"file","file":"01 Masar/Masar - Evidence (Challenge 3).md","x":420,"y":-200,"width":320,"height":120,"color":"3"},
+    {"id":"a000000000000006","type":"file","file":"01 Masar/Absorbed - HAFRA.md","x":420,"y":-40,"width":320,"height":90},
+    {"id":"a000000000000007","type":"file","file":"01 Masar/Absorbed - MIRAT AL-MADINA.md","x":420,"y":80,"width":320,"height":90},
+    {"id":"a000000000000008","type":"file","file":"01 Masar/attachments/masar.html","x":420,"y":200,"width":320,"height":120,"color":"4"},
+
+    {"id":"a000000000000009","type":"file","file":"00 Masar - Home.md","x":-260,"y":-380,"width":520,"height":110,"color":"4"},
+
+    {"id":"a000000000000020","type":"text","x":-980,"y":380,"width":320,"height":90,"color":"1","text":"## 99 Archive\nكل ما لا يخص أثر (رقيب · مُطابِق · المفاهيم · الايجنتس · التقييمات)."}
+  ],
+  "edges": [
+    {"id":"ea00000000000001","fromNode":"a000000000000009","fromSide":"bottom","toNode":"a000000000000001","toSide":"top","label":"البوابة"},
+    {"id":"ea00000000000002","fromNode":"a000000000000001","fromSide":"bottom","toNode":"a000000000000010","toSide":"top","label":"يعمل بـ"},
+    {"id":"ea00000000000003","fromNode":"a000000000000002","fromSide":"right","toNode":"a000000000000001","toSide":"left","color":"2","label":"9.0 ← 9.4"},
+    {"id":"ea00000000000004","fromNode":"a000000000000003","fromSide":"right","toNode":"a000000000000001","toSide":"left","color":"3","label":"قدرات +"},
+    {"id":"ea00000000000005","fromNode":"a000000000000004","fromSide":"right","toNode":"a000000000000001","toSide":"left","color":"6","label":"عرض"},
+    {"id":"ea00000000000006","fromNode":"a000000000000001","fromSide":"right","toNode":"a000000000000005","toSide":"left","label":"أدلة"},
+    {"id":"ea00000000000007","fromNode":"a000000000000006","fromSide":"left","toNode":"a000000000000001","toSide":"right","label":"مُميّز"},
+    {"id":"ea00000000000008","fromNode":"a000000000000007","fromSide":"left","toNode":"a000000000000001","toSide":"right","label":"WOW"},
+    {"id":"ea00000000000009","fromNode":"a000000000000001","fromSide":"right","toNode":"a000000000000008","toSide":"left","label":"دوسيه"}
+  ]
+}

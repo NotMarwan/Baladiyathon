@@ -1,6 +1,6 @@
 'use strict';
 /**
- * أثر — قياس واقعية التوجيه مقابل محرّك مستقل.
+ * مسار — قياس واقعية التوجيه مقابل محرّك مستقل.
  * ---------------------------------------------------------------------------
  * السؤال المشروع: بأي حقّ نقول إن «دقيقتان مضافتان» رقمٌ واقعي؟
  *
@@ -31,7 +31,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const Routing = require('../athar-city-routing.js');
+const Routing = require('../masar-city-routing.js');
 
 const DATA = path.join(__dirname, '..', 'data');
 const OSRM = 'https://router.project-osrm.org/route/v1/driving/';
@@ -75,7 +75,7 @@ async function osrmRoute(from, to) {
   const url = `${OSRM}${from[0]},${from[1]};${to[0]},${to[1]}?overview=false`;
   let response;
   try {
-    response = await fetch(url, { headers: { 'User-Agent': 'athar-calibration' } });
+    response = await fetch(url, { headers: { 'User-Agent': 'masar-calibration' } });
   } catch (err) {
     return null;
   }

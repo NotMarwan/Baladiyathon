@@ -6,9 +6,9 @@
  * الحقيقي مقطع من شارع، فيجب أن ينحني مع الإسفلت ويغطي عرض الشارع.
  *
  * الناتج ملفان في كائن واحد:
- *   ATHAR_CORRIDOR_NODES    ست نقاط [lat,lng] — حدود المقاطع الخمسة (يستهلكها
+ *   MASAR_CORRIDOR_NODES    ست نقاط [lat,lng] — حدود المقاطع الخمسة (يستهلكها
  *                           النموذج في منتصف المقطع والتصدير وموجة الصدمة)
- *   ATHAR_CORRIDOR_SEGMENTS خمسة مسارات [[lng,lat]…] تتبع المحور نقطةً نقطة
+ *   MASAR_CORRIDOR_SEGMENTS خمسة مسارات [[lng,lat]…] تتبع المحور نقطةً نقطة
  *
  * بيانات الطرق © مساهمو OpenStreetMap — رخصة ODbL.
  */
@@ -42,8 +42,8 @@ function main() {
     }
   }
 
-  const body = 'window.ATHAR_CORRIDOR_NODES = ' + JSON.stringify(nodes) + ';\n'
-    + 'window.ATHAR_CORRIDOR_SEGMENTS = ' + JSON.stringify(segments) + ';\n';
+  const body = 'window.MASAR_CORRIDOR_NODES = ' + JSON.stringify(nodes) + ';\n'
+    + 'window.MASAR_CORRIDOR_SEGMENTS = ' + JSON.stringify(segments) + ';\n';
 
   fs.writeFileSync(path.join(ROOT, 'data', 'corridor-geometry.js'), body);
   console.log(

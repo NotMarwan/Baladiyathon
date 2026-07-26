@@ -71,7 +71,7 @@
       "key": "portfolioPermitCount",
       "value": 150,
       "unit": "تصريح",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "حجم المحفظة التمثيلية"
     },
@@ -79,7 +79,7 @@
       "key": "portfolioMode",
       "value": "synthetic",
       "unit": "وضع",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "المحفظة مولَّدة ببذرة ثابتة — ليست بيانات رسمية"
     },
@@ -87,7 +87,7 @@
       "key": "portfolioSeed",
       "value": 20260727,
       "unit": "بذرة",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "بذرة التوليد الثابتة — شرط إعادة الإنتاج"
     },
@@ -95,7 +95,7 @@
       "key": "corridorCount",
       "value": 12,
       "unit": "ممر",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "ممرات المحفظة التجريدية"
     },
@@ -103,7 +103,7 @@
       "key": "coordinationGroupCount",
       "value": 34,
       "unit": "مجموعة",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "مجموعات التنسيق المكتشفة"
     },
@@ -111,7 +111,7 @@
       "key": "groupedPermitCount",
       "value": 125,
       "unit": "تصريح",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "التصاريح الواقعة داخل مجموعات تنسيق"
     },
@@ -119,7 +119,7 @@
       "key": "additionalPermitsInGroups",
       "value": 91,
       "unit": "تصريح",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "التصاريح الزائدة عن واحد داخل المجموعات — عدّ لا أثر"
     },
@@ -127,7 +127,7 @@
       "key": "duplicateTrenchKmEquivalent",
       "value": 91,
       "unit": "كم",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "طول حفر مكرر مكافئ بافتراض تداخل تام — لا هندسة محسوبة"
     },
@@ -135,7 +135,7 @@
       "key": "portfolioDeltaVehHours",
       "value": 909686.9688661927,
       "unit": "ساعة-مركبة",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "فرق نموذجي بين الجدول المقدَّم والأمثل — لا قياس ميداني"
     },
@@ -143,7 +143,7 @@
       "key": "portfolioDeltaPct",
       "value": 89.20629845869914,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "فرق نموذجي بالنسبة — لا وفر مثبت"
     },
@@ -151,7 +151,7 @@
       "key": "deltaHourShareLowPct",
       "value": 65.03805566306426,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "أدنى حصة لإزاحة ساعة البدء من الخفض"
     },
@@ -159,7 +159,7 @@
       "key": "deltaHourShareHighPct",
       "value": 104.94866151260857,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "أعلى حصة لإزاحة ساعة البدء من الخفض — الإسناد يعتمد على ترتيب العوامل"
     },
@@ -167,7 +167,7 @@
       "key": "deltaEnvelopeLowPct",
       "value": 83.89101700444336,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "أدنى الدلتا عبر افتراضَي الأرضية وأسّ المنحنى — كلاهما بلا سند"
     },
@@ -175,7 +175,7 @@
       "key": "deltaEnvelopeHighPct",
       "value": 97.90677765358141,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "أعلى الدلتا عبر الافتراضين نفسيهما"
     },
@@ -183,7 +183,7 @@
       "key": "baselineDaytimeStartSharePct",
       "value": 94,
       "unit": "٪",
-      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
       "grade": "model-derived",
       "limit": "حصة تصاريح الأساس ببدء نهاري — الدلتا تقيس رداءة الأساس أيضاً"
     },
@@ -289,7 +289,7 @@
       "unit": "منطقة عمل",
       "source": "data/wzdx-interop-summary.json — تغذية Washington State DOT، مثبَّتة ببصمتها",
       "grade": "external-official",
-      "limit": "تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا عن صحة أي رقم في أثر."
+      "limit": "تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا عن صحة أي رقم في مسار."
     },
     {
       "key": "interopFeedErrors",
@@ -367,7 +367,7 @@
       "key": "workZoneLaneCapacity",
       "value": 1475,
       "unit": "مركبة/ساعة/حارة",
-      "source": "athar-engine.js — نقطة التشغيل، وسندها delaware-arterial في data/comparable-cases.json",
+      "source": "masar-engine.js — نقطة التشغيل، وسندها delaware-arterial في data/comparable-cases.json",
       "grade": "global-field-measured",
       "limit": "سعة شريان في الرياض. ولا تُسقط على إشارة بعينها: الدراسة تعطي متوسطاً عبر خمسة وعشرين موقعاً، وتوزيعها نفسه واسع."
     },

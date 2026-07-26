@@ -40,10 +40,10 @@
   "freeFlowMin": 6
  },
  "governingDigests": {
-  "athar-engine.js": "1fefba5a88387558",
-  "athar-provenance.js": "f2e6c819b906cd87",
-  "athar-canonical.js": "0c6b0610774554e8",
-  "athar-portfolio.js": "b151704ace4e5415",
+  "masar-engine.js": "1fefba5a88387558",
+  "masar-provenance.js": "f2e6c819b906cd87",
+  "masar-canonical.js": "0c6b0610774554e8",
+  "masar-portfolio.js": "b151704ace4e5415",
   "data/city-portfolio.geojson.js": "76f0b214756e6a12"
  },
  "distribution": {

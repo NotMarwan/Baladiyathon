@@ -3,7 +3,7 @@
  * WP-A5 — كل رقم مشترك من مصدر حاكم واحد.
  *
  * مقارنة الصفحات ببعضها تُثبت الاتساق ولا تُثبت الصحة: صفحتان متطابقتان على
- * رقم خاطئ تمرّان. فتُقارَن الأسطح كلها بمصدر حاكم واحد — `athar-canonical.js`
+ * رقم خاطئ تمرّان. فتُقارَن الأسطح كلها بمصدر حاكم واحد — `masar-canonical.js`
  * — يحسب مؤشراته من بيانات المحفظة ولا يخزّن رقماً مكتوباً يدوياً.
  *
  * الأسطح المفحوصة: مكتب المراجع · صفحة أثر المدينة · بطاقة الفكرة · العرض
@@ -20,7 +20,7 @@ const ROOT = path.join(__dirname, '..');
 const REPO = path.join(ROOT, '..');
 
 global.window = global;
-const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
+const Canonical = require(path.join(ROOT, 'masar-canonical.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -34,18 +34,18 @@ const M = Canonical.metrics();
 /* الأسطح التي يصلها المحكّم. مسارٌ غير موجود يُعدّ خطأ فحص لا يُبتلع: بوابة
    تفحص ملفاً غير موجود تعطي أخضر كاذباً. */
 const SURFACES = [
-  { name: 'مكتب المراجع', file: path.join(ROOT, 'athar-desk.html') },
-  { name: 'مُقلع المكتب', file: path.join(ROOT, 'athar-desk-boot.js') },
-  { name: 'صفحة أثر المدينة', file: path.join(ROOT, 'athar-city-impact.html') },
-  { name: 'الخريطة', file: path.join(ROOT, 'athar-map.html') },
-  { name: 'النموذج القديم', file: path.join(ROOT, 'athar-prototype.html') },
-  { name: 'سجل المصادر', file: path.join(ROOT, 'athar-sources.html') },
-  { name: 'README', file: path.join(ROOT, 'README-athar.md') },
+  { name: 'مكتب المراجع', file: path.join(ROOT, 'masar-desk.html') },
+  { name: 'مُقلع المكتب', file: path.join(ROOT, 'masar-desk-boot.js') },
+  { name: 'صفحة أثر المدينة', file: path.join(ROOT, 'masar-city-impact.html') },
+  { name: 'الخريطة', file: path.join(ROOT, 'masar-map.html') },
+  { name: 'النموذج القديم', file: path.join(ROOT, 'masar-prototype.html') },
+  { name: 'سجل المصادر', file: path.join(ROOT, 'masar-sources.html') },
+  { name: 'README', file: path.join(ROOT, 'README-masar.md') },
   { name: 'بطاقة الفكرة', file: path.join(REPO, 'بطاقة-الفكرة.md') },
 ];
 
 const DECK = path.join(REPO, 'output', 'submission',
-  'athar-baladiyathon-judging-deck.html');
+  'masar-baladiyathon-judging-deck.html');
 if (fs.existsSync(DECK)) SURFACES.push({ name: 'العرض المقدَّم', file: DECK });
 
 /**
@@ -200,7 +200,7 @@ test('وضع البيانات مصطلح واحد — لا «تخيلي» ولا
 test('المصدر الحاكم يحسب ولا يخزّن — لا رقم مكتوب يدوياً فيه', () => {
   /* الخطر المقابل للتوحيد: أن يصير الملف الحاكم مكاناً جديداً لزرع أرقام.
      الفحص يمنع أي عدد من ثلاث خانات فأكثر مكتوباً حرفياً في الملف. */
-  const source = fs.readFileSync(path.join(ROOT, 'athar-canonical.js'), 'utf8');
+  const source = fs.readFileSync(path.join(ROOT, 'masar-canonical.js'), 'utf8');
   const code = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
   const planted = code.match(/[^\w.](\d{3,})/g) || [];
   assert.strictEqual(planted.length, 0,

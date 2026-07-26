@@ -16,11 +16,11 @@ function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 const ROOT = path.join(__dirname, '..');
 // سطح المكتب صار ملفين: الهيكل في HTML والسلوك في المُقلع. البوابة تقرأ
 // السطح كاملاً كما يراه المتصفح — إخراج السكربت لا يُعفيه من أيّ شرط هنا.
-const deskHtml = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
-const deskBoot = fs.readFileSync(path.join(ROOT, 'athar-desk-boot.js'), 'utf8');
+const deskHtml = fs.readFileSync(path.join(ROOT, 'masar-desk.html'), 'utf8');
+const deskBoot = fs.readFileSync(path.join(ROOT, 'masar-desk-boot.js'), 'utf8');
 // الحساب خرج من المُقلع إلى وحدة نقية تُختبر في Node؛ والبوابة تسأل عن السطح
 // كما يراه المتصفح، فتقرأ الوحدة معه — لا تُعفى خطوة لأنها انتقلت ملفاً.
-const deskAnalysis = fs.readFileSync(path.join(ROOT, 'athar-desk-analysis.js'), 'utf8');
+const deskAnalysis = fs.readFileSync(path.join(ROOT, 'masar-desk-analysis.js'), 'utf8');
 const desk = deskHtml + '\n' + deskBoot + '\n' + deskAnalysis;
 
 ok('١ — يجد عملاً: الصندوق والبحث والمرشح والفرز على الشاشة', () => {
@@ -31,14 +31,14 @@ ok('١ — يجد عملاً: الصندوق والبحث والمرشح وال�
 });
 
 ok('٢ — يفهم موقعه وحالته: الخريطة ووسم الحالة على الشاشة نفسها', () => {
-  assert.ok(desk.indexOf('AtharWorksMap') !== -1, 'لا خريطة على المكتب');
-  assert.ok(desk.indexOf('AtharDeskStates') !== -1, 'لا وسوم حالة');
+  assert.ok(desk.indexOf('MasarWorksMap') !== -1, 'لا خريطة على المكتب');
+  assert.ok(desk.indexOf('MasarDeskStates') !== -1, 'لا وسوم حالة');
   assert.ok(desk.indexOf('highlightWork') !== -1, 'الخريطة لا تتبع التحديد');
   assert.ok(desk.indexOf('onWorkClick') !== -1, 'النقر على الخريطة لا يحدّد الصف');
 });
 
 ok('٣ — يرى الأثر والثقة: المحرك وشريط الثقة موصولان', () => {
-  assert.ok(deskBoot.indexOf('AtharDeskAnalysis.evaluate') !== -1, 'المكتب لا يستدعي التحليل');
+  assert.ok(deskBoot.indexOf('MasarDeskAnalysis.evaluate') !== -1, 'المكتب لا يستدعي التحليل');
   assert.ok(desk.indexOf('Engine.score') !== -1, 'الأثر غير محسوب');
   assert.ok(desk.indexOf('renderConfidence') !== -1, 'لا شريط ثقة');
 });
@@ -54,19 +54,19 @@ ok('٥ — يفهم سبب التوصية: الأسباب تُمرَّر إلى 
 });
 
 ok('٦ — يعتمد أو يُرجع خلف حارس يعرض عائقه', () => {
-  assert.ok(desk.indexOf('AtharDeskStates.guard') !== -1, 'الاعتماد بلا حارس');
+  assert.ok(desk.indexOf('MasarDeskStates.guard') !== -1, 'الاعتماد بلا حارس');
   assert.ok(desk.indexOf('renderBlockers') !== -1, 'العوائق لا تُعرض');
-  assert.ok(desk.indexOf('AtharDeskStates.apply') !== -1, 'لا تطبيق ينتج نسخة');
+  assert.ok(desk.indexOf('MasarDeskStates.apply') !== -1, 'لا تطبيق ينتج نسخة');
 });
 
 ok('٧ — يُخرج خطة إدارة المرور من الشاشة نفسها لا بإحالة', () => {
   assert.ok(desk.indexOf("'plan'") !== -1, 'لا تبويب خطة');
-  assert.ok(desk.indexOf('AtharDeskPlan.renderTab') !== -1, 'التبويب لا يبني خطة');
-  assert.ok(desk.indexOf('AtharDeskPlan.toDocument') !== -1, 'لا وثيقة تُنزَّل');
-  assert.ok(desk.indexOf('AtharWzdxExport.buildFeed') !== -1, 'لا تصدير معياري');
+  assert.ok(desk.indexOf('MasarDeskPlan.renderTab') !== -1, 'التبويب لا يبني خطة');
+  assert.ok(desk.indexOf('MasarDeskPlan.toDocument') !== -1, 'لا وثيقة تُنزَّل');
+  assert.ok(desk.indexOf('MasarWzdxExport.buildFeed') !== -1, 'لا تصدير معياري');
   // الشرط على **تبويب الخطة** لا على السطح كله: اسم النموذج التفاعلي يظهر
   // مشروعاً كوجهة تنقّل في لوحة الأوامر، ومنعه هناك يحرس صياغةً لا معنى.
-  const planModule = fs.readFileSync(path.join(ROOT, 'athar-desk-plan.js'), 'utf8');
+  const planModule = fs.readFileSync(path.join(ROOT, 'masar-desk-plan.js'), 'utf8');
   assert.ok(planModule.indexOf('النموذج التفاعلي') === -1,
     'تبويب الخطة ما زال يحيل إلى صفحة أخرى بدل أن يُخرج');
   assert.ok(planModule.indexOf('نزّل خطة إدارة المرور') !== -1, 'لا زرّ تنزيل للخطة');
@@ -79,25 +79,25 @@ ok('زرّ بلا إجراء لا يمرّ إلى مسار الإجراءات', 
 });
 
 ok('لا إعادة إدخال: المكتب يقرأ المحفظة ولا يعرض نموذج إدخال يدوي', () => {
-  assert.ok(desk.indexOf('ATHAR_CITY_PORTFOLIO') !== -1, 'لا محفظة');
+  assert.ok(desk.indexOf('MASAR_CITY_PORTFOLIO') !== -1, 'لا محفظة');
   assert.ok(desk.indexOf('<input') === -1 || desk.indexOf('type="number"') === -1,
     'نموذج إدخال يدوي على مكتب المراجع');
 });
 
 ok('القرار يترك أثراً: سجل تدقيق يُبنى من كل إجراء', () => {
-  assert.ok(desk.indexOf('AtharDecisionRecord.create') !== -1, 'لا سجل قرار');
+  assert.ok(desk.indexOf('MasarDecisionRecord.create') !== -1, 'لا سجل قرار');
   assert.ok(desk.indexOf('renderAudit') !== -1, 'السجل لا يُعرض');
 });
 
 ok('القرار يبقى بعد تحديث الصفحة — لا يعيش في ذاكرة الجلسة', () => {
   assert.ok(desk.indexOf('localStorage') !== -1, 'لا تخزين محلي');
-  assert.ok(desk.indexOf('AtharDecisionRecord.restore') !== -1,
+  assert.ok(desk.indexOf('MasarDecisionRecord.restore') !== -1,
     'المحفظة لا تُبنى من السجل عند الإقلاع');
-  assert.ok(desk.indexOf('AtharDecisionRecord.serialize') !== -1, 'لا حفظ');
+  assert.ok(desk.indexOf('MasarDecisionRecord.serialize') !== -1, 'لا حفظ');
 });
 
 ok('نسخة المدخلات تُحفظ مع القرار — القاعدة التي لا تُكسر', () => {
-  assert.ok(/AtharDecisionRecord\.create\([^)]*analysis\.input/.test(desk.replace(/\s+/g, ' ')),
+  assert.ok(/MasarDecisionRecord\.create\([^)]*analysis\.input/.test(desk.replace(/\s+/g, ' ')),
     'القرار يُحفظ بلا نسخة مدخلاته');
 });
 
@@ -135,9 +135,9 @@ ok('شارة الصدق على المكتب — البيانات توضيحية 
 });
 
 ok('كل صفحات العائلة داخل نظام الوسوم الواحد', () => {
-  ['athar-desk.html', 'athar-map.html', 'athar-decision.html'].forEach((page) => {
+  ['masar-desk.html', 'masar-map.html', 'masar-decision.html'].forEach((page) => {
     const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
-    assert.ok(html.indexOf('athar-tokens.css') !== -1 || html.indexOf('athar-nav.js') !== -1,
+    assert.ok(html.indexOf('masar-tokens.css') !== -1 || html.indexOf('masar-nav.js') !== -1,
       `${page} خارج نظام الوسوم`);
   });
 });
@@ -161,15 +161,15 @@ ok('لا سكربت داخل صفحة المكتب — السلوك كله في 
 
 ok('وسوم الهوية تصل قبل أول رسم لا بعد وصول سكربت', () => {
   const head = deskHtml.slice(0, deskHtml.indexOf('</head>'));
-  assert.ok(head.indexOf('athar-tokens.css') !== -1,
+  assert.ok(head.indexOf('masar-tokens.css') !== -1,
     'الوسوم محقونة بجافاسكربت — الهيكل سيُرسم بمتغيّرات غير معرَّفة');
 });
 
 ok('هيكل الانتظار مكتوب في الصفحة لا مُصيَّر بجافاسكربت', () => {
   assert.ok(deskHtml.indexOf('desk-skeleton') !== -1, 'لا هيكل انتظار في الصندوق');
   assert.ok(deskHtml.indexOf('desk-boot') !== -1, 'لا حالة تحميل على الخريطة');
-  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
-  assert.ok(/\.desk-skeleton-row\s*\{[^}]*--athar-row-h/.test(css),
+  const css = fs.readFileSync(path.join(ROOT, 'masar-desk.css'), 'utf8');
+  assert.ok(/\.desk-skeleton-row\s*\{[^}]*--masar-row-h/.test(css),
     'الهيكل لا يطابق ارتفاع الصف الحقيقي — ستقفز اللوحة حين يحل محله');
 });
 
@@ -197,7 +197,7 @@ ok('غطاء التحميل ينزاح دائماً — بحدث أو بسقف �
 ok('تعذّر الخريطة يُعلَن ولا يُترك فراغاً', () => {
   assert.ok(deskBoot.indexOf('desk-map-down') !== -1,
     'لا لوحة تُعلن تعذّر الخريطة');
-  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'masar-desk.css'), 'utf8');
   assert.ok(css.indexOf('.desk-map-down') !== -1, 'لا تنسيق للوحة التعذّر');
 });
 
@@ -230,7 +230,7 @@ ok('الفرز والترشيح لا يحرّكان الخريطة — التح�
 });
 
 ok('الصندوق يبقى صالحاً للعمل تحت غطاء الخريطة', () => {
-  const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'masar-desk.css'), 'utf8');
   const boot = css.slice(css.indexOf('.desk-boot {'));
   assert.ok(/position:\s*absolute/.test(boot.slice(0, 220)),
     'الغطاء ليس مطلقاً داخل لوحة الخريطة — قد يحجب الفرز');

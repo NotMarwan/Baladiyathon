@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Plain node:assert suite for Athar's independent innovation loops.
+ * Plain node:assert suite for Masar's independent innovation loops.
  * Run: node presentation/tests/innovation-test.js
  */
 
@@ -10,11 +10,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const Demo = require(path.join(__dirname, '..', 'data', 'innovation-demo-data.js'));
-const Boundary = require(path.join(__dirname, '..', 'athar-boundary.js'));
-const Budget = require(path.join(__dirname, '..', 'athar-budget.js'));
-const Reasons = require(path.join(__dirname, '..', 'athar-reasons.js'));
-const Conflict = require(path.join(__dirname, '..', 'athar-conflict.js'));
-const Memory = require(path.join(__dirname, '..', 'athar-memory.js'));
+const Boundary = require(path.join(__dirname, '..', 'masar-boundary.js'));
+const Budget = require(path.join(__dirname, '..', 'masar-budget.js'));
+const Reasons = require(path.join(__dirname, '..', 'masar-reasons.js'));
+const Conflict = require(path.join(__dirname, '..', 'masar-conflict.js'));
+const Memory = require(path.join(__dirname, '..', 'masar-memory.js'));
 
 let count = 0;
 
@@ -306,15 +306,15 @@ test('calibration judgments respond to the supplied success threshold', () => {
 });
 
 test('offline lab contains every innovation scene and local dependency', () => {
-  const labPath = path.join(__dirname, '..', 'athar-lab.html');
+  const labPath = path.join(__dirname, '..', 'masar-lab.html');
   const lab = fs.readFileSync(labPath, 'utf8');
   const localAssets = [
-    'athar-engine.js',
-    'athar-boundary.js',
-    'athar-budget.js',
-    'athar-reasons.js',
-    'athar-conflict.js',
-    'athar-memory.js',
+    'masar-engine.js',
+    'masar-boundary.js',
+    'masar-budget.js',
+    'masar-reasons.js',
+    'masar-conflict.js',
+    'masar-memory.js',
     'innovation-demo-data.js',
   ];
   const scenes = [
@@ -338,7 +338,7 @@ test('offline lab contains every innovation scene and local dependency', () => {
 
 test('offline lab exposes live controls and honest competitive positioning', () => {
   const lab = fs.readFileSync(
-    path.join(__dirname, '..', 'athar-lab.html'),
+    path.join(__dirname, '..', 'masar-lab.html'),
     'utf8'
   );
 

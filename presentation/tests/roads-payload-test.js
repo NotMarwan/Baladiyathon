@@ -3,7 +3,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const Lazy = require('../athar-roads-lazy.js');
+const Lazy = require('../masar-roads-lazy.js');
 const { simplify, slimProperties, TOLERANCE_M, ARTERIAL } = require('../scripts/slim-roads.js');
 
 let passed = 0;
@@ -131,18 +131,18 @@ ok('المسار الافتراضي محلي — لا مصدر خارجي في �
 ok('كل صفحة خريطة توصل الحلقة الثانية', () => {
   // سلوك المكتب في مُقلعه لا في صفحته — والوصل يُقاس حيث يقع.
   const SURFACES = {
-    'athar-desk.html': ['athar-desk.html', 'athar-desk-boot.js'],
-    'athar-map.html': ['athar-map.html'],
-    'athar-prototype.html': ['athar-prototype.html'],
+    'masar-desk.html': ['masar-desk.html', 'masar-desk-boot.js'],
+    'masar-map.html': ['masar-map.html'],
+    'masar-prototype.html': ['masar-prototype.html'],
   };
 
   Object.keys(SURFACES).forEach((page) => {
     const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
-    assert.ok(html.indexOf('athar-roads-lazy.js') !== -1, `${page} بلا حلقة ثانية`);
+    assert.ok(html.indexOf('masar-roads-lazy.js') !== -1, `${page} بلا حلقة ثانية`);
 
     const surface = SURFACES[page]
       .map((file) => fs.readFileSync(path.join(ROOT, file), 'utf8')).join('\n');
-    assert.ok(surface.indexOf('AtharRoadsLazy.attach') !== -1,
+    assert.ok(surface.indexOf('MasarRoadsLazy.attach') !== -1,
       `${page} يحمّل الوحدة ولا يستدعيها`);
   });
 });
@@ -177,7 +177,7 @@ ok('وسوم التوجيه محفوظة بعد التنحيف — الاتجا�
 });
 
 ok('صفحة الخريطة تحمّل شوارع الأحياء بعد رسم التوجيه، والمباني خارج السلسلة', () => {
-  const page = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
+  const page = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
   const graphAt = page.indexOf('riyadh-route-graph.js');
   const hoodAt = page.indexOf('riyadh-roads-neighbourhood.geojson.js');
   assert.ok(hoodAt !== -1, 'شوارع الأحياء غير محمَّلة');
@@ -190,7 +190,7 @@ ok('صفحة الخريطة تحمّل شوارع الأحياء بعد رسم �
    */
   assert.ok(page.indexOf('attachBuildings') === -1,
     'المدينة كلها ما زالت تُحمَّل دفعةً واحدة');
-  assert.ok(page.indexOf('AtharBuildingsLazy.install') !== -1,
+  assert.ok(page.indexOf('MasarBuildingsLazy.install') !== -1,
     'المباني بلا تحميلٍ حسب النطاق');
 });
 

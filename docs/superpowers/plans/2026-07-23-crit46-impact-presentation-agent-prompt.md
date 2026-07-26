@@ -59,11 +59,11 @@ C:\Users\wasan\Downloads\Swarm\Baladiyathon
 docs\FINAL-STRICT-EVALUATION.md
 docs\REPORT-crit4.md
 docs\FEASIBILITY.md
-presentation\athar-pitch.html
-presentation\athar.html
-presentation\athar-merged.html
-presentation\athar-sources.html
-presentation\athar-impact-calibration.js
+presentation\masar-pitch.html
+presentation\masar.html
+presentation\masar-merged.html
+presentation\masar-sources.html
+presentation\masar-impact-calibration.js
 presentation\tests\engine-test.js
 presentation\tests\ui-smoke-test.js
 بطاقة-الفكرة.md
@@ -79,13 +79,13 @@ node presentation/tests/innovation-test.js
 
 يمكنك إنشاء أو تعديل هذه الملفات فقط:
 
-presentation\athar-shadow-evaluation.js
+presentation\masar-shadow-evaluation.js
 presentation\tests\shadow-evaluation-test.js
 presentation\tests\pitch-integrity-test.js
-presentation\athar-pitch.html
-presentation\athar.html
-presentation\athar-merged.html
-presentation\athar-sources.html
+presentation\masar-pitch.html
+presentation\masar.html
+presentation\masar-merged.html
+presentation\masar-sources.html
 بطاقة-الفكرة.md
 docs\SHADOW-PILOT.md
 docs\REPORT-crit46-final.md
@@ -139,7 +139,7 @@ RCRC open data bus and metro official
 
 أنشئ:
 
-presentation\athar-shadow-evaluation.js
+presentation\masar-shadow-evaluation.js
 
 يجب أن تصدّر:
 
@@ -203,7 +203,7 @@ presentation\tests\shadow-evaluation-test.js
 استخدم الهيكل:
 
 const assert = require('node:assert');
-const Shadow = require('../athar-shadow-evaluation.js');
+const Shadow = require('../masar-shadow-evaluation.js');
 
 let count = 0;
 function test(name, fn) {
@@ -352,7 +352,7 @@ node presentation/tests/shadow-evaluation-test.js
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
-    root.AtharShadowEvaluation = factory();
+    root.MasarShadowEvaluation = factory();
   }
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
@@ -613,9 +613,9 @@ node presentation/tests/pitch-integrity-test.js
 
 عدّل الملفات الثلاثة بحيث تتطابق القصة والأرقام:
 
-presentation\athar-pitch.html
-presentation\athar.html
-presentation\athar-merged.html
+presentation\masar-pitch.html
+presentation\masar.html
+presentation\masar-merged.html
 
 اجعل العداد:
 
@@ -632,7 +632,7 @@ Appendix B
 
 في:
 
-presentation\athar-sources.html
+presentation\masar-sources.html
 
 أصلح الروابط المباشرة، وأضف تاريخ الوصول، وميّز بين المصدر الأولي والثانوي. احتفظ بالمصدر الثانوي فقط كشرح إذا كانت له فائدة، لكن لا تجعله سند الرقم الأساسي.
 
@@ -677,17 +677,17 @@ presentation\athar-sources.html
 
 الدورة الأولى:
 
-git add presentation/athar-shadow-evaluation.js presentation/tests/shadow-evaluation-test.js docs/SHADOW-PILOT.md
+git add presentation/masar-shadow-evaluation.js presentation/tests/shadow-evaluation-test.js docs/SHADOW-PILOT.md
 git commit -m "feat: add evidence-gated shadow impact evaluation"
 
 الدورة الثانية:
 
-git add presentation/tests/pitch-integrity-test.js presentation/athar-sources.html بطاقة-الفكرة.md
+git add presentation/tests/pitch-integrity-test.js presentation/masar-sources.html بطاقة-الفكرة.md
 git commit -m "docs: bind impact claims to primary evidence"
 
 الدورة الثالثة:
 
-git add presentation/athar-pitch.html presentation/athar.html presentation/athar-merged.html docs/REPORT-crit46-final.md
+git add presentation/masar-pitch.html presentation/masar.html presentation/masar-merged.html docs/REPORT-crit46-final.md
 git commit -m "docs: align three-minute pitch with measured evidence"
 
 قبل كل التزام شغّل:

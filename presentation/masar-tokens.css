@@ -1,0 +1,116 @@
+/* ==========================================================================
+   مسار — الوسوم البصرية
+   مصدر الحقيقة الوحيد للون والمسافة والزاوية والكثافة والتوقيت.
+   لا قواعد مكوّنات هنا: المكوّنات تقرأ من هنا ولا تكتب فيه.
+   القيم هوية أثر نفسها — ليست لوحة منافس.
+   ========================================================================== */
+
+:root {
+  /* ---- السطوح ---- */
+  --masar-canvas: #ECEFF2;
+  --masar-surface: #FFFFFF;
+  --masar-surface-raised: #F8FAFB;
+
+  /* ---- الحبر ---- */
+  --masar-ink: #15202B;
+  --masar-muted: #5A6672;
+  /* #8A929B كان يعطي 3.0:1 على الأبيض — دون حد WCAG AA للنص الصغير.
+     القيمة هنا تبلغ ≥4.5:1 على *كل* السطوح الأربعة، لا على الأبيض وحده:
+     الرمادي الفاتح --masar-canvas هو الحالة الحرجة. يحرسها tokens-test. */
+  --masar-faint: #626B76;
+  --masar-line: #D8DEE4;
+
+  /* ---- الهوية ---- */
+  --masar-primary: #1D4E77;
+  --masar-primary-hover: #163F5F;
+  --masar-primary-soft: #E9F1F7;
+  --masar-accent: #8C5C1C;
+  --masar-accent-soft: #F4EDE1;
+
+  /* ---- الحالة ----
+     كل واحدة تُقرن دائماً برمز ونص. اللون وحده لا ينقل حالة.
+     كل نبرة داكنة بما يكفي لتبلغ 4.5:1 على خلفيتها الناعمة — القيم الأصلية في
+     وثيقة التصميم كانت 3.5 (تحذير) و4.47 (نجاح)، وكلاهما دون الحد. */
+  --masar-success: #2C7351;
+  --masar-success-soft: #E4F1EA;
+  --masar-warning: #8C5C1C;
+  --masar-warning-soft: #F4EDE1;
+  --masar-danger: #B23B32;
+  --masar-danger-soft: #F7E4E1;
+  --masar-info: #2C6E9D;
+  --masar-info-soft: #E6F0F7;
+
+  /* ---- على الحبر ----
+     شريط واحد في المنتج داكن الخلفية: شريط الوفر فوق الخريطة، داكنٌ عمداً كي
+     يُقرأ إعلاناً وسط صفحة فاتحة. ونبرة النجاح الداكنة (#2C7351) تختفي عليه —
+     3:1 على --masar-ink — فتحتاج نظيرةً فاتحة. الاثنتان محسوبتان لا مختارتان:
+     يقيس tokens-test تباينهما على --masar-ink. */
+  --masar-on-ink: #FFFFFF;
+  --masar-success-on-ink: #7FD6A6;
+
+  /* ---- المسافات — 4 8 12 16 24 32 48 ---- */
+  --masar-space-1: 4px;
+  --masar-space-2: 8px;
+  --masar-space-3: 12px;
+  --masar-space-4: 16px;
+  --masar-space-6: 24px;
+  --masar-space-8: 32px;
+  --masar-space-12: 48px;
+
+  /* ---- الزوايا — الكبسولة للحالة والمرشح القصير فقط ---- */
+  --masar-radius-sm: 6px;
+  --masar-radius: 10px;
+  --masar-radius-lg: 14px;
+  --masar-radius-pill: 999px;
+
+  /* ---- كثافة وضع المراجع ---- */
+  --masar-row-h: 56px;
+  --masar-toolbar-h: 48px;
+  --masar-panel-w: 384px;
+  --masar-text: 14px;
+
+  /* ---- التوقيت ---- */
+  --masar-t-hover: 100ms;
+  --masar-t-control: 160ms;
+  --masar-t-panel: 240ms;
+  --masar-t-map: 300ms;
+  --masar-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- الظل ---- */
+  --masar-shadow-sm: 0 1px 2px rgb(21 32 43 / 0.06);
+  --masar-shadow: 0 4px 16px rgb(21 32 43 / 0.10);
+  --masar-shadow-lg: 0 12px 32px rgb(21 32 43 / 0.14);
+
+  /* ---- الخطوط ---- */
+  --masar-font: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --masar-font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+/* أداة الوصول: نص للقارئ الصوتي فقط. */
+/* WP-C1 — `inset-inline-start: 0` ليس تجميلاً.
+   بلا إزاحة صريحة يقع العنصر المطلق عند موضعه الساكن، وهو في RTL نهايةُ
+   السطر. فبكسلٌ واحد مقصوص يدفع `scrollWidth` خارج نافذة العرض، ويُزيح
+   الجسد كله في واجهة تُقرأ من اليمين.
+   ظهر على مكتب المراجع عند 390 بعد أن صار سجل القرارات ثابتاً وامتلأ شريط
+   الاستئناف — العيب كان قائماً وكانت البيانات أقصر من أن تبلغه. */
+.visually-hidden {
+  position: absolute;
+  inset-inline-start: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --masar-t-hover: 0ms;
+    --masar-t-control: 0ms;
+    --masar-t-panel: 0ms;
+    --masar-t-map: 0ms;
+  }
+}

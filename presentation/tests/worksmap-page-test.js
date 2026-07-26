@@ -2,19 +2,19 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const Interactions = require(path.join(__dirname, '..', 'athar-worksmap-interactions.js'));
-const Data = require(path.join(__dirname, '..', 'athar-worksmap-data.js'));
+const Interactions = require(path.join(__dirname, '..', 'masar-worksmap-interactions.js'));
+const Data = require(path.join(__dirname, '..', 'masar-worksmap-data.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
 const ROOT = path.join(__dirname, '..');
-const html = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
+const html = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
 
 ok('الصفحة تحمّل وحدات الخريطة والبيانات المحلية', () => {
   for (const file of [
-    'athar-worksmap-style.js', 'athar-worksmap-layers.js', 'athar-worksmap-data.js',
-    'athar-worksmap.js', 'athar-worksmap-panel.js', 'athar-worksmap-interactions.js',
+    'masar-worksmap-style.js', 'masar-worksmap-layers.js', 'masar-worksmap-data.js',
+    'masar-worksmap.js', 'masar-worksmap-panel.js', 'masar-worksmap-interactions.js',
     'data/riyadh-roads.geojson.js', 'data/riyadh-base.geojson.js', 'data/city-portfolio.geojson.js',
   ]) {
     assert.ok(html.indexOf(file) !== -1, `غير محمّل: ${file}`);
@@ -38,7 +38,7 @@ ok('كل ملف تشير إليه الصفحة موجود فعلاً', () => {
 });
 
 ok('الصفحة تعلن شريط التنقل وحاوية اللوحة والدليل', () => {
-  assert.ok(html.indexOf('src="athar-nav.js"') !== -1, 'شريط التنقل غير محمّل');
+  assert.ok(html.indexOf('src="masar-nav.js"') !== -1, 'شريط التنقل غير محمّل');
   assert.ok(html.indexOf('id="control-panel"') !== -1, 'حاوية اللوحة مفقودة');
   assert.ok(html.indexOf('wm-legend') !== -1, 'الدليل مفقود');
 });
@@ -70,26 +70,26 @@ ok('نتيجة البحث تُعلَن للقارئ الصوتي لا للعين
 });
 
 ok('بطاقة التفاصيل تذكر الجهة والمقاول — الساكن يعرف من يحفر', () => {
-  const interactions = fs.readFileSync(path.join(ROOT, 'athar-worksmap-interactions.js'), 'utf8');
+  const interactions = fs.readFileSync(path.join(ROOT, 'masar-worksmap-interactions.js'), 'utf8');
   assert.ok(interactions.indexOf('الجهة') !== -1, 'الجهة غير معروضة');
   assert.ok(interactions.indexOf('المقاول') !== -1, 'المقاول غير معروض');
 });
 
 ok('البحث لا يحقن HTML من مدخل المستخدم', () => {
-  const Interactions = require(path.join(ROOT, 'athar-worksmap-interactions.js'));
+  const Interactions = require(path.join(ROOT, 'masar-worksmap-interactions.js'));
   const out = Interactions.popupHtml({ promoter: '<script>x</script>', contractor: '"onload="y' });
   assert.ok(out.indexOf('<script>') === -1, 'تسرّب وسم');
   assert.ok(out.indexOf('onload="y') === -1, 'تسرّب سمة');
 });
 
 ok('الصفحة لا تشارك تنسيق النموذج — تنسيقها مستقل', () => {
-  assert.ok(html.indexOf('athar-worksmap-page.css') !== -1, 'تنسيق الصفحة غير محمّل');
-  assert.ok(html.indexOf('athar-map.css') === -1, 'تنسيق النموذج يسرّب إلى الصفحة');
+  assert.ok(html.indexOf('masar-worksmap-page.css') !== -1, 'تنسيق الصفحة غير محمّل');
+  assert.ok(html.indexOf('masar-map.css') === -1, 'تنسيق النموذج يسرّب إلى الصفحة');
 });
 
 ok('الخريطة تُغذّى من المحفظة الكاملة لا من عيّنة', () => {
-  assert.ok(html.indexOf('ATHAR_CITY_PORTFOLIO') !== -1, 'الصفحة ما زالت على العيّنة');
-  assert.ok(html.indexOf('ATHAR_WORKS_CITY') === -1, 'مرجع العيّنة القديمة باقٍ');
+  assert.ok(html.indexOf('MASAR_CITY_PORTFOLIO') !== -1, 'الصفحة ما زالت على العيّنة');
+  assert.ok(html.indexOf('MASAR_WORKS_CITY') === -1, 'مرجع العيّنة القديمة باقٍ');
 
   const raw = fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson'), 'utf8');
   const collection = JSON.parse(raw);

@@ -146,15 +146,15 @@ https://uk.one.network/sites/default/files/Works%20Planning%20Product%20Sheet_0.
 
 تستدعي شاشة القرار الوحدات الحالية من خلال محولات محلية.
 
-`AtharEngine`
+`MasarEngine`
 
-`AtharRouting`
+`MasarRouting`
 
-`AtharForecast`
+`MasarForecast`
 
-`AtharReasons`
+`MasarReasons`
 
-`AtharConflict`
+`MasarConflict`
 
 حد الدليل:
 
@@ -227,9 +227,9 @@ https://uk.one.network/sites/default/files/Works%20Planning%20Product%20Sheet_0.
 
 `research/2026-07-23/reports/crit12-decision-gap.md`
 
-`presentation/athar-decision.js`
+`presentation/masar-decision.js`
 
-`presentation/athar-decision.html`
+`presentation/masar-decision.html`
 
 `presentation/tests/decision-test.js`
 

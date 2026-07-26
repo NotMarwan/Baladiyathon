@@ -19,8 +19,8 @@ const ROOT = path.join(__dirname, '..');
 const REPO = path.join(ROOT, '..');
 
 global.window = global;
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Canonical = require(path.join(ROOT, 'masar-canonical.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -121,11 +121,11 @@ test('٣ · صفر اسم قطعي لطول أو وفر مبني على افتر
 
 // ---- 4 ----------------------------------------------------------------
 test('٤ · صفر رابط إلى نموذج متقاعد', () => {
-  const nav = fs.readFileSync(path.join(ROOT, 'athar-nav.js'), 'utf8');
+  const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
   const card = fs.readFileSync(path.join(REPO, 'بطاقة-الفكرة.md'), 'utf8');
-  assert.ok(card.indexOf('athar-desk.html') !== -1,
+  assert.ok(card.indexOf('masar-desk.html') !== -1,
     'بطاقة الفكرة لا تحيل إلى المكتب — النموذج الحاكم');
-  assert.ok(nav.indexOf('athar-desk.html') !== -1, 'المكتب خارج الشريط');
+  assert.ok(nav.indexOf('masar-desk.html') !== -1, 'المكتب خارج الشريط');
   (card.match(/`presentation\/([\w.-]+\.html)`/g) || []).forEach((token) => {
     const name = token.replace(/`|presentation\//g, '');
     assert.ok(fs.existsSync(path.join(ROOT, name)),
@@ -141,7 +141,7 @@ test('٥ · صفر Placeholder', () => {
 // ---- 6 ----------------------------------------------------------------
 test('٦ · صفر ادعاء كاذب عن file://', () => {
   scan(/بما فيه الخريطة/, 'ادعاء عمل الخريطة بلا خادم:');
-  const readme = fs.readFileSync(path.join(ROOT, 'README-athar.md'), 'utf8');
+  const readme = fs.readFileSync(path.join(ROOT, 'README-masar.md'), 'utf8');
   assert.ok(/الخريطة تتطلب الخادم المحلي/.test(readme),
     'README لا يسمّي قيد الخريطة');
   const card = fs.readFileSync(path.join(REPO, 'بطاقة-الفكرة.md'), 'utf8');
@@ -159,8 +159,8 @@ test('٧ · صفر ادعاء توافق WZDx قبل اجتياز المخطط',
      يبدو الادعاء معلَناً وهو مشروحٌ لمن يقرأ الشيفرة وحده.
      التجريد هنا هو نفسه المستعمل في `visible()` أعلى الملف. */
   const plan = visible(
-    fs.readFileSync(path.join(ROOT, 'athar-desk-plan.js'), 'utf8'),
-    'athar-desk-plan.js'
+    fs.readFileSync(path.join(ROOT, 'masar-desk-plan.js'), 'utf8'),
+    'masar-desk-plan.js'
   );
   /* البوابة تلاحق الدليل لا نصّاً بعينه.
      كانت تثبّت «لم يُشغَّل عليه المحقق الرسمي بعد» — وصارت تلك العبارة تنفي
@@ -191,13 +191,13 @@ test('٨ · الأرقام المشتركة متطابقة قيمةً ووحدة
 
 // ---- 9 ----------------------------------------------------------------
 test('٩ · كل رقم رئيسي يحمل sourceType والاشتقاق والحدود', () => {
-  const impact = fs.readFileSync(path.join(ROOT, 'athar-city-impact.html'), 'utf8');
-  assert.ok(impact.indexOf('athar-provenance.js') !== -1,
+  const impact = fs.readFileSync(path.join(ROOT, 'masar-city-impact.html'), 'utf8');
+  assert.ok(impact.indexOf('masar-provenance.js') !== -1,
     'صفحة الأثر لا تحمّل عقد المصدر');
   const stamps = impact.match(/stamp\('card-/g) || [];
   assert.ok(stamps.length >= 4, `${stamps.length} بطاقة موسومة فقط`);
   assert.ok(/counter-provenance/.test(impact), 'الرقم الرئيسي بلا سطر مصدر');
-  const P = require(path.join(ROOT, 'athar-provenance.js'));
+  const P = require(path.join(ROOT, 'masar-provenance.js'));
   assert.throws(() => P.value({ value: 1, unit: 'كم' }), /نوع مصدر/,
     'العقد يقبل قيمة بلا نوع مصدر');
 });

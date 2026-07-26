@@ -1,4 +1,4 @@
-# تقرير معيار الابتكار — أثر
+# تقرير معيار الابتكار — مسار
 
 ## النتيجة التنفيذية
 
@@ -16,23 +16,23 @@
 
 ## الملفات المسلّمة
 
-`presentation/athar-boundary.js`
+`presentation/masar-boundary.js`
 
-`presentation/athar-budget.js`
+`presentation/masar-budget.js`
 
-`presentation/athar-reasons.js`
+`presentation/masar-reasons.js`
 
-`presentation/athar-conflict.js`
+`presentation/masar-conflict.js`
 
-`presentation/athar-memory.js`
+`presentation/masar-memory.js`
 
 `presentation/data/innovation-demo-data.js`
 
 `presentation/tests/innovation-test.js`
 
-`presentation/athar-lab.html`
+`presentation/masar-lab.html`
 
-`docs/superpowers/plans/2026-07-23-athar-innovation-loops.md`
+`docs/superpowers/plans/2026-07-23-masar-innovation-loops.md`
 
 كلها ملفات جديدة. لم يُعدّل أي ملف قائم أو محظور في التسليم.
 
@@ -40,7 +40,7 @@
 
 الملف:
 
-`presentation/athar-boundary.js`
+`presentation/masar-boundary.js`
 
 يشتق نصف قطر التأثير من ثلاثة مكونات ظاهرة:
 
@@ -58,13 +58,13 @@ base radius × (1 + demand / capacity + closed-lane share)
 
 لا توجد مسافة ثابتة أو معامل معايرة مخفي. يعرض المختبر كل مكوّن بالأمتار ويتغير الحد بصريًا عند تغيير الحجم أو المسارات أو طول العمل.
 
-## الحلقة الثانية — ميزانية أثر المحور
+## الحلقة الثانية — ميزانية مسار المحور
 
 الملف:
 
-`presentation/athar-budget.js`
+`presentation/masar-budget.js`
 
-يجمع ساعات-المركبات للتصاريح المقبولة في المحور والشهر نفسيهما، ثم يضيف أثر الطلب الجديد ويقارنه بالسقف الذي تحدده الجهة.
+يجمع ساعات-المركبات للتصاريح المقبولة في المحور والشهر نفسيهما، ثم يضيف مسار الطلب الجديد ويقارنه بالسقف الذي تحدده الجهة.
 
 المعادلة المعروضة:
 
@@ -80,7 +80,7 @@ sum(accepted corridor permit delay in month) + requested permit delay
 
 الملف:
 
-`presentation/athar-reasons.js`
+`presentation/masar-reasons.js`
 
 يحسب لكل بديل أربعة فروق رقمية:
 
@@ -106,7 +106,7 @@ factor improvement / observed candidate-set range
 
 الملف:
 
-`presentation/athar-conflict.js`
+`presentation/masar-conflict.js`
 
 تحلل الوحدة عددًا عامًا من التصاريح وتنتج:
 
@@ -134,7 +134,7 @@ factor improvement / observed candidate-set range
 
 الملف:
 
-`presentation/athar-memory.js`
+`presentation/masar-memory.js`
 
 تحتفظ الوحدة بالمتوقع والمرصود لكل حالة، ثم تعيد حساب معامل التصحيح من البيانات:
 
@@ -196,7 +196,7 @@ sum(observed vehicle-hours) / sum(predicted vehicle-hours)
 
 تثبت سنغافورة نضج أتمتة مراجعة خطط المرور، ويثبت الحل المرجعي الدولي نضج التصاريح والتنسيق والخريطة والنشر.
 
-التميّز المقترح هو الجمع بين التوقع المنسوب، واقتصاد كود الطرق السعودي، وميزانية أثر المحور، والترتيب الكمي، والمعايرة بعد التنفيذ في طبقة قرار فوق بلدي.
+التميّز المقترح هو الجمع بين التوقع المنسوب، واقتصاد كود الطرق السعودي، وميزانية مسار المحور، والترتيب الكمي، والمعايرة بعد التنفيذ في طبقة قرار فوق بلدي.
 
 ## التحقق
 

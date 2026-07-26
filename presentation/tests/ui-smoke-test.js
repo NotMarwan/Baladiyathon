@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Static smoke checks for athar-prototype.html — no browser needed.
+ * Static smoke checks for masar-prototype.html — no browser needed.
  * Run: node presentation/tests/ui-smoke-test.js
  * يصطاد فئات الأخطاء التي كشفها التحكيم العدائي: IDs بلا معالجات،
  * وسوم «وفر» فوق أرقام ضرر، ممنوعات، وبيانات تركيبية بلا وسم.
@@ -10,8 +10,8 @@ const assert = require('node:assert');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'athar-prototype.html'), 'utf8');
-const pitchArtifacts = ['athar-pitch.html', 'athar-merged.html', 'athar.html'].map((file) => ({
+const html = fs.readFileSync(path.join(__dirname, '..', 'masar-prototype.html'), 'utf8');
+const pitchArtifacts = ['masar-pitch.html', 'masar-merged.html', 'masar.html'].map((file) => ({
   file,
   html: fs.readFileSync(path.join(__dirname, '..', file), 'utf8'),
 }));
@@ -80,7 +80,7 @@ test('wzdx export uses selected segment coordinates', () => {
 test('wzdx export consumes the selected windows without rebuilding duration', () => {
   assert.ok(/windows:\s*schedule\.windows/.test(html), 'selected windows are not passed to WZDx');
   assert.ok(
-    !/AtharEngine\.wzdx\(\{[\s\S]{0,700}durationHours:\s*state\.durationHours/.test(html),
+    !/MasarEngine\.wzdx\(\{[\s\S]{0,700}durationHours:\s*state\.durationHours/.test(html),
     'export still rebuilds a continuous schedule from the original duration'
   );
   assert.ok(/wzdxExportBtn\.disabled\s*=\s*!schedule/.test(html),
@@ -160,10 +160,10 @@ test('pitch artifacts describe the merged network routing capability', () => {
 
 // المختبر جزء من المنتج المدمج ويجب أن يكون قابلاً للوصول من النموذج والعرض.
 test('main prototype and timed pitch link to the innovation lab', () => {
-  assert.ok(/href="athar-lab\.html"/.test(html), 'prototype does not link to athar-lab.html');
+  assert.ok(/href="masar-lab\.html"/.test(html), 'prototype does not link to masar-lab.html');
   assert.ok(
-    /href="athar-lab\.html"/.test(pitchArtifacts[0].html),
-    'timed pitch does not link to athar-lab.html'
+    /href="masar-lab\.html"/.test(pitchArtifacts[0].html),
+    'timed pitch does not link to masar-lab.html'
   );
 });
 

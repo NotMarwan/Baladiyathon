@@ -1,4 +1,4 @@
-# التقييم النهائي الصارم لمشروع أثر
+# التقييم النهائي الصارم لمشروع مسار
 
 تاريخ التقييم:
 
@@ -86,9 +86,9 @@ b6c0b19f419ad8aa9a91478b191d562a10a95441
 إذا كانت مدة العمل عشر ساعات، يقسمها المحرك إلى ليلتين من ثماني ساعات، ثم يحسب ست عشرة ساعة كاملة.
 
 ```text
-presentation/athar-engine.js:218
-presentation/athar-engine.js:240
-presentation/athar-engine.js:247
+presentation/masar-engine.js:218
+presentation/masar-engine.js:240
+presentation/masar-engine.js:247
 ```
 
 هذا يغيّر ترتيب البدائل والأثر المحسوب.
@@ -98,10 +98,10 @@ presentation/athar-engine.js:247
 عند اختيار عمل ليلي متقطع، يصدر الملف فترة متصلة واحدة بمدة الطلب الأصلية، بدلاً من نوافذ ليلية مستقلة.
 
 ```text
-presentation/athar-prototype.html:1345
-presentation/athar-prototype.html:1360
-presentation/athar-engine.js:485
-presentation/athar-engine.js:512
+presentation/masar-prototype.html:1345
+presentation/masar-prototype.html:1360
+presentation/masar-engine.js:485
+presentation/masar-engine.js:512
 ```
 
 ### ٣. الطلب الناقص ينجح كأثر منخفض
@@ -110,7 +110,7 @@ presentation/athar-engine.js:512
 
 ```text
 presentation/server.js:94
-presentation/athar-engine.js:124
+presentation/masar-engine.js:124
 ```
 
 هذا فشل غير آمن لأي ربط تشغيلي.
@@ -130,9 +130,9 @@ presentation/athar-engine.js:124
 الحساب يرتب البدائل حسب طلب أساسي ثابت، ولا يضيف المركبات المحولة إلى الطريق البديل. لذلك السعة المتبقية المعروضة ليست سعة ما بعد التحويل.
 
 ```text
-presentation/athar-routing.js:109
-presentation/athar-routing.js:205
-presentation/athar-routing.js:251
+presentation/masar-routing.js:109
+presentation/masar-routing.js:205
+presentation/masar-routing.js:251
 ```
 
 ### ٦. مسودة خطة المرور قد تعرض وقتين متعارضين
@@ -140,8 +140,8 @@ presentation/athar-routing.js:251
 وقت البدء المطبوع يأتي من الطلب الأصلي، بينما وصف الجدول يأتي من البديل المختار.
 
 ```text
-presentation/athar-prototype.html:1573
-presentation/athar-prototype.html:1576
+presentation/masar-prototype.html:1573
+presentation/masar-prototype.html:1576
 ```
 
 ### ٧. بطاقة الفكرة أقدم وأجرأ من العرض
@@ -167,8 +167,8 @@ presentation/athar-prototype.html:1576
 الرقم البريطاني الذي يتجاوز مليوني عمل سنوياً صحيح من حيث الرتبة ومثبت في منشورات حكومية، لكن الرابط المرئي في سجل العرض يقود إلى صفحة الخدمة التي لا تعرض الرقم نفسه مباشرة.
 
 ```text
-presentation/athar-sources.html:125
-presentation/athar-sources.html:131
+presentation/masar-sources.html:125
+presentation/masar-sources.html:131
 ```
 
 ونطاق وفر الحفر المشترك البالغ خمسة وعشرين إلى ثلاثة وثلاثين بالمئة موجود فعلاً في التقرير الحكومي الأمريكي. الخلل هو ربط المشروع بمرجع ثانوي أو غير مباشر، لا صحة النطاق نفسه.

@@ -62,11 +62,11 @@ C:\Users\wasan\Downloads\Swarm\Baladiyathon
 docs\FINAL-STRICT-EVALUATION.md
 docs\FEASIBILITY.md
 docs\REPORT-crit35.md
-presentation\athar-engine.js
-presentation\athar-routing.js
+presentation\masar-engine.js
+presentation\masar-routing.js
 presentation\server.js
-presentation\athar-prototype.html
-presentation\README-athar.md
+presentation\masar-prototype.html
+presentation\README-masar.md
 presentation\tests\engine-test.js
 presentation\tests\routing-test.js
 presentation\tests\ui-smoke-test.js
@@ -82,11 +82,11 @@ node presentation/tests/innovation-test.js
 
 يمكنك تعديل هذه الملفات فقط:
 
-presentation\athar-engine.js
-presentation\athar-routing.js
+presentation\masar-engine.js
+presentation\masar-routing.js
 presentation\server.js
-presentation\athar-prototype.html
-presentation\README-athar.md
+presentation\masar-prototype.html
+presentation\README-masar.md
 presentation\tests\engine-test.js
 presentation\tests\routing-test.js
 presentation\tests\ui-smoke-test.js
@@ -104,7 +104,7 @@ docs\REPORT-crit35-final.md
 
 المواضع التي يجب تتبعها:
 
-presentation\athar-engine.js
+presentation\masar-engine.js
 
 حول الأسطر:
 
@@ -118,14 +118,14 @@ presentation\athar-engine.js
 
 المواضع التي يجب تتبعها:
 
-presentation\athar-prototype.html
+presentation\masar-prototype.html
 
 حول الأسطر:
 
 1345
 1360
 
-presentation\athar-engine.js
+presentation\masar-engine.js
 
 حول الأسطر:
 
@@ -144,7 +144,7 @@ presentation\server.js
 
 94
 
-presentation\athar-engine.js
+presentation\masar-engine.js
 
 حول السطر:
 
@@ -160,7 +160,7 @@ presentation\athar-engine.js
 
 المواضع التي يجب تتبعها:
 
-presentation\athar-routing.js
+presentation\masar-routing.js
 
 حول الأسطر:
 
@@ -174,7 +174,7 @@ presentation\athar-routing.js
 
 المواضع التي يجب تتبعها:
 
-presentation\athar-prototype.html
+presentation\masar-prototype.html
 
 حول الأسطر:
 
@@ -218,7 +218,7 @@ function totalWindowHours(candidate) {
 أضف حالة عشر ساعات:
 
 test('10-hour night schedule uses one full window and one 2-hour window', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 1,
@@ -363,7 +363,7 @@ validateScoreInput
 if (require.main === module) {
   const server = createServer();
   server.listen(PORT, () => {
-    console.log(`Athar server listening on http://localhost:${PORT}`);
+    console.log(`Masar server listening on http://localhost:${PORT}`);
   });
 }
 
@@ -456,7 +456,7 @@ assert.ok(Math.abs(assigned - divertedVehiclesPerHour) < 1e-6);
 
 في ملف التشغيل:
 
-presentation\README-athar.md
+presentation\README-masar.md
 
 وثّق عقد الإدخال، ورموز الأخطاء، وتشغيل الاختبارات، وحدود أن النموذج محلي توضيحي.
 
@@ -470,12 +470,12 @@ docs\FEASIBILITY.md
 
 الدورة الأولى:
 
-git add presentation/athar-engine.js presentation/tests/engine-test.js
+git add presentation/masar-engine.js presentation/tests/engine-test.js
 git commit -m "fix: preserve exact hours across phased schedules"
 
 الدورة الثانية:
 
-git add presentation/athar-routing.js presentation/tests/routing-test.js
+git add presentation/masar-routing.js presentation/tests/routing-test.js
 git commit -m "fix: load diverted demand onto route alternatives"
 
 الدورة الثالثة:
@@ -485,7 +485,7 @@ git commit -m "fix: reject invalid scoring requests"
 
 الدورة الرابعة:
 
-git add presentation/athar-prototype.html presentation/tests/ui-smoke-test.js presentation/README-athar.md docs/FEASIBILITY.md docs/REPORT-crit35-final.md
+git add presentation/masar-prototype.html presentation/tests/ui-smoke-test.js presentation/README-masar.md docs/FEASIBILITY.md docs/REPORT-crit35-final.md
 git commit -m "fix: align selected schedule across UI and exports"
 
 قبل كل التزام شغّل:

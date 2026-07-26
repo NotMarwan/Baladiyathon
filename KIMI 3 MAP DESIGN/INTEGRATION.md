@@ -6,24 +6,24 @@
 
 | ملف | دوره |
 |---|---|
-| `athar-ownedmap.js` | الوحدة المعاد كتابتها — نفس API القديم بالضبط: `{ styleFor, toRoutingSegments, load(map, geojson, L, onRoadClick), CLASS_AADT, CLASS_LANES }` |
-| `athar-map.css` | كل تنسيق الخريطة: المسرح الداكن، التوهج، الدخول المتدرج، النبض، الموجة، الدليل، الأدوات، reduced-motion |
+| `masar-ownedmap.js` | الوحدة المعاد كتابتها — نفس API القديم بالضبط: `{ styleFor, toRoutingSegments, load(map, geojson, L, onRoadClick), CLASS_AADT, CLASS_LANES }` |
+| `masar-map.css` | كل تنسيق الخريطة: المسرح الداكن، التوهج، الدخول المتدرج، النبض، الموجة، الدليل، الأدوات، reduced-motion |
 | `screenshots/before-*` | الشكل القديم (بيج مسطح) |
 | `screenshots/after-*` | الشكل الجديد (تشغيل Playwright بلا شبكة — صفر طلبات، صفر أخطاء) |
 
 ## تهيئة الصفحة المضيفة (سطر واحد كما كان)
 
 ```html
-<link rel="stylesheet" href="athar-map.css">
+<link rel="stylesheet" href="masar-map.css">
 ...
-<script>AtharOwnedMap.load(map, RIYADH_ROADS, L);</script>
+<script>MasarOwnedMap.load(map, RIYADH_ROADS, L);</script>
 ```
 
-## ربط اختياري أضافته الصفحة المضيفة (athar-prototype.html)
+## ربط اختياري أضافته الصفحة المضيفة (masar-prototype.html)
 
 - غلاف الممر + قلب سماوي `#59d6f2`، الإغلاق `#e5484d`، الانسياب `#34d399`.
-- علامة حفر نابضة (`athar-dig-marker` divIcon).
-- تدفق اتجاهي على المسار الموصى به (`athar-alt-flow`).
+- علامة حفر نابضة (`masar-dig-marker` divIcon).
+- تدفق اتجاهي على المسار الموصى به (`masar-alt-flow`).
 - موجة أحمر←أخضر عند اختيار الجدول: `sweepSegmentGreen(idx)` — stroke-dashoffset عبر rAF، ‏1.2s، تُلغى مع prefers-reduced-motion.
 - أجواء اليوم: `renderTimeline` يضبط `#map[data-phase]` (peak/night/day) وCSS يتكفل بالباقي.
 

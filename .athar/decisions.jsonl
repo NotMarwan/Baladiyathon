@@ -1,0 +1,13 @@
+{"version":2,"status":"Approved","action":"approve","actor":"reviewer","at":"2026-07-26T02:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"approver","roleLabel":"معتمِد","workId":"s002"}
+{"version":2,"status":"ImpactScreening","action":"act","actor":"فاحص","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"screener","roleLabel":"فاحص الأثر","workId":"d002"}
+{"version":3,"status":"Approved","action":"act","actor":"معتمِد","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"approver","roleLabel":"معتمِد","workId":"d002"}
+{"version":2,"status":"ImpactScreening","action":"act","actor":"سعد","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"screener","roleLabel":"فاحص الأثر","workId":"d003"}
+{"version":3,"status":"Approved","action":"act","actor":"ليان","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"approver","roleLabel":"معتمِد","workId":"d003"}
+{"version":2,"status":"ImpactScreening","action":"act","actor":"فاحص","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"screener","roleLabel":"فاحص الأثر","workId":"d004"}
+{"version":2,"status":"ImpactScreening","action":"act","actor":"أ","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"screener","roleLabel":"فاحص الأثر","workId":"d005"}
+{"version":3,"status":"Approved","action":"act","actor":"ب","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"approver","roleLabel":"معتمِد","workId":"d005"}
+{"version":4,"status":"Scheduled","action":"act","actor":"ج","at":"2026-07-26T04:00:00.000Z","inputs":{"aadt":85000,"lanes":4},"role":"publisher","roleLabel":"ناشر","workId":"d005"}
+{"version":2,"status":"Approved","action":"approve","actor":"مراجع أول","reason":"الأثر ضمن الحد","at":"2026-07-25T10:00:00Z","inputs":{"aadt":80000,"lanes":4,"lanesClosed":2,"startHour":8,"durationHours":8},"role":"approver","roleLabel":"معتمِد","workId":"p001"}
+{"version":3,"status":"StrategyReview","action":"undo","actor":"مناوب الفرز","reason":"تراجع عن «approve» (نسخة 2)","at":"2026-07-25T11:00:00Z","inputs":{},"role":"approver","roleLabel":"معتمِد","workId":"p001"}
+{"version":2,"status":"Approved","action":"approve","actor":"مراجع أول","reason":"الأثر ضمن الحد","at":"2026-07-25T10:00:00Z","inputs":{"aadt":80000,"lanes":4,"lanesClosed":2,"startHour":8,"durationHours":8},"role":"approver","roleLabel":"معتمِد","workId":"p001"}
+{"version":2,"status":"ImpactScreening","action":"a","actor":"���","at":"2026-07-26T06:00:00.000Z","inputs":{"a":1},"role":"screener","roleLabel":"فاحص الأثر","workId":"live-persist"}

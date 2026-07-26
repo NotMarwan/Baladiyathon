@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 const html = fs.readFileSync(
-  path.join(__dirname, '..', 'athar-city-impact.html'),
+  path.join(__dirname, '..', 'masar-city-impact.html'),
   'utf8'
 );
-const Portfolio = require(path.join(__dirname, '..', 'athar-portfolio.js'));
+const Portfolio = require(path.join(__dirname, '..', 'masar-portfolio.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -18,8 +18,8 @@ ok('page carries the mandatory representative-scenario badge', () => {
 });
 
 ok('page loads engine then portfolio scripts', () => {
-  const engineAt = html.indexOf('athar-engine.js');
-  const portfolioAt = html.indexOf('athar-portfolio.js');
+  const engineAt = html.indexOf('masar-engine.js');
+  const portfolioAt = html.indexOf('masar-portfolio.js');
   assert.ok(engineAt !== -1 && portfolioAt !== -1 && engineAt < portfolioAt);
 });
 

@@ -23,7 +23,7 @@
 - server.js
 - IDEA 1: "Tarakkhus" (ترخيص) — The Autonomous Commercial Licensing Agent
 - 1. IDEA A — **HAFRA حَفْرَة** (The "Smart Hole" — Riyadh's City-Wide Excavation Genome)
-- معايير التقييم الصارمة — مشروع أثر (بلدياثون 2026)
+- معايير التقييم الصارمة — مشروع مسار (بلدياثون 2026)
 - Idea 1 — Balady Twin: The 3D Municipal Simulation Layer
 - manager.py
 - Balady Twin — The Living City
@@ -42,9 +42,9 @@
 - STEP 3 — OUR VERSION: "الرقيب الاستباقي" / **PRO-INSPECT** (Proactive Risk-Ordered Inspection)
 - كيف اشتغل نظام الـ 4 Claude Code (شرح كامل عشان تسوّيه بنفسك)
 - STEP 3 — Our Version: "Mutarif" (مطابِق) — AI Pre-Compliance Simulator
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
 - STEP 3 — OUR VERSION: "مُطابِق / Mutābiq — Pre-License Compliance Simulator"
 - خريطة قدرات المنافسين
 - STEP 3 — OUR VERSION: "مُطابِق / Mutābiq — Pre-License Compliance Simulator"
@@ -54,33 +54,33 @@
 - تفصيل كل فكرة ونقدها
 - File Structure
 - تقييم موحّد — مخرجات الـ 4 وكلاء (بلدياتثون 2026)
-- Athar - Master.md
+- Masar - Master.md
 - تقييم موحّد — مخرجات الـ 4 وكلاء (بلدياتثون 2026)
 - خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة
 - خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة
-- Athar Full Build — Implementation Plan (overnight, autonomous)
+- Masar Full Build — Implementation Plan (overnight, autonomous)
 - MISSION 4 — Agent 1: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 1)
 - MISSION 4 — Agent 2: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 2)
 - MISSION 4 — Agent 3: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 3)
 - MISSION 4 — Agent 4: The WILDCARD scout — find the world's most impressive PROVEN govtech project and adapt it to win Baladiyathon 2026
 - File Map
-- حزمة أدلة مشروع أثر
-- أثر — الوثيقة الأم
+- حزمة أدلة مشروع مسار
+- مسار — الوثيقة الأم
 - رقيب — Raqib
 - Agent 1 — Foundational Vitamins & Minerals
 - agent3 — COGNITIVE, SLEEP & STRESS supplements
-- أثر — دليل التشغيل السريع
+- مسار — دليل التشغيل السريع
 - m
 - k
 - 3 قطع مدموجة (بصفر بناء يُذكر)
-- أثر — Athar
+- مسار — Masar
 - مُطابِق — Mutabiq
 - المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار
 - المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
 - Agent 4 — Safety, Quality & Scams
 - MISSION 2 — Agent 1: Find 2 HUGE, revolutionary ideas that WIN 1st place at Baladiyathon 2026
 - MISSION 2 — Agent 2: Find 2 HUGE, revolutionary ideas that WIN 1st place at Baladiyathon 2026
@@ -89,7 +89,7 @@
 - e
 - ke
 - validate
-- Athar — Additional Capabilities (Research)
+- Masar — Additional Capabilities (Research)
 - MISSION — Agent 1: Win Baladiyathon 2026 → CHALLENGE 1 (Commercial Activity Compliance)
 - MISSION 3 — Agent 1: ONE unforgettable idea. Target 9-10. Challenge 1.
 - MISSION — Agent 2: Win Baladiyathon 2026 → CHALLENGE 2 (AI Pre-Inspector)
@@ -102,7 +102,7 @@
 - Ae
 - engine-test.js
 - تصميم التجربة
-- ⚙️ محرك الحساب — athar-engine.js
+- ⚙️ محرك الحساب — masar-engine.js
 - 📇 بطاقة الفكرة — للتقديم الرسمي
 - bi
 - Je
@@ -112,7 +112,7 @@
 - Agent 2 — التحدي 2 (التفتيش الاستباقي)
 - Agent 3 — التحدي 3 (البنية التحتية)
 - Agent 4 — Moonshot / wildcard
-- 🖥️ النموذج التفاعلي — athar-prototype.html
+- 🖥️ النموذج التفاعلي — masar-prototype.html
 - BASEERA.md
 - HAFRA.md
 - HURAS.md
@@ -194,7 +194,7 @@ Nodes (9): FakeBlock, FakeClient, FakeMessages, FakeResp, FakeUsage, test_call_m
 
 ### Community 10 - "server.js"
 Cohesion: 0.10
-Nodes (24): backTest(), bprTravelTime(), buildReasons(), formatLabel(), optimize(), score(), AtharEngine, CONTENT_TYPES (+16 more)
+Nodes (24): backTest(), bprTravelTime(), buildReasons(), formatLabel(), optimize(), score(), MasarEngine, CONTENT_TYPES (+16 more)
 
 ### Community 11 - "IDEA 1: "Tarakkhus" (ترخيص) — The Autonomous Commercial Licensing Agent"
 Cohesion: 0.07
@@ -204,9 +204,9 @@ Nodes (27): 10. Feasibility + Top 3 Risks, 10. Feasibility + Top 3 Risks, 1. Nam
 Cohesion: 0.07
 Nodes (27): 0. Confirmed ground truth (build on this — do not re-debate), 1.10 Feasibility + top 3 risks, 1.1 One-line pitch, 1.2 Target challenge, 1.3 The BIG vision (why revolutionary and national-scale), 1.4 Why now / why hasn't it been done — enabling tech + the gap, 1.5 Leapfrog — exactly what exists today (with sources) and why this is a leap, 1.6 2-day demoable MVP — the concrete slice + the single "WOW moment" (+19 more)
 
-### Community 13 - "معايير التقييم الصارمة — مشروع أثر (بلدياثون 2026)"
+### Community 13 - "معايير التقييم الصارمة — مشروع مسار (بلدياثون 2026)"
 Cohesion: 0.08
-Nodes (23): 🚧 أثر — البرنامج المعتمد للتقديم, ابدأ من هنا, الأدلة والأصل, التطوير الجاري, الحكم, مخرجات 2026-07-09 (البناء الكامل), ⏰ مواعيد, أخطاء جوهرية اصطادها التقييم (ولولاه لظهرت أمام المحكّمين) (+15 more)
+Nodes (23): 🚧 مسار — البرنامج المعتمد للتقديم, ابدأ من هنا, الأدلة والأصل, التطوير الجاري, الحكم, مخرجات 2026-07-09 (البناء الكامل), ⏰ مواعيد, أخطاء جوهرية اصطادها التقييم (ولولاه لظهرت أمام المحكّمين) (+15 more)
 
 ### Community 14 - "Idea 1 — Balady Twin: The 3D Municipal Simulation Layer"
 Cohesion: 0.08
@@ -280,15 +280,15 @@ Nodes (15): 1) الفكرة باختصار, 2) القطع الأربع (وين �
 Cohesion: 0.13
 Nodes (14): 3.1 The Proven Original (Recap), 3.2 Our Adaptation to MOMRAH / Balady / Arabic / Vision 2030, 3.3 The Improvement Delta (What Makes Ours Better), 3.4 Realistic Architecture, 3.5 The WOW Demo Moment, 3.6 Mapping to Official Evaluation Criteria, 3.7 Honest Risks, idea-proven.md — Baladiyathon 2026, Challenge 1 (+6 more)
 
-### Community 32 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 32 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.13
 Nodes (14): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, Baladiyathon 2026 — Challenge 3 Research Dossier (+6 more)
 
-### Community 33 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 33 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.13
 Nodes (14): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, Baladiyathon 2026 — Challenge 3 Research Dossier (+6 more)
 
-### Community 34 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 34 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.13
 Nodes (14): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, Baladiyathon 2026 — Challenge 3 Research Dossier (+6 more)
 
@@ -328,7 +328,7 @@ Nodes (11): Fable-as-Manager Delegation Upgrade — Implementation Plan, File St
 Cohesion: 0.17
 Nodes (11): 0) تصحيح مهم: الحقائق الأساسية **مؤكّدة** (رسمياً), 1) بطاقة الدرجات, 2) تفصيل كل وكيل, 3) قائمة "التنظيف قبل التقديم" (حرجة), 4) أي تحدي نختار للفوز؟, 5) خطة عاجلة (باقي ~أسبوع), 🥇 Agent 1 — التحدي 1 "متوافق" — 8.5/10, Agent 2 — التحدي 2 "رقيب" — 6.5/10 (+3 more)
 
-### Community 44 - "Athar - Master.md"
+### Community 44 - "Masar - Master.md"
 Cohesion: 0.23
 Nodes (4): HAFRA — حفرة, MIR'AT AL-MADINA — مرآة المدينة, 🎬 سيناريو العرض الحي — لحظة الإبهار, شبكة الأمان ([[Merges & Fixes|إصلاح أ]])
 
@@ -338,15 +338,15 @@ Nodes (11): 0) تصحيح مهم: الحقائق الأساسية **مؤكّدة
 
 ### Community 46 - "خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة"
 Cohesion: 0.17
-Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 أثر (Athar) — التحدي 3 — **الترشيح الأول** (+3 more)
+Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 مسار (Masar) — التحدي 3 — **الترشيح الأول** (+3 more)
 
 ### Community 47 - "خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة"
 Cohesion: 0.17
-Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 أثر (Athar) — التحدي 3 — **الترشيح الأول** (+3 more)
+Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 مسار (Masar) — التحدي 3 — **الترشيح الأول** (+3 more)
 
-### Community 48 - "Athar Full Build — Implementation Plan (overnight, autonomous)"
+### Community 48 - "Masar Full Build — Implementation Plan (overnight, autonomous)"
 Cohesion: 0.18
-Nodes (10): Athar Full Build — Implementation Plan (overnight, autonomous), Engine API (authoritative — UI, tests, server all code against THIS), Global Constraints, Out of Scope (ponytail), Sources Ledger (only these may be cited), Task W1: Engine + tests + backend server + README (one worker, sequential), Task W2: Prototype UI (after W1 — codes against the real engine file), Task W3: Pitch deck + Idea Card (parallel with W1) (+2 more)
+Nodes (10): Masar Full Build — Implementation Plan (overnight, autonomous), Engine API (authoritative — UI, tests, server all code against THIS), Global Constraints, Out of Scope (ponytail), Sources Ledger (only these may be cited), Task W1: Engine + tests + backend server + README (one worker, sequential), Task W2: Prototype UI (after W1 — codes against the real engine file), Task W3: Pitch deck + Idea Card (parallel with W1) (+2 more)
 
 ### Community 49 - "MISSION 4 — Agent 1: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 1)"
 Cohesion: 0.20
@@ -366,15 +366,15 @@ Nodes (9): Confirmed context, Hard rules, MISSION 4 — Agent 4: The WILDCARD sc
 
 ### Community 53 - "File Map"
 Cohesion: 0.20
-Nodes (9): Athar Evidence Intelligence Implementation Plan, File Map, Global Constraints, Self-Review, Task 1: Build the Existing-Claim Baseline, Task 2: Collect Primary Evidence with Polite Multi-Strategy Scraping, Task 3: Normalize New Findings and Competitor Capabilities, Task 4: Define a Defensible Impact Measurement System (+1 more)
+Nodes (9): Masar Evidence Intelligence Implementation Plan, File Map, Global Constraints, Self-Review, Task 1: Build the Existing-Claim Baseline, Task 2: Collect Primary Evidence with Polite Multi-Strategy Scraping, Task 3: Normalize New Findings and Competitor Capabilities, Task 4: Define a Defensible Impact Measurement System (+1 more)
 
-### Community 54 - "حزمة أدلة مشروع أثر"
+### Community 54 - "حزمة أدلة مشروع مسار"
 Cohesion: 0.20
-Nodes (10): أقوى منافسين, أهم النتائج الجديدة, الادعاء الذي يجب حذفه, البيانات الآلية, التجربة الموصى بها, الخلاصة التنفيذية, القرار الاستراتيجي, حزمة أدلة مشروع أثر (+2 more)
+Nodes (10): أقوى منافسين, أهم النتائج الجديدة, الادعاء الذي يجب حذفه, البيانات الآلية, التجربة الموصى بها, الخلاصة التنفيذية, القرار الاستراتيجي, حزمة أدلة مشروع مسار (+2 more)
 
-### Community 55 - "أثر — الوثيقة الأم"
+### Community 55 - "مسار — الوثيقة الأم"
 Cohesion: 0.20
-Nodes (10): أثر — الوثيقة الأم, الأصل المُثبت, الثغرة التي نملؤها, ⚖️ الحكم النهائي — 9.0 / 10 🥇, العرض الحي, المحرّك (واقعي، مفتوح المصدر), المصادر, المطابقة لمعايير اللجنة الرسمية (+2 more)
+Nodes (10): مسار — الوثيقة الأم, الأصل المُثبت, الثغرة التي نملؤها, ⚖️ الحكم النهائي — 9.0 / 10 🥇, العرض الحي, المحرّك (واقعي، مفتوح المصدر), المصادر, المطابقة لمعايير اللجنة الرسمية (+2 more)
 
 ### Community 56 - "رقيب — Raqib"
 Cohesion: 0.20
@@ -388,9 +388,9 @@ Nodes (8): Agent 1 — Foundational Vitamins & Minerals, Iron (Ferrous Bisglycin
 Cohesion: 0.22
 Nodes (8): 1. L-Theanine, 2. Melatonin — the dose most sold IS wrong, 3. Magnesium glycinate vs threonate, 4. Ashwagandha (KSM-66 vs Sensoril), 5. Rhodiola rosea, 6. Lion's Mane (Hericium erinaceus), 7. Magnesium (general) — bonus, agent3 — COGNITIVE, SLEEP & STRESS supplements
 
-### Community 59 - "أثر — دليل التشغيل السريع"
+### Community 59 - "مسار — دليل التشغيل السريع"
 Cohesion: 0.22
-Nodes (8): (أ) الوضع الثابت (بدون خادم), أثر — دليل التشغيل السريع, (ب) وضع الـ API (خادم محلي), (ج) الاختبارات, (د) بنية الملفات, ⚡ دليل المحكّم — 60 ثانية, ملاحظة مصادر البيانات, نقاط النهاية (Endpoints)
+Nodes (8): (أ) الوضع الثابت (بدون خادم), مسار — دليل التشغيل السريع, (ب) وضع الـ API (خادم محلي), (ج) الاختبارات, (د) بنية الملفات, ⚡ دليل المحكّم — 60 ثانية, ملاحظة مصادر البيانات, نقاط النهاية (Endpoints)
 
 ### Community 60 - "m"
 Cohesion: 0.31
@@ -404,9 +404,9 @@ Nodes (9): G(), i(), k(), me(), Mi(), Oe(), Se(), ze() (+1 more)
 Cohesion: 0.22
 Nodes (9): 1. بطاقة التفسير (من رقيب), 2. عدّاد الـ back-test المُقاس (من رقيب), 3. سردية المنصة (من مُطابِق), 3 قطع مدموجة (بصفر بناء يُذكر), أ. تأمين الديمو (يرفع يقين الديمو 7.5 ← 9), إصلاحان إلزاميان, الدمج والإصلاحات — رفع 9.0 ← ~9.4, ب. تنظيف المصادر (+1 more)
 
-### Community 63 - "أثر — Athar"
+### Community 63 - "مسار — Masar"
 Cohesion: 0.22
-Nodes (8): أثر — Athar, الأصل المُثبت, الحكم النهائي — 9.0 / 10 🥇, الدوسيه الكامل, القوة, المصادر, المنافسون في نفس التحدي, يدمج
+Nodes (8): مسار — Masar, الأصل المُثبت, الحكم النهائي — 9.0 / 10 🥇, الدوسيه الكامل, القوة, المصادر, المنافسون في نفس التحدي, يدمج
 
 ### Community 64 - "مُطابِق — Mutabiq"
 Cohesion: 0.22
@@ -420,21 +420,21 @@ Nodes (8): التحديات الثلاثة (النص الموثّق), التقن
 Cohesion: 0.22
 Nodes (8): التحديات الثلاثة (النص الموثّق), التقنيات الناشئة المسموحة, الفئة المستهدفة, المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار, حقائق سريعة, خلاصة: منطلق حكمك, متطلبات التقديم (بطاقة الفكرة), ⭐ معايير التحكيم الستة (هذا منطلق حكمك على أي فكرة)
 
-### Community 67 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 67 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 1: Interactive prototype UI
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 1: Interactive prototype UI
 
-### Community 68 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 68 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 2: Impact engine (always-on)
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 2: Impact engine (always-on)
 
-### Community 69 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 69 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 3: SUMO demo + safety net
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 3: SUMO demo + safety net
 
-### Community 70 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 70 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 4: Pitch + submission
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 4: Pitch + submission
 
 ### Community 71 - "Agent 4 — Safety, Quality & Scams"
 Cohesion: 0.25
@@ -468,9 +468,9 @@ Nodes (8): h(), j(), Jt(), ke(), ne(), Qt(), s(), $t()
 Cohesion: 0.32
 Nodes (4): ExistingClaimBaselineTests, ResearchPackageTests, load(), validate()
 
-### Community 79 - "Athar — Additional Capabilities (Research)"
+### Community 79 - "Masar — Additional Capabilities (Research)"
 Cohesion: 0.25
-Nodes (8): 1. CO2 / idling-emissions savings meter, 2. Emergency-vehicle route protection, 3. Dig-Once fiber & utility co-location value, 4. Public transparency map of active works, 5. Context-aware scheduling (prayer / school / Hajj / weekend), 6. Transit & pedestrian accessibility impact, 7. National-channel notifications, Athar — Additional Capabilities (Research)
+Nodes (8): 1. CO2 / idling-emissions savings meter, 2. Emergency-vehicle route protection, 3. Dig-Once fiber & utility co-location value, 4. Public transparency map of active works, 5. Context-aware scheduling (prayer / school / Hajj / weekend), 6. Transit & pedestrian accessibility impact, 7. National-channel notifications, Masar — Additional Capabilities (Research)
 
 ### Community 80 - "MISSION — Agent 1: Win Baladiyathon 2026 → CHALLENGE 1 (Commercial Activity Compliance)"
 Cohesion: 0.29
@@ -514,15 +514,15 @@ Nodes (6): Ae(), Ie(), Le(), O(), Re(), te()
 
 ### Community 90 - "engine-test.js"
 Cohesion: 0.40
-Nodes (3): assert, AtharEngine, path
+Nodes (3): assert, MasarEngine, path
 
 ### Community 91 - "تصميم التجربة"
 Cohesion: 0.40
 Nodes (5): أثناء العمل, بعد العمل, تصميم التجربة, قبل العمل, قرار النجاح
 
-### Community 92 - "⚙️ محرك الحساب — athar-engine.js"
+### Community 92 - "⚙️ محرك الحساب — masar-engine.js"
 Cohesion: 0.40
-Nodes (5): الاختبارات, الخادم (API), الدوال الأساسية, ⚙️ محرك الحساب — athar-engine.js, ملاحظة نمذجة مهمة
+Nodes (5): الاختبارات, الخادم (API), الدوال الأساسية, ⚙️ محرك الحساب — masar-engine.js, ملاحظة نمذجة مهمة
 
 ### Community 93 - "📇 بطاقة الفكرة — للتقديم الرسمي"
 Cohesion: 0.40
@@ -556,12 +556,12 @@ Nodes (3): Agent 3 — التحدي 3 (البنية التحتية), المخر�
 Cohesion: 0.50
 Nodes (3): Agent 4 — Moonshot / wildcard, المخرجات, كيف يعمل
 
-### Community 104 - "🖥️ النموذج التفاعلي — athar-prototype.html"
+### Community 104 - "🖥️ النموذج التفاعلي — masar-prototype.html"
 Cohesion: 0.67
-Nodes (3): 🖥️ النموذج التفاعلي — athar-prototype.html, طريقة التشغيل, ملاحظة جودة
+Nodes (3): 🖥️ النموذج التفاعلي — masar-prototype.html, طريقة التشغيل, ملاحظة جودة
 
 ## Knowledge Gaps
-- **965 isolated node(s):** `http`, `fs`, `path`, `url`, `AtharEngine` (+960 more)
+- **965 isolated node(s):** `http`, `fs`, `path`, `url`, `MasarEngine` (+960 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -572,7 +572,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Why does `خطة قياس الأثر` connect `خطة قياس الأثر` to `README.md`, `تصميم التجربة`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `حزمة أدلة مشروع أثر` connect `حزمة أدلة مشروع أثر` to `README.md`?**
+- **Why does `حزمة أدلة مشروع مسار` connect `حزمة أدلة مشروع مسار` to `README.md`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `Fable-Manager — منسّق يخلّي Fable 5 المدير، وSonnet 5 / Opus 4.8 المنفّذ.  الفكر`, `يحوّل تصنيف المهمة الفرعية إلى موديل: scout → Haiku، وما عداه → Sonnet.`, `يوحّد معرّف الموديل: يزيل لاحقة التاريخ -YYYYMMDD إن وُجدت (مثل claude-haiku-4-5` to the rest of the system?**
   _975 weakly-connected nodes found - possible documentation gaps or missing edges._

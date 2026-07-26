@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const Decision = require('../athar-decision.js');
+const Decision = require('../masar-decision.js');
 
 let count = 0;
 
@@ -351,8 +351,8 @@ test('no conflict returns a recommended verdict', () => {
 });
 
 test('offline decision page exposes the complete one-screen contract', () => {
-  const pagePath = path.join(__dirname, '..', 'athar-decision.html');
-  assert.ok(fs.existsSync(pagePath), 'athar-decision.html must exist');
+  const pagePath = path.join(__dirname, '..', 'masar-decision.html');
+  assert.ok(fs.existsSync(pagePath), 'masar-decision.html must exist');
 
   const source = fs.readFileSync(pagePath, 'utf8');
   [
@@ -373,17 +373,17 @@ test('offline decision page exposes the complete one-screen contract', () => {
   });
 
   [
-    'athar-engine.js',
-    'athar-routing.js',
-    'athar-forecast.js',
-    'athar-reasons.js',
-    'athar-conflict.js',
-    'athar-decision.js',
+    'masar-engine.js',
+    'masar-routing.js',
+    'masar-forecast.js',
+    'masar-reasons.js',
+    'masar-conflict.js',
+    'masar-decision.js',
   ].forEach((scriptName) => {
     assert.ok(source.includes(`src="${scriptName}"`), scriptName);
   });
 
-  assert.ok(source.includes('AtharDecision.createDecisionService'));
+  assert.ok(source.includes('MasarDecision.createDecisionService'));
   assert.ok(!/\bfetch\s*\(/.test(source), 'offline page must not fetch data');
   assert.ok(
     !/\bXMLHttpRequest\b/.test(source),
@@ -413,8 +413,8 @@ test('offline decision page exposes the complete one-screen contract', () => {
 
 test('owned production files contain no prohibited novelty claims', () => {
   const productionFiles = [
-    path.join(__dirname, '..', 'athar-decision.js'),
-    path.join(__dirname, '..', 'athar-decision.html'),
+    path.join(__dirname, '..', 'masar-decision.js'),
+    path.join(__dirname, '..', 'masar-decision.html'),
   ].filter((filePath) => fs.existsSync(filePath));
   const prohibited = [
     'first' + ' platform',

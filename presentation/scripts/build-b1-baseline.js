@@ -20,9 +20,9 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
-const features = global.window.ATHAR_CITY_PORTFOLIO.features;
+const features = global.window.MASAR_CITY_PORTFOLIO.features;
 const D = Engine.DEFAULTS;
 
 const permits = [];
@@ -77,10 +77,10 @@ function digest(relative) {
 }
 
 const GOVERNING = [
-  'athar-engine.js',
-  'athar-provenance.js',
-  'athar-canonical.js',
-  'athar-portfolio.js',
+  'masar-engine.js',
+  'masar-provenance.js',
+  'masar-canonical.js',
+  'masar-portfolio.js',
   'data/city-portfolio.geojson.js',
 ];
 

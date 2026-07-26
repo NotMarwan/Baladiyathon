@@ -1,4 +1,4 @@
-"""أثر — بوابة العرض التقديمي (WP-G2).
+"""مسار — بوابة العرض التقديمي (WP-G2).
 
 العرض هو ما يراه المحكّم أولاً وآخراً، وكان **غير مفحوص تشغيلياً**: يقع خارج
 جذر الخادم فيردّ عليه `403`، فلا يُفتح ولا يُقاس. وغير المتحقَّق يُحتسب فشلاً.
@@ -20,7 +20,7 @@ import sys
 from playwright.async_api import async_playwright
 
 BASE = 'http://localhost:8734'
-DECK = BASE + '/submission/athar-baladiyathon-judging-deck.html'
+DECK = BASE + '/submission/masar-baladiyathon-judging-deck.html'
 WIDTHS = [390, 768, 1440]
 
 LAUNCH_ARGS = [

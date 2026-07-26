@@ -1,5 +1,5 @@
 /**
- * أثر — بناء صفحات الفهرس الثلاث من `athar-catalog.js`.
+ * مسار — بناء صفحات الفهرس الثلاث من `masar-catalog.js`.
  * ---------------------------------------------------------------------------
  * لماذا بناءٌ لا تصييرٌ في المتصفح: هذه الصفحات هي ما يقرؤه من يريد أن يفهم
  * المشروع — قارئ صوتي، مفهرس، نظام تقييم آلي، أو مطوّر يفتح الملف. وصفحةٌ
@@ -17,17 +17,17 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const View = require(path.join(ROOT, 'athar-catalog-view.js'));
+const View = require(path.join(ROOT, 'masar-catalog-view.js'));
 
 const START = '<!-- catalog:start -->';
 const END = '<!-- catalog:end -->';
 
 const PAGES = [
-  { file: 'athar-home.html', render: View.renderHome },
-  { file: 'athar-overview.html', render: function () {
+  { file: 'masar-home.html', render: View.renderHome },
+  { file: 'masar-overview.html', render: function () {
     return View.renderOverviewIndex() + View.renderOverview();
   } },
-  { file: 'athar-advanced.html', render: View.renderAdvanced },
+  { file: 'masar-advanced.html', render: View.renderAdvanced },
 ];
 
 /** يستبدل ما بين العلامتين. غيابهما خطأ صريح لا كتابةٌ في غير موضعها. */

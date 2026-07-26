@@ -76,7 +76,7 @@ function verdictOf(ratio) {
 
 function main() {
   require(path.join(DATA, 'riyadh-route-graph.js'));
-  const Routing = require(path.join(ROOT, 'athar-city-routing.js'));
+  const Routing = require(path.join(ROOT, 'masar-city-routing.js'));
   const graph = global.RIYADH_ROUTE_GRAPH;
   if (!graph) throw new Error('رسم التوجيه غير محمَّل');
 
@@ -150,7 +150,7 @@ function main() {
   };
 
   fs.writeFileSync(OUT_JSON, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
-  fs.writeFileSync(OUT_JS, `window.ATHAR_ALTERNATE_LOAD = ${JSON.stringify(report)};\n`, 'utf8');
+  fs.writeFileSync(OUT_JS, `window.MASAR_ALTERNATE_LOAD = ${JSON.stringify(report)};\n`, 'utf8');
 
   console.log(`${report.total} تصريحاً — البديل:`);
   console.log(`  يتحمّل: ${tally.carries}`);

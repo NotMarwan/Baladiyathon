@@ -179,7 +179,7 @@ const geojson = {
       type: "Feature",
       geometry: route.geometry,
       properties: {
-        featureType: "athar-monitored-route",
+        featureType: "masar-monitored-route",
         groupId: route.groupId,
         street: route.street,
         roadClass: route.roadClass,

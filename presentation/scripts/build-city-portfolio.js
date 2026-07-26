@@ -1,16 +1,16 @@
 'use strict';
 /**
- * أثر — إنزال محفظة التصاريح على شبكة الطرق الحقيقية.
+ * مسار — إنزال محفظة التصاريح على شبكة الطرق الحقيقية.
  * ---------------------------------------------------------------------------
- * المشكلة التي يحلها: المحفظة (athar-portfolio.js) أرقام بلا مكان — أسماء
+ * المشكلة التي يحلها: المحفظة (masar-portfolio.js) أرقام بلا مكان — أسماء
  * وهمية مثل «شرياني أ». والخريطة مكان بلا أرقام — ستة عشر سجلاً. الدمج هو ما
  * يجعل الشغل الحقيقي يبان: كل تصريح على مقطع من محور شارع رياض مسمّى، وأثره
- * من المحرك نفسه الذي تستعمله لوحة أثر المدينة.
+ * من المحرك نفسه الذي تستعمله لوحة مسار المدينة.
  *
- * 1) البذرة نفسها في athar-portfolio: الناتج قابل لإعادة الإنتاج حرفياً.
+ * 1) البذرة نفسها في masar-portfolio: الناتج قابل لإعادة الإنتاج حرفياً.
  * 2) كل مقطع يُقتطع من محور متصل — لا خطوط تقطع الأحياء.
- * 3) الأثر من AtharEngine.score لا من رقم مزروع.
- * 4) الحالات من athar-desk-states إن وُجد، وإلا من القائمة المحلية المطابقة.
+ * 3) الأثر من MasarEngine.score لا من رقم مزروع.
+ * 4) الحالات من masar-desk-states إن وُجد، وإلا من القائمة المحلية المطابقة.
  *
  * يُشغَّل مرة واحدة محلياً. لا شبكة.
  * بيانات الطرق © مساهمو OpenStreetMap — رخصة ODbL.
@@ -18,8 +18,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const Engine = require('../athar-engine.js');
-const Portfolio = require('../athar-portfolio.js');
+const Engine = require('../masar-engine.js');
+const Portfolio = require('../masar-portfolio.js');
 const { longestChain, section, lengthOf } = require('./lib/centreline.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -476,7 +476,7 @@ const text = JSON.stringify(collection);
 
 fs.writeFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson'), text);
 fs.writeFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson.js'),
-  'window.ATHAR_CITY_PORTFOLIO = ' + text + ';');
+  'window.MASAR_CITY_PORTFOLIO = ' + text + ';');
 
 const streets = new Set(collection.features.map((f) => f.properties.street));
 console.log('كُتب ' + collection.features.length + ' تصريحاً على ' + streets.size + ' شارعاً مسمّى');

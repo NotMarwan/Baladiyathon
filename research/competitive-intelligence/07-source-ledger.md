@@ -636,7 +636,7 @@ https://ops.fhwa.dot.gov/wz/resources/final_rule/wzi_guide/sec8.htm
 
 لم تعتمد المقارنة على أرقام تسويقية غير قابلة للتحقق في ترتيب الأولويات. وعندما استلهمت ميزة من ادعاء رسمي، صيغت كتوجه تصميمي يحتاج اختبارًا، لا كحقيقة أداء.
 
-## مصادر داخلية للتحقق من «أثر»
+## مصادر داخلية للتحقق من «مسار»
 
 ### المصدر الداخلي الأول
 
@@ -646,24 +646,24 @@ https://ops.fhwa.dot.gov/wz/resources/final_rule/wzi_guide/sec8.htm
 
 ### المصدر الداخلي الثاني
 
-`presentation/athar-catalog.js`
+`presentation/masar-catalog.js`
 
 الدليل المستخدم: قائمة القدرات الست عشرة وحالاتها.
 
 ### المصدر الداخلي الثالث
 
-`presentation/athar-desk.html`
+`presentation/masar-desk.html`
 
 الدليل المستخدم: بنية مكتب المراجع والتبويبات ومسارات الاستخدام.
 
 ### المصدر الداخلي الرابع
 
-`presentation/athar-desk-measurement.js`
+`presentation/masar-desk-measurement.js`
 
 الدليل المستخدم: منطق القياس والمعايرة وحد العينة.
 
 ### المصدر الداخلي الخامس
 
-`presentation/athar-decision-record.js`
+`presentation/masar-decision-record.js`
 
 الدليل المستخدم: سجل القرار والتراجع في العرض الحالي.

@@ -1,5 +1,5 @@
 /**
- * أثر — حارس مخطط رحلة المستخدم. (تبويب مؤقّت — يُحذف معه.)
+ * مسار — حارس مخطط رحلة المستخدم. (تبويب مؤقّت — يُحذف معه.)
  * ---------------------------------------------------------------------------
  * مخطط رحلةٍ يوصف يدوياً ينحرف عن المنتج بعد أول تعديل، ثم يُقرأ وصفاً لما
  * ليس موجوداً. فالحزمة تفرض الاتجاهين معاً:
@@ -19,10 +19,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Model = require(path.join(ROOT, 'athar-journey-model.js'));
-const Diagram = require(path.join(ROOT, 'athar-journey-diagram.js'));
-const File = require(path.join(ROOT, 'athar-desk-file.js'));
-const States = require(path.join(ROOT, 'athar-desk-states.js'));
+const Model = require(path.join(ROOT, 'masar-journey-model.js'));
+const Diagram = require(path.join(ROOT, 'masar-journey-diagram.js'));
+const File = require(path.join(ROOT, 'masar-desk-file.js'));
+const States = require(path.join(ROOT, 'masar-desk-states.js'));
 
 let failures = 0;
 function ok(name, fn) {
@@ -129,7 +129,7 @@ ok('حالات الاستثناء المعلنة كلها ممثَّلة', () =>
 
 /**
  * الحُرّاس ليسوا شعاراً في المخطط كذلك: القاعدتان اللتان يفرضهما
- * `athar-desk-states.js` مذكورتان بنصّهما في عقدة الحجب، فمن يقرأ الرحلة
+ * `masar-desk-states.js` مذكورتان بنصّهما في عقدة الحجب، فمن يقرأ الرحلة
  * يعرف ما الذي يوقف الإجراء قبل أن يجرّبه.
  */
 ok('عقدة الحجب تسمّي القواعد التي يفرضها الحارس فعلاً', () => {
@@ -190,18 +190,18 @@ ok('النص يُلفّ فلا يخرج من الشكل', () => {
 
 ok('التبويب معلَّم مؤقّتاً وقابلاً للحذف بلا أثر', () => {
   // موضعه بعد إعادة التنظيم: داخل «التفاصيل المتقدمة» لا على الشريط الرئيسي.
-  const Catalog = require(path.join(ROOT, 'athar-catalog.js'));
-  const entry = Catalog.ADVANCED.filter((page) => page.file === 'athar-journey.html')[0];
+  const Catalog = require(path.join(ROOT, 'masar-catalog.js'));
+  const entry = Catalog.ADVANCED.filter((page) => page.file === 'masar-journey.html')[0];
   assert.ok(entry, 'التبويب ليس في قسم التفاصيل المتقدمة');
   assert.strictEqual(entry.temporary, true, 'التبويب غير معلَّم مؤقّتاً في الفهرس');
 
-  const nav = fs.readFileSync(path.join(ROOT, 'athar-nav.js'), 'utf8');
-  assert.ok(nav.indexOf("'athar-journey.html'") !== -1,
+  const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
+  assert.ok(nav.indexOf("'masar-journey.html'") !== -1,
     'الشريط لا يعرف الصفحة فلا يعلّم قسمها');
-  assert.ok(!/\{\s*file:\s*'athar-journey\.html'/.test(nav),
+  assert.ok(!/\{\s*file:\s*'masar-journey\.html'/.test(nav),
     'التبويب المؤقّت عاد إلى الشريط الرئيسي');
 
-  const html = fs.readFileSync(path.join(ROOT, 'athar-journey.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, 'masar-journey.html'), 'utf8');
   assert.ok(html.indexOf('تبويب مؤقّت') !== -1, 'الصفحة لا تعلن أنها مؤقّتة');
 
   /*
@@ -210,15 +210,15 @@ ok('التبويب معلَّم مؤقّتاً وقابلاً للحذف بلا 
    * قائمةٌ مفتوحة تعني أن أحداً لا يعرف ما الذي سينكسر عند الحذف.
    */
   const ALLOWED_REFERRERS = [
-    'athar-nav.js',        // ليعلّم قسم «التفاصيل المتقدمة» حين تُفتح الصفحة
-    'athar-catalog.js',    // مدخل واحد في قائمة المتقدمة، معلَّم temporary
-    'athar-advanced.html', // كتلة مبنيّة من الفهرس — تختفي ببناء واحد بعد الحذف
+    'masar-nav.js',        // ليعلّم قسم «التفاصيل المتقدمة» حين تُفتح الصفحة
+    'masar-catalog.js',    // مدخل واحد في قائمة المتقدمة، معلَّم temporary
+    'masar-advanced.html', // كتلة مبنيّة من الفهرس — تختفي ببناء واحد بعد الحذف
   ];
 
   const product = fs.readdirSync(ROOT)
     .filter((f) => (f.endsWith('.js') || f.endsWith('.html')) && f.indexOf('journey') === -1);
   const leaks = product.filter((f) =>
-    fs.readFileSync(path.join(ROOT, f), 'utf8').indexOf('athar-journey') !== -1
+    fs.readFileSync(path.join(ROOT, f), 'utf8').indexOf('masar-journey') !== -1
     && ALLOWED_REFERRERS.indexOf(f) === -1);
   assert.deepStrictEqual(leaks, [], 'ملفات المنتج تعتمد على التبويب المؤقّت: ' + leaks.join('، '));
 

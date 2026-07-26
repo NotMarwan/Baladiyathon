@@ -2,7 +2,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const Style = require(path.join(__dirname, '..', 'athar-worksmap-style.js'));
+const Style = require(path.join(__dirname, '..', 'masar-worksmap-style.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

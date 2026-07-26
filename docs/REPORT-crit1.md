@@ -11,9 +11,9 @@
 | ملف | التغيير |
 |---|---|
 | `presentation/data/corridor-network.json` (جديد) | شبكة 18 عقدة / 27 ضلعاً: الملك فهد + العليا + التخصصي + 6 تقاطعات عرضية. هندسة من OSM (ODbL)، قيم السعة/السرعة موسومة «افتراض توضيحي». POIs: مستشفى + مدرسة موسومان. |
-| `presentation/athar-routing.js` (جديد) | `buildGraph` · `edgeTravelTime` (BPR) · `shortestPath` (Dijkstra) · `alternativeRoutes` (3 بدائل k-diverse بطريقة العقوبة) · `corridorThroughTime` (زمن البقاء على الممر) · `shockwave` (انتشار الطابور) · `haversineKm`. |
-| `presentation/athar-forecast.js` (جديد) | `forecast` بنطاق ±15٪ (±8٪ بعد المعايرة) · `DOW_FACTORS` (عطلة الجمعة/السبت أخفض) · `calibrateFromCSV` (تحقق + تطبيع) · `forecastGrid` (24×5 للخريطة الحرارية). |
-| `presentation/athar-prototype.html` | حذف `drawReroute` (الوهمي)؛ أُضيف `drawComputedRoutes`/`renderRouteCards`/`drawShockwave`/`renderHeatmap`/معالج CSV + بطاقتا «المسارات البديلة» و«التنبؤ». TMP يطبع أسماء الشوارع الفعلية + الدقائق. `NETWORK_FALLBACK` مضمّن للعمل بلا اتصال. |
+| `presentation/masar-routing.js` (جديد) | `buildGraph` · `edgeTravelTime` (BPR) · `shortestPath` (Dijkstra) · `alternativeRoutes` (3 بدائل k-diverse بطريقة العقوبة) · `corridorThroughTime` (زمن البقاء على الممر) · `shockwave` (انتشار الطابور) · `haversineKm`. |
+| `presentation/masar-forecast.js` (جديد) | `forecast` بنطاق ±15٪ (±8٪ بعد المعايرة) · `DOW_FACTORS` (عطلة الجمعة/السبت أخفض) · `calibrateFromCSV` (تحقق + تطبيع) · `forecastGrid` (24×5 للخريطة الحرارية). |
+| `presentation/masar-prototype.html` | حذف `drawReroute` (الوهمي)؛ أُضيف `drawComputedRoutes`/`renderRouteCards`/`drawShockwave`/`renderHeatmap`/معالج CSV + بطاقتا «المسارات البديلة» و«التنبؤ». TMP يطبع أسماء الشوارع الفعلية + الدقائق. `NETWORK_FALLBACK` مضمّن للعمل بلا اتصال. |
 | `presentation/tests/routing-test.js` (جديد) | 18 اختباراً — مستقل عن ملف اختبارات المحرك. |
 
 ## الدرجة بالدليل (رُبرِك عدائي، ابدأ من 10)
@@ -32,7 +32,7 @@
 
 ## صدق الادعاءات (لملفات وكيل آخر — لم تُلمس)
 
-`athar.html:112` «يقيس جدواها» و`athar-merged.html:167` «على الشبكة»: بعد هذا العمل صار المحرك يحسب فعلاً المسار البديل على شبكة (Dijkstra/BPR) ويقيس زمن رحلته وسعته المتبقية — الادعاءان صارا مدعومَين بكود. الملفات نفسها لم تُعدّل (حد الملكية).
+`masar.html:112` «يقيس جدواها» و`masar-merged.html:167` «على الشبكة»: بعد هذا العمل صار المحرك يحسب فعلاً المسار البديل على شبكة (Dijkstra/BPR) ويقيس زمن رحلته وسعته المتبقية — الادعاءان صارا مدعومَين بكود. الملفات نفسها لم تُعدّل (حد الملكية).
 
 ## ما تعذّر
 

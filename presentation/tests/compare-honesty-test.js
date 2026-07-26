@@ -22,7 +22,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const Compare = require(path.join(ROOT, 'athar-compare-data.js'));
+const Compare = require(path.join(ROOT, 'masar-compare-data.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -31,11 +31,11 @@ function test(name, fn) {
   console.log(`  ok - ${name}`);
 }
 
-const PAGE = path.join(ROOT, 'athar-compare.html');
+const PAGE = path.join(ROOT, 'masar-compare.html');
 
 // ---- كل منافس يتفوّق في شيء -------------------------------------------
 
-test('كل منافس يتفوّق على أثر في بُعد واحد على الأقل', () => {
+test('كل منافس يتفوّق على مسار في بُعد واحد على الأقل', () => {
   /* **الفحص الحاكم.** جدولٌ بلا خسارة واحدة ليس مقارنة. */
   Compare.COMPETITORS.forEach((item) => {
     const wins = Compare.advantagesOf(item.key);
@@ -61,7 +61,7 @@ test('التفوّق مُسمّى صراحةً لا مستنتَجاً من ال
       assert.ok(Compare.COMPETITORS.some((item) => item.key === key),
         `${dim.key}: يشير إلى منافس غير معرّف «${key}»`);
       const theirs = dim.competitors[key];
-      assert.strictEqual(Compare.outranks(theirs.state, dim.athar.state), true,
+      assert.strictEqual(Compare.outranks(theirs.state, dim.masar.state), true,
         `${dim.key}: «${key}» معلَّم متفوّقاً ولا يعلوه دليلاً`);
     });
   });
@@ -74,7 +74,7 @@ test('كل بُعد يتفوّق فيه منافس مذكورٌ في قائمة 
       /* المجهول لا يُقارَن: `outranks` تعيد `null` فلا يُعدّ خسارةً
          مخفيّة ولا تفوّقاً. */
       const theirs = dim.competitors[item.key];
-      if (Compare.outranks(theirs.state, dim.athar.state) !== true) return;
+      if (Compare.outranks(theirs.state, dim.masar.state) !== true) return;
       assert.ok(dim.betterElsewhere.indexOf(item.key) !== -1,
         `${dim.key}: «${item.key}» أعلى رتبةً من أثر ولم يُعدّ متفوّقاً — خسارة مخفية`);
     });
@@ -144,16 +144,16 @@ test('الصفحة تشرح أن «غير مثبت علناً» ليست نفي�
 test('خارطة الطريق لا تُعدّ تفوّقاً لأثر', () => {
   /* «سيفعل» في عمود مقارنة يُقرأ «يفعل». */
   assert.strictEqual(Compare.STATES.roadmap.rank, 0, 'خارطة الطريق لها رتبة');
-  Compare.DIMENSIONS.filter((dim) => dim.athar.state === 'roadmap')
+  Compare.DIMENSIONS.filter((dim) => dim.masar.state === 'roadmap')
     .forEach((dim) => {
       Compare.COMPETITORS.forEach((item) => {
         const theirs = dim.competitors[item.key];
-        if (Compare.outranks(theirs.state, dim.athar.state) === true) {
+        if (Compare.outranks(theirs.state, dim.masar.state) === true) {
           assert.ok(dim.betterElsewhere.indexOf(item.key) !== -1,
             `${dim.key}: أثر على خارطة الطريق و«${item.key}» أعلى ولم يُعدّ متفوّقاً`);
         }
       });
-      assert.ok(/غير منفَّذ/.test(dim.athar.note),
+      assert.ok(/غير منفَّذ/.test(dim.masar.note),
         `${dim.key}: خارطة طريق بلا تصريح أنها غير منفَّذة`);
     });
 });
@@ -165,24 +165,24 @@ test('المقارنة لا تناقض ما تعلنه بقية الأسطح ع�
      وأن الإثبات ينتظر تجربة ظل. وما دامت تلك العبارة قائمة، فالمعايرة بعد
      التنفيذ **لا يجوز** أن تُعرض منفَّذة في جدول المقارنة.
      سطحان يتناقضان أسوأ من سطحٍ يعترف. */
-  const impact = fs.readFileSync(path.join(ROOT, 'athar-city-impact.html'), 'utf8');
+  const impact = fs.readFileSync(path.join(ROOT, 'masar-city-impact.html'), 'utf8');
   const noFieldData = /وفر مقيس ميدانياً/.test(impact) && /تجربة ظل/.test(impact);
   if (!noFieldData) return;
 
   const calibration = Compare.DIMENSIONS.find((dim) => dim.key === 'post-calibration');
   assert.ok(calibration, 'بُعد المعايرة بعد التنفيذ غائب من المقارنة');
-  assert.notStrictEqual(calibration.athar.state, 'implemented',
+  assert.notStrictEqual(calibration.masar.state, 'implemented',
     'المقارنة تعرض المعايرة بعد التنفيذ منفَّذة، وصفحة الأثر تعلن أنه لا '
     + 'قياس ميداني — سطحان يتناقضان');
-  assert.notStrictEqual(calibration.athar.state, 'partial',
+  assert.notStrictEqual(calibration.masar.state, 'partial',
     'المعايرة «منفَّذة بحدود» بلا بيانات ميدانية أصلاً');
 });
 
 test('كل حالة لأثر مصحوبة بحدّها', () => {
   Compare.DIMENSIONS.forEach((dim) => {
-    assert.ok(dim.athar && dim.athar.note && dim.athar.note.length > 15,
+    assert.ok(dim.masar && dim.masar.note && dim.masar.note.length > 15,
       `${dim.key}: حالة أثر بلا شرح`);
-    assert.ok(Compare.STATES[dim.athar.state],
+    assert.ok(Compare.STATES[dim.masar.state],
       `${dim.key}: حالة أثر غير معروفة`);
   });
 });
@@ -192,7 +192,7 @@ test('كل حالة لأثر مصحوبة بحدّها', () => {
 test('لا ادعاء «الأول» أو «غير مسبوق» في البيانات ولا في الصفحة', () => {
   const page = fs.readFileSync(PAGE, 'utf8')
     .replace(/<!--[\s\S]*?-->/g, ' ');
-  const data = fs.readFileSync(path.join(ROOT, 'athar-compare-data.js'), 'utf8')
+  const data = fs.readFileSync(path.join(ROOT, 'masar-compare-data.js'), 'utf8')
     .replace(/\/\*[\s\S]*?\*\//g, ' ')
     .replace(/^\s*\/\/[^\n]*/gm, ' ');
   [['الصفحة', page], ['البيانات', data]].forEach(([label, text]) => {
@@ -205,7 +205,7 @@ test('لا ادعاء «الأول» أو «غير مسبوق» في البيا�
   });
 });
 
-test('الصفحة تعلن أن أثر ليس بديلاً لمنصة التصريح', () => {
+test('الصفحة تعلن أن مسار ليس بديلاً لمنصة التصريح', () => {
   const page = fs.readFileSync(PAGE, 'utf8');
   assert.ok(/ليس بديلاً لمنصة التصريح/.test(page),
     'الصفحة لا تقول أين ينتهي دور أثر');
@@ -217,7 +217,7 @@ test('الصفحة تُبنى من الوحدة ولا تكرّر الجدول �
   /* جدولٌ مكتوب في HTML يفترق عن البيانات عند أول تعديل، فيصير للمقارنة
      نسختان تختلفان — وهو أسوأ من غياب المقارنة. */
   const page = fs.readFileSync(PAGE, 'utf8');
-  assert.ok(page.indexOf('athar-compare-data.js') !== -1,
+  assert.ok(page.indexOf('masar-compare-data.js') !== -1,
     'الصفحة لا تحمّل بيانات المقارنة');
   Compare.DIMENSIONS.forEach((dim) => {
     assert.ok(page.indexOf(dim.title) === -1,
@@ -226,10 +226,10 @@ test('الصفحة تُبنى من الوحدة ولا تكرّر الجدول �
 });
 
 test('الصفحة موصولة: في الفهرس وفي شريط التنقل', () => {
-  const nav = fs.readFileSync(path.join(ROOT, 'athar-nav.js'), 'utf8');
-  const advanced = fs.readFileSync(path.join(ROOT, 'athar-advanced.html'), 'utf8');
-  assert.ok(nav.indexOf('athar-compare.html') !== -1, 'الصفحة خارج قائمة الشريط');
-  assert.ok(advanced.indexOf('href="athar-compare.html"') !== -1,
+  const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
+  const advanced = fs.readFileSync(path.join(ROOT, 'masar-advanced.html'), 'utf8');
+  assert.ok(nav.indexOf('masar-compare.html') !== -1, 'الصفحة خارج قائمة الشريط');
+  assert.ok(advanced.indexOf('href="masar-compare.html"') !== -1,
     'الصفحة يتيمة — لا يصلها قسم التفاصيل المتقدمة');
 });
 

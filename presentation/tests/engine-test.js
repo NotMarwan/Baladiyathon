@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Plain node:assert test suite for AtharEngine.
+ * Plain node:assert test suite for MasarEngine.
  * Run: node presentation/tests/engine-test.js
  * No frameworks. Throws on first failure; prints ALL TESTS PASSED (n) on success.
  */
@@ -8,9 +8,9 @@
 const assert = require('node:assert');
 const path = require('node:path');
 
-const AtharEngine = require(path.join(__dirname, '..', 'athar-engine.js'));
-const Calib = require(path.join(__dirname, '..', 'athar-impact-calibration.js'));
-const Budget = require(path.join(__dirname, '..', 'athar-impact-budget.js'));
+const MasarEngine = require(path.join(__dirname, '..', 'masar-engine.js'));
+const Calib = require(path.join(__dirname, '..', 'masar-impact-calibration.js'));
+const Budget = require(path.join(__dirname, '..', 'masar-impact-budget.js'));
 
 function memStore() {
   const m = new Map();
@@ -39,23 +39,23 @@ function totalWindowHours(candidate) {
 // ---------------------------------------------------------------------------
 
 test('HOURLY_PROFILE has 24 entries summing to ~1.0', () => {
-  assert.strictEqual(AtharEngine.HOURLY_PROFILE.length, 24);
-  const sum = AtharEngine.HOURLY_PROFILE.reduce((a, b) => a + b, 0);
+  assert.strictEqual(MasarEngine.HOURLY_PROFILE.length, 24);
+  const sum = MasarEngine.HOURLY_PROFILE.reduce((a, b) => a + b, 0);
   assert.ok(Math.abs(sum - 1.0) < 1e-9, `sum was ${sum}`);
 });
 
 test('DEFAULTS carries expected demo constants', () => {
-  assert.strictEqual(AtharEngine.DEFAULTS.aadt, 85000);
-  assert.strictEqual(AtharEngine.DEFAULTS.lanes, 4);
-  assert.strictEqual(AtharEngine.DEFAULTS.capacityPerLane, 1800);
-  assert.strictEqual(AtharEngine.DEFAULTS.freeFlowMin, 6);
-  assert.strictEqual(AtharEngine.DEFAULTS.lengthKm, 4.2);
-  assert.strictEqual(AtharEngine.DEFAULTS.valueOfTimeSAR, 45);
-  assert.strictEqual(AtharEngine.DEFAULTS.idleFuelLPerHour, 0.9);
-  assert.strictEqual(AtharEngine.DEFAULTS.co2KgPerL, 2.31);
+  assert.strictEqual(MasarEngine.DEFAULTS.aadt, 85000);
+  assert.strictEqual(MasarEngine.DEFAULTS.lanes, 4);
+  assert.strictEqual(MasarEngine.DEFAULTS.capacityPerLane, 1800);
+  assert.strictEqual(MasarEngine.DEFAULTS.freeFlowMin, 6);
+  assert.strictEqual(MasarEngine.DEFAULTS.lengthKm, 4.2);
+  assert.strictEqual(MasarEngine.DEFAULTS.valueOfTimeSAR, 45);
+  assert.strictEqual(MasarEngine.DEFAULTS.idleFuelLPerHour, 0.9);
+  assert.strictEqual(MasarEngine.DEFAULTS.co2KgPerL, 2.31);
   // WP-A2: trenchCostPerKmSAR حُذف. غيابه شرطٌ لا سهو — الفحص الحارس في
   // 'digOnce() reports zero money…' أدناه يمنع عودته.
-  assert.strictEqual(AtharEngine.DEFAULTS.trenchCostPerKmSAR, undefined);
+  assert.strictEqual(MasarEngine.DEFAULTS.trenchCostPerKmSAR, undefined);
 });
 
 // ---------------------------------------------------------------------------
@@ -63,13 +63,13 @@ test('DEFAULTS carries expected demo constants', () => {
 // ---------------------------------------------------------------------------
 
 test('bprTravelTime returns freeFlowMin at zero volume', () => {
-  const t = AtharEngine.bprTravelTime(6, 0, 7200);
+  const t = MasarEngine.bprTravelTime(6, 0, 7200);
   assert.strictEqual(t, 6);
 });
 
 test('bprTravelTime increases with volume/capacity ratio', () => {
-  const low = AtharEngine.bprTravelTime(6, 1000, 7200);
-  const high = AtharEngine.bprTravelTime(6, 7000, 7200);
+  const low = MasarEngine.bprTravelTime(6, 1000, 7200);
+  const high = MasarEngine.bprTravelTime(6, 7000, 7200);
   assert.ok(high > low, `expected high(${high}) > low(${low})`);
 });
 
@@ -78,7 +78,7 @@ test('bprTravelTime matches BPR formula exactly for a sample point', () => {
   const v = 3600;
   const c = 7200;
   const expected = t0 * (1 + 0.15 * Math.pow(v / c, 4));
-  const actual = AtharEngine.bprTravelTime(t0, v, c);
+  const actual = MasarEngine.bprTravelTime(t0, v, c);
   assert.ok(Math.abs(actual - expected) < 1e-9);
 });
 
@@ -96,8 +96,8 @@ test('Night closure (startHour 23) delay < day closure (startHour 8) for same in
     lengthKm: 4.2,
     durationHours: 4,
   };
-  const night = AtharEngine.score({ ...base, startHour: 23 });
-  const day = AtharEngine.score({ ...base, startHour: 8 });
+  const night = MasarEngine.score({ ...base, startHour: 23 });
+  const day = MasarEngine.score({ ...base, startHour: 8 });
   assert.ok(
     night.delayVehHours < day.delayVehHours,
     `night(${night.delayVehHours}) should be < day(${day.delayVehHours})`
@@ -114,17 +114,17 @@ test('More lanesClosed => more delay, monotonic', () => {
     startHour: 8,
     durationHours: 4,
   };
-  const d0 = AtharEngine.score({ ...base, lanesClosed: 0 }).delayVehHours;
-  const d1 = AtharEngine.score({ ...base, lanesClosed: 1 }).delayVehHours;
-  const d2 = AtharEngine.score({ ...base, lanesClosed: 2 }).delayVehHours;
-  const d3 = AtharEngine.score({ ...base, lanesClosed: 3 }).delayVehHours;
+  const d0 = MasarEngine.score({ ...base, lanesClosed: 0 }).delayVehHours;
+  const d1 = MasarEngine.score({ ...base, lanesClosed: 1 }).delayVehHours;
+  const d2 = MasarEngine.score({ ...base, lanesClosed: 2 }).delayVehHours;
+  const d3 = MasarEngine.score({ ...base, lanesClosed: 3 }).delayVehHours;
   assert.ok(d0 <= d1, `d0(${d0}) <= d1(${d1})`);
   assert.ok(d1 <= d2, `d1(${d1}) <= d2(${d2})`);
   assert.ok(d2 <= d3, `d2(${d2}) <= d3(${d3})`);
 });
 
 test('score() with 0 lanesClosed => delayVehHours = 0, score = 0', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 0,
@@ -152,7 +152,7 @@ test('score() level buckets match the real engine output across severities', () 
   ];
   const seen = new Set();
   severities.forEach((sv) => {
-    const r = AtharEngine.score({
+    const r = MasarEngine.score({
       aadt: 85000, lanes: 4, capacityPerLane: 1800, freeFlowMin: 6,
       lanesClosed: sv.lanesClosed, startHour: sv.startHour, durationHours: sv.durationHours,
     });
@@ -164,7 +164,7 @@ test('score() level buckets match the real engine output across severities', () 
 });
 
 test('score() hourly breakdown length matches durationHours', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 2,
@@ -190,7 +190,7 @@ test('durationHours > 24 wraps hours correctly (h % 24)', () => {
     freeFlowMin: 6,
     lengthKm: 4.2,
   };
-  const r48 = AtharEngine.score({ ...inputBase, startHour: 8, durationHours: 48 });
+  const r48 = MasarEngine.score({ ...inputBase, startHour: 8, durationHours: 48 });
   assert.strictEqual(r48.hourly.length, 48);
   // hour 24 into the closure should wrap back to startHour (8) demand-wise
   const hour0 = r48.hourly[0];
@@ -200,7 +200,7 @@ test('durationHours > 24 wraps hours correctly (h % 24)', () => {
 });
 
 test('durationHours = 30 starting at hour 20 wraps past midnight (h%24) with matching profile fractions', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 1,
@@ -222,7 +222,7 @@ test('durationHours = 30 starting at hour 20 wraps past midnight (h%24) with mat
 // ---------------------------------------------------------------------------
 
 test('lanesClosed == lanes applies capacity floor (0.25*capacityPerLane), stays finite', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 4,
@@ -260,8 +260,8 @@ test('lanesClosed > lanes يُرفض ولا يُقصّ — مُدخل مستحي
     startHour: 8,
     durationHours: 2,
   };
-  assert.ok(Number.isFinite(AtharEngine.score({ ...base, lanesClosed: 4 }).delayVehHours));
-  assert.throws(() => AtharEngine.score({ ...base, lanesClosed: 6 }),
+  assert.ok(Number.isFinite(MasarEngine.score({ ...base, lanesClosed: 4 }).delayVehHours));
+  assert.throws(() => MasarEngine.score({ ...base, lanesClosed: 6 }),
     /حارات مغلقة/);
 });
 
@@ -275,15 +275,15 @@ test('مُدخل ناقص يرفع خطأً ولا يُخرج رقماً', () =>
     .forEach((field) => {
       const broken = { ...full };
       delete broken[field];
-      assert.throws(() => AtharEngine.score(broken), new RegExp(field),
+      assert.throws(() => MasarEngine.score(broken), new RegExp(field),
         `${field} الناقص لم يُرفض`);
     });
   // السعة لكل حارة معيار (1800) لا قياس موقعيّ — فلها افتراضي معلن.
   const withoutCapacity = { ...full };
   delete withoutCapacity.capacityPerLane;
   assert.strictEqual(
-    AtharEngine.score(withoutCapacity).delayVehHours,
-    AtharEngine.score(full).delayVehHours,
+    MasarEngine.score(withoutCapacity).delayVehHours,
+    MasarEngine.score(full).delayVehHours,
     'السعة المعيارية الافتراضية لا تطابق الصريحة'
   );
 });
@@ -293,7 +293,7 @@ test('مُدخل ناقص يرفع خطأً ولا يُخرج رقماً', () =>
 // ---------------------------------------------------------------------------
 
 test('zero lanesClosed => zero delay across multi-hour, multi-day closures', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 0,
@@ -313,7 +313,7 @@ test('zero lanesClosed => zero delay across multi-hour, multi-day closures', () 
 
 test('buildNightWindows preserves exact requested hours across boundary cases', () => {
   for (const durationHours of [1, 8, 9, 10, 16, 17, 10.5]) {
-    const windows = AtharEngine.buildNightWindows(22, durationHours, 8);
+    const windows = MasarEngine.buildNightWindows(22, durationHours, 8);
     assert.ok(windows.length >= 1);
     assert.ok(windows.every((window) => window.durationHours > 0 && window.durationHours <= 8));
     assert.ok(windows.every((window) => window.startHour === 22));
@@ -329,14 +329,14 @@ test('buildNightWindows preserves exact requested hours across boundary cases', 
 });
 
 test('buildNightWindows rejects invalid hours before entering its loop', () => {
-  assert.throws(() => AtharEngine.buildNightWindows(24, 8, 8), /startHour/);
-  assert.throws(() => AtharEngine.buildNightWindows(22, 0, 8), /durationHours/);
-  assert.throws(() => AtharEngine.buildNightWindows(22, Infinity, 8), /durationHours/);
-  assert.throws(() => AtharEngine.buildNightWindows(22, 8, 0), /maxNightHours/);
+  assert.throws(() => MasarEngine.buildNightWindows(24, 8, 8), /startHour/);
+  assert.throws(() => MasarEngine.buildNightWindows(22, 0, 8), /durationHours/);
+  assert.throws(() => MasarEngine.buildNightWindows(22, Infinity, 8), /durationHours/);
+  assert.throws(() => MasarEngine.buildNightWindows(22, 8, 0), /maxNightHours/);
 });
 
 test('10-hour night schedule uses one full window and one 2-hour window', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 1,
@@ -351,7 +351,7 @@ test('10-hour night schedule uses one full window and one 2-hour window', () => 
      خاصية `buildNightWindows`، وبقاء الجدول **مفحوصاً** يُتحقَّق من قائمة
      المرشحين لا من ترتيبها. */
   assert.deepStrictEqual(
-    AtharEngine.buildNightWindows(22, 10, 8).map((item) => item.durationHours),
+    MasarEngine.buildNightWindows(22, 10, 8).map((item) => item.durationHours),
     [8, 2]
   );
   assert.ok(result.rankedLabels.indexOf('22p2w8') !== -1,
@@ -362,7 +362,7 @@ test('10-hour night schedule uses one full window and one 2-hour window', () => 
 });
 
 test('baseline and every candidate represent the same requested work hours', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 2,
@@ -390,11 +390,11 @@ test('phased delay sums active windows only and excludes daytime gaps', () => {
   /* الخاصية المقصودة تخصّ الحساب لا الترتيب: تأخير جدول مرحلي = مجموع
      نوافذه النشطة وحدها، والفجوة النهارية لا تُحتسب إغلاقاً. تُفحص على
      الجدول مباشرة كي لا تتعلّق بفوزه. */
-  const windows = AtharEngine.buildNightWindows(input.startHour, input.durationHours, 8);
+  const windows = MasarEngine.buildNightWindows(input.startHour, input.durationHours, 8);
   assert.strictEqual(windows.length, 2, 'المدة المختارة لا تنتج جدولاً مرحلياً');
-  const evaluation = AtharEngine.evaluateSchedule(input, windows);
+  const evaluation = MasarEngine.evaluateSchedule(input, windows);
   const expected = windows.reduce((sum, window) => {
-    return sum + AtharEngine.score({
+    return sum + MasarEngine.score({
       ...input,
       startHour: window.startHour,
       durationHours: window.durationHours,
@@ -407,7 +407,7 @@ test('phased delay sums active windows only and excludes daytime gaps', () => {
 });
 
 test('top alternatives have distinct window schedules', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 2,
@@ -431,7 +431,7 @@ test('optimize().top3[0].delayVehHours <= baseline.delayVehHours', () => {
     startHour: 8,
     durationHours: 4,
   };
-  const result = AtharEngine.optimize(input);
+  const result = MasarEngine.optimize(input);
   assert.ok(result.top3.length === 3, `expected 3 candidates, got ${result.top3.length}`);
   assert.ok(
     result.top3[0].delayVehHours <= result.baseline.delayVehHours,
@@ -440,7 +440,7 @@ test('optimize().top3[0].delayVehHours <= baseline.delayVehHours', () => {
 });
 
 test('optimize() top3 sorted ascending by delayVehHours', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 2,
@@ -455,7 +455,7 @@ test('optimize() top3 sorted ascending by delayVehHours', () => {
 });
 
 test('optimize() each candidate has label, startHour, phases, reasons[3]', () => {
-  const result = AtharEngine.optimize({
+  const result = MasarEngine.optimize({
     aadt: 85000,
     lanes: 4,
     lanesClosed: 2,
@@ -507,7 +507,7 @@ test('optimize() 48h continuous baseline is NOT vacuous: night-window candidate 
     startHour: 8,
     durationHours: 48,
   };
-  const result = AtharEngine.optimize(input);
+  const result = MasarEngine.optimize(input);
   assert.ok(
     result.top3[0].savedPct > 20,
     `expected savedPct > 20, got ${result.top3[0].savedPct}`
@@ -531,9 +531,9 @@ test('optimize() windowed night candidate (startHour 23) beats a continuous day 
   };
   const totalDuration = input.durationHours;
   const nights = Math.ceil(totalDuration / 8); // WORK_WINDOW_HOURS
-  const nightWindow = AtharEngine.score({ ...input, startHour: 23, durationHours: 8 });
+  const nightWindow = MasarEngine.score({ ...input, startHour: 23, durationHours: 8 });
   const nightWindowedDelay = nightWindow.delayVehHours * nights;
-  const dayContinuous = AtharEngine.score({ ...input, startHour: 8, durationHours: totalDuration });
+  const dayContinuous = MasarEngine.score({ ...input, startHour: 8, durationHours: totalDuration });
   assert.ok(
     nightWindowedDelay < dayContinuous.delayVehHours,
     `expected windowed night delay(${nightWindowedDelay}) < continuous day delay(${dayContinuous.delayVehHours})`
@@ -551,7 +551,7 @@ test('optimize() durationHours=6 (< work window) still returns 3 valid candidate
     startHour: 8,
     durationHours: 6,
   };
-  const result = AtharEngine.optimize(input);
+  const result = MasarEngine.optimize(input);
   assert.strictEqual(result.top3.length, 3);
   result.top3.forEach((c) => {
     assert.ok(Number.isFinite(c.savedVehHours));
@@ -571,7 +571,7 @@ test('optimize() candidate and baseline return windows as the schedule contract'
     startHour: 8,
     durationHours: 48,
   };
-  const result = AtharEngine.optimize(input);
+  const result = MasarEngine.optimize(input);
   /* العقد مثبَّت بالضبط لا بـ«يحتوي على»: حقلٌ يُضاف بصمت يغيّر ما تقرؤه
      الواجهات دون أن يسقط فحص. توسّع العقد في WP-B1 عن قصد، فيُحدَّث هنا. */
   const expectedKeys = ['label', 'startHour', 'phases', 'windowHours', 'windows',
@@ -592,13 +592,13 @@ test('optimize() candidate and baseline return windows as the schedule contract'
 // ---------------------------------------------------------------------------
 
 test('co2: fuelL = vehHours*0.9 exactly with defaults', () => {
-  const r = AtharEngine.co2(10);
+  const r = MasarEngine.co2(10);
   assert.strictEqual(r.fuelL, 9);
   assert.ok(Math.abs(r.co2Kg - 9 * 2.31) < 1e-9);
 });
 
 test('co2(0) => fuelL 0, co2Kg 0', () => {
-  const r = AtharEngine.co2(0);
+  const r = MasarEngine.co2(0);
   assert.strictEqual(r.fuelL, 0);
   assert.strictEqual(r.co2Kg, 0);
 });
@@ -657,15 +657,15 @@ test('corridorBudget: remaining floors at 0, pct and consumedAfter honest', () =
 // ---------------------------------------------------------------------------
 
 test('assumptionsUsed counts unofficial assumptions per metric', () => {
-  assert.strictEqual(AtharEngine.assumptionsUsed('timeValueSAR').length, 7);
-  assert.ok(AtharEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
-  assert.strictEqual(AtharEngine.assumptionsUsed('nope'), null);
+  assert.strictEqual(MasarEngine.assumptionsUsed('timeValueSAR').length, 7);
+  assert.ok(MasarEngine.assumptionsUsed('co2').includes('idleFuelLPerHour'));
+  assert.strictEqual(MasarEngine.assumptionsUsed('nope'), null);
 });
 
 test('assumptionsUsed returns a copy (caller cannot mutate internal table)', () => {
-  const a = AtharEngine.assumptionsUsed('digOnce');
+  const a = MasarEngine.assumptionsUsed('digOnce');
   a.push('x');
-  assert.ok(!AtharEngine.assumptionsUsed('digOnce').includes('x'));
+  assert.ok(!MasarEngine.assumptionsUsed('digOnce').includes('x'));
 });
 
 // ---------------------------------------------------------------------------
@@ -673,7 +673,7 @@ test('assumptionsUsed returns a copy (caller cannot mutate internal table)', () 
 // ---------------------------------------------------------------------------
 
 test('night closure still produces nonzero delay (work-zone friction floor)', () => {
-  const r = AtharEngine.score({
+  const r = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 1, capacityPerLane: 1800,
     freeFlowMin: 6, startHour: 2, durationHours: 4,
   });
@@ -681,7 +681,7 @@ test('night closure still produces nonzero delay (work-zone friction floor)', ()
 });
 
 test('optimize kills the 99.6% mirage: no candidate saves >=99% and best still has material delay', () => {
-  const r = AtharEngine.optimize({
+  const r = MasarEngine.optimize({
     aadt: 85000, lanes: 4, lanesClosed: 2, capacityPerLane: 1800,
     freeFlowMin: 6, startHour: 8, durationHours: 48,
   });
@@ -710,7 +710,7 @@ test('digOnce: N grouped permits are N-1 additional permits — a count, not an 
   /* عدٌّ لا ادعاء أثر. المجموعة تُبنى بتجاور الشارع والنافذة الزمنية، وقد تكون
      ثلاثة نطاقات مختلفة نُسّقت توقيتاً فقط. القول إن «حفرتين اختفتا» يحتاج
      هندسة النطاقات وتفاصيل التنفيذ، وليست عندنا. */
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
   assert.strictEqual(r.permitsMerged, 3);
   assert.strictEqual(r.additionalPermitsInGroups, 2);
   assert.ok(Math.abs(r.separateTrenchKm - 12.6) < 1e-6);
@@ -721,7 +721,7 @@ test('digOnce: the km figure is an equivalent, and carries its assumption', () =
   /* الادعاء المفترَض: (N-1)×trenchKm يستلزم تداخلاً تاماً بين المسارات.
      التداخل الهندسي غير محسوب، فلا يُسمّى الرقم «طولاً متجنَّباً» قطعياً،
      ولا يخرج من الدالة بلا افتراضه ملتصقاً به. */
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
   assert.ok(Math.abs(r.duplicateTrenchKmEquivalent - 8.4) < 1e-6);
   assert.strictEqual(r.avoidedTrenchKm, undefined,
     'الاسم القاطع «طول متجنَّب» عاد — وهو يدّعي هندسةً غير محسوبة');
@@ -732,7 +732,7 @@ test('digOnce: the km figure is an equivalent, and carries its assumption', () =
 });
 
 test('digOnce() with 1 permit drops nothing and asserts no overlap assumption', () => {
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 1 });
   assert.strictEqual(r.duplicateTrenchKmEquivalent, 0);
   assert.strictEqual(r.additionalPermitsInGroups, 0);
   assert.ok(Math.abs(r.sharedTrenchKm - r.separateTrenchKm) < 1e-6);
@@ -742,15 +742,15 @@ test('digOnce() with 1 permit drops nothing and asserts no overlap assumption', 
 
 test('digOnce() reports zero money and names who owns the cost input', () => {
   /* الفحص الحارس: أي عودة لرقم مالي داخل المحرك تسقط هنا. */
-  const r = AtharEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
+  const r = MasarEngine.digOnce({ trenchKm: 4.2, permitsMerged: 3 });
   Object.keys(r).forEach((key) => {
     assert.ok(!/SAR|ريال/i.test(key), `digOnce أعاد حقلاً مالياً: ${key}`);
   });
   assert.ok(/كلفة الخندق لدى الأمانة/.test(r.costNote),
     'costNote لا يسمّي من يملك مُدخل الكلفة');
-  assert.strictEqual(AtharEngine.DEFAULTS.trenchCostPerKmSAR, undefined,
+  assert.strictEqual(MasarEngine.DEFAULTS.trenchCostPerKmSAR, undefined,
     'كلفة الخندق الافتراضية عادت إلى DEFAULTS');
-  assert.deepStrictEqual(AtharEngine.assumptionsUsed('digOnce'), [],
+  assert.deepStrictEqual(MasarEngine.assumptionsUsed('digOnce'), [],
     'digOnce صار بلا افتراضات توضيحية — القائمة يجب أن تكون فارغة');
 });
 
@@ -759,43 +759,43 @@ test('digOnce() reports zero money and names who owns the cost input', () => {
 // ---------------------------------------------------------------------------
 
 test('compound() combines two scores with factor 1.3', () => {
-  const a = AtharEngine.score({
+  const a = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 2, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const b = AtharEngine.score({
+  const b = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 1, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const r = AtharEngine.compound(a, b);
+  const r = MasarEngine.compound(a, b);
   assert.strictEqual(r.factor, 1.3);
   assert.ok(Math.abs(r.combined - (a.delayVehHours + b.delayVehHours) * 1.3) < 1e-9);
 });
 
 test('compound() emits warning string when combined level becomes high', () => {
-  const a = AtharEngine.score({
+  const a = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 3, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const b = AtharEngine.score({
+  const b = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 3, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const r = AtharEngine.compound(a, b);
+  const r = MasarEngine.compound(a, b);
   assert.strictEqual(typeof r.warning, 'string');
   assert.ok(r.warning.length > 0);
 });
 
 test('compound() warning empty string when combined level stays low', () => {
-  const a = AtharEngine.score({
+  const a = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 0, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const b = AtharEngine.score({
+  const b = MasarEngine.score({
     aadt: 85000, lanes: 4, lanesClosed: 0, capacityPerLane: 1800,
     freeFlowMin: 6, lengthKm: 4.2, startHour: 8, durationHours: 4,
   });
-  const r = AtharEngine.compound(a, b);
+  const r = MasarEngine.compound(a, b);
   assert.strictEqual(r.warning, '');
 });
 
@@ -814,10 +814,10 @@ test('backTest() reports before/after vehicle-hours consistent with score/chosen
     startHour: 8,
     durationHours: 4,
   };
-  const opt = AtharEngine.optimize(input);
+  const opt = MasarEngine.optimize(input);
   const chosen = opt.top3[0];
-  const bt = AtharEngine.backTest(input, chosen);
-  const expectedBefore = AtharEngine.score(input).delayVehHours;
+  const bt = MasarEngine.backTest(input, chosen);
+  const expectedBefore = MasarEngine.score(input).delayVehHours;
   assert.ok(Math.abs(bt.beforeVehHours - expectedBefore) < 1e-9);
   assert.ok(Math.abs(bt.afterVehHours - chosen.delayVehHours) < 1e-9);
   assert.ok(bt.afterVehHours <= bt.beforeVehHours);
@@ -828,7 +828,7 @@ test('backTest() reports before/after vehicle-hours consistent with score/chosen
 // ---------------------------------------------------------------------------
 
 test('DEFAULTS carries range constants for person-hours / VoT / fuel / transit', () => {
-  const d = AtharEngine.DEFAULTS;
+  const d = MasarEngine.DEFAULTS;
   assert.strictEqual(d.occupancyLow, 1.2);
   assert.strictEqual(d.occupancyHigh, 1.6);
   assert.strictEqual(d.wageMonthlySAR, 5800);
@@ -848,7 +848,7 @@ test('DEFAULTS carries range constants for person-hours / VoT / fuel / transit',
 // ---------------------------------------------------------------------------
 
 test('personHours(100) => 120-160 person-hours with default occupancy band', () => {
-  const r = AtharEngine.personHours(100);
+  const r = MasarEngine.personHours(100);
   assert.strictEqual(r.lowPersonHours, 120);
   assert.strictEqual(r.highPersonHours, 160);
   assert.strictEqual(r.occLow, 1.2);
@@ -856,13 +856,13 @@ test('personHours(100) => 120-160 person-hours with default occupancy band', () 
 });
 
 test('personHours(0) => zero range', () => {
-  const r = AtharEngine.personHours(0);
+  const r = MasarEngine.personHours(0);
   assert.strictEqual(r.lowPersonHours, 0);
   assert.strictEqual(r.highPersonHours, 0);
 });
 
 test('personHours honors opts override', () => {
-  const r = AtharEngine.personHours(100, { occLow: 1.0, occHigh: 2.0 });
+  const r = MasarEngine.personHours(100, { occLow: 1.0, occHigh: 2.0 });
   assert.strictEqual(r.lowPersonHours, 100);
   assert.strictEqual(r.highPersonHours, 200);
 });
@@ -872,14 +872,14 @@ test('personHours honors opts override', () => {
 // ---------------------------------------------------------------------------
 
 test('timeValueSAR: wageHourly = 5800/160 = 36.25 SAR', () => {
-  const r = AtharEngine.timeValueSAR(AtharEngine.personHours(100));
+  const r = MasarEngine.timeValueSAR(MasarEngine.personHours(100));
   assert.strictEqual(r.wageHourlySAR, 36.25);
 });
 
 test('timeValueSAR(personHours(100)) => low 1740, high 4060 SAR', () => {
   // low  = 120 person-hours * 36.25 * 0.4 = 1740
   // high = 160 person-hours * 36.25 * 0.7 = 4060
-  const r = AtharEngine.timeValueSAR(AtharEngine.personHours(100));
+  const r = MasarEngine.timeValueSAR(MasarEngine.personHours(100));
   assert.ok(Math.abs(r.lowSAR - 1740) < 1e-9, `lowSAR was ${r.lowSAR}`);
   assert.ok(Math.abs(r.highSAR - 4060) < 1e-9, `highSAR was ${r.highSAR}`);
   assert.strictEqual(r.shareLow, 0.4);
@@ -887,7 +887,7 @@ test('timeValueSAR(personHours(100)) => low 1740, high 4060 SAR', () => {
 });
 
 test('timeValueSAR of zero person-hours => zero SAR range', () => {
-  const r = AtharEngine.timeValueSAR(AtharEngine.personHours(0));
+  const r = MasarEngine.timeValueSAR(MasarEngine.personHours(0));
   assert.strictEqual(r.lowSAR, 0);
   assert.strictEqual(r.highSAR, 0);
 });
@@ -897,7 +897,7 @@ test('timeValueSAR of zero person-hours => zero SAR range', () => {
 // ---------------------------------------------------------------------------
 
 test('co2Range(100) => fuel 70-110 L, co2 161.7-254.1 kg', () => {
-  const r = AtharEngine.co2Range(100);
+  const r = MasarEngine.co2Range(100);
   assert.ok(Math.abs(r.lowFuelL - 70) < 1e-9, `lowFuelL was ${r.lowFuelL}`);
   assert.ok(Math.abs(r.highFuelL - 110) < 1e-9, `highFuelL was ${r.highFuelL}`);
   assert.ok(Math.abs(r.lowCo2Kg - 161.7) < 1e-9, `lowCo2Kg was ${r.lowCo2Kg}`);
@@ -905,14 +905,14 @@ test('co2Range(100) => fuel 70-110 L, co2 161.7-254.1 kg', () => {
 });
 
 test('co2Range(0) => zero everywhere', () => {
-  const r = AtharEngine.co2Range(0);
+  const r = MasarEngine.co2Range(0);
   assert.strictEqual(r.lowFuelL, 0);
   assert.strictEqual(r.highCo2Kg, 0);
 });
 
 test('transitImpact: 1 hour with 6-min bus delay => 12 buses, 1.2 bus-hours, 18-48 person-hours', () => {
   const fakeScore = { hourly: [{ hour: 8, demand: 5000, baseT: 6, closedT: 12, delayVehHours: 100 }] };
-  const r = AtharEngine.transitImpact(fakeScore);
+  const r = MasarEngine.transitImpact(fakeScore);
   // buses = 3 routes * 4 buses/hr = 12; delay/bus = 6 min = 0.1 hr
   // busDelayHours = 12 * 0.1 = 1.2; low = 1.2*15 = 18; high = 1.2*40 = 48
   assert.strictEqual(r.busesAffected, 12);
@@ -923,7 +923,7 @@ test('transitImpact: 1 hour with 6-min bus delay => 12 buses, 1.2 bus-hours, 18-
 
 test('transitImpact with no closure delay (closedT == baseT) => zero', () => {
   const fakeScore = { hourly: [{ hour: 3, demand: 400, baseT: 6, closedT: 6, delayVehHours: 0 }] };
-  const r = AtharEngine.transitImpact(fakeScore);
+  const r = MasarEngine.transitImpact(fakeScore);
   assert.strictEqual(r.busDelayHours, 0);
   assert.strictEqual(r.lowPersonHours, 0);
 });
@@ -933,8 +933,8 @@ test('transitImpact with no closure delay (closedT == baseT) => zero', () => {
 // ---------------------------------------------------------------------------
 
 test('wzdx returns a WZDx-shaped FeatureCollection with correct dates and impact', () => {
-  const fc = AtharEngine.wzdx({
-    id: 'athar-demo-001',
+  const fc = MasarEngine.wzdx({
+    id: 'masar-demo-001',
     roadName: 'طريق الملك فهد',
     direction: 'northbound',
     lanes: 4,
@@ -947,7 +947,7 @@ test('wzdx returns a WZDx-shaped FeatureCollection with correct dates and impact
   assert.strictEqual(fc.features.length, 1);
   const p = fc.features[0].properties;
   assert.strictEqual(p.core_details.event_type, 'work-zone');
-  assert.strictEqual(p.core_details.data_source_id, 'athar-prototype');
+  assert.strictEqual(p.core_details.data_source_id, 'masar-prototype');
   assert.deepStrictEqual(p.core_details.road_names, ['طريق الملك فهد']);
   assert.strictEqual(p.core_details.direction, 'northbound');
   assert.strictEqual(p.vehicle_impact, 'some-lanes-closed');
@@ -962,9 +962,9 @@ test('wzdx vehicle_impact: all lanes closed => all-lanes-closed; zero => all-lan
     startISO: '2026-07-27T22:00:00Z', durationHours: 4,
     coordinates: [[46.6, 24.7], [46.7, 24.8]],
   };
-  const closed = AtharEngine.wzdx({ ...base, lanesClosed: 4 });
+  const closed = MasarEngine.wzdx({ ...base, lanesClosed: 4 });
   assert.strictEqual(closed.features[0].properties.vehicle_impact, 'all-lanes-closed');
-  const open = AtharEngine.wzdx({ ...base, lanesClosed: 0 });
+  const open = MasarEngine.wzdx({ ...base, lanesClosed: 0 });
   assert.strictEqual(open.features[0].properties.vehicle_impact, 'all-lanes-open');
 });
 
@@ -973,8 +973,8 @@ test('wzdx emits one closure feature per selected schedule window', () => {
     { dayOffset: 0, startHour: 22, durationHours: 8 },
     { dayOffset: 1, startHour: 22, durationHours: 2 },
   ];
-  const fc = AtharEngine.wzdx({
-    id: 'athar-demo-windowed',
+  const fc = MasarEngine.wzdx({
+    id: 'masar-demo-windowed',
     roadName: 'طريق الملك فهد',
     direction: 'northbound',
     lanes: 4,
@@ -1017,19 +1017,19 @@ test('wzdx emits one closure feature per selected schedule window', () => {
 // ---------------------------------------------------------------------------
 
 test('predictionError(100, 112) => abs 12, pct 12, verdict دقيق', () => {
-  const r = AtharEngine.predictionError(100, 112);
+  const r = MasarEngine.predictionError(100, 112);
   assert.strictEqual(r.absError, 12);
   assert.ok(Math.abs(r.pctError - 12) < 1e-9);
   assert.strictEqual(r.verdict, 'دقيق');
 });
 
 test('predictionError(100, 125) => verdict مقبول; (100, 140) => يتطلب إعادة معايرة', () => {
-  assert.strictEqual(AtharEngine.predictionError(100, 125).verdict, 'مقبول');
-  assert.strictEqual(AtharEngine.predictionError(100, 140).verdict, 'يتطلب إعادة معايرة');
+  assert.strictEqual(MasarEngine.predictionError(100, 125).verdict, 'مقبول');
+  assert.strictEqual(MasarEngine.predictionError(100, 140).verdict, 'يتطلب إعادة معايرة');
 });
 
 test('predictionError guards zero prediction', () => {
-  const r = AtharEngine.predictionError(0, 10);
+  const r = MasarEngine.predictionError(0, 10);
   assert.strictEqual(r.pctError, 100);
   assert.strictEqual(r.verdict, 'يتطلب إعادة معايرة');
 });

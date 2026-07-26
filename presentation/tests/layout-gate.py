@@ -1,4 +1,4 @@
-"""أثر — بوابة التخطيط.
+"""مسار — بوابة التخطيط.
 
 تفتح كل صفحة على ثلاثة عروض وتسأل سؤالين لا يستطيع اختبار Node سؤالهما:
 هل فاض شيء أفقياً، وهل صرخ شيء في الطرفية.
@@ -19,9 +19,9 @@ from playwright.async_api import async_playwright
 BASE = 'http://localhost:8734/'
 WIDTHS = [390, 768, 1440]
 PAGES = [
-    'athar-desk.html', 'athar-map.html', 'athar-decision.html',
-    'athar-city-impact.html', 'athar-sources.html', 'athar-lab.html',
-    'athar-prototype.html', 'athar-pitch.html', 'athar-compare.html',
+    'masar-desk.html', 'masar-map.html', 'masar-decision.html',
+    'masar-city-impact.html', 'masar-sources.html', 'masar-lab.html',
+    'masar-prototype.html', 'masar-pitch.html', 'masar-compare.html',
 ]
 
 LAUNCH_ARGS = [

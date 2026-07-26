@@ -1,8 +1,8 @@
 'use strict';
 const assert = require('assert');
 const path = require('path');
-const Panel = require(path.join(__dirname, '..', 'athar-worksmap-panel.js'));
-const Layers = require(path.join(__dirname, '..', 'athar-worksmap-layers.js'));
+const Panel = require(path.join(__dirname, '..', 'masar-worksmap-panel.js'));
+const Layers = require(path.join(__dirname, '..', 'masar-worksmap-layers.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

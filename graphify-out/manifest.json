@@ -9,12 +9,12 @@
     "ast_hash": "4709e28d8d40f00903a07afa368ffdbd",
     "semantic_hash": ""
   },
-  "KIMI 3 MAP DESIGN/GL-UPGRADE/athar-glmap.js": {
+  "KIMI 3 MAP DESIGN/GL-UPGRADE/masar-glmap.js": {
     "mtime": 1784916113.5215967,
     "ast_hash": "fbec7fe9dbbde1b0d5cea9499cc8a940",
     "semantic_hash": ""
   },
-  "KIMI 3 MAP DESIGN/athar-ownedmap.js": {
+  "KIMI 3 MAP DESIGN/masar-ownedmap.js": {
     "mtime": 1784914464.5967646,
     "ast_hash": "400c241d96888d684596ac4d6efd29d3",
     "semantic_hash": ""
@@ -64,97 +64,97 @@
     "ast_hash": "eb2cd8ff094e2f116235310b1bdd5537",
     "semantic_hash": ""
   },
-  "presentation/athar-boundary.js": {
+  "presentation/masar-boundary.js": {
     "mtime": 1784800467.3774693,
     "ast_hash": "70717ae9c3c7d745289c92b2a0d12ecd",
     "semantic_hash": ""
   },
-  "presentation/athar-budget.js": {
+  "presentation/masar-budget.js": {
     "mtime": 1784800467.3794854,
     "ast_hash": "508b1c7564bbfc246b86cd214a8bdd63",
     "semantic_hash": ""
   },
-  "presentation/athar-conflict.js": {
+  "presentation/masar-conflict.js": {
     "mtime": 1784800467.3814886,
     "ast_hash": "88061713ecf9d763fab288c717c81a6d",
     "semantic_hash": ""
   },
-  "presentation/athar-decision.js": {
+  "presentation/masar-decision.js": {
     "mtime": 1784805902.8115363,
     "ast_hash": "bad6a9645530c83a44e94e9e3f4bfd9d",
     "semantic_hash": ""
   },
-  "presentation/athar-engine.js": {
+  "presentation/masar-engine.js": {
     "mtime": 1784806219.3860958,
     "ast_hash": "21da29c7b8ca4dd3c441505c608dc91c",
     "semantic_hash": ""
   },
-  "presentation/athar-forecast.js": {
+  "presentation/masar-forecast.js": {
     "mtime": 1784800635.738253,
     "ast_hash": "f047a29f239488f276182d8d2226bac0",
     "semantic_hash": ""
   },
-  "presentation/athar-impact-budget.js": {
+  "presentation/masar-impact-budget.js": {
     "mtime": 1784800473.730392,
     "ast_hash": "164bcb99f315c83b6ec0e58b0cac78f6",
     "semantic_hash": ""
   },
-  "presentation/athar-impact-calibration.js": {
+  "presentation/masar-impact-calibration.js": {
     "mtime": 1784800473.7333984,
     "ast_hash": "f55ce91f576f6a1d4b5f76e4ef673022",
     "semantic_hash": ""
   },
-  "presentation/athar-memory.js": {
+  "presentation/masar-memory.js": {
     "mtime": 1784800467.387575,
     "ast_hash": "ee175e21da751969eeab3d45c96f2f67",
     "semantic_hash": ""
   },
-  "presentation/athar-nav.js": {
+  "presentation/masar-nav.js": {
     "mtime": 1784927288.3681467,
     "ast_hash": "cf934c92e545119c4c6a657b89fe31d0",
     "semantic_hash": ""
   },
-  "presentation/athar-portfolio.js": {
+  "presentation/masar-portfolio.js": {
     "mtime": 1784927288.3721452,
     "ast_hash": "e9647c61f2d41a6fd29b936c0e96be48",
     "semantic_hash": ""
   },
-  "presentation/athar-reasons.js": {
+  "presentation/masar-reasons.js": {
     "mtime": 1784800467.3896194,
     "ast_hash": "463900ec5c9dc60a1c0c4df54e79bc6a",
     "semantic_hash": ""
   },
-  "presentation/athar-routing.js": {
+  "presentation/masar-routing.js": {
     "mtime": 1784806219.4240842,
     "ast_hash": "80e9262d958cee623a7fd7a39317f784",
     "semantic_hash": ""
   },
-  "presentation/athar-shadow-evaluation.js": {
+  "presentation/masar-shadow-evaluation.js": {
     "mtime": 1784806332.8787744,
     "ast_hash": "90b364f6bff3b1b6a43f2532d5d058df",
     "semantic_hash": ""
   },
-  "presentation/athar-worksmap-data.js": {
+  "presentation/masar-worksmap-data.js": {
     "mtime": 1784925941.5675936,
     "ast_hash": "0a59d4201f6300e91915b6bfeb85310a",
     "semantic_hash": ""
   },
-  "presentation/athar-worksmap-layers.js": {
+  "presentation/masar-worksmap-layers.js": {
     "mtime": 1784928000.7243316,
     "ast_hash": "c75ed2840d55da7848f69507204508b2",
     "semantic_hash": ""
   },
-  "presentation/athar-worksmap-panel.js": {
+  "presentation/masar-worksmap-panel.js": {
     "mtime": 1784926150.5701385,
     "ast_hash": "4f75a39e013db34598bf9ef9f57420ef",
     "semantic_hash": ""
   },
-  "presentation/athar-worksmap-style.js": {
+  "presentation/masar-worksmap-style.js": {
     "mtime": 1784925780.3150723,
     "ast_hash": "4c75646d79df2688d48ceaf4be4ba4ed",
     "semantic_hash": ""
   },
-  "presentation/athar-worksmap.js": {
+  "presentation/masar-worksmap.js": {
     "mtime": 1784927824.2840114,
     "ast_hash": "787cbeea47688e60df163c4b6fcf7932",
     "semantic_hash": ""
@@ -349,22 +349,22 @@
     "ast_hash": "81062d9c935ae44f2dac1cbb4df2ad7f",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/data/public-page-inventory.json": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/data/public-page-inventory.json": {
     "mtime": 1784807232.4869337,
     "ast_hash": "6b34fd2aebafddcc054ba821cc589db4",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/design/athar-next.tokens.json": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/design/masar-next.tokens.json": {
     "mtime": 1784807185.1787527,
     "ast_hash": "e5ee08a2809fb932dea019ad1249a23a",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/scripts/inventory_public_pages.py": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/scripts/inventory_public_pages.py": {
     "mtime": 1784806139.7591505,
     "ast_hash": "55ff28a066ca083e09cec6dcd6ebd36b",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/scripts/render_diagrams.py": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/scripts/render_diagrams.py": {
     "mtime": 1784807706.0350037,
     "ast_hash": "d79e066da1b31b604e4ded362f9c6cb3",
     "semantic_hash": ""
@@ -444,7 +444,7 @@
     "ast_hash": "23004973e9eb74def385139fcf300721",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/build-deck.mjs": {
+  "tmp/masar-deck-parts/build-deck.mjs": {
     "mtime": 1784809102.4964068,
     "ast_hash": "835b5a871153268ca3def9b7527c8008",
     "semantic_hash": ""
@@ -514,62 +514,62 @@
     "ast_hash": "b7d302f1f5d4c59fcb700b6a6a0fb832",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/00 Athar - Home.md": {
+  "SwarmingObsidian/00 Masar - Home.md": {
     "mtime": 1783588256.9214852,
     "ast_hash": "4f833b1dc960f5f439b03e548ef34402",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Absorbed - HAFRA.md": {
+  "SwarmingObsidian/01 Masar/Absorbed - HAFRA.md": {
     "mtime": 1783528975.811663,
     "ast_hash": "613b895c61b7426981f86d36614ff6e4",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Absorbed - MIRAT AL-MADINA.md": {
+  "SwarmingObsidian/01 Masar/Absorbed - MIRAT AL-MADINA.md": {
     "mtime": 1783528975.8599565,
     "ast_hash": "972af3f947fe2ca1965ec252fd6ee20e",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Athar - Evidence (Challenge 3).md": {
+  "SwarmingObsidian/01 Masar/Masar - Evidence (Challenge 3).md": {
     "mtime": 1783528975.76465,
     "ast_hash": "3f9b5c227eac943f37f0a0b97c50fb8b",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Athar - Master.md": {
+  "SwarmingObsidian/01 Masar/Masar - Master.md": {
     "mtime": 1783529039.263964,
     "ast_hash": "66975f6b0bea337a5a57a1e27b76cf55",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Demo Script.md": {
+  "SwarmingObsidian/01 Masar/Demo Script.md": {
     "mtime": 1783529060.299217,
     "ast_hash": "953d0272997034614067cc3f93b61e9c",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Engine.md": {
+  "SwarmingObsidian/01 Masar/Engine.md": {
     "mtime": 1783588235.2392054,
     "ast_hash": "816d9eebe4f8532639f04b2a7ff23528",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Idea Card.md": {
+  "SwarmingObsidian/01 Masar/Idea Card.md": {
     "mtime": 1783588240.2795656,
     "ast_hash": "0092fd86b57c34416770edc6490d0e9a",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Merges & Fixes.md": {
+  "SwarmingObsidian/01 Masar/Merges & Fixes.md": {
     "mtime": 1783542549.4779265,
     "ast_hash": "d9b2ba3d148ec83d31940fc4dbd6f8da",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/New Capabilities (research).md": {
+  "SwarmingObsidian/01 Masar/New Capabilities (research).md": {
     "mtime": 1783529091.4506633,
     "ast_hash": "fbca7118a917bbf4bd027c600445bc5f",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/Prototype.md": {
+  "SwarmingObsidian/01 Masar/Prototype.md": {
     "mtime": 1783588222.8176336,
     "ast_hash": "be7a908b31c2f242a0cbd12376815148",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/01 Athar/attachments/athar.html": {
+  "SwarmingObsidian/01 Masar/attachments/masar.html": {
     "mtime": 1783523081.958574,
     "ast_hash": "39d1a8a2d102f1b391cbfd7cf02f4089",
     "semantic_hash": ""
@@ -659,7 +659,7 @@
     "ast_hash": "825ed4203850bb8eeb064c96f1d1ef74",
     "semantic_hash": ""
   },
-  "SwarmingObsidian/99 Archive/Final Projects/Athar.md": {
+  "SwarmingObsidian/99 Archive/Final Projects/Masar.md": {
     "mtime": 1783523110.5620093,
     "ast_hash": "0fe77c8aed7e844f0623ce70abed3d2b",
     "semantic_hash": ""
@@ -1044,7 +1044,7 @@
     "ast_hash": "6d744b2b1c6c29e8f2cf7880a89c0d78",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-09-athar-full-build.md": {
+  "docs/superpowers/plans/2026-07-09-masar-full-build.md": {
     "mtime": 1783552131.9381745,
     "ast_hash": "ffe8f98594fc9c162bec90ccc6acf2aa",
     "semantic_hash": ""
@@ -1054,27 +1054,27 @@
     "ast_hash": "d958bf2d77dd129016428a5ac210f9de",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-23-athar-evidence-intelligence.md": {
+  "docs/superpowers/plans/2026-07-23-masar-evidence-intelligence.md": {
     "mtime": 1784791757.2427273,
     "ast_hash": "59e4aed55e59dbc10eacb4600f94044f",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-23-athar-impact-prototype-claude.md": {
+  "docs/superpowers/plans/2026-07-23-masar-impact-prototype-claude.md": {
     "mtime": 1784795841.8220246,
     "ast_hash": "2e1a83d79dcf9491b42e4b6d75aab307",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-23-athar-innovation-loops.md": {
+  "docs/superpowers/plans/2026-07-23-masar-innovation-loops.md": {
     "mtime": 1784800467.3754423,
     "ast_hash": "5a4ddb922f2b8da07dc5c3f7aef03efa",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-23-athar-innovation-pitch-chatgpt.md": {
+  "docs/superpowers/plans/2026-07-23-masar-innovation-pitch-chatgpt.md": {
     "mtime": 1784795818.6749592,
     "ast_hash": "e3236af7c43e93b7c8bdb8fd10f55bc5",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-23-athar-pitch-credibility.md": {
+  "docs/superpowers/plans/2026-07-23-masar-pitch-credibility.md": {
     "mtime": 1784801657.0612974,
     "ast_hash": "3a993ddb596c713474c496d31d19f4d8",
     "semantic_hash": ""
@@ -1114,7 +1114,7 @@
     "ast_hash": "b5b20776337a42ec0d09bebba1240cdf",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-07-24-athar-map-swap.md": {
+  "docs/superpowers/plans/2026-07-24-masar-map-swap.md": {
     "mtime": 1784925044.085577,
     "ast_hash": "1dac72e9027aa81d303aa08ec10b3b7a",
     "semantic_hash": ""
@@ -1149,52 +1149,52 @@
     "ast_hash": "ca01c6e6fa95d83e7f75f9dc6aa4a5b2",
     "semantic_hash": ""
   },
-  "output/submission/athar-baladiyathon-judging-deck.html": {
+  "output/submission/masar-baladiyathon-judging-deck.html": {
     "mtime": 1784809110.598065,
     "ast_hash": "48933321e71a0f2fe6c1d5d13032e5ca",
     "semantic_hash": ""
   },
-  "presentation/README-athar.md": {
+  "presentation/README-masar.md": {
     "mtime": 1784928126.5711107,
     "ast_hash": "deb146c73f8bb1024b8794988efcb129",
     "semantic_hash": ""
   },
-  "presentation/athar-city-impact.html": {
+  "presentation/masar-city-impact.html": {
     "mtime": 1784927288.3621364,
     "ast_hash": "39e415850d77e948e6a86bfd4fef4f62",
     "semantic_hash": ""
   },
-  "presentation/athar-decision.html": {
+  "presentation/masar-decision.html": {
     "mtime": 1784805902.8085248,
     "ast_hash": "1e9c7f631fda60a3379311501c63d8cd",
     "semantic_hash": ""
   },
-  "presentation/athar-lab.html": {
+  "presentation/masar-lab.html": {
     "mtime": 1784927287.5166936,
     "ast_hash": "6c0a2ca0cedb0e15f0674d396df8d092",
     "semantic_hash": ""
   },
-  "presentation/athar-merged.html": {
+  "presentation/masar-merged.html": {
     "mtime": 1784806332.8337498,
     "ast_hash": "359b874c9d25029d738d7175944d7c84",
     "semantic_hash": ""
   },
-  "presentation/athar-pitch.html": {
+  "presentation/masar-pitch.html": {
     "mtime": 1784927287.5257049,
     "ast_hash": "ca97f52a76b1d8dd007db9dc66921160",
     "semantic_hash": ""
   },
-  "presentation/athar-prototype.html": {
+  "presentation/masar-prototype.html": {
     "mtime": 1784927960.996885,
     "ast_hash": "da3bf7bf60991bc424972fccc36a5a16",
     "semantic_hash": ""
   },
-  "presentation/athar-sources.html": {
+  "presentation/masar-sources.html": {
     "mtime": 1784836149.980825,
     "ast_hash": "d5f640beef9c7760455c5968088bd214",
     "semantic_hash": ""
   },
-  "presentation/athar.html": {
+  "presentation/masar.html": {
     "mtime": 1784806332.9172742,
     "ast_hash": "e30e46375548987c58f6df853e869951",
     "semantic_hash": ""
@@ -1219,77 +1219,77 @@
     "ast_hash": "6ef964eef2c7249c999b3d86540ea95c",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/athar-feature-inventory.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/masar-feature-inventory.md": {
     "mtime": 1784802345.4903116,
     "ast_hash": "ee3754fe09f8b6ade70bc3243b3302e3",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/competitor-catalog.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/competitor-catalog.md": {
     "mtime": 1784802729.0424943,
     "ast_hash": "d2d19d2ab96111d632a29d7eaedaf4e6",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/feature-to-competitors.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/feature-to-competitors.md": {
     "mtime": 1784802436.8009324,
     "ast_hash": "21633127edb27ac5e72d5d67e54d6127",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/index.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/index.md": {
     "mtime": 1784804365.7058785,
     "ast_hash": "5030bfa648a1b0efb40e90c1d09f307f",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/capability-adoption-decisions.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/capability-adoption-decisions.md": {
     "mtime": 1784807101.5042303,
     "ast_hash": "e774bf895bc60085b63f3d9c9b12eead",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/data-model-and-state-machines.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/data-model-and-state-machines.md": {
     "mtime": 1784807047.6549802,
     "ast_hash": "9267eb4f927c7f45dec1b65145ddc20b",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/deep-teardowns.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/deep-teardowns.md": {
     "mtime": 1784806871.0382721,
     "ast_hash": "57bda2433c0ba1055046d613f8945759",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/design-and-interaction-system.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/design-and-interaction-system.md": {
     "mtime": 1784806948.8574862,
     "ast_hash": "6d6d757030aa4bd9fc9ac0b22a6182dc",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/implementation-roadmap.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/implementation-roadmap.md": {
     "mtime": 1784807152.471183,
     "ast_hash": "850a6bf6feb8dda9754972e9a6a9803d",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/index.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/index.md": {
     "mtime": 1784807732.691193,
     "ast_hash": "c3edfd4764466075c39ff668a5280c7b",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/scrape-methodology.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/scrape-methodology.md": {
     "mtime": 1784806732.545395,
     "ast_hash": "cf6ef79905a399bed05dfdcc64f3b64d",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/ux-flows.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/ux-flows.md": {
     "mtime": 1784807047.6575093,
     "ast_hash": "a68bd21f5b633b2ec32f512ef35b2be0",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/sources.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/sources.md": {
     "mtime": 1784802938.1647012,
     "ast_hash": "74831f1dd5dab5aa9080c6f14fa29844",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/strategic-decisions.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/strategic-decisions.md": {
     "mtime": 1784802781.8429792,
     "ast_hash": "dd6c19639ca23dbca695631ffe4a4fb4",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/user-experience-uml.md": {
+  "research/2026-07-23/masar-competitor-benchmarks/user-experience-uml.md": {
     "mtime": 1784814292.2293677,
     "ast_hash": "574cec17501ebe271a7953f4c48420ce",
     "semantic_hash": ""
@@ -1329,82 +1329,82 @@
     "ast_hash": "23285be0885c406e0f789c72de83961c",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/README.txt": {
+  "tmp/masar-deck-parts/README.txt": {
     "mtime": 1784809102.499799,
     "ast_hash": "b42ebf6ba88d6bb865878789259f7356",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/diagram-assets.html": {
+  "tmp/masar-deck-parts/diagram-assets.html": {
     "mtime": 1784808811.6494155,
     "ast_hash": "f378bcfa5b927d6bb9fef6dfd6124251",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/masar-pdf-only.html": {
+  "tmp/masar-deck-parts/masar-pdf-only.html": {
     "mtime": 1784809299.6236541,
     "ast_hash": "b91baa67e66e5920edf4165e205e1fda",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-01-03.txt": {
+  "tmp/masar-deck-parts/qa-01-03.txt": {
     "mtime": 1784808693.2307336,
     "ast_hash": "9280e92e893c70b9f3383d6cbf396ea1",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-04-06.txt": {
+  "tmp/masar-deck-parts/qa-04-06.txt": {
     "mtime": 1784808693.2347357,
     "ast_hash": "582f092b663ce8cd3ff32b3896841d53",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-07-09.txt": {
+  "tmp/masar-deck-parts/qa-07-09.txt": {
     "mtime": 1784808693.240242,
     "ast_hash": "5fa145a0779d3042b609d5ef5179ee9e",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-10-12.txt": {
+  "tmp/masar-deck-parts/qa-10-12.txt": {
     "mtime": 1784808769.317991,
     "ast_hash": "eac89f25cb4bf237b2fca30e120b7857",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-13-15.txt": {
+  "tmp/masar-deck-parts/qa-13-15.txt": {
     "mtime": 1784808769.327133,
     "ast_hash": "b6b9da974437e08b0e78d129b2fa3bb0",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/qa-16-18.txt": {
+  "tmp/masar-deck-parts/qa-16-18.txt": {
     "mtime": 1784808769.334452,
     "ast_hash": "db4b9c76d3aee6f4947cf513b4dd1013",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-00-team.html": {
+  "tmp/masar-deck-parts/slides-00-team.html": {
     "mtime": 1784809102.4927955,
     "ast_hash": "7ce77593d613cca24362961181979be9",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-01-03.html": {
+  "tmp/masar-deck-parts/slides-01-03.html": {
     "mtime": 1784808993.3027124,
     "ast_hash": "8f60f366db703f6fa636508af7800241",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-04-06.html": {
+  "tmp/masar-deck-parts/slides-04-06.html": {
     "mtime": 1784809017.5083961,
     "ast_hash": "befaaaed7546906286893c80a8d5b4a8",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-07-09.html": {
+  "tmp/masar-deck-parts/slides-07-09.html": {
     "mtime": 1784808993.3167183,
     "ast_hash": "bc4e70c69f7d26326db5ca7d25027350",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-10-12.html": {
+  "tmp/masar-deck-parts/slides-10-12.html": {
     "mtime": 1784808775.279319,
     "ast_hash": "73bb7d0bed95d157ae4d37c17f73608f",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-13-15.html": {
+  "tmp/masar-deck-parts/slides-13-15.html": {
     "mtime": 1784808769.3221169,
     "ast_hash": "72447991ff9ca7cf9e77df9b420ddf56",
     "semantic_hash": ""
   },
-  "tmp/athar-deck-parts/slides-16-18.html": {
+  "tmp/masar-deck-parts/slides-16-18.html": {
     "mtime": 1784808769.3291354,
     "ast_hash": "70bb656eaa13f111d10574fa7ace7ab6",
     "semantic_hash": ""
@@ -1454,12 +1454,12 @@
     "ast_hash": "1857eabb6862d7cf8f26095f2ca5f25d",
     "semantic_hash": ""
   },
-  "output/submission/athar-baladiyathon-judging-deck.pdf": {
+  "output/submission/masar-baladiyathon-judging-deck.pdf": {
     "mtime": 1784809304.9267735,
     "ast_hash": "76ef68f7243b92466b90db925ff3716f",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/source-docs/balady-interactive-map-beneficiary-guide.pdf": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/source-docs/balady-interactive-map-beneficiary-guide.pdf": {
     "mtime": 1784805897.3339307,
     "ast_hash": "e2202d1ccbddf170c361da1f3454dd01",
     "semantic_hash": ""
@@ -1719,22 +1719,22 @@
     "ast_hash": "6b9b5ce0c4d9653cd534742e97be0811",
     "semantic_hash": ""
   },
-  "output/submission/athar-actors-use-cases.png": {
+  "output/submission/masar-actors-use-cases.png": {
     "mtime": 1784808884.248406,
     "ast_hash": "f9ec13924d2c8f7e74526cec096581dd",
     "semantic_hash": ""
   },
-  "output/submission/athar-current-prototype-journey.png": {
+  "output/submission/masar-current-prototype-journey.png": {
     "mtime": 1784806941.9888265,
     "ast_hash": "be6dc89bed9c2434ce542c0ded3784c6",
     "semantic_hash": ""
   },
-  "output/submission/athar-reviewer-decision-journey.png": {
+  "output/submission/masar-reviewer-decision-journey.png": {
     "mtime": 1784808885.1160328,
     "ast_hash": "fc8bf09cfdc8d1c889fd4de5c2505d49",
     "semantic_hash": ""
   },
-  "output/submission/athar-target-operating-sequence.png": {
+  "output/submission/masar-target-operating-sequence.png": {
     "mtime": 1784808884.7420523,
     "ast_hash": "54ecffb2e5a6a861ecb00002be9676fa",
     "semantic_hash": ""
@@ -2024,157 +2024,157 @@
     "ast_hash": "2f4c645c06e72d3218371e7a89ee9cb6",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/assets/athar-current-prototype-journey.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/assets/masar-current-prototype-journey.png": {
     "mtime": 1784806941.9888265,
     "ast_hash": "be6dc89bed9c2434ce542c0ded3784c6",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/diagrams/athar-capability-architecture.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/diagrams/masar-capability-architecture.png": {
     "mtime": 1784807726.0882552,
     "ast_hash": "73a520f837503d59c03a39a7bad833f7",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/diagrams/athar-capability-architecture.svg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/diagrams/masar-capability-architecture.svg": {
     "mtime": 1784807317.337824,
     "ast_hash": "e164ff487a3f43a79fa41fa368888caf",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/diagrams/athar-reviewer-journey.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/diagrams/masar-reviewer-journey.png": {
     "mtime": 1784807724.4300091,
     "ast_hash": "63af2a36ca7c6b73a7c0fb88cb7b9518",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/diagrams/athar-reviewer-journey.svg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/diagrams/masar-reviewer-journey.svg": {
     "mtime": 1784807317.3358126,
     "ast_hash": "72e42b211dc6d5eacd6a2397b442607d",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aimsun-live-public.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aimsun-live-public.png": {
     "mtime": 1784806557.6937928,
     "ast_hash": "eeb0167a9529bca76eab849abadfa103",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora-marketplace-overview.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora-marketplace-overview.png": {
     "mtime": 1784806607.0485022,
     "ast_hash": "7e07a61a16851de9b2d0f390d7b33de2",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-01.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-01.jpg": {
     "mtime": 1784805534.713939,
     "ast_hash": "d79aadef1536b61bf09ecd69a5a1b882",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-02.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-02.jpg": {
     "mtime": 1784805535.475003,
     "ast_hash": "d5336535091032b1cc133255195b32d7",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-03.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-03.jpg": {
     "mtime": 1784805536.1362536,
     "ast_hash": "4d6c9f1afc5bce2ca449b7924c16097d",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-04.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-04.jpg": {
     "mtime": 1784805536.6571207,
     "ast_hash": "0b02856289f85b3d375bd0a0b1e45c2e",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-05.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-05.jpg": {
     "mtime": 1784805537.5870779,
     "ast_hash": "9fcfff16742984da58d72a69cbfe0bce",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-06.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-06.jpg": {
     "mtime": 1784805538.2747538,
     "ast_hash": "e604c2c89d74581d93d205613bb43cd0",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-07.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-07.jpg": {
     "mtime": 1784805538.7990882,
     "ast_hash": "6590ef23e370174b5406d114c98bebcf",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-08.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-08.jpg": {
     "mtime": 1784805539.3906102,
     "ast_hash": "e3b732a9600b26384e63bc8eab3476e9",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-09.jpg": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/aurora/aurora-09.jpg": {
     "mtime": 1784805540.2875392,
     "ast_hash": "2fb8588c9a86135f7a6f625e7e7efaa2",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-08.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-08.png": {
     "mtime": 1784805945.2032852,
     "ast_hash": "7e7237a4283ad06d363815bc47f6ff76",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-09.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-09.png": {
     "mtime": 1784805945.8767414,
     "ast_hash": "5a56598bb76e3be23faef4f7a5ccbba5",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-10.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-10.png": {
     "mtime": 1784805946.4929466,
     "ast_hash": "1cb4a3e424d69279bab771b77dd8d883",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-17.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-17.png": {
     "mtime": 1784805947.4895773,
     "ast_hash": "467f781e5f847c76635c71ac4f49b639",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-33.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-33.png": {
     "mtime": 1784805948.2002282,
     "ast_hash": "44aeab6f481aadcf85dee332df1a9ea2",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-35.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-35.png": {
     "mtime": 1784805948.8370368,
     "ast_hash": "2786f696d2831893b0c616d0b2751be1",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-36.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-36.png": {
     "mtime": 1784805949.1501384,
     "ast_hash": "45db1c39e3e546151830403f94777d30",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-43.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-43.png": {
     "mtime": 1784805949.5709054,
     "ast_hash": "c871d96fc89057440eef54644d8c2785",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-49.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/balady-guide/page-49.png": {
     "mtime": 1784805949.8639665,
     "ast_hash": "40d09deec2d9bbea010f88e58c17d213",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/causeway-one-network-live-map.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/causeway-one-network-live-map.png": {
     "mtime": 1784806596.9763925,
     "ast_hash": "0ea5776c3795cb87b0ce5ff3d3994abb",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/causeway-one-network-traffic-management.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/causeway-one-network-traffic-management.png": {
     "mtime": 1784805348.9793868,
     "ast_hash": "0cc5bd8b2964df6dce8750d8a1556904",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/cityworks-public-permit-portal.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/cityworks-public-permit-portal.png": {
     "mtime": 1784806529.8951168,
     "ast_hash": "8156bfba5ffd52e5be34aa39b215e5ed",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/haas-alert-dashboard-tab.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/haas-alert-dashboard-tab.png": {
     "mtime": 1784806541.4285069,
     "ast_hash": "e1570ed8265136e2cab7536d6cce0295",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/myworksites-public-roadmap.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/myworksites-public-roadmap.png": {
     "mtime": 1784806520.594929,
     "ast_hash": "8688077d67ec21f1786c6a96528941ea",
     "semantic_hash": ""
   },
-  "research/2026-07-23/athar-competitor-benchmarks/reverse-engineering/assets/screenshots/road-manager-training.png": {
+  "research/2026-07-23/masar-competitor-benchmarks/reverse-engineering/assets/screenshots/road-manager-training.png": {
     "mtime": 1784806503.4165819,
     "ast_hash": "ad7b848f3c3b6c9917a70b651617b7d0",
     "semantic_hash": ""

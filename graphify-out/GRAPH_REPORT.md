@@ -28,7 +28,7 @@
 - server.js
 - IDEA 1: "Tarakkhus" (ترخيص) — The Autonomous Commercial Licensing Agent
 - 1. IDEA A — **HAFRA حَفْرَة** (The "Smart Hole" — Riyadh's City-Wide Excavation Genome)
-- معايير التقييم الصارمة — مشروع أثر (بلدياثون 2026)
+- معايير التقييم الصارمة — مشروع مسار (بلدياثون 2026)
 - Idea 1 — Balady Twin: The 3D Municipal Simulation Layer
 - manager.py
 - Balady Twin — The Living City
@@ -47,9 +47,9 @@
 - STEP 3 — OUR VERSION: "الرقيب الاستباقي" / **PRO-INSPECT** (Proactive Risk-Ordered Inspection)
 - كيف اشتغل نظام الـ 4 Claude Code (شرح كامل عشان تسوّيه بنفسك)
 - STEP 3 — Our Version: "Mutarif" (مطابِق) — AI Pre-Compliance Simulator
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
-- STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+- STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
 - STEP 3 — OUR VERSION: "مُطابِق / Mutābiq — Pre-License Compliance Simulator"
 - خريطة قدرات المنافسين
 - STEP 3 — OUR VERSION: "مُطابِق / Mutābiq — Pre-License Compliance Simulator"
@@ -59,33 +59,33 @@
 - تفصيل كل فكرة ونقدها
 - File Structure
 - تقييم موحّد — مخرجات الـ 4 وكلاء (بلدياتثون 2026)
-- Athar - Master.md
+- Masar - Master.md
 - تقييم موحّد — مخرجات الـ 4 وكلاء (بلدياتثون 2026)
 - خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة
 - خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة
-- Athar Full Build — Implementation Plan (overnight, autonomous)
+- Masar Full Build — Implementation Plan (overnight, autonomous)
 - MISSION 4 — Agent 1: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 1)
 - MISSION 4 — Agent 2: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 2)
 - MISSION 4 — Agent 3: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 3)
 - MISSION 4 — Agent 4: The WILDCARD scout — find the world's most impressive PROVEN govtech project and adapt it to win Baladiyathon 2026
 - File Map
-- حزمة أدلة مشروع أثر
-- أثر — الوثيقة الأم
+- حزمة أدلة مشروع مسار
+- مسار — الوثيقة الأم
 - رقيب — Raqib
 - Agent 1 — Foundational Vitamins & Minerals
 - agent3 — COGNITIVE, SLEEP & STRESS supplements
-- أثر — دليل التشغيل السريع
+- مسار — دليل التشغيل السريع
 - m
 - k
 - 3 قطع مدموجة (بصفر بناء يُذكر)
-- أثر — Athar
+- مسار — Masar
 - مُطابِق — Mutabiq
 - المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار
 - المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
-- 🎯 CURRENT FOCUS — Athar (أثر) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
+- 🎯 CURRENT FOCUS — Masar (مسار) ONLY
 - Agent 4 — Safety, Quality & Scams
 - MISSION 2 — Agent 1: Find 2 HUGE, revolutionary ideas that WIN 1st place at Baladiyathon 2026
 - MISSION 2 — Agent 2: Find 2 HUGE, revolutionary ideas that WIN 1st place at Baladiyathon 2026
@@ -94,7 +94,7 @@
 - e
 - ke
 - validate
-- Athar — Additional Capabilities (Research)
+- Masar — Additional Capabilities (Research)
 - MISSION — Agent 1: Win Baladiyathon 2026 → CHALLENGE 1 (Commercial Activity Compliance)
 - MISSION 3 — Agent 1: ONE unforgettable idea. Target 9-10. Challenge 1.
 - MISSION — Agent 2: Win Baladiyathon 2026 → CHALLENGE 2 (AI Pre-Inspector)
@@ -107,7 +107,7 @@
 - Ae
 - engine-test.js
 - تصميم التجربة
-- ⚙️ محرك الحساب — athar-engine.js
+- ⚙️ محرك الحساب — masar-engine.js
 - 📇 بطاقة الفكرة — للتقديم الرسمي
 - bi
 - Je
@@ -118,7 +118,7 @@
 - Agent 2 — التحدي 2 (التفتيش الاستباقي)
 - Agent 3 — التحدي 3 (البنية التحتية)
 - Agent 4 — Moonshot / wildcard
-- 🖥️ النموذج التفاعلي — athar-prototype.html
+- 🖥️ النموذج التفاعلي — masar-prototype.html
 - BASEERA.md
 - HAFRA.md
 - HURAS.md
@@ -145,7 +145,7 @@
 - Ma
 - dc
 - r
-- athar-routing.js
+- masar-routing.js
 - ce
 - worksmap-style-test.js
 - ba
@@ -162,7 +162,7 @@
 - i
 - .createVertexBuffer
 - Z
-- athar-decision.js
+- masar-decision.js
 - g
 - an
 - is
@@ -174,7 +174,7 @@
 - خطة الإضافة إلى المشروع الحالي
 - .addLayer
 - .evaluate
-- التقييم النهائي الصارم لمشروع أثر
+- التقييم النهائي الصارم لمشروع مسار
 - استبدال خريطة أثر بخريطة الأعمال الجديدة — خطة التنفيذ
 - p
 - wi
@@ -189,7 +189,7 @@
 - w
 - Ua
 - re
-- تقرير معيار الابتكار — أثر
+- تقرير معيار الابتكار — مسار
 - بروتوكول تجربة الظل لأثر
 - render_diagrams.py
 - ki
@@ -236,14 +236,14 @@
 - Global Constraints
 - innovation-test.js
 - .fire
-- المقارنات المرجعية الشاملة لمشروع أثر
+- المقارنات المرجعية الشاملة لمشروع مسار
 - نماذج البيانات وآلات الحالات
 - التفكيك العكسي النظيف للمنافسين
 - build-deck.mjs
 - تفصيل الخصومات (كل خصم بدليل)
 - PROMPT FOR KIMI 3 — World-Class Map Redesign
 - Global Constraints
-- athar-worksmap-layers.js
+- masar-worksmap-layers.js
 - fs
 - gs
 - mo
@@ -260,7 +260,7 @@
 - Global Constraints
 - Global Constraints
 - Global Constraints
-- تصميم: لوحة أثر المدينة + الخريطة المملوكة — 2026-07-24
+- تصميم: لوحة مسار المدينة + الخريطة المملوكة — 2026-07-24
 - fetch-base-layers.js
 - submission-deck-test.js
 - جرد ميزات أثر
@@ -297,7 +297,7 @@
 - tweet_via_jina.md
 - Global Constraints
 - تكامل خريطة «غرفة التحكم»
-- athar-worksmap-data.js
+- masar-worksmap-data.js
 - build-sprite.js
 - worksmap-base-test.js
 - worksmap-layers-test.js
@@ -311,9 +311,9 @@
 - ٩
 - ١٣
 - سابعًا: بيانات الحركة والتوجيه
-- athar-budget.js
-- athar-portfolio.js
-- athar-worksmap-panel.js
+- masar-budget.js
+- masar-portfolio.js
+- masar-worksmap-panel.js
 - fetch-glyphs.js
 - portfolio-test.js
 - fc
@@ -336,7 +336,7 @@
 - برومبت معالجة التحدي والابتكار
 - برومبت الجدوى وجودة النموذج الأولي
 - برومبت الأثر والاستدامة والعرض التقديمي
-- athar-memory.js
+- masar-memory.js
 - fetch-rtl-plugin.js
 - Ic
 - ys
@@ -349,7 +349,7 @@
 - تاسعًا: الخرائط والنشر
 - tmp_capture_designs.py
 - ditto_home.md
-- athar-worksmap-style.js
+- masar-worksmap-style.js
 - الثاني عشر: تنسيق المرافق والحفر المشترك
 - الحادي عشر: حماية الطوارئ
 - ثامنًا: تصميم خطط إدارة المرور
@@ -369,15 +369,15 @@
 
 ## Surprising Connections (you probably didn't know these)
 - `init()` --indirect_call--> `featureCollection()`  [INFERRED]
-  KIMI 3 MAP DESIGN/GL-UPGRADE/athar-glmap.js → presentation/athar-worksmap.js
+  KIMI 3 MAP DESIGN/GL-UPGRADE/masar-glmap.js → presentation/masar-worksmap.js
 - `init()` --indirect_call--> `cb()`  [INFERRED]
-  KIMI 3 MAP DESIGN/GL-UPGRADE/athar-glmap.js → presentation/vendor/mapbox-gl-rtl-text.js
+  KIMI 3 MAP DESIGN/GL-UPGRADE/masar-glmap.js → presentation/vendor/mapbox-gl-rtl-text.js
 - `init()` --indirect_call--> `el()`  [INFERRED]
-  KIMI 3 MAP DESIGN/GL-UPGRADE/athar-glmap.js → presentation/vendor/maplibre-gl.js
+  KIMI 3 MAP DESIGN/GL-UPGRADE/masar-glmap.js → presentation/vendor/maplibre-gl.js
 - `load()` --indirect_call--> `r()`  [INFERRED]
-  KIMI 3 MAP DESIGN/athar-ownedmap.js → presentation/vendor/maplibre-gl.js
+  KIMI 3 MAP DESIGN/masar-ownedmap.js → presentation/vendor/maplibre-gl.js
 - `load()` --indirect_call--> `tt()`  [INFERRED]
-  KIMI 3 MAP DESIGN/athar-ownedmap.js → presentation/vendor/maplibre-gl.js
+  KIMI 3 MAP DESIGN/masar-ownedmap.js → presentation/vendor/maplibre-gl.js
 
 ## Import Cycles
 - None detected.
@@ -436,9 +436,9 @@ Nodes (27): 10. Feasibility + Top 3 Risks, 10. Feasibility + Top 3 Risks, 1. Nam
 Cohesion: 0.07
 Nodes (27): 0. Confirmed ground truth (build on this — do not re-debate), 1.10 Feasibility + top 3 risks, 1.1 One-line pitch, 1.2 Target challenge, 1.3 The BIG vision (why revolutionary and national-scale), 1.4 Why now / why hasn't it been done — enabling tech + the gap, 1.5 Leapfrog — exactly what exists today (with sources) and why this is a leap, 1.6 2-day demoable MVP — the concrete slice + the single "WOW moment" (+19 more)
 
-### Community 13 - "معايير التقييم الصارمة — مشروع أثر (بلدياثون 2026)"
+### Community 13 - "معايير التقييم الصارمة — مشروع مسار (بلدياثون 2026)"
 Cohesion: 0.08
-Nodes (23): 🚧 أثر — البرنامج المعتمد للتقديم, ابدأ من هنا, الأدلة والأصل, التطوير الجاري, الحكم, مخرجات 2026-07-09 (البناء الكامل), ⏰ مواعيد, أخطاء جوهرية اصطادها التقييم (ولولاه لظهرت أمام المحكّمين) (+15 more)
+Nodes (23): 🚧 مسار — البرنامج المعتمد للتقديم, ابدأ من هنا, الأدلة والأصل, التطوير الجاري, الحكم, مخرجات 2026-07-09 (البناء الكامل), ⏰ مواعيد, أخطاء جوهرية اصطادها التقييم (ولولاه لظهرت أمام المحكّمين) (+15 more)
 
 ### Community 14 - "Idea 1 — Balady Twin: The 3D Municipal Simulation Layer"
 Cohesion: 0.08
@@ -512,15 +512,15 @@ Nodes (15): 1) الفكرة باختصار, 2) القطع الأربع (وين �
 Cohesion: 0.13
 Nodes (14): 3.1 The Proven Original (Recap), 3.2 Our Adaptation to MOMRAH / Balady / Arabic / Vision 2030, 3.3 The Improvement Delta (What Makes Ours Better), 3.4 Realistic Architecture, 3.5 The WOW Demo Moment, 3.6 Mapping to Official Evaluation Criteria, 3.7 Honest Risks, idea-proven.md — Baladiyathon 2026, Challenge 1 (+6 more)
 
-### Community 32 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 32 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.13
 Nodes (14): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, Baladiyathon 2026 — Challenge 3 Research Dossier (+6 more)
 
-### Community 33 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 33 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.25
-Nodes (8): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+Nodes (8): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
 
-### Community 34 - "STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
+### Community 34 - "STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady"
 Cohesion: 0.13
 Nodes (14): (1) Proven original + evidence, (2) Adaptation to MOMRAH / Balady / Vision 2030, (3) Improvement delta (what we add beyond every precedent), (4) Realistic architecture (buildable in a hackathon; no vaporware), (5) WOW demo moment (grounded in real capability), (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon), (7) Honest risks, Baladiyathon 2026 — Challenge 3 Research Dossier (+6 more)
 
@@ -560,7 +560,7 @@ Nodes (11): Fable-as-Manager Delegation Upgrade — Implementation Plan, File St
 Cohesion: 0.17
 Nodes (11): 0) تصحيح مهم: الحقائق الأساسية **مؤكّدة** (رسمياً), 1) بطاقة الدرجات, 2) تفصيل كل وكيل, 3) قائمة "التنظيف قبل التقديم" (حرجة), 4) أي تحدي نختار للفوز؟, 5) خطة عاجلة (باقي ~أسبوع), 🥇 Agent 1 — التحدي 1 "متوافق" — 8.5/10, Agent 2 — التحدي 2 "رقيب" — 6.5/10 (+3 more)
 
-### Community 44 - "Athar - Master.md"
+### Community 44 - "Masar - Master.md"
 Cohesion: 0.23
 Nodes (4): HAFRA — حفرة, MIR'AT AL-MADINA — مرآة المدينة, 🎬 سيناريو العرض الحي — لحظة الإبهار, شبكة الأمان ([[Merges & Fixes|إصلاح أ]])
 
@@ -570,15 +570,15 @@ Nodes (11): 0) تصحيح مهم: الحقائق الأساسية **مؤكّدة
 
 ### Community 46 - "خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة"
 Cohesion: 0.17
-Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 أثر (Athar) — التحدي 3 — **الترشيح الأول** (+3 more)
+Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 مسار (Masar) — التحدي 3 — **الترشيح الأول** (+3 more)
 
 ### Community 47 - "خطة الدمج والإقصاء — من 15 مفهوماً إلى 3 مشاريع رائدة"
 Cohesion: 0.17
-Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 أثر (Athar) — التحدي 3 — **الترشيح الأول** (+3 more)
+Nodes (11): 1) الوضع الحالي: جردة المشاريع (≈15 مفهوماً، تداخل كبير), 2) مبدأ الدمج (لماذا الدمج أقوى من الاختيار), 3) المشاريع الرائدة الثلاثة (بعد الدمج), 4) قائمة الإقصاء (ماذا حُذف ولماذا), 5) السردية الموحّدة (تأطير، ليست مشروعاً رابعاً), 6) الترشيح النهائي, 7) التنفيذ عبر OpenCode (السرب), 🥇 مسار (Masar) — التحدي 3 — **الترشيح الأول** (+3 more)
 
-### Community 48 - "Athar Full Build — Implementation Plan (overnight, autonomous)"
+### Community 48 - "Masar Full Build — Implementation Plan (overnight, autonomous)"
 Cohesion: 0.18
-Nodes (10): Athar Full Build — Implementation Plan (overnight, autonomous), Engine API (authoritative — UI, tests, server all code against THIS), Global Constraints, Out of Scope (ponytail), Sources Ledger (only these may be cited), Task W1: Engine + tests + backend server + README (one worker, sequential), Task W2: Prototype UI (after W1 — codes against the real engine file), Task W3: Pitch deck + Idea Card (parallel with W1) (+2 more)
+Nodes (10): Masar Full Build — Implementation Plan (overnight, autonomous), Engine API (authoritative — UI, tests, server all code against THIS), Global Constraints, Out of Scope (ponytail), Sources Ledger (only these may be cited), Task W1: Engine + tests + backend server + README (one worker, sequential), Task W2: Prototype UI (after W1 — codes against the real engine file), Task W3: Pitch deck + Idea Card (parallel with W1) (+2 more)
 
 ### Community 49 - "MISSION 4 — Agent 1: Find a PROVEN winning project, then adapt + improve it to win Baladiyathon 2026 (Challenge 1)"
 Cohesion: 0.20
@@ -598,15 +598,15 @@ Nodes (9): Confirmed context, Hard rules, MISSION 4 — Agent 4: The WILDCARD sc
 
 ### Community 53 - "File Map"
 Cohesion: 0.20
-Nodes (9): Athar Evidence Intelligence Implementation Plan, File Map, Global Constraints, Self-Review, Task 1: Build the Existing-Claim Baseline, Task 2: Collect Primary Evidence with Polite Multi-Strategy Scraping, Task 3: Normalize New Findings and Competitor Capabilities, Task 4: Define a Defensible Impact Measurement System (+1 more)
+Nodes (9): Masar Evidence Intelligence Implementation Plan, File Map, Global Constraints, Self-Review, Task 1: Build the Existing-Claim Baseline, Task 2: Collect Primary Evidence with Polite Multi-Strategy Scraping, Task 3: Normalize New Findings and Competitor Capabilities, Task 4: Define a Defensible Impact Measurement System (+1 more)
 
-### Community 54 - "حزمة أدلة مشروع أثر"
+### Community 54 - "حزمة أدلة مشروع مسار"
 Cohesion: 0.20
-Nodes (10): أقوى منافسين, أهم النتائج الجديدة, الادعاء الذي يجب حذفه, البيانات الآلية, التجربة الموصى بها, الخلاصة التنفيذية, القرار الاستراتيجي, حزمة أدلة مشروع أثر (+2 more)
+Nodes (10): أقوى منافسين, أهم النتائج الجديدة, الادعاء الذي يجب حذفه, البيانات الآلية, التجربة الموصى بها, الخلاصة التنفيذية, القرار الاستراتيجي, حزمة أدلة مشروع مسار (+2 more)
 
-### Community 55 - "أثر — الوثيقة الأم"
+### Community 55 - "مسار — الوثيقة الأم"
 Cohesion: 0.20
-Nodes (10): أثر — الوثيقة الأم, الأصل المُثبت, الثغرة التي نملؤها, ⚖️ الحكم النهائي — 9.0 / 10 🥇, العرض الحي, المحرّك (واقعي، مفتوح المصدر), المصادر, المطابقة لمعايير اللجنة الرسمية (+2 more)
+Nodes (10): مسار — الوثيقة الأم, الأصل المُثبت, الثغرة التي نملؤها, ⚖️ الحكم النهائي — 9.0 / 10 🥇, العرض الحي, المحرّك (واقعي، مفتوح المصدر), المصادر, المطابقة لمعايير اللجنة الرسمية (+2 more)
 
 ### Community 56 - "رقيب — Raqib"
 Cohesion: 0.20
@@ -620,9 +620,9 @@ Nodes (8): Agent 1 — Foundational Vitamins & Minerals, Iron (Ferrous Bisglycin
 Cohesion: 0.22
 Nodes (8): 1. L-Theanine, 2. Melatonin — the dose most sold IS wrong, 3. Magnesium glycinate vs threonate, 4. Ashwagandha (KSM-66 vs Sensoril), 5. Rhodiola rosea, 6. Lion's Mane (Hericium erinaceus), 7. Magnesium (general) — bonus, agent3 — COGNITIVE, SLEEP & STRESS supplements
 
-### Community 59 - "أثر — دليل التشغيل السريع"
+### Community 59 - "مسار — دليل التشغيل السريع"
 Cohesion: 0.18
-Nodes (10): (أ) الوضع الثابت (بدون خادم), أثر — دليل التشغيل السريع, (ب) وضع الـ API (خادم محلي), (ج) الاختبارات, (د) بنية الملفات, ⚡ دليل المحكّم — 60 ثانية, عقد إدخال الحساب والجدولة, ملاحظة مصادر البيانات (+2 more)
+Nodes (10): (أ) الوضع الثابت (بدون خادم), مسار — دليل التشغيل السريع, (ب) وضع الـ API (خادم محلي), (ج) الاختبارات, (د) بنية الملفات, ⚡ دليل المحكّم — 60 ثانية, عقد إدخال الحساب والجدولة, ملاحظة مصادر البيانات (+2 more)
 
 ### Community 60 - "m"
 Cohesion: 0.04
@@ -636,9 +636,9 @@ Nodes (3): Lt(), setTerrain(), Ut()
 Cohesion: 0.22
 Nodes (9): 1. بطاقة التفسير (من رقيب), 2. عدّاد الـ back-test المُقاس (من رقيب), 3. سردية المنصة (من مُطابِق), 3 قطع مدموجة (بصفر بناء يُذكر), أ. تأمين الديمو (يرفع يقين الديمو 7.5 ← 9), إصلاحان إلزاميان, الدمج والإصلاحات — رفع 9.0 ← ~9.4, ب. تنظيف المصادر (+1 more)
 
-### Community 63 - "أثر — Athar"
+### Community 63 - "مسار — Masar"
 Cohesion: 0.22
-Nodes (8): أثر — Athar, الأصل المُثبت, الحكم النهائي — 9.0 / 10 🥇, الدوسيه الكامل, القوة, المصادر, المنافسون في نفس التحدي, يدمج
+Nodes (8): مسار — Masar, الأصل المُثبت, الحكم النهائي — 9.0 / 10 🥇, الدوسيه الكامل, القوة, المصادر, المنافسون في نفس التحدي, يدمج
 
 ### Community 64 - "مُطابِق — Mutabiq"
 Cohesion: 0.22
@@ -652,21 +652,21 @@ Nodes (8): التحديات الثلاثة (النص الموثّق), التقن
 Cohesion: 0.11
 Nodes (16): التحديات الثلاثة (النص الموثّق), التقنيات الناشئة المسموحة, الفئة المستهدفة, المرجع الرسمي لبلدياتثون 2026 — أساس الحكم على الأفكار, حقائق سريعة, خلاصة: منطلق حكمك, متطلبات التقديم (بطاقة الفكرة), ⭐ معايير التحكيم الستة (هذا منطلق حكمك على أي فكرة) (+8 more)
 
-### Community 67 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 67 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 1: Interactive prototype UI
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 1: Interactive prototype UI
 
-### Community 68 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 68 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 2: Impact engine (always-on)
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 2: Impact engine (always-on)
 
-### Community 69 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 69 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 3: SUMO demo + safety net
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 3: SUMO demo + safety net
 
-### Community 70 - "🎯 CURRENT FOCUS — Athar (أثر) ONLY"
+### Community 70 - "🎯 CURRENT FOCUS — Masar (مسار) ONLY"
 Cohesion: 0.25
-Nodes (7): 🎯 CURRENT FOCUS — Athar (أثر) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Athar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Athar task — Agent 4: Pitch + submission
+Nodes (7): 🎯 CURRENT FOCUS — Masar (مسار) ONLY, Do NOT touch (archived), 💰 Model & Delegation Policy (Fable-as-Manager), Rules that still hold, Where Masar lives (read in this order), ✅ You are in the right place if you read THIS file. Confirm by:, 🛠️ YOUR Masar task — Agent 4: Pitch + submission
 
 ### Community 71 - "Agent 4 — Safety, Quality & Scams"
 Cohesion: 0.25
@@ -700,9 +700,9 @@ Nodes (7): ac(), as, gl(), ml(), ra, ta, Zt()
 Cohesion: 0.28
 Nodes (4): ExistingClaimBaselineTests, ResearchPackageTests, load(), validate()
 
-### Community 79 - "Athar — Additional Capabilities (Research)"
+### Community 79 - "Masar — Additional Capabilities (Research)"
 Cohesion: 0.25
-Nodes (8): 1. CO2 / idling-emissions savings meter, 2. Emergency-vehicle route protection, 3. Dig-Once fiber & utility co-location value, 4. Public transparency map of active works, 5. Context-aware scheduling (prayer / school / Hajj / weekend), 6. Transit & pedestrian accessibility impact, 7. National-channel notifications, Athar — Additional Capabilities (Research)
+Nodes (8): 1. CO2 / idling-emissions savings meter, 2. Emergency-vehicle route protection, 3. Dig-Once fiber & utility co-location value, 4. Public transparency map of active works, 5. Context-aware scheduling (prayer / school / Hajj / weekend), 6. Transit & pedestrian accessibility impact, 7. National-channel notifications, Masar — Additional Capabilities (Research)
 
 ### Community 80 - "MISSION — Agent 1: Win Baladiyathon 2026 → CHALLENGE 1 (Commercial Activity Compliance)"
 Cohesion: 0.29
@@ -746,15 +746,15 @@ Nodes (45): قرارات التبني لجميع المراجع, مفتاح ال
 
 ### Community 90 - "engine-test.js"
 Cohesion: 0.22
-Nodes (6): assert, AtharEngine, Budget, Calib, memStore(), path
+Nodes (6): assert, MasarEngine, Budget, Calib, memStore(), path
 
 ### Community 91 - "تصميم التجربة"
 Cohesion: 0.07
 Nodes (7): _cancelRenderFrame(), _requestRenderFrame(), setMaxPitch(), setMaxZoom(), setMinPitch(), setMinZoom(), ts
 
-### Community 92 - "⚙️ محرك الحساب — athar-engine.js"
+### Community 92 - "⚙️ محرك الحساب — masar-engine.js"
 Cohesion: 0.40
-Nodes (5): الاختبارات, الخادم (API), الدوال الأساسية, ⚙️ محرك الحساب — athar-engine.js, ملاحظة نمذجة مهمة
+Nodes (5): الاختبارات, الخادم (API), الدوال الأساسية, ⚙️ محرك الحساب — masar-engine.js, ملاحظة نمذجة مهمة
 
 ### Community 93 - "📇 بطاقة الفكرة — للتقديم الرسمي"
 Cohesion: 0.40
@@ -792,9 +792,9 @@ Nodes (3): Agent 3 — التحدي 3 (البنية التحتية), المخر�
 Cohesion: 0.50
 Nodes (3): Agent 4 — Moonshot / wildcard, المخرجات, كيف يعمل
 
-### Community 104 - "🖥️ النموذج التفاعلي — athar-prototype.html"
+### Community 104 - "🖥️ النموذج التفاعلي — masar-prototype.html"
 Cohesion: 0.67
-Nodes (3): 🖥️ النموذج التفاعلي — athar-prototype.html, طريقة التشغيل, ملاحظة جودة
+Nodes (3): 🖥️ النموذج التفاعلي — masar-prototype.html, طريقة التشغيل, ملاحظة جودة
 
 ### Community 119 - ".parse"
 Cohesion: 0.10
@@ -860,7 +860,7 @@ Nodes (7): H(), O(), Q(), R(), cc(), dc, wh()
 Cohesion: 0.09
 Nodes (8): _down(), ie(), oe(), r(), si(), te, _up(), ze()
 
-### Community 136 - "athar-routing.js"
+### Community 136 - "masar-routing.js"
 Cohesion: 0.13
 Nodes (24): clampDow(), clampHour(), forecast(), forecastGrid(), alternativeRoutes(), buildGraph(), corridorEndpoints(), corridorThroughTime() (+16 more)
 
@@ -904,7 +904,7 @@ Nodes (4): bs, isZooming(), ws, xs
 Cohesion: 0.11
 Nodes (7): c(), fh(), i(), mr(), N, ph(), yr()
 
-### Community 153 - "athar-decision.js"
+### Community 153 - "masar-decision.js"
 Cohesion: 0.13
 Nodes (16): assertDependencies(), createDecisionService(), identityOf(), isMissing(), isPositiveInteger(), isPositiveNumber(), isValidCalendarDate(), normalizeAlternatives() (+8 more)
 
@@ -940,9 +940,9 @@ Nodes (6): addSource(), getLayer(), getLayoutProperty(), getPaintProperty(), set
 Cohesion: 0.20
 Nodes (4): il(), ja(), nl(), sc()
 
-### Community 165 - "التقييم النهائي الصارم لمشروع أثر"
+### Community 165 - "التقييم النهائي الصارم لمشروع مسار"
 Cohesion: 0.10
-Nodes (19): أقصر مسار لرفع الدرجة, التحقق المنفذ, التقييم النهائي الصارم لمشروع أثر, الحكم المختصر, الدرجات المعتمدة, العيوب الحرجة, العيوب المهمة, القرار النهائي (+11 more)
+Nodes (19): أقصر مسار لرفع الدرجة, التحقق المنفذ, التقييم النهائي الصارم لمشروع مسار, الحكم المختصر, الدرجات المعتمدة, العيوب الحرجة, العيوب المهمة, القرار النهائي (+11 more)
 
 ### Community 166 - "استبدال خريطة أثر بخريطة الأعمال الجديدة — خطة التنفيذ"
 Cohesion: 0.10
@@ -990,7 +990,7 @@ Nodes (3): gr(), re(), se
 
 ### Community 180 - "تقرير معيار الابتكار — أثر"
 Cohesion: 0.12
-Nodes (16): التحقق, التقييم العدائي حسب الرُبرِك, التميز الصادق, الحلقة الأولى — حد التأثير الديناميكي, الحلقة الثالثة — المفسر الكمي, الحلقة الثانية — ميزانية أثر المحور, الحلقة الخامسة — ذاكرة المعايرة, الحلقة الرابعة — التعارضات المتعددة (+8 more)
+Nodes (16): التحقق, التقييم العدائي حسب الرُبرِك, التميز الصادق, الحلقة الأولى — حد التأثير الديناميكي, الحلقة الثالثة — المفسر الكمي, الحلقة الثانية — ميزانية مسار المحور, الحلقة الخامسة — ذاكرة المعايرة, الحلقة الرابعة — التعارضات المتعددة (+8 more)
 
 ### Community 181 - "بروتوكول تجربة الظل لأثر"
 Cohesion: 0.12
@@ -1070,7 +1070,7 @@ Nodes (12): Contributing, [ditto.site](https://ditto.site), How It Works, Licens
 
 ### Community 210 - "حزمة الأدلة المعتمدة (المصدر الوحيد للأرقام — لا تستخدم غيرها)"
 Cohesion: 0.15
-Nodes (12): Global Constraints (اقرأها قبل أي تعديل), Task 1: أَسْوَدة الأدلة — استبدال الإحصاءات الأجنبية البارزة بسعودية في `athar-pitch.html`, Task 2: شريحة المنافسين والتميّز في `athar-pitch.html`, Task 3: إعادة تأطير الابتكار — الحلقات الخمس في `athar-pitch.html` و`athar-merged.html`, Task 4: ترقية مصدر GAO من ثانوي إلى أولي (الملفات الثلاثة), Task 5: أجوبة اللجنة الستة — قسم Q&A في `athar-pitch.html`, Task 6: تحديث قسم المصادر + كودا الطرق (الملفات الثلاثة), Task 7: كنس الممنوعات — فحص نهائي شامل (+4 more)
+Nodes (12): Global Constraints (اقرأها قبل أي تعديل), Task 1: أَسْوَدة الأدلة — استبدال الإحصاءات الأجنبية البارزة بسعودية في `masar-pitch.html`, Task 2: شريحة المنافسين والتميّز في `masar-pitch.html`, Task 3: إعادة تأطير الابتكار — الحلقات الخمس في `masar-pitch.html` و`masar-merged.html`, Task 4: ترقية مصدر GAO من ثانوي إلى أولي (الملفات الثلاثة), Task 5: أجوبة اللجنة الستة — قسم Q&A في `masar-pitch.html`, Task 6: تحديث قسم المصادر + كودا الطرق (الملفات الثلاثة), Task 7: كنس الممنوعات — فحص نهائي شامل (+4 more)
 
 ### Community 211 - "Ss"
 Cohesion: 0.15
@@ -1094,27 +1094,27 @@ Nodes (9): evaluateShadowPilot(), failedValidation(), mean(), validateShadowCase
 
 ### Community 222 - "٣"
 Cohesion: 0.17
-Nodes (12): الأدلة, التحسين, الجوال الميداني, الشاشات التشغيلية المثبتة, خريطة الأصول, خريطة الطريق مع المشهد الأرضي, قائمة الأعمال المستحقة, كيف يضاف إلى «أثر» (+4 more)
+Nodes (12): الأدلة, التحسين, الجوال الميداني, الشاشات التشغيلية المثبتة, خريطة الأصول, خريطة الطريق مع المشهد الأرضي, قائمة الأعمال المستحقة, كيف يضاف إلى «مسار» (+4 more)
 
 ### Community 223 - "1) التغييرات (ملف:سطر)"
 Cohesion: 0.18
-Nodes (10): 1) التغييرات (ملف:سطر), 2) الدرجة النهائية بالرُبرِك (تقييم عدائي), 3) ما لم أُصلحه ولماذا, 4) عدد دورات الحلقة: 6 (+ فحص نهائي). كل الكوميتات في `crit4-impact`., `presentation/athar-engine.js`, `presentation/athar-impact-budget.js` (جديد), `presentation/athar-impact-calibration.js` (جديد), `presentation/athar-prototype.html` (+2 more)
+Nodes (10): 1) التغييرات (ملف:سطر), 2) الدرجة النهائية بالرُبرِك (تقييم عدائي), 3) ما لم أُصلحه ولماذا, 4) عدد دورات الحلقة: 6 (+ فحص نهائي). كل الكوميتات في `crit4-impact`., `presentation/masar-engine.js`, `presentation/masar-impact-budget.js` (جديد), `presentation/masar-impact-calibration.js` (جديد), `presentation/masar-prototype.html` (+2 more)
 
 ### Community 224 - "File Structure"
 Cohesion: 0.18
-Nodes (10): Athar Innovation Loops Implementation Plan, File Structure, Global Constraints, Task 1: Shared demo fixture and dynamic boundary, Task 2: Monthly corridor impact budget, Task 3: Quantitative ranking explainer, Task 4: N-permit conflict matrix and derived interaction ratio, Task 5: Calibration memory with successes and failures (+2 more)
+Nodes (10): Masar Innovation Loops Implementation Plan, File Structure, Global Constraints, Task 1: Shared demo fixture and dynamic boundary, Task 2: Monthly corridor impact budget, Task 3: Quantitative ranking explainer, Task 4: N-permit conflict matrix and derived interaction ratio, Task 5: Calibration memory with successes and failures (+2 more)
 
 ### Community 225 - "Global Constraints"
 Cohesion: 0.18
-Nodes (10): Global Constraints, Self-Review, Task 1: digOnce داخل نطاق GAO 25–33%, Task 2: إصلاح إشارة CO₂, Task 3: أرضية احتكاك منطقة العمل (قتل وفر 99.6%), Task 4: عدّاد الافتراضات + إكمال جدول الشفافية, Task 5: آلية معايرة فعلية (athar-impact-calibration.js), Task 6: ميزانية أثر تراكمية للمحور (athar-impact-budget.js) (+2 more)
+Nodes (10): Global Constraints, Self-Review, Task 1: digOnce داخل نطاق GAO 25–33%, Task 2: إصلاح إشارة CO₂, Task 3: أرضية احتكاك منطقة العمل (قتل وفر 99.6%), Task 4: عدّاد الافتراضات + إكمال جدول الشفافية, Task 5: آلية معايرة فعلية (masar-impact-calibration.js), Task 6: ميزانية مسار تراكمية للمحور (masar-impact-budget.js) (+2 more)
 
 ### Community 226 - "innovation-test.js"
 Cohesion: 0.18
 Nodes (9): assert, Boundary, Budget, Conflict, Demo, fs, Memory, path (+1 more)
 
-### Community 228 - "المقارنات المرجعية الشاملة لمشروع أثر"
+### Community 228 - "المقارنات المرجعية الشاملة لمشروع مسار"
 Cohesion: 0.18
-Nodes (6): المقارنات المرجعية الشاملة لمشروع أثر, النتيجة الجامعة, حدود البحث, ما يملكه أثر فعلًا, معمار تجربة أثر المقترح, ملفات التقرير
+Nodes (6): المقارنات المرجعية الشاملة لمشروع مسار, النتيجة الجامعة, حدود البحث, ما يملكه أثر فعلًا, معمار تجربة أثر المقترح, ملفات التقرير
 
 ### Community 229 - "نماذج البيانات وآلات الحالات"
 Cohesion: 0.18
@@ -1122,7 +1122,7 @@ Nodes (10): آلة حالة العمل, آلة حالة القياس الميد�
 
 ### Community 230 - "التفكيك العكسي النظيف للمنافسين"
 Cohesion: 0.18
-Nodes (11): التحسين الأعلى أثرًا على النموذج الحالي, التفكيك العكسي النظيف للمنافسين, الخلاصة التنافسية, القرار المعماري, النتيجة التنفيذية, حدود الملكية والالتزام, لا نعيد بناء هذه الطبقات, ما تمت مراجعته (+3 more)
+Nodes (11): التحسين الأعلى مسارًا على النموذج الحالي, التفكيك العكسي النظيف للمنافسين, الخلاصة التنافسية, القرار المعماري, النتيجة التنفيذية, حدود الملكية والالتزام, لا نعيد بناء هذه الطبقات, ما تمت مراجعته (+3 more)
 
 ### Community 231 - "build-deck.mjs"
 Cohesion: 0.18
@@ -1140,7 +1140,7 @@ Nodes (9): CONTEXT FILES (attached), DELIVERABLES, DESIGN DIRECTION — study th
 Cohesion: 0.20
 Nodes (9): Crit1 Challenge — Real Alternative Routing + Honest Forecast Implementation Plan, Global Constraints, Self-Review, Task 1: Corridor network data + routing engine, Task 2: Honest forecast module, Task 3: UI — real reroute integration, Task 4: UI — forecast heatmap + uncertainty, Task 5: Deepening — queue shockwave on neighbors (+1 more)
 
-### Community 235 - "athar-worksmap-layers.js"
+### Community 235 - "masar-worksmap-layers.js"
 Cohesion: 0.31
 Nodes (6): baseFilters(), buildTriple(), buildWorksLayers(), dashByZoom(), matchFilter(), scaleWidth()
 
@@ -1170,7 +1170,7 @@ Nodes (9): الميزة ١١: ثلاثة مسارات بديلة, الميزة �
 
 ### Community 247 - "٢"
 Cohesion: 0.22
-Nodes (9): أنماط التفاعل المهمة, الأدلة, التحسين, الرحلة العامة المثبتة, كيف يضاف إلى «أثر», ما لا ننسخه, ما نأخذه, ما يفعله (+1 more)
+Nodes (9): أنماط التفاعل المهمة, الأدلة, التحسين, الرحلة العامة المثبتة, كيف يضاف إلى «مسار», ما لا ننسخه, ما نأخذه, ما يفعله (+1 more)
 
 ### Community 248 - "REPORT — المعيار 1: المسارات البديلة + التنبؤ بالازدحام"
 Cohesion: 0.25
@@ -1178,19 +1178,19 @@ Nodes (7): REPORT — المعيار 1: المسارات البديلة + الت
 
 ### Community 249 - "Global Constraints"
 Cohesion: 0.25
-Nodes (7): Athar Pitch Credibility Implementation Plan, Global Constraints, Self-Review, Task 1: Build the unified evidence page, Task 2: Remove unsupported and overstated claims, Task 3: Rebuild the three-minute pitch and deepen the appendices, Task 4: Align the dossier and summary, then deliver the adversarial report
+Nodes (7): Masar Pitch Credibility Implementation Plan, Global Constraints, Self-Review, Task 1: Build the unified evidence page, Task 2: Remove unsupported and overstated claims, Task 3: Rebuild the three-minute pitch and deepen the appendices, Task 4: Align the dossier and summary, then deliver the adversarial report
 
 ### Community 250 - "Global Constraints"
 Cohesion: 0.25
-Nodes (7): City Impact Portfolio + Owned Map — Implementation Plan, Global Constraints, Task 1: Seeded permit generator (`athar-portfolio.js` part 1), Task 2: Portfolio aggregation (`buildPortfolio`), Task 3: City impact dashboard `athar-city-impact.html`, Task 4: Pitch slide + idea card update + integrity test, Task 5: Owned GeoJSON map (Phase 2)
+Nodes (7): City Impact Portfolio + Owned Map — Implementation Plan, Global Constraints, Task 1: Seeded permit generator (`masar-portfolio.js` part 1), Task 2: Portfolio aggregation (`buildPortfolio`), Task 3: City impact dashboard `masar-city-impact.html`, Task 4: Pitch slide + idea card update + integrity test, Task 5: Owned GeoJSON map (Phase 2)
 
 ### Community 251 - "Global Constraints"
 Cohesion: 0.25
-Nodes (7): GL Map — Own-Built Control Room Map (MapLibre GL) Implementation Plan, Global Constraints, Task 1: Vendor MapLibre GL, Task 2: `athar-glmap.js` — style + module (TDD), Task 3: Host integration with fallback, Task 4: Verification, Task 5: Deliverable folder update
+Nodes (7): GL Map — Own-Built Control Room Map (MapLibre GL) Implementation Plan, Global Constraints, Task 1: Vendor MapLibre GL, Task 2: `masar-glmap.js` — style + module (TDD), Task 3: Host integration with fallback, Task 4: Verification, Task 5: Deliverable folder update
 
-### Community 252 - "تصميم: لوحة أثر المدينة + الخريطة المملوكة — 2026-07-24"
+### Community 252 - "تصميم: لوحة مسار المدينة + الخريطة المملوكة — 2026-07-24"
 Cohesion: 0.25
-Nodes (7): الترتيب, المكوّن ١ — مولد محفظة المدينة `presentation/athar-portfolio.js`, المكوّن ٢ — لوحة أثر المدينة `presentation/athar-city-impact.html`, المكوّن ٣ — الخريطة المملوكة (مرحلة ٢), المكوّن ٤ — الاختبارات, تصميم: لوحة أثر المدينة + الخريطة المملوكة — 2026-07-24, خارج النطاق
+Nodes (7): الترتيب, المكوّن ١ — مولد محفظة المدينة `presentation/masar-portfolio.js`, المكوّن ٢ — لوحة مسار المدينة `presentation/masar-city-impact.html`, المكوّن ٣ — الخريطة المملوكة (مرحلة ٢), المكوّن ٤ — الاختبارات, تصميم: لوحة مسار المدينة + الخريطة المملوكة — 2026-07-24, خارج النطاق
 
 ### Community 253 - "fetch-base-layers.js"
 Cohesion: 0.32
@@ -1230,15 +1230,15 @@ Nodes (8): التأخير والتكلفة والجدولة, التصاريح و
 
 ### Community 262 - "١"
 Cohesion: 0.25
-Nodes (8): التحسين, التصنيفات المفيدة, الدليل, الرحلة المثبتة, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ١
+Nodes (8): التحسين, التصنيفات المفيدة, الدليل, الرحلة المثبتة, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ١
 
 ### Community 263 - "٧"
 Cohesion: 0.25
-Nodes (8): التحسين, التفاصيل الصغيرة عالية القيمة, الدليل, بنية شاشة الرسم, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ٧
+Nodes (8): التحسين, التفاصيل الصغيرة عالية القيمة, الدليل, بنية شاشة الرسم, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ٧
 
 ### Community 264 - "التفكيك العميق للمنتجات والرحلات"
 Cohesion: 0.25
-Nodes (8): التفكيك العميق للمنتجات والرحلات, خلاصة التفكيك, طريقة القراءة, كيف يضاف إلى «أثر», ما تفعله, ما لا نبنيه, ما نأخذه, ١٦
+Nodes (8): التفكيك العميق للمنتجات والرحلات, خلاصة التفكيك, طريقة القراءة, كيف يضاف إلى «مسار», ما تفعله, ما لا نبنيه, ما نأخذه, ١٦
 
 ### Community 265 - "رابعًا: منصات التنسيق والتصاريح"
 Cohesion: 0.25
@@ -1278,7 +1278,7 @@ Nodes (7): consumeInt32Ptr(), createInt32Ptr(), mergeParagraphLineBreakPoints(),
 
 ### Community 275 - "خامسًا: تنسيق محفظة التصاريح"
 Cohesion: 0.29
-Nodes (7): الميزة ٢٤: أثر مركب لتصريح مجاور, الميزة ٢٥: مصفوفة تعارض التصاريح, الميزة ٢٦: مجموعات الحفر المشترك, الميزة ٢٧: تقدير وفر الحفر المشترك, الميزة ٢٨: حد تأثير ديناميكي, الميزة ٢٩: ميزانية أثر للمحور, خامسًا: تنسيق محفظة التصاريح
+Nodes (7): الميزة ٢٤: أثر مركب لتصريح مجاور, الميزة ٢٥: مصفوفة تعارض التصاريح, الميزة ٢٦: مجموعات الحفر المشترك, الميزة ٢٧: تقدير وفر الحفر المشترك, الميزة ٢٨: حد تأثير ديناميكي, الميزة ٢٩: ميزانية مسار للمحور, خامسًا: تنسيق محفظة التصاريح
 
 ### Community 276 - "سادسًا: القرار والتوثيق والتعلم"
 Cohesion: 0.29
@@ -1290,7 +1290,7 @@ Nodes (6): أولًا: مدخلات التصريح والخريطة, الميز�
 
 ### Community 278 - "خامسًا: المحفظة والحفر المشترك"
 Cohesion: 0.29
-Nodes (7): الميزة ٢٤: الأثر المركب لتصريح مجاور, الميزة ٢٥: مصفوفة التعارض, الميزة ٢٦: مجموعات الحفر المشترك, الميزة ٢٧: وفر الحفر المشترك, الميزة ٢٨: حد التأثير الديناميكي, الميزة ٢٩: ميزانية أثر المحور, خامسًا: المحفظة والحفر المشترك
+Nodes (7): الميزة ٢٤: الأثر المركب لتصريح مجاور, الميزة ٢٥: مصفوفة التعارض, الميزة ٢٦: مجموعات الحفر المشترك, الميزة ٢٧: وفر الحفر المشترك, الميزة ٢٨: حد التأثير الديناميكي, الميزة ٢٩: ميزانية مسار المحور, خامسًا: المحفظة والحفر المشترك
 
 ### Community 279 - "سادسًا: التوثيق والتعلم"
 Cohesion: 0.29
@@ -1298,19 +1298,19 @@ Nodes (7): الميزة ٣٠: مسودة خطة إدارة المرور, الم�
 
 ### Community 280 - "١٤"
 Cohesion: 0.29
-Nodes (7): أنماط التفاعل المهمة, التحسين, الدليل, كيف يضاف إلى «أثر», ما تفعله, ما نأخذه, ١٤
+Nodes (7): أنماط التفاعل المهمة, التحسين, الدليل, كيف يضاف إلى «مسار», ما تفعله, ما نأخذه, ١٤
 
 ### Community 281 - "٤"
 Cohesion: 0.29
-Nodes (7): التحسين, الدليل, كيف يضاف إلى «أثر», ما كشفته ملاحظات المستخدمين, ما نأخذه, ما يفعله, ٤
+Nodes (7): التحسين, الدليل, كيف يضاف إلى «مسار», ما كشفته ملاحظات المستخدمين, ما نأخذه, ما يفعله, ٤
 
 ### Community 282 - "٦"
 Cohesion: 0.29
-Nodes (7): التحسين, الدليل, الرحلة العامة المثبتة, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ٦
+Nodes (7): التحسين, الدليل, الرحلة العامة المثبتة, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ٦
 
 ### Community 283 - "١١"
 Cohesion: 0.29
-Nodes (7): التحسين, الدليل, الرحلة التشغيلية المستنتجة من المواد العامة, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ١١
+Nodes (7): التحسين, الدليل, الرحلة التشغيلية المستنتجة من المواد العامة, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ١١
 
 ### Community 284 - "الفجوات الحرجة"
 Cohesion: 0.29
@@ -1330,9 +1330,9 @@ Nodes (5): Global Constraints, Task 1: Vision 2030 documented line, Task 2: Live
 
 ### Community 288 - "تكامل خريطة «غرفة التحكم»"
 Cohesion: 0.33
-Nodes (5): التحقق, الملفات, تكامل خريطة «غرفة التحكم», تهيئة الصفحة المضيفة (سطر واحد كما كان), ربط اختياري أضافته الصفحة المضيفة (athar-prototype.html)
+Nodes (5): التحقق, الملفات, تكامل خريطة «غرفة التحكم», تهيئة الصفحة المضيفة (سطر واحد كما كان), ربط اختياري أضافته الصفحة المضيفة (masar-prototype.html)
 
-### Community 289 - "athar-worksmap-data.js"
+### Community 289 - "masar-worksmap-data.js"
 Cohesion: 0.67
 Nodes (5): epoch(), groupOf(), normalizeWorks(), text(), toCanonical()
 
@@ -1370,25 +1370,25 @@ Nodes (6): أخطر خمسة مراجع, المرجع الأول, المرجع �
 
 ### Community 300 - "٩"
 Cohesion: 0.33
-Nodes (6): التحسين, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله المرجع الأول, ما يفعله المرجع الثاني, ٩
+Nodes (6): التحسين, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله المرجع الأول, ما يفعله المرجع الثاني, ٩
 
 ### Community 301 - "١٣"
 Cohesion: 0.33
-Nodes (6): التحسين, رحلة النشر الصحيحة, كيف يضاف إلى «أثر», ما تفعله, ما نأخذه, ١٣
+Nodes (6): التحسين, رحلة النشر الصحيحة, كيف يضاف إلى «مسار», ما تفعله, ما نأخذه, ١٣
 
 ### Community 302 - "سابعًا: بيانات الحركة والتوجيه"
 Cohesion: 0.33
 Nodes (6): الحركة والحوادث, المسارات الواعية بالحركة, بيانات وتوجيه, تحليلات الحركة, سابعًا: بيانات الحركة والتوجيه, مقاييس التنقل
 
-### Community 303 - "athar-budget.js"
+### Community 303 - "masar-budget.js"
 Cohesion: 0.80
 Nodes (4): acceptedUsage(), assess(), firstHourOfFutureMonth(), monthKey()
 
-### Community 304 - "athar-portfolio.js"
+### Community 304 - "masar-portfolio.js"
 Cohesion: 0.70
 Nodes (4): buildPermits(), buildPortfolio(), intIn(), mulberry32()
 
-### Community 305 - "athar-worksmap-panel.js"
+### Community 305 - "masar-worksmap-panel.js"
 Cohesion: 0.70
 Nodes (4): escapeHtml(), mount(), render(), toEpochRange()
 
@@ -1414,23 +1414,23 @@ Nodes (5): سادسًا: المحاكاة والتوأم الرقمي, ٢٠, ٢�
 
 ### Community 313 - "٥"
 Cohesion: 0.40
-Nodes (5): التحسين, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ٥
+Nodes (5): التحسين, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ٥
 
 ### Community 314 - "٨"
 Cohesion: 0.40
-Nodes (5): التحسين, كيف يضاف إلى «أثر», ما نأخذه, ما يفعله, ٨
+Nodes (5): التحسين, كيف يضاف إلى «مسار», ما نأخذه, ما يفعله, ٨
 
 ### Community 315 - "١٠"
 Cohesion: 0.40
-Nodes (5): التحسين, كيف يضاف إلى «أثر», ما تفعله, ما نأخذه, ١٠
+Nodes (5): التحسين, كيف يضاف إلى «مسار», ما تفعله, ما نأخذه, ١٠
 
 ### Community 316 - "١٥"
 Cohesion: 0.40
-Nodes (5): التحسين, كيف يضاف إلى «أثر», ما تفعله, ما نأخذه, ١٥
+Nodes (5): التحسين, كيف يضاف إلى «مسار», ما تفعله, ما نأخذه, ١٥
 
 ### Community 317 - "١٢"
 Cohesion: 0.40
-Nodes (5): كيف يضاف إلى «أثر», ما تفعله, ما لا نبنيه, ما نأخذه, ١٢
+Nodes (5): كيف يضاف إلى «مسار», ما تفعله, ما لا نبنيه, ما نأخذه, ١٢
 
 ### Community 318 - "مخاطر التنفيذ"
 Cohesion: 0.40
@@ -1472,7 +1472,7 @@ Nodes (3): البرومبت الجاهز للنسخ, برومبت الجدوى �
 Cohesion: 0.50
 Nodes (3): البرومبت الجاهز للنسخ, برومبت الأثر والاستدامة والعرض التقديمي, قائمة تحقق الوكيل
 
-### Community 328 - "athar-memory.js"
+### Community 328 - "masar-memory.js"
 Cohesion: 0.83
 Nodes (3): calibrate(), errorPct(), verdict()
 
@@ -1490,7 +1490,7 @@ Nodes (4): خامسًا: أدوات تقييم أثر مناطق العمل, ١�
 
 ### Community 337 - "المحصلة"
 Cohesion: 0.50
-Nodes (4): المحصلة, نبني داخل «أثر», نتكامل, نستخدم مرجعًا
+Nodes (4): المحصلة, نبني داخل «مسار», نتكامل, نستخدم مرجعًا
 
 ### Community 338 - "المرحلة الأولى"
 Cohesion: 0.50

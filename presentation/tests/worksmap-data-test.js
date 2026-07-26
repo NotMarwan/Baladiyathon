@@ -2,7 +2,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const Data = require(path.join(__dirname, '..', 'athar-worksmap-data.js'));
+const Data = require(path.join(__dirname, '..', 'masar-worksmap-data.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

@@ -13,15 +13,15 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
-const Data = require(path.join(ROOT, 'athar-worksmap-data.js'));
-const Panel = require(path.join(ROOT, 'athar-worksmap-panel.js'));
-const Layers = require(path.join(ROOT, 'athar-worksmap-layers.js'));
-const Interactions = require(path.join(ROOT, 'athar-worksmap-interactions.js'));
+const Data = require(path.join(ROOT, 'masar-worksmap-data.js'));
+const Panel = require(path.join(ROOT, 'masar-worksmap-panel.js'));
+const Layers = require(path.join(ROOT, 'masar-worksmap-layers.js'));
+const Interactions = require(path.join(ROOT, 'masar-worksmap-interactions.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
-const html = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
+const html = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
 const portfolio = JSON.parse(
   fs.readFileSync(path.join(ROOT, 'data', 'city-portfolio.geojson'), 'utf8')
 );
@@ -303,7 +303,7 @@ ok('«هذا الأسبوع» و«هذا الشهر» يبدآن من الحدّ
 
 ok('النتيجة واحدة مهما كانت منطقة المتصفح — الحتمية باقية', () => {
   // الثبات كان نيّة الحساب الأصلي بـ UTC ويجب أن يبقى بعد التثبيت على +٣.
-  const probe = 'const P=require(' + JSON.stringify(path.join(ROOT, 'athar-worksmap-panel.js'))
+  const probe = 'const P=require(' + JSON.stringify(path.join(ROOT, 'masar-worksmap-panel.js'))
     + ');process.stdout.write(String(P.toEpochRange("today",Date.UTC(2026,6,24,22,0,0)).from));';
   const run = (tz) => execFileSync(process.execPath, ['-e', probe], {
     env: Object.assign({}, process.env, { TZ: tz }), encoding: 'utf8',

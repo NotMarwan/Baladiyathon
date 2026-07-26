@@ -2,7 +2,7 @@
 const assert = require('assert');
 const path = require('path');
 
-const Recall = require(path.join(__dirname, '..', 'athar-desk-recall.js'));
+const Recall = require(path.join(__dirname, '..', 'masar-desk-recall.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

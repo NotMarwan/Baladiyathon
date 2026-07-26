@@ -2,7 +2,7 @@
 /**
  * مصداقية رقم المحفظة — الحارس الذي يمنع عودة رجل القشّ.
  * ---------------------------------------------------------------------------
- * لوحة أثر المدينة كانت تعلن وفر ٩٨.٦٪. الرقم صحيح حسابياً وكاذب دلالياً:
+ * لوحة مسار المدينة كانت تعلن وفر ٩٨.٦٪. الرقم صحيح حسابياً وكاذب دلالياً:
  * تصريح واحد يشكّل ٢٣٪ منه، وهو إغلاق ثلاثة من أربعة مسارات على شريان يحمل
  * ٨٧ ألف مركبة يومياً، ثماني ساعات من الثالثة عصراً، سبعة وعشرين يوماً — تصريح
  * لا تصدره بلدية. والوفر على تصريح ما كان ليُصدر ليس وفراً.
@@ -15,9 +15,9 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-global.AtharEngine = Engine;
-const Portfolio = require(path.join(ROOT, 'athar-portfolio.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+global.MasarEngine = Engine;
+const Portfolio = require(path.join(ROOT, 'masar-portfolio.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

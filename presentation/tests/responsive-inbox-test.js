@@ -31,7 +31,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const css = fs.readFileSync(path.join(ROOT, 'athar-desk.css'), 'utf8');
+const css = fs.readFileSync(path.join(ROOT, 'masar-desk.css'), 'utf8');
 
 let count = 0;
 function test(name, fn) {

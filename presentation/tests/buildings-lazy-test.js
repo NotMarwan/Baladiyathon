@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Lazy = require(path.join(ROOT, 'athar-buildings-lazy.js'));
+const Lazy = require(path.join(ROOT, 'masar-buildings-lazy.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -217,12 +217,12 @@ ok('معرّفات البلاطات لا تتصادم', () => {
 
 /* ---- الوصل بالصفحة ---- */
 
-const page = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
-const module_ = fs.readFileSync(path.join(ROOT, 'athar-buildings-lazy.js'), 'utf8');
+const page = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
+const module_ = fs.readFileSync(path.join(ROOT, 'masar-buildings-lazy.js'), 'utf8');
 
 ok('الصفحة تحمّل الوحدة وتركّبها على الخريطة', () => {
-  assert.ok(page.indexOf('athar-buildings-lazy.js') !== -1, 'الوحدة غير محمَّلة');
-  assert.ok(page.indexOf('AtharBuildingsLazy.install(GL.map)') !== -1, 'الوحدة غير مركَّبة');
+  assert.ok(page.indexOf('masar-buildings-lazy.js') !== -1, 'الوحدة غير محمَّلة');
+  assert.ok(page.indexOf('MasarBuildingsLazy.install(GL.map)') !== -1, 'الوحدة غير مركَّبة');
 });
 
 ok('المدينة كلها لم تعد تُحمَّل دفعةً واحدة', () => {
@@ -271,7 +271,7 @@ ok('الابتعاد لا يُسقط ما رُسم', () => {
 
 /* ---- الطبقة الخشنة في النمط ---- */
 
-const Style = require(path.join(ROOT, 'athar-worksmap-style.js'));
+const Style = require(path.join(ROOT, 'masar-worksmap-style.js'));
 
 ok('النمط يحمل مصدرين وطبقةً خشنة تحت الدقيقة', () => {
   const style = Style.buildStyle({ type: 'FeatureCollection', features: [] },
@@ -300,10 +300,10 @@ ok('شفافية الخشن تتبع كثافته — الحيّ المكتظّ 
 });
 
 ok('صفحة المكتب تحمّل الوحدة وتركّبها كصفحة الخريطة', () => {
-  const desk = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
-  const boot = fs.readFileSync(path.join(ROOT, 'athar-desk-boot.js'), 'utf8');
-  assert.ok(desk.indexOf('athar-buildings-lazy.js') !== -1, 'الوحدة غير محمَّلة في المكتب');
-  assert.ok(boot.indexOf('AtharBuildingsLazy.install') !== -1, 'المكتب بلا تركيب');
+  const desk = fs.readFileSync(path.join(ROOT, 'masar-desk.html'), 'utf8');
+  const boot = fs.readFileSync(path.join(ROOT, 'masar-desk-boot.js'), 'utf8');
+  assert.ok(desk.indexOf('masar-buildings-lazy.js') !== -1, 'الوحدة غير محمَّلة في المكتب');
+  assert.ok(boot.indexOf('MasarBuildingsLazy.install') !== -1, 'المكتب بلا تركيب');
   assert.strictEqual(boot.indexOf('attachBuildings'), -1,
     'المكتب ما زال يُنزّل المدينة كلها دفعةً واحدة');
 });

@@ -5,8 +5,8 @@
 | السؤال | الجواب |
 |---|---|
 | المولِّد | `presentation/scripts/build-deck-manifest.js` |
-| المخرجات | `output/submission/deck-manifest.json` · `output/submission/athar-judging-deck-text.html` |
-| المصدر | مولَّد من المنتج — يستدعي `athar-canonical.js` ويقرأ التقارير المولَّدة |
+| المخرجات | `output/submission/deck-manifest.json` · `output/submission/masar-judging-deck-text.html` |
+| المصدر | مولَّد من المنتج — يستدعي `masar-canonical.js` ويقرأ التقارير المولَّدة |
 | ملف مكتوب يدوياً؟ | **لا** |
 | يتجدّد بعد تشغيل الاختبارات؟ | نعم — `checksPassed`/`suitesPassed` يُقرآن من `tests/fixtures/test-manifest.json` الذي يكتبه `run-all.js` عند تشغيل أخضر فقط |
 | إعادة الإنتاج | شُغِّل المولِّد → `24 رقماً مجروداً` → `git status` **فارغ** = **مطابق بايتاً ببايت** |
@@ -20,11 +20,11 @@
 
 العدد **24** بالضبط. قُسّم التحقق إلى ثلاث طرائق.
 
-### أ. عشرة أرقام أُعيد حسابها حيّاً من `athar-canonical.js`
+### أ. عشرة أرقام أُعيد حسابها حيّاً من `masar-canonical.js`
 
 | الرقم | القيمة | المصدر المباشر | نوع المصدر | طريقة الاشتقاق | الحدّ |
 |---|---:|---|---|---|---|
-| `portfolioPermitCount` | 150 | `athar-canonical.js` | محسوب من المحفظة | `Portfolio.buildPortfolio(SEED).permitCount` | حجم محفظة تمثيلية |
+| `portfolioPermitCount` | 150 | `masar-canonical.js` | محسوب من المحفظة | `Portfolio.buildPortfolio(SEED).permitCount` | حجم محفظة تمثيلية |
 | `portfolioMode` | `synthetic` | نفسه | ثابت معلن | — | مولَّدة ببذرة، ليست رسمية |
 | `portfolioSeed` | 20260727 | نفسه | ثابت | `Portfolio.SEED` | شرط إعادة الإنتاج |
 | `corridorCount` | 12 | نفسه | محسوب | `Portfolio.CORRIDORS.length` | ممرات تجريدية |
@@ -98,7 +98,7 @@
 
 | القياس | القيمة |
 |---|---|
-| `athar-baladiyathon-judging-deck.html` | 2,000,546 بايت |
+| `masar-baladiyathon-judging-deck.html` | 2,000,546 بايت |
 | صور مضمَّنة (`data:` URI) | **25** |
 | نصّ مرئي خارج الصور | **6,499 محرفاً** |
 | رموز عددية مميّزة في النصّ المرئي | **19** — وكلها أرقام شرائح (`01`…`19`) |

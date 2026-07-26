@@ -138,9 +138,9 @@ savedPct  = 89.206٪            ← مطابق للمنشور
 
 ## 6. ما لم يُنفَّذ، ولماذا
 
-الرقم يعيش في `athar-canonical.js` ويدخل `output/submission/deck-manifest.json` —
-وكلاهما خارج ملكية هذا الدور (`athar-engine.js` · `athar-sensitivity.js` ·
-`athar-stability.js` · `tests/` · `docs/`). **التوصية مكتوبة ولم تُطبَّق على
+الرقم يعيش في `masar-canonical.js` ويدخل `output/submission/deck-manifest.json` —
+وكلاهما خارج ملكية هذا الدور (`masar-engine.js` · `masar-sensitivity.js` ·
+`masar-stability.js` · `tests/` · `docs/`). **التوصية مكتوبة ولم تُطبَّق على
 أي سطح.** تنفيذها قرار الوكيل A ومن يدمج.
 
 ## 7. إعادة الإنتاج

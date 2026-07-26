@@ -1,10 +1,10 @@
-"""أثر — مقياس الحلقة.
+"""مسار — مقياس الحلقة.
 
 يقيس ما يراه المراجع لا ما يقيسه الخادم: متى يظهر أول شيء، ومتى يصبح
 صندوق الأعمال قابلاً للاستعمال، ومتى تكتمل الخريطة — عند ثلاث سرعات معالج.
 
     python tests/measure.py                 # المكتب، ثلاث سرعات
-    python tests/measure.py --page athar-map.html --cpu 6
+    python tests/measure.py --page masar-map.html --cpu 6
 
 الخرج JSON على stdout ويُلحق بـ tests/measure-ledger.json حتى يكون
 لكل دورة رقم «قبل» و«بعد» لا انطباع.
@@ -23,16 +23,16 @@ BASE = 'http://localhost:8734/'
 
 # أول إطار مفيد لكل صفحة: العنصر الذي يعني «الأداة صارت مستعملة».
 READY_SELECTOR = {
-    'athar-desk.html': '#deskList [data-work-id]',
-    'athar-map.html': '#wmStat',
+    'masar-desk.html': '#deskList [data-work-id]',
+    'masar-map.html': '#wmStat',
 }
 
 # الخريطة جاهزة: لكل صفحة مقبضها الخاص، ولا صفحة تنتظر مقبض أخرى.
 MAP_READY = {
-    'athar-desk.html': ('() => window.__atharDesk && window.__atharDesk.map'
-                        ' && window.__atharDesk.map.map.loaded()'),
-    'athar-map.html': ('() => window.__atharWorksMap'
-                       ' && window.__atharWorksMap.map.loaded()'),
+    'masar-desk.html': ('() => window.__masarDesk && window.__masarDesk.map'
+                        ' && window.__masarDesk.map.map.loaded()'),
+    'masar-map.html': ('() => window.__masarWorksMap'
+                       ' && window.__masarWorksMap.map.loaded()'),
 }
 
 # مهلة واحدة قصيرة نسبياً: القياس الفاشل يجب أن يفشل بسرعة ليُقرأ كفشل.
@@ -112,7 +112,7 @@ async def measure_once(browser, page_name, cpu_rate, shot_at_ms=0):
 
 async def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--page', default='athar-desk.html')
+    parser.add_argument('--page', default='masar-desk.html')
     parser.add_argument('--cpu', type=int, nargs='*', default=[1, 4, 6])
     parser.add_argument('--label', default='')
     parser.add_argument('--shot-at', type=int, default=0, dest='shot_at',

@@ -1,7 +1,7 @@
 /**
- * أثر — حارس الفهرس: لا ادّعاء بلا سند.
+ * مسار — حارس الفهرس: لا ادّعاء بلا سند.
  * ---------------------------------------------------------------------------
- * `athar-catalog.js` هو ما تعرضه الصفحة الرئيسية وصفحة النظرة العامة عن
+ * `masar-catalog.js` هو ما تعرضه الصفحة الرئيسية وصفحة النظرة العامة عن
  * المشروع: خصائصه وحالاتها ومصادرها واختباراتها وقيوده. وثيقةٌ من هذا النوع
  * تكذب بلا أن تقصد: تُكتب مرة، ثم يتغيّر الملف أو تُحذف الحزمة أو تنتقل
  * الخاصية، ويبقى النص يقول ما لم يعد صحيحاً.
@@ -11,7 +11,7 @@
  *   ← كل ملف مذكور في خاصية أو بنية موجود على القرص.
  *   ← كل حزمة اختبار مذكورة موجودة في `tests/`.
  *   ← لا خاصية «مكتملة» بلا حزمة تغطيها — الاكتمال بلا تحقّق ادّعاء.
- *   ← كل معرّف مصدر موجود في `athar-sources.html` نفسه.
+ *   ← كل معرّف مصدر موجود في `masar-sources.html` نفسه.
  *   ← كل صفحة في قسم المتقدم موجودة ومربوطة.
  *   ← الخاصية غير المنفذة لا تحمل ملفاً ولا حزمة — ولا تُعدّ إنجازاً.
  */
@@ -22,7 +22,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const Catalog = require(path.join(ROOT, 'athar-catalog.js'));
+const Catalog = require(path.join(ROOT, 'masar-catalog.js'));
 
 let failures = 0;
 function ok(name, fn) {
@@ -127,7 +127,7 @@ ok('المشروع لا يدّعي أنه كله مكتمل', () => {
 /* ---- المصادر ---- */
 
 ok('كل معرّف مصدر موجود في سجل المصادر نفسه', () => {
-  const html = fs.readFileSync(path.join(ROOT, 'athar-sources.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, 'masar-sources.html'), 'utf8');
   const missing = Catalog.SOURCES
     .filter((source) => html.indexOf('id="' + source.id + '"') === -1)
     .map((source) => source.id);
@@ -135,7 +135,7 @@ ok('كل معرّف مصدر موجود في سجل المصادر نفسه', ()
 });
 
 ok('سجل المصادر لا يحوي مصدراً غاب عن الفهرس', () => {
-  const html = fs.readFileSync(path.join(ROOT, 'athar-sources.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, 'masar-sources.html'), 'utf8');
   const found = (html.match(/id="(src-[^"]+)"/g) || [])
     .map((m) => m.replace(/id="|"/g, ''));
   const known = Catalog.SOURCES.map((source) => source.id);
@@ -182,11 +182,11 @@ ok('كل فجوة تحمل صياغة حالة صريحة لا فراغاً', ()
  * فالفهرس يذكر مكان الوسم، والحزمة تفتح الصفحة وتتأكد أنه هناك.
  */
 ok('كل بيان تمثيلي موسوم في الصفحة التي يظهر فيها', () => {
-  const desk = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
+  const desk = fs.readFileSync(path.join(ROOT, 'masar-desk.html'), 'utf8');
   assert.ok(desk.indexOf('بيانات توضيحية للعرض') !== -1,
     'المكتب بلا شارة البيانات التوضيحية');
 
-  const measurement = fs.readFileSync(path.join(ROOT, 'athar-desk-measurement.js'), 'utf8');
+  const measurement = fs.readFileSync(path.join(ROOT, 'masar-desk-measurement.js'), 'utf8');
   assert.ok(measurement.indexOf('تركيبية ومعلَّمة') !== -1,
     'تبويب القياس بلا لافتة الأرصاد التركيبية');
 
@@ -233,11 +233,11 @@ ok('صفحات الفهرس مبنيّة من النسخة الحالية منه
  * ولا يُلوَّن بلون الخلفية.
  */
 ok('التفصيل مطويّ لا مخفيّ — ولا نص خارج الشاشة ولا بلون الخلفية', () => {
-  const overview = fs.readFileSync(path.join(ROOT, 'athar-overview.html'), 'utf8');
+  const overview = fs.readFileSync(path.join(ROOT, 'masar-overview.html'), 'utf8');
   assert.ok((overview.match(/<details/g) || []).length >= 10,
     'لا كشف متدرّج في صفحة النظرة العامة');
 
-  ['athar-home.html', 'athar-overview.html', 'athar-advanced.html'].forEach((file) => {
+  ['masar-home.html', 'masar-overview.html', 'masar-advanced.html'].forEach((file) => {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
     assert.ok(!/display\s*:\s*none/.test(html), file + ': نص محجوب بـ display:none');
     assert.ok(!/text-indent\s*:\s*-\d{4}/.test(html), file + ': نص مدفوع خارج الشاشة');
@@ -246,7 +246,7 @@ ok('التفصيل مطويّ لا مخفيّ — ولا نص خارج الشا�
 });
 
 ok('صفحات الفهرس بنيتها دلالية: عناوين مرتّبة وجداول حقيقية', () => {
-  const overview = fs.readFileSync(path.join(ROOT, 'athar-overview.html'), 'utf8');
+  const overview = fs.readFileSync(path.join(ROOT, 'masar-overview.html'), 'utf8');
   assert.strictEqual((overview.match(/<h1/g) || []).length, 1, 'عنوان أول ليس واحداً');
   assert.ok((overview.match(/<table/g) || []).length >= 5,
     'البيانات الجدولية ليست في جداول');
@@ -254,7 +254,7 @@ ok('صفحات الفهرس بنيتها دلالية: عناوين مرتّبة
   assert.ok(overview.indexOf('scope="col"') !== -1, 'رؤوس الجدول بلا نطاق');
   assert.ok(overview.indexOf('<nav class="ac-toc"') !== -1, 'صفحة طويلة بلا فهرس داخلي');
 
-  const home = fs.readFileSync(path.join(ROOT, 'athar-home.html'), 'utf8');
+  const home = fs.readFileSync(path.join(ROOT, 'masar-home.html'), 'utf8');
   assert.strictEqual((home.match(/<h1/g) || []).length, 1, 'الرئيسية بلا عنوان أول واحد');
   assert.strictEqual((home.match(/class="ac-cta"/g) || []).length, 1,
     'أكثر من إجراء أساسي واحد على الرئيسية');
@@ -266,7 +266,7 @@ ok('صفحات الفهرس بنيتها دلالية: عناوين مرتّبة
  * أو من يقرأ النص وحده — يعرف الحالة.
  */
 ok('كل وسم حالة يحمل نصّه لا لونه وحده', () => {
-  const overview = fs.readFileSync(path.join(ROOT, 'athar-overview.html'), 'utf8');
+  const overview = fs.readFileSync(path.join(ROOT, 'masar-overview.html'), 'utf8');
   const tags = overview.match(/<span class="ac-status"[^>]*>[\s\S]{0,200}?<\/span>/g) || [];
   assert.ok(tags.length >= Catalog.FEATURES.length, 'وسوم الحالة أقل من الخصائص');
   tags.forEach((tag) => {

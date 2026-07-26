@@ -23,7 +23,7 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Exporter = require(path.join(ROOT, 'athar-wzdx-export.js'));
+const Exporter = require(path.join(ROOT, 'masar-wzdx-export.js'));
 const validator = require('./lib/wzdx-validator.js');
 
 const PORTFOLIO = path.join(ROOT, 'data', 'city-portfolio.geojson');
@@ -160,7 +160,7 @@ function main() {
   fs.writeFileSync(path.join(ROOT, 'data', 'wzdx-conformance-summary.json'),
     `${JSON.stringify(summary, null, 2)}\n`);
   fs.writeFileSync(path.join(ROOT, 'data', 'wzdx-conformance-summary.js'),
-    `window.ATHAR_WZDX_CONFORMANCE = ${JSON.stringify(summary)};\n`);
+    `window.MASAR_WZDX_CONFORMANCE = ${JSON.stringify(summary)};\n`);
 
   console.log(report.permittedClaim);
   Object.keys(tally).sort().forEach((key) => console.log(`  ${key}: ${tally[key]}`));

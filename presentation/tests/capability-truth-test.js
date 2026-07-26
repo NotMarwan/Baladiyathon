@@ -77,7 +77,7 @@ function surfaces() {
 
 const SURFACES = surfaces();
 const server = read(path.join(ROOT, 'server.js'));
-const routing = read(path.join(ROOT, 'athar-city-routing.js'));
+const routing = read(path.join(ROOT, 'masar-city-routing.js'));
 
 /**
  * القدرات المتنازَع عليها.
@@ -89,7 +89,7 @@ const CAPABILITIES = [
   {
     key: 'roles',
     label: 'فصل الصلاحيات في الخادم',
-    evidence: () => /X-Athar-Key/.test(server)
+    evidence: () => /X-Masar-Key/.test(server)
       && /segregationBreach/.test(server)
       && /ROLE_NOT_PERMITTED/.test(server),
     denial: /(?:الصلاحيات|فصل الصلاحيات)[^.،]{0,30}غير (?:منفذة|منفَّذة|منفذ|منفَّذ)/,

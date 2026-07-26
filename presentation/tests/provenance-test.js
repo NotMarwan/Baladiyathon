@@ -21,8 +21,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const P = require(path.join(ROOT, 'athar-provenance.js'));
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const P = require(path.join(ROOT, 'masar-provenance.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 let count = 0;
 function test(name, fn) {
@@ -112,7 +112,7 @@ test('الرسمي والمرصود لا يُدّعى لهما حياة بلا �
 
 // --- 5. الرقم السنوي ----------------------------------------------------
 
-const cityImpact = fs.readFileSync(path.join(ROOT, 'athar-city-impact.html'), 'utf8');
+const cityImpact = fs.readFileSync(path.join(ROOT, 'masar-city-impact.html'), 'utf8');
 
 test('لا رقم يُوصف «سنوياً» بلا مقام موثّق', () => {
   /* المحفظة مولَّدة: 150 تصريحاً بتواريخ بدء عشوائية على 365 يوماً ببذرة
@@ -132,7 +132,7 @@ test('لا رقم يُوصف «سنوياً» بلا مقام موثّق', () =>
   const claims = [];
   outsideNote.split('\n').forEach((line, index) => {
     if (/سنوياً/.test(line)) {
-      claims.push(`athar-city-impact.html:${index + 1} — ${line.trim().slice(0, 80)}`);
+      claims.push(`masar-city-impact.html:${index + 1} — ${line.trim().slice(0, 80)}`);
     }
   });
   assert.strictEqual(claims.length, 0,
@@ -182,8 +182,8 @@ test('الطول المكرر يخرج بافتراضه لا بوصفه هندس
 // --- سطح العرض يحمل العقد -----------------------------------------------
 
 test('صفحة الأثر تحمّل وحدة العقد وتعرض سطر مصدر لكل رقم رئيسي', () => {
-  assert.ok(cityImpact.indexOf('athar-provenance.js') !== -1,
-    'الصفحة لا تحمّل athar-provenance.js');
+  assert.ok(cityImpact.indexOf('masar-provenance.js') !== -1,
+    'الصفحة لا تحمّل masar-provenance.js');
   const stamps = cityImpact.match(/stamp\('card-/g) || [];
   assert.ok(stamps.length >= 4,
     `${stamps.length} بطاقة موسومة فقط — الأرقام الرئيسية الأربع كلها تُوسَم`);

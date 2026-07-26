@@ -1,6 +1,6 @@
 'use strict';
 /**
- * أثر — منع الانعطاف من OpenStreetMap.
+ * مسار — منع الانعطاف من OpenStreetMap.
  * ---------------------------------------------------------------------------
  * الرسم صار يحترم الاتجاه والانعطاف والإشارة، وبقيت فجوة معلنة في `src-P05`:
  * علاقات `turn_restriction`. أثرها أن المحرك قد يقترح «انعطف يساراً هنا» عند
@@ -58,7 +58,7 @@ async function ask() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': 'athar-roads-builder',
+          'User-Agent': 'masar-roads-builder',
         },
         body: new URLSearchParams({ data: QUERY }).toString(),
         signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),

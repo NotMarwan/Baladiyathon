@@ -120,7 +120,7 @@ function main() {
   /* شِمّ المتصفح: الصفحات تُفتح من القرص بلا خادم أحياناً، و`fetch` على
      `file://` يسقط. بقية بيانات المشروع تتبع النمط نفسه. */
   fs.writeFileSync(`${OUT.replace(/\.json$/, '')}.js`,
-    `window.ATHAR_POINT_GEOMETRY = ${JSON.stringify(payload)};\n`);
+    `window.MASAR_POINT_GEOMETRY = ${JSON.stringify(payload)};\n`);
   console.log(`\n${resolved}/${points.length} مُسنَد — ${OUT}`);
 }
 

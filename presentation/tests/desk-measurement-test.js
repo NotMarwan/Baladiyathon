@@ -2,8 +2,8 @@
 const assert = require('assert');
 const path = require('path');
 
-const Measure = require(path.join(__dirname, '..', 'athar-desk-measurement.js'));
-const Calibration = require(path.join(__dirname, '..', 'athar-impact-calibration.js'));
+const Measure = require(path.join(__dirname, '..', 'masar-desk-measurement.js'));
+const Calibration = require(path.join(__dirname, '..', 'masar-impact-calibration.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }

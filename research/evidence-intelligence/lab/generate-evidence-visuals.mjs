@@ -223,7 +223,7 @@ coverageBody += text(1465, 715, "لا سرعة ولا حجم", 18, theme.muted, 
 await fs.writeFile(
   path.join(visuals, "route-source-coverage.svg"),
   base(
-    "تغطية الأدلة على مسارات «أثر»",
+    "تغطية الأدلة على مسارات «مسار»",
     "المسارات ملوّنة، نقاط التقاطع الرسمية زرقاء، وأقرب عداد وزارة ظاهر بعلامة حمراء",
     coverageBody
   ),

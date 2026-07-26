@@ -28,9 +28,9 @@ const crypto = require('node:crypto');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Mapping = require(path.join(ROOT, 'athar-wzdx-mapping.js'));
-const Exporter = require(path.join(ROOT, 'athar-wzdx-export.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Mapping = require(path.join(ROOT, 'masar-wzdx-mapping.js'));
+const Exporter = require(path.join(ROOT, 'masar-wzdx-export.js'));
 const validator = require(path.join(ROOT, 'scripts', 'lib', 'wzdx-validator.js'));
 
 let count = 0;
@@ -49,7 +49,7 @@ const INPUT = {
   startISO: '2026-08-01T22:00:00.000Z',
   durationHours: 8,
   coordinates: [[46.6753, 24.7136], [46.6801, 24.7192]],
-  dataSourceId: 'athar-reviewer-desk',
+  dataSourceId: 'masar-reviewer-desk',
 };
 
 // ---- المحقق نفسه ---------------------------------------------------------

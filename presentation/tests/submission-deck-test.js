@@ -5,7 +5,7 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..', '..');
 const out = path.join(root, 'output', 'submission');
-const htmlPath = path.join(out, 'athar-baladiyathon-judging-deck.html');
+const htmlPath = path.join(out, 'masar-baladiyathon-judging-deck.html');
 let passed = 0;
 
 function test(name, fn) {
@@ -50,10 +50,10 @@ test('first slide contains all four team members', () => {
 
 test('all four journey diagrams are embedded', () => {
   const expected = [
-    'athar-current-prototype-journey',
-    'athar-actors-use-cases',
-    'athar-target-operating-sequence',
-    'athar-reviewer-decision-journey',
+    'masar-current-prototype-journey',
+    'masar-actors-use-cases',
+    'masar-target-operating-sequence',
+    'masar-reviewer-decision-journey',
   ];
   for (const token of expected) {
     if (!html.includes(`data-asset="${token}"`)) throw new Error(`missing embedded diagram marker: ${token}`);
@@ -81,10 +81,10 @@ test('project GitHub link is visible and clickable', () => {
 
 test('sidecar assets exist and are non-empty', () => {
   for (const name of [
-    'athar-current-prototype-journey.png',
-    'athar-actors-use-cases.png',
-    'athar-target-operating-sequence.png',
-    'athar-reviewer-decision-journey.png',
+    'masar-current-prototype-journey.png',
+    'masar-actors-use-cases.png',
+    'masar-target-operating-sequence.png',
+    'masar-reviewer-decision-journey.png',
   ]) {
     const file = path.join(out, name);
     if (!fs.existsSync(file) || fs.statSync(file).size < 1000) throw new Error(`missing or empty asset: ${name}`);

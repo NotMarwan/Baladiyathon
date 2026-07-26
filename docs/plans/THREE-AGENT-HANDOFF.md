@@ -15,14 +15,14 @@
 
 | الوكيل | يملك | ممنوع عليه |
 |---|---|---|
-| **A — العرض** | `output/submission/` · `athar-pitch.html` · `scripts/build-deck-manifest.js` | `athar-engine.js` · `athar-sensitivity.js` · `data/` |
-| **B — الدليل المحلي** | `data/` · `scripts/` (عدا build-deck-manifest) · `research/` · `athar-comparable-cases.js` | `athar-engine.js` · `athar-sensitivity.js` · `athar-stability.js` · `output/` |
-| **C — الحسم والتحقق** | `athar-engine.js` · `athar-sensitivity.js` · `athar-stability.js` · `tests/` · `docs/` | `data/` · `output/` · `research/` |
+| **A — العرض** | `output/submission/` · `masar-pitch.html` · `scripts/build-deck-manifest.js` | `masar-engine.js` · `masar-sensitivity.js` · `data/` |
+| **B — الدليل المحلي** | `data/` · `scripts/` (عدا build-deck-manifest) · `research/` · `masar-comparable-cases.js` | `masar-engine.js` · `masar-sensitivity.js` · `masar-stability.js` · `output/` |
+| **C — الحسم والتحقق** | `masar-engine.js` · `masar-sensitivity.js` · `masar-stability.js` · `tests/` · `docs/` | `data/` · `output/` · `research/` |
 
 ### التصادم الوحيد المتوقَّع — وحلّه مكتوب سلفاً
 
 ثلاثتهم سيشغّلون المولِّدات، فتتغيّر عندهم:
-`output/submission/deck-manifest.json` · `athar-judging-deck-text.html` ·
+`output/submission/deck-manifest.json` · `masar-judging-deck-text.html` ·
 `tests/fixtures/test-manifest.json` · `tests/fixtures/impact-golden.json`
 
 **قاعدة الدمج:** هذه الملفات **مولَّدة**. عند التعارض لا تُدمج يدوياً —
@@ -49,9 +49,9 @@ A يقرأ الأرقام ولا ينتجها — فيُدمج أخيراً عل
 
 ```bash
 cd /c/Users/wasan/Downloads/Swarm/Baladiyathon
-git worktree add ../athar-A-deck    -b agent/a-deck    main
-git worktree add ../athar-B-evidence -b agent/b-evidence main
-git worktree add ../athar-C-decide  -b agent/c-decide  main
+git worktree add ../masar-A-deck    -b agent/a-deck    main
+git worktree add ../masar-B-evidence -b agent/b-evidence main
+git worktree add ../masar-C-decide  -b agent/c-decide  main
 ```
 
 ثم في كل شجرة — **إلزامي**، وإلا سقط المحقق الرسمي:
@@ -74,7 +74,7 @@ node presentation/tests/run-all.js
 1. docs/audits/final-independent-acceptance/GO-NO-GO.md
 2. docs/audits/final-independent-acceptance/REMEDIATION-DELTA.md
 3. docs/audits/final-independent-acceptance/SIX-CRITERIA-COLD-JUDGING.md
-4. presentation/athar-canonical.js — BANNED_CLAIMS
+4. presentation/masar-canonical.js — BANNED_CLAIMS
 
 ## قواعد لا تُخرق
 - لا تُرخِ عتبة ولا تضيّق نطاقاً ولا تغيّر وزناً لتحسين رقم معروض.
@@ -146,7 +146,7 @@ node presentation/tests/run-all.js
 - `npm test` أخضر · `deck-numbers-test` و`deck-text-test` يمرّان
 - كل رقم في العرض له سطر في `deck-manifest.json`
 - `git status` نظيفة بعد إعادة توليد الجرد
-- لم تُلمس `athar-engine.js` ولا `data/`
+- لم تُلمس `masar-engine.js` ولا `data/`
 
 ---
 
@@ -160,7 +160,7 @@ node presentation/tests/run-all.js
 حاسمة أنجزها وكيل سابق:
 
 > عدّادات وزارة النقل (32 محطة، `traffic-density-on-roads.xlsx`) **لا تغطي
-> محفظة أثر**. أقرب عدّاد يبعد **14,957 متراً** عن أقرب موقع عمل. صفر
+> محفظة مسار**. أقرب عدّاد يبعد **14,957 متراً** عن أقرب موقع عمل. صفر
 > عدّادات ضمن 500 متر من أي من المسارات الواحد والعشرين.
 > والمحطة الوحيدة القريبة من الرياض (`MOT-13`، طريق 513) تحمل علم جودة:
 > مجموع الفترة (619) أقل من مجموع الأربع والعشرين ساعة (7,618).
@@ -176,7 +176,7 @@ node presentation/tests/run-all.js
 يحمل 631 تقاطعاً بإحداثياتها وأسماء شوارعها في الرياض. **بيانات محلية
 حقيقية.**
 
-محرك أثر اليوم **يتجاهل الإشارات تماماً**: يستعمل تدفق تشبّع 1800 بلا نسبة
+محرك مسار اليوم **يتجاهل الإشارات تماماً**: يستعمل تدفق تشبّع 1800 بلا نسبة
 أخضر/دورة. وسعة شريان بإشارات محكومة بالإشارة لا بالمقطع.
 
 **السؤال:** هل يمكن استعمال كثافة التقاطعات على المقطع لتقييد السعة الفعلية
@@ -216,7 +216,7 @@ node presentation/tests/run-all.js
 - كل مصدر مفحوص له بند في السجل: ما يُثبته، وما لا يُثبته، وتاريخ الوصول
 - أي رفع درجة في `comparable-cases.json` يحمل قياساً وطريقة قياس
 - `localMeasured` يبقى **صفراً** ما لم توجد حالة سعودية بقياسات قبل/أثناء
-- `npm test` أخضر · لم تُلمس `athar-engine.js`
+- `npm test` أخضر · لم تُلمس `masar-engine.js`
 
 ---
 
@@ -267,7 +267,7 @@ node presentation/tests/run-all.js
 الفرضية غير المثبتة: ضغط بيئة التدقيق (خادم تطوير ومتصفح متوازيان).
 
 **دليل جديد يضيّق الفرضية:** تكرّر السقوط في **شجرة عمل نظيفة** أُنشئت لتوّها
-(`athar-A-deck`) في أول تشغيل بعد `npm install`، **بلا متصفح متصل بها**،
+(`masar-A-deck`) في أول تشغيل بعد `npm install`، **بلا متصفح متصل بها**،
 ثم نجح التشغيل الثاني فوراً. أي أن الفرضية «متصفحي كان يستهلك المنافذ»
 **ضعيفة**، والأرجح أثر أول تشغيل بارد — ذاكرة مؤقتة، أو تصادم منافذ عابرة
 عبر عمليات متوازية، أو مهلة تُتجاوز تحت ضغط أول تحميل. ابدأ من هنا.
@@ -279,7 +279,7 @@ node presentation/tests/run-all.js
 
 ## المهمة الرابعة — اختبار غير المتخصص (آخر `UNVERIFIED`)
 
-البروتوكول: شخص واحد لم يعمل على أثر · شاشة المكتب على تصريح ممثّل ·
+البروتوكول: شخص واحد لم يعمل على مسار · شاشة المكتب على تصريح ممثّل ·
 **ستون ثانية بلا شرح شفهي** · ثم الأسئلة السبعة · تسجيل الإجابات **حرفياً**.
 النجاح 6 من 7 من داخل الواجهة، وبقسم تفاصيل واحد كحدّ أقصى.
 

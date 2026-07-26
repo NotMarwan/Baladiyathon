@@ -28,9 +28,9 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 global.window = global;
 
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
-const Analysis = require(path.join(ROOT, 'athar-desk-analysis.js'));
-const DeskFile = require(path.join(ROOT, 'athar-desk-file.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Analysis = require(path.join(ROOT, 'masar-desk-analysis.js'));
+const DeskFile = require(path.join(ROOT, 'masar-desk-file.js'));
 
 const REPORT = path.join(ROOT, 'data', 'alternate-load.json');
 
@@ -102,7 +102,7 @@ test('البطاقة تعرض الحكم بلغة تُقرأ بلا مصطلح',
     .find((one) => report.permits[one.properties.permitRef].verdict.key === 'overflows');
   assert.ok(feature, 'لا حالة فائضة في المحفظة — راجع التقرير');
 
-  global.ATHAR_ALTERNATE_LOAD = report;
+  global.MASAR_ALTERNATE_LOAD = report;
   const analysis = Analysis.evaluate(feature.properties, Engine);
   const html = DeskFile.renderSummary(feature, analysis);
 
@@ -118,8 +118,8 @@ test('البطاقة تعرض الحكم بلغة تُقرأ بلا مصطلح',
 test('غياب الملخّص يُسكت البطاقة ولا يُسقطها', () => {
   /* بطاقةٌ صامتة أصدق من تقدير، وأسلم من صفحة تسقط. */
   const feature = portfolio.features[0];
-  const saved = global.ATHAR_ALTERNATE_LOAD;
-  delete global.ATHAR_ALTERNATE_LOAD;
+  const saved = global.MASAR_ALTERNATE_LOAD;
+  delete global.MASAR_ALTERNATE_LOAD;
   try {
     const analysis = Analysis.evaluate(feature.properties, Engine);
     const html = DeskFile.renderSummary(feature, analysis);
@@ -127,12 +127,12 @@ test('غياب الملخّص يُسكت البطاقة ولا يُسقطها', 
       'البطاقة تعرض القسم بلا بيانات');
     assert.ok(html.length > 100, 'البطاقة سقطت بغياب ملف اختياري');
   } finally {
-    global.ATHAR_ALTERNATE_LOAD = saved;
+    global.MASAR_ALTERNATE_LOAD = saved;
   }
 });
 
 test('المكتب يُحمّل الملخّص', () => {
-  const page = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
+  const page = fs.readFileSync(path.join(ROOT, 'masar-desk.html'), 'utf8');
   assert.match(page, /data\/alternate-load\.js/,
     'المكتب لا يُحمّل ملخّص حمل البديل');
 });

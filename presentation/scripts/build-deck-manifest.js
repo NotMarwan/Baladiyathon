@@ -27,15 +27,15 @@ const ROOT = path.join(__dirname, '..');
 const REPO = path.join(ROOT, '..');
 global.window = global;
 
-const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
-const Cases = require(path.join(ROOT, 'athar-comparable-cases.js'));
-const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+const Canonical = require(path.join(ROOT, 'masar-canonical.js'));
+const Cases = require(path.join(ROOT, 'masar-comparable-cases.js'));
+const Evidence = require(path.join(ROOT, 'masar-route-evidence.js'));
 /* يُقرأ ولا يُكتب: نقطة تشغيل السعة تُؤخذ من المحرك نفسه لا من نسخة عنها،
    كي لا يبقى في الجرد رقمٌ صحيحٌ يوم كُتب وخاطئٌ بعد أول تعديل في المحرك. */
-const Engine = require(path.join(ROOT, 'athar-engine.js'));
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
 
 const OUT_JSON = path.join(REPO, 'output', 'submission', 'deck-manifest.json');
-const OUT_HTML = path.join(REPO, 'output', 'submission', 'athar-judging-deck-text.html');
+const OUT_HTML = path.join(REPO, 'output', 'submission', 'masar-judging-deck-text.html');
 
 function read(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -78,7 +78,7 @@ function build() {
 
   Object.keys(metrics).forEach((key) => {
     figures.push(figure(key, metrics[key].value, metrics[key].unit,
-      'athar-canonical.js (محسوب من المحفظة)', 'model-derived',
+      'masar-canonical.js (محسوب من المحفظة)', 'model-derived',
       metrics[key].meaning));
   });
 
@@ -132,7 +132,7 @@ function build() {
     'data/wzdx-interop-summary.json — تغذية ' + interopPublishers
       + '، مثبَّتة ببصمتها', 'external-official',
     'تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا '
-      + 'عن صحة أي رقم في أثر.'));
+      + 'عن صحة أي رقم في مسار.'));
   figures.push(figure('interopFeedErrors', interopErrors, 'خطأ',
     'data/wzdx-interop-summary.json — نفس المحقق ونفس الالتزام '
       + interop.validator.commit.slice(0, 7), 'external-official',
@@ -201,7 +201,7 @@ function build() {
       + 'رقماً بلا سنده');
   }
   figures.push(figure('workZoneLaneCapacity', engineCapacity, arterialPrior.unit,
-    'athar-engine.js — نقطة التشغيل، وسندها delaware-arterial في '
+    'masar-engine.js — نقطة التشغيل، وسندها delaware-arterial في '
     + 'data/comparable-cases.json', arterialPrior.evidenceLevel,
     delaware.doesNotProve));
   figures.push(figure('workZoneCapacitySites', delaware.sites, 'موقع مقيس',
@@ -280,7 +280,7 @@ function html(manifest) {
   return `<!doctype html>
 <html lang="ar" dir="rtl">
 <meta charset="utf-8">
-<title>أثر — العرض النصّي القابل للتدقيق</title>
+<title>مسار — العرض النصّي القابل للتدقيق</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { color-scheme: light dark; --line: #d8d8d8; --muted: #5a5a5a; }
@@ -301,7 +301,7 @@ function html(manifest) {
           color: var(--muted); font-size: 0.9rem; }
 </style>
 
-<h1>أثر — العرض النصّي القابل للتدقيق</h1>
+<h1>مسار — العرض النصّي القابل للتدقيق</h1>
 <p class="lead">كل رقم هنا مولَّد من مصدر حاكم في المستودع، ومعه درجة دليله وحدّه.
 لا صور، ولا سكربت، ولا رقم مكتوب يدوياً.</p>
 

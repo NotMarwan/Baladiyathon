@@ -1,8 +1,8 @@
 'use strict';
 /**
- * Athar backend — Node stdlib only (http, fs, path, url).
+ * Masar backend — Node stdlib only (http, fs, path, url).
  * Serves static files from presentation/ and a minimal JSON API backed by
- * AtharEngine (presentation/athar-engine.js — the single source of truth
+ * MasarEngine (presentation/masar-engine.js — the single source of truth
  * for all math, shared with the browser UI and the test suite).
  *
  * Run: node presentation/server.js
@@ -14,8 +14,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 
-const AtharEngine = require('./athar-engine.js');
-const { createLedger } = require('./athar-ledger.js');
+const MasarEngine = require('./masar-engine.js');
+const { createLedger } = require('./masar-ledger.js');
 
 const PORT = 8734;
 const ROOT_DIR = path.resolve(__dirname);
@@ -41,7 +41,7 @@ const MAX_BODY_BYTES = 1024 * 1024; // 1MB JSON body size limit
 // الواجهة. قول ذلك صراحةً أنفع من ترويسة تُقرأ إقراراً بأمن الإنتاج.
 
 /** الاستماع على الحلقة المحلية وحدها ما لم يُطلب غيرها صراحةً. */
-const BIND_HOST = process.env.ATHAR_HOST || '127.0.0.1';
+const BIND_HOST = process.env.MASAR_HOST || '127.0.0.1';
 
 // WP-D3 — حُذف `resolveApiKey` والمفتاح الواحد معه.
 // مفتاحٌ واحد يفتح كل انتقال يجعل «الأدوار» تسميةً في الواجهة. الأدوار الآن
@@ -63,7 +63,7 @@ const BIND_HOST = process.env.ATHAR_HOST || '127.0.0.1';
 //
 // `action` نصّ حرّ يرسله العميل: `approve` أو `sign-off` أو أي شيء. التخويل
 // عليه يعني التخويل على تسمية يملكها الطرف غير الموثوق. أمّا الحالات فهي آلة
-// الحالات المعلنة في `athar-desk-states.js` — وهي ما يعنيه القرار فعلاً.
+// الحالات المعلنة في `masar-desk-states.js` — وهي ما يعنيه القرار فعلاً.
 const ROLES = {
   screener: {
     label: 'فاحص الأثر',
@@ -119,7 +119,7 @@ function resolveRoleKeys() {
   const keys = {};
   const generated = [];
   Object.keys(ROLES).forEach((role) => {
-    const fromEnv = String(process.env[`ATHAR_KEY_${role.toUpperCase()}`] || '').trim();
+    const fromEnv = String(process.env[`MASAR_KEY_${role.toUpperCase()}`] || '').trim();
     if (fromEnv) {
       keys[role] = fromEnv;
     } else {
@@ -515,13 +515,13 @@ async function handleJsonEndpoint(req, res, validate, execute) {
 
 async function handleApiScore(req, res) {
   return handleJsonEndpoint(req, res, validateScoreInput, (body) =>
-    AtharEngine.score({ ...AtharEngine.DEFAULTS, ...body })
+    MasarEngine.score({ ...MasarEngine.DEFAULTS, ...body })
   );
 }
 
 async function handleApiOptimize(req, res) {
   return handleJsonEndpoint(req, res, validateScoreInput, (body) =>
-    AtharEngine.optimize({ ...AtharEngine.DEFAULTS, ...body })
+    MasarEngine.optimize({ ...MasarEngine.DEFAULTS, ...body })
   );
 }
 
@@ -530,7 +530,7 @@ async function handleApiDigOnce(req, res) {
     req,
     res,
     validateDigOnceInput,
-    (body) => AtharEngine.digOnce(body)
+    (body) => MasarEngine.digOnce(body)
   );
 }
 
@@ -544,7 +544,7 @@ async function handleApiDigOnce(req, res) {
  * لتمنع فاحصاً من اعتماد ما فحصه. وسجلٌّ في الذاكرة يعني أن إعادة تشغيل
  * الخادم تُفرغه فيسقط القيد — **قاعدةٌ تُهزَم بإعادة تشغيل، لا بثغرة**.
  *
- * فالثبات شرطُ بقاءِ ما أُعلن، لا ترقية تخزين. التفاصيل في `athar-ledger.js`.
+ * فالثبات شرطُ بقاءِ ما أُعلن، لا ترقية تخزين. التفاصيل في `masar-ledger.js`.
  *
  * ويبقى المتصفح مخزناً موازياً: سقوط الخادم لا يفقد المراجع قراره.
  *
@@ -552,8 +552,8 @@ async function handleApiDigOnce(req, res) {
  * قرارات ما لم يُمرَّر لهما المسار نفسه صراحةً — وإلا تسرّبت حالة اختبار إلى
  * اختبار.
  */
-const DEFAULT_LEDGER_PATH = path.resolve(process.env.ATHAR_LEDGER
-  || path.join(ROOT_DIR, '..', '.athar', 'decisions.jsonl'));
+const DEFAULT_LEDGER_PATH = path.resolve(process.env.MASAR_LEDGER
+  || path.join(ROOT_DIR, '..', '.masar', 'decisions.jsonl'));
 
 /* خارج جذر الصفحات عمداً: ملفٌ تحت `presentation/` يُقدَّم عبر HTTP، فيصير
    سجل القرارات مقروءاً لأي طالب. */
@@ -624,7 +624,7 @@ function workIdFromPath(pathname) {
  * والرفض لا يكفي أن يكون `403`: البوابة تقرأ السجل بعده وتشترط أنه لم يتغيّر.
  */
 async function handleApiDecisionPost(req, res, store, workId) {
-  const role = req.atharRole;
+  const role = req.masarRole;
 
   return handleJsonEndpoint(req, res, validateDecision, (body) => {
     if (!mayPerform(role, body.status)) {
@@ -776,7 +776,7 @@ function isPrivatePath(relativePath) {
 
 function serveStatic(req, res, pathname) {
   const decodedPath = decodeURIComponent(pathname);
-  const relativePath = decodedPath === '/' ? '/athar-home.html' : decodedPath;
+  const relativePath = decodedPath === '/' ? '/masar-home.html' : decodedPath;
   if (isPrivatePath(relativePath)) {
     sendPlainError(res, 403, 'Forbidden');
     return;
@@ -810,7 +810,7 @@ function injectNonce(html, nonce) {
     /* WP-G2 — الـ`nonce` يذهب إلى **كل** وسم نصّي، بما فيه ذو `src`.
      *
      * الوسوم الخارجية لا تحتاجه لتُنفَّذ (`'self'` تغطيها). لكنها تحتاجه
-     * لتستطيع حقن نمط وقت التشغيل: `athar-nav.js` ينشئ `<style>` ويضيفه إلى
+     * لتستطيع حقن نمط وقت التشغيل: `masar-nav.js` ينشئ `<style>` ويضيفه إلى
      * الرأس، فتحجبه `style-src-elem` لأنه بلا `nonce` — وشريط التنقل يبقى
      * بلا أنماط في كل صفحة. حُجب بصمت منذ WP-D1 ولم تلتقطه بوابة التخطيط.
      *
@@ -883,16 +883,16 @@ function createServer(options) {
     }
 
     if (isWriteRoute(pathname, req.method)) {
-      const role = roleForKey(roleKeys, req.headers['x-athar-key']);
+      const role = roleForKey(roleKeys, req.headers['x-masar-key']);
       if (!role) {
         sendJson(res, 401, {
           error: 'MISSING_OR_INVALID_KEY',
-          hint: 'أرسل ترويسة X-Athar-Key — مفتاح الفاحص من GET /api/session-key، '
+          hint: 'أرسل ترويسة X-Masar-Key — مفتاح الفاحص من GET /api/session-key، '
             + 'ومفاتيح الأدوار الأخرى من طرفية الخادم',
         });
         return;
       }
-      req.atharRole = role;
+      req.masarRole = role;
     }
 
     if (pathname === '/api/score' && req.method === 'POST') {
@@ -948,13 +948,13 @@ if (require.main === module) {
   const resolved = resolveRoleKeys();
   const server = createServer({ roleKeys: resolved.keys });
   server.listen(PORT, BIND_HOST, () => {
-    console.log(`Athar server listening on http://${BIND_HOST}:${PORT}`);
+    console.log(`Masar server listening on http://${BIND_HOST}:${PORT}`);
     /* مفاتيح الأدوار تُطبع هنا ولا تُقدَّم عبر HTTP إلا مفتاح الفاحص.
        الطرفية هي حدّ المشغّل على جهاز واحد. */
     console.log('مفاتيح الأدوار (WP-D3):');
     Object.keys(ROLES).forEach((role) => {
       const source = resolved.generated.indexOf(role) === -1
-        ? `ATHAR_KEY_${role.toUpperCase()}` : 'مولَّد لهذه الجلسة';
+        ? `MASAR_KEY_${role.toUpperCase()}` : 'مولَّد لهذه الجلسة';
       console.log(`  ${ROLES[role].label.padEnd(12)} ${role.padEnd(12)} `
         + `${resolved.keys[role]}  (${source})`);
     });

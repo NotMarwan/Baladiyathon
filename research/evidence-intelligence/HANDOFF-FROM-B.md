@@ -2,7 +2,7 @@
 
 الفرع: `agent/b-evidence` · التاريخ: 26 يوليو 2026
 خط الاختبارات: **72/72 حزمة · 1,198 فحصاً** قبل العمل وبعده
-لم تُلمس: `athar-engine.js` · `athar-sensitivity.js` · `athar-stability.js` ·
+لم تُلمس: `masar-engine.js` · `masar-sensitivity.js` · `masar-stability.js` ·
 `output/` · `tests/` · `docs/audits/`
 
 ---
@@ -14,7 +14,7 @@
 | 1 | **قرار التقاطعات** — لا تُقيَّد سعة ولا تُرفع ثقة، بدليل مقيس على مصدرين | [RCRC-INTERSECTION-DECISION.md](RCRC-INTERSECTION-DECISION.md) · `presentation/data/intersection-context.json` |
 | 2 | **لقطة التقاطعات مثبَّتة في المنتج** — 631 تقاطعاً ببصمة SHA-256، تُفحص بلا شبكة | `presentation/data/rcrc-intersections.json` · `presentation/scripts/pin-rcrc-intersections.js` |
 | 3 | **دراسة الدمام في السجل** — `context-only`، و`localMeasured` باقٍ صفراً | [DAMMAM-CASE-DECISION.md](DAMMAM-CASE-DECISION.md) · `presentation/data/comparable-cases.json` |
-| 4 | **بُعد «ما لا يقيسه أثر»** — ثلاثة أبعاد مكتوبة في السجل | `comparable-cases.json → notMeasuredByAthar` |
+| 4 | **بُعد «ما لا يقيسه أثر»** — ثلاثة أبعاد مكتوبة في السجل | `comparable-cases.json → notMeasuredByMasar` |
 | 5 | **مسح المصادر السعودية** — كتالوج الهيئة الملكية كاملاً (35) وقائمة الأمانة كاملة (28) | [SAUDI-SOURCE-SWEEP-2026-07-26.md](SAUDI-SOURCE-SWEEP-2026-07-26.md) |
 | 6 | **مؤشرات النقل الرسمية للرياض** مثبَّتة ببصمة | `lab/official-data/rcrc-urban-indicators-transport-2018.json` |
 
@@ -79,7 +79,7 @@
 - `sourceAgreement.sweep` غير فارغ.
 
 **٢) تعليق قديم في `consistency-gate-test.js` صار غير صحيح.**
-السطر 88–90 يقول إن `athar-city-routing.js` «لا يحمّل الحركة المحوَّلة —
+السطر 88–90 يقول إن `masar-city-routing.js` «لا يحمّل الحركة المحوَّلة —
 صفر تطابق». والواقع أن `loadRoute` فيه يحمّلها فعلاً (سطر 450)، ويُستدعى من
 `alternativesAround` (سطر ~1199)، ومنه يبني `build-alternate-load.js` حكم
 112/150.
@@ -88,8 +88,8 @@
 كاذب**، والتعليل هو ما يُقرأ بعد شهر. ملكية `tests/` لـC، فلم أعدّله.
 
 **٣) البُعد التاسع في بطاقة القرار — «ما لا يقيسه أثر».**
-البيانات جاهزة في `comparable-cases.json → notMeasuredByAthar` (ثلاثة أبعاد،
-أحدها بدليل سعودي مقيس). والتنفيذ في `athar-decision.js` — خارج ملكيتي.
+البيانات جاهزة في `comparable-cases.json → notMeasuredByMasar` (ثلاثة أبعاد،
+أحدها بدليل سعودي مقيس). والتنفيذ في `masar-decision.js` — خارج ملكيتي.
 والتفصيل في [DAMMAM-CASE-DECISION.md](DAMMAM-CASE-DECISION.md).
 
 **٤) `g/C` إن وصلت يوماً: موضعها المقام، لا الأرضية.**
@@ -130,7 +130,7 @@
 | لم أفحص طبقات `mapservice.alriyadh.gov.sa` | خارج الوقت. وقيمتها في سؤال الفصل المنسوب — بند 2 |
 | لم أرفع أي حالة إلى `local-comparable` | لا حالة سعودية بقياس قبل/أثناء وُجدت. `localMeasured = 0` باقٍ، والبوابة تحرسه |
 | لم أضف أي رقم إلى أي سطح مستخدم | كل ما أنتجته بيانات وأبحاث. الأسطح ملكُ A، والجرد ملكُه |
-| لم أعدّل `athar-city-routing.js` رغم أن الفجوة فيه | ليس في ملكيتي، وتعديل السعة يقلب توزيع الامتناع — قرارٌ بنيوي لا تعديل رقم |
+| لم أعدّل `masar-city-routing.js` رغم أن الفجوة فيه | ليس في ملكيتي، وتعديل السعة يقلب توزيع الامتناع — قرارٌ بنيوي لا تعديل رقم |
 
 ---
 

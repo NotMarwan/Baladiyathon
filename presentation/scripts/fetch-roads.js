@@ -1,6 +1,6 @@
 'use strict';
 /**
- * أثر — شبكة طرق الرياض من OpenStreetMap.
+ * مسار — شبكة طرق الرياض من OpenStreetMap.
  * ---------------------------------------------------------------------------
  * التغطية على حلقتين كي يبقى الملف قابلاً للتحميل داخل الصفحة:
  *   - الحلقة الواسعة: الشرايين فقط (motorway/trunk/primary/secondary + وصلاتها).
@@ -45,7 +45,7 @@ async function query() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'athar-roads-builder',
+        'User-Agent': 'masar-roads-builder',
       },
       body: new URLSearchParams({ data: QUERY }).toString(),
     }).catch((err) => ({ ok: false, status: err.message }));

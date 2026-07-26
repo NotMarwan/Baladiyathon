@@ -38,8 +38,8 @@ function loadGlobal(file, name) {
   return value;
 }
 
-const Routing = require(path.join(ROOT, 'athar-city-routing.js'));
-const Solution = require(path.join(ROOT, 'athar-worksmap-solution.js'));
+const Routing = require(path.join(ROOT, 'masar-city-routing.js'));
+const Solution = require(path.join(ROOT, 'masar-worksmap-solution.js'));
 const graph = loadGlobal('riyadh-route-graph.js', 'RIYADH_ROUTE_GRAPH');
 const portfolio = JSON.parse(fs.readFileSync(path.join(DATA, 'city-portfolio.geojson'), 'utf8'));
 
@@ -550,8 +550,8 @@ ok('المتطابقون يُسقَطون: المرشحون أكثر من الم
 /* ---- الوصل ---- */
 
 ok('صفحة الخريطة تحمّل التوجيه وترسم مسارات', () => {
-  const page = fs.readFileSync(path.join(ROOT, 'athar-map.html'), 'utf8');
-  assert.ok(page.indexOf('athar-city-routing.js') !== -1, 'الوحدة غير محمَّلة');
+  const page = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
+  assert.ok(page.indexOf('masar-city-routing.js') !== -1, 'الوحدة غير محمَّلة');
   assert.ok(page.indexOf('riyadh-route-graph.js') !== -1, 'الرسم غير مؤجَّل التحميل');
   assert.ok(page.indexOf('buildRouteLayers') !== -1, 'لا طبقات مسارات');
   assert.ok(page.indexOf('decorate') !== -1, 'البطاقة لا تتلقى كتلة البديل');

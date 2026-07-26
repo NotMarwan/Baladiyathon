@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مسار — مكتب المراجع</title>
+<!--
+  الوسوم أولاً وفي الصفحة نفسها لا محقونة بسكربت: مع defer يصل السكربت بعد
+  أول رسم، فهيكل الانتظار كان سيُرسم بمتغيّرات غير معرَّفة. طبقة الأساس
+  البصرية لا يجوز أن تتوقف على جافاسكربت.
+-->
+<link rel="stylesheet" href="masar-tokens.css">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="masar-desk.css">
+</head>
+<body>
+
+<header class="desk-bar">
+  <h1>مكتب المراجع — محفظة تصاريح الحفر</h1>
+  <span class="desk-badge">بيانات توضيحية للعرض</span>
+  <span class="desk-bar-spacer"></span>
+  <button type="button" class="desk-ledger" id="deskLedger" role="status"
+          aria-haspopup="dialog" hidden></button>
+  <button type="button" class="desk-keyhint" id="deskKeyhint" aria-haspopup="dialog">
+    اختصارات <kbd>؟</kbd>
+  </button>
+  <button type="button" class="desk-reset" id="deskReset">مسح القرارات المحفوظة</button>
+  <span class="desk-actor" id="deskActor">المراجع: مناوب الفرز</span>
+</header>
+
+<!-- ما يُرى يُسمع: كل نتيجة مفتاح تُعلن هنا لقارئ الشاشة. -->
+<p class="visually-hidden" id="deskLive" role="status" aria-live="polite"></p>
+
+<!-- الاستئناف فوق الشبكة لا داخلها: يُقرأ مرة ثم يُخفى، ولا يزاحم لوحة. -->
+<div class="desk-resume" id="deskResume" role="status" hidden></div>
+
+<div class="desk-shell">
+
+  <aside class="desk-pane desk-pane-inbox" aria-label="صندوق الأعمال">
+    <div id="deskToolbar"></div>
+    <!--
+      هيكل الانتظار مكتوب في الصفحة لا مُصيَّر بجافاسكربت: يظهر مع أول رسم،
+      قبل أن يُفكّ بايت واحد من شبكة الطرق. المراجع يعرف أين ينظر فوراً،
+      وشكل الهيكل هو شكل الصف الحقيقي فلا تقفز اللوحة حين يحل محله.
+      يُستبدل كاملاً عند أول تصيير — لا يُخفى فيُترك في شجرة الوصول.
+    -->
+    <div class="desk-scroll" id="deskList">
+      <p class="visually-hidden" role="status">جارٍ تحميل محفظة التصاريح.</p>
+      <div class="desk-skeleton" aria-hidden="true">
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+        <div class="desk-skeleton-row"></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="desk-map-wrap">
+    <div id="map" role="application" aria-label="خريطة محفظة التصاريح"></div>
+    <!-- الغطاء على الخريطة وحدها: الفرز يبدأ قبل أن ترسم الخريطة أول بلاطة. -->
+    <div class="desk-boot" id="deskBoot">
+      <p class="desk-boot-status" role="status">جارٍ تحميل شبكة طرق الرياض…</p>
+      <p class="desk-boot-note">6,114 شرياناً و150 تصريحاً — محلية بالكامل، بلا اتصال.
+        الطرق الفرعية تلتحق بعد أول إطار.</p>
+    </div>
+  </main>
+
+  <section class="desk-pane desk-pane-file" aria-label="ملف القرار">
+    <!-- التأكيد فوق الملف لا فوق الشاشة: يقع حيث وقع الفعل. -->
+    <div class="desk-confirm" id="deskConfirm" role="status" hidden></div>
+    <div id="deskFile" class="desk-file-empty"></div>
+  </section>
+
+</div>
+
+<div class="desk-help" id="deskHelp" role="dialog" aria-modal="true"
+     aria-labelledby="deskHelpTitle" hidden></div>
+
+<div class="desk-help" id="deskSession" role="dialog" aria-modal="true"
+     aria-labelledby="deskSessionTitle" hidden></div>
+
+<div class="desk-palette" id="deskPalette" role="dialog" aria-modal="true"
+     aria-label="لوحة الأوامر" hidden></div>
+
+<!--
+  كلها defer. الفرق ليس في البايتات بل في متى تُدفع: سكربت متزامن يوقف
+  محلّل HTML عنده، فيُفكّ 3.4 م.ب من الطرق قبل أن يرى المراجع صفاً واحداً.
+  مع defer يكتمل بناء الشجرة ويُرسم الهيكل أولاً، ثم تُنفَّذ الملفات بترتيب
+  ورودها — الترتيب مضمون بالمواصفة، فالتبعيات بينها تبقى سليمة.
+  ولهذا خرج مُقلع المكتب إلى ملفه: سكربت داخل الصفحة لا يقبل التأجيل، وكان
+  سيسبق كل ما يعتمد عليه.
+-->
+<script defer src="masar-nav.js"></script>
+<script defer src="vendor/maplibre-gl.js"></script>
+<script defer src="data/riyadh-roads.geojson.js"></script>
+<script defer src="data/riyadh-base.geojson.js"></script>
+<script defer src="data/city-portfolio.geojson.js"></script>
+<script defer src="data/point-geometry-resolution.js"></script>
+<script defer src="data/wzdx-conformance-summary.js"></script>
+<script defer src="data/alternate-load.js"></script>
+<script defer src="masar-engine.js"></script>
+<script defer src="masar-wzdx-mapping.js"></script>
+<script defer src="masar-wzdx-export.js"></script>
+<script defer src="masar-conflict.js"></script>
+<script defer src="masar-worksmap-style.js"></script>
+<script defer src="masar-worksmap-layers.js"></script>
+<script defer src="masar-worksmap-data.js"></script>
+<script defer src="masar-worksmap.js"></script>
+<script defer src="masar-roads-lazy.js"></script>
+<script defer src="masar-buildings-lazy.js"></script>
+<script defer src="masar-decision-record.js"></script>
+<script defer src="masar-sensitivity.js"></script>
+<script defer src="data/comparable-cases.js"></script>
+<script defer src="masar-comparable-cases.js"></script>
+<script defer src="masar-stability.js"></script>
+<script defer src="masar-desk-analysis.js"></script>
+<script defer src="masar-desk-states.js"></script>
+<script defer src="masar-desk-store.js"></script>
+<script defer src="masar-desk-inbox.js"></script>
+<script defer src="masar-desk-file.js"></script>
+<script defer src="masar-desk-digonce.js"></script>
+<script defer src="masar-desk-plan.js"></script>
+<script defer src="masar-impact-calibration.js"></script>
+<script defer src="masar-desk-measurement.js"></script>
+<script defer src="masar-desk-palette.js"></script>
+<script defer src="masar-desk-recall.js"></script>
+<script defer src="masar-desk-session.js"></script>
+<script defer src="masar-desk-keys.js"></script>
+<script defer src="masar-desk-boot.js"></script>
+
+</body>
+</html>

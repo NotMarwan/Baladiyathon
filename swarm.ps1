@@ -21,7 +21,7 @@ $projects = @(
     Select-Object -ExpandProperty Name | Sort-Object
 )
 
-Write-Host '  [0] athar   (المجلد الجذر — المشروع الحالي)' -ForegroundColor Green
+Write-Host '  [0] masar   (المجلد الجذر — المشروع الحالي)' -ForegroundColor Green
 $i = 1
 foreach ($p in $projects) { Write-Host ("  [{0}] {1}" -f $i, $p); $i++ }
 Write-Host '  [N] + مشروع جديد' -ForegroundColor Yellow
@@ -29,7 +29,7 @@ Write-Host ''
 $choice = Read-Host '  اختيارك'
 
 if ($choice -eq '0') {
-  $root = $Swarm ; $name = 'athar (root)'
+  $root = $Swarm ; $name = 'masar (root)'
 }
 elseif ($choice -match '^[Nn]$') {
   $new  = Read-Host '  اسم المشروع الجديد'

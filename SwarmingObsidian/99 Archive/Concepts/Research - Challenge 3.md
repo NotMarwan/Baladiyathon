@@ -44,9 +44,9 @@ So the leapfrog (Balady + nav apps) covers **spatial/temporal de-confliction and
 
 ---
 
-## STEP 3 — OUR VERSION: "أثر" (Athar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
+## STEP 3 — OUR VERSION: "مسار" (Masar) — Excavation Traffic-Impact & Scheduling Copilot for Balady
 
-*(Athar = "impact/trace" in Arabic.)*
+*(Masar = "impact/trace" in Arabic.)*
 
 ### (1) Proven original + evidence
 - **Engine:** work-zone schedule optimization = microscopic traffic simulation of route-changing behavior + metaheuristic search. Proven: **11.1% total traffic-delay reduction vs. planner baseline** (*Automation in Construction*, 2009); **VISUM-in-the-loop scheduling** (Lukas & Borrmann, ISARC 2011).
@@ -59,7 +59,7 @@ So the leapfrog (Balady + nav apps) covers **spatial/temporal de-confliction and
 - **Road-network source:** OpenStreetMap KSA + Balady's own road layer; **no reliance on unverifiable proprietary traffic indices.**
 
 ### (3) Improvement delta (what we add beyond every precedent)
-1. **Pre-permit impact score, not post-hoc coordination.** Street Manager/LTA coordinate *space and time*; NYC OCMC reviews by *expert rule*. Athar gives each permit request a **quantitative Traffic-Impact Score** (simulated added vehicle-hours / delay on the affected corridor) *before* approval.
+1. **Pre-permit impact score, not post-hoc coordination.** Street Manager/LTA coordinate *space and time*; NYC OCMC reviews by *expert rule*. Masar gives each permit request a **quantitative Traffic-Impact Score** (simulated added vehicle-hours / delay on the affected corridor) *before* approval.
 2. **Automated alternative-schedule + alternative-route recommender.** Ports the ACO/simulation scheduler to say "shift this dig to nights / to week 3 → −X% delay" and "recommended diversion route R" — the challenge's exact ask, which no precedent product ships.
 3. **Conflict/compounding-impact detector across concurrent Balady permits** — flags when two approved digs on parallel corridors compound congestion (the research shows simultaneous nearby work zones cause disproportionate delay). Balady's coordination service checks *entity alignment*, not *traffic superposition*.
 4. **Open-data + nav handoff:** publish approved-and-mitigated works as a Street-Manager-style feed so nav apps route around them — closing the loop the leapfrog leaves open.
@@ -72,10 +72,10 @@ So the leapfrog (Balady + nav apps) covers **spatial/temporal de-confliction and
 - **App:** Arabic RTL web dashboard (map + impact score + recommended schedule + auto-drafted TMP + open-data export). All components are open-source and offline-runnable — no proprietary black boxes, nothing that can't be demoed live.
 
 ### (5) WOW demo moment (grounded in real capability)
-On a real Riyadh corridor, an officer opens a pending Balady dig permit. Athar shows a **red Traffic-Impact Score** and an animated SUMO clip of the resulting jam. The officer clicks **"Optimize."** Athar instantly re-proposes: *"Move to nights + split into 2 phases → simulated peak delay −~11% (method: microscopic-sim + schedule search, per Automation in Construction 2009)"*, redraws the map **green**, overlays the recommended diversion route, and **auto-generates the Arabic Traffic Management Plan PDF** — then publishes the mitigated work to a live open-data feed a phone's map app reads. One screen turns a manual, blind approval into a data-backed, congestion-minimized decision.
+On a real Riyadh corridor, an officer opens a pending Balady dig permit. Masar shows a **red Traffic-Impact Score** and an animated SUMO clip of the resulting jam. The officer clicks **"Optimize."** Masar instantly re-proposes: *"Move to nights + split into 2 phases → simulated peak delay −~11% (method: microscopic-sim + schedule search, per Automation in Construction 2009)"*, redraws the map **green**, overlays the recommended diversion route, and **auto-generates the Arabic Traffic Management Plan PDF** — then publishes the mitigated work to a live open-data feed a phone's map app reads. One screen turns a manual, blind approval into a data-backed, congestion-minimized decision.
 
 ### (6) Mapping to official evaluation criteria (momah.gov.sa/ar/hackathon)
-| Criterion (verified) | How Athar scores |
+| Criterion (verified) | How Masar scores |
 |---|---|
 | Problem-solving effectiveness | Directly answers "تحليل وقياس التأثير على الحركة المرورية + مسارات بديلة + التنبؤ بالازدحام." |
 | Innovation | First pre-permit simulation-scored traffic-impact + auto-scheduler on Balady; not offered by Street Manager/LTA/OCMC. |
@@ -89,7 +89,7 @@ On a real Riyadh corridor, an officer opens a pending Balady dig permit. Athar s
 - **SUMO runtime** on large networks. Mitigation: analytical BPR surrogate for instant scoring at scale; full micro-sim only on the demoed corridor.
 - **The 11.1% is from a specific 2009 study, not a guaranteed KSA outcome.** We cite it as *proof the approach yields double-digit delay reductions*, not a promised number — no fabricated stats.
 - **Integration with live Balady APIs** is out of hackathon scope. Mitigation: import a representative permit dataset matching Balady's schema; design clean adapters.
-- **Don't rebuild Balady's coordination service** — position Athar as the *analysis/prediction layer on top of it*, respecting the confirmed leapfrog.
+- **Don't rebuild Balady's coordination service** — position Masar as the *analysis/prediction layer on top of it*, respecting the confirmed leapfrog.
 
 ---
 

@@ -77,14 +77,14 @@ const DECISION = {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
       const wrong = await fetch(`${base}/api/works/s002/decisions`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Athar-Key': 'gate-key-d2' },
+        headers: { 'Content-Type': 'application/json', 'X-Masar-Key': 'gate-key-d2' },
         body: JSON.stringify(DECISION),
       });
       assert.strictEqual(wrong.status, 401, 'مفتاح خاطئ بالطول نفسه مرّ');
 
       const right = await fetch(`${base}/api/works/s002/decisions`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Athar-Key': KEY },
+        headers: { 'Content-Type': 'application/json', 'X-Masar-Key': KEY },
         body: JSON.stringify(DECISION),
       });
       assert.strictEqual(right.status, 200, 'المفتاح الصحيح لم يمرّ');
@@ -120,7 +120,7 @@ const REQUIRED_HEADERS = {
 
   await test('كل استجابة تحمل الترويسات الأمنية — صفحةً وواجهةً وخطأً', async () => {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
-      const targets = ['/athar-home.html', '/api/decisions', '/لا-يوجد'];
+      const targets = ['/masar-home.html', '/api/decisions', '/لا-يوجد'];
       for (const target of targets) {
         const response = await fetch(base + target);
         Object.keys(REQUIRED_HEADERS).forEach((header) => {
@@ -136,7 +136,7 @@ const REQUIRED_HEADERS = {
 
   await test('لا ادعاء نقلٍ مشفَّر على خادم http', async () => {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
-      const response = await fetch(`${base}/athar-home.html`);
+      const response = await fetch(`${base}/masar-home.html`);
       assert.strictEqual(response.headers.get('strict-transport-security'), null,
         'HSTS على http — ادعاء تشفير لا وجود له');
     });
@@ -144,7 +144,7 @@ const REQUIRED_HEADERS = {
 
   await test('CSP على الصفحات: لا unsafe-inline ولا مضيف خارجي', async () => {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
-      const response = await fetch(`${base}/athar-home.html`);
+      const response = await fetch(`${base}/masar-home.html`);
       const csp = response.headers.get('content-security-policy') || '';
       assert.ok(csp, 'الصفحة بلا سياسة أمن محتوى');
 
@@ -209,7 +209,7 @@ const REQUIRED_HEADERS = {
   await test('حقن الـnonce يشمل الوسوم ذات src ولا يلتقط وسماً مشابهاً', () => {
     /* WP-G2 — انقلب هذا الفحص عن قصد.
        كان يشترط ألّا يتلقّى وسمُ `src` الـ`nonce` «بلا داعٍ». والداعي ظهر:
-       `athar-nav.js` ينشئ `<style>` وقت التشغيل، فتحجبه `style-src-elem`
+       `masar-nav.js` ينشئ `<style>` وقت التشغيل، فتحجبه `style-src-elem`
        ما لم يحمل الـ`nonce` — ولا يقرؤه السكربت إلا من وسمه هو. */
     const out = Server.injectNonce(
       '<script src="a.js"></script><script>x</script><style>b</style>'
@@ -225,9 +225,9 @@ const REQUIRED_HEADERS = {
     /* الحارس الدائم ضد العودة: بلا هذا السطر يبقى الشريط بلا أنماط في كل
        صفحة، ولا يظهر ذلك في اختبار وحدة ولا في لقطة شاشة عابرة. */
     const fs = require('node:fs');
-    const nav = fs.readFileSync(path.join(ROOT, 'athar-nav.js'), 'utf8');
+    const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
     assert.ok(/document\.currentScript[\s\S]{0,40}nonce/.test(nav),
-      'athar-nav.js لا يقرأ nonce وسمه');
+      'masar-nav.js لا يقرأ nonce وسمه');
     assert.ok(/style\.setAttribute\('nonce'/.test(nav),
       'النمط المحقون بلا nonce — سيُحجب بصمت');
   });
@@ -246,7 +246,7 @@ const REQUIRED_HEADERS = {
 
       /* الحدّ على الواجهة لا على الصفحات: محكّم يفتح ثماني صفحات في ثوانٍ
          يجب ألّا يُحجب. */
-      const page = await fetch(`${base}/athar-home.html`);
+      const page = await fetch(`${base}/masar-home.html`);
       assert.strictEqual(page.status, 200, 'حدّ المعدّل حجب صفحة ساكنة');
     });
   });
@@ -272,7 +272,7 @@ const REQUIRED_HEADERS = {
         assert.ok(Server.isPrivatePath('/' + relative),
           `${relative} يُقدَّم — سطح بلا سبب`);
       });
-    ['athar-home.html', 'athar-engine.js', 'data/city-portfolio.geojson.js',
+    ['masar-home.html', 'masar-engine.js', 'data/city-portfolio.geojson.js',
       'vendor/anything.js'].forEach((relative) => {
       assert.ok(!Server.isPrivatePath('/' + relative),
         `${relative} حُجب وهو أصل صفحة`);
@@ -286,7 +286,7 @@ const REQUIRED_HEADERS = {
         const response = await fetch(base + target);
         assert.strictEqual(response.status, 403, `${target} عاد ${response.status}`);
       }
-      assert.strictEqual((await fetch(`${base}/athar-engine.js`)).status, 200,
+      assert.strictEqual((await fetch(`${base}/masar-engine.js`)).status, 200,
         'المحرك محجوب — الحجب أوسع من هدفه');
     });
   });
@@ -294,7 +294,7 @@ const REQUIRED_HEADERS = {
   await test('تركيب مادة التسليم يحرس جذره وحده', async () => {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
       const deck = await fetch(
-        `${base}${Server.SUBMISSION_MOUNT}/athar-baladiyathon-judging-deck.html`);
+        `${base}${Server.SUBMISSION_MOUNT}/masar-baladiyathon-judging-deck.html`);
       assert.strictEqual(deck.status, 200, 'العرض لا يُقدَّم');
 
       /* الحارس مُعامَل لا موسَّع: الخروج من جذر التسليم مرفوض حتى لو وقع
@@ -345,7 +345,7 @@ const REQUIRED_HEADERS = {
   const write = (base, work, body, key) => fetch(
     `${base}/api/works/${work}/decisions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Athar-Key': key },
+      headers: { 'Content-Type': 'application/json', 'X-Masar-Key': key },
       body: JSON.stringify(body),
     });
 
@@ -453,7 +453,7 @@ const REQUIRED_HEADERS = {
 
   await test('مفتاح كل دور مستقل ومولَّد', () => {
     ['SCREENER', 'APPROVER', 'COORDINATOR', 'PUBLISHER']
-      .forEach((role) => { delete process.env[`ATHAR_KEY_${role}`]; });
+      .forEach((role) => { delete process.env[`MASAR_KEY_${role}`]; });
     const first = Server.resolveRoleKeys();
     const second = Server.resolveRoleKeys();
     const values = Object.values(first.keys);
@@ -513,7 +513,7 @@ const REQUIRED_HEADERS = {
   });
 
   await test('المحرك يرفض المدة المفرطة كذلك — لا حماية بطبقة واحدة', () => {
-    const Engine = require(path.join(ROOT, 'athar-engine.js'));
+    const Engine = require(path.join(ROOT, 'masar-engine.js'));
     assert.throws(() => Engine.score({
       aadt: 85000, lanes: 4, lanesClosed: 1, freeFlowMin: 6,
       startHour: 8, durationHours: 1e9,

@@ -31,8 +31,8 @@ function test(name, fn) {
 }
 
 const report = JSON.parse(fs.readFileSync(REPORT_PATH, 'utf8'));
-const Portfolio = require(path.join(ROOT, 'athar-portfolio.js'));
-const Canonical = require(path.join(ROOT, 'athar-canonical.js'));
+const Portfolio = require(path.join(ROOT, 'masar-portfolio.js'));
+const Canonical = require(path.join(ROOT, 'masar-canonical.js'));
 
 test('التفكيك يصف الدلتا المعروضة نفسها — لا رقماً قريباً منها', () => {
   /* أهمّ فحص في الحزمة. تفكيكٌ لرقمٍ غير المعروض يبرّئ المعروض بالباطل:
@@ -122,9 +122,9 @@ test('بوابة تُسقط ادعاء الوفر عارياً من قيوده',
 test('غياب التفكيك يُسقط المؤشرات صراحةً لا صامتاً', () => {
   /* لو عاد الملف المولَّد غائباً لكان الأسوأ أن تُعرض الدلتا عاريةً من قيودها
      بينما البوابة صامتة — وهو بالضبط الوضع الذي وُجدت القيود لمنعه. */
-  const source = fs.readFileSync(path.join(ROOT, 'athar-canonical.js'), 'utf8');
+  const source = fs.readFileSync(path.join(ROOT, 'masar-canonical.js'), 'utf8');
   assert.ok(/throw new Error\('تفكيك الدلتا غير محمَّل/.test(source),
-    'athar-canonical.js لا يسقط عند غياب التفكيك');
+    'masar-canonical.js لا يسقط عند غياب التفكيك');
 });
 
 console.log(`ALL TESTS PASSED (${count})`);

@@ -2,11 +2,11 @@
 const assert = require('assert');
 const path = require('path');
 
-const Plan = require(path.join(__dirname, '..', 'athar-desk-plan.js'));
-const Engine = require(path.join(__dirname, '..', 'athar-engine.js'));
+const Plan = require(path.join(__dirname, '..', 'masar-desk-plan.js'));
+const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
 /* الاتجاه الداخلي عربي والمعياري إنجليزي — التحويل عبر الجدول لا في موضع
    الاستعمال. تمريره خاماً هو ما أفشل تصدير المحفظة كاملة. */
-const Mapping = require(path.join(__dirname, '..', 'athar-wzdx-mapping.js'));
+const Mapping = require(path.join(__dirname, '..', 'masar-wzdx-mapping.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -109,7 +109,7 @@ ok('الوثيقة عربية RTL ومكتملة البنية', () => {
 });
 
 ok('الإسناد وختم التوليد في ذيل الوثيقة', () => {
-  assert.ok(doc.indexOf('محرك أثر') !== -1, 'مصدر الأثر غير مذكور');
+  assert.ok(doc.indexOf('محرك مسار') !== -1, 'مصدر الأثر غير مذكور');
   assert.ok(doc.indexOf('OpenStreetMap') !== -1, 'مصدر الهندسة غير مذكور');
   assert.ok(doc.indexOf('بيانات توضيحية للعرض') !== -1, 'شارة الصدق ساقطة');
   assert.ok(doc.indexOf('2026') !== -1, 'بلا ختم زمني');
@@ -142,7 +142,7 @@ ok('كل قيمة تمر بترميز HTML', () => {
 });
 
 ok('اسم الملف مشتقّ من المرجع وآمن على نظام الملفات', () => {
-  assert.strictEqual(Plan.fileName(plan, 'html'), 'athar-BLD-2026-0084.html');
+  assert.strictEqual(Plan.fileName(plan, 'html'), 'masar-BLD-2026-0084.html');
   const evil = Plan.build(work({ permitRef: '../../etc/passwd' }), analysis(), STAMP);
   assert.ok(Plan.fileName(evil, 'geojson').indexOf('/') === -1, 'مسار في اسم ملف');
   assert.ok(Plan.fileName(evil, 'geojson').indexOf('..') === -1);
@@ -169,7 +169,7 @@ ok('WZDx يُبنى من نوافذ البديل الفائز لا من المط
   assert.strictEqual(collection.features.length, plan.windows.length);
   const core = collection.features[0].properties.core_details;
   assert.strictEqual(core.event_type, 'work-zone');
-  assert.strictEqual(core.data_source_id, 'athar-prototype',
+  assert.strictEqual(core.data_source_id, 'masar-prototype',
     'الافتراض تغيّر — صفحات أخرى تعتمد عليه');
   assert.deepStrictEqual(core.road_names, ['طريق الملك فهد']);
   assert.strictEqual(collection.features[0].properties.vehicle_impact, 'some-lanes-closed');
@@ -177,13 +177,13 @@ ok('WZDx يُبنى من نوافذ البديل الفائز لا من المط
 
 ok('المُصدِّر يسمّي نفسه — ملف تبادل لا يُنسب إلى سطح لم يُنتجه', () => {
   const named = Engine.wzdx({
-    dataSourceId: 'athar-reviewer-desk', id: 'x', roadName: 'ط',
+    dataSourceId: 'masar-reviewer-desk', id: 'x', roadName: 'ط',
     direction: Mapping.mapDirection('شمال').value,
     lanes: 3, lanesClosed: 1, startISO: '2026-07-19T06:00:00Z', durationHours: 6,
     coordinates: [[46.6, 24.7], [46.7, 24.8]],
   });
   assert.strictEqual(named.features[0].properties.core_details.data_source_id,
-    'athar-reviewer-desk');
+    'masar-reviewer-desk');
 });
 
 ok('إغلاق كل المسارات يُعلن كذلك في WZDx', () => {

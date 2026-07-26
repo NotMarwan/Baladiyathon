@@ -22,19 +22,19 @@ let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
 
 const ROOT = path.join(__dirname, '..');
-const BENCH = path.join(ROOT, '..', 'research', '2026-07-23', 'athar-competitor-benchmarks');
-const INVENTORY = path.join(BENCH, 'athar-feature-inventory.md');
+const BENCH = path.join(ROOT, '..', 'research', '2026-07-23', 'masar-competitor-benchmarks');
+const INVENTORY = path.join(BENCH, 'masar-feature-inventory.md');
 
 const inventory = fs.readFileSync(INVENTORY, 'utf8');
-const deskSurface = ['athar-desk.html', 'athar-desk-boot.js']
+const deskSurface = ['masar-desk.html', 'masar-desk-boot.js']
   .map((file) => fs.readFileSync(path.join(ROOT, file), 'utf8')).join('\n');
 
 /** كل ميزة تدّعي الرحلة الرئيسية، والوصل الذي يُثبت الادّعاء. */
 const MAIN_JOURNEY = {
-  'الميزة ٢٥': ['AtharDeskDigOnce', 'conflict'],
-  'الميزة ٢٦': ['AtharDeskDigOnce.render', 'mergeFor'],
-  'الميزة ٣٢': ['AtharDeskMeasurement.render', 'importObservation'],
-  'الميزة ٣٣': ['AtharImpactCalibration.createCalibration', 'calibration.status'],
+  'الميزة ٢٥': ['MasarDeskDigOnce', 'conflict'],
+  'الميزة ٢٦': ['MasarDeskDigOnce.render', 'mergeFor'],
+  'الميزة ٣٢': ['MasarDeskMeasurement.render', 'importObservation'],
+  'الميزة ٣٣': ['MasarImpactCalibration.createCalibration', 'calibration.status'],
 };
 
 function blockOf(feature) {
@@ -74,9 +74,9 @@ ok('ما يبقى مخططاً له لا يُوصف بأنه يعمل', () => {
 });
 
 ok('وحدات المكتب المدّعاة موجودة كملفات ومحمَّلة في الصفحة', () => {
-  const html = fs.readFileSync(path.join(ROOT, 'athar-desk.html'), 'utf8');
-  ['athar-desk-digonce.js', 'athar-desk-measurement.js', 'athar-impact-calibration.js',
-    'athar-desk-plan.js', 'athar-desk-recall.js', 'athar-desk-session.js']
+  const html = fs.readFileSync(path.join(ROOT, 'masar-desk.html'), 'utf8');
+  ['masar-desk-digonce.js', 'masar-desk-measurement.js', 'masar-impact-calibration.js',
+    'masar-desk-plan.js', 'masar-desk-recall.js', 'masar-desk-session.js']
     .forEach((file) => {
       assert.ok(fs.existsSync(path.join(ROOT, file)), `ملف مفقود: ${file}`);
       assert.ok(html.indexOf(file) !== -1, `${file} غير محمَّل على المكتب`);

@@ -60,7 +60,7 @@ function buildRequest(route, options) {
 }
 
 /**
- * يحوّل استجابة flow إلى قياسات بعقد `athar-route-evidence`.
+ * يحوّل استجابة flow إلى قياسات بعقد `masar-route-evidence`.
  *
  * @param {object} payload استجابة المزوّد.
  * @param {object} context `{ routeId, observedAt, importedAt, dataMode, license }`

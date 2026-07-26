@@ -28,7 +28,7 @@ const ROOT = path.join(__dirname, '..');
 const REPO = path.join(ROOT, '..');
 global.window = global;
 
-const Evidence = require(path.join(ROOT, 'athar-route-evidence.js'));
+const Evidence = require(path.join(ROOT, 'masar-route-evidence.js'));
 
 const FEED_DIR = path.join(ROOT, 'data', 'reference-feeds');
 const MANIFEST = path.join(FEED_DIR, 'MANIFEST.json');
@@ -141,9 +141,9 @@ test('لغة القياس ممنوعة على درجة التبادلية', () =
 
 test('البطاقة في صفحة المصادر تُملأ من الملخّص لا من رقم مكتوب', () => {
   /* رقمٌ مكتوب في صفحة يتقادم مع أول تغذية تُضاف ولا ينبّه أحد. الفحص هنا
-     على السبب: البطاقة تقرأ `ATHAR_WZDX_INTEROP`، ولا تحمل الرقم نصّاً. */
-  const page = fs.readFileSync(path.join(ROOT, 'athar-sources.html'), 'utf8');
-  assert.match(page, /ATHAR_WZDX_INTEROP/,
+     على السبب: البطاقة تقرأ `MASAR_WZDX_INTEROP`، ولا تحمل الرقم نصّاً. */
+  const page = fs.readFileSync(path.join(ROOT, 'masar-sources.html'), 'utf8');
+  assert.match(page, /MASAR_WZDX_INTEROP/,
     'بطاقة التبادلية لا تقرأ الملخّص المولَّد');
   assert.match(page, /data\/wzdx-interop-summary\.js/,
     'صفحة المصادر لا تُحمّل ملخّص التبادلية');

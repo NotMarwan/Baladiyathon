@@ -235,7 +235,7 @@ https://shc.rga.gov.sa/content/dam/roadcodes/assets/road-code-library/305%20EN.p
 الملف:
 
 ```text
-presentation/athar-shadow-evaluation.js
+presentation/masar-shadow-evaluation.js
 ```
 
 تصدّر الوحدة وظيفتين:
@@ -364,7 +364,7 @@ violations = ["insufficient-measured-cases", "benefit-threshold"]
 العنوان المختبر:
 
 ```text
-http://127.0.0.1:8746/presentation/athar-pitch.html
+http://127.0.0.1:8746/presentation/masar-pitch.html
 ```
 
 النتيجة النهائية:

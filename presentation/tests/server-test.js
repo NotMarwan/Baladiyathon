@@ -26,7 +26,7 @@ const { listenOnFreePort } = require('./helpers/free-port.js');
 /* WP-D1: مفتاح ثابت للاختبار، ودلو رموز واسع كي لا يخلط حدُّ المعدّل نتائج
    حزمةٍ تُطلق عشرات الطلبات في ثوانٍ. الحدّ نفسه مفحوص في حزمة الأمن بدلوٍ
    ضيّق خاص بها — فحصه هنا يجعل كل اختبار آخر رهينةً لتوقيته. */
-const TEST_KEY = 'test-key-athar-d1';
+const TEST_KEY = 'test-key-masar-d1';
 /* WP-D3: الدور صار مشتقاً من المفتاح، فحزمة الخادم تستعمل مفتاح المعتمِد —
    أفعالها اعتماد وإرجاع. الفصل نفسه مفحوص في حزمة الأمن لا هنا. */
 const TEST_KEYS = { screener: 'test-key-screener', approver: TEST_KEY,
@@ -63,7 +63,7 @@ async function withServer(run) {
 async function postRaw(baseUrl, route, raw, key) {
   const response = await fetch(baseUrl + route, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Athar-Key': key || TEST_KEY },
+    headers: { 'Content-Type': 'application/json', 'X-Masar-Key': key || TEST_KEY },
     body: raw,
   });
   const text = await response.text();
