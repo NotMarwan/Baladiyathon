@@ -30,12 +30,22 @@
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('./athar-engine.js'));
+    module.exports = factory(require('./athar-engine.js'),
+      require('./athar-comparable-cases.js'));
   } else {
-    root.AtharSensitivity = factory(root.AtharEngine);
+    root.AtharSensitivity = factory(root.AtharEngine, root.AtharComparableCases);
   }
-})(typeof self !== 'undefined' ? self : this, function (Engine) {
+})(typeof self !== 'undefined' ? self : this, function (Engine, Cases) {
   'use strict';
+
+  /**
+   * النطاق المشتقّ من سجل الحالات المقارنة.
+   *
+   * يُقرأ ولا يُكتب هنا. الرقم الذي يُنسخ من دراسة إلى شيفرة ينفصل عن سنده
+   * في أول تعديل، فيبقى في الجدول بلا مصدر يُراجَع.
+   */
+  var frictionPrior = (Cases && Cases.priorFor
+    && Cases.priorFor('capacityPerLaneInWorkZone')) || null;
 
   /**
    * يعيد تشكيل ملف الطلب الساعي بأسٍّ واحد ثم يُطبّع.
@@ -147,12 +157,35 @@
       kind: 'محسوب',
       unit: 'مضاعِف',
       baseOf: function () { return Engine.CALIBRATION.WORK_ZONE_FRICTION; },
-      range: function () { return { low: 1.0, high: 1.25 }; },
+      /* WP-C1 — النطاق كان [1.00 – 1.25] وسنده وصفٌ لا دراسة، ثم دخل سجل
+         الحالات المقارنة فأزاحه:
+           · تصريف الرتل المقيس في ميزوري 1072 مركبة/ساعة/حارة.
+           · سعة الأساس الموصى بها في TTI 1108-5: 1600.
+           · سعة المحرك خارج منطقة العمل: 1800.
+         فالنسبة تقع بين 1072/1800 = 0.60 و1600/1800 = 0.89، أي أن المضاعِف
+         بين 1.12 و1.68.
+
+         والحدّ الأدنى القديم (1.0 = لا احتكاك) **لا تسنده حالة واحدة**،
+         والأعلى (1.25) كان دون منتصف المدى المشاهَد. أي أن النموذج كان يحسب
+         على تفاؤل لا دليل عليه.
+
+         وتوسيع النطاق يزيد هشاشة التوصية ولا ينقصها. هذه هي النتيجة الصادقة:
+         الدليل لم يأتِ ليطمئن. تضييقه ليبدو القرار مستقراً هو تلميع لا معايرة. */
+      range: function () {
+        if (!frictionPrior) return { low: 1.0, high: 1.25 };
+        var base = Engine.DEFAULTS.capacityPerLane;
+        return {
+          low: Math.round((base / frictionPrior.priorHigh) * 100) / 100,
+          high: Math.round((base / frictionPrior.priorLow) * 100) / 100,
+        };
+      },
       apply: function (input, value) {
         return withCalibration(input, { workZoneFriction: value });
       },
-      why: 'الحد الأدنى (1.0) يعني «لا احتكاك» وهو ما كان عليه النموذج قبل '
-        + 'تصحيحه؛ والأعلى تضييقٌ حادّ بتحويلة مسار.',
+      why: frictionPrior
+        ? frictionPrior.consequenceForAthar + ' ' + frictionPrior.doesNotProve
+        : 'بلا سجل حالات — النطاق الاحتياطي وصفيّ لا مسنود.',
+      source: 'data/comparable-cases.json → derivedPriors.capacityPerLaneInWorkZone',
     },
     {
       key: 'minCapacityFraction',
