@@ -229,7 +229,7 @@
     },
     {
       "key": "comparableCases",
-      "value": 7,
+      "value": 8,
       "unit": "حالة",
       "source": "data/comparable-cases.json",
       "grade": "global-analog",
