@@ -104,6 +104,26 @@
   };
 
   /**
+   * تمييز العدد بالعربية.
+   *
+   * «4 افتراضاً» خطأ نحوي يقرؤه المراجع في أول سطر من بطاقته، ويقرأ معه أن
+   * أحداً لم يقرأ ما كتبه. الواحد والاثنان لهما صيغتاهما، ومن ثلاثة إلى عشرة
+   * جمعٌ، وما فوقها مفردٌ منصوب.
+   *
+   * @param {number} value العدد.
+   * @param {string} [adjective] نعتٌ يتبع المعدود، مثل «مستقلّ».
+   */
+  function countPhrase(value, adjective) {
+    var suffixOne = adjective ? ' ' + adjective : '';
+    var suffixTwo = adjective ? ' ' + adjective + 'ان' : '';
+    var suffixMany = adjective ? ' ' + adjective + 'ة' : '';
+    if (value === 1) return 'افتراض واحد' + suffixOne;
+    if (value === 2) return 'افتراضان' + suffixTwo;
+    if (value >= 3 && value <= 10) return value + ' افتراضات' + suffixMany;
+    return value + ' افتراضاً' + (adjective ? ' ' + adjective + 'اً' : '');
+  }
+
+  /**
    * يصنّف استقرار توصية تصريح واحد.
    *
    * @param {object} input مُدخل بصيغة `Engine.score`.
@@ -131,12 +151,13 @@
       /* ثلاثة افتراضات مستقلة يقلب كلٌّ منها التوصية وحده تعني أن الفائز
          يتبدّل مع أيٍّ منها. هذا ليس ترتيباً هشّاً — هو غياب ترتيب. */
       state = STATES.insufficient;
-      reason = flipping.length + ' افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — '
-        + 'لا ترتيب ينجو: '
+      reason = countPhrase(flipping.length, 'مستقلّ')
+        + ' يقلب كلٌّ منها التوصية وحده — لا ترتيب ينجو: '
         + flipping.map(function (row) { return row.label; }).join('، ');
     } else if (flipping.length >= THRESHOLDS.fragileFlips) {
       state = STATES.fragile;
-      reason = flipping.length + ' افتراضاً يقلب التوصية داخل نطاقه المعقول: '
+      reason = countPhrase(flipping.length)
+        + ' يقلب التوصية داخل نطاقه المعقول: '
         + flipping.map(function (row) { return row.label; }).join('، ');
     } else if (widest && widest.swingPct >= THRESHOLDS.conditionalSwingPct) {
       /* الترتيب صمد والحجم لم يصمد. وهذه أصدق حالة في المنتج كله:
