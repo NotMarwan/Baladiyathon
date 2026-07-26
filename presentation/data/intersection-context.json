@@ -1,0 +1,3408 @@
+{
+  "generatedFrom": "presentation/scripts/build-intersection-context.js",
+  "role": "مؤشر سياق",
+  "ladderGrade": null,
+  "ladderGradeWhyNull": "سُلَّم الدليل يصنّف ما يُعاير معاملاً أو يضيّق نطاقاً. هذا المؤشر لا يفعل أيّاً منهما — يقول أين نموذج السعة خارج نطاقه.",
+  "isEvidenceForParameter": false,
+  "calibratesAnyParameter": false,
+  "sources": [
+    {
+      "what": "مواقع التقاطعات",
+      "publisher": "الهيئة الملكية لمدينة الرياض",
+      "recordCount": 631,
+      "sha256": "9f625c52cde73f87460d686fdd8c30d92124e6e0cf234bde5821f408a9e451f3",
+      "accessedOn": "2026-07-26",
+      "absent": [
+        "نوع التحكّم (إشارة/دوران/أفضلية)",
+        "طول الدورة",
+        "نسبة الأخضر إلى الدورة",
+        "الفصل المنسوب (جسر أو نفق)",
+        "عدد المداخل",
+        "حجم مروري",
+        "سرعة",
+        "زمن رحلة",
+        "توقيت منطقة عمل"
+      ]
+    },
+    {
+      "what": "عقد التحكّم المروري",
+      "publisher": "OpenStreetMap (ODbL)",
+      "signalNodes": 544,
+      "absent": [
+        "طول الدورة",
+        "نسبة الأخضر إلى الدورة",
+        "التنسيق بين الإشارات",
+        "الفصل المنسوب"
+      ]
+    }
+  ],
+  "method": {
+    "onRouteM": 50,
+    "nearRouteM": 100,
+    "signalOnRouteM": 30,
+    "corroborationM": 75,
+    "corroborationSweepM": [
+      50,
+      75,
+      100
+    ],
+    "distance": "أقرب مسافة إسقاطية من نقطة إلى خطّ المسار، بالمتر",
+    "note": "نقطةٌ قريبة من مسار نمذجيّ تسند تخطيط القياس. ولا تتحقّق من اتجاه ولا طوبولوجيا ولا سرعة ولا حجم ولا أثر."
+  },
+  "capacityModelInProduct": {
+    "where": "athar-city-routing.js — edgeLoad",
+    "formula": "السعة = عدد الحارات × سعة صنف الطريق (1900 مركبة/ساعة/حارة للشريان الرئيسي)",
+    "missingTerm": "نسبة الأخضر إلى الدورة (g/C)",
+    "consequence": "حيث يقيّد تقاطعٌ محكوم بإشارة المقطعَ الحاكم، تكون السعة المستعملة أعلى من الفعلية، فتكون نسبة الحجم إلى السعة أقلّ من الفعلية، ويكون حكم «لا يتحمّل» حدّاً أدنى.",
+    "conditional": "وهذا شرطيّ لا مثبت: المصدر لا يذكر نوع التحكّم ولا الفصل المنسوب. تقاطعٌ مفصول بجسر لا يقيّد المقطع، وطريق الملك فهد فيه فصل منسوب. فلا يُقلب أي حكم بناءً على هذا المؤشر.",
+    "whatWouldCloseIt": [
+      "نوع التحكّم لكل تقاطع",
+      "طول الدورة",
+      "نسبة الأخضر إلى الدورة لكل مدخل",
+      "الفصل المنسوب (جسر/نفق)"
+    ]
+  },
+  "scope": {
+    "permitsInPortfolio": 150,
+    "permitsMeasured": 134,
+    "permitsPointGeometry": 16,
+    "monitoredGroups": 6,
+    "monitoredRoutes": 21,
+    "limit": "البدائل تُقاس على المسارات المرصودة وحدها — 9 بديلاً على 6 مجموعة. باقي المحفظة يُقاس مقطعُ عمله لا بدائله، لأن هندسة البدائل غير مخزَّنة."
+  },
+  "sourceAgreement": {
+    "listedIntersectionsTotal": 631,
+    "listedIntersectionsInsideOsmBox": 617,
+    "osmSignalNodes": 544,
+    "sweep": [
+      {
+        "thresholdM": 50,
+        "listedIntersectionsWithOsmSignal": 122,
+        "listedIntersectionsWithOsmSignalPct": 20,
+        "osmSignalsAtListedIntersection": 414,
+        "osmSignalsAtListedIntersectionPct": 76
+      },
+      {
+        "thresholdM": 75,
+        "listedIntersectionsWithOsmSignal": 128,
+        "listedIntersectionsWithOsmSignalPct": 21,
+        "osmSignalsAtListedIntersection": 438,
+        "osmSignalsAtListedIntersectionPct": 81
+      },
+      {
+        "thresholdM": 100,
+        "listedIntersectionsWithOsmSignal": 128,
+        "listedIntersectionsWithOsmSignalPct": 21,
+        "osmSignalsAtListedIntersection": 439,
+        "osmSignalsAtListedIntersectionPct": 81
+      },
+      {
+        "thresholdM": 150,
+        "listedIntersectionsWithOsmSignal": 132,
+        "listedIntersectionsWithOsmSignalPct": 21,
+        "osmSignalsAtListedIntersection": 442,
+        "osmSignalsAtListedIntersectionPct": 81
+      },
+      {
+        "thresholdM": 250,
+        "listedIntersectionsWithOsmSignal": 142,
+        "listedIntersectionsWithOsmSignalPct": 23,
+        "osmSignalsAtListedIntersection": 457,
+        "osmSignalsAtListedIntersectionPct": 84
+      }
+    ],
+    "finding": "التطابق غير متماثل: أغلب عقد إشارات OpenStreetMap تقع على تقاطع مسرود عند الهيئة الملكية، وخُمس تقاطعات الهيئة الملكية وحده يحمل عقدة إشارة. والنسبتان تستويان بعد 75 متراً، فالنتيجة ليست أثر عتبة.",
+    "interpretation": "أحد أمرين، ولا يفصل بينهما أي من المصدرين: إمّا أن طبقة OpenStreetMap ناقصة التغطية للإشارات في الرياض، وإمّا أن أربعة أخماس التقاطعات المسرودة غير محكومة بإشارة فعلاً (فصل منسوب أو أفضلية). وما دام الأمران ممكنين، **فغياب عقدة إشارة ليس دليل غياب إشارة**.",
+    "consequence": "لا يُشتقّ من هذين المصدرين مؤشر «كثافة إشارات على الممر» قابل للاعتماد، ولا يُقيَّد به سعة، ولا يُرفع به مستوى ثقة. المستخرج الوحيد الصالح: قائمة تقاطعات مؤكَّدة من مصدرين (وهي أرضية لا حصر)، وطلب بيانات محدَّد."
+  },
+  "verdict": {
+    "question": "هل تُقيَّد السعة الفعلية أو تُرفع درجة الثقة بكثافة التقاطعات؟",
+    "answer": "لا.",
+    "why": "المصدر الرسمي يحمل مواقع لا نوع تحكّم ولا توقيت إشارة، والمصدر المجتمعي يخالفه في أربعة أخماس التقاطعات باتجاه غير معلوم السبب. ونسبة الأخضر إلى الدورة — وهي الكمية الوحيدة التي تقيّد سعة شريان بإشارات — غير موجودة في أيٍّ منهما.",
+    "whatIsUsableToday": [
+      "تصميم مواقع القياس الميداني على تقاطع معلوم إحداثيّه",
+      "تحقّق هندسي من أن المقطع المنمذَج يقع على الشارع المقصود",
+      "قائمة تقاطعات مؤكَّدة من مصدرين — أرضية لا حصر"
+    ],
+    "whatIsNotUsable": [
+      "تقييد سعة",
+      "رفع درجة ثقة",
+      "كثافة إشارات على ممر",
+      "قراءة غياب عقدة إشارة نفياً للإشارة"
+    ]
+  },
+  "summary": {
+    "permitsWithListedIntersectionOnWorkSegment": 54,
+    "permitsWithOsmSignalOnWorkSegment": 18,
+    "permitsWithConfirmedSignalControl": 17,
+    "alternatesMeasured": 9,
+    "alternatesWithOsmSignal": 0,
+    "alternatesWithConfirmedSignalControl": 0,
+    "farthestNearestSignalOnAlternateM": 1767
+  },
+  "doesNotProve": "أي رقم مروري. المصدران يقولان «هنا تقاطع» و«هنا إشارة»، ولا يقول أيّ منهما حجماً ولا سرعة ولا تأخيراً ولا سعة. ولا يجوز أن يُشتقّ من عددٍ هنا معاملٌ في المحرك.",
+  "monitored": [
+    {
+      "groupId": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 3.05,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0020-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 7128,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1682,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0020-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 563,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1944,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0020-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 7950,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1368,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 1.45,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0063-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 1858,
+          "listedIntersectionsOnRoute": 2,
+          "listedIntersectionsNearRoute": 2,
+          "listedIntersectionsPerKm": 1.08,
+          "nearestListedIntersectionM": 7,
+          "nearestListedIntersection": "ابن العميد - شارع اسطنبول",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1956,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0063-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 1599,
+          "listedIntersectionsOnRoute": 1,
+          "listedIntersectionsNearRoute": 2,
+          "listedIntersectionsPerKm": 0.63,
+          "nearestListedIntersectionM": 13,
+          "nearestListedIntersection": "شارع ابن ماجة/ ابن العميد",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1981,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0063-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 3948,
+          "listedIntersectionsOnRoute": 5,
+          "listedIntersectionsNearRoute": 5,
+          "listedIntersectionsPerKm": 1.27,
+          "nearestListedIntersectionM": 8,
+          "nearestListedIntersection": "شارع ابن ماجة - شارع الحمراء",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1767,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0063-بديل-2",
+          "role": "alternate",
+          "label": "بديل 2",
+          "lengthM": 3952,
+          "listedIntersectionsOnRoute": 5,
+          "listedIntersectionsNearRoute": 5,
+          "listedIntersectionsPerKm": 1.27,
+          "nearestListedIntersectionM": 8,
+          "nearestListedIntersection": "شارع ابن ماجة - شارع الحمراء",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 1767,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 3.05,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0045-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 1948,
+          "listedIntersectionsOnRoute": 3,
+          "listedIntersectionsNearRoute": 3,
+          "listedIntersectionsPerKm": 1.54,
+          "nearestListedIntersectionM": 11,
+          "nearestListedIntersection": "طريق الملك فهد - طريق الملك سعود",
+          "osmSignalsOnRoute": 6,
+          "osmSignalsPerKm": 3.08,
+          "nearestOsmSignalM": 4,
+          "corroboratedSignalControlled": 3,
+          "corroborationSweep": {
+            "50": 3,
+            "75": 3,
+            "100": 3
+          },
+          "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+          "absenceIsNotEvidence": false
+        },
+        {
+          "routeId": "BLD-2026-0045-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 695,
+          "listedIntersectionsOnRoute": 1,
+          "listedIntersectionsNearRoute": 1,
+          "listedIntersectionsPerKm": 1.44,
+          "nearestListedIntersectionM": 11,
+          "nearestListedIntersection": "طريق الملك فهد - طريق الملك سعود",
+          "osmSignalsOnRoute": 4,
+          "osmSignalsPerKm": 5.75,
+          "nearestOsmSignalM": 4,
+          "corroboratedSignalControlled": 1,
+          "corroborationSweep": {
+            "50": 1,
+            "75": 1,
+            "100": 1
+          },
+          "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+          "absenceIsNotEvidence": false
+        },
+        {
+          "routeId": "BLD-2026-0045-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 1589,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 213,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 1.99,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0025-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 692,
+          "listedIntersectionsOnRoute": 3,
+          "listedIntersectionsNearRoute": 3,
+          "listedIntersectionsPerKm": 4.34,
+          "nearestListedIntersectionM": 7,
+          "nearestListedIntersection": "شارع العليا - منتصف الكتلة",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 247,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0025-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 561,
+          "listedIntersectionsOnRoute": 2,
+          "listedIntersectionsNearRoute": 3,
+          "listedIntersectionsPerKm": 3.57,
+          "nearestListedIntersectionM": 7,
+          "nearestListedIntersection": "شارع العليا - منتصف الكتلة",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 228,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0025-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 1122,
+          "listedIntersectionsOnRoute": 1,
+          "listedIntersectionsNearRoute": 2,
+          "listedIntersectionsPerKm": 0.89,
+          "nearestListedIntersectionM": 5,
+          "nearestListedIntersection": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 261,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0025-بديل-2",
+          "role": "alternate",
+          "label": "بديل 2",
+          "lengthM": 1123,
+          "listedIntersectionsOnRoute": 1,
+          "listedIntersectionsNearRoute": 3,
+          "listedIntersectionsPerKm": 0.89,
+          "nearestListedIntersectionM": 5,
+          "nearestListedIntersection": "شارع العليا - شارع الأمير سلطان بن سلمان بن عبدالعزيز",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 261,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "major",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 1.99,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0108-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 2112,
+          "listedIntersectionsOnRoute": 1,
+          "listedIntersectionsNearRoute": 1,
+          "listedIntersectionsPerKm": 0.47,
+          "nearestListedIntersectionM": 4,
+          "nearestListedIntersection": "زيد بن الخطاب - طريق عمر بن الخطاب",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 911,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0108-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 528,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 997,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0108-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 2762,
+          "listedIntersectionsOnRoute": 2,
+          "listedIntersectionsNearRoute": 2,
+          "listedIntersectionsPerKm": 0.72,
+          "nearestListedIntersectionM": 18,
+          "nearestListedIntersection": "شارع الأمير فهد بن إبراهيم آل سعود - طريق عمر بن الخطاب",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 850,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    },
+    {
+      "groupId": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "alternateVerdict": "لا يتحمّل",
+      "alternateRatioAfter": 1.05,
+      "routes": [
+        {
+          "routeId": "BLD-2026-0133-أساسي",
+          "role": "primary",
+          "label": "المسار الأساسي عبر موقع العمل",
+          "lengthM": 854,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 358,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0133-مقطع-العمل",
+          "role": "work-segment",
+          "label": "المقطع المتأثر — هندسة التصريح",
+          "lengthM": 971,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 490,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0133-بديل-1",
+          "role": "alternate",
+          "label": "بديل 1",
+          "lengthM": 1945,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 1,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": 52,
+          "nearestListedIntersection": "شارع الأمير مقرن بن عبد العزيز - طريق عثمان بن عفان",
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 31,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        },
+        {
+          "routeId": "BLD-2026-0133-بديل-2",
+          "role": "alternate",
+          "label": "بديل 2",
+          "lengthM": 1959,
+          "listedIntersectionsOnRoute": 0,
+          "listedIntersectionsNearRoute": 0,
+          "listedIntersectionsPerKm": 0,
+          "nearestListedIntersectionM": null,
+          "nearestListedIntersection": null,
+          "osmSignalsOnRoute": 0,
+          "osmSignalsPerKm": 0,
+          "nearestOsmSignalM": 141,
+          "corroboratedSignalControlled": 0,
+          "corroborationSweep": {
+            "50": 0,
+            "75": 0,
+            "100": 0
+          },
+          "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+          "absenceIsNotEvidence": true
+        }
+      ]
+    }
+  ],
+  "permits": {
+    "BLD-2026-0001": {
+      "computed": true,
+      "lengthM": 1512,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.66,
+      "nearestListedIntersectionM": 6,
+      "nearestListedIntersection": "طريق أبو عبيدة عامر بن الجراح - طريق هارون الرشيد",
+      "osmSignalsOnRoute": 3,
+      "osmSignalsPerKm": 1.98,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0002": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0003": {
+      "computed": true,
+      "lengthM": 529,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 164,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0004": {
+      "computed": true,
+      "lengthM": 1218,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.64,
+      "nearestListedIntersectionM": 2,
+      "nearestListedIntersection": "شارع الإمام عبدالعزيز بن محمد بن سعود الفرعي - الإمام فيصل بن تركي بن ​​عبدالله",
+      "osmSignalsOnRoute": 1,
+      "osmSignalsPerKm": 0.82,
+      "nearestOsmSignalM": 15,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0005": {
+      "computed": true,
+      "lengthM": 1547,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.29,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "طريق سعد بن عبدالرحمن الأول - قرب شارع الهوشله",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1757,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0006": {
+      "computed": true,
+      "lengthM": 1400,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.43,
+      "nearestListedIntersectionM": 31,
+      "nearestListedIntersection": "الامير سعد بن عبدالرحمن الاول - قرب طريق المهند",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2250,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0007": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0008": {
+      "computed": true,
+      "lengthM": 1590,
+      "listedIntersectionsOnRoute": 3,
+      "listedIntersectionsNearRoute": 3,
+      "listedIntersectionsPerKm": 1.89,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "شارع الأمير عبدالعزيز بن مساعد بن جلوي - شارع عبدالله بن عبداللطيف آل الشيخ",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 132,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0009": {
+      "computed": true,
+      "lengthM": 838,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.19,
+      "nearestListedIntersectionM": 15,
+      "nearestListedIntersection": "شارع  الفرزدق - طريق الامير محمد بن عبدالرحمن",
+      "osmSignalsOnRoute": 4,
+      "osmSignalsPerKm": 4.77,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0010": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0011": {
+      "computed": true,
+      "lengthM": 1564,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 121,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0012": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0013": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0014": {
+      "computed": true,
+      "lengthM": 1573,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2003,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0015": {
+      "computed": true,
+      "lengthM": 619,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3450,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0016": {
+      "computed": true,
+      "lengthM": 1462,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 841,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0017": {
+      "computed": true,
+      "lengthM": 1108,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1627,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0018": {
+      "computed": true,
+      "lengthM": 902,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.11,
+      "nearestListedIntersectionM": 6,
+      "nearestListedIntersection": "يزيد بن أبي سفيان - شارع العريجاء",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1007,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0019": {
+      "computed": true,
+      "lengthM": 436,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1699,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0020": {
+      "computed": true,
+      "lengthM": 563,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1944,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0021": {
+      "computed": true,
+      "lengthM": 509,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1640,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0022": {
+      "computed": true,
+      "lengthM": 824,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.21,
+      "nearestListedIntersectionM": 48,
+      "nearestListedIntersection": "طريق عمر بن عبد العزيز الفرعي - طريق النهضة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1244,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0023": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0024": {
+      "computed": true,
+      "lengthM": 1570,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.64,
+      "nearestListedIntersectionM": 32,
+      "nearestListedIntersection": "طريق الأمير متعب بن عبد الله بن عبد العزيز - طريق الأمير سعد بن عبدالرحمن الأول",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1781,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0025": {
+      "computed": true,
+      "lengthM": 561,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 3,
+      "listedIntersectionsPerKm": 3.57,
+      "nearestListedIntersectionM": 7,
+      "nearestListedIntersection": "شارع العليا - منتصف الكتلة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 228,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0026": {
+      "computed": true,
+      "lengthM": 1181,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.85,
+      "nearestListedIntersectionM": 14,
+      "nearestListedIntersection": "شارع العليا - شارع السيل الكبير",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 870,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0027": {
+      "computed": true,
+      "lengthM": 574,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1597,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0028": {
+      "computed": true,
+      "lengthM": 1025,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.98,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "طريق الامام سعود بن عبد العزيز بن محمد - طريق أبي بكر الصديق",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1980,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0029": {
+      "computed": true,
+      "lengthM": 1181,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.85,
+      "nearestListedIntersectionM": 25,
+      "nearestListedIntersection": "طريق الأمير تركي بن ​​عبد العزيز الأول - طريق الدائري الشمالي الفرعي",
+      "osmSignalsOnRoute": 1,
+      "osmSignalsPerKm": 0.85,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0030": {
+      "computed": true,
+      "lengthM": 713,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 121,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0031": {
+      "computed": true,
+      "lengthM": 580,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 6781,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0032": {
+      "computed": true,
+      "lengthM": 627,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3073,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0033": {
+      "computed": true,
+      "lengthM": 658,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 925,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0034": {
+      "computed": true,
+      "lengthM": 427,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 9095,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0035": {
+      "computed": true,
+      "lengthM": 721,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 5477,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0036": {
+      "computed": true,
+      "lengthM": 1154,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 7492,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0037": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0038": {
+      "computed": true,
+      "lengthM": 1336,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 8839,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0039": {
+      "computed": true,
+      "lengthM": 1513,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 11978,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0040": {
+      "computed": true,
+      "lengthM": 1302,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 19132,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0041": {
+      "computed": true,
+      "lengthM": 783,
+      "listedIntersectionsOnRoute": 3,
+      "listedIntersectionsNearRoute": 4,
+      "listedIntersectionsPerKm": 3.83,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "طريق المدينة المنورة - عبد اللطيف الموسلي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 965,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0042": {
+      "computed": true,
+      "lengthM": 964,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 577,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0043": {
+      "computed": true,
+      "lengthM": 620,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2196,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0044": {
+      "computed": true,
+      "lengthM": 819,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3825,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0045": {
+      "computed": true,
+      "lengthM": 695,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.44,
+      "nearestListedIntersectionM": 11,
+      "nearestListedIntersection": "طريق الملك فهد - طريق الملك سعود",
+      "osmSignalsOnRoute": 4,
+      "osmSignalsPerKm": 5.75,
+      "nearestOsmSignalM": 4,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0046": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0047": {
+      "computed": true,
+      "lengthM": 877,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1173,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0048": {
+      "computed": true,
+      "lengthM": 1189,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.84,
+      "nearestListedIntersectionM": 47,
+      "nearestListedIntersection": "طريق خريص - شارع عبدالرحمن الناصر",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2642,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0049": {
+      "computed": true,
+      "lengthM": 961,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3148,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0050": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0051": {
+      "computed": true,
+      "lengthM": 1136,
+      "listedIntersectionsOnRoute": 4,
+      "listedIntersectionsNearRoute": 4,
+      "listedIntersectionsPerKm": 3.52,
+      "nearestListedIntersectionM": 11,
+      "nearestListedIntersection": "طريق صلاح الدين الأيوبي - شارع فاطمة الزهراء",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 510,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0052": {
+      "computed": true,
+      "lengthM": 1360,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.74,
+      "nearestListedIntersectionM": 4,
+      "nearestListedIntersection": "طريق عمر بن الخطاب - طريق النهضة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1010,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0053": {
+      "computed": true,
+      "lengthM": 574,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.74,
+      "nearestListedIntersectionM": 22,
+      "nearestListedIntersection": "طريق خريص - الامير متعب بن عبد العزيز",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 944,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0054": {
+      "computed": true,
+      "lengthM": 1095,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.83,
+      "nearestListedIntersectionM": 25,
+      "nearestListedIntersection": "طريق مكة المكرمة - شارع الصفا",
+      "osmSignalsOnRoute": 1,
+      "osmSignalsPerKm": 0.91,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0055": {
+      "computed": true,
+      "lengthM": 1334,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.75,
+      "nearestListedIntersectionM": 6,
+      "nearestListedIntersection": "عائشة بنت أبي بكر - الشيخ عبد العزيز بن محمد بن علي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 366,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0056": {
+      "computed": true,
+      "lengthM": 1492,
+      "listedIntersectionsOnRoute": 3,
+      "listedIntersectionsNearRoute": 3,
+      "listedIntersectionsPerKm": 2.01,
+      "nearestListedIntersectionM": 2,
+      "nearestListedIntersection": "شارع الأمير عبدالعزيز بن مساعد بن جلوي - طريق الأمير سلطان بن عبدالعزيز",
+      "osmSignalsOnRoute": 2,
+      "osmSignalsPerKm": 1.34,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0057": {
+      "computed": true,
+      "lengthM": 522,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 98,
+      "nearestListedIntersection": "طريق الإمام عبدالله بن سعود بن عبدالعزيز - طريق عثمان بن عفان",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 84,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0058": {
+      "computed": true,
+      "lengthM": 1019,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 150,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0059": {
+      "computed": true,
+      "lengthM": 802,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 315,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0060": {
+      "computed": true,
+      "lengthM": 787,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2672,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0061": {
+      "computed": true,
+      "lengthM": 947,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 63,
+      "nearestListedIntersection": "الامام تركي بن ​​عبدالله بن محمد - ابراهيم عبداللطيف ال شيخ",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 389,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0062": {
+      "computed": true,
+      "lengthM": 986,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 2.03,
+      "nearestListedIntersectionM": 13,
+      "nearestListedIntersection": "شارع ابن ماجة/ ابن العميد",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1981,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0063": {
+      "computed": true,
+      "lengthM": 1599,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 0.63,
+      "nearestListedIntersectionM": 13,
+      "nearestListedIntersection": "شارع ابن ماجة/ ابن العميد",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1981,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0064": {
+      "computed": true,
+      "lengthM": 1159,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.86,
+      "nearestListedIntersectionM": 37,
+      "nearestListedIntersection": "طريق هارون الرشيد - ابن العميد",
+      "osmSignalsOnRoute": 1,
+      "osmSignalsPerKm": 0.86,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0065": {
+      "computed": true,
+      "lengthM": 586,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 95,
+      "nearestListedIntersection": "طريق عمر بن عبدالعزيز - شارع الأحساء",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 66,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0066": {
+      "computed": true,
+      "lengthM": 749,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 2.67,
+      "nearestListedIntersectionM": 5,
+      "nearestListedIntersection": "الامام الشافعي - الشيخ عبدالرحمن بن اسحاق بن عبد الرحمن",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2161,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0067": {
+      "computed": true,
+      "lengthM": 1597,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.25,
+      "nearestListedIntersectionM": 11,
+      "nearestListedIntersection": "شارع الملك فيصل - طريق الامام فيصل بن تركي عبدالله",
+      "osmSignalsOnRoute": 7,
+      "osmSignalsPerKm": 4.38,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 2,
+      "corroborationSweep": {
+        "50": 2,
+        "75": 2,
+        "100": 2
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0068": {
+      "computed": true,
+      "lengthM": 754,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.33,
+      "nearestListedIntersectionM": 12,
+      "nearestListedIntersection": "طريق الملك فهد - طريق الإمام فيصل بن تركي بن عبدالله",
+      "osmSignalsOnRoute": 6,
+      "osmSignalsPerKm": 7.96,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0069": {
+      "computed": true,
+      "lengthM": 1232,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 3,
+      "listedIntersectionsPerKm": 1.62,
+      "nearestListedIntersectionM": 4,
+      "nearestListedIntersection": "البطحاء - شارع أبي ايوب الانصاري",
+      "osmSignalsOnRoute": 3,
+      "osmSignalsPerKm": 2.44,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 2,
+      "corroborationSweep": {
+        "50": 2,
+        "75": 2,
+        "100": 2
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0070": {
+      "computed": true,
+      "lengthM": 1328,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.75,
+      "nearestListedIntersectionM": 3,
+      "nearestListedIntersection": "طريق الأمير محمد بن عبدالرحمن - الأمير عبدالله بن عبد الرحمن بن فيصل",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 883,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0071": {
+      "computed": true,
+      "lengthM": 650,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.54,
+      "nearestListedIntersectionM": 11,
+      "nearestListedIntersection": "شارع الأمير مساعد بن عبدالرحمن بن فيصل - عباس بن فرناس",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 813,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0072": {
+      "computed": true,
+      "lengthM": 1192,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 196,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0073": {
+      "computed": true,
+      "lengthM": 817,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 196,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0074": {
+      "computed": true,
+      "lengthM": 1068,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2469,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0075": {
+      "computed": true,
+      "lengthM": 998,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3610,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0076": {
+      "computed": true,
+      "lengthM": 1385,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.72,
+      "nearestListedIntersectionM": 16,
+      "nearestListedIntersection": "طريق الشيخ حسن بن عبدالله آل الشيخ - بوابة جامعة الملك سعود",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 539,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0077": {
+      "computed": true,
+      "lengthM": 579,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1035,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0078": {
+      "computed": true,
+      "lengthM": 1366,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 993,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0079": {
+      "computed": true,
+      "lengthM": 632,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 6534,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0080": {
+      "computed": true,
+      "lengthM": 1494,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3314,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0081": {
+      "computed": true,
+      "lengthM": 1534,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.3,
+      "nearestListedIntersectionM": 12,
+      "nearestListedIntersection": "طريق النصر - طريق العزيزية",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 894,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0082": {
+      "computed": true,
+      "lengthM": 1049,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.95,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "بلال بن رباح -  الذهبي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1427,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0083": {
+      "computed": true,
+      "lengthM": 865,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.16,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "بلال بن رباح -  الذهبي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1567,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0084": {
+      "computed": true,
+      "lengthM": 1086,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 0.92,
+      "nearestListedIntersectionM": 0,
+      "nearestListedIntersection": "سدير - عبدالملك بن هشام",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 79,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0085": {
+      "computed": true,
+      "lengthM": 497,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 5281,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0086": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0087": {
+      "computed": true,
+      "lengthM": 1249,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 5304,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0088": {
+      "computed": true,
+      "lengthM": 1083,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 0.92,
+      "nearestListedIntersectionM": 6,
+      "nearestListedIntersection": "الاحساء - شارع جرير",
+      "osmSignalsOnRoute": 3,
+      "osmSignalsPerKm": 2.77,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0089": {
+      "computed": true,
+      "lengthM": 683,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3693,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0090": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0091": {
+      "computed": true,
+      "lengthM": 939,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3530,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0092": {
+      "computed": true,
+      "lengthM": 1491,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.34,
+      "nearestListedIntersectionM": 7,
+      "nearestListedIntersection": "أم الحمام - الأمير نواف بن عبد العزيز",
+      "osmSignalsOnRoute": 2,
+      "osmSignalsPerKm": 1.34,
+      "nearestOsmSignalM": 19,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0093": {
+      "computed": true,
+      "lengthM": 834,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.2,
+      "nearestListedIntersectionM": 6,
+      "nearestListedIntersection": "الاحساء - شارع جرير",
+      "osmSignalsOnRoute": 3,
+      "osmSignalsPerKm": 3.6,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0094": {
+      "computed": true,
+      "lengthM": 663,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.51,
+      "nearestListedIntersectionM": 3,
+      "nearestListedIntersection": "شارع خالد بن الوليد - ابراهيم القصيبي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1754,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0095": {
+      "computed": true,
+      "lengthM": 620,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.61,
+      "nearestListedIntersectionM": 7,
+      "nearestListedIntersection": "شارع  الإمام أحمد بن حنبل - سعد بن أبي وقاص",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2687,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0096": {
+      "computed": true,
+      "lengthM": 1442,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2804,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0097": {
+      "computed": true,
+      "lengthM": 836,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2351,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0098": {
+      "computed": true,
+      "lengthM": 1385,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.72,
+      "nearestListedIntersectionM": 23,
+      "nearestListedIntersection": "طريق الأمير تركي بن ​​عبد العزيز الأول - التحلية",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 562,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0099": {
+      "computed": true,
+      "lengthM": 515,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 985,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0100": {
+      "computed": true,
+      "lengthM": 1203,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 4207,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0101": {
+      "computed": true,
+      "lengthM": 1380,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 0.72,
+      "nearestListedIntersectionM": 10,
+      "nearestListedIntersection": "التحلية - الملك محمد الخامس",
+      "osmSignalsOnRoute": 4,
+      "osmSignalsPerKm": 2.9,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0102": {
+      "computed": true,
+      "lengthM": 928,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.08,
+      "nearestListedIntersectionM": 4,
+      "nearestListedIntersection": "طريق الملك عبدالله - طريق الصحابة",
+      "osmSignalsOnRoute": 5,
+      "osmSignalsPerKm": 5.39,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0103": {
+      "computed": true,
+      "lengthM": 760,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2139,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0104": {
+      "computed": true,
+      "lengthM": 988,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2117,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0105": {
+      "computed": true,
+      "lengthM": 939,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 716,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0106": {
+      "computed": true,
+      "lengthM": 1218,
+      "listedIntersectionsOnRoute": 3,
+      "listedIntersectionsNearRoute": 3,
+      "listedIntersectionsPerKm": 2.46,
+      "nearestListedIntersectionM": 12,
+      "nearestListedIntersection": "طريق عبد الرحمن بن عوف - حي النسيم الغربي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3333,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0107": {
+      "computed": true,
+      "lengthM": 608,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1700,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0108": {
+      "computed": true,
+      "lengthM": 528,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 997,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0109": {
+      "computed": true,
+      "lengthM": 1441,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.69,
+      "nearestListedIntersectionM": 3,
+      "nearestListedIntersection": "الأمير سطام بن عبد العزيز - شارع عمرو بن العاص",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 680,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0110": {
+      "computed": true,
+      "lengthM": 1316,
+      "listedIntersectionsOnRoute": 4,
+      "listedIntersectionsNearRoute": 4,
+      "listedIntersectionsPerKm": 3.04,
+      "nearestListedIntersectionM": 5,
+      "nearestListedIntersection": "شارع محمد رشيد رضا - طريق عجمان",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2136,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0111": {
+      "computed": true,
+      "lengthM": 449,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 3,
+      "osmSignalsPerKm": 6.68,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0112": {
+      "computed": true,
+      "lengthM": 841,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1097,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0113": {
+      "computed": true,
+      "lengthM": 1252,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.8,
+      "nearestListedIntersectionM": 12,
+      "nearestListedIntersection": "ابن الجوزي - عباس بن فرناس",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 720,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0114": {
+      "computed": true,
+      "lengthM": 870,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1.15,
+      "nearestListedIntersectionM": 8,
+      "nearestListedIntersection": "شارع الأمير مساعد بن عبدالعزيز - شارع أبي بكر الرازي",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 439,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0115": {
+      "computed": true,
+      "lengthM": 907,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 981,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0116": {
+      "computed": true,
+      "lengthM": 811,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1251,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0117": {
+      "computed": true,
+      "lengthM": 1287,
+      "listedIntersectionsOnRoute": 2,
+      "listedIntersectionsNearRoute": 2,
+      "listedIntersectionsPerKm": 1.55,
+      "nearestListedIntersectionM": 1,
+      "nearestListedIntersection": "شارع الأمير تركي بن ​​عبد العزيز الثاني - المغيرة بن شعبة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1064,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0118": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0119": {
+      "computed": true,
+      "lengthM": 995,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 669,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0120": {
+      "computed": true,
+      "lengthM": 671,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 867,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0121": {
+      "computed": true,
+      "lengthM": 1247,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1369,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0122": {
+      "computed": true,
+      "lengthM": 1228,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3308,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0123": {
+      "computed": true,
+      "lengthM": 1167,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 61,
+      "nearestListedIntersection": "الأمير فيصل بن فهد بن عبد العزيز - بواسطة - الخيمة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1191,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0124": {
+      "computed": true,
+      "lengthM": 899,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1257,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0125": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0126": {
+      "computed": true,
+      "lengthM": 997,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 3065,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0127": {
+      "computed": true,
+      "lengthM": 1152,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1069,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0128": {
+      "computed": true,
+      "lengthM": 1131,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1523,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0129": {
+      "computed": true,
+      "lengthM": 713,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 217,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0130": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0131": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0132": {
+      "computed": true,
+      "lengthM": 1120,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2625,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0133": {
+      "computed": true,
+      "lengthM": 971,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 490,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0134": {
+      "computed": true,
+      "lengthM": 1001,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 1,
+      "nearestListedIntersectionM": 49,
+      "nearestListedIntersection": "طريق الملك عبدالعزيز - أبي بن معاذ الانصاري",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 485,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0135": {
+      "computed": false,
+      "reason": "هندسة نقطية — لا خطّ يُقاس عليه"
+    },
+    "BLD-2026-0136": {
+      "computed": true,
+      "lengthM": 649,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1005,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0137": {
+      "computed": true,
+      "lengthM": 495,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1514,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0138": {
+      "computed": true,
+      "lengthM": 483,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 575,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0139": {
+      "computed": true,
+      "lengthM": 943,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 349,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0140": {
+      "computed": true,
+      "lengthM": 1556,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1030,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0141": {
+      "computed": true,
+      "lengthM": 1010,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 85,
+      "nearestListedIntersection": "طريق الصحابة - شارع عبدالله بن قيس",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 886,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0142": {
+      "computed": true,
+      "lengthM": 642,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 4781,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0143": {
+      "computed": true,
+      "lengthM": 404,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": 82,
+      "nearestListedIntersection": "طريق الملك فهد الفرعي - طريق الامام سعود بن فيصل",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 46,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0144": {
+      "computed": true,
+      "lengthM": 1244,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.8,
+      "nearestListedIntersectionM": 11,
+      "nearestListedIntersection": "طريق العروبة - طريق الملك خالد",
+      "osmSignalsOnRoute": 1,
+      "osmSignalsPerKm": 0.8,
+      "nearestOsmSignalM": 0,
+      "corroboratedSignalControlled": 1,
+      "corroborationSweep": {
+        "50": 1,
+        "75": 1,
+        "100": 1
+      },
+      "controlStatus": "تحكّم بإشارة مؤكَّد من المصدرين",
+      "absenceIsNotEvidence": false
+    },
+    "BLD-2026-0145": {
+      "computed": true,
+      "lengthM": 1354,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.74,
+      "nearestListedIntersectionM": 27,
+      "nearestListedIntersection": "شارع وادي حنيفة - قرب عرقة القديمة",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1985,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0146": {
+      "computed": true,
+      "lengthM": 1086,
+      "listedIntersectionsOnRoute": 1,
+      "listedIntersectionsNearRoute": 1,
+      "listedIntersectionsPerKm": 0.92,
+      "nearestListedIntersectionM": 3,
+      "nearestListedIntersection": "شارع أبي جعفر المنصور - عبدالرحمن بن عزاز",
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1091,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "تقاطع مسرود بلا تأكيد تحكّم",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0147": {
+      "computed": true,
+      "lengthM": 1316,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 2659,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0148": {
+      "computed": true,
+      "lengthM": 519,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1147,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0149": {
+      "computed": true,
+      "lengthM": 605,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1603,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    },
+    "BLD-2026-0150": {
+      "computed": true,
+      "lengthM": 900,
+      "listedIntersectionsOnRoute": 0,
+      "listedIntersectionsNearRoute": 0,
+      "listedIntersectionsPerKm": 0,
+      "nearestListedIntersectionM": null,
+      "nearestListedIntersection": null,
+      "osmSignalsOnRoute": 0,
+      "osmSignalsPerKm": 0,
+      "nearestOsmSignalM": 1693,
+      "corroboratedSignalControlled": 0,
+      "corroborationSweep": {
+        "50": 0,
+        "75": 0,
+        "100": 0
+      },
+      "controlStatus": "لا مصدر يذكر تقاطعاً على هذا المسار",
+      "absenceIsNotEvidence": true
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "_provenance": {
+    "note": "مؤشرات النقل للرياض من تقرير مؤشرات الرياض الحضرية 2018 — الهيئة الملكية لمدينة الرياض، عبر واجهتها المفتوحة بلا مفتاح.",
+    "publisher": "الهيئة الملكية لمدينة الرياض",
+    "datasetId": "urban-indicators-of-the-riyadh-2018-report",
+    "api": "https://opendata.rcrc.gov.sa/api/explore/v2.1/catalog/datasets/urban-indicators-of-the-riyadh-2018-report/records",
+    "query": "geocode=\"RUH\" AND chapternb=\"ch05\"",
+    "datasetRecordsTotal": 581,
+    "rowsFetched": 12,
+    "accessedOn": "2026-07-26",
+    "license": "رخصة البيانات المفتوحة السعودية",
+    "decision": "سياق وطني/مدني فقط. لا معايرة: المؤشر على مستوى المدينة لا على ممر، ولا يفصّل ساعةً ولا اتجاهاً ولا منطقة عمل.",
+    "sha256": "6e42aef269288ef99ee7640eaa62fe971a0248fea8fbfe64c81c4ee761e5d468"
+  },
+  "rows": [
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "King Abdulaziz International Airport",
+      "itemAr": "مطار الملك عبد العزيز الدولي",
+      "year": "2018",
+      "value": 0.373
+    },
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "King Fahd International Airport",
+      "itemAr": "مطار الملك فهد الدولي",
+      "year": "2018",
+      "value": 0.111
+    },
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "King Khalid International Airport",
+      "itemAr": "مطار الملك خالد الدولي",
+      "year": "2014",
+      "value": 0.32
+    },
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "King Khalid International Airport",
+      "itemAr": "مطار الملك خالد الدولي",
+      "year": "2018",
+      "value": 0.28
+    },
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "Other airports",
+      "itemAr": "بقية المطارات",
+      "year": "2018",
+      "value": 0.16
+    },
+    {
+      "indicatorCode": "Indic49",
+      "indicatorEn": "Percentage of passengers at Kingdom’s airports.",
+      "indicatorAr": "نسبة المسافرين عبر مطار الملك خالد الدولي إلى اجمالي مطارات المملكة",
+      "item": "Prince Mohammed Bin Abdulaziz International Airport",
+      "itemAr": "مطار الأمير محمد بن عبد العزيز الدولي",
+      "year": "2018",
+      "value": 0.083
+    },
+    {
+      "indicatorCode": "Indic50",
+      "indicatorEn": "Number of private vehicles per 1,000 people",
+      "indicatorAr": "عدد السيارات الخاصة لكل ( ١٠٠٠ ) من السكان",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2014",
+      "value": 274
+    },
+    {
+      "indicatorCode": "Indic50",
+      "indicatorEn": "Number of private vehicles per 1,000 people",
+      "indicatorAr": "عدد السيارات الخاصة لكل ( ١٠٠٠ ) من السكان",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2018",
+      "value": 310
+    },
+    {
+      "indicatorCode": "Indic51",
+      "indicatorEn": "Average travel time by all transport modes.",
+      "indicatorAr": "متوسط زمن رحلة العمل لكافة وسائل النقل",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2014",
+      "value": 23
+    },
+    {
+      "indicatorCode": "Indic51",
+      "indicatorEn": "Average travel time by all transport modes.",
+      "indicatorAr": "متوسط زمن رحلة العمل لكافة وسائل النقل",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2018",
+      "value": 31
+    },
+    {
+      "indicatorCode": "Indic52",
+      "indicatorEn": "Number of deaths and injuries from traffic accidents per 100,000 people",
+      "indicatorAr": "عدد الوفيات والاصابات من جراء الحوادث المرورية لكل ( 100) الف من السكان",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2014",
+      "value": 9.8
+    },
+    {
+      "indicatorCode": "Indic52",
+      "indicatorEn": "Number of deaths and injuries from traffic accidents per 100,000 people",
+      "indicatorAr": "عدد الوفيات والاصابات من جراء الحوادث المرورية لكل ( 100) الف من السكان",
+      "item": "NA",
+      "itemAr": "NA",
+      "year": "2018",
+      "value": 10.8
+    }
+  ]
+}
