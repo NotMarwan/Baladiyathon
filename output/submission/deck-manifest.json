@@ -197,7 +197,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1199,
+      "value": 1203,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
@@ -229,7 +229,7 @@
     },
     {
       "key": "comparableCases",
-      "value": 8,
+      "value": 7,
       "unit": "حالة",
       "source": "data/comparable-cases.json",
       "grade": "global-analog",
@@ -258,6 +258,86 @@
       "source": "data/wzdx-interop-summary.json — نفس المحقق ونفس الالتزام 42b98fc",
       "grade": "external-official",
       "limit": "صفر يعني أن المخطط الذي نصدّر عليه قبِل إنتاج جهة رسمية حقيقية. ولا يعني أن مُخرَجنا صحيح مرورياً: هذا اجتياز بنية لا قياس، ولا يقول شيئاً عن الرياض."
+    },
+    {
+      "key": "alternateOverflows",
+      "value": 112,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8",
+      "grade": "model-derived",
+      "limit": "الطلب المحوَّل يتجاوز طاقة البديل في النموذج. لا قياس ميداني: الحركة المحوَّلة مقدَّرة، والسعة افتراض معلن، والنموذج لا يعرف أن السائق قد يلغي رحلته أو يغيّر ساعتها."
+    },
+    {
+      "key": "alternateCarries",
+      "value": 3,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8",
+      "grade": "model-derived",
+      "limit": "يبقى دون طاقته في النموذج عند الساعة المرجعية وحدها. ساعة أخرى قد تعطي حكماً آخر."
+    },
+    {
+      "key": "alternateNearCapacity",
+      "value": 3,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8",
+      "grade": "model-derived",
+      "limit": "قريب من طاقته — حكمٌ حدّي يقلبه تغيّر صغير في الحركة المحوَّلة، فلا يُقرأ نجاحاً."
+    },
+    {
+      "key": "alternateUncomputed",
+      "value": 32,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8",
+      "grade": "model-derived",
+      "limit": "لم يُحسب له بديل — هندسة نقطية بلا خطّ يُحوَّل حوله. غياب حكم لا حكم بالسلامة."
+    },
+    {
+      "key": "alternateCaseBeforeShare",
+      "value": 59,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — التصريح BLD-2026-0045، المقطع المقيِّد: السويس",
+      "grade": "model-derived",
+      "limit": "نسبة الحجم إلى السعة على البديل قبل التحويل، عند ساعة مرجعية واحدة."
+    },
+    {
+      "key": "alternateCaseAfterShare",
+      "value": 305,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — التصريح BLD-2026-0045، المقطع المقيِّد: السويس",
+      "grade": "model-derived",
+      "limit": "النسبة نفسها بعد التحويل. فوق المئة تعني طابوراً في النموذج، لا زمن تأخير مقيساً."
+    },
+    {
+      "key": "alternateCaseDiverted",
+      "value": 1760,
+      "unit": "مركبة/ساعة",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — التصريح BLD-2026-0045، المقطع المقيِّد: السويس",
+      "grade": "model-derived",
+      "limit": "حركة محوَّلة مقدَّرة من حصة المسارات المغلقة، لا عدّاً مرورياً."
+    },
+    {
+      "key": "alternateWorstAfterShare",
+      "value": 592,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — أعلى نسبة بعد التحويل في المحفظة",
+      "grade": "model-derived",
+      "limit": "موجود كي لا تُقرأ الحالة المعروضة حدّاً أعلى وهي وسط الترتيب. رقمٌ نموذجي مثل غيره، لا قياس."
+    },
+    {
+      "key": "workZoneLaneCapacity",
+      "value": 1475,
+      "unit": "مركبة/ساعة/حارة",
+      "source": "athar-engine.js — نقطة التشغيل، وسندها delaware-arterial في data/comparable-cases.json",
+      "grade": "global-field-measured",
+      "limit": "سعة شريان في الرياض. ولا تُسقط على إشارة بعينها: الدراسة تعطي متوسطاً عبر خمسة وعشرين موقعاً، وتوزيعها نفسه واسع."
+    },
+    {
+      "key": "workZoneCapacitySites",
+      "value": 25,
+      "unit": "موقع مقيس",
+      "source": "data/comparable-cases.json — delaware-arterial، جامعة ديلاوير — مركز ديلاوير للنقل، تقرير DCT 265 (أبريل 2017)",
+      "grade": "global-field-measured",
+      "limit": "متوسط عبر خمسة وعشرين موقعاً أمريكياً، وتوزيعها نفسه واسع. لا يُسقَط على إشارة بعينها ولا على شارع في الرياض."
     },
     {
       "key": "providersReady",
