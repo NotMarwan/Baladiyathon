@@ -5,30 +5,44 @@
     {
       "key": "local-field",
       "label": "دليل ميداني محلي",
-      "rank": 6,
+      "rank": 8,
       "proves": "أثراً سببياً لهذه الحالة — ضمن حدود تصميم المقارنة.",
       "notProves": "تعميماً على تصاريح أخرى بلا عيّنة."
     },
     {
       "key": "local-route",
       "label": "رصد محلي فوق المسار",
-      "rank": 5,
+      "rank": 7,
       "proves": "سرعة وزمن رحلة فعليين على الطريق في ظرفه القائم.",
       "notProves": "أثر الإغلاق. الطريق بلا إغلاق لا يقول ماذا يحدث معه."
     },
     {
       "key": "local-historical",
       "label": "سجل محلي تاريخي",
-      "rank": 4,
+      "rank": 6,
       "proves": "خط أساس يقارَن به، وتمييز المعتاد من الشاذّ.",
       "notProves": "سببية. الفرق عن الخط قد يكون طقساً أو فعالية."
     },
     {
       "key": "local-comparable",
       "label": "حالة محلية مشابهة",
-      "rank": 3,
+      "rank": 5,
       "proves": "نطاقاً مرجعياً أقرب إلى ظرفنا من العالمي.",
       "notProves": "قيمة معامل لهذا الطريق."
+    },
+    {
+      "key": "global-field-measured",
+      "label": "قياس ميداني أجنبي",
+      "rank": 4,
+      "proves": "أن الظاهرة قيست فعلاً لا استُنتجت، وأن حجمها في سياقٍ معلوم.",
+      "notProves": "قيمة محلية. سلوك السائق والشبكة والإنفاذ يختلف — والفرق غير معروف المقدار لأنه لم يُقَس هنا."
+    },
+    {
+      "key": "external-official",
+      "label": "تبادلية مع إنتاج رسمي أجنبي",
+      "rank": 3,
+      "proves": "أن العقد الذي نصدّر عليه هو العقد الذي تنشر عليه جهة حقيقية — أي أن المحقق ليس مفصَّلاً على مخرجاتنا وحدها.",
+      "notProves": "أي رقم مروري. البنية ليست القياس، وتغذيةُ ولايةٍ أخرى لا تقول شيئاً عن الرياض."
     },
     {
       "key": "global-analog",
@@ -183,7 +197,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1173,
+      "value": 1188,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
@@ -191,7 +205,7 @@
     },
     {
       "key": "suitesPassed",
-      "value": 69,
+      "value": 71,
       "unit": "حزمة",
       "source": "presentation/tests/fixtures/test-manifest.json",
       "grade": "model-derived",
@@ -228,6 +242,22 @@
       "source": "data/comparable-cases.json",
       "grade": "global-analog",
       "limit": "صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة."
+    },
+    {
+      "key": "interopFeedFeatures",
+      "value": 576,
+      "unit": "منطقة عمل",
+      "source": "data/wzdx-interop-summary.json — تغذية Washington State DOT، مثبَّتة ببصمتها",
+      "grade": "external-official",
+      "limit": "تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا عن صحة أي رقم في أثر."
+    },
+    {
+      "key": "interopFeedErrors",
+      "value": 0,
+      "unit": "خطأ",
+      "source": "data/wzdx-interop-summary.json — نفس المحقق ونفس الالتزام 42b98fc",
+      "grade": "external-official",
+      "limit": "صفر يعني أن المخطط الذي نصدّر عليه قبِل إنتاج جهة رسمية حقيقية. ولا يعني أن مُخرَجنا صحيح مرورياً: هذا اجتياز بنية لا قياس، ولا يقول شيئاً عن الرياض."
     },
     {
       "key": "providersReady",

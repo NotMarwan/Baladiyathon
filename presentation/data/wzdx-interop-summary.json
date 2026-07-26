@@ -1,0 +1,74 @@
+{
+  "generatedFrom": "presentation/scripts/build-interop-report.js",
+  "validator": {
+    "schema": "WZDx 4.2 — WorkZoneFeed.json (رسمي)",
+    "schemaId": "https://raw.githubusercontent.com/usdot-jpo-ode/wzdx/main/schemas/4.2/WorkZoneFeed.json",
+    "commit": "42b98fcdd837e897ae3e208780c45ce61f7fc12a",
+    "validator": "ajv@8.20.0",
+    "formats": "ajv-formats@3.0.1",
+    "files": [
+      "geojson/LineString.json",
+      "geojson/MultiPoint.json",
+      "wzdx-4.2/WorkZoneFeed.json",
+      "wzdx-4.2/RoadEventFeature.json",
+      "wzdx-4.2/FeedInfo.json",
+      "wzdx-4.2/Direction.json",
+      "wzdx-4.2/BoundingBox.json"
+    ]
+  },
+  "fetchedAt": "2026-07-26T14:05:28.769Z",
+  "registry": "https://data.transportation.gov/resource/69qe-yiui",
+  "feeds": 1,
+  "totalFeatures": 576,
+  "allValid": true,
+  "evidenceGrade": "external-official",
+  "permittedClaim": "مخطط أثر المثبَّت (التزام 42b98fcdd837e897ae3e208780c45ce61f7fc12a) قبِل 576 منطقة عمل حقيقية من 1 تغذية حكومية أجنبية، بصفر أخطاء.",
+  "forbiddenClaim": "ممنوع قراءة هذه النتيجة قياساً مرورياً أو دليلاً على صحة أي رقم في أثر. التبادلية بنية لا قياس، وتغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض.",
+  "rows": [
+    {
+      "key": "wsdot",
+      "publisher": "Washington State DOT",
+      "country": "الولايات المتحدة",
+      "source": "https://wzdx.wsdot.wa.gov/api/v4/WorkZoneFeed",
+      "sha256": "5aaa26c547a3d370c561a9f639c4fba610177ed598983a7fea3e419ed31b4fab",
+      "featureCount": 576,
+      "feedVersion": "4.2",
+      "feedUpdateDate": "2026-07-25T00:00:10.6206396+00:00",
+      "valid": true,
+      "errorCount": 0,
+      "failedFields": [],
+      "firstErrors": [],
+      "coverage": {
+        "eventTypes": [
+          "work-zone"
+        ],
+        "vehicleImpacts": [
+          "unknown"
+        ],
+        "locationMethods": [
+          "unknown"
+        ],
+        "directions": [
+          "eastbound",
+          "northbound",
+          "southbound",
+          "westbound"
+        ],
+        "geometryTypes": [
+          "LineString"
+        ],
+        "optionalFields": [
+          "beginning_accuracy",
+          "beginning_milepost",
+          "end_date_accuracy",
+          "ending_accuracy",
+          "ending_milepost",
+          "event_status",
+          "reduced_speed_limit_kph",
+          "start_date_accuracy",
+          "worker_presence"
+        ]
+      }
+    }
+  ]
+}

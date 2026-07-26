@@ -56,12 +56,14 @@
 <tr><td><code>stabilityDecidable</code></td><td class="num">50</td><td>توصية</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>قابلة للقرار يعني أن ترتيب البدائل يصمد، لا أن الرقم صحيح.</td></tr>
 <tr><td><code>stabilityAbstained</code></td><td class="num">100</td><td>توصية</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>الامتناع نتيجة صالحة: البيانات لا تكفي لترتيب البدائل.</td></tr>
 <tr><td><code>stabilityAbstainedShare</code></td><td class="num">67</td><td>٪</td><td>مشتقّ من النموذج</td><td>data/stability-report.json</td><td>نسبة الامتناع عبر المحفظة التمثيلية.</td></tr>
-<tr><td><code>checksPassed</code></td><td class="num">1173</td><td>فحص</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر</td><td>الفحوص تُثبت أن الشيفرة تفعل ما وُصفت به. لا تُثبت أن النموذج صحيح.</td></tr>
-<tr><td><code>suitesPassed</code></td><td class="num">69</td><td>حزمة</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json</td><td>عدد حزم الاختبار.</td></tr>
+<tr><td><code>checksPassed</code></td><td class="num">1188</td><td>فحص</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر</td><td>الفحوص تُثبت أن الشيفرة تفعل ما وُصفت به. لا تُثبت أن النموذج صحيح.</td></tr>
+<tr><td><code>suitesPassed</code></td><td class="num">71</td><td>حزمة</td><td>مشتقّ من النموذج</td><td>presentation/tests/fixtures/test-manifest.json</td><td>عدد حزم الاختبار.</td></tr>
 <tr><td><code>frictionPriorLow</code></td><td class="num">1072</td><td>مركبة/ساعة/حارة</td><td>نظير عالمي</td><td>data/comparable-cases.json — missouri-breakdown (تصريف الرتل 1072 — الحدّ الأدنى)</td><td>قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي.</td></tr>
 <tr><td><code>frictionPriorHigh</code></td><td class="num">1600</td><td>مركبة/ساعة/حارة</td><td>نظير عالمي</td><td>data/comparable-cases.json — tti-1108-5 (سعة أساس موصى بها 1600 — الحدّ الأعلى)</td><td>قيمة الاحتكاك على أي شارع في الرياض. النطاق أولي ولم يُعاير على إغلاق ميداني محلي.</td></tr>
 <tr><td><code>comparableCases</code></td><td class="num">7</td><td>حالة</td><td>نظير عالمي</td><td>data/comparable-cases.json</td><td>لا واحدة منها سعودية بقياسات — والنتيجة معلنة في السجل.</td></tr>
 <tr><td><code>localMeasuredCases</code></td><td class="num">0</td><td>حالة</td><td>نظير عالمي</td><td>data/comparable-cases.json</td><td>صفر. لا حالة سعودية بقياسات قبل/أثناء في المصادر العامة المفحوصة.</td></tr>
+<tr><td><code>interopFeedFeatures</code></td><td class="num">576</td><td>منطقة عمل</td><td>تبادلية مع إنتاج رسمي أجنبي</td><td>data/wzdx-interop-summary.json — تغذية Washington State DOT، مثبَّتة ببصمتها</td><td>تبادلية بنيوية لا قياس. تغذية ولايةٍ أخرى لا تقول شيئاً عن الرياض ولا عن صحة أي رقم في أثر.</td></tr>
+<tr><td><code>interopFeedErrors</code></td><td class="num">0</td><td>خطأ</td><td>تبادلية مع إنتاج رسمي أجنبي</td><td>data/wzdx-interop-summary.json — نفس المحقق ونفس الالتزام 42b98fc</td><td>صفر يعني أن المخطط الذي نصدّر عليه قبِل إنتاج جهة رسمية حقيقية. ولا يعني أن مُخرَجنا صحيح مرورياً: هذا اجتياز بنية لا قياس، ولا يقول شيئاً عن الرياض.</td></tr>
 <tr><td><code>providersReady</code></td><td class="num">0</td><td>مزوّد</td><td>تركيبي</td><td>data/route-evidence/readiness.json</td><td>صفر: لا مفاتيح. المحوّلات جاهزة ولم تُشغَّل ببيانات حقيقية.</td></tr>
 <tr><td><code>fieldCases</code></td><td class="num">0</td><td>حالة</td><td>دليل ميداني محلي</td><td>لا ملف — القيمة صفر لأن لا حالة ميدانية في المستودع</td><td>هذا هو السقف الحاكم لدرجة الأثر: بلا حالة ميدانية واحدة لا يُثبت أثر.</td></tr>
 </tbody>
@@ -75,10 +77,12 @@
 <table>
 <thead><tr><th>الدرجة</th><th>الرتبة</th><th>ما تُثبته</th><th>ما لا تُثبته</th></tr></thead>
 <tbody>
-<tr><td>دليل ميداني محلي</td><td class="num">6</td><td>أثراً سببياً لهذه الحالة — ضمن حدود تصميم المقارنة.</td><td>تعميماً على تصاريح أخرى بلا عيّنة.</td></tr>
-<tr><td>رصد محلي فوق المسار</td><td class="num">5</td><td>سرعة وزمن رحلة فعليين على الطريق في ظرفه القائم.</td><td>أثر الإغلاق. الطريق بلا إغلاق لا يقول ماذا يحدث معه.</td></tr>
-<tr><td>سجل محلي تاريخي</td><td class="num">4</td><td>خط أساس يقارَن به، وتمييز المعتاد من الشاذّ.</td><td>سببية. الفرق عن الخط قد يكون طقساً أو فعالية.</td></tr>
-<tr><td>حالة محلية مشابهة</td><td class="num">3</td><td>نطاقاً مرجعياً أقرب إلى ظرفنا من العالمي.</td><td>قيمة معامل لهذا الطريق.</td></tr>
+<tr><td>دليل ميداني محلي</td><td class="num">8</td><td>أثراً سببياً لهذه الحالة — ضمن حدود تصميم المقارنة.</td><td>تعميماً على تصاريح أخرى بلا عيّنة.</td></tr>
+<tr><td>رصد محلي فوق المسار</td><td class="num">7</td><td>سرعة وزمن رحلة فعليين على الطريق في ظرفه القائم.</td><td>أثر الإغلاق. الطريق بلا إغلاق لا يقول ماذا يحدث معه.</td></tr>
+<tr><td>سجل محلي تاريخي</td><td class="num">6</td><td>خط أساس يقارَن به، وتمييز المعتاد من الشاذّ.</td><td>سببية. الفرق عن الخط قد يكون طقساً أو فعالية.</td></tr>
+<tr><td>حالة محلية مشابهة</td><td class="num">5</td><td>نطاقاً مرجعياً أقرب إلى ظرفنا من العالمي.</td><td>قيمة معامل لهذا الطريق.</td></tr>
+<tr><td>قياس ميداني أجنبي</td><td class="num">4</td><td>أن الظاهرة قيست فعلاً لا استُنتجت، وأن حجمها في سياقٍ معلوم.</td><td>قيمة محلية. سلوك السائق والشبكة والإنفاذ يختلف — والفرق غير معروف المقدار لأنه لم يُقَس هنا.</td></tr>
+<tr><td>تبادلية مع إنتاج رسمي أجنبي</td><td class="num">3</td><td>أن العقد الذي نصدّر عليه هو العقد الذي تنشر عليه جهة حقيقية — أي أن المحقق ليس مفصَّلاً على مخرجاتنا وحدها.</td><td>أي رقم مروري. البنية ليست القياس، وتغذيةُ ولايةٍ أخرى لا تقول شيئاً عن الرياض.</td></tr>
 <tr><td>نظير عالمي</td><td class="num">2</td><td>نطاقاً أولياً واسعاً، واتجاه الأثر المتوقَّع.</td><td>أي رقم محلي. سلوك السائق والشبكة والإنفاذ يختلف.</td></tr>
 <tr><td>مشتقّ من النموذج</td><td class="num">1</td><td>ترتيباً داخلياً متسقاً بين بدائل تحت الافتراضات نفسها.</td><td>قيمة مطلقة. الافتراض غير المعاير يحملها.</td></tr>
 <tr><td>تركيبي</td><td class="num">0</td><td>أن الشيفرة تعمل.</td><td>أي شيء عن الرياض.</td></tr>

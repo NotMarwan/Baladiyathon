@@ -107,6 +107,21 @@
   </div>
 
   <section class="grid" id="sources">
+    <!-- src-101 يُملأ من `data/wzdx-interop-summary.js` عند التحميل.
+         كتابة «٥٧٦» و«صفر» هنا يدوياً تجعلهما يتقادمان مع أول تغذية تُضاف
+         أو تتغيّر، ولا ينبّه أحد — وهي العلّة نفسها التي عالجها جرد العرض. -->
+    <article id="src-101" data-type="primary">
+      <div class="row"><div class="id">src-101</div><div class="type">تبادلية مع إنتاج رسمي أجنبي</div></div>
+      <h2>محقّق أثر يقبل تغذية مناطق عمل حكومية حقيقية</h2>
+      <div class="value" id="interop-value">—</div>
+      <p id="interop-body">جارٍ القراءة من تقرير التبادلية…</p>
+      <p class="meta">سجل تغذيات WZDx · وزارة النقل الأمريكية · وصول 2026-07-26</p>
+      <p class="meta" id="interop-meta"></p>
+      <p class="supports">يدعم: أن العقد الذي يصدّر عليه أثر هو العقد نفسه الذي تنشر عليه إدارة نقل حكومية إنتاجها التشغيلي — أي أن المحقق ليس مفصَّلاً على مخرجات أثر وحدها.</p>
+      <p class="limit">لا يدعم: أي رقم مروري، ولا صحة أي قيمة في أثر، ولا شيئاً عن الرياض. التبادلية بنية لا قياس.</p>
+      <a href="https://data.transportation.gov/resource/69qe-yiui">سجل تغذيات WZDx لدى وزارة النقل الأمريكية</a>
+    </article>
+
     <article id="src-008" data-type="primary">
       <div class="row"><div class="id">src-008</div><div class="type">مصدر أولي رسمي</div></div>
       <h2>الخريطة التفاعلية في منصة الحفريات</h2>
@@ -345,6 +360,46 @@
 
   <footer>لا تستخدم أي بطاقة خارج حدها المكتوب. عند تغير مصدر رسمي، يُحدث الرقم وتاريخ الوصول في العرض والبطاقة معاً.</footer>
 </main>
+<script src="data/wzdx-interop-summary.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* بطاقة التبادلية تُملأ من الملخّص المولَّد.
+     وإن غاب الملخّص تبقى البطاقة تقول حدّها بلا أرقام — بطاقةٌ بلا رقم أصدق
+     من رقمٍ مكتوب احتياطاً، لأن الاحتياطي لا أحد يُحدّثه. */
+  var summary = window.ATHAR_WZDX_INTEROP;
+  var value = document.getElementById('interop-value');
+  var body = document.getElementById('interop-body');
+  var meta = document.getElementById('interop-meta');
+  if (!value || !body || !meta) return;
+
+  if (!summary) {
+    value.textContent = '—';
+    body.textContent = 'تقرير التبادلية غير محمَّل. شغّل: '
+      + 'node presentation/scripts/build-interop-report.js';
+    return;
+  }
+
+  /* أرقام لاتينية داخل نصّ عربي — كما في كل أسطح المنتج. الخلط بين نظامي
+     الترقيم في صفحة واحدة يجعل الرقم يُقرأ مرتين. */
+  var arabic = function (number) {
+    return Number(number).toLocaleString('ar-SA-u-nu-latn');
+  };
+
+  value.textContent = arabic(summary.totalFeatures) + ' منطقة عمل · '
+    + (summary.errorCount === 0 ? 'صفر أخطاء' : arabic(summary.errorCount) + ' خطأ');
+  body.textContent = 'مُرِّرت تغذية ' + summary.publishers.join('، ')
+    + ' التشغيلية — وهي مناطق عمل حقيقية تنشرها الجهة لمستخدمي الطريق — على '
+    + 'مخطط WZDx 4.2 الرسمي المثبَّت في هذا المستودع، بالمحقق نفسه الذي '
+    + 'يُمرَّر عليه مُخرَج أثر. '
+    + (summary.allValid ? 'قبِلها بلا خطأ واحد.'
+      : 'ورُصدت مخالفات — التفصيل في تقرير التبادلية.');
+  meta.textContent = summary.publishers.join('، ') + ' · التزام المخطط '
+    + summary.commit.slice(0, 7) + ' · ' + summary.validator
+    + ' · سحب التغذية ' + String(summary.fetchedAt).slice(0, 10)
+    + ' · مثبَّتة ببصمتها وتُفحص بلا شبكة';
+}());
+</script>
 <script src="data/riyadh-turn-restrictions.js"></script>
 <script src="athar-network-coverage.js"></script>
 <script>
