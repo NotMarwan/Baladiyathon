@@ -37,6 +37,19 @@
 node presentation/tests/run-all.js
 ```
 
+#### إن أضفت حزمة: الترتيب يهمّ
+
+`run-all.js` لا يكتب `tests/fixtures/test-manifest.json` إلا على تشغيل أخضر
+كامل، و`build-deck-manifest.js` يخبز عدّ الفحوص منه. فتوليد الجرد قبل تشغيلٍ
+أخضر يخبز عدّاً متقادماً، فتسقط `deck-text-test` **بثبات** — لا تقطّعاً —
+برسالة `checksPassed: القيمة المخزَّنة N والمولَّدة N+1`.
+
+الترتيب الصحيح: **تشغيل أخضر ⟵ توليد الجرد ⟵ تشغيل للتأكيد.**
+
+وإن تغيّر عدد الحزم نفسه فحدّث الرقم المعروض في
+`output/submission/athar-baladiyathon-judging-deck.html` أيضاً — `deck-numbers-test`
+تشترط أن يطابق العرضُ الجردَ، ورسالتها `العرض لا يعرض «N / N»`.
+
 ### المسار القديم (النموذج التفاعلي، ما زال يعمل)
 
 1. افتح `http://localhost:8734/athar-prototype.html`.
