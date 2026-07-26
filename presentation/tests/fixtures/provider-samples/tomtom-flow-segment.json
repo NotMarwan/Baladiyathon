@@ -1,0 +1,13 @@
+{
+  "_note": "عيّنة بشكل استجابة TomTom flowSegmentData. ليست قياساً للرياض.",
+  "flowSegmentData": {
+    "frc": "FRC1",
+    "currentSpeed": 38,
+    "freeFlowSpeed": 75,
+    "currentTravelTime": 189,
+    "freeFlowTravelTime": 96,
+    "confidence": 0.95,
+    "roadClosure": false,
+    "coordinates": { "coordinate": [] }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "generatedFrom": "presentation/scripts/collect-route-evidence.js",
+  "providers": [
+    {
+      "key": "here-traffic-v7",
+      "name": "HERE Traffic API v7",
+      "providesVolume": false,
+      "ready": false,
+      "missing": [
+        {
+          "env": "HERE_API_KEY",
+          "what": "مفتاح واجهة HERE بصلاحية Traffic API",
+          "how": "من حساب HERE Developer بعد إنشاء مشروع"
+        }
+      ]
+    },
+    {
+      "key": "tomtom-traffic",
+      "name": "TomTom Traffic API",
+      "providesVolume": false,
+      "ready": false,
+      "missing": [
+        {
+          "env": "TOMTOM_API_KEY",
+          "what": "مفتاح واجهة TomTom بصلاحية Traffic",
+          "how": "من TomTom Developer Portal"
+        }
+      ]
+    },
+    {
+      "key": "google-routes",
+      "name": "Google Routes API",
+      "providesVolume": false,
+      "ready": false,
+      "missing": [
+        {
+          "env": "GOOGLE_ROUTES_API_KEY",
+          "what": "مفتاح Google Maps Platform بصلاحية Routes API",
+          "how": "من Google Cloud Console بعد تفعيل Routes API وربط الفوترة"
+        }
+      ]
+    }
+  ],
+  "anyReady": false,
+  "volumeAvailable": false,
+  "cadence": {
+    "snapshotEveryMinutes": 5,
+    "windowSeconds": 300,
+    "coverage": [
+      "ذروة الصباح 06:00–09:00",
+      "الظهيرة 11:00–14:00",
+      "ذروة المساء 15:00–19:00",
+      "الليل 21:00–02:00"
+    ],
+    "days": "أيام العمل وعطلة نهاية الأسبوع — نمط الرياض يختلف بينهما اختلافاً حاداً",
+    "minimumForBaseline": "أربعة أسابيع متصلة لبناء نمط بالساعة واليوم يُعتمد عليه"
+  },
+  "snapshotWindowSeconds": 300,
+  "honesty": "هذا تقرير **جاهزية** لا تقرير قياس. ما دام anyReady=false فلا قياس محلي واحد في المستودع، ودرجة الدليل القصوى المتاحة هي «مشتقّ من النموذج»."
+}

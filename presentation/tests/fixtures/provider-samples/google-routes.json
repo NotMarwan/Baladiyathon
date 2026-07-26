@@ -1,0 +1,10 @@
+{
+  "_note": "عيّنة بشكل استجابة Google Routes computeRoutes. ليست قياساً للرياض.",
+  "routes": [
+    {
+      "distanceMeters": 7420,
+      "duration": "612s",
+      "staticDuration": "421s"
+    }
+  ]
+}

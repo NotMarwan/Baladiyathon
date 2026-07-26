@@ -1,0 +1,35 @@
+{
+  "_note": "عيّنة بشكل استجابة HERE Traffic API v7 — flow. ليست قياساً للرياض.",
+  "sourceUpdated": "2026-07-26T05:00:00Z",
+  "results": [
+    {
+      "location": {
+        "description": "طريق الملك فهد — مقطع تجريبي",
+        "length": 1200,
+        "shape": { "links": [] }
+      },
+      "currentFlow": {
+        "speed": 42.0,
+        "speedUncapped": 44.5,
+        "freeFlow": 80.0,
+        "jamFactor": 4.2,
+        "confidence": 0.92,
+        "traversability": "open"
+      }
+    },
+    {
+      "location": { "description": "مقطع بثقة تاريخية", "length": 800 },
+      "currentFlow": {
+        "speed": 55.0,
+        "freeFlow": 70.0,
+        "jamFactor": 1.5,
+        "confidence": 0.6,
+        "traversability": "open"
+      }
+    },
+    {
+      "location": { "description": "مقطع بلا سرعة", "length": 400 },
+      "currentFlow": { "jamFactor": 0.0, "confidence": 0.4 }
+    }
+  ]
+}
