@@ -191,6 +191,53 @@
       + '<ul>' + items + '</ul></div>';
   }
 
+  /**
+   * حالة استقرار التوصية — تحت العنوان مباشرة لا في ذيل البطاقة.
+   *
+   * الموضع قرارٌ لا تنسيق: التوصية تُقرأ في سطرها الأول، ومن يقرؤها ثم يجد
+   * بعد ثلاث فقرات أنها تنقلب بافتراض واحد يكون قد قرّر. والامتناع يُعرض
+   * **بدل** الثقة لا بجوارها.
+   *
+   * وغياب الوحدة يعطي «غير مفحوص» لا صمتاً: صمتٌ في موضع الحالة يُقرأ
+   * استقراراً.
+   */
+  function renderStability(stability) {
+    if (!stability) {
+      return '<p class="desk-stability" data-state="unknown">'
+        + 'استقرار التوصية: غير مفحوص على هذه الشاشة.</p>';
+    }
+
+    var body = '<p class="desk-stability" data-state="'
+      + escapeHtml(text(stability.state)) + '">'
+      + '<span class="desk-stability-label">' + escapeHtml(text(stability.label))
+      + '</span> — ' + escapeHtml(text(stability.reason)) + '</p>';
+
+    if (!stability.decidable) {
+      body += '<p class="desk-abstain">' + escapeHtml(text(stability.abstention)) + '</p>';
+      var asks = (stability.flippingAssumptions || []).slice(0, 3)
+        .map(function (item) {
+          return '<li><span>' + escapeHtml(text(item.label)) + '</span>'
+            + '<span class="desk-hint">' + escapeHtml(text(item.dataNeeded)) + '</span></li>';
+        }).join('');
+      if (asks) {
+        body += '<p class="desk-card-label">ما يُطلب كي تصير قابلة للقرار</p>'
+          + '<ul class="desk-asks">' + asks + '</ul>';
+      }
+    }
+
+    /* حجم الأثر يُعلن مدىً حتى مع ترتيب صامد: «مستقرّة» بجوار رقمٍ مفرد
+       تجعل القارئ يصدّق الرقم، والرقم هو أضعف ما في النموذج. */
+    var magnitude = stability.magnitude;
+    if (magnitude && !magnitude.defensible) {
+      body += '<p class="desk-hint">حجم الأثر يتحرك '
+        + escapeHtml(text(magnitude.worstSwingPct)) + '٪ مع «'
+        + escapeHtml(text(magnitude.drivenBy)) + '» — الرقم أدناه مركزُ مدى '
+        + 'لا قيمة مثبتة.</p>';
+    }
+
+    return body;
+  }
+
   function renderSummary(feature, analysis) {
     var p = (feature && feature.properties) || {};
     var a = analysis || {};
@@ -222,6 +269,7 @@
     return '<section class="desk-card">'
       + '<p class="desk-card-label">التوصية</p>'
       + '<h3 class="desk-recommend">' + escapeHtml(text(best.label)) + '</h3>'
+      + renderStability(a.stability)
       + '<dl class="desk-figures">'
       + '<div><dt>الأثر كما طُلب</dt><dd>' + escapeHtml(number(a.scored.delayVehHours))
       + ' ساعة-مركبة</dd></div>'

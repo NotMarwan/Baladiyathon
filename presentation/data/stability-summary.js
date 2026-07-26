@@ -1,0 +1,1 @@
+window.ATHAR_STABILITY = {"total":150,"counts":{"stable":0,"conditional":50,"fragile":26,"insufficient":74},"decidable":50,"abstained":100,"abstainedShare":67,"topAsk":{"assumption":"residualCapacityFraction","flipsRecommendations":82,"flipsShare":55,"dataNeeded":"قياس تدفق على الحارات المفتوحة أثناء إغلاق جزئي."}};

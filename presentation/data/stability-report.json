@@ -1,0 +1,3687 @@
+{
+  "generatedFrom": "presentation/scripts/build-stability-report.js",
+  "total": 150,
+  "counts": {
+    "stable": 0,
+    "conditional": 50,
+    "fragile": 26,
+    "insufficient": 74
+  },
+  "decidable": 50,
+  "abstained": 100,
+  "abstainedShare": 67,
+  "thresholds": {
+    "fragileFlips": 1,
+    "insufficientFlips": 3,
+    "conditionalSwingPct": 50
+  },
+  "abstentionMessage": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+  "dataAsks": [
+    {
+      "assumption": "residualCapacityFraction",
+      "flipsRecommendations": 82,
+      "flipsShare": 55,
+      "dataNeeded": "قياس تدفق على الحارات المفتوحة أثناء إغلاق جزئي."
+    },
+    {
+      "assumption": "aadt",
+      "flipsRecommendations": 79,
+      "flipsShare": 53,
+      "dataNeeded": "عدّاد حركة على المقطع بدقة الساعة — من الأمانة أو مركز إدارة الحركة. مزوّدو المسبار لا ينتجون حجماً."
+    },
+    {
+      "assumption": "capacityPerLane",
+      "flipsRecommendations": 65,
+      "flipsShare": 43,
+      "dataNeeded": "قياس تدفق تشبّع على شريان رياض مماثل عند إشارة."
+    },
+    {
+      "assumption": "workZoneFriction",
+      "flipsRecommendations": 52,
+      "flipsShare": 35,
+      "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+    },
+    {
+      "assumption": "weightNightPremium",
+      "flipsRecommendations": 34,
+      "flipsShare": 23,
+      "dataNeeded": "اعتماد علاوة العمل الليلي من الجهة — تكلفة تشغيل وسياسة إزعاج، لا معامل مروري يُقاس."
+    },
+    {
+      "assumption": "weightSensitivity",
+      "flipsRecommendations": 25,
+      "flipsShare": 17,
+      "dataNeeded": "اعتماد وزن حساسية الجوار من الجهة — تفضيل سياسة لا قياس. لا بيانات ميدانية تحسمه، والقرار يبقى معلَّقاً حتى يُعتمد."
+    },
+    {
+      "assumption": "freeFlowMin",
+      "flipsRecommendations": 14,
+      "flipsShare": 9,
+      "dataNeeded": "زمن رحلة مقيس عبر المقطع في ساعة انسياب حر — متاح من مزوّد حركة اليوم بلا انتظار جهة."
+    },
+    {
+      "assumption": "hourlyProfileShape",
+      "flipsRecommendations": 14,
+      "flipsShare": 9,
+      "dataNeeded": "ملف طلب ساعي سعودي منشور، أو سلسلة عدّ محلية لأربعة أسابيع تغطي أيام العمل والعطلة."
+    }
+  ],
+  "honesty": "التصنيف يقيس **ترتيب البدائل** لا حجم الأثر. حجم الأثر يتأرجح أكثر من مئتي بالمئة في كل حالة تقريباً، ولذلك يُعرض مدىً لا رقماً حتى حين يكون الترتيب مستقراً.",
+  "rows": [
+    {
+      "permitRef": "BLD-2026-0001",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 464,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8462,
+        "highVehHours": 41035,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0002",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5218,
+        "highVehHours": 27293,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0003",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 191,
+        "highVehHours": 999,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0004",
+      "street": "الإمام عبدالعزيز بن محمد بن سعود",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 381٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 381,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3169,
+        "highVehHours": 13735,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0005",
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 570,
+        "highVehHours": 2983,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0006",
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 484,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 11220,
+        "highVehHours": 56083,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0007",
+      "street": "الأمير طلال بن عبدالعزيز",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1079,
+        "highVehHours": 5642,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0008",
+      "street": "الأمير عبدالعزيز بن مساعد بن جلوي",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7164,
+        "highVehHours": 37475,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0009",
+      "street": "الأمير محمد بن عبد الرحمن",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: زمن السريان الحر عبر المقطع، الحركة اليومية للشارع (AADT)، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4454,
+        "highVehHours": 23297,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "freeFlowMin",
+        "aadt",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0010",
+      "street": "البطحاء",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 459,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1427,
+        "highVehHours": 7006,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0011",
+      "street": "البطحاء",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1128,
+        "highVehHours": 5899,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0012",
+      "street": "البطحاء",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 886,
+        "highVehHours": 4633,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0013",
+      "street": "السويدي العام",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 318,
+        "highVehHours": 1662,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0014",
+      "street": "الشيخ جابر الأحمد الصباح",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5248,
+        "highVehHours": 27453,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0015",
+      "street": "الطريق الدائري الثاني",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1241,
+        "highVehHours": 6493,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0016",
+      "street": "الطريق الدائري الشمالي",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 466,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1017,
+        "highVehHours": 4927,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0017",
+      "street": "الطريق الدائري الشمالي",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 286,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1808,
+        "highVehHours": 6651,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0018",
+      "street": "العريجاء",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: حدّة ذروة الطلب الساعي، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 212,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4792,
+        "highVehHours": 14308,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "hourlyProfileShape",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0019",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2660,
+        "highVehHours": 13914,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 266,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 25596,
+        "highVehHours": 88628,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0021",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 425٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 425,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3988,
+        "highVehHours": 18328,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0022",
+      "street": "النهضة",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: زمن السريان الحر عبر المقطع، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2015,
+        "highVehHours": 10539,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "freeFlowMin",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0023",
+      "street": "خديجة بنت خويلد",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 379,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 17391,
+        "highVehHours": 75318,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0024",
+      "street": "شارع الأمير متعب بن عبدالله بن عبدالعزيز",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 335,
+        "highVehHours": 1753,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 317,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 20847,
+        "highVehHours": 79971,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0026",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 668,
+        "highVehHours": 3495,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0027",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3763,
+        "highVehHours": 19686,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0028",
+      "street": "طريق أبي بكر الصديق",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 345,
+        "highVehHours": 1803,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0029",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 493,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7251,
+        "highVehHours": 36652,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0030",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 315,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7393,
+        "highVehHours": 28730,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0031",
+      "street": "طريق الأمير فيصل بن بندر بن عبدالعزيز",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 487٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 487,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4593,
+        "highVehHours": 23182,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0032",
+      "street": "طريق الأمير محمد بن سلمان بن عبدالعزيز",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 475٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 475,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1462,
+        "highVehHours": 7199,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0033",
+      "street": "طريق الثمامة",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 539,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6613,
+        "highVehHours": 34589,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0034",
+      "street": "طريق الجنادرية",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 480,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4587,
+        "highVehHours": 22779,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0035",
+      "street": "طريق الجنادرية",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 361,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 9276,
+        "highVehHours": 39095,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0036",
+      "street": "طريق الخرج السريع",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1663,
+        "highVehHours": 8698,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0037",
+      "street": "طريق الدائري الشرقي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "7 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 472,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6552,
+        "highVehHours": 32062,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "freeFlowMin",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0038",
+      "street": "طريق الدمام",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 443,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2657,
+        "highVehHours": 12482,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0039",
+      "street": "طريق الدمام",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 366,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6404,
+        "highVehHours": 27133,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0040",
+      "street": "طريق الدمام",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 421,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8526,
+        "highVehHours": 39094,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0041",
+      "street": "طريق المدينة المنورة",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 497٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 497,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2806,
+        "highVehHours": 14218,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0042",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 459,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1888,
+        "highVehHours": 9070,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0043",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2954,
+        "highVehHours": 15452,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0044",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 297,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7060,
+        "highVehHours": 26347,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 295,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 20445,
+        "highVehHours": 76407,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0046",
+      "street": "طريق الملك فهد الفرعي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5588,
+        "highVehHours": 29227,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "freeFlowMin",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0047",
+      "street": "طريق الملك فهد الفرعي",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1777,
+        "highVehHours": 9294,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0048",
+      "street": "طريق خريص",
+      "roadClass": "arterial",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1047,
+        "highVehHours": 5477,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0049",
+      "street": "طريق ديراب",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1072,
+        "highVehHours": 5605,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0050",
+      "street": "طريق صلاح الدين الأيوبي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 381,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4996,
+        "highVehHours": 21718,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0051",
+      "street": "طريق صلاح الدين الأيوبي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 512,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4116,
+        "highVehHours": 21331,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0052",
+      "street": "طريق عمر بن الخطاب",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 392,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5169,
+        "highVehHours": 22802,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0053",
+      "street": "طريق مكة المكرمة الفرعي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 542,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1796,
+        "highVehHours": 9393,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "freeFlowMin",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0054",
+      "street": "طريق مكة المكرمة الفرعي",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 389,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6369,
+        "highVehHours": 28036,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0055",
+      "street": "عائشة بنت أبي بكر",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 961,
+        "highVehHours": 5027,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0056",
+      "street": "عبد العزيز بن مساعد بن جلوي",
+      "roadClass": "arterial",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: حدّة ذروة الطلب الساعي، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 188,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3203,
+        "highVehHours": 8857,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "hourlyProfileShape",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0057",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4037,
+        "highVehHours": 21116,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0058",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "7 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، زمن السريان الحر عبر المقطع، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 344,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 12091,
+        "highVehHours": 49370,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "freeFlowMin",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0059",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 398,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7412,
+        "highVehHours": 32983,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0060",
+      "street": "وادي الساحل",
+      "roadClass": "arterial",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 658,
+        "highVehHours": 3439,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "freeFlowMin",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0061",
+      "street": "إبراهيم عبداللطيف آل الشيخ",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 259,
+        "highVehHours": 1354,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0062",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 322,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1205,
+        "highVehHours": 4657,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 253,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 23617,
+        "highVehHours": 79255,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0064",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 356,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6547,
+        "highVehHours": 27376,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0065",
+      "street": "الاحساء",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "7 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 525,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4097,
+        "highVehHours": 21430,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "freeFlowMin",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0066",
+      "street": "الإمام الشافعي",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: احتكاك منطقة العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 720,
+        "highVehHours": 3768,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0067",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 346,
+        "highVehHours": 1808,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0068",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1217,
+        "highVehHours": 6366,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0069",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 308,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4129,
+        "highVehHours": 15794,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0070",
+      "street": "الأمير عبدالله بن عبدالرحمن بن فيصل",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 317,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 9575,
+        "highVehHours": 36710,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0071",
+      "street": "الأمير مساعد بن عبدالرحمن بن فيصل",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 377,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 11677,
+        "highVehHours": 50524,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0072",
+      "street": "الأمين عبدالله العلي النعيم",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 539,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 561,
+        "highVehHours": 2933,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0073",
+      "street": "الأمين عبدالله العلي النعيم",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "8 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، زمن السريان الحر عبر المقطع، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 428,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 15347,
+        "highVehHours": 70443,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "freeFlowMin",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0074",
+      "street": "الدائري الجنوبي",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5597,
+        "highVehHours": 29274,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0075",
+      "street": "الداخلة",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: حدّة ذروة الطلب الساعي، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 185,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2919,
+        "highVehHours": 8004,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "hourlyProfileShape",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0076",
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: احتكاك منطقة العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1278,
+        "highVehHours": 6684,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0077",
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 380,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8740,
+        "highVehHours": 37917,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0078",
+      "street": "الشيخ محمد بن عبداللطيف بن عبدالرحمن",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1239,
+        "highVehHours": 6479,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0079",
+      "street": "الطائف",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 181,
+        "highVehHours": 948,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0080",
+      "street": "الطائف",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 889,
+        "highVehHours": 4650,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0081",
+      "street": "النصر",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 775,
+        "highVehHours": 4054,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0082",
+      "street": "بلال بن رباح",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2961,
+        "highVehHours": 15489,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0083",
+      "street": "بلال بن رباح",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4365,
+        "highVehHours": 22835,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0084",
+      "street": "سدير",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 429,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 11129,
+        "highVehHours": 51625,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0085",
+      "street": "شارع ابن حسان",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 358,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8941,
+        "highVehHours": 37386,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0086",
+      "street": "شارع ابن حسان",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 485,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6002,
+        "highVehHours": 29937,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0087",
+      "street": "شارع ابن حسان",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 480,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1741,
+        "highVehHours": 8630,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0088",
+      "street": "شارع الاحساء",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "7 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 515,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6856,
+        "highVehHours": 35564,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "freeFlowMin",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0089",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3344,
+        "highVehHours": 17493,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0090",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2868,
+        "highVehHours": 15001,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0091",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5698,
+        "highVehHours": 29806,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0092",
+      "street": "شارع أم الحمام",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "7 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، زمن السريان الحر عبر المقطع، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 341,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3725,
+        "highVehHours": 15193,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "freeFlowMin",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0093",
+      "street": "شارع جرير",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 502,
+        "highVehHours": 2624,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0094",
+      "street": "شارع خالد بن الوليد",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2783,
+        "highVehHours": 14557,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0095",
+      "street": "شارع سعد بن أبي وقاص",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 583,
+        "highVehHours": 3049,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0096",
+      "street": "شارع سعد بن أبي وقاص",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 486,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 3009,
+        "highVehHours": 15048,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0097",
+      "street": "طريق ابن الهيثم",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 324,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 11129,
+        "highVehHours": 43884,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0098",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 492٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 492,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1180,
+        "highVehHours": 5965,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0099",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 416,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1053,
+        "highVehHours": 4789,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0100",
+      "street": "طريق الأمير محمد بن سعد بن عبدالعزيز",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "8 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، زمن السريان الحر عبر المقطع، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 388,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6676,
+        "highVehHours": 29334,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "freeFlowMin",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0101",
+      "street": "طريق الأمير محمد بن عبد العزيز",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1771,
+        "highVehHours": 9262,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0102",
+      "street": "طريق الصحابة",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 483,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6669,
+        "highVehHours": 33227,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0103",
+      "street": "طريق خديجة بنت خويلد",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2096,
+        "highVehHours": 10966,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0104",
+      "street": "طريق خديجة بنت خويلد",
+      "roadClass": "major",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 357,
+        "highVehHours": 1867,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0105",
+      "street": "عبدالرحمن الغافقي",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 423,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1293,
+        "highVehHours": 5937,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0106",
+      "street": "عبدالرحمن بن عوف",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 490,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 4723,
+        "highVehHours": 23783,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0107",
+      "street": "علي بن أبي طالب",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 618,
+        "highVehHours": 3231,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، حدّة ذروة الطلب الساعي، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 258,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 17226,
+        "highVehHours": 58523,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "hourlyProfileShape",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0109",
+      "street": "عمرو بن العاص",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 266,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6590,
+        "highVehHours": 22448,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0110",
+      "street": "محمد رشيد رضا",
+      "roadClass": "major",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 399,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 17182,
+        "highVehHours": 76681,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0111",
+      "street": "نبع",
+      "roadClass": "major",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 445,
+        "highVehHours": 2329,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0112",
+      "street": "آل داود",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1540,
+        "highVehHours": 8057,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0113",
+      "street": "ابن الجوزي",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2306,
+        "highVehHours": 12061,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0114",
+      "street": "ابي بكر الرازي",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2200,
+        "highVehHours": 11507,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0115",
+      "street": "أحمد بن محمد السديري",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1635,
+        "highVehHours": 8553,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0116",
+      "street": "الإمام سعود بن عبدالعزيز بن محمد الفرعي",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، زمن السريان الحر عبر المقطع، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 421,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1047,
+        "highVehHours": 4791,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "freeFlowMin",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0117",
+      "street": "الأمير تركي بن عبدالعزيز الثاني",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1650,
+        "highVehHours": 8629,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0118",
+      "street": "الأمير عبدالرحمن بن عبدالعزيز",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 518,
+        "highVehHours": 2708,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0119",
+      "street": "الأمير محمد بن فيصل بن تركي",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: حدّة ذروة الطلب الساعي، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "aadt",
+      "magnitude": {
+        "worstSwingPct": 195,
+        "drivenBy": "الحركة اليومية للشارع (AADT)",
+        "lowVehHours": 2284,
+        "highVehHours": 13518,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "عدّاد حركة على المقطع بدقة الساعة — من الأمانة أو مركز إدارة الحركة. مزوّدو المسبار لا ينتجون حجماً."
+      },
+      "flipping": [
+        "hourlyProfileShape",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0120",
+      "street": "البحار",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 482,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7690,
+        "highVehHours": 38171,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0121",
+      "street": "البلدية",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2292,
+        "highVehHours": 11990,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0122",
+      "street": "الحويطة",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 358,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 9850,
+        "highVehHours": 41093,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0123",
+      "street": "الخيمة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 503٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 503,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 966,
+        "highVehHours": 5048,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0124",
+      "street": "الربع الخالي",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 725,
+        "highVehHours": 3790,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0125",
+      "street": "الشفق",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2814,
+        "highVehHours": 14721,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0126",
+      "street": "الشيخ عبدالله المخضوب",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 425٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 425,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1466,
+        "highVehHours": 6736,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0127",
+      "street": "العباس بن عبدالمطلب",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 955,
+        "highVehHours": 4994,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0128",
+      "street": "المثنى بن حارثة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 609,
+        "highVehHours": 3184,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0129",
+      "street": "المهندس مساعد العنقري",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 431,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 7950,
+        "highVehHours": 36758,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0130",
+      "street": "إمتداد الطريق الدائري الشرقي - وصلة الخرج)",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1919,
+        "highVehHours": 10038,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "residualCapacityFraction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0131",
+      "street": "تميم الداري",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 518٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 518,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5956,
+        "highVehHours": 31113,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0132",
+      "street": "حزام الدوسري",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، وزن الجوار الحسّاس، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 453,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8017,
+        "highVehHours": 38283,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightSensitivity",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "6 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، زمن السريان الحر عبر المقطع، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 342,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 16609,
+        "highVehHours": 67702,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "freeFlowMin",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0134",
+      "street": "شارع أبي بن معاذ الأنصاري",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 515,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1220,
+        "highVehHours": 6353,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0135",
+      "street": "شارع الأمير مقرن بن عبدالعزيز",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 370٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 370,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2806,
+        "highVehHours": 11990,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0136",
+      "street": "شارع الحميد",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 375,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 8662,
+        "highVehHours": 37345,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0137",
+      "street": "شارع الضياء",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 394,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5456,
+        "highVehHours": 24149,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0138",
+      "street": "شارع الكرامة",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "5 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل، علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1434,
+        "highVehHours": 7502,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction",
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0139",
+      "street": "شارع حلب",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: الحركة اليومية للشارع (AADT)، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 417,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 5971,
+        "highVehHours": 27185,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0140",
+      "street": "شارع سعيد بن عبدالله السيد",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 511٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 511,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1670,
+        "highVehHours": 8639,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0141",
+      "street": "شارع عبدالله بن قيس",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2624,
+        "highVehHours": 13723,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0142",
+      "street": "شارع وادي حنيفة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1048,
+        "highVehHours": 5484,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0143",
+      "street": "طريق الإمام سعود بن فيصل الفرعي",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1005,
+        "highVehHours": 5256,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0144",
+      "street": "طريق العروبة الفرعي",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "4 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: احتكاك منطقة العمل، الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 6280,
+        "highVehHours": 32850,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0145",
+      "street": "طريق وادي حنيفة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 525٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 525,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2006,
+        "highVehHours": 10495,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0146",
+      "street": "عبدالرحمن بن عزاز",
+      "roadClass": "local",
+      "state": "insufficient",
+      "label": "أدلة غير كافية",
+      "decidable": false,
+      "reason": "3 افتراضاً مستقلاً يقلب التوصية كلٌّ وحده — لا ترتيب ينجو: الحركة اليومية للشارع (AADT)، سعة الحارة، السعة أثناء وجود الموقع خارج ساعات العمل",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 336,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2721,
+        "highVehHours": 10776,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "aadt",
+        "capacityPerLane",
+        "residualCapacityFraction"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0147",
+      "street": "عرقة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 208٪ مع «الحركة اليومية للشارع (AADT)» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "aadt",
+      "magnitude": {
+        "worstSwingPct": 208,
+        "drivenBy": "الحركة اليومية للشارع (AADT)",
+        "lowVehHours": 1876,
+        "highVehHours": 12755,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "عدّاد حركة على المقطع بدقة الساعة — من الأمانة أو مركز إدارة الحركة. مزوّدو المسبار لا ينتجون حجماً."
+      },
+      "flipping": []
+    },
+    {
+      "permitRef": "BLD-2026-0148",
+      "street": "ماجد بن عبد الله القصبي",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "2 افتراضاً يقلب التوصية داخل نطاقه المعقول: احتكاك منطقة العمل، وزن الجوار الحسّاس",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 400,
+        "highVehHours": 2090,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "workZoneFriction",
+        "weightSensitivity"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0149",
+      "street": "محمد حامد الفقي",
+      "roadClass": "local",
+      "state": "fragile",
+      "label": "هشّة",
+      "decidable": false,
+      "reason": "1 افتراضاً يقلب التوصية داخل نطاقه المعقول: علاوة العمل الليلي",
+      "abstention": "التوصية غير مستقرة عبر نطاق الافتراضات — تحتاج بيانات إضافية أو مراجعة خبير.",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 1050,
+        "highVehHours": 5491,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": [
+        "weightNightPremium"
+      ]
+    },
+    {
+      "permitRef": "BLD-2026-0150",
+      "street": "وادي الرمة",
+      "roadClass": "local",
+      "state": "conditional",
+      "label": "مستقرّة بشرط",
+      "decidable": true,
+      "reason": "الترتيب ثابت عبر كل الافتراضات، وحجم الأثر يتحرك 550٪ مع «احتكاك منطقة العمل» — يُعرض مدىً لا رقماً",
+      "abstention": "",
+      "dominant": "workZoneFriction",
+      "magnitude": {
+        "worstSwingPct": 550,
+        "drivenBy": "احتكاك منطقة العمل",
+        "lowVehHours": 2911,
+        "highVehHours": 15227,
+        "defensible": false,
+        "note": "رقم ساعات-المركبة غير قابل للدفاع عنه مفرداً — يُعرض مدىً.",
+        "dataNeeded": "قياس سعة داخل منطقة عمل فعلية في الرياض: تدفق مقيس على الحارات المفتوحة أثناء الإغلاق. هذا هو الافتراض الأول الذي يستحق حالةً ميدانية واحدة."
+      },
+      "flipping": []
+    }
+  ]
+}

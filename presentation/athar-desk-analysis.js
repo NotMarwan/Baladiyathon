@@ -23,11 +23,11 @@
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory();
+    module.exports = factory(require('./athar-stability.js'));
   } else {
-    root.AtharDeskAnalysis = factory();
+    root.AtharDeskAnalysis = factory(root.AtharStability);
   }
-})(typeof self !== 'undefined' ? self : this, function () {
+})(typeof self !== 'undefined' ? self : this, function (Stability) {
   'use strict';
 
   /** حدّا مدة التصريح كما في `scripts/build-city-portfolio.js` — لا رقمان. */
@@ -97,6 +97,28 @@
   }
 
   /**
+   * ذاكرة تصنيف الاستقرار.
+   *
+   * التصنيف يستدعي `optimize` عشرين مرة، وقياسه هنا ربع ثانية للتصريح
+   * الواحد. والمكتب يُفرز بلوحة المفاتيح — تصريح كل ثانية أو أقل — فربعُ
+   * ثانية عند كل تحديد يُشعر بالبطء. المفتاح رقم التصريح ونسخة مدخلاته معاً:
+   * تعديل المدخلات يبطل الذاكرة، وإعادة التحديد لا تبطلها.
+   */
+  var stabilityCache = {};
+
+  function classifyCached(properties, input) {
+    if (!Stability || !Stability.classify) return null;
+    var key = (properties.permitRef || properties.id || '?')
+      + '|' + (properties.inputsVersion || '') + '|' + (properties.version || '');
+    if (Object.prototype.hasOwnProperty.call(stabilityCache, key)) {
+      return stabilityCache[key];
+    }
+    var verdict = Stability.classify(input);
+    stabilityCache[key] = verdict;
+    return verdict;
+  }
+
+  /**
    * حصيلة القرار لتصريح واحد.
    * @param {object} properties خصائص التصريح
    * @param {object} Engine محرك أثر
@@ -123,8 +145,15 @@
     var vot = Engine.timeValueSAR(ph);
     var carbon = Engine.co2Range(asked);
 
+    /* استقرار التوصية يُحسب هنا لا في الواجهة: الشاشة التي تعرض توصيةً
+       دون أن تعرف هل تنقلب بافتراض واحد تعرض ثقةً لا تملكها. وغياب الوحدة
+       (صفحة لم تحمّلها) يعطي `null` — والواجهة تعرض «غير مفحوص» لا
+       «مستقرّة». الافتراض الصامت هنا كان سيكون أسوأ صمت في المنتج. */
+    var stability = classifyCached(properties, planInput(input));
+
     return {
       scored: { delayVehHours: asked, delayPct: delayPercent(scored), level: scored.level },
+      stability: stability,
       alternatives: alternatives,
       reasons: (best && best.reasons) || [],
       delta: bestTotal !== null && asked > 0 ? ((bestTotal - asked) / asked) * 100 : null,

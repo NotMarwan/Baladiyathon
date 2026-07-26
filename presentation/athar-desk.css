@@ -991,3 +991,32 @@ kbd {
   font-size: 0.72rem;
   color: var(--athar-muted);
 }
+
+/* ---- استقرار التوصية ----
+   الحالة تقع تحت عنوان التوصية مباشرة. اللون يفصل القابل للقرار عن الممتنع،
+   والحدّ الجانبي يجعل الفرق مقروءاً بلا اعتماد على اللون وحده. */
+.desk-stability {
+  margin: var(--athar-space-2) 0;
+  padding: var(--athar-space-2) var(--athar-space-3);
+  border-inline-start: 3px solid var(--athar-line);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--athar-muted);
+  background: var(--athar-surface-2, transparent);
+}
+.desk-stability-label { font-weight: 700; color: var(--athar-text); }
+.desk-stability[data-state="stable"] { border-inline-start-color: var(--athar-success); }
+.desk-stability[data-state="conditional"] { border-inline-start-color: var(--athar-accent); }
+.desk-stability[data-state="fragile"] { border-inline-start-color: var(--athar-warning); }
+.desk-stability[data-state="insufficient"] { border-inline-start-color: var(--athar-danger); }
+.desk-stability[data-state="unknown"] { border-inline-start-style: dashed; }
+
+.desk-asks { list-style: none; display: grid; gap: 6px; margin-top: 4px; }
+.desk-asks li {
+  display: grid; gap: 2px;
+  font-size: 0.78rem;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--athar-line);
+}
+.desk-asks .desk-hint { padding: 0; font-size: 0.72rem; }
