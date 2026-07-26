@@ -23,13 +23,14 @@
     module.exports = factory(
       require('./athar-portfolio.js'),
       require('./athar-engine.js'),
-      require('./data/wzdx-conformance-summary.json')
+      require('./data/wzdx-conformance-summary.json'),
+      require('./data/delta-decomposition.json')
     );
   } else {
     root.AtharCanonical = factory(root.AtharPortfolio, root.AtharEngine,
-      root.ATHAR_WZDX_CONFORMANCE);
+      root.ATHAR_WZDX_CONFORMANCE, root.ATHAR_DELTA_DECOMPOSITION);
   }
-})(typeof self !== 'undefined' ? self : this, function (Portfolio, Engine, wzdx) {
+})(typeof self !== 'undefined' ? self : this, function (Portfolio, Engine, wzdx, delta) {
   'use strict';
 
   /**
@@ -52,6 +53,14 @@
   function metrics() {
     var portfolio = Portfolio.buildPortfolio(Portfolio.SEED);
     var dig = portfolio.digOnceMerged;
+    /* التفكيك مولَّد لا محسوب هنا: يتطلب تشغيل المحرك بثوابت مستبدَلة، وهو
+       عمل توليدٍ لا عمل استدعاء. غيابه يسقط صراحةً بدل أن يُعرض الرقم عارياً
+       من قيوده — وهو الوضع الذي وُجدت هذه القيود لمنعه. */
+    if (!delta || !delta.hourShift || !delta.envelope) {
+      throw new Error('تفكيك الدلتا غير محمَّل — شغّل '
+        + 'presentation/scripts/build-delta-decomposition.js');
+    }
+    var dec = delta;
 
     return {
       portfolioPermitCount: {
@@ -106,6 +115,37 @@
         unit: '٪',
         meaning: 'فرق نموذجي بالنسبة — لا وفر مثبت',
       },
+      /* الحدّ «لا وفر مثبت» أعلاه صحيح ولا يكفي: القارئ يرى رقماً كبيراً
+         فيقرأه إنجازاً. القيود الثلاثة التالية تُولَّد مع الرقم من المحرك
+         نفسه (`scripts/build-delta-decomposition.js`) كي تسافر معه إلى أي
+         سطح، فلا يُعرض مفرداً. */
+      deltaHourShareLowPct: {
+        value: dec.hourShift.lowPct,
+        unit: '٪',
+        meaning: 'أدنى حصة لإزاحة ساعة البدء من الخفض',
+      },
+      deltaHourShareHighPct: {
+        value: dec.hourShift.highPct,
+        unit: '٪',
+        /* يتجاوز المئة، وهذا قياس لا خطأ: بنية النوافذ وحدها بلا إزاحة
+           الساعة تزيد التأخير، فالساعة تفسّر الخفض كله وزيادة. */
+        meaning: 'أعلى حصة لإزاحة ساعة البدء من الخفض — الإسناد يعتمد على ترتيب العوامل',
+      },
+      deltaEnvelopeLowPct: {
+        value: dec.envelope.lowPct,
+        unit: '٪',
+        meaning: 'أدنى الدلتا عبر افتراضَي الأرضية وأسّ المنحنى — كلاهما بلا سند',
+      },
+      deltaEnvelopeHighPct: {
+        value: dec.envelope.highPct,
+        unit: '٪',
+        meaning: 'أعلى الدلتا عبر الافتراضين نفسيهما',
+      },
+      baselineDaytimeStartSharePct: {
+        value: dec.baselineRealism.daytimeStartSharePct,
+        unit: '٪',
+        meaning: 'حصة تصاريح الأساس ببدء نهاري — الدلتا تقيس رداءة الأساس أيضاً',
+      },
     };
   }
 
@@ -137,6 +177,26 @@
       pattern: /طول متجنَّب|مسافة موفَّرة/,
       why: 'الطول مكافئ بافتراض تداخل تام؛ التداخل الهندسي غير محسوب.',
       instead: 'طول حفر مكرر مكافئ (بافتراض تداخل تام).',
+    },
+    {
+      /* الرقم الأخطر في المنتج، لأنه الوحيد الذي يُقرأ إنجازاً بلا وسيط.
+         التفكيك المولَّد أثبت ثلاثة أشياء عنه، كلها تنقض قراءته مفرداً:
+         جُلّه من إزاحة ساعة البدء وحدها، وموضعه داخل مداه يحدده افتراضان
+         بلا سند، وأساسه شبه كلّه بدء نهاري. */
+      /* لا يُدرَج «وفر مثبت» هنا رغم كونه الادعاء المقصود حرفياً: لا يرد في
+         المستودع إلا داخل نفيه — «لا وفر مثبت» — وهو التحفّظ نفسه. فحظره
+         يُسقط البوابةَ على التحفّظات ويترك الادعاءات. */
+      pattern: /وفر(?:ت|نا)? \d|توفير \d|خفض(?:نا)? التأخير بنسبة/,
+      why: 'الدلتا فرق بين جدولين داخل نموذج، لا وفر مقيس ميدانياً. و'
+        + Math.round(delta.hourShift.lowPct) + '٪ إلى '
+        + Math.round(delta.hourShift.highPct) + '٪ منها من نقل ساعة العمل '
+        + 'إلى الليل وحدها.',
+      instead: 'فرق نموذجي بين الجدول المقدَّم والأمثل: '
+        + delta.governing.deltaPct.toFixed(1) + '٪ ضمن مدى '
+        + delta.envelope.lowPct.toFixed(1) + '–' + delta.envelope.highPct.toFixed(1)
+        + '٪ بحسب افتراضين بلا سند، مقابل أساسٍ '
+        + Math.round(delta.baselineRealism.daytimeStartSharePct)
+        + '٪ منه بدء نهاري. لم يُقَس ميدانياً في الرياض.',
     },
   ];
 

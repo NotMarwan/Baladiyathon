@@ -148,6 +148,46 @@
       "limit": "فرق نموذجي بالنسبة — لا وفر مثبت"
     },
     {
+      "key": "deltaHourShareLowPct",
+      "value": 65.03805566306426,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "أدنى حصة لإزاحة ساعة البدء من الخفض"
+    },
+    {
+      "key": "deltaHourShareHighPct",
+      "value": 104.94866151260857,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "أعلى حصة لإزاحة ساعة البدء من الخفض — الإسناد يعتمد على ترتيب العوامل"
+    },
+    {
+      "key": "deltaEnvelopeLowPct",
+      "value": 83.89101700444336,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "أدنى الدلتا عبر افتراضَي الأرضية وأسّ المنحنى — كلاهما بلا سند"
+    },
+    {
+      "key": "deltaEnvelopeHighPct",
+      "value": 97.90677765358141,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "أعلى الدلتا عبر الافتراضين نفسيهما"
+    },
+    {
+      "key": "baselineDaytimeStartSharePct",
+      "value": 94,
+      "unit": "٪",
+      "source": "athar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "حصة تصاريح الأساس ببدء نهاري — الدلتا تقيس رداءة الأساس أيضاً"
+    },
+    {
       "key": "wzdxPassed",
       "value": 144,
       "unit": "تصريح",
