@@ -43,11 +43,13 @@ const visible = html
   .replace(/<!--[\s\S]*?-->/g, ' ')
   .replace(/<[^>]+>/g, ' ');
 
-test('العرض اثنتا عشرة شريحة — خانة المنصة لا أرشيف', () => {
+test('العرض ثلاث عشرة شريحة — خانة المنصة لا أرشيف', () => {
   /* واحد وعشرون شريحة في خانة خمس دقائق تعني خمس عشرة ثانية للشريحة.
-     العرض التفصيلي يبقى منفصلاً لمن يقرأ. */
+     العرض التفصيلي يبقى منفصلاً لمن يقرأ.
+     والثالثة عشرة أُضيفت لسؤال ساكن — «أين يقع الطابور؟» — وهو سؤالٌ يُسأل
+     على المنصة فيُجاب فيها، لا يُحال إلى مرفق. */
   const slides = (html.match(/class="slide/g) || []).length;
-  assert.strictEqual(slides, 12, `${slides} شريحة — العرض خرج عن حجم المنصة`);
+  assert.strictEqual(slides, 13, `${slides} شريحة — العرض خرج عن حجم المنصة`);
 });
 
 test('كل رقم مرئي مسنود بسطر في الجرد', () => {
@@ -68,7 +70,11 @@ test('كل رقم مرئي مسنود بسطر في الجرد', () => {
 test('الأرقام الحاكمة حاضرة فعلاً — لا قالب فارغ', () => {
   /* بوابة السند وحدها تمرّ على عرض خالٍ من الأرقام. هذه تشترط الحضور. */
   ['alternateOverflows', 'interopFeedFeatures', 'checksPassed', 'stabilityAbstained',
-    'localMeasuredCases', 'portfolioDeltaPct'].forEach((key) => {
+    'localMeasuredCases', 'portfolioDeltaPct',
+    /* شريحة الحيّ: الرقم الحاكم، ومعه ما يجعله مقروءاً — السعة التي تُقاس
+       عليها، وصفر إنقاذٍ بتوسيع البحث. رقمٌ بلا هذين يُقرأ رأياً. */
+    'neighbourhoodOverloaded', 'neighbourhoodCapacity',
+    'neighbourhoodWiderSearchRescued'].forEach((key) => {
     const row = figures.find((f) => f.key === key);
     assert.ok(row, `${key} غائب عن الجرد`);
     assert.ok(visible.indexOf(fmt(row.value)) !== -1,

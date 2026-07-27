@@ -342,9 +342,53 @@
           + escapeHtml(entry.bindingStreet) + '</dd></div>'
         : '')
       + '</dl>'
+      + neighbourhoodBlock(entry.neighbourhood)
       + '<p class="desk-source">مشتقّ من النموذج عند ساعة مرجعية واحدة — '
       + 'الحركة المحوَّلة مقدَّرة من حصة المسارات المغلقة، والسعة افتراض معلن. '
       + 'لا قياس ميداني.</p>';
+  }
+
+  /**
+   * أين يقع الحمل — على شبكةٍ بُنيت له، أم أمام البيوت؟
+   *
+   * «لا يتحمّل» وحدها لا تكفي متخذ القرار: طابورٌ على شريان كلفةٌ على من اختار
+   * الطريق، وطابورٌ في حيٍّ كلفةٌ على من لم يختر شيئاً ولم يُسأل. والرقم واحد
+   * في الحالين، فيُفصَّل هنا.
+   *
+   * وحين لا يجنّب الحيَّ أيُّ بديل، فالمعروض ليس مساراً بل **قرار**: هذا
+   * الإغلاق بلا بديل مقبول، وتصريفه نافذةٌ أخرى أو إغلاقٌ جزئي أو خطة أخرى —
+   * لا طريقٌ آخر. وإخفاء ذلك خلف «استخدم البديل» يحوّل المشكلة إلى حيٍّ سكني
+   * بلا إعلان.
+   */
+  function neighbourhoodBlock(hood) {
+    if (!hood || !hood.key || hood.key === 'unknown') return '';
+    var head = '<p class="desk-card-label">أين يقع الحمل؟</p>'
+      + '<p class="desk-hood is-' + escapeHtml(hood.key) + '">'
+      + '<strong>' + escapeHtml(hood.label) + '</strong> — '
+      + escapeHtml(hood.plain) + '</p>';
+    if (hood.key === 'none') return head;
+
+    /* قبل/بعد على الشارع السكني تحديداً. وهو جوهر ما يعيشه الساكن: الشارع
+       لم يكن مزدحماً، والإغلاق هو ما أزدحمه. «بعد» وحدها تُقرأ كأن الحيّ
+       كان مزدحماً أصلاً فتُبرّئ الإغلاق. */
+    var rows = '<dl class="desk-figures">'
+      + '<div><dt>أكثر مقطع سكني تحميلاً — قبل</dt><dd>'
+      + escapeHtml(decimal(hood.ratioBefore * 100)) + '٪ من سعته</dd></div>'
+      + '<div><dt>بعد التحويل</dt><dd>'
+      + escapeHtml(decimal(hood.ratioAfter * 100)) + '٪ من سعته</dd></div>'
+      + (hood.bindingStreet
+        ? '<div><dt>الشارع السكني المقيِّد</dt><dd>'
+          + escapeHtml(hood.bindingStreet) + '</dd></div>'
+        : '')
+      + '</dl>';
+
+    var decision = hood.sparedByAnyAlternative === false
+      ? '<p class="desk-hood-decision">لا بديل مقبول: كل بديل محسوب يدفع '
+        + 'شارعاً سكنياً فوق سعته. <strong>هذا الإغلاق قرارٌ لا مسار</strong> — '
+        + 'تصريفه نافذةٌ أخرى أو إغلاقٌ جزئي أو تنسيقٌ مع جهةٍ أخرى، لا توجيهُ '
+        + 'الحركة إلى الحيّ.</p>'
+      : '';
+    return head + rows + decision;
   }
 
   /**

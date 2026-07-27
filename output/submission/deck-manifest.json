@@ -237,7 +237,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1221,
+      "value": 1233,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
@@ -245,7 +245,7 @@
     },
     {
       "key": "suitesPassed",
-      "value": 74,
+      "value": 75,
       "unit": "حزمة",
       "source": "presentation/tests/fixtures/test-manifest.json",
       "grade": "model-derived",
@@ -330,6 +330,70 @@
       "source": "data/alternate-load.json — ساعة مرجعية 8",
       "grade": "model-derived",
       "limit": "لم يُحسب له بديل — هندسة نقطية بلا خطّ يُحوَّل حوله. غياب حكم لا حكم بالسلامة."
+    },
+    {
+      "key": "neighbourhoodOverloaded",
+      "value": 103,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "بديلها الأفضل يدفع شارعاً سكنياً فوق سعته المعلنة في النموذج. وفتح البحث على أهداف المحرك الخمسة كلها لم ينقذ منها واحداً. ولا يقيس أثراً على السكان — لا ضجيج ولا سلامة ولا سرعة عند البيوت."
+    },
+    {
+      "key": "neighbourhoodComputed",
+      "value": 118,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "ما حُسب له بديل فعلاً — والباقي هندسة نقطية بلا خطّ يُحوَّل حوله. قراءة النسبة على 150 تُصغّر المشكلة بمقامٍ لم يُفحص."
+    },
+    {
+      "key": "neighbourhoodSpared",
+      "value": 15,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "بديلها لا يدخل حيّاً، أو يدخله ويبقى دون سعته. حكمٌ عند ساعة مرجعية واحدة — ساعة أخرى قد تعطي غيره."
+    },
+    {
+      "key": "neighbourhoodWiderSearchRescued",
+      "value": 0,
+      "unit": "تصريح",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها، بحثٌ بعمق 5 مقابل 2 في العرض",
+      "grade": "model-derived",
+      "limit": "صفر يعني أن الحكم ليس أثراً لضيق البحث. ولا يعني أن لا بديل موجود في الواقع: المحرك يبحث بخمسة أهداف على رسمٍ مبسَّط، لا على شبكة الرياض كاملة بإشاراتها وممنوعاتها."
+    },
+    {
+      "key": "neighbourhoodLoadBeforeShare",
+      "value": 12,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "وسيط حمل أكثر مقطعٍ سكني تحميلاً على البديل، قبل التحويل. الوسيط لا المتوسط: أقصى حالة تبلغ أضعاف السعة فتجرّ المتوسط."
+    },
+    {
+      "key": "neighbourhoodLoadAfterShare",
+      "value": 145,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "الوسيط نفسه بعد التحويل. فوق المئة يعني طابوراً في النموذج لا زمن تأخير مقيساً، ولا يعرف النموذج أن الساكن قد يؤجّل رحلته."
+    },
+    {
+      "key": "neighbourhoodWorstShare",
+      "value": 592,
+      "unit": "٪",
+      "source": "data/alternate-load.json — ساعة مرجعية 8 — نطاق أصناف residential وliving_street وunclassified، بعتبة السعة نفسها",
+      "grade": "model-derived",
+      "limit": "أسوأ حالة في المحفظة — حدٌّ أعلى لا حالٌ معتاد."
+    },
+    {
+      "key": "neighbourhoodCapacity",
+      "value": 600,
+      "unit": "مركبة/ساعة",
+      "source": "data/riyadh-route-graph.js — جدول أصناف الطرق، صنف residential",
+      "grade": "model-derived",
+      "limit": "سعة افتراضية معلنة من جدول الأصناف، لا عدّاً ميدانياً على شارع بعينه."
     },
     {
       "key": "alternateCaseBeforeShare",

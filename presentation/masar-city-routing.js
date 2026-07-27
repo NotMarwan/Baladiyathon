@@ -445,6 +445,20 @@
    * بداية التحويلة يسير عليها إلى نهايتها. توزيعها بالحصص يفترض تسرّباً
    * جانبياً لا تملك الشبكة دليلاً عليه.
    *
+   * **ولماذا يُقاس حمل الشوارع السكنية على حدة.**
+   *
+   * `maxRatioAfter` أقصى نسبةٍ على البديل كلّه، ولا يقول **أين** وقعت. وهذا
+   * فرقٌ يعيشه الناس: طابورٌ على شريان طريقٌ بُني ليحمل، وطابورٌ أمام البيوت
+   * أثرٌ على من لم يطلب التحويل ولم يُسأل عنه. والرقم واحد في الحالين.
+   *
+   * فتُحسب النسبة نفسها مقصورةً على أصناف `MINOR_NAMES` — الشوارع التي يسكنها
+   * الناس لا التي تعبرهم. والعتبة هي 1.0 نفسها التي يستعملها `overflows`، لا
+   * عتبةً جديدة: الشارع السكني له سعةٌ معلنة في جدول الأصناف، وتجاوزها تجاوز.
+   *
+   * وهذا **تفصيلٌ للحكم القائم لا نقضٌ له**: كل ضلع سكني يتجاوز سعته يرفع
+   * `maxRatioAfter` فوق الواحد بالضرورة، فـ `minorOverflows` مجموعة جزئية من
+   * `overflows` لا تناقضه. مقيسٌ على المحفظة: صفر تناقض.
+   *
    * @returns {object} النسب قبل وبعد، والضلع الحاكم، والزمن بعد التحميل
    */
   function loadRoute(prepared, route, divertedVehPerHour, hour) {
@@ -454,6 +468,10 @@
     var after = 0;
     var bindingIndex = -1;
     var minutesAfter = 0;
+    var minorBefore = 0;
+    var minorAfter = 0;
+    var minorBinding = -1;
+    var minorCount = 0;
 
     edges.forEach(function (index) {
       var edge = graph.edges[index];
@@ -462,6 +480,13 @@
       if (plain.ratio > before) before = plain.ratio;
       if (loaded.ratio > after) { after = loaded.ratio; bindingIndex = index; }
       minutesAfter += loaded.minutes;
+      /* نفس الحساب، نفس المرور على الأضلاع. مرورٌ ثانٍ منفصل يفترق عن الأول
+         عند أول تعديل، فتصير نسبة الحيّ من معادلة ونسبة الطريق من أخرى. */
+      if (isMinorClass(prepared, edge)) {
+        minorCount += 1;
+        if (plain.ratio > minorBefore) minorBefore = plain.ratio;
+        if (loaded.ratio > minorAfter) { minorAfter = loaded.ratio; minorBinding = index; }
+      }
     });
 
     /* زمن الانعطاف والتحكّم لا يتغيّر بالحجم في هذا النموذج، فيُنقل كما هو
@@ -476,6 +501,14 @@
       bindingStreet: bindingIndex >= 0 ? nameOf(graph, bindingIndex) : '',
       bindingEdge: bindingIndex,
       minutesAfter: minutesAfter,
+      /* حمل الحيّ — الأضلاع السكنية وحدها. `minorEdges === 0` يعني بديلاً لا
+         يدخل حيّاً أصلاً، وهو حالٌ مختلف عن «يدخل ويتحمّل»، فيبقى مميَّزاً. */
+      minorEdges: minorCount,
+      minorMaxRatioBefore: minorBefore,
+      minorMaxRatioAfter: minorAfter,
+      minorOverflows: minorCount > 0 && minorAfter > 1,
+      minorBindingStreet: minorBinding >= 0 ? nameOf(graph, minorBinding) : '',
+      minorBindingEdge: minorBinding,
     };
   }
 

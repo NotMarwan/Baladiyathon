@@ -1038,3 +1038,22 @@ kbd {
 .desk-alt-load.is-overflows { color: var(--masar-danger); }
 .desk-alt-load.is-near-capacity { color: var(--masar-warning); }
 .desk-alt-load.is-carries { color: var(--masar-success); }
+
+/* أين يقع الحمل. التحميل فوق سعة الحيّ يأخذ لون الخطر لا لون التحذير:
+   أثره على من لم يختر الطريق ولم يُسأل، وهو أشدّ لا أخفّ. */
+.desk-hood { font-size: 0.84rem; line-height: 1.65; margin: var(--masar-space-2) 0; }
+.desk-hood.is-overloaded { color: var(--masar-danger); }
+.desk-hood.is-within { color: var(--masar-warning); }
+.desk-hood.is-none { color: var(--masar-success); }
+
+/* «لا بديل مقبول» ليس رقماً بل قرار — فيُعرض كتلةً لا سطراً في جدول، كي
+   لا يُقرأ حاشيةً على أرقام أعلاه. */
+.desk-hood-decision {
+  font-size: 0.84rem;
+  line-height: 1.7;
+  margin: var(--masar-space-2) 0;
+  padding: var(--masar-space-2) var(--masar-space-3);
+  border-inline-start: 3px solid var(--masar-danger);
+  background: color-mix(in oklab, var(--masar-danger) 8%, transparent);
+  border-radius: 0 6px 6px 0;
+}

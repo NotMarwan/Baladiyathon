@@ -163,6 +163,58 @@ function build() {
     'لم يُحسب له بديل — هندسة نقطية بلا خطّ يُحوَّل حوله. غياب حكم لا حكم '
     + 'بالسلامة.'));
 
+  /* أين يقع الحمل — سؤالُ ساكن لا سؤالُ مهندس.
+     `alternateOverflows` يقول إن طابوراً يتكوّن ولا يقول أين، وهذه الأرقام
+     تقوله. وهي **تفصيلٌ للتعداد أعلاه لا تعدادٌ ثانٍ**: كل محمَّلٍ على حيّ
+     داخلٌ في `alternateOverflows`. */
+  const hood = alternate.neighbourhood;
+  if (!hood || !hood.tally) {
+    throw new Error('alternate-load.json بلا قسم للحيّ — أعد توليده بـ '
+      + 'build-alternate-load.js قبل بناء الجرد');
+  }
+  const hoodSource = altSource + ' — نطاق أصناف residential وliving_street '
+    + 'وunclassified، بعتبة السعة نفسها';
+  const pct = (ratio) => Math.round(ratio * 100);
+
+  figures.push(figure('neighbourhoodOverloaded', hood.tally.overloaded, 'تصريح',
+    hoodSource, alternate.grade,
+    'بديلها الأفضل يدفع شارعاً سكنياً فوق سعته المعلنة في النموذج. وفتح '
+    + 'البحث على أهداف المحرك الخمسة كلها لم ينقذ منها واحداً. ولا يقيس '
+    + 'أثراً على السكان — لا ضجيج ولا سلامة ولا سرعة عند البيوت.'));
+  /* المقام معروضٌ مع البسط. «103» بلا مقام يُسأل عنه فوراً، و«من 150» خطأ:
+     32 تصريحاً بلا بديل محسوب أصلاً، فالمقام هو ما حُسب له بديل. */
+  figures.push(figure('neighbourhoodComputed',
+    hood.tally.none + hood.tally.within + hood.tally.overloaded, 'تصريح',
+    hoodSource, alternate.grade,
+    'ما حُسب له بديل فعلاً — والباقي هندسة نقطية بلا خطّ يُحوَّل حوله. '
+    + 'قراءة النسبة على 150 تُصغّر المشكلة بمقامٍ لم يُفحص.'));
+  figures.push(figure('neighbourhoodSpared',
+    hood.tally.none + hood.tally.within, 'تصريح', hoodSource, alternate.grade,
+    'بديلها لا يدخل حيّاً، أو يدخله ويبقى دون سعته. حكمٌ عند ساعة مرجعية '
+    + 'واحدة — ساعة أخرى قد تعطي غيره.'));
+  figures.push(figure('neighbourhoodWiderSearchRescued', hood.widerSearchRescued,
+    'تصريح', hoodSource + `، بحثٌ بعمق ${hood.auditSearchCount} مقابل `
+    + `${hood.displaySearchCount} في العرض`, alternate.grade,
+    'صفر يعني أن الحكم ليس أثراً لضيق البحث. ولا يعني أن لا بديل موجود في '
+    + 'الواقع: المحرك يبحث بخمسة أهداف على رسمٍ مبسَّط، لا على شبكة الرياض '
+    + 'كاملة بإشاراتها وممنوعاتها.'));
+
+  figures.push(figure('neighbourhoodLoadBeforeShare',
+    pct(hood.medianMinorRatioBefore), '٪', hoodSource, alternate.grade,
+    'وسيط حمل أكثر مقطعٍ سكني تحميلاً على البديل، قبل التحويل. الوسيط لا '
+    + 'المتوسط: أقصى حالة تبلغ أضعاف السعة فتجرّ المتوسط.'));
+  figures.push(figure('neighbourhoodLoadAfterShare',
+    pct(hood.medianMinorRatioAfter), '٪', hoodSource, alternate.grade,
+    'الوسيط نفسه بعد التحويل. فوق المئة يعني طابوراً في النموذج لا زمن '
+    + 'تأخير مقيساً، ولا يعرف النموذج أن الساكن قد يؤجّل رحلته.'));
+  figures.push(figure('neighbourhoodWorstShare',
+    pct(hood.worstMinorRatioAfter), '٪', hoodSource, alternate.grade,
+    'أسوأ حالة في المحفظة — حدٌّ أعلى لا حالٌ معتاد.'));
+  figures.push(figure('neighbourhoodCapacity', hood.minorCapacityVehPerHour,
+    'مركبة/ساعة', 'data/riyadh-route-graph.js — جدول أصناف الطرق، صنف '
+    + 'residential', 'model-derived',
+    'سعة افتراضية معلنة من جدول الأصناف، لا عدّاً ميدانياً على شارع بعينه.'));
+
   const example = alternate.permits[EXAMPLE_PERMIT];
   if (!example || !example.ratioAfter) {
     throw new Error(`${EXAMPLE_PERMIT}: الحالة المعروضة في العرض غير موجودة `
