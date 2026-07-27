@@ -461,6 +461,21 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 .wm-legend-line { width: 26px; height: 0; border-top: 2.4px dashed currentColor; flex: 0 0 auto; }
 .wm-legend-solid { border-top-style: solid; }
 
+/*
+ * المعلم دائرة والعمل خط — والفرق مقصود.
+ * الخط يعني تدخّلاً على مقطع من الشارع، والدائرة تعني وجهةً تقع بجواره. لو
+ * أخذ الاثنان الشكل نفسه لصار الدليل يشرح لونين لمعنىً واحد. والعرض ٢٦ بكسل
+ * محجوز للخط، فتُوسَّط الدائرة داخله كي يبقى عمود النصّ مستقيماً.
+ */
+.wm-legend-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  margin-inline: 8.5px;
+  box-shadow: 0 0 0 1.5px var(--wm-surface), 0 0 0 2.2px var(--wm-border);
+}
+
 .wm-legend-split {
   margin-top: 8px;
   padding-top: 6px;

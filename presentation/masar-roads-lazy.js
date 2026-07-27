@@ -120,13 +120,43 @@
     });
   }
 
+  var POI = { src: 'data/riyadh-poi.geojson.js', globalName: 'RIYADH_POI' };
+
+  /**
+   * معالم المدينة — حمولة مؤجَّلة كغيرها، وموضعها هنا لا في الصفحات.
+   * ---------------------------------------------------------------------------
+   * ملفها كسرٌ من ملف المباني، وأثرها البصري أكبر: المدينة بلا وجهاتٍ تُقرأ
+   * شبكةً هندسية، وبها تُقرأ مدينةً. فلا توضع خلف حمولةٍ بستة عشر ميغابايت،
+   * بل تُطلب بعد جاهزية الخريطة مباشرةً.
+   *
+   * ويُسقط الفشل صامتاً: غياب المعالم لا يمنع قراءة عملٍ ولا اتخاذ قرار، وطبقةُ
+   * سياقٍ لا يجوز أن تُسقط صفحةً. وكذلك `setPoi` الغائبة — خريطةٌ لم تُقلع لا
+   * نمط لها ولا مصدر، فلا شيء يُكتب فيه.
+   *
+   * وثلاث صفحات تستدعيها بسطرٍ واحد لا باثني عشر. اثنتان منها فوق ميزانيتهما
+   * في `file-budget-test`، والقاعدة صريحة: المتجاوز لا يُزاد عليه. فالمنطق
+   * والتعليل هنا — في الوحدة التي تملك التأجيل أصلاً — والصفحة تنادي فقط.
+   *
+   * @param {object} GL ناتج MasarWorksMap.init — يحمل setPoi.
+   */
+  function attachPoi(GL, options) {
+    var opts = options || {};
+    if (!GL || typeof GL.setPoi !== 'function') return;
+    load(opts.src || POI.src, opts.globalName || POI.globalName, function (err, poi) {
+      if (!err) GL.setPoi(poi);
+      if (opts.onDone) opts.onDone(err);
+    });
+  }
+
   return {
     attach: attach,
     attachBuildings: attachBuildings,
+    attachPoi: attachPoi,
     load: load,
     merge: merge,
     DEFAULT_SRC: DEFAULT_SRC,
     DEFAULT_GLOBAL: DEFAULT_GLOBAL,
     BUILDINGS: BUILDINGS,
+    POI: POI,
   };
 });

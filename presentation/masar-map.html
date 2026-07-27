@@ -181,6 +181,13 @@
     if (typeof MasarBuildingsLazy !== 'undefined') {
       window.__masarBuildings = MasarBuildingsLazy.install(GL.map);
     }
+    /*
+     * المعالم داخل `armMapLayers` لا خارجه: `setPoi` تكتب في مصدرٍ من النمط،
+     * والنمط غائبٌ في الوضع المتدهور. خارج الحاجز تُسقط رميتُها السجلاتِ
+     * والبحثَ والعدّاد — أي الصفحة كلها على ساكنٍ يبحث عن شارعه، ثمناً لطبقة
+     * سياق. والتعليل الكامل للتأجيل في `masar-roads-lazy.js`.
+     */
+    if (typeof MasarRoadsLazy !== 'undefined') MasarRoadsLazy.attachPoi(GL);
     } // ← نهاية armMapLayers
 
     var works = window.MASAR_CITY_PORTFOLIO || { type: 'FeatureCollection', features: [] };

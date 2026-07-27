@@ -449,6 +449,7 @@
     var style = Style.buildStyle(roadsGeoJSON, opts.baseGeoJSON || featureCollection([]), {
       glyphsUrl: opts.glyphsUrl || 'vendor/glyphs/{fontstack}/{range}.pbf',
       spriteUrl: opts.spriteUrl || 'vendor/sprite/sprite',
+      poi: opts.poi || null,
     });
 
     var map = new maplibre.Map({
@@ -629,7 +630,23 @@
       fireReadyOnce(null);
     });
 
-    return { map: map, api: api };
+    /**
+     * تحميل المعالم بعد الإطار الأول.
+     * ---------------------------------------------------------------------
+     * المعالم زينةٌ سياقية لا شرطَ عرض، وملفها بالميغابايت. تمريرها في
+     * `opts.poi` يؤخّر أول رسم بقدر تحليلها — وأول رسم هو ما يحكم عليه
+     * المحكّم. فالمسار المفضّل: افتح الخريطة فارغةً منها، ثم استدعِ هذه بعد
+     * `onReady`. والمصدر موجود سلفاً في النمط فارغاً، فلا إعادة بناء للنمط
+     * ولا وميض طبقات.
+     */
+    function setPoi(collection) {
+      var source = map.getSource && map.getSource('poi');
+      if (!source || !source.setData) return false;
+      source.setData(collection || featureCollection([]));
+      return true;
+    }
+
+    return { map: map, api: api, setPoi: setPoi };
   }
 
   return { init: init, API_METHODS: API_METHODS, _buildApi: buildApi };
