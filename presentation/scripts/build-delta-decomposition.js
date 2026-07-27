@@ -217,8 +217,11 @@ function main() {
     loadEngineWith('const WORK_ZONE_FRICTION = 1.10;',
       'const WORK_ZONE_FRICTION = 1.00;'),
     permits);
+  /* الأسّ صار ثابتاً مسمّى (`BPR_BETA`) يوم أُضيف عكس الدالة، كي لا يفترق
+     الأمام عن العكس. فالاستبدال يستهدف تعريف الثابت لا موضع استعماله —
+     وموضعُ الاستعمال صار واحداً للدالتين معاً. */
   const linearCurve = portfolioDelta(
-    loadEngineWith('Math.pow(ratio, 4)', 'Math.pow(ratio, 1)'),
+    loadEngineWith('const BPR_BETA = 4;', 'const BPR_BETA = 1;'),
     permits);
 
   const bounds = [governing.pct, noFloor.pct, linearCurve.pct];

@@ -9,631 +9,231 @@
    "id": "p001",
    "permitRef": "BLD-2026-0001",
    "input": {
-    "aadt": 79347,
+    "aadt": 56000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 8,
-    "durationHours": 142
+    "durationHours": 125
    },
-   "delayVehHours": 12528.33733146713,
-   "score": 45,
-   "level": "medium"
+   "delayVehHours": 3363.07767718542,
+   "score": 17,
+   "level": "low"
   },
   {
    "id": "p002",
    "permitRef": "BLD-2026-0002",
    "input": {
-    "aadt": 36957,
-    "lanes": 3,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 220
+    "startHour": 12,
+    "durationHours": 77
    },
-   "delayVehHours": 3885.228542194371,
-   "score": 30,
-   "level": "medium"
+   "delayVehHours": 2051.853386071532,
+   "score": 10,
+   "level": "low"
   },
   {
    "id": "p003",
    "permitRef": "BLD-2026-0003",
    "input": {
-    "aadt": 18545,
-    "lanes": 2,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 21,
-    "durationHours": 50
+    "durationHours": 198
    },
-   "delayVehHours": 448.63698812302863,
-   "score": 7,
-   "level": "low"
+   "delayVehHours": 5167.048334962453,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p004",
    "permitRef": "BLD-2026-0004",
    "input": {
-    "aadt": 23620,
-    "lanes": 2,
+    "aadt": 42000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 14,
-    "durationHours": 143
+    "durationHours": 94
    },
-   "delayVehHours": 2915.542045027839,
-   "score": 35,
-   "level": "medium"
+   "delayVehHours": 2403.809073571619,
+   "score": 16,
+   "level": "low"
   },
   {
    "id": "p005",
    "permitRef": "BLD-2026-0005",
    "input": {
-    "aadt": 39095,
+    "aadt": 42000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 20,
-    "durationHours": 52
+    "startHour": 11,
+    "durationHours": 101
    },
-   "delayVehHours": 1027.0766007325074,
-   "score": 8,
+   "delayVehHours": 2540.235478614939,
+   "score": 17,
    "level": "low"
   },
   {
    "id": "p006",
    "permitRef": "BLD-2026-0006",
    "input": {
-    "aadt": 76768,
-    "lanes": 4,
+    "aadt": 42000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 8,
-    "durationHours": 201
+    "durationHours": 95
    },
-   "delayVehHours": 15405.399838499714,
-   "score": 57,
-   "level": "medium"
+   "delayVehHours": 2403.340125422486,
+   "score": 16,
+   "level": "low"
   },
   {
    "id": "p007",
    "permitRef": "BLD-2026-0007",
    "input": {
-    "aadt": 45368,
+    "aadt": 42000,
     "lanes": 3,
-    "lanesClosed": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 140
+    "startHour": 10,
+    "durationHours": 201
    },
-   "delayVehHours": 64565.79669259734,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 5221.850389891648,
+   "score": 36,
+   "level": "medium"
   },
   {
    "id": "p008",
    "permitRef": "BLD-2026-0008",
    "input": {
-    "aadt": 42761,
+    "aadt": 42000,
     "lanes": 3,
-    "lanesClosed": 1,
+    "lanesClosed": 2,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 233
+    "startHour": 23,
+    "durationHours": 136
    },
-   "delayVehHours": 6449.373135461544,
-   "score": 43,
-   "level": "medium"
+   "delayVehHours": 40181.52141247065,
+   "score": 100,
+   "level": "high"
   },
   {
    "id": "p009",
    "permitRef": "BLD-2026-0009",
    "input": {
-    "aadt": 35008,
+    "aadt": 42000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 187
+    "startHour": 12,
+    "durationHours": 28
    },
-   "delayVehHours": 2981.6017135862394,
-   "score": 24,
+   "delayVehHours": 689.0651651363322,
+   "score": 5,
    "level": "low"
   },
   {
    "id": "p010",
    "permitRef": "BLD-2026-0010",
    "input": {
-    "aadt": 87377,
+    "aadt": 56000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 19,
-    "durationHours": 40
+    "startHour": 7,
+    "durationHours": 25
    },
-   "delayVehHours": 4752.771024845622,
-   "score": 16,
+   "delayVehHours": 677.9638186921941,
+   "score": 3,
    "level": "low"
   },
   {
    "id": "p011",
    "permitRef": "BLD-2026-0011",
    "input": {
-    "aadt": 13320,
-    "lanes": 2,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 121
+    "startHour": 9,
+    "durationHours": 239
    },
-   "delayVehHours": 674.0662728164803,
-   "score": 14,
-   "level": "low"
+   "delayVehHours": 6321.940745737672,
+   "score": 32,
+   "level": "medium"
   },
   {
    "id": "p012",
    "permitRef": "BLD-2026-0012",
    "input": {
-    "aadt": 87492,
+    "aadt": 56000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 20,
-    "durationHours": 35
+    "startHour": 9,
+    "durationHours": 181
    },
-   "delayVehHours": 3466.3866929640035,
-   "score": 11,
-   "level": "low"
+   "delayVehHours": 4931.226785172608,
+   "score": 25,
+   "level": "medium"
   },
   {
    "id": "p013",
    "permitRef": "BLD-2026-0013",
    "input": {
-    "aadt": 16978,
-    "lanes": 2,
+    "aadt": 42000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 24
+    "startHour": 11,
+    "durationHours": 102
    },
-   "delayVehHours": 180.91932636575277,
-   "score": 3,
+   "delayVehHours": 2564.746800812467,
+   "score": 17,
    "level": "low"
   },
   {
    "id": "p014",
    "permitRef": "BLD-2026-0014",
    "input": {
-    "aadt": 53813,
-    "lanes": 3,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 151
+    "startHour": 14,
+    "durationHours": 35
    },
-   "delayVehHours": 9812.979167028161,
-   "score": 52,
-   "level": "medium"
+   "delayVehHours": 998.2227851394146,
+   "score": 5,
+   "level": "low"
   },
   {
    "id": "p015",
    "permitRef": "BLD-2026-0015",
    "input": {
-    "aadt": 16884,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 111
-   },
-   "delayVehHours": 846.8992786588133,
-   "score": 14,
-   "level": "low"
-  },
-  {
-   "id": "p016",
-   "permitRef": "BLD-2026-0016",
-   "input": {
-    "aadt": 45305,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 27
-   },
-   "delayVehHours": 862.1270735734128,
-   "score": 5,
-   "level": "low"
-  },
-  {
-   "id": "p017",
-   "permitRef": "BLD-2026-0017",
-   "input": {
-    "aadt": 52026,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 36
-   },
-   "delayVehHours": 2158.1883544876137,
-   "score": 12,
-   "level": "low"
-  },
-  {
-   "id": "p018",
-   "permitRef": "BLD-2026-0018",
-   "input": {
-    "aadt": 84853,
-    "lanes": 4,
-    "lanesClosed": 3,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 201
-   },
-   "delayVehHours": 2012264.3813117258,
-   "score": 100,
-   "level": "high"
-  },
-  {
-   "id": "p019",
-   "permitRef": "BLD-2026-0019",
-   "input": {
-    "aadt": 17688,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 13,
-    "durationHours": 192
-   },
-   "delayVehHours": 1567.2473992842213,
-   "score": 25,
-   "level": "medium"
-  },
-  {
-   "id": "p020",
-   "permitRef": "BLD-2026-0020",
-   "input": {
-    "aadt": 87054,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 13,
-    "durationHours": 231
-   },
-   "delayVehHours": 30744.528775651484,
-   "score": 100,
-   "level": "high"
-  },
-  {
-   "id": "p021",
-   "permitRef": "BLD-2026-0021",
-   "input": {
-    "aadt": 22467,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 209
-   },
-   "delayVehHours": 3490.5872389245087,
-   "score": 44,
-   "level": "medium"
-  },
-  {
-   "id": "p022",
-   "permitRef": "BLD-2026-0022",
-   "input": {
-    "aadt": 38402,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 73
-   },
-   "delayVehHours": 1422.1365381598455,
-   "score": 11,
-   "level": "low"
-  },
-  {
-   "id": "p023",
-   "permitRef": "BLD-2026-0023",
-   "input": {
-    "aadt": 86748,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 222
-   },
-   "delayVehHours": 29300.744229554744,
-   "score": 97,
-   "level": "high"
-  },
-  {
-   "id": "p024",
-   "permitRef": "BLD-2026-0024",
-   "input": {
-    "aadt": 14384,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 145
-   },
-   "delayVehHours": 867.6636217072967,
-   "score": 17,
-   "level": "low"
-  },
-  {
-   "id": "p025",
-   "permitRef": "BLD-2026-0025",
-   "input": {
-    "aadt": 83007,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 237
-   },
-   "delayVehHours": 25200.83644572039,
-   "score": 87,
-   "level": "high"
-  },
-  {
-   "id": "p026",
-   "permitRef": "BLD-2026-0026",
-   "input": {
-    "aadt": 36343,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 28
-   },
-   "delayVehHours": 474.269356552948,
-   "score": 4,
-   "level": "low"
-  },
-  {
-   "id": "p027",
-   "permitRef": "BLD-2026-0027",
-   "input": {
-    "aadt": 82698,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 70
-   },
-   "delayVehHours": 6964.584630936007,
-   "score": 24,
-   "level": "low"
-  },
-  {
-   "id": "p028",
-   "permitRef": "BLD-2026-0028",
-   "input": {
-    "aadt": 18692,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 21,
-    "durationHours": 91
-   },
-   "delayVehHours": 798.3256390194039,
-   "score": 12,
-   "level": "low"
-  },
-  {
-   "id": "p029",
-   "permitRef": "BLD-2026-0029",
-   "input": {
-    "aadt": 48204,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 212
-   },
-   "delayVehHours": 8966.672471312293,
-   "score": 53,
-   "level": "medium"
-  },
-  {
-   "id": "p030",
-   "permitRef": "BLD-2026-0030",
-   "input": {
-    "aadt": 82046,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 84
-   },
-   "delayVehHours": 8845.606907014617,
-   "score": 31,
-   "level": "medium"
-  },
-  {
-   "id": "p031",
-   "permitRef": "BLD-2026-0031",
-   "input": {
-    "aadt": 42607,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 163
-   },
-   "delayVehHours": 4380.493465726252,
-   "score": 29,
-   "level": "medium"
-  },
-  {
-   "id": "p032",
-   "permitRef": "BLD-2026-0032",
-   "input": {
-    "aadt": 44171,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 42
-   },
-   "delayVehHours": 1231.037409814862,
-   "score": 8,
-   "level": "low"
-  },
-  {
-   "id": "p033",
-   "permitRef": "BLD-2026-0033",
-   "input": {
-    "aadt": 44376,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 207
-   },
-   "delayVehHours": 6573.7911699425,
-   "score": 42,
-   "level": "medium"
-  },
-  {
-   "id": "p034",
-   "permitRef": "BLD-2026-0034",
-   "input": {
-    "aadt": 49073,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 129
-   },
-   "delayVehHours": 5799.238867799345,
-   "score": 34,
-   "level": "medium"
-  },
-  {
-   "id": "p035",
-   "permitRef": "BLD-2026-0035",
-   "input": {
-    "aadt": 79544,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 116
-   },
-   "delayVehHours": 10576.934247680929,
-   "score": 38,
-   "level": "medium"
-  },
-  {
-   "id": "p036",
-   "permitRef": "BLD-2026-0036",
-   "input": {
-    "aadt": 51603,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 201
-   },
-   "delayVehHours": 10764.524061497188,
-   "score": 60,
-   "level": "high"
-  },
-  {
-   "id": "p037",
-   "permitRef": "BLD-2026-0037",
-   "input": {
-    "aadt": 53522,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 170
-   },
-   "delayVehHours": 10989.008764010792,
-   "score": 59,
-   "level": "medium"
-  },
-  {
-   "id": "p038",
-   "permitRef": "BLD-2026-0038",
-   "input": {
-    "aadt": 46406,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 65
-   },
-   "delayVehHours": 2315.6769282549644,
-   "score": 14,
-   "level": "low"
-  },
-  {
-   "id": "p039",
-   "permitRef": "BLD-2026-0039",
-   "input": {
-    "aadt": 50240,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 131
-   },
-   "delayVehHours": 6708.2996843273395,
-   "score": 38,
-   "level": "medium"
-  },
-  {
-   "id": "p040",
-   "permitRef": "BLD-2026-0040",
-   "input": {
-    "aadt": 74902,
+    "aadt": 88000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
@@ -641,903 +241,1303 @@
     "startHour": 12,
     "durationHours": 124
    },
-   "delayVehHours": 8477.722215995218,
-   "score": 32,
+   "delayVehHours": 16926.414116650307,
+   "score": 55,
+   "level": "medium"
+  },
+  {
+   "id": "p016",
+   "permitRef": "BLD-2026-0016",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 80
+   },
+   "delayVehHours": 11022.007800978847,
+   "score": 36,
+   "level": "medium"
+  },
+  {
+   "id": "p017",
+   "permitRef": "BLD-2026-0017",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 21,
+    "durationHours": 143
+   },
+   "delayVehHours": 20051.78870787309,
+   "score": 65,
+   "level": "high"
+  },
+  {
+   "id": "p018",
+   "permitRef": "BLD-2026-0018",
+   "input": {
+    "aadt": 42000,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 12,
+    "durationHours": 80
+   },
+   "delayVehHours": 2169.8825887783805,
+   "score": 15,
+   "level": "low"
+  },
+  {
+   "id": "p019",
+   "permitRef": "BLD-2026-0019",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 12,
+    "durationHours": 167
+   },
+   "delayVehHours": 23418.145335649922,
+   "score": 76,
+   "level": "high"
+  },
+  {
+   "id": "p020",
+   "permitRef": "BLD-2026-0020",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 16,
+    "durationHours": 169
+   },
+   "delayVehHours": 23574.471484384754,
+   "score": 77,
+   "level": "high"
+  },
+  {
+   "id": "p021",
+   "permitRef": "BLD-2026-0021",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 2,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 21,
+    "durationHours": 201
+   },
+   "delayVehHours": 147472.27019397513,
+   "score": 100,
+   "level": "high"
+  },
+  {
+   "id": "p022",
+   "permitRef": "BLD-2026-0022",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 13,
+    "durationHours": 135
+   },
+   "delayVehHours": 3585.98821358201,
+   "score": 18,
+   "level": "low"
+  },
+  {
+   "id": "p023",
+   "permitRef": "BLD-2026-0023",
+   "input": {
+    "aadt": 42000,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 7,
+    "durationHours": 190
+   },
+   "delayVehHours": 4864.928438103529,
+   "score": 33,
+   "level": "medium"
+  },
+  {
+   "id": "p024",
+   "permitRef": "BLD-2026-0024",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 9,
+    "durationHours": 52
+   },
+   "delayVehHours": 6965.402572922731,
+   "score": 23,
+   "level": "low"
+  },
+  {
+   "id": "p025",
+   "permitRef": "BLD-2026-0025",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 12,
+    "durationHours": 41
+   },
+   "delayVehHours": 1063.8778473155705,
+   "score": 5,
+   "level": "low"
+  },
+  {
+   "id": "p026",
+   "permitRef": "BLD-2026-0026",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 14,
+    "durationHours": 65
+   },
+   "delayVehHours": 1677.926350389688,
+   "score": 9,
+   "level": "low"
+  },
+  {
+   "id": "p027",
+   "permitRef": "BLD-2026-0027",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 23,
+    "durationHours": 130
+   },
+   "delayVehHours": 3350.30119201239,
+   "score": 17,
+   "level": "low"
+  },
+  {
+   "id": "p028",
+   "permitRef": "BLD-2026-0028",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 18,
+    "durationHours": 145
+   },
+   "delayVehHours": 3938.561871532924,
+   "score": 20,
+   "level": "low"
+  },
+  {
+   "id": "p029",
+   "permitRef": "BLD-2026-0029",
+   "input": {
+    "aadt": 70000,
+    "lanes": 5,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 11,
+    "durationHours": 165
+   },
+   "delayVehHours": 5061.721927990579,
+   "score": 21,
+   "level": "low"
+  },
+  {
+   "id": "p030",
+   "permitRef": "BLD-2026-0030",
+   "input": {
+    "aadt": 70000,
+    "lanes": 5,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 110
+   },
+   "delayVehHours": 3566.4045760291333,
+   "score": 15,
+   "level": "low"
+  },
+  {
+   "id": "p031",
+   "permitRef": "BLD-2026-0031",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 10,
+    "durationHours": 78
+   },
+   "delayVehHours": 2069.685070391495,
+   "score": 11,
+   "level": "low"
+  },
+  {
+   "id": "p032",
+   "permitRef": "BLD-2026-0032",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 13,
+    "durationHours": 57
+   },
+   "delayVehHours": 1628.680106574295,
+   "score": 8,
+   "level": "low"
+  },
+  {
+   "id": "p033",
+   "permitRef": "BLD-2026-0033",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 10,
+    "durationHours": 107
+   },
+   "delayVehHours": 2961.341872233315,
+   "score": 15,
+   "level": "low"
+  },
+  {
+   "id": "p034",
+   "permitRef": "BLD-2026-0034",
+   "input": {
+    "aadt": 42000,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 14,
+    "durationHours": 78
+   },
+   "delayVehHours": 2130.7213013368573,
+   "score": 14,
+   "level": "low"
+  },
+  {
+   "id": "p035",
+   "permitRef": "BLD-2026-0035",
+   "input": {
+    "aadt": 42000,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 20,
+    "durationHours": 84
+   },
+   "delayVehHours": 1964.7855459633,
+   "score": 13,
+   "level": "low"
+  },
+  {
+   "id": "p036",
+   "permitRef": "BLD-2026-0036",
+   "input": {
+    "aadt": 66000,
+    "lanes": 3,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 17,
+    "durationHours": 106
+   },
+   "delayVehHours": 19032.965717408435,
+   "score": 82,
+   "level": "high"
+  },
+  {
+   "id": "p037",
+   "permitRef": "BLD-2026-0037",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 132
+   },
+   "delayVehHours": 19603.352243389534,
+   "score": 64,
+   "level": "high"
+  },
+  {
+   "id": "p038",
+   "permitRef": "BLD-2026-0038",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 79
+   },
+   "delayVehHours": 10976.904605055455,
+   "score": 36,
+   "level": "medium"
+  },
+  {
+   "id": "p039",
+   "permitRef": "BLD-2026-0039",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 10,
+    "durationHours": 143
+   },
+   "delayVehHours": 19969.46072613629,
+   "score": 65,
+   "level": "high"
+  },
+  {
+   "id": "p040",
+   "permitRef": "BLD-2026-0040",
+   "input": {
+    "aadt": 88000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 10,
+    "durationHours": 82
+   },
+   "delayVehHours": 12183.30914886818,
+   "score": 40,
    "level": "medium"
   },
   {
    "id": "p041",
    "permitRef": "BLD-2026-0041",
    "input": {
-    "aadt": 20462,
-    "lanes": 2,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 172
+    "startHour": 10,
+    "durationHours": 59
    },
-   "delayVehHours": 2092.205930619736,
-   "score": 29,
-   "level": "medium"
+   "delayVehHours": 1684.8475233683573,
+   "score": 9,
+   "level": "low"
   },
   {
    "id": "p042",
    "permitRef": "BLD-2026-0042",
    "input": {
-    "aadt": 45362,
-    "lanes": 3,
-    "lanesClosed": 1,
+    "aadt": 110000,
+    "lanes": 5,
+    "lanesClosed": 3,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 49
+    "startHour": 22,
+    "durationHours": 201
    },
-   "delayVehHours": 1614.3639603641307,
-   "score": 10,
-   "level": "low"
+   "delayVehHours": 456441.0604693424,
+   "score": 100,
+   "level": "high"
   },
   {
    "id": "p043",
    "permitRef": "BLD-2026-0043",
    "input": {
-    "aadt": 85039,
-    "lanes": 4,
+    "aadt": 110000,
+    "lanes": 5,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 204
+    "startHour": 10,
+    "durationHours": 224
    },
-   "delayVehHours": 23936.83509678842,
-   "score": 80,
+   "delayVehHours": 29696.1931302272,
+   "score": 77,
    "level": "high"
   },
   {
    "id": "p044",
    "permitRef": "BLD-2026-0044",
    "input": {
-    "aadt": 53322,
-    "lanes": 3,
+    "aadt": 110000,
+    "lanes": 5,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 118
+    "startHour": 20,
+    "durationHours": 150
    },
-   "delayVehHours": 7639.530553048123,
-   "score": 41,
+   "delayVehHours": 19434.646534855783,
+   "score": 50,
    "level": "medium"
   },
   {
    "id": "p045",
    "permitRef": "BLD-2026-0045",
    "input": {
-    "aadt": 83390,
+    "aadt": 88000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 234
+    "startHour": 15,
+    "durationHours": 112
    },
-   "delayVehHours": 26064.652421521292,
-   "score": 89,
-   "level": "high"
+   "delayVehHours": 15535.0654175798,
+   "score": 50,
+   "level": "medium"
   },
   {
    "id": "p046",
    "permitRef": "BLD-2026-0046",
    "input": {
-    "aadt": 36804,
-    "lanes": 3,
+    "aadt": 70000,
+    "lanes": 5,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 194
+    "startHour": 17,
+    "durationHours": 88
    },
-   "delayVehHours": 3389.6451003279035,
-   "score": 26,
-   "level": "medium"
+   "delayVehHours": 2690.5128438821803,
+   "score": 11,
+   "level": "low"
   },
   {
    "id": "p047",
    "permitRef": "BLD-2026-0047",
    "input": {
-    "aadt": 12955,
-    "lanes": 2,
+    "aadt": 70000,
+    "lanes": 5,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 195
+    "startHour": 9,
+    "durationHours": 227
    },
-   "delayVehHours": 1065.789720224758,
-   "score": 24,
-   "level": "low"
+   "delayVehHours": 7156.57404001288,
+   "score": 29,
+   "level": "medium"
   },
   {
    "id": "p048",
    "permitRef": "BLD-2026-0048",
    "input": {
-    "aadt": 17754,
-    "lanes": 2,
+    "aadt": 88000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 82
+    "startHour": 13,
+    "durationHours": 76
    },
-   "delayVehHours": 692.3777225017162,
-   "score": 11,
-   "level": "low"
+   "delayVehHours": 10295.125270115337,
+   "score": 33,
+   "level": "medium"
   },
   {
    "id": "p049",
    "permitRef": "BLD-2026-0049",
    "input": {
-    "aadt": 75692,
-    "lanes": 4,
+    "aadt": 54000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 83
+    "startHour": 20,
+    "durationHours": 49
    },
-   "delayVehHours": 5780.905450682544,
-   "score": 22,
+   "delayVehHours": 3275.7919647092567,
+   "score": 17,
    "level": "low"
   },
   {
    "id": "p050",
    "permitRef": "BLD-2026-0050",
    "input": {
-    "aadt": 49175,
-    "lanes": 3,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 110
+    "startHour": 23,
+    "durationHours": 187
    },
-   "delayVehHours": 5032.897028327063,
-   "score": 29,
+   "delayVehHours": 4892.096217114847,
+   "score": 25,
    "level": "medium"
   },
   {
    "id": "p051",
    "permitRef": "BLD-2026-0051",
    "input": {
-    "aadt": 73625,
+    "aadt": 56000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 75
+    "startHour": 8,
+    "durationHours": 196
    },
-   "delayVehHours": 5079.343677730489,
-   "score": 20,
-   "level": "low"
+   "delayVehHours": 5250.860874185823,
+   "score": 27,
+   "level": "medium"
   },
   {
    "id": "p052",
    "permitRef": "BLD-2026-0052",
    "input": {
-    "aadt": 47659,
-    "lanes": 3,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 143
+    "startHour": 10,
+    "durationHours": 231
    },
-   "delayVehHours": 5748.50997367149,
-   "score": 34,
+   "delayVehHours": 6206.92867777127,
+   "score": 32,
    "level": "medium"
   },
   {
    "id": "p053",
    "permitRef": "BLD-2026-0053",
    "input": {
-    "aadt": 21111,
-    "lanes": 2,
+    "aadt": 56000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 119
+    "startHour": 12,
+    "durationHours": 46
    },
-   "delayVehHours": 1605.4792174394213,
-   "score": 22,
+   "delayVehHours": 1225.9809016149554,
+   "score": 6,
    "level": "low"
   },
   {
    "id": "p054",
    "permitRef": "BLD-2026-0054",
    "input": {
-    "aadt": 77068,
+    "aadt": 56000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 91
+    "startHour": 22,
+    "durationHours": 182
    },
-   "delayVehHours": 6921.5206072920655,
-   "score": 26,
-   "level": "medium"
+   "delayVehHours": 4726.833311453455,
+   "score": 24,
+   "level": "low"
   },
   {
    "id": "p055",
    "permitRef": "BLD-2026-0055",
    "input": {
-    "aadt": 14450,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 94
-   },
-   "delayVehHours": 564.9655660763576,
-   "score": 11,
-   "level": "low"
-  },
-  {
-   "id": "p056",
-   "permitRef": "BLD-2026-0056",
-   "input": {
-    "aadt": 86889,
-    "lanes": 4,
-    "lanesClosed": 3,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 121
-   },
-   "delayVehHours": 1415463.116519969,
-   "score": 100,
-   "level": "high"
-  },
-  {
-   "id": "p057",
-   "permitRef": "BLD-2026-0057",
-   "input": {
-    "aadt": 82555,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 75
-   },
-   "delayVehHours": 7725.800473499169,
-   "score": 27,
-   "level": "medium"
-  },
-  {
-   "id": "p058",
-   "permitRef": "BLD-2026-0058",
-   "input": {
-    "aadt": 51157,
+    "aadt": 42000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 14,
-    "durationHours": 233
+    "durationHours": 192
    },
-   "delayVehHours": 12432.044282368517,
-   "score": 69,
-   "level": "high"
-  },
-  {
-   "id": "p059",
-   "permitRef": "BLD-2026-0059",
-   "input": {
-    "aadt": 48449,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 171
-   },
-   "delayVehHours": 7372.769537495348,
-   "score": 43,
+   "delayVehHours": 4885.940722026283,
+   "score": 33,
    "level": "medium"
   },
   {
-   "id": "p060",
-   "permitRef": "BLD-2026-0060",
+   "id": "p056",
+   "permitRef": "BLD-2026-0056",
    "input": {
-    "aadt": 36871,
+    "aadt": 42000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 11,
-    "durationHours": 24
+    "durationHours": 82
    },
-   "delayVehHours": 421.21961084202155,
-   "score": 3,
+   "delayVehHours": 2209.897177964895,
+   "score": 15,
    "level": "low"
   },
   {
-   "id": "p061",
-   "permitRef": "BLD-2026-0061",
+   "id": "p057",
+   "permitRef": "BLD-2026-0057",
    "input": {
-    "aadt": 14579,
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 23,
+    "durationHours": 85
+   },
+   "delayVehHours": 2158.1593232863206,
+   "score": 11,
+   "level": "low"
+  },
+  {
+   "id": "p058",
+   "permitRef": "BLD-2026-0058",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 13,
+    "durationHours": 226
+   },
+   "delayVehHours": 6112.095618038861,
+   "score": 31,
+   "level": "medium"
+  },
+  {
+   "id": "p059",
+   "permitRef": "BLD-2026-0059",
+   "input": {
+    "aadt": 56000,
+    "lanes": 4,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 126
+   },
+   "delayVehHours": 3388.33440081042,
+   "score": 17,
+   "level": "low"
+  },
+  {
+   "id": "p060",
+   "permitRef": "BLD-2026-0060",
+   "input": {
+    "aadt": 28000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 10,
-    "durationHours": 27
+    "durationHours": 128
    },
-   "delayVehHours": 166.01894232345788,
-   "score": 3,
-   "level": "low"
+   "delayVehHours": 5281.051454360296,
+   "score": 54,
+   "level": "medium"
+  },
+  {
+   "id": "p061",
+   "permitRef": "BLD-2026-0061",
+   "input": {
+    "aadt": 20000,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 222
+   },
+   "delayVehHours": 2511.741357618981,
+   "score": 36,
+   "level": "medium"
   },
   {
    "id": "p062",
    "permitRef": "BLD-2026-0062",
    "input": {
-    "aadt": 49415,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 18,
-    "durationHours": 33
+    "startHour": 19,
+    "durationHours": 94
    },
-   "delayVehHours": 1597.6872736304822,
-   "score": 9,
+   "delayVehHours": 998.7773858265053,
+   "score": 14,
    "level": "low"
   },
   {
    "id": "p063",
    "permitRef": "BLD-2026-0063",
    "input": {
-    "aadt": 87565,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 215
+    "startHour": 10,
+    "durationHours": 91
    },
-   "delayVehHours": 29436.898685271484,
-   "score": 96,
-   "level": "high"
+   "delayVehHours": 1009.4767853754505,
+   "score": 14,
+   "level": "low"
   },
   {
    "id": "p064",
    "permitRef": "BLD-2026-0064",
    "input": {
-    "aadt": 79733,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 80
+    "startHour": 16,
+    "durationHours": 88
    },
-   "delayVehHours": 7797.069116476143,
-   "score": 28,
-   "level": "medium"
+   "delayVehHours": 980.8060203494767,
+   "score": 14,
+   "level": "low"
   },
   {
    "id": "p065",
    "permitRef": "BLD-2026-0065",
    "input": {
-    "aadt": 49017,
-    "lanes": 3,
+    "aadt": 40000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 125
+    "startHour": 23,
+    "durationHours": 187
    },
-   "delayVehHours": 5508.237176223959,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 3097.4029065560158,
+   "score": 22,
+   "level": "low"
   },
   {
    "id": "p066",
    "permitRef": "BLD-2026-0066",
    "input": {
-    "aadt": 14097,
+    "aadt": 20000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 68
+    "startHour": 8,
+    "durationHours": 155
    },
-   "delayVehHours": 397.37790741476243,
-   "score": 8,
-   "level": "low"
+   "delayVehHours": 1813.284509975179,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p067",
    "permitRef": "BLD-2026-0067",
    "input": {
-    "aadt": 10584,
-    "lanes": 2,
+    "aadt": 10000,
+    "lanes": 1,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 18,
+    "startHour": 12,
     "durationHours": 64
    },
-   "delayVehHours": 274.29064625363935,
-   "score": 7,
-   "level": "low"
+   "delayVehHours": 1780.9793627264232,
+   "score": 51,
+   "level": "medium"
   },
   {
    "id": "p068",
    "permitRef": "BLD-2026-0068",
    "input": {
-    "aadt": 15240,
-    "lanes": 2,
+    "aadt": 10000,
+    "lanes": 1,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 19,
-    "durationHours": 212
+    "startHour": 17,
+    "durationHours": 140
    },
-   "delayVehHours": 1340.9522351832695,
-   "score": 25,
-   "level": "medium"
+   "delayVehHours": 3971.546170537634,
+   "score": 100,
+   "level": "high"
   },
   {
    "id": "p069",
    "permitRef": "BLD-2026-0069",
    "input": {
-    "aadt": 84011,
-    "lanes": 4,
+    "aadt": 10000,
+    "lanes": 1,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 44
+    "startHour": 13,
+    "durationHours": 101
    },
-   "delayVehHours": 5279.775395805273,
-   "score": 18,
-   "level": "low"
+   "delayVehHours": 2811.9091485818744,
+   "score": 80,
+   "level": "high"
   },
   {
    "id": "p070",
    "permitRef": "BLD-2026-0070",
    "input": {
-    "aadt": 83255,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 109
+    "startHour": 7,
+    "durationHours": 24
    },
-   "delayVehHours": 12178.704258860509,
-   "score": 42,
-   "level": "medium"
+   "delayVehHours": 270.08922562951824,
+   "score": 4,
+   "level": "low"
   },
   {
    "id": "p071",
    "permitRef": "BLD-2026-0071",
    "input": {
-    "aadt": 78172,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 153
+    "startHour": 10,
+    "durationHours": 90
    },
-   "delayVehHours": 13157.368208915665,
-   "score": 48,
-   "level": "medium"
+   "delayVehHours": 1008.0767848951407,
+   "score": 14,
+   "level": "low"
   },
   {
    "id": "p072",
    "permitRef": "BLD-2026-0072",
    "input": {
-    "aadt": 47369,
+    "aadt": 30000,
     "lanes": 3,
-    "lanesClosed": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 71
+    "startHour": 15,
+    "durationHours": 94
    },
-   "delayVehHours": 40805.73076845977,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 1176.0816205019732,
+   "score": 11,
+   "level": "low"
   },
   {
    "id": "p073",
    "permitRef": "BLD-2026-0073",
    "input": {
-    "aadt": 83615,
-    "lanes": 4,
+    "aadt": 30000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 230
+    "startHour": 14,
+    "durationHours": 166
    },
-   "delayVehHours": 26270.69884284384,
-   "score": 90,
-   "level": "high"
+   "delayVehHours": 2077.501688602413,
+   "score": 20,
+   "level": "low"
   },
   {
    "id": "p074",
    "permitRef": "BLD-2026-0074",
    "input": {
-    "aadt": 36876,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 228
+    "startHour": 18,
+    "durationHours": 226
    },
-   "delayVehHours": 4075.9395410263423,
-   "score": 32,
+   "delayVehHours": 2538.3712466724764,
+   "score": 36,
    "level": "medium"
   },
   {
    "id": "p075",
    "permitRef": "BLD-2026-0075",
    "input": {
-    "aadt": 87445,
-    "lanes": 4,
-    "lanesClosed": 3,
+    "aadt": 20000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 109
+    "startHour": 13,
+    "durationHours": 113
    },
-   "delayVehHours": 1265824.2105813827,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 1254.9482040535797,
+   "score": 18,
+   "level": "low"
   },
   {
    "id": "p076",
    "permitRef": "BLD-2026-0076",
    "input": {
-    "aadt": 11260,
-    "lanes": 2,
+    "aadt": 30000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 177
+    "startHour": 19,
+    "durationHours": 221
    },
-   "delayVehHours": 841.2219760394355,
-   "score": 21,
-   "level": "low"
+   "delayVehHours": 2769.1589936174164,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p077",
    "permitRef": "BLD-2026-0077",
    "input": {
-    "aadt": 86726,
-    "lanes": 4,
+    "aadt": 30000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 112
+    "startHour": 18,
+    "durationHours": 68
    },
-   "delayVehHours": 15576.606694701153,
-   "score": 51,
-   "level": "medium"
+   "delayVehHours": 834.3743865206624,
+   "score": 8,
+   "level": "low"
   },
   {
    "id": "p078",
    "permitRef": "BLD-2026-0078",
    "input": {
-    "aadt": 88318,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 88
+    "startHour": 18,
+    "durationHours": 32
    },
-   "delayVehHours": 11541.157748250082,
-   "score": 37,
-   "level": "medium"
+   "delayVehHours": 375.65744145771936,
+   "score": 5,
+   "level": "low"
   },
   {
    "id": "p079",
    "permitRef": "BLD-2026-0079",
    "input": {
-    "aadt": 14226,
-    "lanes": 2,
+    "aadt": 30000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 80
+    "startHour": 14,
+    "durationHours": 108
    },
-   "delayVehHours": 441.0035876645963,
-   "score": 9,
+   "delayVehHours": 1365.5890166966751,
+   "score": 13,
    "level": "low"
   },
   {
    "id": "p080",
    "permitRef": "BLD-2026-0080",
    "input": {
-    "aadt": 42028,
+    "aadt": 30000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 131
+    "startHour": 9,
+    "durationHours": 55
    },
-   "delayVehHours": 3233.6564001033807,
-   "score": 22,
+   "delayVehHours": 702.4355396989031,
+   "score": 7,
    "level": "low"
   },
   {
    "id": "p081",
    "permitRef": "BLD-2026-0081",
    "input": {
-    "aadt": 37562,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 27
+    "startHour": 9,
+    "durationHours": 191
    },
-   "delayVehHours": 492.2508722508168,
-   "score": 4,
-   "level": "low"
+   "delayVehHours": 2128.4208023953274,
+   "score": 30,
+   "level": "medium"
   },
   {
    "id": "p082",
    "permitRef": "BLD-2026-0082",
    "input": {
-    "aadt": 73698,
-    "lanes": 4,
-    "lanesClosed": 2,
+    "aadt": 20000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 236
+    "startHour": 10,
+    "durationHours": 31
    },
-   "delayVehHours": 75374.55546974989,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 336.94364027297974,
+   "score": 5,
+   "level": "low"
   },
   {
    "id": "p083",
    "permitRef": "BLD-2026-0083",
    "input": {
-    "aadt": 36403,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 155
+    "startHour": 12,
+    "durationHours": 55
    },
-   "delayVehHours": 2684.28313427375,
-   "score": 21,
+   "delayVehHours": 670.6018357190652,
+   "score": 10,
    "level": "low"
   },
   {
    "id": "p084",
    "permitRef": "BLD-2026-0084",
    "input": {
-    "aadt": 72179,
+    "aadt": 40000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 210
+    "startHour": 20,
+    "durationHours": 71
    },
-   "delayVehHours": 12703.934147324528,
-   "score": 50,
-   "level": "medium"
+   "delayVehHours": 1175.0013788574547,
+   "score": 8,
+   "level": "low"
   },
   {
    "id": "p085",
    "permitRef": "BLD-2026-0085",
    "input": {
-    "aadt": 50575,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 179
+    "startHour": 8,
+    "durationHours": 171
    },
-   "delayVehHours": 9354.726140039451,
-   "score": 53,
+   "delayVehHours": 1943.9450777071684,
+   "score": 28,
    "level": "medium"
   },
   {
    "id": "p086",
    "permitRef": "BLD-2026-0086",
    "input": {
-    "aadt": 43560,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 168
+    "startHour": 12,
+    "durationHours": 114
    },
-   "delayVehHours": 4835.8552257463425,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 1264.5554858313576,
+   "score": 18,
+   "level": "low"
   },
   {
    "id": "p087",
    "permitRef": "BLD-2026-0087",
    "input": {
-    "aadt": 43869,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 50
+    "startHour": 14,
+    "durationHours": 222
    },
-   "delayVehHours": 1462.6667142887868,
-   "score": 10,
-   "level": "low"
+   "delayVehHours": 2559.1772295205274,
+   "score": 37,
+   "level": "medium"
   },
   {
    "id": "p088",
    "permitRef": "BLD-2026-0088",
    "input": {
-    "aadt": 49902,
-    "lanes": 3,
+    "aadt": 40000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 203
+    "startHour": 22,
+    "durationHours": 76
    },
-   "delayVehHours": 10050.58828484301,
-   "score": 58,
-   "level": "medium"
+   "delayVehHours": 1229.4986645956806,
+   "score": 9,
+   "level": "low"
   },
   {
    "id": "p089",
    "permitRef": "BLD-2026-0089",
    "input": {
-    "aadt": 35477,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 122
+    "startHour": 17,
+    "durationHours": 37
    },
-   "delayVehHours": 1975.2334814073047,
-   "score": 16,
+   "delayVehHours": 405.4439411743416,
+   "score": 6,
    "level": "low"
   },
   {
    "id": "p090",
    "permitRef": "BLD-2026-0090",
    "input": {
-    "aadt": 17988,
+    "aadt": 20000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 235
+    "startHour": 19,
+    "durationHours": 137
    },
-   "delayVehHours": 2005.5829753360129,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 1490.1119693170804,
+   "score": 21,
+   "level": "low"
   },
   {
    "id": "p091",
    "permitRef": "BLD-2026-0091",
    "input": {
-    "aadt": 88628,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 20,
-    "durationHours": 237
+    "startHour": 23,
+    "durationHours": 88
    },
-   "delayVehHours": 32808.44075452286,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 937.7762902712606,
+   "score": 13,
+   "level": "low"
   },
   {
    "id": "p092",
    "permitRef": "BLD-2026-0092",
    "input": {
-    "aadt": 81400,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 44
+    "startHour": 22,
+    "durationHours": 85
    },
-   "delayVehHours": 4585.147509511146,
-   "score": 16,
+   "delayVehHours": 906.7536800182027,
+   "score": 13,
    "level": "low"
   },
   {
    "id": "p093",
    "permitRef": "BLD-2026-0093",
    "input": {
-    "aadt": 35796,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 88
+    "startHour": 14,
+    "durationHours": 204
    },
-   "delayVehHours": 1380.9097820696372,
-   "score": 11,
-   "level": "low"
+   "delayVehHours": 2319.8998107738407,
+   "score": 33,
+   "level": "medium"
   },
   {
    "id": "p094",
    "permitRef": "BLD-2026-0094",
    "input": {
-    "aadt": 88284,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 197
+    "startHour": 11,
+    "durationHours": 128
    },
-   "delayVehHours": 27275.47038936816,
-   "score": 88,
-   "level": "high"
+   "delayVehHours": 1489.8747860451197,
+   "score": 21,
+   "level": "low"
   },
   {
    "id": "p095",
    "permitRef": "BLD-2026-0095",
    "input": {
-    "aadt": 23135,
+    "aadt": 20000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 22,
-    "durationHours": 158
+    "startHour": 9,
+    "durationHours": 127
    },
-   "delayVehHours": 2861.8254506685917,
-   "score": 35,
-   "level": "medium"
+   "delayVehHours": 1417.7040076753688,
+   "score": 20,
+   "level": "low"
   },
   {
    "id": "p096",
    "permitRef": "BLD-2026-0096",
    "input": {
-    "aadt": 43355,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 88
+    "startHour": 20,
+    "durationHours": 101
    },
-   "delayVehHours": 2456.5174502680966,
+   "delayVehHours": 1109.7687089205936,
    "score": 16,
    "level": "low"
   },
@@ -1545,127 +1545,127 @@
    "id": "p097",
    "permitRef": "BLD-2026-0097",
    "input": {
-    "aadt": 52147,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 203
+    "startHour": 12,
+    "durationHours": 221
    },
-   "delayVehHours": 12047.056982043954,
-   "score": 66,
-   "level": "high"
+   "delayVehHours": 2479.646898434123,
+   "score": 35,
+   "level": "medium"
   },
   {
    "id": "p098",
    "permitRef": "BLD-2026-0098",
    "input": {
-    "aadt": 20420,
-    "lanes": 2,
+    "aadt": 30000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 79
+    "startHour": 7,
+    "durationHours": 210
    },
-   "delayVehHours": 1010.7915323625386,
-   "score": 14,
-   "level": "low"
+   "delayVehHours": 2684.7669561195166,
+   "score": 26,
+   "level": "medium"
   },
   {
    "id": "p099",
    "permitRef": "BLD-2026-0099",
    "input": {
-    "aadt": 47754,
+    "aadt": 30000,
     "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 13,
-    "durationHours": 24
+    "startHour": 14,
+    "durationHours": 192
    },
-   "delayVehHours": 970.6754786620811,
-   "score": 6,
+   "delayVehHours": 2406.1948816289478,
+   "score": 23,
    "level": "low"
   },
   {
    "id": "p100",
    "permitRef": "BLD-2026-0100",
    "input": {
-    "aadt": 77557,
+    "aadt": 40000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 90
+    "startHour": 16,
+    "durationHours": 195
    },
-   "delayVehHours": 7183.408363554756,
-   "score": 26,
-   "level": "medium"
+   "delayVehHours": 3297.970490528296,
+   "score": 24,
+   "level": "low"
   },
   {
    "id": "p101",
    "permitRef": "BLD-2026-0101",
    "input": {
-    "aadt": 13004,
-    "lanes": 2,
+    "aadt": 60000,
+    "lanes": 6,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 175
+    "startHour": 15,
+    "durationHours": 132
    },
-   "delayVehHours": 963.9188861294385,
-   "score": 21,
+   "delayVehHours": 3308.710933756007,
+   "score": 16,
    "level": "low"
   },
   {
    "id": "p102",
    "permitRef": "BLD-2026-0102",
    "input": {
-    "aadt": 48988,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 189
+    "startHour": 10,
+    "durationHours": 65
    },
-   "delayVehHours": 8502.596288755545,
-   "score": 50,
-   "level": "medium"
+   "delayVehHours": 736.9875591763164,
+   "score": 11,
+   "level": "low"
   },
   {
    "id": "p103",
    "permitRef": "BLD-2026-0103",
    "input": {
-    "aadt": 18475,
+    "aadt": 20000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 159
+    "startHour": 16,
+    "durationHours": 110
    },
-   "delayVehHours": 1488.8600564706167,
-   "score": 23,
+   "delayVehHours": 1227.330375400802,
+   "score": 18,
    "level": "low"
   },
   {
    "id": "p104",
    "permitRef": "BLD-2026-0104",
    "input": {
-    "aadt": 13074,
+    "aadt": 20000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 36
+    "startHour": 11,
+    "durationHours": 25
    },
-   "delayVehHours": 196.21011307581855,
+   "delayVehHours": 279.0944990670182,
    "score": 4,
    "level": "low"
   },
@@ -1673,655 +1673,655 @@
    "id": "p105",
    "permitRef": "BLD-2026-0105",
    "input": {
-    "aadt": 46137,
-    "lanes": 3,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 37
+    "startHour": 11,
+    "durationHours": 235
    },
-   "delayVehHours": 1310.432496871363,
-   "score": 8,
-   "level": "low"
+   "delayVehHours": 2624.0068874164467,
+   "score": 37,
+   "level": "medium"
   },
   {
    "id": "p106",
    "permitRef": "BLD-2026-0106",
    "input": {
-    "aadt": 76169,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 86
+    "startHour": 20,
+    "durationHours": 226
    },
-   "delayVehHours": 6902.290741819217,
-   "score": 26,
+   "delayVehHours": 2468.0148599088047,
+   "score": 35,
    "level": "medium"
   },
   {
    "id": "p107",
    "permitRef": "BLD-2026-0107",
    "input": {
-    "aadt": 17272,
-    "lanes": 2,
+    "aadt": 40000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
+    "startHour": 17,
     "durationHours": 209
    },
-   "delayVehHours": 1599.384075150646,
-   "score": 26,
+   "delayVehHours": 3475.5834931564973,
+   "score": 25,
    "level": "medium"
   },
   {
    "id": "p108",
    "permitRef": "BLD-2026-0108",
    "input": {
-    "aadt": 87705,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 13,
-    "durationHours": 151
+    "startHour": 8,
+    "durationHours": 177
    },
-   "delayVehHours": 21769.025699046855,
-   "score": 71,
-   "level": "high"
+   "delayVehHours": 2001.7942189131297,
+   "score": 29,
+   "level": "medium"
   },
   {
    "id": "p109",
    "permitRef": "BLD-2026-0109",
    "input": {
-    "aadt": 88832,
-    "lanes": 4,
+    "aadt": 10000,
+    "lanes": 1,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 62
+    "startHour": 8,
+    "durationHours": 30
    },
-   "delayVehHours": 9331.47471407247,
-   "score": 30,
-   "level": "medium"
+   "delayVehHours": 846.8838166845426,
+   "score": 24,
+   "level": "low"
   },
   {
    "id": "p110",
    "permitRef": "BLD-2026-0110",
    "input": {
-    "aadt": 76610,
-    "lanes": 4,
+    "aadt": 20000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 236
+    "startHour": 23,
+    "durationHours": 215
    },
-   "delayVehHours": 17876.634058839456,
-   "score": 67,
-   "level": "high"
+   "delayVehHours": 2425.2025388284437,
+   "score": 35,
+   "level": "medium"
   },
   {
    "id": "p111",
    "permitRef": "BLD-2026-0111",
    "input": {
-    "aadt": 44003,
-    "lanes": 3,
-    "lanesClosed": 2,
+    "aadt": 20000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 60
+    "startHour": 20,
+    "durationHours": 231
    },
-   "delayVehHours": 21981.659705303555,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 2544.900228787538,
+   "score": 36,
+   "level": "medium"
   },
   {
    "id": "p112",
    "permitRef": "BLD-2026-0112",
    "input": {
-    "aadt": 35531,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 19,
-    "durationHours": 114
+    "durationHours": 88
    },
-   "delayVehHours": 1791.0395829757454,
-   "score": 14,
+   "delayVehHours": 496.739038967128,
+   "score": 10,
    "level": "low"
   },
   {
    "id": "p113",
    "permitRef": "BLD-2026-0113",
    "input": {
-    "aadt": 35242,
-    "lanes": 3,
+    "aadt": 28000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 15,
-    "durationHours": 87
+    "startHour": 14,
+    "durationHours": 210
    },
-   "delayVehHours": 1362.6915657697618,
-   "score": 11,
-   "level": "low"
+   "delayVehHours": 2431.0750477365887,
+   "score": 25,
+   "level": "medium"
   },
   {
    "id": "p114",
    "permitRef": "BLD-2026-0114",
    "input": {
-    "aadt": 41829,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 73
+    "startHour": 15,
+    "durationHours": 41
    },
-   "delayVehHours": 1846.553224253848,
-   "score": 13,
+   "delayVehHours": 228.62928620434926,
+   "score": 5,
    "level": "low"
   },
   {
    "id": "p115",
    "permitRef": "BLD-2026-0115",
    "input": {
-    "aadt": 82364,
-    "lanes": 4,
-    "lanesClosed": 2,
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 118
+    "startHour": 7,
+    "durationHours": 58
    },
-   "delayVehHours": 66139.0375248752,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 356.3702206748412,
+   "score": 7,
+   "level": "low"
   },
   {
    "id": "p116",
    "permitRef": "BLD-2026-0116",
    "input": {
-    "aadt": 22822,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 52
+    "startHour": 9,
+    "durationHours": 116
    },
-   "delayVehHours": 931.812439404716,
-   "score": 12,
+   "delayVehHours": 672.4097551254207,
+   "score": 14,
    "level": "low"
   },
   {
    "id": "p117",
    "permitRef": "BLD-2026-0117",
    "input": {
-    "aadt": 18209,
-    "lanes": 2,
+    "aadt": 21000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 117
+    "startHour": 9,
+    "durationHours": 208
    },
-   "delayVehHours": 1019.0119760753737,
-   "score": 16,
-   "level": "low"
+   "delayVehHours": 1844.0952192786137,
+   "score": 25,
+   "level": "medium"
   },
   {
    "id": "p118",
    "permitRef": "BLD-2026-0118",
    "input": {
-    "aadt": 18777,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 161
+    "startHour": 13,
+    "durationHours": 89
    },
-   "delayVehHours": 1469.3657781520897,
-   "score": 22,
+   "delayVehHours": 506.6962629425971,
+   "score": 10,
    "level": "low"
   },
   {
    "id": "p119",
    "permitRef": "BLD-2026-0119",
    "input": {
-    "aadt": 84161,
-    "lanes": 4,
-    "lanesClosed": 3,
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 23,
-    "durationHours": 123
+    "startHour": 13,
+    "durationHours": 189
    },
-   "delayVehHours": 1206646.1636171823,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 1101.3711193752467,
+   "score": 22,
+   "level": "low"
   },
   {
    "id": "p120",
    "permitRef": "BLD-2026-0120",
    "input": {
-    "aadt": 82915,
-    "lanes": 4,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 129
+    "startHour": 7,
+    "durationHours": 146
    },
-   "delayVehHours": 14231.079795092832,
-   "score": 49,
-   "level": "medium"
+   "delayVehHours": 861.5443982352849,
+   "score": 18,
+   "level": "low"
   },
   {
    "id": "p121",
    "permitRef": "BLD-2026-0121",
    "input": {
-    "aadt": 19731,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 171
+    "startHour": 20,
+    "durationHours": 235
    },
-   "delayVehHours": 1862.561791126827,
-   "score": 27,
+   "delayVehHours": 1353.0754360465726,
+   "score": 28,
    "level": "medium"
   },
   {
    "id": "p122",
    "permitRef": "BLD-2026-0122",
    "input": {
-    "aadt": 79331,
-    "lanes": 4,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 128
-   },
-   "delayVehHours": 11728.865563323128,
-   "score": 42,
-   "level": "medium"
-  },
-  {
-   "id": "p123",
-   "permitRef": "BLD-2026-0123",
-   "input": {
-    "aadt": 41142,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 18,
-    "durationHours": 43
-   },
-   "delayVehHours": 1010.441613253889,
-   "score": 7,
-   "level": "low"
-  },
-  {
-   "id": "p124",
-   "permitRef": "BLD-2026-0124",
-   "input": {
-    "aadt": 38679,
-    "lanes": 3,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 27
-   },
-   "delayVehHours": 565.4413079040057,
-   "score": 4,
-   "level": "low"
-  },
-  {
-   "id": "p125",
-   "permitRef": "BLD-2026-0125",
-   "input": {
-    "aadt": 15361,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 12,
-    "durationHours": 236
+    "durationHours": 183
    },
-   "delayVehHours": 1518.9471974755916,
-   "score": 28,
+   "delayVehHours": 1069.98454096636,
+   "score": 22,
+   "level": "low"
+  },
+  {
+   "id": "p123",
+   "permitRef": "BLD-2026-0123",
+   "input": {
+    "aadt": 7000,
+    "lanes": 1,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 8,
+    "durationHours": 109
+   },
+   "delayVehHours": 652.554159651495,
+   "score": 27,
+   "level": "medium"
+  },
+  {
+   "id": "p124",
+   "permitRef": "BLD-2026-0124",
+   "input": {
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 12,
+    "durationHours": 203
+   },
+   "delayVehHours": 1204.0512852535935,
+   "score": 25,
+   "level": "medium"
+  },
+  {
+   "id": "p125",
+   "permitRef": "BLD-2026-0125",
+   "input": {
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 14,
+    "durationHours": 218
+   },
+   "delayVehHours": 1273.8029904715663,
+   "score": 26,
    "level": "medium"
   },
   {
    "id": "p126",
    "permitRef": "BLD-2026-0126",
    "input": {
-    "aadt": 22599,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 73
+    "startHour": 23,
+    "durationHours": 151
    },
-   "delayVehHours": 1242.186644578646,
-   "score": 16,
+   "delayVehHours": 850.3206108131586,
+   "score": 17,
    "level": "low"
   },
   {
    "id": "p127",
    "permitRef": "BLD-2026-0127",
    "input": {
-    "aadt": 17021,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 20,
-    "durationHours": 209
+    "startHour": 11,
+    "durationHours": 228
    },
-   "delayVehHours": 1551.97815001663,
-   "score": 26,
+   "delayVehHours": 1350.4389360398493,
+   "score": 28,
    "level": "medium"
   },
   {
    "id": "p128",
    "permitRef": "BLD-2026-0128",
    "input": {
-    "aadt": 17165,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 19,
-    "durationHours": 93
+    "startHour": 9,
+    "durationHours": 156
    },
-   "delayVehHours": 688.9258512575966,
-   "score": 11,
+   "delayVehHours": 935.6428005591866,
+   "score": 19,
    "level": "low"
   },
   {
    "id": "p129",
    "permitRef": "BLD-2026-0129",
    "input": {
-    "aadt": 82702,
+    "aadt": 28000,
     "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 121
+    "startHour": 12,
+    "durationHours": 204
    },
-   "delayVehHours": 13107.483548358869,
-   "score": 45,
+   "delayVehHours": 2413.9826097398604,
+   "score": 25,
    "level": "medium"
   },
   {
    "id": "p130",
    "permitRef": "BLD-2026-0130",
    "input": {
-    "aadt": 39715,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 71
+    "startHour": 11,
+    "durationHours": 65
    },
-   "delayVehHours": 1502.1292126701524,
-   "score": 11,
+   "delayVehHours": 376.551604889936,
+   "score": 8,
    "level": "low"
   },
   {
    "id": "p131",
    "permitRef": "BLD-2026-0131",
    "input": {
-    "aadt": 41179,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 194
+    "startHour": 14,
+    "durationHours": 106
    },
-   "delayVehHours": 4618.924399722382,
-   "score": 32,
-   "level": "medium"
+   "delayVehHours": 633.6221367964386,
+   "score": 13,
+   "level": "low"
   },
   {
    "id": "p132",
    "permitRef": "BLD-2026-0132",
    "input": {
-    "aadt": 80389,
-    "lanes": 4,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 130
+    "startHour": 9,
+    "durationHours": 144
    },
-   "delayVehHours": 12241.432668712088,
-   "score": 44,
-   "level": "medium"
+   "delayVehHours": 840.520586877689,
+   "score": 17,
+   "level": "low"
   },
   {
    "id": "p133",
    "permitRef": "BLD-2026-0133",
    "input": {
-    "aadt": 80964,
-    "lanes": 4,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 12,
-    "durationHours": 195
+    "startHour": 10,
+    "durationHours": 73
    },
-   "delayVehHours": 18622.337669096076,
-   "score": 66,
-   "level": "high"
+   "delayVehHours": 426.56117974548516,
+   "score": 9,
+   "level": "low"
   },
   {
    "id": "p134",
    "permitRef": "BLD-2026-0134",
    "input": {
-    "aadt": 46513,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 8,
-    "durationHours": 38
+    "startHour": 23,
+    "durationHours": 158
    },
-   "delayVehHours": 1623.0808637533955,
-   "score": 10,
+   "delayVehHours": 903.971405789021,
+   "score": 18,
    "level": "low"
   },
   {
    "id": "p135",
    "permitRef": "BLD-2026-0135",
    "input": {
-    "aadt": 23211,
-    "lanes": 2,
+    "aadt": 28000,
+    "lanes": 4,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 156
+    "startHour": 12,
+    "durationHours": 197
    },
-   "delayVehHours": 2974.5081204412777,
-   "score": 37,
-   "level": "medium"
+   "delayVehHours": 2309.7229773855292,
+   "score": 24,
+   "level": "low"
   },
   {
    "id": "p136",
    "permitRef": "BLD-2026-0136",
    "input": {
-    "aadt": 48434,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 17,
-    "durationHours": 230
+    "startHour": 20,
+    "durationHours": 140
    },
-   "delayVehHours": 9836.137062306163,
-   "score": 58,
-   "level": "medium"
+   "delayVehHours": 799.4496019765037,
+   "score": 16,
+   "level": "low"
   },
   {
    "id": "p137",
    "permitRef": "BLD-2026-0137",
    "input": {
-    "aadt": 48772,
-    "lanes": 3,
+    "aadt": 7000,
+    "lanes": 1,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 14,
-    "durationHours": 120
+    "startHour": 22,
+    "durationHours": 239
    },
-   "delayVehHours": 5286.521545969948,
-   "score": 31,
+   "delayVehHours": 1346.9739131794595,
+   "score": 55,
    "level": "medium"
   },
   {
    "id": "p138",
    "permitRef": "BLD-2026-0138",
    "input": {
-    "aadt": 84570,
-    "lanes": 4,
+    "aadt": 21000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 20,
-    "durationHours": 61
+    "startHour": 11,
+    "durationHours": 86
    },
-   "delayVehHours": 6508.001627064505,
-   "score": 22,
+   "delayVehHours": 771.3875538882085,
+   "score": 10,
    "level": "low"
   },
   {
    "id": "p139",
    "permitRef": "BLD-2026-0139",
    "input": {
-    "aadt": 47445,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 146
+    "startHour": 19,
+    "durationHours": 158
    },
-   "delayVehHours": 5718.623557006703,
-   "score": 34,
-   "level": "medium"
+   "delayVehHours": 902.294711210443,
+   "score": 18,
+   "level": "low"
   },
   {
    "id": "p140",
    "permitRef": "BLD-2026-0140",
    "input": {
-    "aadt": 19926,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 11,
-    "durationHours": 112
+    "startHour": 12,
+    "durationHours": 129
    },
-   "delayVehHours": 1253.4010864075628,
-   "score": 18,
+   "delayVehHours": 774.5505285774018,
+   "score": 16,
    "level": "low"
   },
   {
    "id": "p141",
    "permitRef": "BLD-2026-0141",
    "input": {
-    "aadt": 18032,
-    "lanes": 2,
-    "lanesClosed": 1,
-    "capacityPerLane": 1800,
-    "freeFlowMin": 6,
-    "startHour": 10,
-    "durationHours": 219
-   },
-   "delayVehHours": 1861.7302976991664,
-   "score": 29,
-   "level": "medium"
-  },
-  {
-   "id": "p142",
-   "permitRef": "BLD-2026-0142",
-   "input": {
-    "aadt": 16923,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 8,
-    "durationHours": 91
+    "durationHours": 164
    },
-   "delayVehHours": 696.9164748661555,
-   "score": 12,
+   "delayVehHours": 962.8190227949628,
+   "score": 20,
+   "level": "low"
+  },
+  {
+   "id": "p142",
+   "permitRef": "BLD-2026-0142",
+   "input": {
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
+    "capacityPerLane": 1800,
+    "freeFlowMin": 6,
+    "startHour": 17,
+    "durationHours": 126
+   },
+   "delayVehHours": 749.6236189589031,
+   "score": 15,
    "level": "low"
   },
   {
    "id": "p143",
    "permitRef": "BLD-2026-0143",
    "input": {
-    "aadt": 15023,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 16,
-    "durationHours": 95
+    "startHour": 15,
+    "durationHours": 181
    },
-   "delayVehHours": 595.619514941128,
-   "score": 11,
+   "delayVehHours": 1051.3615445196974,
+   "score": 21,
    "level": "low"
   },
   {
    "id": "p144",
    "permitRef": "BLD-2026-0144",
    "input": {
-    "aadt": 76363,
-    "lanes": 4,
+    "aadt": 27000,
+    "lanes": 3,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 9,
-    "durationHours": 127
+    "startHour": 19,
+    "durationHours": 51
    },
-   "delayVehHours": 9310.556003791748,
-   "score": 35,
-   "level": "medium"
+   "delayVehHours": 583.6269624284594,
+   "score": 6,
+   "level": "low"
   },
   {
    "id": "p145",
    "permitRef": "BLD-2026-0145",
    "input": {
-    "aadt": 21953,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 128
+    "startHour": 14,
+    "durationHours": 220
    },
-   "delayVehHours": 1988.0520649153814,
+   "delayVehHours": 1292.4375409936936,
    "score": 26,
    "level": "medium"
   },
@@ -2329,80 +2329,80 @@
    "id": "p146",
    "permitRef": "BLD-2026-0146",
    "input": {
-    "aadt": 49706,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 18,
-    "durationHours": 77
+    "startHour": 15,
+    "durationHours": 43
    },
-   "delayVehHours": 3902.205698107363,
-   "score": 22,
+   "delayVehHours": 248.24875988427613,
+   "score": 5,
    "level": "low"
   },
   {
    "id": "p147",
    "permitRef": "BLD-2026-0147",
    "input": {
-    "aadt": 82893,
-    "lanes": 4,
-    "lanesClosed": 3,
+    "aadt": 14000,
+    "lanes": 2,
+    "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 21,
-    "durationHours": 66
+    "startHour": 14,
+    "durationHours": 73
    },
-   "delayVehHours": 532590.8002513085,
-   "score": 100,
-   "level": "high"
+   "delayVehHours": 426.5611797454851,
+   "score": 9,
+   "level": "low"
   },
   {
    "id": "p148",
    "permitRef": "BLD-2026-0148",
    "input": {
-    "aadt": 10829,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 7,
-    "durationHours": 51
+    "startHour": 20,
+    "durationHours": 125
    },
-   "delayVehHours": 239.37657498540634,
-   "score": 6,
+   "delayVehHours": 721.0158067001458,
+   "score": 15,
    "level": "low"
   },
   {
    "id": "p149",
    "permitRef": "BLD-2026-0149",
    "input": {
-    "aadt": 12031,
+    "aadt": 14000,
     "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
-    "startHour": 19,
-    "durationHours": 233
+    "startHour": 14,
+    "durationHours": 128
    },
-   "delayVehHours": 1154.2777605817946,
-   "score": 27,
-   "level": "medium"
+   "delayVehHours": 766.8487989966352,
+   "score": 16,
+   "level": "low"
   },
   {
    "id": "p150",
    "permitRef": "BLD-2026-0150",
    "input": {
-    "aadt": 35569,
-    "lanes": 3,
+    "aadt": 14000,
+    "lanes": 2,
     "lanesClosed": 1,
     "capacityPerLane": 1800,
     "freeFlowMin": 6,
     "startHour": 13,
-    "durationHours": 104
+    "durationHours": 132
    },
-   "delayVehHours": 1762.007112291222,
-   "score": 14,
+   "delayVehHours": 781.4097880630039,
+   "score": 16,
    "level": "low"
   }
  ]

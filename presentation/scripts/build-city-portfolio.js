@@ -20,6 +20,7 @@ const path = require('path');
 
 const Engine = require('../masar-engine.js');
 const Portfolio = require('../masar-portfolio.js');
+const TrafficLoad = require('../masar-trafficload.js');
 const { longestChain, section, lengthOf } = require('./lib/centreline.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -144,10 +145,21 @@ function namedCorridors() {
         name: properties.name,
         highway: properties.highway,
         aadt: properties.aadt,
+        /* الاتجاه من أول مقطعٍ يحمل الاسم. المحور المدموج قد يخلط الاتجاهين،
+           والتقريب معلن: يدخل حساب نسبة الحجم/السعة لا حساب الحمل اليومي. */
+        oneway: properties.oneway,
+        lanes: null,
         parts: [],
       });
     }
-    byName.get(properties.name).parts.push(feature.geometry.coordinates);
+    const entry = byName.get(properties.name);
+    entry.parts.push(feature.geometry.coordinates);
+    /* أعرض مقطعٍ يحمل الاسم يمثّل المحور: الوسم غائب عن أكثر من نصف المقاطع،
+       وأخذُ أوّل ما يوجد يعطي وصلةً فرعية عرضَ محورٍ كامل. */
+    const lanes = Number(properties.lanes);
+    if (Number.isFinite(lanes) && lanes >= 1) {
+      entry.lanes = Math.max(entry.lanes || 0, Math.round(lanes));
+    }
   });
 
   return Array.from(byName.values())
@@ -156,6 +168,8 @@ function namedCorridors() {
       highway: road.highway,
       roadClass: CLASS_BY_HIGHWAY[road.highway] || 'local',
       aadt: road.aadt,
+      oneway: road.oneway,
+      lanes: road.lanes,
       chain: longestChain(road.parts),
     }))
     .filter((road) => road.chain.length >= 2 && lengthOf(road.chain) > 0.009)
@@ -305,8 +319,41 @@ function build() {
     const workDays = Math.max(1, Math.ceil(permitHours / Engine.WORK_WINDOW_HOURS));
     const durationHours = permitHours;
 
-    // حركة الشارع من بيانات الشبكة إن وُجدت — أدق من قيمة المحفظة المولّدة.
-    const aadt = Number(corridor.aadt) > 0 ? Number(corridor.aadt) : permit.aadt;
+    /**
+     * حمل الشارع من سلّم الأدلة، على الطريق الحقيقي الذي يقع عليه التصريح.
+     * -------------------------------------------------------------------------
+     * كان السطر: `corridor.aadt > 0 ? corridor.aadt : permit.aadt`. وحقل
+     * `aadt` في `riyadh-roads.geojson` **فارغ في 9,277 مقطعاً من 9,277**،
+     * فالشرط يسقط دائماً إلى `permit.aadt` — وهو سحبةٌ عشوائية من نطاقٍ مكتوب
+     * بخطّ اليد. أي أن كل رقمٍ في هذه المحفظة كان مبنياً على حمل لم يُقدَّر.
+     *
+     * الآن يمرّ الرقم بـ`MasarTrafficLoad`: العدّاد المرصود أولاً إن وصل
+     * (وهو ما يجعل السطر القديم صحيحاً حين تصل تغذية الأمانة)، وإلا صنفُ
+     * الطريق **الحقيقي** من OpenStreetMap وعددُ حاراته. فالتصريح على شريان
+     * يحمل حمل شريان، والتصريح على شارع فرعي يحمل حمله — من الشبكة نفسها
+     * التي تُرسم على الخريطة، لا من صنفٍ تمثيلي.
+     */
+    const loadEstimate = TrafficLoad.estimate({
+      highway: corridor.highway,
+      lanes: corridor.lanes,
+      oneway: corridor.oneway,
+      aadt: corridor.aadt,
+    });
+    const aadt = loadEstimate.aadt;
+
+    /**
+     * عرض الطريق من الشارع الحقيقي، لا من المحفظة التمثيلية.
+     * -------------------------------------------------------------------------
+     * كان التصريح يحمل «أربع حارات» من المحفظة المجرّدة ويُنزَل على شارعٍ
+     * حقيقي عرضُه حارتان. فالحمل يُحسب على عرضٍ والإغلاق على عرضٍ آخر، ويُعرض
+     * على البطاقة «إغلاق ١ من ٤» على شارعٍ لا يملك أربعاً.
+     *
+     * الآن العرض من الوسم إن وُجد وإلا من صنف الطريق (وهو ما تفعله
+     * `TrafficLoad.resolveLanes` نفسها، فلا اشتقاق ثانٍ)، والإغلاق يُقصّ عليه:
+     * لا يتجاوز عرض الشارع ناقص حارة، ولا ينزل عن واحدة.
+     */
+    const lanes = loadEstimate.lanes;
+    const lanesClosed = Math.max(1, Math.min(permit.lanesClosed, lanes - 1));
 
     /* WP-B1: الحساسية تُسحب **قبل** المحسّن لا بعده.
        كانت تُولَّد داخل خصائص المَعْلَم، فتظهر «مستشفى» على البطاقة بينما
@@ -316,8 +363,8 @@ function build() {
 
     const daily = Engine.score({
       aadt: aadt,
-      lanes: permit.lanes,
-      lanesClosed: permit.lanesClosed,
+      lanes: lanes,
+      lanesClosed: lanesClosed,
       startHour: permit.startHour,
       durationHours: windowHours,
       capacityPerLane: Engine.DEFAULTS.capacityPerLane,
@@ -338,8 +385,8 @@ function build() {
      */
     const plan = Engine.optimize({
       aadt: aadt,
-      lanes: permit.lanes,
-      lanesClosed: permit.lanesClosed,
+      lanes: lanes,
+      lanesClosed: lanesClosed,
       startHour: permit.startHour,
       durationHours: durationHours,
       capacityPerLane: Engine.DEFAULTS.capacityPerLane,
@@ -380,7 +427,7 @@ function build() {
     // المدة الكلية لا النافذة اليومية: بوابة «٧٢ ساعة» تقيس طول التصريح، ونافذة
     // العمل لا تتجاوز ثماني ساعات أصلاً — فمقارنتها بالعتبة تُبقي البوابة مغلقة
     // دائماً، ويظهر النظام وكأن لا تصريح يستحق التصعيد.
-    const escalate = escalationReason(delayPct, permit.lanes, permit.lanesClosed, durationHours);
+    const escalate = escalationReason(delayPct, lanes, lanesClosed, durationHours);
 
     /**
      * الشدة على مستوى التصريح لا على مستوى الساعة: إغلاق مسار واحد ثماني
@@ -438,8 +485,8 @@ function build() {
         promoter: promoter,
         contractor: CONTRACTORS[Math.floor(rand() * CONTRACTORS.length)],
         aadt: aadt,
-        lanes: permit.lanes,
-        lanesClosed: permit.lanesClosed,
+        lanes: lanes,
+        lanesClosed: lanesClosed,
         direction: rand() < 0.5 ? 'شمال' : 'جنوب',
         start: isoAt(startDay, permit.startHour),
         end: isoAt(startDay + workDays, permit.startHour + windowHours),
@@ -480,7 +527,7 @@ function build() {
         escalateReason: escalation || '',
         inputsVersion: 'v1',
         version: 1,
-        description: 'إغلاق ' + permit.lanesClosed + ' من ' + permit.lanes
+        description: 'إغلاق ' + lanesClosed + ' من ' + lanes
           + ' مسارات — نافذة ' + windowHours + ' ساعات يومياً على مدى '
           + workDays + ' يوماً (' + durationHours + ' ساعة عمل)',
       },

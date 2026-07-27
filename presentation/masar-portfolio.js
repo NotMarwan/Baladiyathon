@@ -6,11 +6,11 @@
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('./masar-engine.js'));
+    module.exports = factory(require('./masar-engine.js'), require('./masar-trafficload.js'));
   } else {
-    root.MasarPortfolio = factory(root.MasarEngine);
+    root.MasarPortfolio = factory(root.MasarEngine, root.MasarTrafficLoad);
   }
-})(typeof self !== 'undefined' ? self : this, function (MasarEngine) {
+})(typeof self !== 'undefined' ? self : this, function (MasarEngine, TrafficLoad) {
   'use strict';
 
   const SEED = 20260727;
@@ -18,21 +18,60 @@
   const DAYTIME_SHARE = 0.7;
   const LABEL = 'سيناريو تمثيلي — مدخلات موسومة، حسابات المحرك حقيقية';
 
-  // 12 ممراً تمثيلياً بثلاثة أصناف — النطاقات توضيحية موسومة
-  const CORRIDORS = [
-    { id: 'art_1', nameAr: 'شرياني أ', class: 'arterial', aadtLow: 70000, aadtHigh: 90000, lanes: 4 },
-    { id: 'art_2', nameAr: 'شرياني ب', class: 'arterial', aadtLow: 70000, aadtHigh: 90000, lanes: 4 },
-    { id: 'art_3', nameAr: 'شرياني ج', class: 'arterial', aadtLow: 70000, aadtHigh: 90000, lanes: 4 },
-    { id: 'art_4', nameAr: 'شرياني د', class: 'arterial', aadtLow: 70000, aadtHigh: 90000, lanes: 4 },
-    { id: 'maj_1', nameAr: 'رئيسي أ', class: 'major', aadtLow: 35000, aadtHigh: 55000, lanes: 3 },
-    { id: 'maj_2', nameAr: 'رئيسي ب', class: 'major', aadtLow: 35000, aadtHigh: 55000, lanes: 3 },
-    { id: 'maj_3', nameAr: 'رئيسي ج', class: 'major', aadtLow: 35000, aadtHigh: 55000, lanes: 3 },
-    { id: 'maj_4', nameAr: 'رئيسي د', class: 'major', aadtLow: 35000, aadtHigh: 55000, lanes: 3 },
-    { id: 'loc_1', nameAr: 'فرعي أ', class: 'local', aadtLow: 10000, aadtHigh: 25000, lanes: 2 },
-    { id: 'loc_2', nameAr: 'فرعي ب', class: 'local', aadtLow: 10000, aadtHigh: 25000, lanes: 2 },
-    { id: 'loc_3', nameAr: 'فرعي ج', class: 'local', aadtLow: 10000, aadtHigh: 25000, lanes: 2 },
-    { id: 'loc_4', nameAr: 'فرعي د', class: 'local', aadtLow: 10000, aadtHigh: 25000, lanes: 2 },
+  /**
+   * أحمال الممرات — محسوبة من `masar-trafficload.js`، لا مسحوبة من نطاقٍ عشوائي.
+   * ---------------------------------------------------------------------------
+   * **ما كان:** كل ممر يحمل `aadtLow`/`aadtHigh` مكتوبين بخطّ اليد، وكل تصريح
+   * يسحب رقماً عشوائياً بينهما. فأدقّ حسابٍ في المستودع — دالة BPR ومعايرة
+   * منطقة العمل والملف الساعي كله — كان يقف على رقمٍ **لم يُقدَّر أصلاً**،
+   * وكانت المحفظة تُنتج تفاوتاً بين تصريحين على الممر نفسه بلا سبب مادي.
+   *
+   * **ما صار:** لكل ممر صنفُ طريقٍ معلن (`highway`) وعددُ حارات، ومنهما يخرج
+   * الحمل من سلّم الأدلة نفسه الذي تعرضه الخريطة. الرقم واحدٌ لكل ممر لأن
+   * التقدير واحد: التفاوت بين تصاريح الممر الواحد يأتي من الإغلاق والنافذة
+   * والمدة — وهي أشياء تختلف فعلاً — لا من ضجيجٍ يُوهم بمعرفةٍ لا توجد.
+   *
+   * **ولماذا لا يُسحب عشوائياً من داخل المظروف؟** لأن المظروف إعلانُ **عدم
+   * يقين** لا وصفُ **توزيع سكاني**. السحب منه يخلط الاثنين، فيُقرأ التشتّت
+   * تنوّعاً في المدينة وهو في الحقيقة جهلنا بالرقم.
+   *
+   * **والتفاوت داخل الصنف من عدد الحارات لا من سحبة.** أربعة شرايين بأربع
+   * حارات متطابقة تُنتج أربعة أحمال متطابقة، فيعطي المحسّن الجواب نفسه
+   * لأغلب التصاريح — وقياس ذلك مسجَّل: انهار تنوّع القرار إلى ٨٠٪ لفائزٍ
+   * واحد، وحزمة `decision-diversity-test` تسقط عند سبعين. والعلاج ليس إعادة
+   * الضجيج: شوارع المدينة تختلف بعدد حاراتها فعلاً، وهو سببٌ مادي يُعلَن
+   * ويُشتقّ منه الحمل. (وفي المحفظة المُنزَلة على شبكة الرياض الحقيقية
+   * — `data/city-portfolio.geojson` — يأتي التفاوت من حارات الشوارع نفسها.)
+   *
+   * الأصناف والحارات مختارة كي تقع الأحمال داخل النطاقات القديمة نفسها:
+   * الشرايين 54–90 ألفاً، والرئيسية 28–56، والفرعية 20–30.
+   */
+  const CORRIDOR_SHAPES = [
+    { id: 'art_1', nameAr: 'شرياني أ', class: 'arterial', highway: 'trunk', lanes: 5 },
+    { id: 'art_2', nameAr: 'شرياني ب', class: 'arterial', highway: 'trunk', lanes: 4 },
+    { id: 'art_3', nameAr: 'شرياني ج', class: 'arterial', highway: 'trunk', lanes: 4 },
+    { id: 'art_4', nameAr: 'شرياني د', class: 'arterial', highway: 'trunk', lanes: 3 },
+    { id: 'maj_1', nameAr: 'رئيسي أ', class: 'major', highway: 'primary', lanes: 4 },
+    { id: 'maj_2', nameAr: 'رئيسي ب', class: 'major', highway: 'primary', lanes: 3 },
+    { id: 'maj_3', nameAr: 'رئيسي ج', class: 'major', highway: 'primary', lanes: 3 },
+    { id: 'maj_4', nameAr: 'رئيسي د', class: 'major', highway: 'primary', lanes: 2 },
+    { id: 'loc_1', nameAr: 'فرعي أ', class: 'local', highway: 'secondary', lanes: 3 },
+    { id: 'loc_2', nameAr: 'فرعي ب', class: 'local', highway: 'secondary', lanes: 2 },
+    { id: 'loc_3', nameAr: 'فرعي ج', class: 'local', highway: 'secondary', lanes: 2 },
+    { id: 'loc_4', nameAr: 'فرعي د', class: 'local', highway: 'secondary', lanes: 2 },
   ];
+
+  /* المظروف يبقى على الممر — يُعرض ولا يُسحب منه. */
+  const CORRIDORS = CORRIDOR_SHAPES.map(function (shape) {
+    const estimate = TrafficLoad.estimate({ highway: shape.highway, lanes: shape.lanes });
+    return Object.assign({}, shape, {
+      aadt: estimate.aadt,
+      aadtLow: estimate.low,
+      aadtHigh: estimate.high,
+      aadtMethod: estimate.method,
+      aadtEvidence: estimate.evidence,
+    });
+  });
 
   function mulberry32(seed) {
     let state = seed >>> 0;
@@ -87,7 +126,10 @@
         id: 'p' + String(i + 1).padStart(3, '0'),
         corridorId: corridor.id,
         corridorClass: corridor.class,
-        aadt: intIn(rand, corridor.aadtLow, corridor.aadtHigh),
+        // الحمل من تقدير الممر لا من سحبةٍ عشوائية — انظر رأس CORRIDOR_SHAPES.
+        aadt: corridor.aadt,
+        aadtMethod: corridor.aadtMethod,
+        aadtEvidence: corridor.aadtEvidence,
         lanes: corridor.lanes,
         lanesClosed,
         startHour,
@@ -229,6 +271,7 @@
     SEED,
     LABEL,
     CORRIDORS,
+    CORRIDOR_SHAPES,
     /* يُصدَّر كي يبقى اصطلاح النافذة مصدراً واحداً.
        كشف الامتثال الاتجاهيّ (`scripts/build-digonce-compliance.js`) يقيس
        فجوة «كان يمكنك الانضمام» بالعتبة نفسها. نسخةٌ ثانية من الرقم هناك
