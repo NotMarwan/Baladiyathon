@@ -290,6 +290,10 @@
       + (reasons ? '<p class="desk-card-label">أكبر ثلاثة أسباب</p>'
         + '<ul class="desk-reasons">' + reasons + '</ul>' : '')
       + renderAlternateLoad(p.permitRef)
+      /* إشعار التنسيق — سطر واحد عمداً: هذا الملف يُعدَّل بالتوازي من أكثر من
+         جهة، والسطر الواحد يجعل الدمج بلا ألم. والوحدة تُقرأ من المضيف كما
+         يُقرأ ملخّص حمل البديل: إن غابت لم يُعرض شيء ولم تسقط البطاقة. */
+      + (typeof window === 'object' && window.MasarDeskCoordination ? window.MasarDeskCoordination.notice(p) : '')
       + (conflicts ? '<p class="desk-card-label">التعارض</p>'
         + '<ul class="desk-conflicts">' + conflicts + '</ul>'
         : '<p class="desk-none">لا تعارض على المقطع في النافذة نفسها.</p>')

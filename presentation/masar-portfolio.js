@@ -229,6 +229,12 @@
     SEED,
     LABEL,
     CORRIDORS,
+    /* يُصدَّر كي يبقى اصطلاح النافذة مصدراً واحداً.
+       كشف الامتثال الاتجاهيّ (`scripts/build-digonce-compliance.js`) يقيس
+       فجوة «كان يمكنك الانضمام» بالعتبة نفسها. نسخةٌ ثانية من الرقم هناك
+       تصير رقمين يفترقان بلا أن ينبّه شيء — وهو العيب الذي بُني له
+       masar-canonical.js أصلاً. */
+    DIG_ONCE_WINDOW_DAYS,
     mulberry32,
     buildPermits,
     buildPortfolio,

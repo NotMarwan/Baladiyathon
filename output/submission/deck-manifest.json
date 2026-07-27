@@ -132,6 +132,46 @@
       "limit": "طول حفر مكرر مكافئ بافتراض تداخل تام — لا هندسة محسوبة"
     },
     {
+      "key": "multiPermitStreetCount",
+      "value": 25,
+      "unit": "شارع",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "شوارع تحمل أكثر من تصريح — وهي مادة المؤشّر الاتجاهيّ كلها"
+    },
+    {
+      "key": "missedCoordinationCaseCount",
+      "value": 26,
+      "unit": "حالة",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "فرص تنسيق فائتة منسوبة إلى الجهة المتأخرة في محفظة مولَّدة — لا حكم على سلوك جهة حقيقية"
+    },
+    {
+      "key": "emergencyExemptCaseCount",
+      "value": 8,
+      "unit": "حالة",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "حالات استُثنيت لأن العمل طارئ — ولولا الاستثناء لحُسبت، وأثره منشور في exemptionEffect"
+    },
+    {
+      "key": "firstOnStreetCount",
+      "value": 27,
+      "unit": "تصريح",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "الأول على شارعه — لا يُحاسب من لم يسبقه أحد"
+    },
+    {
+      "key": "coordinationWindowDays",
+      "value": 30,
+      "unit": "يوم",
+      "source": "masar-canonical.js (محسوب من المحفظة)",
+      "grade": "model-derived",
+      "limit": "عتبة «النافذة القريبة» — اصطلاح إداريّ لا قياس، وحساسية الحصيلة له معروضة مع النتيجة"
+    },
+    {
       "key": "portfolioDeltaVehHours",
       "value": 909686.9688661927,
       "unit": "ساعة-مركبة",
@@ -237,7 +277,7 @@
     },
     {
       "key": "checksPassed",
-      "value": 1233,
+      "value": 1262,
       "unit": "فحص",
       "source": "presentation/tests/fixtures/test-manifest.json — مولَّد من تشغيل أخضر",
       "grade": "model-derived",
@@ -245,7 +285,7 @@
     },
     {
       "key": "suitesPassed",
-      "value": 75,
+      "value": 76,
       "unit": "حزمة",
       "source": "presentation/tests/fixtures/test-manifest.json",
       "grade": "model-derived",

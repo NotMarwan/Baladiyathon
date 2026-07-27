@@ -24,13 +24,16 @@
       require('./masar-portfolio.js'),
       require('./masar-engine.js'),
       require('./data/wzdx-conformance-summary.json'),
-      require('./data/delta-decomposition.json')
+      require('./data/delta-decomposition.json'),
+      require('./data/digonce-compliance.json')
     );
   } else {
     root.MasarCanonical = factory(root.MasarPortfolio, root.MasarEngine,
-      root.MASAR_WZDX_CONFORMANCE, root.MASAR_DELTA_DECOMPOSITION);
+      root.MASAR_WZDX_CONFORMANCE, root.MASAR_DELTA_DECOMPOSITION,
+      root.MASAR_DIGONCE_COMPLIANCE);
   }
-})(typeof self !== 'undefined' ? self : this, function (Portfolio, Engine, wzdx, delta) {
+})(typeof self !== 'undefined' ? self : this, function (Portfolio, Engine, wzdx, delta,
+  compliance) {
   'use strict';
 
   /**
@@ -61,6 +64,12 @@
         + 'presentation/scripts/build-delta-decomposition.js');
     }
     var dec = delta;
+    /* الكشف الاتجاهيّ مولَّد كذلك، ولسبب أقوى: مؤشّر امتثالٍ يُعرض من ذاكرة
+       شيفرةٍ لا من تشغيلٍ يصير حكماً على جهة بلا سند. غيابه يسقط صراحةً. */
+    if (!compliance || !compliance.tally || !compliance.promoters) {
+      throw new Error('كشف الامتثال الاتجاهيّ غير محمَّل — شغّل '
+        + 'presentation/scripts/build-digonce-compliance.js');
+    }
 
     return {
       portfolioPermitCount: {
@@ -104,6 +113,39 @@
         value: dig.duplicateTrenchKmEquivalent,
         unit: 'كم',
         meaning: 'طول حفر مكرر مكافئ بافتراض تداخل تام — لا هندسة محسوبة',
+      },
+      /* الامتثال الاتجاهيّ. الدمج أعلاه متماثل يقول «هؤلاء متقاربون»؛ هذه
+         المؤشرات تقول **من تأخّر**. والفرق يقلب المعنى: الأول لا يُحاسب،
+         والمتأخر وحده هو المسؤول. */
+      multiPermitStreetCount: {
+        value: compliance.multiPermitStreetCount,
+        unit: 'شارع',
+        meaning: 'شوارع تحمل أكثر من تصريح — وهي مادة المؤشّر الاتجاهيّ كلها',
+      },
+      missedCoordinationCaseCount: {
+        value: compliance.chargeableCaseCount,
+        unit: 'حالة',
+        /* «فرص تنسيق فائتة» لا «مخالفات»: المؤشّر أداة تنسيق لا لوحة عار،
+           والنظام لا يغرّم — الغرامة صلاحية الجهة البلدية. */
+        meaning: 'فرص تنسيق فائتة منسوبة إلى الجهة المتأخرة في محفظة مولَّدة — '
+          + 'لا حكم على سلوك جهة حقيقية',
+      },
+      emergencyExemptCaseCount: {
+        value: compliance.tally['exempt-emergency'],
+        unit: 'حالة',
+        meaning: 'حالات استُثنيت لأن العمل طارئ — ولولا الاستثناء لحُسبت، '
+          + 'وأثره منشور في exemptionEffect',
+      },
+      firstOnStreetCount: {
+        value: compliance.tally['first-on-street'],
+        unit: 'تصريح',
+        meaning: 'الأول على شارعه — لا يُحاسب من لم يسبقه أحد',
+      },
+      coordinationWindowDays: {
+        value: compliance.windowDays,
+        unit: 'يوم',
+        meaning: 'عتبة «النافذة القريبة» — اصطلاح إداريّ لا قياس، وحساسية '
+          + 'الحصيلة له معروضة مع النتيجة',
       },
       portfolioDeltaVehHours: {
         value: portfolio.totals.savedVehHours,
