@@ -19,6 +19,11 @@
 - Keep interaction state in page memory; do not call write APIs or local storage.
 - Do not modify the engine, server, reviewer desk, catalog, or source data.
 - Preserve right-to-left layout, keyboard access, textual chart equivalents, and reduced-motion support.
+- Build mobile-first, then enhance at `769px` and `1100px`.
+- Keep one primary action per state and a minimum control target of `44 × 44px`.
+- Use direct-labeled horizontal comparison bars; do not rely on hover tooltips.
+- Animate only the notification route and the coordination state transition.
+- Keep the established light Masar palette despite the generic operations-dashboard dark recommendation; project consistency and tested contrast take precedence.
 - Each task ends with focused tests and a commit.
 
 ---
@@ -593,7 +598,8 @@ assert.ok(controller.includes('MasarExperienceModel.buildViewModel'));
 assert.ok(!controller.includes('fetch('));
 assert.ok(!controller.includes('localStorage'));
 assert.ok(css.includes('@media (prefers-reduced-motion: reduce)'));
-assert.ok(css.includes('@media (max-width: 768px)'));
+assert.ok(css.includes('@media (min-width: 769px)'));
+assert.ok(css.includes('@media (min-width: 1100px)'));
 assert.ok(css.includes('@media (max-width: 480px)'));
 assert.ok(css.includes(':focus-visible'));
 assert.ok(css.includes('.experience-command'));
@@ -713,18 +719,18 @@ Import no fonts or external files. Use project tokens and define:
 
 - A maximum content width of `1440px`.
 - A compact identity bar.
-- A three-column command grid at desktop:
+- A single-column mobile layout by default.
+- A two-column command grid from `769px`.
+- A three-column command grid from `1100px`:
 
 ```css
 grid-template-columns: minmax(280px, .88fr) minmax(380px, 1.35fr) minmax(260px, .77fr);
 ```
 
-- Two columns below `1100px`.
-- One column below `768px`.
 - Forty-four-pixel minimum control height.
 - A restrained one-time notification pulse.
 - SVG path reveal using stroke dash offset.
-- Comparison bars transitioning with existing timing tokens.
+- Direct-labeled horizontal comparison bars transitioning with existing timing tokens.
 - A five-step automation line that remains readable without motion.
 - Clear focus rings on every button.
 - Explicit empty, error, waiting, and representative-data states.
