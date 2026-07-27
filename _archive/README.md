@@ -14,6 +14,7 @@
 | `ideas-eliminated-agent1..4/` | نواتج الوكلاء الأربعة في جولة توليد الأفكار | ١٥ مفهوماً أُقصيت: InfraFlow، Mutabiq، Raqib، Nadheer، Mirat، Baseera، Huras وغيرها |
 | `missions/` | مهام `MISSION*.md` للوكلاء | حلّت محلها بنية التفويض في `fable-orchestrator/` |
 | `presentation/` | نماذج المفاهيم المُقصاة | `mutabiq.html`، `raqib.html`، `nadheer.html`، `mirat.html`، `balady-twin.html` |
+| `vault-99-archive/` | كان `SwarmingObsidian/99 Archive/` — نسخ المفاهيم المُقصاة داخل مخزن التوثيق الحيّ | أرشيف كان يسكن مجلداً حيّاً، فيفهرسه الرسم المعرفي وتقرؤه الوكلاء كأنه مواصفة قائمة |
 | `graph-snapshot-2026-07-25/` | لقطة رسم معرفي قديمة | الرسم الحيّ في `../graphify-out/` |
 
 ## الروابط المكسورة هنا متوقَّعة
