@@ -1,0 +1,1258 @@
+{
+  "generatedFrom": "presentation/scripts/build-signal-reallocation.js",
+  "role": "نقل زمن الأخضر من المدخل المغلق إلى مدخل البديل",
+  "grade": "model-derived",
+  "referenceHour": 8,
+  "builtOn": {
+    "detection": "presentation/data/signal-phase-impact.json",
+    "confirmedPermits": 17,
+    "note": "الكشف لا يُعاد هنا — يُقرأ من مُخرَج الطور السابق، فيبقى تعريف «مؤكَّد» واحداً في المستودع."
+  },
+  "method": {
+    "thetaDeg": 30,
+    "thetaSweepDeg": [
+      20,
+      30,
+      45
+    ],
+    "thetaSweep": {
+      "20": {
+        "junctionsWithOpenLeg": 15,
+        "alternativeEntersJunction": 3
+      },
+      "30": {
+        "junctionsWithOpenLeg": 15,
+        "alternativeEntersJunction": 3
+      },
+      "45": {
+        "junctionsWithOpenLeg": 15,
+        "alternativeEntersJunction": 2
+      }
+    },
+    "onClosedStreet": "الضلع على الشارع المغلق إن وافق اتجاهُه عند أحد طرفيه اتجاهَ خط العمل محلياً ضمن 30 درجة، مطويّاً على 180 (فالشارع اتجاهان). وما عداه ضلعٌ متقاطع لم يغلقه التصريح.",
+    "phaseClosureIsSubset": "إغلاق الطور مجموعة جزئية من إغلاق الإنتاج دائماً — يفتح منه ولا يغلق ضلعاً لم يغلقه.",
+    "conservative": "زيادة الزاوية تُبقي أضلاعاً أكثر مغلقةً فتُنقص الحالات المكتشفة. فالاختيار لا يُوسَّع لالتقاط حالات."
+  },
+  "closureModelCost": {
+    "constant": "CLOSURE_NEAR_M = 45 م في masar-city-routing.js",
+    "defect": "يمنع كل ضلع ضمن هذا النطاق من خط العمل، فيمنع عند تقاطعٍ على الخط أضلاعه كلها — بما فيها الشارع المتقاطع الذي لم يغلقه التصريح. أي أن التصريح يغلق شارعاً والنموذج يغلق تقاطعاً بشوارعه.",
+    "recommendation": "يُستبدل نطاق المسافة وحده باختبار مسافة واتجاه معاً، كما هنا. وهذا يمسّ كل رقم منشور (البدائل وأحمالها والدلتا وأرقام العرض)، فقراره لصاحب المحرك — ولم يُنفَّذ في هذا الدور.",
+    "junctionsExamined": 17,
+    "openLegInProduction": 0,
+    "openLegInPhase": 15,
+    "alternativeEntersInProduction": 0,
+    "alternativeEntersInPhase": 3,
+    "casesHiddenByProductionClosure": 3
+  },
+  "doesNotProve": "أي ثانية. طول الدورة ونسبة الأخضر إلى الدورة غير موجودتين في أي مصدر متاح. والمعروض نسبةٌ من دورةٍ مجهولة الطول تحت افتراض توزيع متساوٍ معلن، وحركةٌ محوَّلة مشتقّة من النموذج.",
+  "singleGreenNotTwo": "في حالة النقل الأخضرُ المنقول واحد: ما يخسره المدخل المغلق هو عينه ما يكسبه مدخل البديل. ولا يُعرضان مكسبين.",
+  "total": 17,
+  "tally": {
+    "reallocate": 3,
+    "redistribute": 11,
+    "no-waste": 1,
+    "unmeasurable": 2,
+    "recommendationBlockedByMissingName": 1
+  },
+  "permits": {
+    "BLD-2026-0001": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 11192,
+          "name": "طريق أبو عبيدة عامر بن الجراح - طريق هارون الرشيد",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 10891,
+              "street": "أبو عبيدة عامر بن الجراح",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 10892,
+              "street": "أبو عبيدة عامر بن الجراح",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 11763,
+              "street": "هارون الرشيد",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 11764,
+              "street": "هارون الرشيد",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 1120,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "أبو عبيدة عامر بن الجراح",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «أبو عبيدة عامر بن الجراح» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0004": {
+      "control": "confirmed",
+      "action": "reallocate",
+      "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+      "junctions": [
+        {
+          "node": 52574,
+          "name": "شارع الإمام عبدالعزيز بن محمد بن سعود الفرعي - الإمام تركي بن ​​عبدالله بن محمد",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 71855,
+              "street": "الإمام تركي بن عبدالله",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 71856,
+              "street": "الإمام تركي بن عبدالله",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 73559,
+              "street": "الإمام عبدالعزيز بن محمد بن سعود",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 73560,
+              "street": "الإمام عبدالعزيز بن محمد بن سعود",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "reallocate",
+          "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": true,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": {
+            "arriveEdge": 71855,
+            "arriveStreet": "الإمام تركي بن عبدالله",
+            "leaveEdge": 71856,
+            "leaveStreet": "الإمام تركي بن عبدالله",
+            "isTerminal": false,
+            "turnForbidden": false
+          },
+          "divertedVehPerHour": 1120,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "reallocate-green",
+            "fromApproach": "الإمام عبدالعزيز بن محمد بن سعود",
+            "toApproach": "الإمام تركي بن عبدالله",
+            "blockedBy": null,
+            "label": "نقل زمن الأخضر من «الإمام عبدالعزيز بن محمد بن سعود» إلى «الإمام تركي بن عبدالله» بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0009": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 25353,
+          "name": "شارع  الفرزدق - طريق الامير محمد بن عبدالرحمن",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 28452,
+              "street": "الفرزدق",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 28453,
+              "street": "الفرزدق",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 30207,
+              "street": "الأمير محمد بن عبد الرحمن",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 30208,
+              "street": "الأمير محمد بن عبد الرحمن",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 1120,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الأمير محمد بن عبد الرحمن",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الأمير محمد بن عبد الرحمن» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0029": {
+      "control": "confirmed",
+      "junctions": [],
+      "action": "unmeasurable",
+      "why": "لم تُسنَد عقدة تقاطع في الرسم — لا هندسة تُقاس عليها الأضلاع."
+    },
+    "BLD-2026-0045": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 16142,
+          "name": "طريق الملك فهد - طريق الملك سعود",
+          "legs": 5,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 3,
+          "legDetail": [
+            {
+              "edge": 16196,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 27274,
+              "street": "طريق الملك فهد الفرعي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 27275,
+              "street": "طريق الملك فهد الفرعي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 27291,
+              "street": "عمرو بن العاص",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 27292,
+              "street": "عمرو بن العاص",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 1760,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 40,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 5 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "طريق الملك فهد الفرعي",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «طريق الملك فهد الفرعي» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0054": {
+      "control": "confirmed",
+      "junctions": [],
+      "action": "unmeasurable",
+      "why": "لم تُسنَد عقدة تقاطع في الرسم — لا هندسة تُقاس عليها الأضلاع."
+    },
+    "BLD-2026-0056": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 20358,
+          "name": "شارع الأمير عبدالعزيز بن مساعد بن جلوي - طريق الأمير سلطان بن عبدالعزيز",
+          "legs": 3,
+          "legsOnClosedStreet": 3,
+          "closedApproaches": 3,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 0,
+          "legDetail": [
+            {
+              "edge": 20932,
+              "street": "عبد العزيز بن مساعد بن جلوي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 20933,
+              "street": "عبد العزيز بن مساعد بن جلوي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 30764,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 1120,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 100,
+            "unit": "٪ من الدورة",
+            "means": "حصة 3 من 3 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "عبد العزيز بن مساعد بن جلوي",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «عبد العزيز بن مساعد بن جلوي» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0064": {
+      "control": "confirmed",
+      "action": "reallocate",
+      "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+      "junctions": [
+        {
+          "node": 12030,
+          "name": "طريق هارون الرشيد - ابن العميد",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 11770,
+              "street": "هارون الرشيد",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 11771,
+              "street": "هارون الرشيد",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 25286,
+              "street": "ابن العميد",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 25287,
+              "street": "ابن العميد",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "reallocate",
+          "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+          "alternativesComputed": 1,
+          "alternativeEntersJunction": true,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": {
+            "arriveEdge": 11770,
+            "arriveStreet": "هارون الرشيد",
+            "leaveEdge": null,
+            "leaveStreet": "",
+            "isTerminal": true,
+            "turnForbidden": false
+          },
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "reallocate-green",
+            "fromApproach": "ابن العميد",
+            "toApproach": "هارون الرشيد",
+            "blockedBy": null,
+            "label": "نقل زمن الأخضر من «ابن العميد» إلى «هارون الرشيد» بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0067": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 3701,
+          "name": "شارع الملك فيصل - طريق الامام فيصل بن تركي عبدالله",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 3515,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 3516,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 19330,
+              "street": "الملك فيصل بن عبدالعزيز",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 19331,
+              "street": "الملك فيصل بن عبدالعزيز",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الإمام فيصل بن تركي بن عبدالله",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الإمام فيصل بن تركي بن عبدالله» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        },
+        {
+          "node": 3682,
+          "name": "طريق الملك فهد - طريق الإمام فيصل بن تركي بن عبدالله",
+          "legs": 6,
+          "legsOnClosedStreet": 4,
+          "closedApproaches": 4,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 3496,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 3497,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 6980,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 6981,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 6993,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 6994,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 67,
+            "unit": "٪ من الدورة",
+            "means": "حصة 4 من 6 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الإمام فيصل بن تركي بن عبدالله",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الإمام فيصل بن تركي بن عبدالله» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0068": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 3682,
+          "name": "طريق الملك فهد - طريق الإمام فيصل بن تركي بن عبدالله",
+          "legs": 6,
+          "legsOnClosedStreet": 4,
+          "closedApproaches": 4,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 3496,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 3497,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 6980,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 6981,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 6993,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 6994,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 67,
+            "unit": "٪ من الدورة",
+            "means": "حصة 4 من 6 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الإمام فيصل بن تركي بن عبدالله",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الإمام فيصل بن تركي بن عبدالله» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0069": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 3643,
+          "name": "البطحاء - شارع أبي ايوب الانصاري",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 3458,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 3459,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 19534,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 19535,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الإمام فيصل بن تركي بن عبدالله",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الإمام فيصل بن تركي بن عبدالله» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        },
+        {
+          "node": 3701,
+          "name": "شارع الملك فيصل - طريق الامام فيصل بن تركي عبدالله",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 3515,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 3516,
+              "street": "الإمام فيصل بن تركي بن عبدالله",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 19330,
+              "street": "الملك فيصل بن عبدالعزيز",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 19331,
+              "street": "الملك فيصل بن عبدالعزيز",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "الإمام فيصل بن تركي بن عبدالله",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «الإمام فيصل بن تركي بن عبدالله» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0088": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 21444,
+          "name": "الاحساء - شارع جرير",
+          "legs": 3,
+          "legsOnClosedStreet": 3,
+          "closedApproaches": 3,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 0,
+          "legDetail": [
+            {
+              "edge": 22455,
+              "street": "شارع الاحساء",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 22456,
+              "street": "شارع الاحساء",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 30925,
+              "street": "",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 100,
+            "unit": "٪ من الدورة",
+            "means": "حصة 3 من 3 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "شارع الاحساء",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «شارع الاحساء» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0092": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 13116,
+          "name": "أم الحمام - الفارابي",
+          "legs": 6,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 4,
+          "legDetail": [
+            {
+              "edge": 12974,
+              "street": "صالح بن عذل",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 12991,
+              "street": "صالح بن عذل",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 20597,
+              "street": "شارع أم الحمام",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 20598,
+              "street": "شارع أم الحمام",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 99358,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 99359,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 33,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 6 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "شارع أم الحمام",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «شارع أم الحمام» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0093": {
+      "control": "confirmed",
+      "action": "no-waste",
+      "why": "لا ضلع على الشارع المغلق ممنوعٌ عند التقاطع — الإغلاق ليس ملاصقاً لخط التوقّف. المركبات تخرج من الإشارة وتصطفّ عند العمل، فالمسألة تخزين طابور لا أخضرٌ مهدور.",
+      "junctions": [
+        {
+          "node": 21444,
+          "name": "الاحساء - شارع جرير",
+          "legs": 3,
+          "legsOnClosedStreet": 0,
+          "closedApproaches": 0,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 3,
+          "legDetail": [
+            {
+              "edge": 22455,
+              "street": "شارع الاحساء",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 22456,
+              "street": "شارع الاحساء",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 30925,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "no-waste",
+          "why": "لا ضلع على الشارع المغلق ممنوعٌ عند التقاطع — الإغلاق ليس ملاصقاً لخط التوقّف. المركبات تخرج من الإشارة وتصطفّ عند العمل، فالمسألة تخزين طابور لا أخضرٌ مهدور.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": null,
+          "recommendation": null
+        }
+      ]
+    },
+    "BLD-2026-0101": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 26406,
+          "name": "التحلية - الملك محمد الخامس",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 30182,
+              "street": "طريق الأمير محمد بن عبد العزيز",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 30183,
+              "street": "طريق الأمير محمد بن عبد العزيز",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 31280,
+              "street": "شارع الملك محمد الخامس",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 31281,
+              "street": "شارع الملك محمد الخامس",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "طريق الأمير محمد بن عبد العزيز",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «طريق الأمير محمد بن عبد العزيز» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0102": {
+      "control": "confirmed",
+      "action": "reallocate",
+      "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+      "junctions": [
+        {
+          "node": 19229,
+          "name": "طريق الملك عبدالله - طريق الصحابة",
+          "legs": 4,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 2,
+          "legDetail": [
+            {
+              "edge": 19634,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 19635,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            },
+            {
+              "edge": 27012,
+              "street": "طريق الصحابة",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 27013,
+              "street": "طريق الصحابة",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            }
+          ],
+          "action": "reallocate",
+          "why": "البديل المحسوب يدخل التقاطع نفسه من مدخل آخر — فالأخضر المهدور على المدخل المغلق يُنقل إلى المدخل الذي يستقبل الحركة المحوَّلة.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": true,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": {
+            "arriveEdge": 19634,
+            "arriveStreet": "",
+            "leaveEdge": 19635,
+            "leaveStreet": "",
+            "isTerminal": false,
+            "turnForbidden": false
+          },
+          "divertedVehPerHour": 800,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 50,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 4 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": null,
+            "fromApproach": "طريق الصحابة",
+            "toApproach": null,
+            "label": null,
+            "blockedBy": "البديل يدخل التقاطع، لكن اسم مدخله غير مسرود في المصدر — الاكتشاف قائم والتوصية تحتاج تسمية ميدانية للمدخل"
+          }
+        }
+      ]
+    },
+    "BLD-2026-0144": {
+      "control": "confirmed",
+      "action": "redistribute",
+      "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+      "junctions": [
+        {
+          "node": 15379,
+          "name": "طريق العروبة - طريق الملك خالد",
+          "legs": 3,
+          "legsOnClosedStreet": 2,
+          "closedApproaches": 2,
+          "openLegsInProduction": 0,
+          "openLegsInPhase": 1,
+          "legDetail": [
+            {
+              "edge": 15311,
+              "street": "طريق العروبة الفرعي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 15312,
+              "street": "طريق العروبة الفرعي",
+              "onClosedStreet": true,
+              "closedInProduction": true,
+              "closedInPhase": true
+            },
+            {
+              "edge": 99219,
+              "street": "",
+              "onClosedStreet": false,
+              "closedInProduction": true,
+              "closedInPhase": false
+            }
+          ],
+          "action": "redistribute",
+          "why": "لا بديل محسوب يدخل التقاطع — فطور المدخل المغلق يُسقط ويُوزَّع على المداخل الباقية.",
+          "alternativesComputed": 2,
+          "alternativeEntersJunction": false,
+          "alternativeEntersJunctionInProduction": false,
+          "approach": null,
+          "divertedVehPerHour": 1120,
+          "envelope": {
+            "lowPct": 0,
+            "highPct": 67,
+            "unit": "٪ من الدورة",
+            "means": "حصة 2 من 3 مدخلاً بافتراض توزيع متساوٍ على الأضلاع الملتقية.",
+            "assumption": "التوزيع المتساوي افتراض لا قياس: خطط التوقيت تعطي الشريان أكثر من الفرعي.",
+            "notSeconds": "لا تُحوَّل إلى ثوانٍ: طول الدورة غير موجود في أي مصدر متاح.",
+            "evidenceLevel": "model-derived"
+          },
+          "recommendation": {
+            "action": "drop-phase",
+            "fromApproach": "طريق العروبة الفرعي",
+            "toApproach": null,
+            "blockedBy": null,
+            "label": "إسقاط طور «طريق العروبة الفرعي» وتوزيع زمنه على المداخل الباقية، بالتنسيق مع إدارة المرور قبل بدء العمل"
+          }
+        }
+      ]
+    }
+  }
+}
