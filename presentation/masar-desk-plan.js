@@ -267,7 +267,7 @@
       + '<div class="gap"><p>البنود التالية لا يحسبها هذا النظام، '
       + 'ولا تكتمل الخطة بدونها:</p>\n' + engineerHtml(plan) + '</div>\n'
 
-      + '<p class="foot">وُلّدت من مكتب المراجع — أثر · '
+      + '<p class="foot">وُلّدت من مكتب المراجع — مسار · '
       + escapeHtml(stamp(plan.generatedAt)) + ' UTC · '
       + 'الأثر من محرك مسار (BPR) على هندسة OpenStreetMap · بيانات توضيحية للعرض.</p>\n'
       + '</body>\n</html>\n';
