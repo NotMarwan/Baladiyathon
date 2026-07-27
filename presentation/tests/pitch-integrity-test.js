@@ -28,7 +28,42 @@ const ideaCard = read('docs/hackathon/بطاقة-الفكرة.md');
  * حارسٌ على لا شيء.
  */
 const formAnswers = read('docs/hackathon/اجوبة-الفورم.md');
-const allOwnedNarrative = [...artifacts.map((item) => item.html), sources, ideaCard, formAnswers].join('\n');
+
+/*
+ * مادة التسليم نفسها — آخر ما بقي خارج الحراسة.
+ * ---------------------------------------------------------------------------
+ * الدورة الماضية كشفت أن `اجوبة-الفورم.md` كان خارج النطاق، فأُدخل. ثم بقيت
+ * **الملفات التي تُرفع فعلاً** خارجه: `output/submission/*.html` — وهي التي
+ * تصير PDFات في يد اللجنة. أي أن الحارس كان يحرس المصدر ويترك المُخرَج.
+ *
+ * وهذه القائمة **مشتقّة من القرص لا مكتوبة**: كل قائمة يدوية شاخت هنا مرّتين،
+ * ومصدر الشيخوخة واحد — ملفٌّ جديد يدخل التسليم ولا يدخل الفحص.
+ *
+ * وتُجرَّد base64 قبل البحث. عرض التحكيم ملفان بالميغابايت من صور مضمَّنة،
+ * وأبجدية base64 تحوي `ACO` و`+2M` كسلاسل عابرة — البحث الخام يعطي إنذاراً
+ * كاذباً على كليهما (قيس: ضربتان، كلتاهما من صورة). والحارس الذي يكذب يُعطَّل،
+ * فيصير وجوده أسوأ من غيابه.
+ */
+function withoutEmbeddedData(source) {
+  return source.replace(/data:[a-z/+.-]*;base64,[A-Za-z0-9+/=\s]+/gi, '[B64]');
+}
+
+const submissionDir = path.join(root, 'output', 'submission');
+const submissionArtifacts = fs.existsSync(submissionDir)
+  ? fs.readdirSync(submissionDir)
+    .filter((name) => name.endsWith('.html'))
+    .sort()
+    .map((name) => ({
+      file: 'output/submission/' + name,
+      html: withoutEmbeddedData(read('output/submission/' + name)),
+    }))
+  : [];
+
+const allOwnedNarrative = [
+  ...artifacts.map((item) => item.html),
+  sources, ideaCard, formAnswers,
+  ...submissionArtifacts.map((item) => item.html),
+].join('\n');
 
 const forbiddenClaims = [
   'أول أداة',
@@ -140,10 +175,63 @@ test('every numeric metric card has a matching local source or formula link', ()
   });
 });
 
+/* الرسالة تسمّي الملف.
+   الصيغة السابقة ضمّت كل شيء في نصّ واحد، فقالت «أي ادعاء» ولا تقول «أين».
+   وثمن ذلك بحثٌ يدوي في مليونَي محرف — أسوأ ما يكون وقت التسليم. */
+const narrativeByFile = [
+  ...artifacts,
+  { file: 'presentation/masar-sources.html', html: sources },
+  { file: 'docs/hackathon/بطاقة-الفكرة.md', html: ideaCard },
+  { file: 'docs/hackathon/اجوبة-الفورم.md', html: formAnswers },
+  ...submissionArtifacts,
+];
+
 test('forbidden unsupported or misleading claims are absent from every owned narrative file', () => {
+  const hits = [];
+  narrativeByFile.forEach((item) => {
+    forbiddenClaims.forEach((claim) => {
+      if (item.html.includes(claim)) hits.push(`${item.file} ⟵ «${claim}»`);
+    });
+  });
+  assert.deepStrictEqual(hits, [], 'ادعاءات محظورة:\n    ' + hits.join('\n    '));
+  /* والنصّ المضموم يُفحص كذلك: ملفٌّ يدخل `allOwnedNarrative` ولا يدخل
+     `narrativeByFile` يمرّ من الثقب — فيُقفل الطرفان. */
   forbiddenClaims.forEach((claim) => {
     assert.ok(!allOwnedNarrative.includes(claim), `forbidden claim present: ${claim}`);
   });
+});
+
+/*
+ * تغطية النطاق.
+ * الحارس السابق سقط مرّتين بالطريقة نفسها: قائمة يدوية شاخت. فتُفحص التغطية
+ * نفسها — لا محتواها وحده. وحدّ الملفين لأن التسليم فيه عرضان: عرض المنصة
+ * والعرض التفصيلي، والنصّي فوقهما.
+ */
+test('مادة التسليم داخل النطاق فعلاً — لا حارس على مجلد فارغ', () => {
+  assert.ok(fs.existsSync(submissionDir),
+    'output/submission/ غير موجود — الفحص يمرّ على لا شيء ويقول أخضر');
+  assert.ok(submissionArtifacts.length >= 2,
+    `النطاق يحمل ${submissionArtifacts.length} ملف تسليم — المتوقَّع عرضان على الأقل`);
+  const names = submissionArtifacts.map((item) => item.file);
+  ['masar-baladiyathon-judging-deck.html', 'masar-pitch-deck.html'].forEach((name) => {
+    assert.ok(names.some((file) => file.endsWith(name)),
+      `${name} خارج نطاق الحراسة — وهو من الملفات المرفوعة`);
+  });
+});
+
+/*
+ * التجريد يجب أن يعمل — وأن يعمل بدقّة.
+ * لو جرّد أكثر من اللازم لصار الحارس أعمى صامتاً: يمرّ على كل شيء ويقول أخضر.
+ * ولو جرّد أقلّ لأنذر كاذباً على صورة. فيُقاس الطرفان بحقنٍ مباشر.
+ */
+test('تجريد base64 يمسح الصور ولا يمسح النصّ حولها', () => {
+  const sample = 'قبل <img src="data:image/png;base64,QUNPUGx1czJN"> بعد ACO_حقيقي';
+  const stripped = withoutEmbeddedData(sample);
+  assert.ok(!stripped.includes('QUNPUGx1czJN'), 'الصورة لم تُجرَّد');
+  assert.ok(stripped.includes('قبل ') && stripped.includes(' بعد'),
+    'التجريد ابتلع النصّ المحيط');
+  assert.ok(stripped.includes('ACO_حقيقي'),
+    'التجريد ابتلع ادعاءً حقيقياً خارج الصورة — الحارس صار أعمى');
 });
 
 test('all three presentation artifacts share the same ordered eight-part story', () => {
