@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مسار — تجربة الجهة</title>
+<meta name="description" content="تجربة تنسيق تمثيلية للشركة السعودية للكهرباء عند وصول تصريح متداخل من شركة المياه الوطنية.">
+<link rel="stylesheet" href="masar-tokens.css">
+<link rel="stylesheet" href="masar-experience.css">
+</head>
+<body>
+
+<a class="visually-hidden experience-skip" href="#experienceMain">
+  تخطَّ إلى محتوى التجربة
+</a>
+
+<header class="experience-identity">
+  <div class="experience-identity-copy">
+    <p class="experience-eyebrow">مركز تنسيق الأعمال</p>
+    <h1>تجربة الجهة — الشركة السعودية للكهرباء</h1>
+  </div>
+  <span class="experience-representative">بيانات تمثيلية للعرض</span>
+</header>
+
+<p class="visually-hidden" id="experienceLive" role="status"
+   aria-live="polite"></p>
+
+<main class="experience-page" id="experienceMain">
+  <section class="experience-intro" aria-labelledby="experienceGreeting">
+    <div class="experience-intro-copy">
+      <p class="experience-eyebrow">ملخص اليوم</p>
+      <h2 id="experienceGreeting">صباح الخير — لديك فرصة تنسيق تحتاج قرارك.</h2>
+      <p>التنبيه أدناه يربط عملين على الشارع نفسه قبل اعتماد الجدول.</p>
+    </div>
+    <div class="experience-summary" id="experienceSummary"
+         aria-label="ملخص محفظة الجهة">
+      <p class="experience-loading" role="status">جارٍ قراءة محفظة الجهة…</p>
+    </div>
+  </section>
+
+  <section class="experience-command" aria-label="حالة التنسيق الرئيسية">
+    <article class="experience-panel experience-alert" id="experienceAlert">
+      <p class="experience-loading" role="status">جارٍ مطابقة الأعمال على الشارع…</p>
+    </article>
+    <figure class="experience-panel experience-map" id="experienceMap">
+      <figcaption>سيظهر هنا موضع العملين وعلاقة التداخل بينهما.</figcaption>
+    </figure>
+    <aside class="experience-panel experience-action" id="experienceAction"
+           aria-label="إجراء التنسيق"></aside>
+  </section>
+
+  <section class="experience-section" id="experienceComparison"
+           aria-labelledby="experienceComparisonTitle">
+    <p class="experience-eyebrow">قراءة القرار</p>
+    <h2 id="experienceComparisonTitle">قبل التنسيق وبعده</h2>
+  </section>
+
+  <section class="experience-section" id="experienceAutomation"
+           aria-labelledby="experienceAutomationTitle">
+    <p class="experience-eyebrow">رحلة الأتمتة</p>
+    <h2 id="experienceAutomationTitle">من التصريح إلى طلب النافذة المشتركة</h2>
+  </section>
+
+  <section class="experience-section" id="experiencePermits"
+           aria-labelledby="experiencePermitsTitle">
+    <p class="experience-eyebrow">محفظة الجهة</p>
+    <h2 id="experiencePermitsTitle">ما يحتاج انتباه الكهرباء</h2>
+  </section>
+
+  <section class="experience-section" id="experienceCapabilities"
+           aria-labelledby="experienceCapabilitiesTitle">
+    <p class="experience-eyebrow">قدرات مسار</p>
+    <h2 id="experienceCapabilitiesTitle">من التنبيه إلى قرار يمكن مراجعته</h2>
+  </section>
+
+  <section class="experience-limits" aria-labelledby="experienceLimitsTitle">
+    <p class="experience-eyebrow">حدود العرض</p>
+    <h2 id="experienceLimitsTitle">قرار بشري على بيانات معلَّمة</h2>
+    <ul>
+      <li>المحفظة تمثيلية وليست سجل تصاريح رسمياً.</li>
+      <li>طلب التنسيق داخل هذه الصفحة لا يرسل إلى جهة خارجية.</li>
+      <li>اعتماد النافذة المشتركة يحتاج موافقة الجهتين.</li>
+      <li>القياس الميداني مطلوب قبل اعتماد أثر المدينة.</li>
+    </ul>
+  </section>
+</main>
+
+<script defer src="masar-nav.js"></script>
+<script defer src="data/city-portfolio.geojson.js"></script>
+<script defer src="data/digonce-compliance.js"></script>
+<script defer src="masar-experience-model.js"></script>
+<script defer src="masar-experience.js"></script>
+
+</body>
+</html>

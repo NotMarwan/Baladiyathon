@@ -104,4 +104,33 @@ ok('غياب البيانات أو الحالة لا يصنع تصريحاً ب�
   assert.strictEqual(noPair.scenario, null);
 });
 
+ok('الصفحة دلالية وتحمّل مصادرها محلياً بلا كتابة خارجية', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'masar-experience.html'), 'utf8');
+  assert.ok(html.includes('lang="ar" dir="rtl"'));
+  assert.ok(html.includes('بيانات تمثيلية للعرض'));
+  [
+    'experienceSummary',
+    'experienceAlert',
+    'experienceMap',
+    'experienceComparison',
+    'experienceAutomation',
+    'experiencePermits',
+    'experienceCapabilities',
+  ].forEach((id) => {
+    assert.ok(html.includes(`id="${id}"`), `موضع مفقود: ${id}`);
+  });
+  assert.ok(html.includes('aria-live="polite"'));
+  assert.ok(html.includes('src="data/city-portfolio.geojson.js"'));
+  assert.ok(html.includes('src="data/digonce-compliance.js"'));
+  assert.ok(html.includes('src="masar-experience-model.js"'));
+  assert.ok(html.includes('src="masar-experience.js"'));
+  assert.ok(!html.includes('/api/'), 'صفحة العرض لا تكتب إلى واجهة الخادم');
+});
+
+ok('شريط التنقل يحمل تجربة المستخدم قسماً مستقلاً', () => {
+  const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
+  assert.ok(nav.includes("file: 'masar-experience.html'"));
+  assert.ok(nav.includes("label: 'تجربة المستخدم'"));
+});
+
 console.log(`ALL EXPERIENCE TESTS PASSED (${passed})`);
