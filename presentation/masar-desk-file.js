@@ -290,6 +290,7 @@
       + (reasons ? '<p class="desk-card-label">أكبر ثلاثة أسباب</p>'
         + '<ul class="desk-reasons">' + reasons + '</ul>' : '')
       + renderAlternateLoad(p.permitRef)
+      + renderSignalPhase(p.permitRef)
       + (conflicts ? '<p class="desk-card-label">التعارض</p>'
         + '<ul class="desk-conflicts">' + conflicts + '</ul>'
         : '<p class="desk-none">لا تعارض على المقطع في النافذة نفسها.</p>')
@@ -345,6 +346,100 @@
       + '<p class="desk-source">مشتقّ من النموذج عند ساعة مرجعية واحدة — '
       + 'الحركة المحوَّلة مقدَّرة من حصة المسارات المغلقة، والسعة افتراض معلن. '
       + 'لا قياس ميداني.</p>';
+  }
+
+  /**
+   * طور الإشارة عند إغلاق مدخل — تأخيرٌ لا يظهر في أي نموذج وصلات.
+   * ---------------------------------------------------------------------------
+   * تقاطعٌ بإشارة يُغلق أحد مداخله. والإشارة تبقى تعمل بخطتها الثابتة فتمنح
+   * أخضرَ لمدخلٍ لا تأتي منه مركبة، وذلك الأخضر أحمرُ إضافيّ على المداخل
+   * الباقية. فينتظر السائق أطول **لا بسبب الحفر بل بسبب خطة لم يعدّلها أحد**.
+   * وهذا ليس في الوصلة حتى يقيسه محرك BPR — هو في التقاطع.
+   *
+   * **ولا رقم ثوانٍ هنا ولا يمكن أن يكون.** طول الدورة ونسبة الأخضر إلى الدورة
+   * غير موجودتين في أي مصدر متاح. فيُعرض مظروفٌ معلَن الافتراض: أدناه صفر
+   * (الوضع القائم)، وأعلاه حصة مدخلٍ واحد بافتراض توزيع متساوٍ على الأضلاع.
+   *
+   * والحالة غير المؤكَّدة تُقال غير مؤكَّدة: مصدرٌ واحد يذكر تقاطعاً ليس
+   * إشارة، وغياب عقدة إشارة ليس دليل غيابها. وحيث لا مصدر — صمت.
+   */
+  function renderSignalPhase(permitRef) {
+    var host = (typeof window !== 'undefined' && window) || {};
+    var source = (host.MASAR_SIGNAL_PHASE && host.MASAR_SIGNAL_PHASE.permits) || null;
+    var entry = source && source[permitRef];
+    if (!entry) return '';
+
+    var label = '<p class="desk-card-label">طور الإشارة عند إغلاق مدخل</p>';
+
+    /* مصدرٌ واحد يذكر تقاطعاً: يُقال ذلك ولا تُدّعى إشارة، ولا يُقال «لا
+       إشارة» أيضاً — المصدر المجتمعي ناقص التغطية بمقدار مقيس. */
+    if (entry.control === 'single-source') {
+      return label
+        + '<p class="desk-none">التحكّم على هذا المقطع <strong>غير مؤكَّد</strong> — '
+        + 'مصدرٌ واحد يذكر تقاطعاً ولا يؤكّده الآخر. ولا يُقرأ ذلك نفياً '
+        + 'لوجود إشارة: تغطية المصدر المفتوح ناقصة بمقدار معلوم. '
+        + 'فلا توصية توقيت على هذه الحالة.</p>';
+    }
+    if (entry.control !== 'confirmed') return '';
+
+    var junction = (entry.intersections || [])
+      .filter(function (one) { return one.nodeStatus === 'resolved'; })[0]
+      || (entry.intersections || [])[0];
+    if (!junction) return '';
+
+    return label + renderSignalPhaseBody(entry, junction);
+  }
+
+  /** تمييز العدد بالعربية: الثلاثة إلى العشرة جمعٌ، وما فوقها مفردٌ منصوب. */
+  function legsPhrase(legs) {
+    if (legs === 1) return 'ضلع واحد';
+    if (legs === 2) return 'ضلعان';
+    if (legs >= 3 && legs <= 10) return number(legs) + ' أضلاع';
+    return number(legs) + ' ضلعاً';
+  }
+
+  /** جسم البطاقة المؤكَّدة: الحال، ثم المظروف، ثم الإجراء أو سببُ سقوطه. */
+  function renderSignalPhaseBody(entry, junction) {
+    var envelope = junction.envelope;
+    var eligible = entry.rule && entry.rule.state === 'eligible';
+
+    var body = '<p class="desk-alt-load is-' + (eligible ? 'overflows' : 'unknown') + '">'
+      + '<strong>تقاطع بإشارة مؤكَّدة من مصدرين</strong> — هذا العمل يغلق مدخلاً '
+      + 'على تقاطع بإشارة. الإشارة ستبقى تمنح أخضرَ لمدخلٍ مغلق ما لم تُعدَّل '
+      + 'خطتها، فالانتظار على المداخل الباقية يزيد بلا سبب.</p>'
+      + '<dl class="desk-figures">'
+      + '<div><dt>التقاطع</dt><dd>' + escapeHtml(text(junction.name)) + '</dd></div>'
+      + '<div><dt>على بُعد</dt><dd>' + escapeHtml(number(junction.intersectionToWorkM))
+      + ' متراً من مقطع العمل</dd></div>'
+      + '<div><dt>أضلاع ملتقية</dt><dd>'
+      + (junction.legs ? escapeHtml(legsPhrase(junction.legs)) : DASH)
+      + '</dd></div>'
+      + (envelope
+        ? '<div><dt>الأخضر المهدور</dt><dd>' + escapeHtml(number(envelope.lowPct))
+          + '٪ إلى ' + escapeHtml(number(envelope.highPct)) + '٪ من الدورة</dd></div>'
+        : '')
+      + '</dl>';
+
+    if (envelope) {
+      body += '<p class="desk-hint">المدى ليس حساباً: أدناه صفر — لا أحد يعدّل '
+        + 'الخطة، وهو الوضع القائم. وأعلاه حصة مدخلٍ واحد بافتراض توزيع متساوٍ '
+        + 'على الأضلاع، وهو افتراض معلن لا قياس. ولا يُحوَّل إلى ثوانٍ: طول '
+        + 'الدورة غير منشور في أي مصدر متاح.</p>';
+    }
+
+    if (eligible) {
+      body += '<p class="desk-card-label">الإجراء</p>'
+        + '<p class="desk-alt-load is-overflows"><strong>تنسيق إعادة توقيت مع '
+        + 'إدارة المرور قبل بدء العمل.</strong></p>';
+    } else {
+      body += '<p class="desk-abstain">لا توصية توقيت: '
+        + escapeHtml(text(entry.rule && entry.rule.why)) + '</p>';
+    }
+
+    return body + '<p class="desk-source">التحكّم مؤكَّد من مصدرين مستقلين '
+      + '(سجل الهيئة الملكية وعقد OpenStreetMap). وما عدا ذلك مشتقّ من النموذج: '
+      + 'عدد الأضلاع من هندسة الشبكة، والمدى من افتراض توزيع معلن. '
+      + 'لا توقيت إشارة في أي مصدر.</p>';
   }
 
   /**
