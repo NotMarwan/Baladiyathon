@@ -109,6 +109,27 @@
   GL.map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: 'metric' }), 'bottom-left');
 
   GL.api.onReady(function () {
+    /*
+     * الطبقات الرسمية داخل حاجز، والسجلات خارجه.
+     * -----------------------------------------------------------------------
+     * `onReady` تُطلق الآن من ثلاثة أبواب: إقلاعٌ سليم، وخطأ، ومهلة تنقضي.
+     * وفي البابين الأخيرين لا يوجد نمطٌ محمَّل، فكل ما يضيف مصدراً أو طبقة قد
+     * يرمي — والرمية في سلسلةٍ واحدة تُسقط ما بعدها، وما بعدها هو **السجلات
+     * والبحث والعدّاد**: أي الصفحة كلها بالنسبة لساكنٍ يبحث عن شارعه.
+     *
+     * فالترتيب مقصود: كل ما يحتاج WebGL في حاجزه، وما لا يحتاجه بعده مكشوفاً.
+     * القائمة تُعرض والخريطة تغيب — لا العكس.
+     */
+    if (GL.api.isDegraded()) {
+      console.warn('[masar] الخريطة لم تُقلع: ' + GL.api.degradedReason()
+        + ' — السجلات تُعرض في القائمة بلا رسم.');
+    }
+
+    try { armMapLayers(); } catch (err) {
+      console.error('[masar] الطبقات الرسمية لم تُركَّب:', err);
+    }
+
+    function armMapLayers() {
     /**
      * سلسلة التأجيل، من الأخفّ فائدةً إلى الأثقل زينةً:
      *   شرايين (مع الصفحة) → محلية → رسم التوجيه → شوارع الأحياء.
@@ -145,15 +166,23 @@
     if (typeof MasarBuildingsLazy !== 'undefined') {
       window.__masarBuildings = MasarBuildingsLazy.install(GL.map);
     }
+    } // ← نهاية armMapLayers
+
     var works = window.MASAR_CITY_PORTFOLIO || { type: 'FeatureCollection', features: [] };
     GL.api.setWorks(works);
 
-    MasarWorksMapInteractions.install(GL.map, maplibregl, {
-      decorate: function (rendered) {
-        // الهندسة المرسومة مقصوصة على حدود البلاطة؛ التوجيه يحتاج الأصل.
-        return detourFor(byId[rendered.properties.id] || rendered);
-      },
-    });
+    /* التفاعلات تسجّل مستمعات على طبقاتٍ قد لا توجد. مستمعٌ على طبقة غائبة
+       لا يُطلق ولا يضرّ — لكن التركيب نفسه يلمس الخريطة، فيبقى في حاجزه. */
+    try {
+      MasarWorksMapInteractions.install(GL.map, maplibregl, {
+        decorate: function (rendered) {
+          // الهندسة المرسومة مقصوصة على حدود البلاطة؛ التوجيه يحتاج الأصل.
+          return detourFor(byId[rendered.properties.id] || rendered);
+        },
+      });
+    } catch (err) {
+      console.error('[masar] تفاعلات الخريطة لم تُركَّب:', err);
+    }
     MasarWorksMapPanel.mount(document.getElementById('control-panel'), GL.api, Date.now());
 
     var Data = MasarWorksMapData;

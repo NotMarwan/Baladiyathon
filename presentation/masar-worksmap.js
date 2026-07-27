@@ -37,7 +37,26 @@
     'updateRoad', 'onRoadClick', 'getData',
     'setWorks', 'setDateRange', 'toggleGroup',
     'highlightWork', 'onWorkClick',
+    'isDegraded', 'degradedReason',
   ];
+
+  /*
+   * مهلة إقلاع الخريطة.
+   * ---------------------------------------------------------------------------
+   * كان كل ما على هذه الصفحة معلَّقاً على `map.on('load')` وحده: لا مستمع خطأ،
+   * ولا مهلة، ولا مسار بديل. فإن تعثّر WebGL أو النمط — بطاقة قديمة، أو تسريع
+   * معطَّل، أو لوحة لا تركّب إطاراً فلا يعمل `requestAnimationFrame` — بقيت
+   * الصفحة على «جارٍ التحميل…» بصفر سجل و**صفر خطأ في الـconsole**، والمئة
+   * والخمسون معلماً محمَّلة في الذاكرة وغير معروضة. صفحةٌ تَعِد بأن «السجلات
+   * مسرودة أزراراً» ثم لا تسرد شيئاً ولا تقول لماذا.
+   *
+   * وهذه صفحة السكان — طبقة الشفافية العامة. تعليقها الصامت أسوأ من سقوطها:
+   * الساقط يُصلَح، والمعلَّق يُنتظر.
+   *
+   * ثماني ثوانٍ: أطول من إقلاع سليم على جهاز بطيء بفارق مريح (المقيس هنا دون
+   * الثانيتين مع 6,114 شرياناً)، وأقصر من صبر إنسانٍ أمام شاشة لا تتحرك.
+   */
+  var READY_TIMEOUT_MS = 8000;
 
   var POINT_SOURCE = 'works';
   var LINE_SOURCE = 'works-lines';
@@ -69,6 +88,9 @@
     var roads = state.roads || featureCollection([]);
     var dateRange = null;
     var hiddenGroups = {};
+    /* سبب التدهور — `null` يعني خريطة سليمة.
+       يُقرأ من الصفحة لتعرف أنها تعرض قائمةً بلا رسم، لا لتخفي الفرق. */
+    var degradedReason = null;
 
     function corridorFC() {
       return featureCollection(corridor.map(function (segment, idx) {
@@ -124,9 +146,35 @@
         if (typeof cb === 'function') readyCbs.push(cb);
       },
 
+      isDegraded: function () { return degradedReason !== null; },
+      degradedReason: function () { return degradedReason; },
+      _setDegraded: function (reason) { degradedReason = reason || null; },
+
+      /*
+       * تُنفَّذ كل ردّة نداء داخل حاجزها.
+       *
+       * الحلقة العارية كانت تعني أن أول ردّة تُلقي خطأً تُسقط ما بعدها بلا أثر:
+       * ردّة تلمس طبقة غير موجودة (وهو الحال بالضبط في الوضع المتدهور) تُلغي
+       * تركيب القائمة والبحث والعدّاد. فتصير نتيجة الخطأ الواحد صفحةً فارغة.
+       *
+       * والابتلاع ليس البديل: الخطأ يُسجَّل باسم موضعه ويُعاد في `failures`
+       * ليعرضه المتصل. حاجزٌ يُبلِّغ، لا حاجزٌ يكتم.
+       */
       _fireReady: function () {
-        readyCbs.forEach(function (cb) { cb(); });
+        var pending = readyCbs;
+        var failures = [];
         readyCbs = [];
+        pending.forEach(function (cb, index) {
+          try {
+            cb();
+          } catch (error) {
+            failures.push({ index: index, error: error });
+            if (typeof console !== 'undefined' && console.error) {
+              console.error('[masar-worksmap] onReady#' + index + ' سقطت:', error);
+            }
+          }
+        });
+        return failures;
       },
 
       setCorridor: function (coordPairs) {
@@ -416,6 +464,74 @@
     var api = buildApi(map, { roads: roadsGeoJSON, works: featureCollection([]) });
     var labelLayerId = firstLabelLayerId(style);
 
+    /*
+     * إقلاعٌ يُطلق مرة واحدة، من ثلاثة أبواب.
+     * -------------------------------------------------------------------------
+     * الباب السليم `map.on('load')`، وبابان للفشل: خطأ يمنع الإقلاع، ومهلة
+     * تنقضي بلا خطأ ولا حِمل — وهذه الأخيرة هي الحالة الخبيثة، لأن الخريطة
+     * التي لا تُقلع ولا تُخطئ لا تترك في الـconsole سطراً واحداً.
+     *
+     * وفي البابين تُطلق `onReady` **كما هي**: تركيب القائمة والبحث والعدّاد
+     * والفلاتر لا يحتاج WebGL، وكل دوال الـapi التي تلمس الخريطة محروسة أصلاً
+     * بـ`getSource`/`getLayer` فتصير لا-عمليات. النتيجة أن المحكّم يرى مئة
+     * وخمسين سجلاً في قائمة بدل شاشة تدور — وهذا هو الفرق كله.
+     */
+    var readyFired = false;
+    var readyTimer = null;
+
+    /* الإعلان يُنسَّق من CSSOM لا من ورقة أنماط.
+       السياسة الأمنية على هذه الصفحة تمنع `style=` المضمَّن، و`element.style`
+       ليس منه — فيبقى الإعلان مستقلاً بذاته: لا صنف ينتظر ورقةً، ولا ورقةَ
+       تنتظر تحميلاً قد يكون هو نفسه ما فشل. */
+    function announce(reason) {
+      if (!reason || !container || typeof document === 'undefined') return;
+      var note = document.createElement('div');
+      note.className = 'wm-degraded';
+      note.setAttribute('role', 'alert');
+      note.dir = 'rtl';
+      note.textContent = 'تعذّر رسم الخريطة على هذا الجهاز (' + reason + '). '
+        + 'السجلات معروضة كاملةً في قائمة «السجلات المعروضة» — '
+        + 'الأرقام والتواريخ والحالات كلها كما هي، والمفقود هو الرسم وحده.';
+      var css = {
+        position: 'absolute', insetInlineStart: '12px', insetInlineEnd: '12px',
+        top: '12px', zIndex: '900', padding: '12px 14px', borderRadius: '10px',
+        background: '#fff4e6', color: '#7a3e00', border: '1px solid #f0a868',
+        font: '500 14px/1.6 system-ui, sans-serif', boxShadow: '0 2px 10px rgba(0,0,0,.12)',
+        maxWidth: '640px', marginInline: 'auto',
+      };
+      Object.keys(css).forEach(function (key) { note.style[key] = css[key]; });
+      if (container.style && !container.style.position) container.style.position = 'relative';
+      container.appendChild(note);
+    }
+
+    function fireReadyOnce(reason) {
+      if (readyFired) return;
+      readyFired = true;
+      if (readyTimer !== null) { clearTimeout(readyTimer); readyTimer = null; }
+      api._setDegraded(reason || null);
+      announce(reason);
+      api._fireReady();
+    }
+
+    /* مستمع الخطأ. أخطاء maplibre بعد الإقلاع (بلاطة ناقصة، مصدر متأخر) لا
+       تُسقط الصفحة ولا تستحق إعلاناً؛ وما يقع **قبله** يعني أن الإقلاع لن
+       يتم. فالتمييز بالزمن لا بنوع الخطأ. */
+    map.on('error', function (event) {
+      var detail = (event && event.error && event.error.message)
+        || (event && event.message) || 'خطأ غير مسمّى';
+      if (typeof console !== 'undefined' && console.error) {
+        console.error('[masar-worksmap] maplibre:', detail);
+      }
+      if (!readyFired) fireReadyOnce('خطأ في محرك الرسم: ' + detail);
+    });
+
+    if (typeof setTimeout === 'function') {
+      readyTimer = setTimeout(function () {
+        fireReadyOnce('انقضت مهلة ' + (READY_TIMEOUT_MS / 1000) + ' ثوانٍ بلا إقلاع');
+      }, READY_TIMEOUT_MS);
+      if (readyTimer && typeof readyTimer.unref === 'function') readyTimer.unref();
+    }
+
     map.on('load', function () {
       map.addSource(POINT_SOURCE, Object.assign(
         { type: 'geojson', data: featureCollection([]) }, Layers.POINT_SOURCE_OPTIONS
@@ -510,7 +626,7 @@
         });
       });
 
-      api._fireReady();
+      fireReadyOnce(null);
     });
 
     return { map: map, api: api };

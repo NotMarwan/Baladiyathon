@@ -18,6 +18,10 @@ const REQUIRED = [
 // ما يضيفه مكتب المراجع فوق العقد الأصلي — إضافة لا استبدال.
 const DESK_ADDITIONS = ['setWorks', 'setDateRange', 'toggleGroup', 'highlightWork', 'onWorkClick'];
 
+/* ما أضافه مسار التدهور. الصفحة تحتاج أن **تعرف** أنها تعرض قائمةً بلا رسم
+   كي تقول ذلك للقارئ؛ خريطةٌ متعثّرة تصمت أسوأ من خريطة تسقط. */
+const RESILIENCE_ADDITIONS = ['isDegraded', 'degradedReason'];
+
 ok('العقد معلن في الوحدة', () => {
   for (const name of REQUIRED) {
     assert.ok(WorksMap.API_METHODS.indexOf(name) !== -1, `مفقود من العقد: ${name}`);
@@ -28,8 +32,12 @@ ok('عقد المكتب مضاف بلا كسر العقد الأصلي', () => {
   for (const name of DESK_ADDITIONS) {
     assert.ok(WorksMap.API_METHODS.indexOf(name) !== -1, `مفقود من عقد المكتب: ${name}`);
   }
-  assert.strictEqual(WorksMap.API_METHODS.length, REQUIRED.length + DESK_ADDITIONS.length,
-    'العقد يحمل دوالّ غير معلنة في أي من القائمتين');
+  for (const name of RESILIENCE_ADDITIONS) {
+    assert.ok(WorksMap.API_METHODS.indexOf(name) !== -1, `مفقود من عقد التدهور: ${name}`);
+  }
+  assert.strictEqual(WorksMap.API_METHODS.length,
+    REQUIRED.length + DESK_ADDITIONS.length + RESILIENCE_ADDITIONS.length,
+    'العقد يحمل دوالّ غير معلنة في أي من القوائم الثلاث');
 });
 
 ok('الوحدة تعمل في Node بلا maplibregl', () => {
