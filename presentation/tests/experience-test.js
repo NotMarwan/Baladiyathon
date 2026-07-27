@@ -133,4 +133,46 @@ ok('شريط التنقل يحمل تجربة المستخدم قسماً مست
   assert.ok(nav.includes("label: 'تجربة المستخدم'"));
 });
 
+ok('التفاعل محلي ومحدود بثلاث حالات واضحة', () => {
+  const controller = fs.readFileSync(
+    path.join(ROOT, 'masar-experience.js'),
+    'utf8',
+  );
+  assert.ok(controller.includes("coordination: 'new'"));
+  [
+    'request-coordination',
+    'review-details',
+    'defer',
+    'reset',
+  ].forEach((action) => {
+    assert.ok(
+      controller.includes(`data-action="${action}"`),
+      `إجراء مفقود: ${action}`,
+    );
+  });
+  assert.ok(controller.includes('MasarExperienceModel.buildViewModel'));
+  assert.ok(!controller.includes('fetch('));
+  assert.ok(!controller.includes('localStorage'));
+});
+
+ok('النمط متجاوب ويحترم الحركة المخففة والوصول باللوحة واللمس', () => {
+  const css = fs.readFileSync(
+    path.join(ROOT, 'masar-experience.css'),
+    'utf8',
+  );
+  [
+    '@media (prefers-reduced-motion: reduce)',
+    '@media (min-width: 769px)',
+    '@media (min-width: 1100px)',
+    '@media (max-width: 480px)',
+    ':focus-visible',
+    '.experience-command',
+    '.experience-comparison',
+    'min-height: 44px',
+    'touch-action: manipulation',
+  ].forEach((rule) => {
+    assert.ok(css.includes(rule), `قاعدة واجهة مفقودة: ${rule}`);
+  });
+});
+
 console.log(`ALL EXPERIENCE TESTS PASSED (${passed})`);
