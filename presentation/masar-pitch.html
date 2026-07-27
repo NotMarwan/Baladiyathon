@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مسار — قرار قابل للإثبات في ثلاث دقائق</title>
+<link rel="stylesheet" href="masar-tokens.css">
 <style>
   :root{
     /* شرائح العرض تحتفظ بأسفلتها الداكن — خلفية قاعة لا واجهة تشغيل.
@@ -327,7 +328,7 @@
         </article>
       </div>
       <div class="source-strip">
-        <a href="masar-prototype.html">افتح النموذج التفاعلي</a>
+        <a href="masar-desk.html">افتح مكتب القرار — المنتج الحاكم</a>
         <a href="masar-lab.html">افتح مختبر القرار</a>
       </div>
       <p class="quiet">المقارنة التوضيحية تستخدم شبكة طرق محلية ومدخلات معلنة، ولا تمثل نتيجة ميدانية.</p>
@@ -595,6 +596,9 @@
 </script>
 <script src="masar-engine.js"></script>
 <script src="masar-decision.js"></script>
+<!-- `masar-portfolio.js` يستدعي `TrafficLoad.estimate()` وقت بناء الوحدة نفسه،
+     فغيابه لا يُعطّل رقماً واحداً بل يمنع تعريف `MasarPortfolio` كلّه. -->
+<script src="masar-trafficload.js"></script>
 <script src="masar-portfolio.js"></script>
 <script>
 (function () {

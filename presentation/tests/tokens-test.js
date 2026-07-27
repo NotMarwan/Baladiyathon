@@ -74,11 +74,27 @@ const HEX_BUDGET = {
   'masar-journey.html': 0,
 };
 
+/**
+ * الاستيراد يُفحص **وسماً** لا ذِكراً.
+ * ---------------------------------------------------------------------------
+ * الصيغة السابقة كانت `html.indexOf('masar-tokens.css') !== -1`. و`masar-pitch.html`
+ * يحمل الاسم في **تعليق CSS** («بقية الأدوار من masar-tokens.css كي لا تتفرّق
+ * الهوية عن المنتج») بلا وسم `<link>` واحد. فمرّ الحارس على نيّةٍ مكتوبة، بينما
+ * الصفحة تُصيَّر بلا هوية: كل `var(--masar-*)` غير معرَّف، فتسقط الخلفية والسطح
+ * والحدّ ولون العَلَم — على **الملف الوحيد الذي يقف أمام اللجنة**.
+ *
+ * نجا من ١٣٦٦ فحصاً لأن الحارس كان يقرأ ذِكراً. والحارس الذي يقبل الذِّكر بدل
+ * الحِمل يحرس الوثيقة لا الصفحة.
+ */
+const TOKEN_LINK = /<link\b[^>]*\bhref\s*=\s*["'][^"']*masar-tokens\.css["']/i;
+const NAV_SCRIPT = /<script\b[^>]*\bsrc\s*=\s*["'][^"']*masar-nav\.js["']/i;
+
 ok('كل صفحة عائلة تستورد ملف الوسوم أو تحمّل الشريط الذي يحقنه', () => {
   Object.keys(HEX_BUDGET).forEach((page) => {
     const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
-    assert.ok(html.indexOf('masar-tokens.css') !== -1 || html.indexOf('masar-nav.js') !== -1,
-      `${page} خارج نظام الوسوم`);
+    assert.ok(TOKEN_LINK.test(html) || NAV_SCRIPT.test(html),
+      `${page} خارج نظام الوسوم — لا وسم <link> للوسوم ولا <script> للشريط `
+      + '(ذِكر الاسم في تعليق لا يحمّل شيئاً)');
   });
 });
 

@@ -116,9 +116,12 @@
 <script defer src="masar-roads-lazy.js"></script>
 <script defer src="masar-buildings-lazy.js"></script>
 <script defer src="masar-decision-record.js"></script>
-<script defer src="masar-sensitivity.js"></script>
+<!-- سجل الحالات قبل الحساسية: `masar-sensitivity.js` يقرأ أولوياته منه وقت بناء
+     الوحدة، وصيغته الدفاعية `(Cases && …) || null` تجعل الترتيب المقلوب **صمتاً**
+     لا خطأً — تختفي الأولويات المسنودة بالدليل ويبقى اللوح يعمل. -->
 <script defer src="data/comparable-cases.js"></script>
 <script defer src="masar-comparable-cases.js"></script>
+<script defer src="masar-sensitivity.js"></script>
 <script defer src="masar-stability.js"></script>
 <script defer src="masar-desk-analysis.js"></script>
 <script defer src="masar-desk-states.js"></script>
