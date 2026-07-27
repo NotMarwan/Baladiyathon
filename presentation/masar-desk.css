@@ -1032,6 +1032,31 @@ kbd {
 }
 .desk-asks .desk-hint { padding: 0; font-size: 0.72rem; }
 
+/* مِنسَب: التدرّج يتبع المنزلة لا الخطر. المؤشّر لا يقول «هذا سيّئ» — يقول
+   «هذا أثقل». والألوان التحذيرية عليه تُقرأ حكماً على الشارع وهو ليس حكماً. */
+.desk-street-load { font-size: 0.84rem; line-height: 1.65; margin: var(--masar-space-2) 0; }
+.desk-street-load.is-top { color: var(--masar-text); }
+.desk-street-load.is-high { color: var(--masar-text); }
+.desk-street-load.is-mid-high,
+.desk-street-load.is-mid-low,
+.desk-street-load.is-low { color: var(--masar-muted); }
+
+/* الحدّ في جسد البطاقة لا في حاشيتها.
+   -----------------------------------------------------------------------
+   كتابة «ليس عدّاً للمركبات» بحجم الحاشية ولونها تحت رقمٍ كبير إخفاءٌ بصيغة
+   إفصاح: العين تقرأ الرقم وتتخطّى الرمادي. فيأخذ الحدّ حجم النصّ العادي
+   وإطاراً جانبياً يجعله كتلةً تُقرأ، لا سطراً يُمرّ عليه. */
+.desk-street-load-limit {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  margin: var(--masar-space-2) 0 0;
+  padding: var(--masar-space-2) var(--masar-space-3);
+  border-inline-start: 3px solid var(--masar-faint);
+  background: color-mix(in oklab, var(--masar-faint) 8%, transparent);
+  border-radius: 0 6px 6px 0;
+  color: var(--masar-text);
+}
+
 /* حكم البديل: اللون يتبع المعنى لا الزينة — الفائض تحذير لأنه يعني
    طابوراً ينتقل إلى حيّ، لا مجرد رقم أعلى. */
 .desk-alt-load { font-size: 0.84rem; line-height: 1.65; margin: var(--masar-space-2) 0; }

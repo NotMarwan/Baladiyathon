@@ -62,6 +62,16 @@
     return Number.isFinite(n) ? n.toLocaleString('ar-SA-u-nu-latn', { maximumFractionDigits: 1 }) : DASH;
   }
 
+  /* منزلتان لا واحدة: `decimal` يقرّب ٠٫٧٨ إلى ٠٫٨، وسُلَّمٌ من صفر إلى واحد
+     تُمحى فيه المنزلة الثانية يصير خمس درجات لا مئة. */
+  function ratio(value) {
+    var n = Number(value);
+    return Number.isFinite(n)
+      ? n.toLocaleString('ar-SA-u-nu-latn', {
+        minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : DASH;
+  }
+
   function longDate(value) {
     var ms = Date.parse(value);
     if (!ms) return DASH;
@@ -289,6 +299,10 @@
       + '</dl>'
       + (reasons ? '<p class="desk-card-label">أكبر ثلاثة أسباب</p>'
         + '<ul class="desk-reasons">' + reasons + '</ul>' : '')
+      /* مِنسَب قبل حِمل البديل: كل رقمٍ فوق هذا السطر يتناسب طردياً مع حركة
+         الشارع، وحركةُ الشارع هي أضعف مدخل في المنتج كله. فيُقرأ الحدّ قبل
+         السؤال عن البديل لا بعده. */
+      + renderStreetLoad(p.permitRef)
       + renderAlternateLoad(p.permitRef)
       /* أثرٌ ثم إجراء: طور الإشارة يصف ما يفعله هذا التصريح نفسه، وإشعار
          التنسيق يصف ما يمكن فعله حياله. فالوصف قبل المخرج. */
@@ -304,6 +318,82 @@
       + '<p class="desk-source">المصدر: محرك مسار (BPR) على هندسة OpenStreetMap · '
       + 'قيم الحركة والسعة افتراضات معلنة.</p>'
       + '</section>';
+  }
+
+  /**
+   * مِنسَب — منسوب الحِمل على الشارع.
+   * ---------------------------------------------------------------------------
+   * **لماذا على البطاقة أصلاً.** كل رقم أثر فوق هذا الموضع — ساعات التأخير
+   * والريال والكربون والدرجة — يتناسب طردياً مع حركة الشارع. وحركة الشارع في
+   * المحفظة رقمٌ عشوائي ببذرة ثابتة داخل نطاق صنفه: ثلاثة تصاريح على «البطحاء»
+   * كلها شرياني، وقيمها ١٣٬٣٢٠ و٨٧٬٣٧٧ و٨٧٬٤٩٢. فالمراجع يقرأ أرقاماً دقيقة
+   * المظهر مبنيّة على أضعف مدخل في المنتج، ولا شيء على الشاشة يقول له ذلك.
+   *
+   * **وما تقوله البطاقة.** منزلةً نسبية بين شوارع المحفظة — «هذا أثقل من ذاك»
+   * — ومدىً مطلقاً لا نقطة. والحدّ **على البطاقة نفسها لا في حاشيتها**: أن
+   * يُكتب «ليس عدّاً للمركبات» بلون الحاشية تحت رقمٍ كبير هو إخفاءٌ بصيغة
+   * إفصاح.
+   *
+   * **ولا يُحسب هنا.** المؤشّر يحتاج رسم توجيه يزيد على اثني عشر ميغابايت
+   * وعيّنة مسارات تستغرق دقائق. يُحسب مرة عند البناء ويُقرأ ملخّصاً. وإن غاب
+   * الملخّص لا يُعرض شيء — بطاقةٌ صامتة أصدق من تقدير.
+   */
+  function renderStreetLoad(permitRef) {
+    var host = (typeof window !== 'undefined' && window) || {};
+    var payload = host.MASAR_STREET_LOAD || null;
+    var entry = payload && payload.permits && payload.permits[permitRef];
+    if (!entry) return '';
+
+    var head = '<p class="desk-card-label">مِنسَب — منسوب الحِمل على الشارع</p>';
+
+    /* لا منسوب لهذا التصريح: يُقال بسببه ولا يُملأ بصفر. الصفر يقرأ «شارعٌ
+       خفيف» وهو لا يقول ذلك — يقول «لا نعرف». */
+    if (entry.loadIndex === null || entry.loadIndex === undefined) {
+      return head + '<p class="desk-none">'
+        + escapeHtml(entry.reason || 'لم يُحسب منسوب لهذا العمل.') + '</p>';
+    }
+
+    /* «هذا المقطع» أو «هذا الشارع» — بحسب ما حُسب فعلاً. تصريحٌ نقطيّ يأخذ
+       منسوب شارعه، وقوله «هذا المقطع» عنه ادّعاءُ دقّةٍ لا تخصّه. */
+    var isSegment = entry.basis === 'segment';
+    var subject = isSegment ? 'هذا المقطع' : 'هذا الشارع';
+
+    return head
+      + '<p class="desk-street-load is-' + escapeHtml(entry.tier) + '">'
+      + '<strong>مِنسَب ' + escapeHtml(subject) + ': '
+      + escapeHtml(ratio(entry.loadIndex)) + ' من 1</strong> — '
+      + escapeHtml(entry.tierLabel) + '.</p>'
+      + '<dl class="desk-figures">'
+      + '<div><dt>الترتيب</dt><dd>' + escapeHtml(text(entry.rank)) + ' من '
+      + escapeHtml(text(entry.rankOf))
+      + (isSegment ? ' مقطعاً' : ' شارعاً') + '</dd></div>'
+      + '<div><dt>الصنف</dt><dd>' + escapeHtml(classLabel(entry.roadClass))
+      + '</dd></div>'
+      /* المدى مدىً أبداً لا نقطة: نقطةٌ واحدة تُقرأ عدّاً وليست عدّاً. */
+      + (entry.vphBand
+        ? '<div><dt>مدى الحمل في ساعة الذروة</dt><dd>'
+          + escapeHtml(text(entry.vphBand.low)) + '–'
+          + escapeHtml(text(entry.vphBand.high)) + ' مركبة/ساعة</dd></div>'
+          + '<div><dt>نسبة الحمل إلى السعة</dt><dd>'
+          + escapeHtml(ratio(entry.vphBand.vcLow)) + '–'
+          + escapeHtml(ratio(entry.vphBand.vcHigh)) + '</dd></div>'
+        : '<div><dt>مدى الحمل</dt><dd>' + DASH + '</dd></div>')
+      + '</dl>'
+      + (entry.reason
+        ? '<p class="desk-hint">' + escapeHtml(entry.reason) + '</p>' : '')
+      /* الحدّ بحجم النصّ لا بحجم الحاشية، وفي جسد البطاقة لا أسفلها. */
+      + '<p class="desk-street-load-limit"><strong>ليس عدّاً للمركبات.</strong> '
+      + escapeHtml(payload.derivedFrom || '') + ' '
+      + escapeHtml((payload.limit || '').replace('ليس عدّاً للمركبات. ', ''))
+      + '</p>';
+  }
+
+  var CLASS_LABELS = {
+    arterial: 'شرياني', major: 'رئيسي', local: 'فرعي',
+  };
+
+  function classLabel(key) {
+    return CLASS_LABELS[key] || key || DASH;
   }
 
   /**

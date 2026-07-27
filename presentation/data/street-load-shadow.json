@@ -1,0 +1,5847 @@
+{
+  "generatedFrom": "presentation/scripts/build-street-load-shadow.js",
+  "grade": "model-derived",
+  "changesNothing": "تقريرٌ يحسب ولا يبدّل. لم يُعدَّل masar-engine.js ولا masar-portfolio.js ولا city-portfolio.geojson.",
+  "peakShareUsed": 0.09,
+  "permitsCompared": 129,
+  "permitsSkipped": 21,
+  "reproductionMismatches": 0,
+  "aadtRatio": {
+    "note": "وسط مدى مِنسَب مقسوماً على الحركة الحالية. الواحد يعني اتفاقاً، وبُعده عنه في الاتجاهين يقيس ما كانت العشوائية تضيفه أو تحذفه.",
+    "lowest": 0.187,
+    "median": 0.875,
+    "highest": 4.577,
+    "belowHalf": 38,
+    "aboveDouble": 19
+  },
+  "totals": {
+    "currentVehHours": 956347,
+    "shadowLowVehHours": 1465173,
+    "shadowMidVehHours": 4113766,
+    "shadowHighVehHours": 9895317
+  },
+  "convexity": {
+    "note": "المجموع لا يتبع الوسيط لأن معادلة الأثر متحدّبة.",
+    "midOverCurrent": 4.3,
+    "topShare": 13,
+    "topShareOfTotal": 0.844
+  },
+  "ranking": {
+    "spearman": 0.224,
+    "bigMoveThreshold": 10,
+    "movedMoreThanThreshold": 107,
+    "worstShift": 101,
+    "leftTopTen": [
+      "BLD-2026-0020",
+      "BLD-2026-0025",
+      "BLD-2026-0045",
+      "BLD-2026-0058",
+      "BLD-2026-0063",
+      "BLD-2026-0071",
+      "BLD-2026-0073",
+      "BLD-2026-0108",
+      "BLD-2026-0110",
+      "BLD-2026-0133"
+    ],
+    "enteredTopTen": [
+      "BLD-2026-0004",
+      "BLD-2026-0011",
+      "BLD-2026-0019",
+      "BLD-2026-0021",
+      "BLD-2026-0041",
+      "BLD-2026-0047",
+      "BLD-2026-0055",
+      "BLD-2026-0074",
+      "BLD-2026-0098",
+      "BLD-2026-0101"
+    ],
+    "severityChanged": 80,
+    "recommendedWindowChanged": 82
+  },
+  "skipped": [
+    {
+      "permitRef": "BLD-2026-0002",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 2 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0007",
+      "street": "الأمير طلال بن عبدالعزيز",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0010",
+      "street": "البطحاء",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 1 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0012",
+      "street": "البطحاء",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 1 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0013",
+      "street": "السويدي العام",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0023",
+      "street": "خديجة بنت خويلد",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0024",
+      "street": "شارع الأمير متعب بن عبدالله بن عبدالعزيز",
+      "reason": "لا ضلع من الرسم تحت خطّ العمل — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0034",
+      "street": "طريق الجنادرية",
+      "reason": "لا ضلع من الرسم تحت خطّ العمل — فالمنسوب عن الشارع كله (وسيط 1 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0037",
+      "street": "طريق الدائري الشرقي",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0038",
+      "street": "طريق الدمام",
+      "reason": "لا ضلع من الرسم تحت خطّ العمل — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0039",
+      "street": "طريق الدمام",
+      "reason": "لا ضلع من الرسم تحت خطّ العمل — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0040",
+      "street": "طريق الدمام",
+      "reason": "لا ضلع من الرسم تحت خطّ العمل — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0046",
+      "street": "طريق الملك فهد الفرعي",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 1 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0050",
+      "street": "طريق صلاح الدين الأيوبي",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 1 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0086",
+      "street": "شارع ابن حسان",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 2 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0090",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — فالمنسوب عن الشارع كله (وسيط 2 مقطعاً محسوباً عليه) لا عن موضع العمل منه"
+    },
+    {
+      "permitRef": "BLD-2026-0118",
+      "street": "الأمير عبدالرحمن بن عبدالعزيز",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0125",
+      "street": "الشفق",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0130",
+      "street": "إمتداد الطريق الدائري الشرقي - وصلة الخرج)",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0131",
+      "street": "تميم الداري",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    },
+    {
+      "permitRef": "BLD-2026-0135",
+      "street": "شارع الأمير مقرن بن عبدالعزيز",
+      "reason": "هندسة نقطية — لا مقطع خطّي تُقاس أضلاعه — ولا مقطع آخر محسوب على الشارع نفسه"
+    }
+  ],
+  "mismatched": [],
+  "permits": [
+    {
+      "permitRef": "BLD-2026-0001",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "roadClass": "arterial",
+      "loadIndex": 0.777,
+      "loadRank": 11,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 79347,
+      "shadowAadtLow": 48867,
+      "shadowAadtMid": 60417,
+      "shadowAadtHigh": 71967,
+      "aadtRatio": 0.761,
+      "current": {
+        "impactVehHours": 11606,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 10223,
+        "savedPct": 88.1
+      },
+      "shadowLow": {
+        "impactVehHours": 3628,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3065,
+        "savedPct": 84.5
+      },
+      "shadowMid": {
+        "impactVehHours": 5207,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4509,
+        "savedPct": 86.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 8258,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 7004,
+        "savedPct": 84.8
+      },
+      "currentRank": 28,
+      "shadowRank": 42,
+      "rankShift": -14
+    },
+    {
+      "permitRef": "BLD-2026-0003",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "roadClass": "arterial",
+      "loadIndex": 0.677,
+      "loadRank": 31,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 18545,
+      "shadowAadtLow": 45667,
+      "shadowAadtMid": 57017,
+      "shadowAadtHigh": 68367,
+      "aadtRatio": 3.075,
+      "current": {
+        "impactVehHours": 147,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 71,
+        "savedPct": 48.4
+      },
+      "shadowLow": {
+        "impactVehHours": 580,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 289,
+        "savedPct": 49.8
+      },
+      "shadowMid": {
+        "impactVehHours": 1441,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 966,
+        "savedPct": 67
+      },
+      "shadowHigh": {
+        "impactVehHours": 3358,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 2471,
+        "savedPct": 73.6
+      },
+      "currentRank": 128,
+      "shadowRank": 85,
+      "rankShift": 43
+    },
+    {
+      "permitRef": "BLD-2026-0004",
+      "street": "الإمام عبدالعزيز بن محمد بن سعود",
+      "roadClass": "arterial",
+      "loadIndex": 0.675,
+      "loadRank": 32,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 23620,
+      "shadowAadtLow": 34200,
+      "shadowAadtMid": 42711,
+      "shadowAadtHigh": 51222,
+      "aadtRatio": 1.808,
+      "current": {
+        "impactVehHours": 5088,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4813,
+        "savedPct": 94.6
+      },
+      "shadowLow": {
+        "impactVehHours": 29703,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 29306,
+        "savedPct": 98.7
+      },
+      "shadowMid": {
+        "impactVehHours": 90151,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 89403,
+        "savedPct": 99.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 223642,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 222667,
+        "savedPct": 99.6
+      },
+      "currentRank": 51,
+      "shadowRank": 7,
+      "rankShift": 44
+    },
+    {
+      "permitRef": "BLD-2026-0005",
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "roadClass": "arterial",
+      "loadIndex": 0.646,
+      "loadRank": 40,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 39095,
+      "shadowAadtLow": 33500,
+      "shadowAadtMid": 41972,
+      "shadowAadtHigh": 50444,
+      "aadtRatio": 1.074,
+      "current": {
+        "impactVehHours": 439,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 275,
+        "savedPct": 62.7
+      },
+      "shadowLow": {
+        "impactVehHours": 376,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 235,
+        "savedPct": 62.6
+      },
+      "shadowMid": {
+        "impactVehHours": 471,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 295,
+        "savedPct": 62.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 567,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 356,
+        "savedPct": 62.7
+      },
+      "currentRank": 120,
+      "shadowRank": 116,
+      "rankShift": 4
+    },
+    {
+      "permitRef": "BLD-2026-0006",
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "roadClass": "arterial",
+      "loadIndex": 0.701,
+      "loadRank": 25,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 76768,
+      "shadowAadtLow": 34822,
+      "shadowAadtMid": 43372,
+      "shadowAadtHigh": 51922,
+      "aadtRatio": 0.565,
+      "current": {
+        "impactVehHours": 14701,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 12798,
+        "savedPct": 87.1
+      },
+      "shadowLow": {
+        "impactVehHours": 3653,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3082,
+        "savedPct": 84.4
+      },
+      "shadowMid": {
+        "impactVehHours": 4557,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3846,
+        "savedPct": 84.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 5470,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4619,
+        "savedPct": 84.4
+      },
+      "currentRank": 20,
+      "shadowRank": 47,
+      "rankShift": -27
+    },
+    {
+      "permitRef": "BLD-2026-0008",
+      "street": "الأمير عبدالعزيز بن مساعد بن جلوي",
+      "roadClass": "arterial",
+      "loadIndex": 0.647,
+      "loadRank": 38,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 42761,
+      "shadowAadtLow": 33533,
+      "shadowAadtMid": 42000,
+      "shadowAadtHigh": 50467,
+      "aadtRatio": 0.982,
+      "current": {
+        "impactVehHours": 7336,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6525,
+        "savedPct": 88.9
+      },
+      "shadowLow": {
+        "impactVehHours": 4298,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3662,
+        "savedPct": 85.2
+      },
+      "shadowMid": {
+        "impactVehHours": 6949,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6153,
+        "savedPct": 88.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 13276,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 12319,
+        "savedPct": 92.8
+      },
+      "currentRank": 42,
+      "shadowRank": 36,
+      "rankShift": 6
+    },
+    {
+      "permitRef": "BLD-2026-0009",
+      "street": "الأمير محمد بن عبد الرحمن",
+      "roadClass": "local",
+      "loadIndex": 0.573,
+      "loadRank": 51,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 35008,
+      "shadowAadtLow": 31756,
+      "shadowAadtMid": 40112,
+      "shadowAadtHigh": 48467,
+      "aadtRatio": 1.146,
+      "current": {
+        "impactVehHours": 3493,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2957,
+        "savedPct": 84.7
+      },
+      "shadowLow": {
+        "impactVehHours": 3104,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2619,
+        "savedPct": 84.4
+      },
+      "shadowMid": {
+        "impactVehHours": 4624,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4011,
+        "savedPct": 86.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 7807,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 7066,
+        "savedPct": 90.5
+      },
+      "currentRank": 62,
+      "shadowRank": 46,
+      "rankShift": 16
+    },
+    {
+      "permitRef": "BLD-2026-0011",
+      "street": "البطحاء",
+      "roadClass": "arterial",
+      "loadIndex": 0.782,
+      "loadRank": 10,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 13320,
+      "shadowAadtLow": 49022,
+      "shadowAadtMid": 60589,
+      "shadowAadtHigh": 72156,
+      "aadtRatio": 4.549,
+      "current": {
+        "impactVehHours": 867,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 736,
+        "savedPct": 84.8
+      },
+      "shadowLow": {
+        "impactVehHours": 144903,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 144148,
+        "savedPct": 99.5
+      },
+      "shadowMid": {
+        "impactVehHours": 417662,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 416333,
+        "savedPct": 99.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 1000414,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 997856,
+        "savedPct": 99.7
+      },
+      "currentRank": 102,
+      "shadowRank": 4,
+      "rankShift": 98
+    },
+    {
+      "permitRef": "BLD-2026-0014",
+      "street": "الشيخ جابر الأحمد الصباح",
+      "roadClass": "arterial",
+      "loadIndex": 0.521,
+      "loadRank": 61,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 53813,
+      "shadowAadtLow": 40667,
+      "shadowAadtMid": 51712,
+      "shadowAadtHigh": 62756,
+      "aadtRatio": 0.961,
+      "current": {
+        "impactVehHours": 5006,
+        "severity": 2,
+        "bestStartHour": 23,
+        "savedVehHours": 3950,
+        "savedPct": 78.9
+      },
+      "shadowLow": {
+        "impactVehHours": 3031,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2528,
+        "savedPct": 83.4
+      },
+      "shadowMid": {
+        "impactVehHours": 4501,
+        "severity": 2,
+        "bestStartHour": 23,
+        "savedVehHours": 3487,
+        "savedPct": 77.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 8833,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 7195,
+        "savedPct": 81.5
+      },
+      "currentRank": 52,
+      "shadowRank": 48,
+      "rankShift": 4
+    },
+    {
+      "permitRef": "BLD-2026-0015",
+      "street": "الطريق الدائري الثاني",
+      "roadClass": "arterial",
+      "loadIndex": 0.417,
+      "loadRank": 77,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 16884,
+      "shadowAadtLow": 37344,
+      "shadowAadtMid": 48178,
+      "shadowAadtHigh": 59011,
+      "aadtRatio": 2.853,
+      "current": {
+        "impactVehHours": 955,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 802,
+        "savedPct": 84
+      },
+      "shadowLow": {
+        "impactVehHours": 12863,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 12356,
+        "savedPct": 96.1
+      },
+      "shadowMid": {
+        "impactVehHours": 45970,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 45312,
+        "savedPct": 98.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 126734,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 125633,
+        "savedPct": 99.1
+      },
+      "currentRank": 99,
+      "shadowRank": 12,
+      "rankShift": 87
+    },
+    {
+      "permitRef": "BLD-2026-0016",
+      "street": "الطريق الدائري الشمالي",
+      "roadClass": "arterial",
+      "loadIndex": 0.869,
+      "loadRank": 1,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 45305,
+      "shadowAadtLow": 51811,
+      "shadowAadtMid": 63550,
+      "shadowAadtHigh": 75289,
+      "aadtRatio": 1.403,
+      "current": {
+        "impactVehHours": 1424,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1325,
+        "savedPct": 93.1
+      },
+      "shadowLow": {
+        "impactVehHours": 2521,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2408,
+        "savedPct": 95.5
+      },
+      "shadowMid": {
+        "impactVehHours": 6655,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 6364,
+        "savedPct": 95.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 15466,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 15104,
+        "savedPct": 97.7
+      },
+      "currentRank": 89,
+      "shadowRank": 38,
+      "rankShift": 51
+    },
+    {
+      "permitRef": "BLD-2026-0017",
+      "street": "الطريق الدائري الشمالي",
+      "roadClass": "arterial",
+      "loadIndex": 0.811,
+      "loadRank": 5,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 52026,
+      "shadowAadtLow": 49956,
+      "shadowAadtMid": 61578,
+      "shadowAadtHigh": 73200,
+      "aadtRatio": 1.184,
+      "current": {
+        "impactVehHours": 3757,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3605,
+        "savedPct": 95.9
+      },
+      "shadowLow": {
+        "impactVehHours": 3115,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2968,
+        "savedPct": 95.3
+      },
+      "shadowMid": {
+        "impactVehHours": 8443,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 8059,
+        "savedPct": 95.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 19766,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 19301,
+        "savedPct": 97.6
+      },
+      "currentRank": 60,
+      "shadowRank": 35,
+      "rankShift": 25
+    },
+    {
+      "permitRef": "BLD-2026-0018",
+      "street": "العريجاء",
+      "roadClass": "arterial",
+      "loadIndex": 0.624,
+      "loadRank": 45,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 84853,
+      "shadowAadtLow": 32978,
+      "shadowAadtMid": 41411,
+      "shadowAadtHigh": 49844,
+      "aadtRatio": 0.488,
+      "current": {
+        "impactVehHours": 8687,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 7296,
+        "savedPct": 84
+      },
+      "shadowLow": {
+        "impactVehHours": 817,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 277,
+        "savedPct": 33.9
+      },
+      "shadowMid": {
+        "impactVehHours": 1026,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 347,
+        "savedPct": 33.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 1308,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 491,
+        "savedPct": 37.5
+      },
+      "currentRank": 37,
+      "shadowRank": 96,
+      "rankShift": -59
+    },
+    {
+      "permitRef": "BLD-2026-0019",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "loadIndex": 0.768,
+      "loadRank": 15,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 17688,
+      "shadowAadtLow": 48578,
+      "shadowAadtMid": 60111,
+      "shadowAadtHigh": 71644,
+      "aadtRatio": 3.398,
+      "current": {
+        "impactVehHours": 2418,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2140,
+        "savedPct": 88.5
+      },
+      "shadowLow": {
+        "impactVehHours": 230968,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 229807,
+        "savedPct": 99.5
+      },
+      "shadowMid": {
+        "impactVehHours": 670074,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 668065,
+        "savedPct": 99.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 1611581,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 1607767,
+        "savedPct": 99.8
+      },
+      "currentRank": 67,
+      "shadowRank": 2,
+      "rankShift": 65
+    },
+    {
+      "permitRef": "BLD-2026-0020",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "loadIndex": 0.788,
+      "loadRank": 9,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 87054,
+      "shadowAadtLow": 49211,
+      "shadowAadtMid": 60789,
+      "shadowAadtHigh": 72367,
+      "aadtRatio": 0.698,
+      "current": {
+        "impactVehHours": 56632,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 53165,
+        "savedPct": 93.9
+      },
+      "shadowLow": {
+        "impactVehHours": 7239,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6312,
+        "savedPct": 87.2
+      },
+      "shadowMid": {
+        "impactVehHours": 12369,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 11223,
+        "savedPct": 90.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 24432,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 22386,
+        "savedPct": 91.6
+      },
+      "currentRank": 1,
+      "shadowRank": 30,
+      "rankShift": -29
+    },
+    {
+      "permitRef": "BLD-2026-0021",
+      "street": "المطار",
+      "roadClass": "arterial",
+      "loadIndex": 0.746,
+      "loadRank": 20,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 22467,
+      "shadowAadtLow": 47867,
+      "shadowAadtMid": 59362,
+      "shadowAadtHigh": 70856,
+      "aadtRatio": 2.642,
+      "current": {
+        "impactVehHours": 5874,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5492,
+        "savedPct": 93.5
+      },
+      "shadowLow": {
+        "impactVehHours": 227147,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 225913,
+        "savedPct": 99.5
+      },
+      "shadowMid": {
+        "impactVehHours": 666289,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 664153,
+        "savedPct": 99.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 1614371,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 1610328,
+        "savedPct": 99.7
+      },
+      "currentRank": 47,
+      "shadowRank": 3,
+      "rankShift": 44
+    },
+    {
+      "permitRef": "BLD-2026-0022",
+      "street": "النهضة",
+      "roadClass": "arterial",
+      "loadIndex": 0.759,
+      "loadRank": 16,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 38402,
+      "shadowAadtLow": 36211,
+      "shadowAadtMid": 44850,
+      "shadowAadtHigh": 53489,
+      "aadtRatio": 1.168,
+      "current": {
+        "impactVehHours": 1713,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1484,
+        "savedPct": 86.6
+      },
+      "shadowLow": {
+        "impactVehHours": 1527,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1310,
+        "savedPct": 85.8
+      },
+      "shadowMid": {
+        "impactVehHours": 2683,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2415,
+        "savedPct": 90
+      },
+      "shadowHigh": {
+        "impactVehHours": 5315,
+        "severity": 2,
+        "bestStartHour": 23,
+        "savedVehHours": 4798,
+        "savedPct": 90.3
+      },
+      "currentRank": 84,
+      "shadowRank": 55,
+      "rankShift": 29
+    },
+    {
+      "permitRef": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "loadIndex": 0.499,
+      "loadRank": 67,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 83007,
+      "shadowAadtLow": 29978,
+      "shadowAadtMid": 38228,
+      "shadowAadtHigh": 46478,
+      "aadtRatio": 0.461,
+      "current": {
+        "impactVehHours": 40069,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 36702,
+        "savedPct": 91.6
+      },
+      "shadowLow": {
+        "impactVehHours": 4020,
+        "severity": 2,
+        "bestStartHour": 1,
+        "savedVehHours": 3150,
+        "savedPct": 78.4
+      },
+      "shadowMid": {
+        "impactVehHours": 5135,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4396,
+        "savedPct": 85.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 6274,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5375,
+        "savedPct": 85.7
+      },
+      "currentRank": 4,
+      "shadowRank": 43,
+      "rankShift": -39
+    },
+    {
+      "permitRef": "BLD-2026-0026",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "loadIndex": 0.824,
+      "loadRank": 4,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 36343,
+      "shadowAadtLow": 50367,
+      "shadowAadtMid": 62017,
+      "shadowAadtHigh": 73667,
+      "aadtRatio": 1.706,
+      "current": {
+        "impactVehHours": 514,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 433,
+        "savedPct": 84.2
+      },
+      "shadowLow": {
+        "impactVehHours": 1043,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 931,
+        "savedPct": 89.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2258,
+        "severity": 1,
+        "bestStartHour": 21,
+        "savedVehHours": 1970,
+        "savedPct": 87.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 5339,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 4988,
+        "savedPct": 93.4
+      },
+      "currentRank": 116,
+      "shadowRank": 63,
+      "rankShift": 53
+    },
+    {
+      "permitRef": "BLD-2026-0027",
+      "street": "شارع العليا",
+      "roadClass": "arterial",
+      "loadIndex": 0.642,
+      "loadRank": 41,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 82698,
+      "shadowAadtLow": 33411,
+      "shadowAadtMid": 41872,
+      "shadowAadtHigh": 50333,
+      "aadtRatio": 0.506,
+      "current": {
+        "impactVehHours": 3627,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 2635,
+        "savedPct": 72.6
+      },
+      "shadowLow": {
+        "impactVehHours": 1150,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 961,
+        "savedPct": 83.6
+      },
+      "shadowMid": {
+        "impactVehHours": 1442,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1205,
+        "savedPct": 83.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 1736,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1451,
+        "savedPct": 83.6
+      },
+      "currentRank": 61,
+      "shadowRank": 84,
+      "rankShift": -23
+    },
+    {
+      "permitRef": "BLD-2026-0028",
+      "street": "طريق أبي بكر الصديق",
+      "roadClass": "local",
+      "loadIndex": 0.756,
+      "loadRank": 17,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 18692,
+      "shadowAadtLow": 48189,
+      "shadowAadtMid": 59700,
+      "shadowAadtHigh": 71211,
+      "aadtRatio": 3.194,
+      "current": {
+        "impactVehHours": 265,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 126,
+        "savedPct": 47.5
+      },
+      "shadowLow": {
+        "impactVehHours": 1228,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 677,
+        "savedPct": 55.1
+      },
+      "shadowMid": {
+        "impactVehHours": 3077,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 2116,
+        "savedPct": 68.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 7070,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 5237,
+        "savedPct": 74.1
+      },
+      "currentRank": 126,
+      "shadowRank": 50,
+      "rankShift": 76
+    },
+    {
+      "permitRef": "BLD-2026-0029",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "roadClass": "arterial",
+      "loadIndex": 0.805,
+      "loadRank": 6,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 48204,
+      "shadowAadtLow": 49756,
+      "shadowAadtMid": 61367,
+      "shadowAadtHigh": 72978,
+      "aadtRatio": 1.273,
+      "current": {
+        "impactVehHours": 8658,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 7823,
+        "savedPct": 90.4
+      },
+      "shadowLow": {
+        "impactVehHours": 9656,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8794,
+        "savedPct": 91.1
+      },
+      "shadowMid": {
+        "impactVehHours": 22341,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 20736,
+        "savedPct": 92.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 53136,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 50421,
+        "savedPct": 94.9
+      },
+      "currentRank": 38,
+      "shadowRank": 23,
+      "rankShift": 15
+    },
+    {
+      "permitRef": "BLD-2026-0030",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "roadClass": "arterial",
+      "loadIndex": 0.502,
+      "loadRank": 66,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 82046,
+      "shadowAadtLow": 30044,
+      "shadowAadtMid": 38300,
+      "shadowAadtHigh": 46556,
+      "aadtRatio": 0.467,
+      "current": {
+        "impactVehHours": 15751,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 14892,
+        "savedPct": 94.5
+      },
+      "shadowLow": {
+        "impactVehHours": 1456,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1250,
+        "savedPct": 85.8
+      },
+      "shadowMid": {
+        "impactVehHours": 1860,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1597,
+        "savedPct": 85.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 2276,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1957,
+        "savedPct": 86
+      },
+      "currentRank": 19,
+      "shadowRank": 73,
+      "rankShift": -54
+    },
+    {
+      "permitRef": "BLD-2026-0031",
+      "street": "طريق الأمير فيصل بن بندر بن عبدالعزيز",
+      "roadClass": "arterial",
+      "loadIndex": 0.484,
+      "loadRank": 69,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 42607,
+      "shadowAadtLow": 39489,
+      "shadowAadtMid": 50456,
+      "shadowAadtHigh": 61422,
+      "aadtRatio": 1.184,
+      "current": {
+        "impactVehHours": 6553,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5985,
+        "savedPct": 91.3
+      },
+      "shadowLow": {
+        "impactVehHours": 4786,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4259,
+        "savedPct": 89
+      },
+      "shadowMid": {
+        "impactVehHours": 13827,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 13154,
+        "savedPct": 95.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 35166,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 33429,
+        "savedPct": 95.1
+      },
+      "currentRank": 44,
+      "shadowRank": 27,
+      "rankShift": 17
+    },
+    {
+      "permitRef": "BLD-2026-0032",
+      "street": "طريق الأمير محمد بن سلمان بن عبدالعزيز",
+      "roadClass": "arterial",
+      "loadIndex": 0.355,
+      "loadRank": 93,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 44171,
+      "shadowAadtLow": 26522,
+      "shadowAadtMid": 34556,
+      "shadowAadtHigh": 42589,
+      "aadtRatio": 0.782,
+      "current": {
+        "impactVehHours": 1938,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1786,
+        "savedPct": 92.2
+      },
+      "shadowLow": {
+        "impactVehHours": 628,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 537,
+        "savedPct": 85.5
+      },
+      "shadowMid": {
+        "impactVehHours": 925,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 807,
+        "savedPct": 87.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 1704,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1558,
+        "savedPct": 91.4
+      },
+      "currentRank": 80,
+      "shadowRank": 100,
+      "rankShift": -20
+    },
+    {
+      "permitRef": "BLD-2026-0033",
+      "street": "طريق الثمامة",
+      "roadClass": "arterial",
+      "loadIndex": 0.526,
+      "loadRank": 58,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 44376,
+      "shadowAadtLow": 40833,
+      "shadowAadtMid": 51883,
+      "shadowAadtHigh": 62933,
+      "aadtRatio": 1.169,
+      "current": {
+        "impactVehHours": 7319,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6570,
+        "savedPct": 89.8
+      },
+      "shadowLow": {
+        "impactVehHours": 5688,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4999,
+        "savedPct": 87.9
+      },
+      "shadowMid": {
+        "impactVehHours": 13183,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 12308,
+        "savedPct": 93.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 31123,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 28894,
+        "savedPct": 92.8
+      },
+      "currentRank": 43,
+      "shadowRank": 29,
+      "rankShift": 14
+    },
+    {
+      "permitRef": "BLD-2026-0035",
+      "street": "طريق الجنادرية",
+      "roadClass": "arterial",
+      "loadIndex": 0.408,
+      "loadRank": 80,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 79544,
+      "shadowAadtLow": 27789,
+      "shadowAadtMid": 35900,
+      "shadowAadtHigh": 44011,
+      "aadtRatio": 0.451,
+      "current": {
+        "impactVehHours": 18308,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 16722,
+        "savedPct": 91.3
+      },
+      "shadowLow": {
+        "impactVehHours": 1908,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 1514,
+        "savedPct": 79.4
+      },
+      "shadowMid": {
+        "impactVehHours": 2469,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2129,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 3035,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2618,
+        "savedPct": 86.3
+      },
+      "currentRank": 13,
+      "shadowRank": 61,
+      "rankShift": -48
+    },
+    {
+      "permitRef": "BLD-2026-0036",
+      "street": "طريق الخرج السريع",
+      "roadClass": "arterial",
+      "loadIndex": 0.317,
+      "loadRank": 103,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 51603,
+      "shadowAadtLow": 25611,
+      "shadowAadtMid": 33584,
+      "shadowAadtHigh": 41556,
+      "aadtRatio": 0.651,
+      "current": {
+        "impactVehHours": 1279,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 433,
+        "savedPct": 33.9
+      },
+      "shadowLow": {
+        "impactVehHours": 635,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 215,
+        "savedPct": 33.9
+      },
+      "shadowMid": {
+        "impactVehHours": 832,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 282,
+        "savedPct": 33.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 1030,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 349,
+        "savedPct": 33.9
+      },
+      "currentRank": 95,
+      "shadowRank": 102,
+      "rankShift": -7
+    },
+    {
+      "permitRef": "BLD-2026-0041",
+      "street": "طريق المدينة المنورة",
+      "roadClass": "arterial",
+      "loadIndex": 0.559,
+      "loadRank": 53,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 20462,
+      "shadowAadtLow": 31411,
+      "shadowAadtMid": 39750,
+      "shadowAadtHigh": 48089,
+      "aadtRatio": 1.943,
+      "current": {
+        "impactVehHours": 3395,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3109,
+        "savedPct": 91.6
+      },
+      "shadowLow": {
+        "impactVehHours": 23057,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 22617,
+        "savedPct": 98.1
+      },
+      "shadowMid": {
+        "impactVehHours": 74523,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 73679,
+        "savedPct": 98.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 193124,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 192098,
+        "savedPct": 99.5
+      },
+      "currentRank": 63,
+      "shadowRank": 8,
+      "rankShift": 55
+    },
+    {
+      "permitRef": "BLD-2026-0042",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "loadIndex": 0.771,
+      "loadRank": 13,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 45362,
+      "shadowAadtLow": 48667,
+      "shadowAadtMid": 60212,
+      "shadowAadtHigh": 71756,
+      "aadtRatio": 1.327,
+      "current": {
+        "impactVehHours": 2745,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2562,
+        "savedPct": 93.4
+      },
+      "shadowLow": {
+        "impactVehHours": 3690,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3494,
+        "savedPct": 94.7
+      },
+      "shadowMid": {
+        "impactVehHours": 9910,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 9415,
+        "savedPct": 95
+      },
+      "shadowHigh": {
+        "impactVehHours": 23637,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 23046,
+        "savedPct": 97.5
+      },
+      "currentRank": 65,
+      "shadowRank": 33,
+      "rankShift": 32
+    },
+    {
+      "permitRef": "BLD-2026-0043",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "loadIndex": 0.745,
+      "loadRank": 21,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 85039,
+      "shadowAadtLow": 47844,
+      "shadowAadtMid": 59333,
+      "shadowAadtHigh": 70822,
+      "aadtRatio": 0.698,
+      "current": {
+        "impactVehHours": 2272,
+        "severity": 1,
+        "bestStartHour": 21,
+        "savedVehHours": -726,
+        "savedPct": -32
+      },
+      "shadowLow": {
+        "impactVehHours": 1277,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 480,
+        "savedPct": 37.6
+      },
+      "shadowMid": {
+        "impactVehHours": 1584,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 595,
+        "savedPct": 37.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 1891,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 711,
+        "savedPct": 37.6
+      },
+      "currentRank": 70,
+      "shadowRank": 79,
+      "rankShift": -9
+    },
+    {
+      "permitRef": "BLD-2026-0044",
+      "street": "طريق الملك خالد",
+      "roadClass": "arterial",
+      "loadIndex": 0.647,
+      "loadRank": 39,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 53322,
+      "shadowAadtLow": 55878,
+      "shadowAadtMid": 69995,
+      "shadowAadtHigh": 84111,
+      "aadtRatio": 1.313,
+      "current": {
+        "impactVehHours": 13793,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 13021,
+        "savedPct": 94.4
+      },
+      "shadowLow": {
+        "impactVehHours": 17164,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 16354,
+        "savedPct": 95.3
+      },
+      "shadowMid": {
+        "impactVehHours": 51965,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 50558,
+        "savedPct": 97.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 130110,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 127970,
+        "savedPct": 98.4
+      },
+      "currentRank": 21,
+      "shadowRank": 11,
+      "rankShift": 10
+    },
+    {
+      "permitRef": "BLD-2026-0045",
+      "street": "طريق الملك فهد",
+      "roadClass": "arterial",
+      "loadIndex": 0.695,
+      "loadRank": 26,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 83390,
+      "shadowAadtLow": 34678,
+      "shadowAadtMid": 43223,
+      "shadowAadtHigh": 51767,
+      "aadtRatio": 0.518,
+      "current": {
+        "impactVehHours": 45386,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 42018,
+        "savedPct": 92.6
+      },
+      "shadowLow": {
+        "impactVehHours": 4380,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3717,
+        "savedPct": 84.9
+      },
+      "shadowMid": {
+        "impactVehHours": 5475,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4649,
+        "savedPct": 84.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 7340,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6351,
+        "savedPct": 86.5
+      },
+      "currentRank": 3,
+      "shadowRank": 40,
+      "rankShift": -37
+    },
+    {
+      "permitRef": "BLD-2026-0047",
+      "street": "طريق الملك فهد الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.829,
+      "loadRank": 3,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 12955,
+      "shadowAadtLow": 37900,
+      "shadowAadtMid": 46639,
+      "shadowAadtHigh": 55378,
+      "aadtRatio": 3.6,
+      "current": {
+        "impactVehHours": 1367,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1161,
+        "savedPct": 84.9
+      },
+      "shadowLow": {
+        "impactVehHours": 66215,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 65301,
+        "savedPct": 98.6
+      },
+      "shadowMid": {
+        "impactVehHours": 186146,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 185021,
+        "savedPct": 99.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 438979,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 437340,
+        "savedPct": 99.6
+      },
+      "currentRank": 92,
+      "shadowRank": 6,
+      "rankShift": 86
+    },
+    {
+      "permitRef": "BLD-2026-0048",
+      "street": "طريق خريص",
+      "roadClass": "arterial",
+      "loadIndex": 0.732,
+      "loadRank": 22,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 17754,
+      "shadowAadtLow": 35567,
+      "shadowAadtMid": 44167,
+      "shadowAadtHigh": 52767,
+      "aadtRatio": 2.488,
+      "current": {
+        "impactVehHours": 844,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 727,
+        "savedPct": 86
+      },
+      "shadowLow": {
+        "impactVehHours": 12662,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 12426,
+        "savedPct": 98.1
+      },
+      "shadowMid": {
+        "impactVehHours": 37391,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 36936,
+        "savedPct": 98.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 91009,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 90390,
+        "savedPct": 99.3
+      },
+      "currentRank": 103,
+      "shadowRank": 16,
+      "rankShift": 87
+    },
+    {
+      "permitRef": "BLD-2026-0049",
+      "street": "طريق ديراب",
+      "roadClass": "major",
+      "loadIndex": 0.19,
+      "loadRank": 122,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 75692,
+      "shadowAadtLow": 15044,
+      "shadowAadtMid": 20233,
+      "shadowAadtHigh": 25422,
+      "aadtRatio": 0.267,
+      "current": {
+        "impactVehHours": 824,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 38,
+        "savedPct": 4.6
+      },
+      "shadowLow": {
+        "impactVehHours": 164,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 63,
+        "savedPct": 38.3
+      },
+      "shadowMid": {
+        "impactVehHours": 220,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 84,
+        "savedPct": 38.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 277,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 106,
+        "savedPct": 38.3
+      },
+      "currentRank": 104,
+      "shadowRank": 127,
+      "rankShift": -23
+    },
+    {
+      "permitRef": "BLD-2026-0051",
+      "street": "طريق صلاح الدين الأيوبي",
+      "roadClass": "arterial",
+      "loadIndex": 0.651,
+      "loadRank": 37,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 73625,
+      "shadowAadtLow": 33622,
+      "shadowAadtMid": 42100,
+      "shadowAadtHigh": 50578,
+      "aadtRatio": 0.572,
+      "current": {
+        "impactVehHours": 5683,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 4990,
+        "savedPct": 87.8
+      },
+      "shadowLow": {
+        "impactVehHours": 1398,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1192,
+        "savedPct": 85.3
+      },
+      "shadowMid": {
+        "impactVehHours": 1753,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1496,
+        "savedPct": 85.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 2112,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1804,
+        "savedPct": 85.4
+      },
+      "currentRank": 48,
+      "shadowRank": 76,
+      "rankShift": -28
+    },
+    {
+      "permitRef": "BLD-2026-0052",
+      "street": "طريق عمر بن الخطاب",
+      "roadClass": "arterial",
+      "loadIndex": 0.789,
+      "loadRank": 8,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 47659,
+      "shadowAadtLow": 49244,
+      "shadowAadtMid": 60822,
+      "shadowAadtHigh": 72400,
+      "aadtRatio": 1.276,
+      "current": {
+        "impactVehHours": 9212,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8658,
+        "savedPct": 94
+      },
+      "shadowLow": {
+        "impactVehHours": 10667,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 10096,
+        "savedPct": 94.6
+      },
+      "shadowMid": {
+        "impactVehHours": 28823,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 27758,
+        "savedPct": 96.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 67630,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 65816,
+        "savedPct": 97.3
+      },
+      "currentRank": 34,
+      "shadowRank": 19,
+      "rankShift": 15
+    },
+    {
+      "permitRef": "BLD-2026-0053",
+      "street": "طريق مكة المكرمة الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.688,
+      "loadRank": 28,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 21111,
+      "shadowAadtLow": 34511,
+      "shadowAadtMid": 43045,
+      "shadowAadtHigh": 51578,
+      "aadtRatio": 2.039,
+      "current": {
+        "impactVehHours": 1864,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 1559,
+        "savedPct": 83.6
+      },
+      "shadowLow": {
+        "impactVehHours": 15187,
+        "severity": 3,
+        "bestStartHour": 23,
+        "savedVehHours": 14655,
+        "savedPct": 96.5
+      },
+      "shadowMid": {
+        "impactVehHours": 45846,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 45220,
+        "savedPct": 98.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 113244,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 112420,
+        "savedPct": 99.3
+      },
+      "currentRank": 82,
+      "shadowRank": 13,
+      "rankShift": 69
+    },
+    {
+      "permitRef": "BLD-2026-0054",
+      "street": "طريق مكة المكرمة الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.691,
+      "loadRank": 27,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 77068,
+      "shadowAadtLow": 34589,
+      "shadowAadtMid": 43123,
+      "shadowAadtHigh": 51656,
+      "aadtRatio": 0.56,
+      "current": {
+        "impactVehHours": 11045,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 10169,
+        "savedPct": 92.1
+      },
+      "shadowLow": {
+        "impactVehHours": 1778,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1520,
+        "savedPct": 85.5
+      },
+      "shadowMid": {
+        "impactVehHours": 2222,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1901,
+        "savedPct": 85.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 2950,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2565,
+        "savedPct": 87
+      },
+      "currentRank": 31,
+      "shadowRank": 65,
+      "rankShift": -34
+    },
+    {
+      "permitRef": "BLD-2026-0055",
+      "street": "عائشة بنت أبي بكر",
+      "roadClass": "arterial",
+      "loadIndex": 0.722,
+      "loadRank": 23,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 14450,
+      "shadowAadtLow": 35333,
+      "shadowAadtMid": 43911,
+      "shadowAadtHigh": 52489,
+      "aadtRatio": 3.039,
+      "current": {
+        "impactVehHours": 739,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 629,
+        "savedPct": 85.1
+      },
+      "shadowLow": {
+        "impactVehHours": 22591,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 22183,
+        "savedPct": 98.2
+      },
+      "shadowMid": {
+        "impactVehHours": 66644,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 66137,
+        "savedPct": 99.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 162419,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 161736,
+        "savedPct": 99.6
+      },
+      "currentRank": 109,
+      "shadowRank": 9,
+      "rankShift": 100
+    },
+    {
+      "permitRef": "BLD-2026-0056",
+      "street": "عبد العزيز بن مساعد بن جلوي",
+      "roadClass": "arterial",
+      "loadIndex": 0.805,
+      "loadRank": 7,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 86889,
+      "shadowAadtLow": 49756,
+      "shadowAadtMid": 61367,
+      "shadowAadtHigh": 72978,
+      "aadtRatio": 0.706,
+      "current": {
+        "impactVehHours": 5913,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5052,
+        "savedPct": 85.5
+      },
+      "shadowLow": {
+        "impactVehHours": 788,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 296,
+        "savedPct": 37.5
+      },
+      "shadowMid": {
+        "impactVehHours": 1403,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 795,
+        "savedPct": 56.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 2741,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2018,
+        "savedPct": 73.6
+      },
+      "currentRank": 46,
+      "shadowRank": 87,
+      "rankShift": -41
+    },
+    {
+      "permitRef": "BLD-2026-0057",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "local",
+      "loadIndex": 0.674,
+      "loadRank": 33,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 82555,
+      "shadowAadtLow": 45567,
+      "shadowAadtMid": 56917,
+      "shadowAadtHigh": 68267,
+      "aadtRatio": 0.689,
+      "current": {
+        "impactVehHours": 3910,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 2833,
+        "savedPct": 72.5
+      },
+      "shadowLow": {
+        "impactVehHours": 1687,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1409,
+        "savedPct": 83.5
+      },
+      "shadowMid": {
+        "impactVehHours": 2112,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1765,
+        "savedPct": 83.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 2544,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2128,
+        "savedPct": 83.6
+      },
+      "currentRank": 59,
+      "shadowRank": 66,
+      "rankShift": -7
+    },
+    {
+      "permitRef": "BLD-2026-0058",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "local",
+      "loadIndex": 0.685,
+      "loadRank": 29,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 51157,
+      "shadowAadtLow": 45922,
+      "shadowAadtMid": 57289,
+      "shadowAadtHigh": 68656,
+      "aadtRatio": 1.12,
+      "current": {
+        "impactVehHours": 22183,
+        "severity": 3,
+        "bestStartHour": 23,
+        "savedVehHours": 20613,
+        "savedPct": 92.9
+      },
+      "shadowLow": {
+        "impactVehHours": 13860,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 12990,
+        "savedPct": 93.7
+      },
+      "shadowMid": {
+        "impactVehHours": 37519,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 35212,
+        "savedPct": 93.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 91537,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 88767,
+        "savedPct": 97
+      },
+      "currentRank": 10,
+      "shadowRank": 15,
+      "rankShift": -5
+    },
+    {
+      "permitRef": "BLD-2026-0059",
+      "street": "مسلمة الأنصاري",
+      "roadClass": "local",
+      "loadIndex": 0.685,
+      "loadRank": 30,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 48449,
+      "shadowAadtLow": 45922,
+      "shadowAadtMid": 57289,
+      "shadowAadtHigh": 68656,
+      "aadtRatio": 1.182,
+      "current": {
+        "impactVehHours": 12581,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 11905,
+        "savedPct": 94.6
+      },
+      "shadowLow": {
+        "impactVehHours": 9993,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 9353,
+        "savedPct": 93.6
+      },
+      "shadowMid": {
+        "impactVehHours": 27307,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 26094,
+        "savedPct": 95.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 66491,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 64462,
+        "savedPct": 96.9
+      },
+      "currentRank": 25,
+      "shadowRank": 20,
+      "rankShift": 5
+    },
+    {
+      "permitRef": "BLD-2026-0060",
+      "street": "وادي الساحل",
+      "roadClass": "arterial",
+      "loadIndex": 0.413,
+      "loadRank": 78,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 36871,
+      "shadowAadtLow": 18611,
+      "shadowAadtMid": 24022,
+      "shadowAadtHigh": 29433,
+      "aadtRatio": 0.652,
+      "current": {
+        "impactVehHours": 626,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 553,
+        "savedPct": 88.4
+      },
+      "shadowLow": {
+        "impactVehHours": 254,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 199,
+        "savedPct": 78.3
+      },
+      "shadowMid": {
+        "impactVehHours": 328,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 256,
+        "savedPct": 78.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 402,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 315,
+        "savedPct": 78.3
+      },
+      "currentRank": 113,
+      "shadowRank": 121,
+      "rankShift": -8
+    },
+    {
+      "permitRef": "BLD-2026-0061",
+      "street": "إبراهيم عبداللطيف آل الشيخ",
+      "roadClass": "local",
+      "loadIndex": 0.216,
+      "loadRank": 117,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 14579,
+      "shadowAadtLow": 15456,
+      "shadowAadtMid": 20673,
+      "shadowAadtHigh": 25889,
+      "aadtRatio": 1.418,
+      "current": {
+        "impactVehHours": 199,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 167,
+        "savedPct": 84
+      },
+      "shadowLow": {
+        "impactVehHours": 211,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 177,
+        "savedPct": 84
+      },
+      "shadowMid": {
+        "impactVehHours": 319,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 274,
+        "savedPct": 85.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 576,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 520,
+        "savedPct": 90.2
+      },
+      "currentRank": 127,
+      "shadowRank": 123,
+      "rankShift": 4
+    },
+    {
+      "permitRef": "BLD-2026-0062",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "loadIndex": 0.253,
+      "loadRank": 113,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 49415,
+      "shadowAadtLow": 16044,
+      "shadowAadtMid": 21300,
+      "shadowAadtHigh": 26556,
+      "aadtRatio": 0.431,
+      "current": {
+        "impactVehHours": 2232,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2100,
+        "savedPct": 94.1
+      },
+      "shadowLow": {
+        "impactVehHours": 216,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 173,
+        "savedPct": 80.2
+      },
+      "shadowMid": {
+        "impactVehHours": 287,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 230,
+        "savedPct": 80.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 358,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 287,
+        "savedPct": 80.2
+      },
+      "currentRank": 72,
+      "shadowRank": 124,
+      "rankShift": -52
+    },
+    {
+      "permitRef": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "loadIndex": 0.213,
+      "loadRank": 118,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 87565,
+      "shadowAadtLow": 15411,
+      "shadowAadtMid": 20622,
+      "shadowAadtHigh": 25833,
+      "aadtRatio": 0.236,
+      "current": {
+        "impactVehHours": 53679,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 50434,
+        "savedPct": 94
+      },
+      "shadowLow": {
+        "impactVehHours": 1897,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1628,
+        "savedPct": 85.8
+      },
+      "shadowMid": {
+        "impactVehHours": 2539,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2179,
+        "savedPct": 85.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 3182,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2730,
+        "savedPct": 85.8
+      },
+      "currentRank": 2,
+      "shadowRank": 59,
+      "rankShift": -57
+    },
+    {
+      "permitRef": "BLD-2026-0064",
+      "street": "ابن العميد",
+      "roadClass": "major",
+      "loadIndex": 0.508,
+      "loadRank": 63,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 79733,
+      "shadowAadtLow": 30189,
+      "shadowAadtMid": 38450,
+      "shadowAadtHigh": 46711,
+      "aadtRatio": 0.482,
+      "current": {
+        "impactVehHours": 12972,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 12191,
+        "savedPct": 94
+      },
+      "shadowLow": {
+        "impactVehHours": 1448,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1250,
+        "savedPct": 86.4
+      },
+      "shadowMid": {
+        "impactVehHours": 1847,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1596,
+        "savedPct": 86.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 2264,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1959,
+        "savedPct": 86.5
+      },
+      "currentRank": 23,
+      "shadowRank": 74,
+      "rankShift": -51
+    },
+    {
+      "permitRef": "BLD-2026-0065",
+      "street": "الاحساء",
+      "roadClass": "major",
+      "loadIndex": 0.497,
+      "loadRank": 68,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 49017,
+      "shadowAadtLow": 39900,
+      "shadowAadtMid": 50895,
+      "shadowAadtHigh": 61889,
+      "aadtRatio": 1.038,
+      "current": {
+        "impactVehHours": 4471,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3974,
+        "savedPct": 88.9
+      },
+      "shadowLow": {
+        "impactVehHours": 2745,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2340,
+        "savedPct": 85.3
+      },
+      "shadowMid": {
+        "impactVehHours": 5035,
+        "severity": 2,
+        "bestStartHour": 23,
+        "savedVehHours": 4208,
+        "savedPct": 83.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 10673,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 9335,
+        "savedPct": 87.5
+      },
+      "currentRank": 55,
+      "shadowRank": 44,
+      "rankShift": 11
+    },
+    {
+      "permitRef": "BLD-2026-0066",
+      "street": "الإمام الشافعي",
+      "roadClass": "major",
+      "loadIndex": 0.425,
+      "loadRank": 75,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 14097,
+      "shadowAadtLow": 18800,
+      "shadowAadtMid": 24228,
+      "shadowAadtHigh": 29656,
+      "aadtRatio": 1.719,
+      "current": {
+        "impactVehHours": 554,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": 113,
+        "savedPct": 20.5
+      },
+      "shadowLow": {
+        "impactVehHours": 998,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 843,
+        "savedPct": 84.4
+      },
+      "shadowMid": {
+        "impactVehHours": 2743,
+        "severity": 2,
+        "bestStartHour": 1,
+        "savedVehHours": 2543,
+        "savedPct": 92.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 7126,
+        "severity": 2,
+        "bestStartHour": 23,
+        "savedVehHours": 6864,
+        "savedPct": 96.3
+      },
+      "currentRank": 115,
+      "shadowRank": 54,
+      "rankShift": 61
+    },
+    {
+      "permitRef": "BLD-2026-0067",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "local",
+      "loadIndex": 0.585,
+      "loadRank": 50,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 10584,
+      "shadowAadtLow": 32044,
+      "shadowAadtMid": 40422,
+      "shadowAadtHigh": 48800,
+      "aadtRatio": 3.819,
+      "current": {
+        "impactVehHours": 266,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 211,
+        "savedPct": 79.4
+      },
+      "shadowLow": {
+        "impactVehHours": 6841,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6676,
+        "savedPct": 97.6
+      },
+      "shadowMid": {
+        "impactVehHours": 21424,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 21107,
+        "savedPct": 98.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 54660,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 54270,
+        "savedPct": 99.3
+      },
+      "currentRank": 125,
+      "shadowRank": 24,
+      "rankShift": 101
+    },
+    {
+      "permitRef": "BLD-2026-0068",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "major",
+      "loadIndex": 0.638,
+      "loadRank": 42,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 15240,
+      "shadowAadtLow": 33311,
+      "shadowAadtMid": 41767,
+      "shadowAadtHigh": 50222,
+      "aadtRatio": 2.741,
+      "current": {
+        "impactVehHours": 936,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 672,
+        "savedPct": 71.8
+      },
+      "shadowLow": {
+        "impactVehHours": 7765,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 7188,
+        "savedPct": 92.6
+      },
+      "shadowMid": {
+        "impactVehHours": 22687,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 21595,
+        "savedPct": 95.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 56077,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 54687,
+        "savedPct": 97.5
+      },
+      "currentRank": 101,
+      "shadowRank": 22,
+      "rankShift": 79
+    },
+    {
+      "permitRef": "BLD-2026-0069",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "roadClass": "local",
+      "loadIndex": 0.536,
+      "loadRank": 56,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 84011,
+      "shadowAadtLow": 30867,
+      "shadowAadtMid": 39167,
+      "shadowAadtHigh": 47467,
+      "aadtRatio": 0.466,
+      "current": {
+        "impactVehHours": 8730,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 8072,
+        "savedPct": 92.5
+      },
+      "shadowLow": {
+        "impactVehHours": 802,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 639,
+        "savedPct": 79.6
+      },
+      "shadowMid": {
+        "impactVehHours": 1020,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 879,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 1261,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1091,
+        "savedPct": 86.5
+      },
+      "currentRank": 36,
+      "shadowRank": 97,
+      "rankShift": -61
+    },
+    {
+      "permitRef": "BLD-2026-0070",
+      "street": "الأمير عبدالله بن عبدالرحمن بن فيصل",
+      "roadClass": "major",
+      "loadIndex": 0.662,
+      "loadRank": 35,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 83255,
+      "shadowAadtLow": 33889,
+      "shadowAadtMid": 42384,
+      "shadowAadtHigh": 50878,
+      "aadtRatio": 0.509,
+      "current": {
+        "impactVehHours": 18308,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 16768,
+        "savedPct": 91.6
+      },
+      "shadowLow": {
+        "impactVehHours": 2082,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1779,
+        "savedPct": 85.5
+      },
+      "shadowMid": {
+        "impactVehHours": 2609,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2231,
+        "savedPct": 85.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 3413,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2959,
+        "savedPct": 86.7
+      },
+      "currentRank": 14,
+      "shadowRank": 56,
+      "rankShift": -42
+    },
+    {
+      "permitRef": "BLD-2026-0071",
+      "street": "الأمير مساعد بن عبدالرحمن بن فيصل",
+      "roadClass": "major",
+      "loadIndex": 0.445,
+      "loadRank": 73,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 78172,
+      "shadowAadtLow": 19122,
+      "shadowAadtMid": 24567,
+      "shadowAadtHigh": 30011,
+      "aadtRatio": 0.314,
+      "current": {
+        "impactVehHours": 22497,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 21019,
+        "savedPct": 93.4
+      },
+      "shadowLow": {
+        "impactVehHours": 1731,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1493,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2225,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1918,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 2719,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2345,
+        "savedPct": 86.2
+      },
+      "currentRank": 9,
+      "shadowRank": 64,
+      "rankShift": -55
+    },
+    {
+      "permitRef": "BLD-2026-0072",
+      "street": "الأمين عبدالله العلي النعيم",
+      "roadClass": "major",
+      "loadIndex": 0.713,
+      "loadRank": 24,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 47369,
+      "shadowAadtLow": 46811,
+      "shadowAadtMid": 58239,
+      "shadowAadtHigh": 69667,
+      "aadtRatio": 1.229,
+      "current": {
+        "impactVehHours": 614,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 343,
+        "savedPct": 55.8
+      },
+      "shadowLow": {
+        "impactVehHours": 593,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 324,
+        "savedPct": 54.7
+      },
+      "shadowMid": {
+        "impactVehHours": 1254,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 920,
+        "savedPct": 73.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 2670,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2271,
+        "savedPct": 85.1
+      },
+      "currentRank": 114,
+      "shadowRank": 88,
+      "rankShift": 26
+    },
+    {
+      "permitRef": "BLD-2026-0073",
+      "street": "الأمين عبدالله العلي النعيم",
+      "roadClass": "major",
+      "loadIndex": 0.589,
+      "loadRank": 49,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 83615,
+      "shadowAadtLow": 42844,
+      "shadowAadtMid": 54022,
+      "shadowAadtHigh": 65200,
+      "aadtRatio": 0.646,
+      "current": {
+        "impactVehHours": 22815,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 20456,
+        "savedPct": 89.7
+      },
+      "shadowLow": {
+        "impactVehHours": 5141,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4336,
+        "savedPct": 84.3
+      },
+      "shadowMid": {
+        "impactVehHours": 6695,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5680,
+        "savedPct": 84.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 10086,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8861,
+        "savedPct": 87.9
+      },
+      "currentRank": 8,
+      "shadowRank": 37,
+      "rankShift": -29
+    },
+    {
+      "permitRef": "BLD-2026-0074",
+      "street": "الدائري الجنوبي",
+      "roadClass": "arterial",
+      "loadIndex": 0.769,
+      "loadRank": 14,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 36876,
+      "shadowAadtLow": 60756,
+      "shadowAadtMid": 75178,
+      "shadowAadtHigh": 89600,
+      "aadtRatio": 2.039,
+      "current": {
+        "impactVehHours": 4340,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3653,
+        "savedPct": 84.2
+      },
+      "shadowLow": {
+        "impactVehHours": 18014,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 16305,
+        "savedPct": 90.5
+      },
+      "shadowMid": {
+        "impactVehHours": 52237,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 49178,
+        "savedPct": 94.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 125621,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 120507,
+        "savedPct": 95.9
+      },
+      "currentRank": 56,
+      "shadowRank": 10,
+      "rankShift": 46
+    },
+    {
+      "permitRef": "BLD-2026-0075",
+      "street": "الداخلة",
+      "roadClass": "major",
+      "loadIndex": 0.204,
+      "loadRank": 119,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 87445,
+      "shadowAadtLow": 15267,
+      "shadowAadtMid": 20467,
+      "shadowAadtHigh": 25667,
+      "aadtRatio": 0.234,
+      "current": {
+        "impactVehHours": 5398,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4618,
+        "savedPct": 85.5
+      },
+      "shadowLow": {
+        "impactVehHours": 205,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 69,
+        "savedPct": 33.7
+      },
+      "shadowMid": {
+        "impactVehHours": 275,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 93,
+        "savedPct": 33.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 345,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 116,
+        "savedPct": 33.7
+      },
+      "currentRank": 49,
+      "shadowRank": 125,
+      "rankShift": -76
+    },
+    {
+      "permitRef": "BLD-2026-0076",
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "roadClass": "major",
+      "loadIndex": 0.388,
+      "loadRank": 85,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 11260,
+      "shadowAadtLow": 27311,
+      "shadowAadtMid": 35395,
+      "shadowAadtHigh": 43478,
+      "aadtRatio": 3.143,
+      "current": {
+        "impactVehHours": 983,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": 66,
+        "savedPct": 6.7
+      },
+      "shadowLow": {
+        "impactVehHours": 3175,
+        "severity": 2,
+        "bestStartHour": 1,
+        "savedVehHours": 2584,
+        "savedPct": 81.4
+      },
+      "shadowMid": {
+        "impactVehHours": 10227,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 9155,
+        "savedPct": 89.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 28600,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 27650,
+        "savedPct": 96.7
+      },
+      "currentRank": 98,
+      "shadowRank": 32,
+      "rankShift": 66
+    },
+    {
+      "permitRef": "BLD-2026-0077",
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "roadClass": "major",
+      "loadIndex": 0.336,
+      "loadRank": 99,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 86726,
+      "shadowAadtLow": 26067,
+      "shadowAadtMid": 34067,
+      "shadowAadtHigh": 42067,
+      "aadtRatio": 0.393,
+      "current": {
+        "impactVehHours": 16019,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 14829,
+        "savedPct": 92.6
+      },
+      "shadowLow": {
+        "impactVehHours": 1599,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1362,
+        "savedPct": 85.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2091,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1782,
+        "savedPct": 85.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 2586,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2204,
+        "savedPct": 85.2
+      },
+      "currentRank": 17,
+      "shadowRank": 67,
+      "rankShift": -50
+    },
+    {
+      "permitRef": "BLD-2026-0078",
+      "street": "الشيخ محمد بن عبداللطيف بن عبدالرحمن",
+      "roadClass": "local",
+      "loadIndex": 0.377,
+      "loadRank": 91,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 88318,
+      "shadowAadtLow": 18033,
+      "shadowAadtMid": 23411,
+      "shadowAadtHigh": 28789,
+      "aadtRatio": 0.265,
+      "current": {
+        "impactVehHours": 953,
+        "severity": 1,
+        "bestStartHour": 21,
+        "savedVehHours": -366,
+        "savedPct": -38.4
+      },
+      "shadowLow": {
+        "impactVehHours": 194,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 66,
+        "savedPct": 33.9
+      },
+      "shadowMid": {
+        "impactVehHours": 252,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 85,
+        "savedPct": 33.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 310,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 105,
+        "savedPct": 33.9
+      },
+      "currentRank": 100,
+      "shadowRank": 126,
+      "rankShift": -26
+    },
+    {
+      "permitRef": "BLD-2026-0079",
+      "street": "الطائف",
+      "roadClass": "major",
+      "loadIndex": 0.298,
+      "loadRank": 107,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 14226,
+      "shadowAadtLow": 25156,
+      "shadowAadtMid": 33100,
+      "shadowAadtHigh": 41044,
+      "aadtRatio": 2.327,
+      "current": {
+        "impactVehHours": 139,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 46,
+        "savedPct": 33.3
+      },
+      "shadowLow": {
+        "impactVehHours": 247,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 82,
+        "savedPct": 33.3
+      },
+      "shadowMid": {
+        "impactVehHours": 324,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 108,
+        "savedPct": 33.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 402,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 0,
+        "savedPct": 0
+      },
+      "currentRank": 129,
+      "shadowRank": 122,
+      "rankShift": 7
+    },
+    {
+      "permitRef": "BLD-2026-0080",
+      "street": "الطائف",
+      "roadClass": "major",
+      "loadIndex": 0.536,
+      "loadRank": 57,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 42028,
+      "shadowAadtLow": 30867,
+      "shadowAadtMid": 39167,
+      "shadowAadtHigh": 47467,
+      "aadtRatio": 0.932,
+      "current": {
+        "impactVehHours": 684,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 237,
+        "savedPct": 34.7
+      },
+      "shadowLow": {
+        "impactVehHours": 502,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 174,
+        "savedPct": 34.7
+      },
+      "shadowMid": {
+        "impactVehHours": 637,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 221,
+        "savedPct": 34.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 772,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 268,
+        "savedPct": 34.7
+      },
+      "currentRank": 111,
+      "shadowRank": 109,
+      "rankShift": 2
+    },
+    {
+      "permitRef": "BLD-2026-0081",
+      "street": "النصر",
+      "roadClass": "major",
+      "loadIndex": 0.754,
+      "loadRank": 18,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 37562,
+      "shadowAadtLow": 48133,
+      "shadowAadtMid": 59639,
+      "shadowAadtHigh": 71144,
+      "aadtRatio": 1.588,
+      "current": {
+        "impactVehHours": 742,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 660,
+        "savedPct": 89
+      },
+      "shadowLow": {
+        "impactVehHours": 1821,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1716,
+        "savedPct": 94.2
+      },
+      "shadowMid": {
+        "impactVehHours": 4794,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 4522,
+        "savedPct": 94.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 11544,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 11218,
+        "savedPct": 97.2
+      },
+      "currentRank": 108,
+      "shadowRank": 45,
+      "rankShift": 63
+    },
+    {
+      "permitRef": "BLD-2026-0082",
+      "street": "بلال بن رباح",
+      "roadClass": "major",
+      "loadIndex": 0.263,
+      "loadRank": 112,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 73698,
+      "shadowAadtLow": 16211,
+      "shadowAadtMid": 21472,
+      "shadowAadtHigh": 26733,
+      "aadtRatio": 0.291,
+      "current": {
+        "impactVehHours": 2278,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 134,
+        "savedPct": 5.9
+      },
+      "shadowLow": {
+        "impactVehHours": 501,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 188,
+        "savedPct": 37.6
+      },
+      "shadowMid": {
+        "impactVehHours": 663,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 249,
+        "savedPct": 37.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 826,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 310,
+        "savedPct": 37.6
+      },
+      "currentRank": 69,
+      "shadowRank": 106,
+      "rankShift": -37
+    },
+    {
+      "permitRef": "BLD-2026-0083",
+      "street": "بلال بن رباح",
+      "roadClass": "major",
+      "loadIndex": 0.326,
+      "loadRank": 102,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 36403,
+      "shadowAadtLow": 17211,
+      "shadowAadtMid": 22539,
+      "shadowAadtHigh": 27867,
+      "aadtRatio": 0.619,
+      "current": {
+        "impactVehHours": 4017,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3559,
+        "savedPct": 88.6
+      },
+      "shadowLow": {
+        "impactVehHours": 1577,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1360,
+        "savedPct": 86.3
+      },
+      "shadowMid": {
+        "impactVehHours": 2066,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1782,
+        "savedPct": 86.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 2558,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2207,
+        "savedPct": 86.3
+      },
+      "currentRank": 58,
+      "shadowRank": 69,
+      "rankShift": -11
+    },
+    {
+      "permitRef": "BLD-2026-0084",
+      "street": "سدير",
+      "roadClass": "local",
+      "loadIndex": 0.456,
+      "loadRank": 72,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 72179,
+      "shadowAadtLow": 38589,
+      "shadowAadtMid": 49500,
+      "shadowAadtHigh": 60411,
+      "aadtRatio": 0.686,
+      "current": {
+        "impactVehHours": 20329,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 19091,
+        "savedPct": 93.9
+      },
+      "shadowLow": {
+        "impactVehHours": 3910,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3248,
+        "savedPct": 83.1
+      },
+      "shadowMid": {
+        "impactVehHours": 5404,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4555,
+        "savedPct": 84.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 9525,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8489,
+        "savedPct": 89.1
+      },
+      "currentRank": 12,
+      "shadowRank": 41,
+      "rankShift": -29
+    },
+    {
+      "permitRef": "BLD-2026-0085",
+      "street": "شارع ابن حسان",
+      "roadClass": "major",
+      "loadIndex": 0.153,
+      "loadRank": 126,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 50575,
+      "shadowAadtLow": 14444,
+      "shadowAadtMid": 19600,
+      "shadowAadtHigh": 24756,
+      "aadtRatio": 0.388,
+      "current": {
+        "impactVehHours": 16053,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 15317,
+        "savedPct": 95.4
+      },
+      "shadowLow": {
+        "impactVehHours": 1528,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1318,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2075,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1790,
+        "savedPct": 86.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 2623,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2263,
+        "savedPct": 86.3
+      },
+      "currentRank": 16,
+      "shadowRank": 68,
+      "rankShift": -52
+    },
+    {
+      "permitRef": "BLD-2026-0087",
+      "street": "شارع ابن حسان",
+      "roadClass": "major",
+      "loadIndex": 0.153,
+      "loadRank": 127,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 43869,
+      "shadowAadtLow": 14444,
+      "shadowAadtMid": 19600,
+      "shadowAadtHigh": 24756,
+      "aadtRatio": 0.447,
+      "current": {
+        "impactVehHours": 2385,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2206,
+        "savedPct": 92.5
+      },
+      "shadowLow": {
+        "impactVehHours": 411,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 352,
+        "savedPct": 85.6
+      },
+      "shadowMid": {
+        "impactVehHours": 559,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 478,
+        "savedPct": 85.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 706,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 605,
+        "savedPct": 85.7
+      },
+      "currentRank": 68,
+      "shadowRank": 112,
+      "rankShift": -44
+    },
+    {
+      "permitRef": "BLD-2026-0088",
+      "street": "شارع الاحساء",
+      "roadClass": "major",
+      "loadIndex": 0.636,
+      "loadRank": 43,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 49902,
+      "shadowAadtLow": 44356,
+      "shadowAadtMid": 55628,
+      "shadowAadtHigh": 66900,
+      "aadtRatio": 1.115,
+      "current": {
+        "impactVehHours": 7758,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6934,
+        "savedPct": 89.4
+      },
+      "shadowLow": {
+        "impactVehHours": 5617,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4885,
+        "savedPct": 87
+      },
+      "shadowMid": {
+        "impactVehHours": 11224,
+        "severity": 3,
+        "bestStartHour": 23,
+        "savedVehHours": 9741,
+        "savedPct": 86.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 26004,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 23650,
+        "savedPct": 90.9
+      },
+      "currentRank": 40,
+      "shadowRank": 31,
+      "rankShift": 9
+    },
+    {
+      "permitRef": "BLD-2026-0089",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "roadClass": "major",
+      "loadIndex": 0.181,
+      "loadRank": 123,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 35477,
+      "shadowAadtLow": 14900,
+      "shadowAadtMid": 20078,
+      "shadowAadtHigh": 25256,
+      "aadtRatio": 0.566,
+      "current": {
+        "impactVehHours": 2983,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2629,
+        "savedPct": 88.1
+      },
+      "shadowLow": {
+        "impactVehHours": 1073,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 925,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 1447,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1247,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 1822,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1571,
+        "savedPct": 86.2
+      },
+      "currentRank": 64,
+      "shadowRank": 83,
+      "rankShift": -19
+    },
+    {
+      "permitRef": "BLD-2026-0091",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "roadClass": "major",
+      "loadIndex": 0.598,
+      "loadRank": 47,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 88628,
+      "shadowAadtLow": 32356,
+      "shadowAadtMid": 40750,
+      "shadowAadtHigh": 49144,
+      "aadtRatio": 0.46,
+      "current": {
+        "impactVehHours": 4745,
+        "severity": 2,
+        "bestStartHour": 21,
+        "savedVehHours": 1147,
+        "savedPct": 24.2
+      },
+      "shadowLow": {
+        "impactVehHours": 1587,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 961,
+        "savedPct": 60.6
+      },
+      "shadowMid": {
+        "impactVehHours": 1999,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1211,
+        "savedPct": 60.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 2412,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1462,
+        "savedPct": 60.6
+      },
+      "currentRank": 54,
+      "shadowRank": 71,
+      "rankShift": -17
+    },
+    {
+      "permitRef": "BLD-2026-0092",
+      "street": "شارع أم الحمام",
+      "roadClass": "local",
+      "loadIndex": 0.606,
+      "loadRank": 46,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 81400,
+      "shadowAadtLow": 43389,
+      "shadowAadtMid": 54600,
+      "shadowAadtHigh": 65811,
+      "aadtRatio": 0.671,
+      "current": {
+        "impactVehHours": 7547,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 7094,
+        "savedPct": 94
+      },
+      "shadowLow": {
+        "impactVehHours": 1132,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 975,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 1661,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1464,
+        "savedPct": 88.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 3052,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2815,
+        "savedPct": 92.2
+      },
+      "currentRank": 41,
+      "shadowRank": 77,
+      "rankShift": -36
+    },
+    {
+      "permitRef": "BLD-2026-0093",
+      "street": "شارع جرير",
+      "roadClass": "major",
+      "loadIndex": 0.636,
+      "loadRank": 44,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 35796,
+      "shadowAadtLow": 44356,
+      "shadowAadtMid": 55628,
+      "shadowAadtHigh": 66900,
+      "aadtRatio": 1.554,
+      "current": {
+        "impactVehHours": 386,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 131,
+        "savedPct": 33.9
+      },
+      "shadowLow": {
+        "impactVehHours": 478,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 162,
+        "savedPct": 33.9
+      },
+      "shadowMid": {
+        "impactVehHours": 600,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 0,
+        "savedPct": 0
+      },
+      "shadowHigh": {
+        "impactVehHours": 722,
+        "severity": 1,
+        "bestStartHour": 21,
+        "savedVehHours": -278,
+        "savedPct": -38.5
+      },
+      "currentRank": 122,
+      "shadowRank": 111,
+      "rankShift": 11
+    },
+    {
+      "permitRef": "BLD-2026-0094",
+      "street": "شارع خالد بن الوليد",
+      "roadClass": "major",
+      "loadIndex": 0.473,
+      "loadRank": 71,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 88284,
+      "shadowAadtLow": 19567,
+      "shadowAadtMid": 25039,
+      "shadowAadtHigh": 30511,
+      "aadtRatio": 0.284,
+      "current": {
+        "impactVehHours": 2141,
+        "severity": 1,
+        "bestStartHour": 21,
+        "savedVehHours": -837,
+        "savedPct": -39.1
+      },
+      "shadowLow": {
+        "impactVehHours": 474,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 161,
+        "savedPct": 33.9
+      },
+      "shadowMid": {
+        "impactVehHours": 607,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 206,
+        "savedPct": 33.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 739,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 251,
+        "savedPct": 33.9
+      },
+      "currentRank": 75,
+      "shadowRank": 110,
+      "rankShift": -35
+    },
+    {
+      "permitRef": "BLD-2026-0095",
+      "street": "شارع سعد بن أبي وقاص",
+      "roadClass": "major",
+      "loadIndex": 0.508,
+      "loadRank": 64,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 23135,
+      "shadowAadtLow": 20133,
+      "shadowAadtMid": 25639,
+      "shadowAadtHigh": 31144,
+      "aadtRatio": 1.108,
+      "current": {
+        "impactVehHours": 448,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 150,
+        "savedPct": 33.4
+      },
+      "shadowLow": {
+        "impactVehHours": 390,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 130,
+        "savedPct": 33.4
+      },
+      "shadowMid": {
+        "impactVehHours": 497,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 166,
+        "savedPct": 33.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 604,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 202,
+        "savedPct": 33.4
+      },
+      "currentRank": 119,
+      "shadowRank": 113,
+      "rankShift": 6
+    },
+    {
+      "permitRef": "BLD-2026-0096",
+      "street": "شارع سعد بن أبي وقاص",
+      "roadClass": "major",
+      "loadIndex": 0.273,
+      "loadRank": 109,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 43355,
+      "shadowAadtLow": 16367,
+      "shadowAadtMid": 21639,
+      "shadowAadtHigh": 26911,
+      "aadtRatio": 0.499,
+      "current": {
+        "impactVehHours": 4090,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3781,
+        "savedPct": 92.4
+      },
+      "shadowLow": {
+        "impactVehHours": 823,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": 161,
+        "savedPct": 19.5
+      },
+      "shadowMid": {
+        "impactVehHours": 1089,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 859,
+        "savedPct": 78.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 1356,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 1071,
+        "savedPct": 79
+      },
+      "currentRank": 57,
+      "shadowRank": 92,
+      "rankShift": -35
+    },
+    {
+      "permitRef": "BLD-2026-0097",
+      "street": "طريق ابن الهيثم",
+      "roadClass": "major",
+      "loadIndex": 0.407,
+      "loadRank": 81,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 52147,
+      "shadowAadtLow": 18511,
+      "shadowAadtMid": 23917,
+      "shadowAadtHigh": 29322,
+      "aadtRatio": 0.459,
+      "current": {
+        "impactVehHours": 20931,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 20070,
+        "savedPct": 95.9
+      },
+      "shadowLow": {
+        "impactVehHours": 2223,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1917,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2874,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2479,
+        "savedPct": 86.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 3530,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3046,
+        "savedPct": 86.3
+      },
+      "currentRank": 11,
+      "shadowRank": 52,
+      "rankShift": -41
+    },
+    {
+      "permitRef": "BLD-2026-0098",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.774,
+      "loadRank": 12,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 20420,
+      "shadowAadtLow": 60956,
+      "shadowAadtMid": 75395,
+      "shadowAadtHigh": 89833,
+      "aadtRatio": 3.692,
+      "current": {
+        "impactVehHours": 1483,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1351,
+        "savedPct": 91.1
+      },
+      "shadowLow": {
+        "impactVehHours": 285827,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 284963,
+        "savedPct": 99.7
+      },
+      "shadowMid": {
+        "impactVehHours": 827377,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 825421,
+        "savedPct": 99.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 1986873,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 1982607,
+        "savedPct": 99.8
+      },
+      "currentRank": 88,
+      "shadowRank": 1,
+      "rankShift": 87
+    },
+    {
+      "permitRef": "BLD-2026-0099",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.666,
+      "loadRank": 34,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 47754,
+      "shadowAadtLow": 33989,
+      "shadowAadtMid": 42484,
+      "shadowAadtHigh": 50978,
+      "aadtRatio": 0.89,
+      "current": {
+        "impactVehHours": 1697,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1604,
+        "savedPct": 94.5
+      },
+      "shadowLow": {
+        "impactVehHours": 545,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 478,
+        "savedPct": 87.8
+      },
+      "shadowMid": {
+        "impactVehHours": 1061,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 977,
+        "savedPct": 92.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 2267,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2167,
+        "savedPct": 95.6
+      },
+      "currentRank": 85,
+      "shadowRank": 93,
+      "rankShift": -8
+    },
+    {
+      "permitRef": "BLD-2026-0100",
+      "street": "طريق الأمير محمد بن سعد بن عبدالعزيز",
+      "roadClass": "major",
+      "loadIndex": 0.331,
+      "loadRank": 100,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 77557,
+      "shadowAadtLow": 17300,
+      "shadowAadtMid": 22628,
+      "shadowAadtHigh": 27956,
+      "aadtRatio": 0.292,
+      "current": {
+        "impactVehHours": 12621,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 11747,
+        "savedPct": 93.1
+      },
+      "shadowLow": {
+        "impactVehHours": 918,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 791,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 1201,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1035,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 1485,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1279,
+        "savedPct": 86.2
+      },
+      "currentRank": 24,
+      "shadowRank": 91,
+      "rankShift": -67
+    },
+    {
+      "permitRef": "BLD-2026-0101",
+      "street": "طريق الأمير محمد بن عبد العزيز",
+      "roadClass": "major",
+      "loadIndex": 0.511,
+      "loadRank": 62,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 13004,
+      "shadowAadtLow": 40356,
+      "shadowAadtMid": 51378,
+      "shadowAadtHigh": 62400,
+      "aadtRatio": 3.951,
+      "current": {
+        "impactVehHours": 1362,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1176,
+        "savedPct": 86.3
+      },
+      "shadowLow": {
+        "impactVehHours": 82801,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 81936,
+        "savedPct": 99
+      },
+      "shadowMid": {
+        "impactVehHours": 276936,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 275735,
+        "savedPct": 99.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 731841,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 729785,
+        "savedPct": 99.7
+      },
+      "currentRank": 93,
+      "shadowRank": 5,
+      "rankShift": 88
+    },
+    {
+      "permitRef": "BLD-2026-0102",
+      "street": "طريق الصحابة",
+      "roadClass": "major",
+      "loadIndex": 0.66,
+      "loadRank": 36,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 48988,
+      "shadowAadtLow": 45122,
+      "shadowAadtMid": 56439,
+      "shadowAadtHigh": 67756,
+      "aadtRatio": 1.152,
+      "current": {
+        "impactVehHours": 8145,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 7390,
+        "savedPct": 90.7
+      },
+      "shadowLow": {
+        "impactVehHours": 6246,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5551,
+        "savedPct": 88.9
+      },
+      "shadowMid": {
+        "impactVehHours": 13744,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 12431,
+        "savedPct": 90.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 32625,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 30440,
+        "savedPct": 93.3
+      },
+      "currentRank": 39,
+      "shadowRank": 28,
+      "rankShift": 11
+    },
+    {
+      "permitRef": "BLD-2026-0103",
+      "street": "طريق خديجة بنت خويلد",
+      "roadClass": "major",
+      "loadIndex": 0.161,
+      "loadRank": 124,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 18475,
+      "shadowAadtLow": 14578,
+      "shadowAadtMid": 19739,
+      "shadowAadtHigh": 24900,
+      "aadtRatio": 1.068,
+      "current": {
+        "impactVehHours": 1750,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1511,
+        "savedPct": 86.3
+      },
+      "shadowLow": {
+        "impactVehHours": 1271,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1082,
+        "savedPct": 85.1
+      },
+      "shadowMid": {
+        "impactVehHours": 2044,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1788,
+        "savedPct": 87.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 4507,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4184,
+        "savedPct": 92.8
+      },
+      "currentRank": 83,
+      "shadowRank": 70,
+      "rankShift": 13
+    },
+    {
+      "permitRef": "BLD-2026-0104",
+      "street": "طريق خديجة بنت خويلد",
+      "roadClass": "major",
+      "loadIndex": 0.161,
+      "loadRank": 125,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 13074,
+      "shadowAadtLow": 14578,
+      "shadowAadtMid": 19739,
+      "shadowAadtHigh": 24900,
+      "aadtRatio": 1.51,
+      "current": {
+        "impactVehHours": 275,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 236,
+        "savedPct": 86
+      },
+      "shadowLow": {
+        "impactVehHours": 306,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 263,
+        "savedPct": 86
+      },
+      "shadowMid": {
+        "impactVehHours": 640,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 582,
+        "savedPct": 90.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 1691,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1617,
+        "savedPct": 95.7
+      },
+      "currentRank": 124,
+      "shadowRank": 108,
+      "rankShift": 16
+    },
+    {
+      "permitRef": "BLD-2026-0105",
+      "street": "عبدالرحمن الغافقي",
+      "roadClass": "major",
+      "loadIndex": 0.525,
+      "loadRank": 59,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 46137,
+      "shadowAadtLow": 20400,
+      "shadowAadtMid": 25928,
+      "shadowAadtHigh": 31456,
+      "aadtRatio": 0.562,
+      "current": {
+        "impactVehHours": 2191,
+        "severity": 1,
+        "bestStartHour": 23,
+        "savedVehHours": 1975,
+        "savedPct": 90.1
+      },
+      "shadowLow": {
+        "impactVehHours": 378,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 286,
+        "savedPct": 75.7
+      },
+      "shadowMid": {
+        "impactVehHours": 481,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 364,
+        "savedPct": 75.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 606,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 510,
+        "savedPct": 84.2
+      },
+      "currentRank": 73,
+      "shadowRank": 115,
+      "rankShift": -42
+    },
+    {
+      "permitRef": "BLD-2026-0106",
+      "street": "عبدالرحمن بن عوف",
+      "roadClass": "major",
+      "loadIndex": 0.381,
+      "loadRank": 89,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 76169,
+      "shadowAadtLow": 18100,
+      "shadowAadtMid": 23478,
+      "shadowAadtHigh": 28856,
+      "aadtRatio": 0.308,
+      "current": {
+        "impactVehHours": 6096,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 5291,
+        "savedPct": 86.8
+      },
+      "shadowLow": {
+        "impactVehHours": 811,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 684,
+        "savedPct": 84.3
+      },
+      "shadowMid": {
+        "impactVehHours": 1053,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 888,
+        "savedPct": 84.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 1294,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1091,
+        "savedPct": 84.3
+      },
+      "currentRank": 45,
+      "shadowRank": 94,
+      "rankShift": -49
+    },
+    {
+      "permitRef": "BLD-2026-0107",
+      "street": "علي بن أبي طالب",
+      "roadClass": "arterial",
+      "loadIndex": 0.86,
+      "loadRank": 2,
+      "tierLabel": "من أثقل 10٪ في المحفظة",
+      "currentAadt": 17272,
+      "shadowAadtLow": 64400,
+      "shadowAadtMid": 79050,
+      "shadowAadtHigh": 93700,
+      "aadtRatio": 4.577,
+      "current": {
+        "impactVehHours": 475,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 182,
+        "savedPct": 38.2
+      },
+      "shadowLow": {
+        "impactVehHours": 5855,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 3087,
+        "savedPct": 52.7
+      },
+      "shadowMid": {
+        "impactVehHours": 15038,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 8603,
+        "savedPct": 57.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 34096,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 20130,
+        "savedPct": 59
+      },
+      "currentRank": 117,
+      "shadowRank": 25,
+      "rankShift": 92
+    },
+    {
+      "permitRef": "BLD-2026-0108",
+      "street": "عمر بن الخطاب",
+      "roadClass": "local",
+      "loadIndex": 0.555,
+      "loadRank": 55,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 87705,
+      "shadowAadtLow": 41756,
+      "shadowAadtMid": 52867,
+      "shadowAadtHigh": 63978,
+      "aadtRatio": 0.603,
+      "current": {
+        "impactVehHours": 38448,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 36158,
+        "savedPct": 94
+      },
+      "shadowLow": {
+        "impactVehHours": 3811,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3295,
+        "savedPct": 86.5
+      },
+      "shadowMid": {
+        "impactVehHours": 5480,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4827,
+        "savedPct": 88.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 9779,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8989,
+        "savedPct": 91.9
+      },
+      "currentRank": 5,
+      "shadowRank": 39,
+      "rankShift": -34
+    },
+    {
+      "permitRef": "BLD-2026-0109",
+      "street": "عمرو بن العاص",
+      "roadClass": "major",
+      "loadIndex": 0.405,
+      "loadRank": 82,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 88832,
+      "shadowAadtLow": 18478,
+      "shadowAadtMid": 23884,
+      "shadowAadtHigh": 29289,
+      "aadtRatio": 0.269,
+      "current": {
+        "impactVehHours": 13455,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 12777,
+        "savedPct": 95
+      },
+      "shadowLow": {
+        "impactVehHours": 641,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 547,
+        "savedPct": 85.4
+      },
+      "shadowMid": {
+        "impactVehHours": 828,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 707,
+        "savedPct": 85.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 1016,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 868,
+        "savedPct": 85.4
+      },
+      "currentRank": 22,
+      "shadowRank": 103,
+      "rankShift": -81
+    },
+    {
+      "permitRef": "BLD-2026-0110",
+      "street": "محمد رشيد رضا",
+      "roadClass": "major",
+      "loadIndex": 0.347,
+      "loadRank": 97,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 76610,
+      "shadowAadtLow": 17556,
+      "shadowAadtMid": 22900,
+      "shadowAadtHigh": 28244,
+      "aadtRatio": 0.299,
+      "current": {
+        "impactVehHours": 31562,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 29333,
+        "savedPct": 92.9
+      },
+      "shadowLow": {
+        "impactVehHours": 2472,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2133,
+        "savedPct": 86.3
+      },
+      "shadowMid": {
+        "impactVehHours": 3225,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2783,
+        "savedPct": 86.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 3979,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3435,
+        "savedPct": 86.3
+      },
+      "currentRank": 7,
+      "shadowRank": 49,
+      "rankShift": -42
+    },
+    {
+      "permitRef": "BLD-2026-0111",
+      "street": "نبع",
+      "roadClass": "major",
+      "loadIndex": 0.25,
+      "loadRank": 114,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 44003,
+      "shadowAadtLow": 16000,
+      "shadowAadtMid": 21250,
+      "shadowAadtHigh": 26500,
+      "aadtRatio": 0.483,
+      "current": {
+        "impactVehHours": 426,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 210,
+        "savedPct": 49.3
+      },
+      "shadowLow": {
+        "impactVehHours": 124,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 46,
+        "savedPct": 37
+      },
+      "shadowMid": {
+        "impactVehHours": 165,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 61,
+        "savedPct": 37
+      },
+      "shadowHigh": {
+        "impactVehHours": 206,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 76,
+        "savedPct": 37
+      },
+      "currentRank": 121,
+      "shadowRank": 129,
+      "rankShift": -8
+    },
+    {
+      "permitRef": "BLD-2026-0112",
+      "street": "آل داود",
+      "roadClass": "local",
+      "loadIndex": 0.384,
+      "loadRank": 87,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 35531,
+      "shadowAadtLow": 18144,
+      "shadowAadtMid": 23528,
+      "shadowAadtHigh": 28911,
+      "aadtRatio": 0.662,
+      "current": {
+        "impactVehHours": 1185,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 854,
+        "savedPct": 72.1
+      },
+      "shadowLow": {
+        "impactVehHours": 604,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 435,
+        "savedPct": 72
+      },
+      "shadowMid": {
+        "impactVehHours": 783,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 564,
+        "savedPct": 72
+      },
+      "shadowHigh": {
+        "impactVehHours": 963,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 694,
+        "savedPct": 72
+      },
+      "currentRank": 96,
+      "shadowRank": 105,
+      "rankShift": -9
+    },
+    {
+      "permitRef": "BLD-2026-0113",
+      "street": "ابن الجوزي",
+      "roadClass": "local",
+      "loadIndex": 0.557,
+      "loadRank": 54,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 35242,
+      "shadowAadtLow": 41822,
+      "shadowAadtMid": 52939,
+      "shadowAadtHigh": 64056,
+      "aadtRatio": 1.502,
+      "current": {
+        "impactVehHours": 2056,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1806,
+        "savedPct": 87.9
+      },
+      "shadowLow": {
+        "impactVehHours": 3542,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3246,
+        "savedPct": 91.6
+      },
+      "shadowMid": {
+        "impactVehHours": 9705,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 9142,
+        "savedPct": 94.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 24383,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 23702,
+        "savedPct": 97.2
+      },
+      "currentRank": 78,
+      "shadowRank": 34,
+      "rankShift": 44
+    },
+    {
+      "permitRef": "BLD-2026-0114",
+      "street": "ابي بكر الرازي",
+      "roadClass": "local",
+      "loadIndex": 0.505,
+      "loadRank": 65,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 41829,
+      "shadowAadtLow": 20078,
+      "shadowAadtMid": 25584,
+      "shadowAadtHigh": 31089,
+      "aadtRatio": 0.612,
+      "current": {
+        "impactVehHours": 2157,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1907,
+        "savedPct": 88.4
+      },
+      "shadowLow": {
+        "impactVehHours": 806,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 686,
+        "savedPct": 85.1
+      },
+      "shadowMid": {
+        "impactVehHours": 1028,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 875,
+        "savedPct": 85.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 1250,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1065,
+        "savedPct": 85.1
+      },
+      "currentRank": 74,
+      "shadowRank": 95,
+      "rankShift": -21
+    },
+    {
+      "permitRef": "BLD-2026-0115",
+      "street": "أحمد بن محمد السديري",
+      "roadClass": "local",
+      "loadIndex": 0.35,
+      "loadRank": 95,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 82364,
+      "shadowAadtLow": 17600,
+      "shadowAadtMid": 22950,
+      "shadowAadtHigh": 28300,
+      "aadtRatio": 0.279,
+      "current": {
+        "impactVehHours": 1389,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 196,
+        "savedPct": 14.1
+      },
+      "shadowLow": {
+        "impactVehHours": 268,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 100,
+        "savedPct": 37.2
+      },
+      "shadowMid": {
+        "impactVehHours": 350,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 130,
+        "savedPct": 37.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 432,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 160,
+        "savedPct": 37.2
+      },
+      "currentRank": 91,
+      "shadowRank": 118,
+      "rankShift": -27
+    },
+    {
+      "permitRef": "BLD-2026-0116",
+      "street": "الإمام سعود بن عبدالعزيز بن محمد الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.751,
+      "loadRank": 19,
+      "tierLabel": "من أثقل ربع المحفظة",
+      "currentAadt": 22822,
+      "shadowAadtLow": 36022,
+      "shadowAadtMid": 44650,
+      "shadowAadtHigh": 53278,
+      "aadtRatio": 1.956,
+      "current": {
+        "impactVehHours": 1547,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 1406,
+        "savedPct": 90.9
+      },
+      "shadowLow": {
+        "impactVehHours": 13476,
+        "severity": 3,
+        "bestStartHour": 23,
+        "savedVehHours": 13233,
+        "savedPct": 98.2
+      },
+      "shadowMid": {
+        "impactVehHours": 39430,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 39137,
+        "savedPct": 99.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 95380,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 94976,
+        "savedPct": 99.6
+      },
+      "currentRank": 87,
+      "shadowRank": 14,
+      "rankShift": 73
+    },
+    {
+      "permitRef": "BLD-2026-0117",
+      "street": "الأمير تركي بن عبدالعزيز الثاني",
+      "roadClass": "local",
+      "loadIndex": 0.412,
+      "loadRank": 79,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 18209,
+      "shadowAadtLow": 27889,
+      "shadowAadtMid": 36006,
+      "shadowAadtHigh": 44122,
+      "aadtRatio": 1.977,
+      "current": {
+        "impactVehHours": 1582,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1408,
+        "savedPct": 89
+      },
+      "shadowLow": {
+        "impactVehHours": 8952,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8686,
+        "savedPct": 97
+      },
+      "shadowMid": {
+        "impactVehHours": 31612,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 31093,
+        "savedPct": 98.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 87349,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 86712,
+        "savedPct": 99.3
+      },
+      "currentRank": 86,
+      "shadowRank": 18,
+      "rankShift": 68
+    },
+    {
+      "permitRef": "BLD-2026-0119",
+      "street": "الأمير محمد بن فيصل بن تركي",
+      "roadClass": "local",
+      "loadIndex": 0.35,
+      "loadRank": 96,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 84161,
+      "shadowAadtLow": 17600,
+      "shadowAadtMid": 22950,
+      "shadowAadtHigh": 28300,
+      "aadtRatio": 0.273,
+      "current": {
+        "impactVehHours": 12029,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 11186,
+        "savedPct": 93
+      },
+      "shadowLow": {
+        "impactVehHours": 284,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 108,
+        "savedPct": 37.9
+      },
+      "shadowMid": {
+        "impactVehHours": 370,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 140,
+        "savedPct": 37.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 456,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 173,
+        "savedPct": 37.9
+      },
+      "currentRank": 26,
+      "shadowRank": 117,
+      "rankShift": -91
+    },
+    {
+      "permitRef": "BLD-2026-0120",
+      "street": "البحار",
+      "roadClass": "local",
+      "loadIndex": 0.384,
+      "loadRank": 88,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 82915,
+      "shadowAadtLow": 18144,
+      "shadowAadtMid": 23528,
+      "shadowAadtHigh": 28911,
+      "aadtRatio": 0.284,
+      "current": {
+        "impactVehHours": 10114,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 8296,
+        "savedPct": 82
+      },
+      "shadowLow": {
+        "impactVehHours": 1196,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1005,
+        "savedPct": 84.1
+      },
+      "shadowMid": {
+        "impactVehHours": 1551,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1303,
+        "savedPct": 84.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 1906,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1602,
+        "savedPct": 84.1
+      },
+      "currentRank": 32,
+      "shadowRank": 80,
+      "rankShift": -48
+    },
+    {
+      "permitRef": "BLD-2026-0121",
+      "street": "البلدية",
+      "roadClass": "local",
+      "loadIndex": 0.432,
+      "loadRank": 74,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 19731,
+      "shadowAadtLow": 28367,
+      "shadowAadtMid": 36517,
+      "shadowAadtHigh": 44667,
+      "aadtRatio": 1.851,
+      "current": {
+        "impactVehHours": 2078,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1803,
+        "savedPct": 86.8
+      },
+      "shadowLow": {
+        "impactVehHours": 6739,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6343,
+        "savedPct": 94.1
+      },
+      "shadowMid": {
+        "impactVehHours": 23114,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 22341,
+        "savedPct": 96.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 63290,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 62344,
+        "savedPct": 98.5
+      },
+      "currentRank": 77,
+      "shadowRank": 21,
+      "rankShift": 56
+    },
+    {
+      "permitRef": "BLD-2026-0122",
+      "street": "الحويطة",
+      "roadClass": "local",
+      "loadIndex": 0.374,
+      "loadRank": 92,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 79331,
+      "shadowAadtLow": 26978,
+      "shadowAadtMid": 35039,
+      "shadowAadtHigh": 43100,
+      "aadtRatio": 0.442,
+      "current": {
+        "impactVehHours": 18027,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 16783,
+        "savedPct": 93.1
+      },
+      "shadowLow": {
+        "impactVehHours": 1961,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1679,
+        "savedPct": 85.6
+      },
+      "shadowMid": {
+        "impactVehHours": 2550,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2183,
+        "savedPct": 85.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 3144,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2693,
+        "savedPct": 85.7
+      },
+      "currentRank": 15,
+      "shadowRank": 57,
+      "rankShift": -42
+    },
+    {
+      "permitRef": "BLD-2026-0123",
+      "street": "الخيمة",
+      "roadClass": "local",
+      "loadIndex": 0.102,
+      "loadRank": 128,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 41142,
+      "shadowAadtLow": 13633,
+      "shadowAadtMid": 18733,
+      "shadowAadtHigh": 23833,
+      "aadtRatio": 0.455,
+      "current": {
+        "impactVehHours": 1306,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1161,
+        "savedPct": 88.9
+      },
+      "shadowLow": {
+        "impactVehHours": 243,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 195,
+        "savedPct": 80.2
+      },
+      "shadowMid": {
+        "impactVehHours": 334,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 268,
+        "savedPct": 80.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 425,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 341,
+        "savedPct": 80.2
+      },
+      "currentRank": 94,
+      "shadowRank": 120,
+      "rankShift": -26
+    },
+    {
+      "permitRef": "BLD-2026-0124",
+      "street": "الربع الخالي",
+      "roadClass": "local",
+      "loadIndex": 0.425,
+      "loadRank": 76,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 38679,
+      "shadowAadtLow": 18800,
+      "shadowAadtMid": 24228,
+      "shadowAadtHigh": 29656,
+      "aadtRatio": 0.626,
+      "current": {
+        "impactVehHours": 636,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 552,
+        "savedPct": 86.7
+      },
+      "shadowLow": {
+        "impactVehHours": 269,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 229,
+        "savedPct": 84.8
+      },
+      "shadowMid": {
+        "impactVehHours": 347,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 295,
+        "savedPct": 84.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 426,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 361,
+        "savedPct": 84.8
+      },
+      "currentRank": 112,
+      "shadowRank": 119,
+      "rankShift": -7
+    },
+    {
+      "permitRef": "BLD-2026-0126",
+      "street": "الشيخ عبدالله المخضوب",
+      "roadClass": "local",
+      "loadIndex": 0.381,
+      "loadRank": 90,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 22599,
+      "shadowAadtLow": 18100,
+      "shadowAadtMid": 23478,
+      "shadowAadtHigh": 28856,
+      "aadtRatio": 1.039,
+      "current": {
+        "impactVehHours": 2135,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2000,
+        "savedPct": 93.7
+      },
+      "shadowLow": {
+        "impactVehHours": 966,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 858,
+        "savedPct": 88.8
+      },
+      "shadowMid": {
+        "impactVehHours": 2504,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2363,
+        "savedPct": 94.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 6419,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6246,
+        "savedPct": 97.3
+      },
+      "currentRank": 76,
+      "shadowRank": 60,
+      "rankShift": 16
+    },
+    {
+      "permitRef": "BLD-2026-0127",
+      "street": "العباس بن عبدالمطلب",
+      "roadClass": "local",
+      "loadIndex": 0.313,
+      "loadRank": 105,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 17021,
+      "shadowAadtLow": 17011,
+      "shadowAadtMid": 22322,
+      "shadowAadtHigh": 27633,
+      "aadtRatio": 1.311,
+      "current": {
+        "impactVehHours": 734,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 445,
+        "savedPct": 60.6
+      },
+      "shadowLow": {
+        "impactVehHours": 734,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 445,
+        "savedPct": 60.6
+      },
+      "shadowMid": {
+        "impactVehHours": 964,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 584,
+        "savedPct": 60.6
+      },
+      "shadowHigh": {
+        "impactVehHours": 1238,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 768,
+        "savedPct": 62.1
+      },
+      "currentRank": 110,
+      "shadowRank": 99,
+      "rankShift": 11
+    },
+    {
+      "permitRef": "BLD-2026-0128",
+      "street": "المثنى بن حارثة",
+      "roadClass": "local",
+      "loadIndex": 0.328,
+      "loadRank": 101,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 17165,
+      "shadowAadtLow": 17244,
+      "shadowAadtMid": 22572,
+      "shadowAadtHigh": 27900,
+      "aadtRatio": 1.315,
+      "current": {
+        "impactVehHours": 468,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 338,
+        "savedPct": 72.3
+      },
+      "shadowLow": {
+        "impactVehHours": 470,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 340,
+        "savedPct": 72.3
+      },
+      "shadowMid": {
+        "impactVehHours": 790,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 619,
+        "savedPct": 78.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 1604,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1393,
+        "savedPct": 86.8
+      },
+      "currentRank": 118,
+      "shadowRank": 104,
+      "rankShift": 14
+    },
+    {
+      "permitRef": "BLD-2026-0129",
+      "street": "المهندس مساعد العنقري",
+      "roadClass": "local",
+      "loadIndex": 0.386,
+      "loadRank": 86,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 82702,
+      "shadowAadtLow": 18178,
+      "shadowAadtMid": 23561,
+      "shadowAadtHigh": 28944,
+      "aadtRatio": 0.285,
+      "current": {
+        "impactVehHours": 11781,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 10542,
+        "savedPct": 89.5
+      },
+      "shadowLow": {
+        "impactVehHours": 1149,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 969,
+        "savedPct": 84.3
+      },
+      "shadowMid": {
+        "impactVehHours": 1489,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1256,
+        "savedPct": 84.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 1830,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1544,
+        "savedPct": 84.3
+      },
+      "currentRank": 27,
+      "shadowRank": 81,
+      "rankShift": -54
+    },
+    {
+      "permitRef": "BLD-2026-0132",
+      "street": "حزام الدوسري",
+      "roadClass": "local",
+      "loadIndex": 0.397,
+      "loadRank": 84,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 80389,
+      "shadowAadtLow": 18356,
+      "shadowAadtMid": 23750,
+      "shadowAadtHigh": 29144,
+      "aadtRatio": 0.295,
+      "current": {
+        "impactVehHours": 11349,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 9558,
+        "savedPct": 84.2
+      },
+      "shadowLow": {
+        "impactVehHours": 1248,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1054,
+        "savedPct": 84.5
+      },
+      "shadowMid": {
+        "impactVehHours": 1614,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1364,
+        "savedPct": 84.5
+      },
+      "shadowHigh": {
+        "impactVehHours": 1982,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1674,
+        "savedPct": 84.5
+      },
+      "currentRank": 30,
+      "shadowRank": 78,
+      "rankShift": -48
+    },
+    {
+      "permitRef": "BLD-2026-0133",
+      "street": "سعيد بن بيشان",
+      "roadClass": "local",
+      "loadIndex": 0.289,
+      "loadRank": 108,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 80964,
+      "shadowAadtLow": 16622,
+      "shadowAadtMid": 21911,
+      "shadowAadtHigh": 27200,
+      "aadtRatio": 0.271,
+      "current": {
+        "impactVehHours": 33497,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 30776,
+        "savedPct": 91.9
+      },
+      "shadowLow": {
+        "impactVehHours": 1934,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1670,
+        "savedPct": 86.3
+      },
+      "shadowMid": {
+        "impactVehHours": 2550,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2202,
+        "savedPct": 86.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 3167,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2734,
+        "savedPct": 86.3
+      },
+      "currentRank": 6,
+      "shadowRank": 58,
+      "rankShift": -52
+    },
+    {
+      "permitRef": "BLD-2026-0134",
+      "street": "شارع أبي بن معاذ الأنصاري",
+      "roadClass": "local",
+      "loadIndex": 0.596,
+      "loadRank": 48,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 46513,
+      "shadowAadtLow": 32300,
+      "shadowAadtMid": 40695,
+      "shadowAadtHigh": 49089,
+      "aadtRatio": 0.875,
+      "current": {
+        "impactVehHours": 1397,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1252,
+        "savedPct": 89.6
+      },
+      "shadowLow": {
+        "impactVehHours": 643,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 543,
+        "savedPct": 84.4
+      },
+      "shadowMid": {
+        "impactVehHours": 978,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 851,
+        "savedPct": 87.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 1677,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1525,
+        "savedPct": 90.9
+      },
+      "currentRank": 90,
+      "shadowRank": 98,
+      "rankShift": -8
+    },
+    {
+      "permitRef": "BLD-2026-0136",
+      "street": "شارع الحميد",
+      "roadClass": "local",
+      "loadIndex": 0.248,
+      "loadRank": 115,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 48434,
+      "shadowAadtLow": 15967,
+      "shadowAadtMid": 21217,
+      "shadowAadtHigh": 26467,
+      "aadtRatio": 0.438,
+      "current": {
+        "impactVehHours": 15943,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 15033,
+        "savedPct": 94.3
+      },
+      "shadowLow": {
+        "impactVehHours": 1764,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1464,
+        "savedPct": 83
+      },
+      "shadowMid": {
+        "impactVehHours": 2346,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1947,
+        "savedPct": 83
+      },
+      "shadowHigh": {
+        "impactVehHours": 2931,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2433,
+        "savedPct": 83
+      },
+      "currentRank": 18,
+      "shadowRank": 62,
+      "rankShift": -44
+    },
+    {
+      "permitRef": "BLD-2026-0137",
+      "street": "شارع الضياء",
+      "roadClass": "local",
+      "loadIndex": 0.071,
+      "loadRank": 129,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 48772,
+      "shadowAadtLow": 6567,
+      "shadowAadtMid": 9106,
+      "shadowAadtHigh": 11644,
+      "aadtRatio": 0.187,
+      "current": {
+        "impactVehHours": 9258,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8780,
+        "savedPct": 94.8
+      },
+      "shadowLow": {
+        "impactVehHours": 467,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 403,
+        "savedPct": 86.2
+      },
+      "shadowMid": {
+        "impactVehHours": 647,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 558,
+        "savedPct": 86.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 828,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 714,
+        "savedPct": 86.2
+      },
+      "currentRank": 33,
+      "shadowRank": 107,
+      "rankShift": -74
+    },
+    {
+      "permitRef": "BLD-2026-0138",
+      "street": "شارع الكرامة",
+      "roadClass": "local",
+      "loadIndex": 0.474,
+      "loadRank": 70,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 84570,
+      "shadowAadtLow": 29378,
+      "shadowAadtMid": 37589,
+      "shadowAadtHigh": 45800,
+      "aadtRatio": 0.444,
+      "current": {
+        "impactVehHours": 1122,
+        "severity": 1,
+        "bestStartHour": 22,
+        "savedVehHours": 481,
+        "savedPct": 42.9
+      },
+      "shadowLow": {
+        "impactVehHours": 380,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 234,
+        "savedPct": 61.4
+      },
+      "shadowMid": {
+        "impactVehHours": 487,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 299,
+        "savedPct": 61.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 593,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 364,
+        "savedPct": 61.4
+      },
+      "currentRank": 97,
+      "shadowRank": 114,
+      "rankShift": -17
+    },
+    {
+      "permitRef": "BLD-2026-0139",
+      "street": "شارع حلب",
+      "roadClass": "local",
+      "loadIndex": 0.569,
+      "loadRank": 52,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 47445,
+      "shadowAadtLow": 42211,
+      "shadowAadtMid": 53350,
+      "shadowAadtHigh": 64489,
+      "aadtRatio": 1.124,
+      "current": {
+        "impactVehHours": 9001,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 8435,
+        "savedPct": 93.7
+      },
+      "shadowLow": {
+        "impactVehHours": 5845,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5341,
+        "savedPct": 91.4
+      },
+      "shadowMid": {
+        "impactVehHours": 14823,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 14186,
+        "savedPct": 95.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 36303,
+        "severity": 3,
+        "bestStartHour": 21,
+        "savedVehHours": 34684,
+        "savedPct": 95.5
+      },
+      "currentRank": 35,
+      "shadowRank": 26,
+      "rankShift": 9
+    },
+    {
+      "permitRef": "BLD-2026-0140",
+      "street": "شارع سعيد بن عبدالله السيد",
+      "roadClass": "local",
+      "loadIndex": 0.299,
+      "loadRank": 106,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 19926,
+      "shadowAadtLow": 16789,
+      "shadowAadtMid": 22084,
+      "shadowAadtHigh": 27378,
+      "aadtRatio": 1.108,
+      "current": {
+        "impactVehHours": 1928,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1747,
+        "savedPct": 90.6
+      },
+      "shadowLow": {
+        "impactVehHours": 1196,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1043,
+        "savedPct": 87.2
+      },
+      "shadowMid": {
+        "impactVehHours": 2769,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2569,
+        "savedPct": 92.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 6813,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 6564,
+        "savedPct": 96.3
+      },
+      "currentRank": 81,
+      "shadowRank": 53,
+      "rankShift": 28
+    },
+    {
+      "permitRef": "BLD-2026-0141",
+      "street": "شارع عبدالله بن قيس",
+      "roadClass": "local",
+      "loadIndex": 0.27,
+      "loadRank": 110,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 18032,
+      "shadowAadtLow": 16322,
+      "shadowAadtMid": 21589,
+      "shadowAadtHigh": 26856,
+      "aadtRatio": 1.197,
+      "current": {
+        "impactVehHours": 2028,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1706,
+        "savedPct": 84.1
+      },
+      "shadowLow": {
+        "impactVehHours": 1826,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1535,
+        "savedPct": 84
+      },
+      "shadowMid": {
+        "impactVehHours": 2904,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2519,
+        "savedPct": 86.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 5562,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 5082,
+        "savedPct": 91.4
+      },
+      "currentRank": 79,
+      "shadowRank": 51,
+      "rankShift": 28
+    },
+    {
+      "permitRef": "BLD-2026-0142",
+      "street": "شارع وادي حنيفة",
+      "roadClass": "local",
+      "loadIndex": 0.2,
+      "loadRank": 120,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 16923,
+      "shadowAadtLow": 15200,
+      "shadowAadtMid": 20400,
+      "shadowAadtHigh": 25600,
+      "aadtRatio": 1.205,
+      "current": {
+        "impactVehHours": 812,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 686,
+        "savedPct": 84.5
+      },
+      "shadowLow": {
+        "impactVehHours": 724,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 611,
+        "savedPct": 84.4
+      },
+      "shadowMid": {
+        "impactVehHours": 1204,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1052,
+        "savedPct": 87.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 2438,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2247,
+        "savedPct": 92.2
+      },
+      "currentRank": 105,
+      "shadowRank": 90,
+      "rankShift": 15
+    },
+    {
+      "permitRef": "BLD-2026-0143",
+      "street": "طريق الإمام سعود بن فيصل الفرعي",
+      "roadClass": "local",
+      "loadIndex": 0.525,
+      "loadRank": 60,
+      "tierLabel": "فوق وسيط المحفظة",
+      "currentAadt": 15023,
+      "shadowAadtLow": 30600,
+      "shadowAadtMid": 38889,
+      "shadowAadtHigh": 47178,
+      "aadtRatio": 2.589,
+      "current": {
+        "impactVehHours": 777,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 662,
+        "savedPct": 85.1
+      },
+      "shadowLow": {
+        "impactVehHours": 11148,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 10913,
+        "savedPct": 97.9
+      },
+      "shadowMid": {
+        "impactVehHours": 36402,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 35950,
+        "savedPct": 98.8
+      },
+      "shadowHigh": {
+        "impactVehHours": 95339,
+        "severity": 3,
+        "bestStartHour": 22,
+        "savedVehHours": 94790,
+        "savedPct": 99.4
+      },
+      "currentRank": 107,
+      "shadowRank": 17,
+      "rankShift": 90
+    },
+    {
+      "permitRef": "BLD-2026-0144",
+      "street": "طريق العروبة الفرعي",
+      "roadClass": "arterial",
+      "loadIndex": 0.401,
+      "loadRank": 83,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 76363,
+      "shadowAadtLow": 18411,
+      "shadowAadtMid": 23817,
+      "shadowAadtHigh": 29222,
+      "aadtRatio": 0.312,
+      "current": {
+        "impactVehHours": 5342,
+        "severity": 2,
+        "bestStartHour": 22,
+        "savedVehHours": 4156,
+        "savedPct": 77.8
+      },
+      "shadowLow": {
+        "impactVehHours": 1150,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 959,
+        "savedPct": 83.4
+      },
+      "shadowMid": {
+        "impactVehHours": 1488,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1240,
+        "savedPct": 83.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 1826,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1522,
+        "savedPct": 83.4
+      },
+      "currentRank": 50,
+      "shadowRank": 82,
+      "rankShift": -32
+    },
+    {
+      "permitRef": "BLD-2026-0145",
+      "street": "طريق وادي حنيفة",
+      "roadClass": "local",
+      "loadIndex": 0.197,
+      "loadRank": 121,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 21953,
+      "shadowAadtLow": 15156,
+      "shadowAadtMid": 20350,
+      "shadowAadtHigh": 25544,
+      "aadtRatio": 0.927,
+      "current": {
+        "impactVehHours": 2258,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2029,
+        "savedPct": 89.8
+      },
+      "shadowLow": {
+        "impactVehHours": 1063,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 904,
+        "savedPct": 85.1
+      },
+      "shadowMid": {
+        "impactVehHours": 1791,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1578,
+        "savedPct": 88.1
+      },
+      "shadowHigh": {
+        "impactVehHours": 4007,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3740,
+        "savedPct": 93.3
+      },
+      "currentRank": 71,
+      "shadowRank": 75,
+      "rankShift": -4
+    },
+    {
+      "permitRef": "BLD-2026-0146",
+      "street": "عبدالرحمن بن عزاز",
+      "roadClass": "local",
+      "loadIndex": 0.337,
+      "loadRank": 98,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 49706,
+      "shadowAadtLow": 26089,
+      "shadowAadtMid": 34095,
+      "shadowAadtHigh": 42100,
+      "aadtRatio": 0.686,
+      "current": {
+        "impactVehHours": 4901,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 4592,
+        "savedPct": 93.7
+      },
+      "shadowLow": {
+        "impactVehHours": 811,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 649,
+        "savedPct": 80
+      },
+      "shadowMid": {
+        "impactVehHours": 1243,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1031,
+        "savedPct": 82.9
+      },
+      "shadowHigh": {
+        "impactVehHours": 2443,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 2181,
+        "savedPct": 89.3
+      },
+      "currentRank": 53,
+      "shadowRank": 89,
+      "rankShift": -36
+    },
+    {
+      "permitRef": "BLD-2026-0147",
+      "street": "عرقة",
+      "roadClass": "local",
+      "loadIndex": 0.238,
+      "loadRank": 116,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 82893,
+      "shadowAadtLow": 15811,
+      "shadowAadtMid": 21050,
+      "shadowAadtHigh": 26289,
+      "aadtRatio": 0.254,
+      "current": {
+        "impactVehHours": 11377,
+        "severity": 3,
+        "bestStartHour": 0,
+        "savedVehHours": 10930,
+        "savedPct": 96.1
+      },
+      "shadowLow": {
+        "impactVehHours": 163,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": -317,
+        "savedPct": -193.6
+      },
+      "shadowMid": {
+        "impactVehHours": 218,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 46,
+        "savedPct": 21.3
+      },
+      "shadowHigh": {
+        "impactVehHours": 272,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 58,
+        "savedPct": 21.3
+      },
+      "currentRank": 29,
+      "shadowRank": 128,
+      "rankShift": -99
+    },
+    {
+      "permitRef": "BLD-2026-0148",
+      "street": "ماجد بن عبد الله القصبي",
+      "roadClass": "local",
+      "loadIndex": 0.27,
+      "loadRank": 111,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 10829,
+      "shadowAadtLow": 16322,
+      "shadowAadtMid": 21589,
+      "shadowAadtHigh": 26856,
+      "aadtRatio": 1.994,
+      "current": {
+        "impactVehHours": 307,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": 53,
+        "savedPct": 17.3
+      },
+      "shadowLow": {
+        "impactVehHours": 464,
+        "severity": 1,
+        "bestStartHour": 10,
+        "savedVehHours": 81,
+        "savedPct": 17.4
+      },
+      "shadowMid": {
+        "impactVehHours": 888,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 756,
+        "savedPct": 85.2
+      },
+      "shadowHigh": {
+        "impactVehHours": 2095,
+        "severity": 1,
+        "bestStartHour": 1,
+        "savedVehHours": 1932,
+        "savedPct": 92.2
+      },
+      "currentRank": 123,
+      "shadowRank": 101,
+      "rankShift": 22
+    },
+    {
+      "permitRef": "BLD-2026-0149",
+      "street": "محمد حامد الفقي",
+      "roadClass": "local",
+      "loadIndex": 0.316,
+      "loadRank": 104,
+      "tierLabel": "من أخفّ ربع المحفظة",
+      "currentAadt": 12031,
+      "shadowAadtLow": 17056,
+      "shadowAadtMid": 22373,
+      "shadowAadtHigh": 27689,
+      "aadtRatio": 1.86,
+      "current": {
+        "impactVehHours": 808,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 579,
+        "savedPct": 71.8
+      },
+      "shadowLow": {
+        "impactVehHours": 1145,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 822,
+        "savedPct": 71.8
+      },
+      "shadowMid": {
+        "impactVehHours": 1903,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1478,
+        "savedPct": 77.7
+      },
+      "shadowHigh": {
+        "impactVehHours": 3857,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 3332,
+        "savedPct": 86.4
+      },
+      "currentRank": 106,
+      "shadowRank": 72,
+      "rankShift": 34
+    },
+    {
+      "permitRef": "BLD-2026-0150",
+      "street": "وادي الرمة",
+      "roadClass": "local",
+      "loadIndex": 0.352,
+      "loadRank": 94,
+      "tierLabel": "دون وسيط المحفظة",
+      "currentAadt": 35569,
+      "shadowAadtLow": 17633,
+      "shadowAadtMid": 22983,
+      "shadowAadtHigh": 28333,
+      "aadtRatio": 0.646,
+      "current": {
+        "impactVehHours": 2604,
+        "severity": 2,
+        "bestStartHour": 0,
+        "savedVehHours": 2302,
+        "savedPct": 88.4
+      },
+      "shadowLow": {
+        "impactVehHours": 1103,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 953,
+        "savedPct": 86.4
+      },
+      "shadowMid": {
+        "impactVehHours": 1439,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1243,
+        "savedPct": 86.4
+      },
+      "shadowHigh": {
+        "impactVehHours": 1776,
+        "severity": 1,
+        "bestStartHour": 0,
+        "savedVehHours": 1536,
+        "savedPct": 86.4
+      },
+      "currentRank": 66,
+      "shadowRank": 86,
+      "rankShift": -20
+    }
+  ]
+}
