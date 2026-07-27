@@ -228,8 +228,14 @@ test('عدد الفحوص والحزم في العرض يطابق جرد الت�
      فيصير العرض يكذب بعد ساعة من صدقه. والأرضية لا تكذب أبداً — لكنها
      تكذب على نفسها إن بقيت بعيدة جداً عن الحقيقة، فلها حدّان. */
   const suites = toArabic(manifest.suites);
+  /* السقوط يسمّي أمر إصلاحه.
+     تقادم هذا الرقم ثلاث مرات في يومين — ٧٧ ⟵ ٨٠ ⟵ ٨١ ⟵ ٨٢ — وفي كل مرة
+     كان يُصلَح بتحرير يدوي في الـHTML المبني. صار له ختّامٌ يقرأ الجرد، فبقاء
+     الرسالة بلا اسمه يعيد الناس إلى التحرير اليدوي. */
   assert.ok(RAW.indexOf(`${suites} / ${suites}`) !== -1,
-    `العرض لا يعرض «${manifest.suites} / ${manifest.suites}» — عدد الحزم متقادم`);
+    `العرض لا يعرض «${manifest.suites} / ${manifest.suites}» — عدد الحزم متقادم.\n`
+    + '    الإصلاح: node presentation/scripts/sync-deck-counts.js\n'
+    + '    (ويُستدعى تلقائياً من tools/deck-build/export-masar-pdf.cjs قبل التصيير)');
 
   const FLOOR = 900;
   assert.ok(manifest.checks >= FLOOR,
@@ -372,6 +378,55 @@ test('سعة منطقة العمل معروضة بسندها وبعدد مواق
   });
   assert.ok(/لم تُعاير على الرياض/.test(text),
     'قيمة مقيسة أجنبياً معروضة بلا الحدّ الذي يمنع قراءتها محلية');
+});
+
+/* ---- ختّام عدد الحزم: أن يعمل، وأن يسقط حين لا يعمل ---- */
+
+const { syncDeckCounts } = require(path.join(__dirname, '..', 'scripts', 'sync-deck-counts.js'));
+
+/*
+ * الخطر الحقيقي في هذا الختّام ليس أن يخطئ، بل أن **يمرّ صامتاً**: لو تغيّر
+ * ترميز الشريحة فلم يطابق تعبيرُه شيئاً، لطبع «تمّ» وبقي الرقم متقادماً —
+ * وهو عين العطل الذي وُضع لمنعه. فيُفحص الطرفان: أنه يجد موضعه، وأنه يسقط إن
+ * لم يجده.
+ */
+test('الختّام يجد موضعه في العرض المبني — ولا يمرّ على لا شيء', () => {
+  const result = syncDeckCounts({ quiet: true });
+  assert.ok(result.suites > 0, 'الختّام أعاد عدد حزم غير صالح');
+  assert.ok(RAW.indexOf(result.stamp) !== -1,
+    `الختّام يعلن «${result.stamp}» ولا يظهر في العرض المقروء هنا`);
+});
+
+test('الختّام لا يعمل إلا مرة — إعادته لا تغيّر شيئاً', () => {
+  const again = syncDeckCounts({ quiet: true });
+  assert.deepStrictEqual(again.changed, [],
+    `الختّام غيّر شيئاً في التشغيلة الثانية: ${again.changed.join(' · ')}`);
+});
+
+test('الختّام يسقط إن غاب موضعه — لا نجاح صامت على رقم متقادم', () => {
+  const deckPath = DECK;
+  const original = fs.readFileSync(deckPath, 'utf8');
+  /* زمنا الملف يُحفظان ويُعادان.
+     `submission-deck-test.js` يسقط إن صار الـHTML أحدث من الـPDF المبني منه.
+     وكتابةُ المحتوى نفسه ترفع زمن التعديل، فيسقط ذلك الفحص بسبب هذا — بوابةٌ
+     تكسر بوابةً أخرى بلا أن يتغيّر شيء في التسليم. */
+  const before = fs.statSync(deckPath);
+  /* كسرُ اللاحقة وحدها يكفي: التعبير يثبّت الموضع بها، فإزالتها تحاكي تغيّر
+     ترميز الشريحة بدقة أكبر من حذف الرقم. */
+  const broken = original.replace('</div><p class="lead">حزمة تحقق',
+    '</div><p class="lead">حزمةُ تحقق');
+  assert.notStrictEqual(broken, original, 'لم تُكسر اللاحقة — الفحص لا يقيس شيئاً');
+  fs.writeFileSync(deckPath, broken, 'utf8');
+  let threw = false;
+  try {
+    syncDeckCounts({ quiet: true });
+  } catch (error) {
+    threw = /لم يُعثر على موضع عدد الحزم/.test(error.message);
+  } finally {
+    fs.writeFileSync(deckPath, original, 'utf8');
+    fs.utimesSync(deckPath, before.atime, before.mtime);
+  }
+  assert.ok(threw, 'الختّام مرّ على عرضٍ لا يحمل موضعه — نجاحٌ صامت');
 });
 
 console.log(`ALL TESTS PASSED (${count})`);

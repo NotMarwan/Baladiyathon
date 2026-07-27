@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { launchBrowser } = require('./launch-browser.cjs');
+const { syncDeckCounts } = require('../../presentation/scripts/sync-deck-counts.js');
 
 (async () => {
   const root = path.resolve(__dirname, '..', '..');
@@ -8,6 +9,13 @@ const { launchBrowser } = require('./launch-browser.cjs');
   const source = path.join(out, 'masar-baladiyathon-judging-deck.html');
   const temp = path.join(__dirname, 'masar-pdf-only.html');
   const pdf = path.join(out, 'masar-baladiyathon-judging-deck.pdf');
+
+  /* الختم قبل القراءة لا بعدها.
+     عدد الحزم يتحرّك مع كل حزمة تُضاف، وكان مكتوباً يدوياً فتقادم ثلاث مرات في
+     يومين. ووضعُه هنا يجعل تقادمه مستحيلاً لا مستبعَداً: لا يُصيَّر PDF من
+     HTML لم يُختم. ويسقط السكربت إن لم يجد موضعه بدل أن يمرّ صامتاً. */
+  syncDeckCounts();
+
   let html = fs.readFileSync(source, 'utf8');
   const replacements = [
     ['<title>مسار —', '<title>مسار —'],
