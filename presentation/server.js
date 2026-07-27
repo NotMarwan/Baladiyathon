@@ -17,7 +17,15 @@ const crypto = require('node:crypto');
 const MasarEngine = require('./masar-engine.js');
 const { createLedger } = require('./masar-ledger.js');
 
-const PORT = 8734;
+/**
+ * المنفذ ثابتٌ افتراضاً ومتغيّرٌ عند الطلب.
+ * ---------------------------------------------------------------------------
+ * `8734` يبقى الافتراض كي لا يتغيّر أي أمر موثَّق ولا رابط في وثيقة. لكن رقماً
+ * مثبَّتاً في الشيفرة يمنع نسخةً ثانية من العمل، ومدقّق مستقل اصطدم بذلك فعلاً:
+ * الخادم قائمٌ من جلسة أخرى، فتعذّر عليه رفع نسخته للفحص إلا بإيقاف عملية ليست
+ * له. و«أوقف عملية غيرك لتفحص» ليس خياراً على جهاز تتشارك عليه جلسات.
+ */
+const PORT = Number(process.env.MASAR_PORT) || 8734;
 const ROOT_DIR = path.resolve(__dirname);
 const WORKS_GEOJSON_PATH = path.join(ROOT_DIR, 'data', 'works.geojson');
 
@@ -947,6 +955,26 @@ function createServer(options) {
 if (require.main === module) {
   const resolved = resolveRoleKeys();
   const server = createServer({ roleKeys: resolved.keys });
+  /* المنفذ المشغول يُقال لا يُرمى.
+     ---------------------------------------------------------------------
+     بلا هذا المعالج يخرج `EADDRINUSE` أثراً خاماً من `node:net` — وهو ما وقع
+     أمام مدقّق مستقل فعلاً. وأمام لجنة تحكيم يقرأ الأثرُ الخام «تعطّل»، بينما
+     السبب أن نسخةً تعمل أصلاً وأنّ الحل سطرٌ واحد. */
+  server.on('error', (error) => {
+    if (error && error.code === 'EADDRINUSE') {
+      console.error(`المنفذ ${PORT} مشغول — نسخة أخرى من الخادم تعمل عليه.`);
+      console.error(`افتح http://${BIND_HOST}:${PORT} مباشرة، أو شغّل نسخة `
+        + `موازية بمنفذ آخر:  MASAR_PORT=${PORT + 1} node presentation/server.js`);
+      process.exit(1);
+    }
+    if (error && error.code === 'EACCES') {
+      console.error(`المنفذ ${PORT} يحتاج صلاحية أعلى — اختر منفذاً فوق 1024 `
+        + 'عبر MASAR_PORT.');
+      process.exit(1);
+    }
+    throw error;
+  });
+
   server.listen(PORT, BIND_HOST, () => {
     console.log(`Masar server listening on http://${BIND_HOST}:${PORT}`);
     /* مفاتيح الأدوار تُطبع هنا ولا تُقدَّم عبر HTTP إلا مفتاح الفاحص.
