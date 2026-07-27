@@ -1,0 +1,20 @@
+# Metadata only — no eol/text directives on purpose.
+# Adding `text=auto eol=lf` here would renormalize line endings across ~1500
+# tracked files and surface as spurious modifications inside every other
+# live worktree. Not worth it mid-hackathon.
+
+# ── Generated or vendored: keep out of GitHub language stats and diffs ──
+graphify-out/**                          linguist-generated=true
+presentation/vendor/**                   linguist-vendored=true
+presentation/data/*.geojson.js           linguist-generated=true -diff
+presentation/data/riyadh-route-graph.js  linguist-generated=true -diff
+package-lock.json                        linguist-generated=true -diff
+skills-lock.json                         linguist-generated=true -diff
+
+# ── Archive: documentation, not code. Keeps the language bar honest. ──
+_archive/**                              linguist-documentation=true
+
+# ── Binaries ──
+*.pdf   binary
+*.png   binary
+*.pptx  binary
