@@ -810,42 +810,50 @@
    * فالعيب ليس أن الجواب منتصف الليل. العيب أن النظام **يدّعي ترتيباً أدقّ من
    * عدم يقينه**، وهو نقيض ما يَعِد به: «يرفض أن يحكم حين لا يملك دليلاً».
    *
-   * والعلاج ليس تشتيت الجواب — ذاك كذبٌ آخر. العلاج أن يُعلن التعادل تعادلاً:
-   * العتبة **مشتقّة من المظروف نفسه** لا مختارة، وهي مدى تحرّك مجموع الفائز
-   * عبر `RESIDUAL_SWEEP`. وما يقع داخلها لا يُرتَّب.
+   * والعلاج ليس تشتيت الجواب — ذاك كذبٌ آخر. العلاج أن يُعلن التعادل تعادلاً.
    *
-   * @returns {{epsilonPct:number, members:Array<string>, basis:string}|null}
+   * **والعضوية بانقلاب الرتبة لا بفارق المجموع.** جُرِّبت الصيغة الأخرى أولاً —
+   * عتبةٌ من مدى تحرّك مجموع الفائز — فأعطت نطاقاً وسيطه 25٪ وأقصاه 160٪ يبتلع
+   * اثنين وعشرين مرشحاً. وسببُ الخطأ أن تحريك نسبة السعة المتبقية يرفع **كل**
+   * المرشحين معاً: إزاحةُ نمطٍ مشتركة لا تمسّ الترتيب، فاتخاذها عتبةً للترتيب
+   * يضخّم عدم اليقين تضخيماً كاذباً.
+   *
+   * فالمعيار الصحيح مباشر وبلا معلَمة: **جدولٌ يفوز عند أيّ افتراضٍ مقبول في
+   * المظروف لا يُقال إنه خسر.** وما يفوز عند نقطة واحدة على الأقل يدخل صنف
+   * التعادل، وما لا يفوز عند أيٍّ منها يبقى خارجه.
+   *
+   * @returns {{members:Array<string>, decided:boolean, basis:string}|null}
    */
   function indifferenceBand(candidates, sweep) {
-    if (!candidates.length) return null;
+    if (!candidates.length || sweep.length < 2) return null;
     const best = candidates[0];
     const bestLabel = labelOf(best);
     const base = best.evaluation.totalEquivalentVehHours;
-    if (!(base > 0)) return null;
 
-    const totals = sweep
-      .map((entry) => entry.totals[bestLabel])
-      .filter((value) => typeof value === 'number' && Number.isFinite(value));
-    if (totals.length < 2) return null;
+    /* الفائزون عبر المظروف — بترتيب المرشحين لا بترتيب المسح، كي يبقى المخرَج
+       ثابتاً بين التشغيلات. */
+    const winners = new Set(sweep.map((entry) => entry.winner).filter(Boolean));
+    const members = candidates.map(labelOf).filter((label) => winners.has(label));
+    if (!members.length) return null;
 
-    const epsilonPct = ((Math.max(...totals) - Math.min(...totals)) / base) * 100;
-    const members = candidates
-      .filter((candidate) => {
-        const gap = ((candidate.evaluation.totalEquivalentVehHours - base) / base) * 100;
-        return gap <= epsilonPct;
-      })
-      .map(labelOf);
+    /* أوسع فارق داخل الصنف — يُعرض كي لا يُقرأ التعادل تطابقاً. */
+    const totals = candidates
+      .filter((candidate) => winners.has(labelOf(candidate)))
+      .map((candidate) => candidate.evaluation.totalEquivalentVehHours);
+    const spreadPct = base > 0
+      ? ((Math.max(...totals) - Math.min(...totals)) / base) * 100
+      : 0;
 
     return {
-      epsilonPct,
       members,
+      spreadPct,
       /* المُمثِّل يبقى الأول — لا يُكسر ما يقرأ `top3[0]`. لكنه صار واحداً من
          `members` لا فائزاً عليها، والفرق يُقرأ من `decided`. */
       representative: bestLabel,
       decided: members.length === 1,
-      basis: 'مدى تحرّك مجموع الفائز عبر مظروف نسبة السعة المتبقية '
-        + `(${RESIDUAL_SWEEP[RESIDUAL_SWEEP.length - 1]}–${RESIDUAL_SWEEP[0]}) — `
-        + 'عتبة مشتقّة لا مختارة',
+      basis: 'جداولُ يفوز كلٌّ منها عند نقطةٍ واحدة على الأقل من مظروف نسبة '
+        + `السعة المتبقية (${RESIDUAL_SWEEP[RESIDUAL_SWEEP.length - 1]}–`
+        + `${RESIDUAL_SWEEP[0]}) — عضويةٌ بانقلاب الرتبة لا بعتبةٍ مختارة`,
     };
   }
 
@@ -866,6 +874,9 @@
     const baselineEvaluation = evaluateSchedule(input, baselineWindows);
 
     const candidates = buildCandidates(input);
+    /* المسح مرة واحدة: منه حساسية السعة المتبقية، ومنه عتبة اللاتمييز. */
+    const sweep = candidates.length ? sweepRankings(input) : [];
+    const indifference = indifferenceBand(candidates, sweep);
 
     const top3 = candidates.slice(0, 3).map((candidate) => {
       const delayVehHours = candidate.evaluation.closureDelayVehHours;
@@ -909,6 +920,22 @@
       };
     });
 
+    /*
+     * التعادل يُقال في الأسباب، لا في حقلٍ يقرؤه المطوّر وحده.
+     *
+     * الحقل `indifference` كافٍ لمن يقرأ المخرَج برمجياً. أما المراجع فيقرأ
+     * `reasons` — فلو بقي التعادل هناك وحده لعرضت الشاشة «الفائز» كما كانت
+     * تعرضه قبل الإصلاح، ولصار الإصلاح حقيقةً في الـAPI وكذبةً على الشاشة.
+     */
+    if (indifference && !indifference.decided && top3.length) {
+      const others = indifference.members.length - 1;
+      top3[0].reasons = top3[0].reasons.concat([
+        `متعادل مع ${others} ${others === 1 ? 'جدول آخر' : 'جداول أخرى'} — `
+        + 'كلٌّ منها يفوز عند افتراضٍ مقبول لنسبة السعة المتبقية. '
+        + 'الاختيار بينها تشغيليّ لا حسابيّ.',
+      ]);
+    }
+
     const effectiveWeights = candidates.length
       ? candidates[0].evaluation.weights
       : { ...OBJECTIVE_WEIGHTS, ...(input.weights || {}) };
@@ -936,7 +963,13 @@
       rankedLabels: candidates.map(labelOf),
       /* هل الجواب معلَّق على نسبة السعة المتبقية غير المصدرية؟ مسحٌ صريح
          بدل ادعاء المتانة. */
-      residualSensitivity: residualSweep(input, candidates[0]),
+      residualSensitivity: sweep.map((entry) => ({
+        residualCapacityFraction: entry.residualCapacityFraction,
+        winner: entry.winner,
+        changed: candidates.length ? entry.winner !== labelOf(candidates[0]) : true,
+      })),
+      /* هل يُميَّز الفائز عمّا بعده أصلاً؟ حقلٌ إضافي لا يغيّر `top3`. */
+      indifference,
       objective: {
         unit: 'ساعة-مركبة مكافئة',
         terms: [
@@ -966,13 +999,23 @@
     };
   }
 
+  /**
+   * وسم النافذة الموصى بها — يُقرأ في أعرض خطٍّ أعلى ملف القرار.
+   *
+   * كان يسرد مدد النوافذ جمعاً: «17 ليالٍ (10 + 10 + 10 + … + 9 س)» — سبعة
+   * عشر حدّاً لا تقول أكثر مما يقوله ضربٌ واحد، وتزيح ما تحتها من الشاشة.
+   * والنوافذ متساوية إلا آخرها في الغالب، فتُختصر «عدد × مدة» ويُستثنى
+   * الذيل. وحين لا تتساوى — وهو ممكن — يُعرض المدى لا رقمٌ يُوهم انتظاماً.
+   *
+   * و«17 ليالٍ» خطأ نحوي كذلك: ما جاوز العشرة يُمَيَّز بمفرد، وجمعُ القلّة
+   * لثلاثٍ إلى عشر، والاثنتان مثنّى.
+   */
   function formatLabel(startHour, phases, windows) {
     const hourLabel = String(startHour).padStart(2, '0') + ':00';
-    if (phases === 1 || windows.length <= 1) {
-      return `كتلة متواصلة تبدأ ${hourLabel}`;
-    }
-    const durations = windows.map((window) => window.durationHours).join(' + ');
-    return `عمل ليلي على ${windows.length} ليالٍ (${durations} س، تبدأ ${hourLabel})`;
+    if (phases === 1 || windows.length <= 1) return `كتلة متواصلة تبدأ ${hourLabel}`;
+    const hs = windows.map((w) => w.durationHours), n = hs.length, h0 = hs[0], hn = hs[n - 1];
+    const nights = n === 2 ? 'ليلتان' : n + (n <= 10 ? ' ليالٍ' : ' ليلة');
+    return `عمل ليلي: ${nights}${hs.slice(0, -1).every((h) => h === h0) ? ` × ${h0} س${hn !== h0 ? ` (آخرها ${hn} س)` : ''}` : `، ${Math.min(...hs)}–${Math.max(...hs)} س`}، تبدأ ${hourLabel}`;
   }
 
   /**

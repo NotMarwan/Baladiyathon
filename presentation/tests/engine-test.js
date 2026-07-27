@@ -583,8 +583,51 @@ test('optimize() candidate and baseline return windows as the schedule contract'
   assert.deepStrictEqual(Object.keys(result.baseline).sort(),
     ['breakdown', 'delayVehHours', 'totalEquivalentVehHours', 'windows']);
   assert.deepStrictEqual(Object.keys(result).sort(),
-    ['baseline', 'candidateCount', 'objective', 'rankedLabels',
+    ['baseline', 'candidateCount', 'indifference', 'objective', 'rankedLabels',
       'residualSensitivity', 'switchPoints', 'top3'].sort());
+});
+
+/* صنف اللاتمييز — عقدُه وصدقُه.
+   الحقل أُضيف لأن `optimize()` كان يتوّج المرشح الأول مهما ضاق الفارق: قيس على
+   المحفظة فكان الوسيط 5.8٪ ومئةٌ وخمسون من مئة وخمسين داخل 10٪ — أي داخل عدم
+   يقين النموذج نفسه. فما لا يُميَّز يُعلَن تعادلاً لا يُرتَّب. */
+test('صنف اللاتمييز معلَن، وعضويته من انقلاب الرتبة لا من عتبة مختارة', () => {
+  const result = MasarEngine.optimize({
+    aadt: 85000,
+    lanes: 4,
+    lanesClosed: 2,
+    capacityPerLane: 1800,
+    freeFlowMin: 6,
+    lengthKm: 4.2,
+    startHour: 8,
+    durationHours: 48,
+  });
+  const band = result.indifference;
+  assert.ok(band, 'لا صنف لاتمييز في المخرَج');
+  assert.deepStrictEqual(Object.keys(band).sort(),
+    ['basis', 'decided', 'members', 'representative', 'spreadPct'].sort());
+
+  assert.ok(band.members.length >= 1, 'صنف فارغ');
+  assert.strictEqual(band.representative, result.rankedLabels[0],
+    'المُمثِّل ليس المرشح الأول — `top3[0]` وصنفُ التعادل افترقا');
+  assert.ok(band.members.indexOf(band.representative) !== -1,
+    'المُمثِّل خارج صنفه');
+  assert.strictEqual(band.decided, band.members.length === 1,
+    '`decided` لا يطابق حجم الصنف — إعلانُ حسمٍ بلا حسم');
+
+  /* كل عضو يفوز فعلاً عند نقطةٍ من المظروف. عضويةٌ بلا هذا الشرط تعني عتبةً
+     مخفيّة، وهي عين ما استُبدل. */
+  const sweepWinners = new Set(result.residualSensitivity.map((s) => s.winner));
+  band.members.forEach((label) => {
+    assert.ok(sweepWinners.has(label),
+      `${label} في الصنف ولا يفوز عند أي نقطة من المسح`);
+  });
+
+  /* والترتيب محفوظ: الأعضاء بترتيب المرشحين لا بترتيب المسح، وإلا تغيّر
+     المخرَج بين تشغيلتين على المدخل نفسه. */
+  const order = band.members.map((label) => result.rankedLabels.indexOf(label));
+  assert.deepStrictEqual(order.slice().sort((a, b) => a - b), order,
+    'أعضاء الصنف بغير ترتيب المرشحين');
 });
 
 // ---------------------------------------------------------------------------
