@@ -235,7 +235,7 @@ test('README يسمّي قيد file:// صراحةً بدل أن يعد بما ل
  * مانع تسليم معلَن. تُفحص من هنا لأن البوابة تملك بالفعل تعريف «سطح عرض».
  * ------------------------------------------------------------------ */
 
-const CARD_PATH = path.join(ROOT, '..', 'بطاقة-الفكرة.md');
+const CARD_PATH = path.join(ROOT, '..', 'docs', 'hackathon', 'بطاقة-الفكرة.md');
 const card = fs.existsSync(CARD_PATH) ? fs.readFileSync(CARD_PATH, 'utf8') : null;
 
 test('بطاقة الفكرة موجودة ومقروءة', () => {

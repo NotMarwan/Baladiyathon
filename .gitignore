@@ -1,8 +1,19 @@
-fable-orchestrator/.pytest_cache/
-**/__pycache__/
+# ── Dependencies ────────────────────────────────────────────────
 node_modules/
+**/__pycache__/
+fable-orchestrator/.pytest_cache/
+.pytest_cache/
+
+# ── Runtime / local-only state (not source) ─────────────────────
+# سجل القرارات الثابت: بيانات تشغيل لا مصدر.
+.masar/
+.athar/
+logs/
+tmp/
 presentation/server_log.txt
 presentation/tests/shots/
 
-# WP-L1 — سجل القرارات الثابت: بيانات تشغيل لا مصدر.
-.masar/
+# ── Regenerated artifacts ───────────────────────────────────────
+# graphify cache يُعاد بناؤه بـ `graphify update` — لا يُتتبّع.
+# graph.json و GRAPH_REPORT.md و manifest.json تبقى متتبَّعة (محرك التنقل).
+graphify-out/cache/

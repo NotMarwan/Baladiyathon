@@ -64,7 +64,7 @@ function surfaces() {
   fs.readdirSync(ROOT)
     .filter((name) => /\.(html|md)$/.test(name))
     .forEach((name) => list.push(path.join(ROOT, name)));
-  const card = path.join(REPO, 'بطاقة-الفكرة.md');
+  const card = path.join(REPO, 'docs', 'hackathon', 'بطاقة-الفكرة.md');
   if (fs.existsSync(card)) list.push(card);
   const submission = path.join(REPO, 'output', 'submission');
   if (fs.existsSync(submission)) {

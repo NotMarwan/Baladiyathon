@@ -53,7 +53,7 @@ function surfaces() {
   fs.readdirSync(ROOT).forEach((name) => {
     if (/\.(html|md)$/.test(name)) out.push(path.join(ROOT, name));
   });
-  const card = path.join(REPO, 'بطاقة-الفكرة.md');
+  const card = path.join(REPO, 'docs', 'hackathon', 'بطاقة-الفكرة.md');
   if (fs.existsSync(card)) out.push(card);
   const sub = path.join(REPO, 'output', 'submission');
   if (fs.existsSync(sub)) {
@@ -122,7 +122,7 @@ test('٣ · صفر اسم قطعي لطول أو وفر مبني على افتر
 // ---- 4 ----------------------------------------------------------------
 test('٤ · صفر رابط إلى نموذج متقاعد', () => {
   const nav = fs.readFileSync(path.join(ROOT, 'masar-nav.js'), 'utf8');
-  const card = fs.readFileSync(path.join(REPO, 'بطاقة-الفكرة.md'), 'utf8');
+  const card = fs.readFileSync(path.join(REPO, 'docs', 'hackathon', 'بطاقة-الفكرة.md'), 'utf8');
   assert.ok(card.indexOf('masar-desk.html') !== -1,
     'بطاقة الفكرة لا تحيل إلى المكتب — النموذج الحاكم');
   assert.ok(nav.indexOf('masar-desk.html') !== -1, 'المكتب خارج الشريط');
@@ -144,7 +144,7 @@ test('٦ · صفر ادعاء كاذب عن file://', () => {
   const readme = fs.readFileSync(path.join(ROOT, 'README-masar.md'), 'utf8');
   assert.ok(/الخريطة تتطلب الخادم المحلي/.test(readme),
     'README لا يسمّي قيد الخريطة');
-  const card = fs.readFileSync(path.join(REPO, 'بطاقة-الفكرة.md'), 'utf8');
+  const card = fs.readFileSync(path.join(REPO, 'docs', 'hackathon', 'بطاقة-الفكرة.md'), 'utf8');
   assert.ok(/الخريطة تتطلب الخادم المحلي/.test(card),
     'بطاقة الفكرة لا تسمّي قيد الخريطة');
 });

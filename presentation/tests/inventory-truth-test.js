@@ -84,7 +84,7 @@ ok('وحدات المكتب المدّعاة موجودة كملفات ومحم�
 });
 
 ok('تقرير التدقيق موجود ويحمل حدوده لا إنجازاته وحدها', () => {
-  const audit = fs.readFileSync(path.join(ROOT, '..', 'docs', 'AUDIT-2026-07-25.md'), 'utf8');
+  const audit = fs.readFileSync(path.join(ROOT, '..', 'docs', 'audits', 'AUDIT-2026-07-25.md'), 'utf8');
   assert.ok(audit.indexOf('ما زال ناقصاً') !== -1, 'تدقيق بلا قسم نواقص');
   assert.ok(audit.indexOf('لا قياس ميداني') !== -1,
     'التدقيق لا يذكر أن المعايرة لم تقع — وهو أهم حدّ فيه');

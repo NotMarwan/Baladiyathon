@@ -18,7 +18,7 @@ const artifacts = [
 ];
 const pitch = artifacts[0].html;
 const sources = read('presentation/masar-sources.html');
-const ideaCard = read('بطاقة-الفكرة.md');
+const ideaCard = read('docs/hackathon/بطاقة-الفكرة.md');
 /*
  * نموذج التقديم الرسمي — أضيف إلى نطاق الحراسة بعد تحكيم بارد كشف أنه كان
  * **خارجها وحده**. الملفات الخمسة الأخرى كلها مواد عرض؛ وهذا الملف هو النص
@@ -27,7 +27,7 @@ const ideaCard = read('بطاقة-الفكرة.md');
  * بلدي الحالية») لأن الفحص لم يكن يمرّ عليه. الحارس الذي لا يحرس أهم وثيقة
  * حارسٌ على لا شيء.
  */
-const formAnswers = read('اجوبة-الفورم.md');
+const formAnswers = read('docs/hackathon/اجوبة-الفورم.md');
 const allOwnedNarrative = [...artifacts.map((item) => item.html), sources, ideaCard, formAnswers].join('\n');
 
 const forbiddenClaims = [
@@ -133,7 +133,7 @@ test('every numeric metric card has a matching local source or formula link', ()
     }
     if (formulaMatch) {
       assert.ok(
-        /href="\.\.\/docs\/SHADOW-PILOT\.md#[^"]+"/.test(body),
+        /href="\.\.\/docs\/engineering\/SHADOW-PILOT\.md#[^"]+"/.test(body),
         `formula metric ${formulaMatch[1]} lacks a protocol link`
       );
     }

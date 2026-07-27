@@ -46,8 +46,8 @@ const Builder = require(path.join(ROOT, 'scripts', 'build-digonce-compliance.js'
 global.MasarDeskCoordination = Coordination;
 
 const REPORT = path.join(ROOT, 'data', 'digonce-compliance.json');
-const OPTIONS_PAPER = path.join(REPO, 'docs', 'DIGONCE-COMPLIANCE-POLICY.md');
-const SUMMARY = path.join(REPO, 'docs', 'DIGONCE-COMPLIANCE-SUMMARY.md');
+const OPTIONS_PAPER = path.join(REPO, 'docs', 'policy', 'DIGONCE-COMPLIANCE-POLICY.md');
+const SUMMARY = path.join(REPO, 'docs', 'policy', 'DIGONCE-COMPLIANCE-SUMMARY.md');
 const DATA_REQUEST = path.join(REPO, 'research', 'evidence-intelligence',
   'DATA-ACQUISITION-TARGETS.md');
 

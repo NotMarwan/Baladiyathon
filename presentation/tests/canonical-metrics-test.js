@@ -41,7 +41,7 @@ const SURFACES = [
   { name: 'النموذج القديم', file: path.join(ROOT, 'masar-prototype.html') },
   { name: 'سجل المصادر', file: path.join(ROOT, 'masar-sources.html') },
   { name: 'README', file: path.join(ROOT, 'README-masar.md') },
-  { name: 'بطاقة الفكرة', file: path.join(REPO, 'بطاقة-الفكرة.md') },
+  { name: 'بطاقة الفكرة', file: path.join(REPO, 'docs', 'hackathon', 'بطاقة-الفكرة.md') },
 ];
 
 const DECK = path.join(REPO, 'output', 'submission',
