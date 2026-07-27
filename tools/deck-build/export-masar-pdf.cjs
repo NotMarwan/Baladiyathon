@@ -1,6 +1,6 @@
-const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
+const { launchBrowser } = require('./launch-browser.cjs');
 
 (async () => {
   const root = path.resolve(__dirname, '..', '..');
@@ -20,7 +20,7 @@ const path = require('path');
   ];
   for (const [from, to] of replacements) html = html.replaceAll(from, to);
   fs.writeFileSync(temp, html, 'utf8');
-  const browser = await chromium.launch({ headless: true });
+  const browser = await launchBrowser();
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
   await page.goto('file:///' + temp.replace(/\\/g, '/'), { waitUntil: 'load' });
   await page.evaluate(() => Promise.all([...document.images].map((img) => img.decode().catch(() => null))));
