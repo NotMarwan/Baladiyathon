@@ -275,6 +275,21 @@
     return windows;
   }
 
+  /* معاملا BPR ثابتان مسمّيان لا رقمان مكرران.
+     -----------------------------------------------------------------------
+     كانا مكتوبين داخل `bprTravelTime` وحدها. ويوم أُضيف عكسُ الدالة
+     (`bprVolumeRatio`) صار الرقم في موضعين: أيّ معايرة لاحقة تُغيّر أحدهما
+     وتترك الآخر، فيصير الأمام والعكس دالّتين مختلفتين لا دالّةً ومعكوسها —
+     والخطأ لا يظهر في اختبارٍ يفحص كلاً على حدة.
+
+     القيمتان (0.15, 4) هما معيار مكتب الطرق العامة الأمريكي، وهما الأشيع.
+     ومظروفهما المنشور أوسع: α من 0.10 إلى 1.0، و β من 4 إلى 11، ويختلفان
+     بنوع الطريق والمدينة — لا قيمة «صحيحة» عالمية بلا معايرة محلية.
+     المرجع: rosap.ntl.bts.gov/view/dot/40540. فتبقى هاتان قيمتين معلنتين،
+     ومظروفهما هو ما يجب أن يُعرض مع أي رقمٍ يخرج من العكس. */
+  const BPR_ALPHA = 0.15;
+  const BPR_BETA = 4;
+
   /**
    * Standard BPR (Bureau of Public Roads) volume-delay function.
    * t = t0 * (1 + 0.15 * (v/c)^4)
@@ -286,7 +301,42 @@
   function bprTravelTime(freeFlowMin, volume, capacity) {
     const safeCapacity = capacity > 0 ? capacity : 1e-9;
     const ratio = volume / safeCapacity;
-    return freeFlowMin * (1 + 0.15 * Math.pow(ratio, 4));
+    return freeFlowMin * (1 + BPR_ALPHA * Math.pow(ratio, BPR_BETA));
+  }
+
+  /**
+   * عكس دالة BPR: من نسبة الزمن المرصود إلى نسبة الحجم/السعة.
+   * ---------------------------------------------------------------------------
+   * v/c = ((t/t0 − 1) / α)^(1/β)
+   *
+   * **لمَ هي هنا لا في وحدة التقدير؟** لأن القاعدة الأولى في هذا المستودع أن
+   * الحساب المروري له مصدر واحد. ولو كُتب العكس في `masar-trafficload.js`
+   * لصار في المستودع معادلتا BPR: واحدة تحسب الزمن من الحجم وأخرى تحسب الحجم
+   * من الزمن، بمعاملين قد يفترقان. هنا يشتركان في `BPR_ALPHA` و`BPR_BETA`
+   * حرفياً، والاختبار يجول بالدالة وعكسها فيعود إلى نقطة البداية.
+   *
+   * **وحدّان يجب أن يُقالا مع كل رقم يخرج منها:**
+   *
+   * ١) المخطط الأساسي للتدفق **غير أحادي**. السرعة الواحدة تقابل حالتين: تدفق
+   *    حرّ منخفض الكثافة، وتدفق مختنق عالي الكثافة. فالعكس لا «يستخرج» الحجم
+   *    من الزمن — يستخرجه **بشرط فرعٍ مفترض**: أن الطريق على الفرع غير
+   *    المختنق. الفرع الآخر يعطي حجماً أقل عند السرعة نفسها. من رصد سرعةً
+   *    وحدها ولم يرصد كثافة لا يعرف على أيّ فرعٍ هو.
+   *    (en.wikipedia.org/wiki/Fundamental_diagram_of_traffic_flow)
+   *
+   * ٢) الدالة تنفجر حساسيةً عند t ≈ t0: الجذر الرابع يجعل خطأً صغيراً في
+   *    زمن التدفق الحرّ خطأً كبيراً في النسبة. ولذلك تُرجع صفراً — لا رقماً
+   *    صغيراً موهماً — حين لا يتجاوز الزمنُ المرصودُ زمنَ التدفق الحرّ.
+   *
+   * ولم أجد دراسة منشورة تقيس دقة هذا العكس بـ MAPE أو R². فمن استعمله لا
+   * يقول «دقّته كذا» — يقول «هذا ما تعطيه المعادلة تحت فرضها المعلن».
+   *
+   * @param {number} travelTimeRatio زمن مرصود ÷ زمن تدفق حرّ (t/t0)
+   * @returns {number} نسبة الحجم إلى السعة، أو صفر إن كان الزمن ≤ زمن التدفق الحر
+   */
+  function bprVolumeRatio(travelTimeRatio) {
+    if (!Number.isFinite(travelTimeRatio) || travelTimeRatio <= 1) return 0;
+    return Math.pow((travelTimeRatio - 1) / BPR_ALPHA, 1 / BPR_BETA);
   }
 
   /**
@@ -710,17 +760,93 @@
    */
   function residualSweep(input, currentWinner) {
     if (!currentWinner) return [];
+    return sweepRankings(input).map((entry) => ({
+      residualCapacityFraction: entry.residualCapacityFraction,
+      winner: entry.winner,
+      changed: entry.winner !== labelOf(currentWinner),
+    }));
+  }
+
+  /**
+   * المسح مرة واحدة، يُقرأ منه شيئان.
+   *
+   * `residualSweep` يسأله: هل يتغيّر الفائز؟ و`indifferenceBand` يسأله: كم
+   * يتحرّك المجموع نفسه؟ وإعادة بناء المرشحين لكل سؤال تضاعف الكلفة على
+   * `optimize()` بلا فائدة.
+   */
+  function sweepRankings(input) {
     return RESIDUAL_SWEEP.map((fraction) => {
-      const winner = buildCandidates({
-        ...input,
-        residualCapacityFraction: fraction,
-      })[0];
+      const ranked = buildCandidates({ ...input, residualCapacityFraction: fraction });
+      const totals = {};
+      ranked.forEach((candidate) => {
+        totals[labelOf(candidate)] = candidate.evaluation.totalEquivalentVehHours;
+      });
       return {
         residualCapacityFraction: fraction,
-        winner: winner ? labelOf(winner) : null,
-        changed: winner ? labelOf(winner) !== labelOf(currentWinner) : true,
+        winner: ranked.length ? labelOf(ranked[0]) : null,
+        totals,
       };
     });
+  }
+
+  /**
+   * نطاق اللاتمييز — متى يكون «الفائز» فائزاً فعلاً؟
+   * ---------------------------------------------------------------------------
+   * كان `optimize()` يتوّج المرشح الأول دائماً مهما ضاق الفارق. وقيس الفارق
+   * على المحفظة كلها: **الوسيط 5.8٪، ومئة وخمسون من مئة وخمسين داخل 10٪**.
+   *
+   * وهذا الفارق أصغر من عدم يقين النموذج نفسه. فـ`WORK_ZONE_FRICTION` — أرضية
+   * زمن العبور — **افتراض نمذجة بلا سند مقيس** تنتج 91.1٪ من التأخير المعروض
+   * (`docs/FLOOR-DECISION-2026-07-26.md`)، وتحريك السعة المقيسة عبر مظروفها
+   * كله يحرّك التأخير 5٪ والأرضية تعمل. أي أن الترتيب بين المرشحَين الأولين
+   * يقع **داخل** ما لا يستطيع النموذج حسمه.
+   *
+   * وأثرُ ذلك ظهر في بوابة التنوّع: بين التصاريح التي يصفها
+   * `stability-report.json` بأنها **قابلة للقرار** يفوز `0p2` في **87 من 87**
+   * — مئة بالمئة. لا لأن منتصف الليل أفضل لكل شارع، بل لأن كل الشوارع تتقاسم
+   * ملف طلبٍ ساعي واحد (`HOURLY_PROFILE`، «افتراض توضيحي للعرض») فقاعه عند
+   * الساعة نفسها، وعلاوة الليل ثابتة عبر ساعات البدء الليلية فلا تميّز بينها.
+   *
+   * فالعيب ليس أن الجواب منتصف الليل. العيب أن النظام **يدّعي ترتيباً أدقّ من
+   * عدم يقينه**، وهو نقيض ما يَعِد به: «يرفض أن يحكم حين لا يملك دليلاً».
+   *
+   * والعلاج ليس تشتيت الجواب — ذاك كذبٌ آخر. العلاج أن يُعلن التعادل تعادلاً:
+   * العتبة **مشتقّة من المظروف نفسه** لا مختارة، وهي مدى تحرّك مجموع الفائز
+   * عبر `RESIDUAL_SWEEP`. وما يقع داخلها لا يُرتَّب.
+   *
+   * @returns {{epsilonPct:number, members:Array<string>, basis:string}|null}
+   */
+  function indifferenceBand(candidates, sweep) {
+    if (!candidates.length) return null;
+    const best = candidates[0];
+    const bestLabel = labelOf(best);
+    const base = best.evaluation.totalEquivalentVehHours;
+    if (!(base > 0)) return null;
+
+    const totals = sweep
+      .map((entry) => entry.totals[bestLabel])
+      .filter((value) => typeof value === 'number' && Number.isFinite(value));
+    if (totals.length < 2) return null;
+
+    const epsilonPct = ((Math.max(...totals) - Math.min(...totals)) / base) * 100;
+    const members = candidates
+      .filter((candidate) => {
+        const gap = ((candidate.evaluation.totalEquivalentVehHours - base) / base) * 100;
+        return gap <= epsilonPct;
+      })
+      .map(labelOf);
+
+    return {
+      epsilonPct,
+      members,
+      /* المُمثِّل يبقى الأول — لا يُكسر ما يقرأ `top3[0]`. لكنه صار واحداً من
+         `members` لا فائزاً عليها، والفرق يُقرأ من `decided`. */
+      representative: bestLabel,
+      decided: members.length === 1,
+      basis: 'مدى تحرّك مجموع الفائز عبر مظروف نسبة السعة المتبقية '
+        + `(${RESIDUAL_SWEEP[RESIDUAL_SWEEP.length - 1]}–${RESIDUAL_SWEEP[0]}) — `
+        + 'عتبة مشتقّة لا مختارة',
+    };
   }
 
   /**
@@ -1342,7 +1468,10 @@
       COMPOUND_FACTOR,
       MIN_CAPACITY_FRACTION,
     },
+    BPR_ALPHA,
+    BPR_BETA,
     bprTravelTime,
+    bprVolumeRatio,
     score,
     optimize,
     co2,
