@@ -1,0 +1,4292 @@
+{
+  "generatedFrom": "presentation/scripts/build-digonce-compliance.js",
+  "grade": "model-derived",
+  "portfolioMode": "synthetic",
+  "portfolioSeed": 20260727,
+  "portfolioLimit": "المحفظة مولَّدة ببذرة ثابتة — ليست سجلّ تصاريح رسمياً. المؤشّر يصف محفظة مولَّدة، ولا يقول شيئاً عن سلوك جهة حقيقية. والآلية نفسها — الإشعار وقاعدة الاستثناء والمؤشّر — تعمل كما هي على سجلّ حقيقي حين يُوصَل.",
+  "rule": "عدم الامتثال اتجاهيّ: طلبٌ على الشارع نفسه، وبدءٌ بعد بدء تصريح قائم أو منتهٍ قريباً، مع إمكان البدء معه. الأول ليس مخالفاً، والمتأخر وحده هو المسؤول.",
+  "doesNotProve": "لا قياس ميداني ولا سجلّ رسمي. الحالة تقول إن نافذتين على شارع واحد كان يمكن أن تتّحدا في هذه المحفظة، ولا تقول إن الاتحاد كان ممكناً تقنياً: أعماق الخدمات ومواصفات الردم غير معروفة، ولا سجلّ إشعارٍ يُثبت أن الجهة المتأخرة عَلِمت.",
+  "windowDays": 30,
+  "windowBasis": "اصطلاح لا قياس. الرقم هو DIG_ONCE_WINDOW_DAYS نفسه في masar-portfolio.js، مقروءاً من مصدره لا منسوخاً عنه. ومعناه حدٌّ إداريّ: كم يوماً بعد إغلاق الخندق يبقى «كان بإمكانك أن تبدأ معهم» قولاً معقولاً. حساسية الحصيلة له معروضة في sensitivity.",
+  "exemptions": [
+    {
+      "key": "exempt-emergency",
+      "why": "العمل الطارئ لا يُخطَّط. كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق — لم يكن يعلم. ومؤشّر يعاقب الطوارئ يُرفض في أول مراجعة."
+    },
+    {
+      "key": "first-on-street",
+      "why": "لا يُحاسب من لم يسبقه أحد. المؤشّر اتجاهيّ، والأول ليس مخالفاً."
+    },
+    {
+      "key": "unjudgeable",
+      "why": "الاستثناء قبل الاتهام. نقص شارع أو تاريخ يعطي «غير قابل للحكم» لا «مخالفة»."
+    },
+    {
+      "key": "exempt-unplannable-predecessor",
+      "why": "الاستثناء الرابع: السابق طارئ والفجوة موجبة. نافذة الطوارئ تُفتح بلا إعلان مسبق وتُغلق، فمن بدأ بعدها لم تكن أمامه نافذة يلحق بها حين خطّط. ويسقط الاستثناء عند التداخل الزمني: الخندق كان مفتوحاً وهو يبدأ."
+    }
+  ],
+  "total": 150,
+  "streetCount": 114,
+  "multiPermitStreetCount": 25,
+  "portfolioSpanDays": 54,
+  "longestWorkDays": 30,
+  "dataLimit": "نوافذ المحفظة كلها تقع في 54 يوماً، وأطول عمل فيها 30 يوماً — أي أن مدد الأعمال تزيد على تباعد البدايات. فالحالة التي وصفها الطلب حرفياً (تنتهي جهة ويُفتح الشارع ثم تحفر جهة أخرى بعد أيام) لا تقع في هذه المحفظة ولا مرة: كل حالة مرصودة تداخلٌ زمنيّ. ويترتّب على ذلك أن العتبة لا تصنع شيئاً من هذه الأرقام — والحساسية تُثبته بانعدام فرقها — وأن تصنيفَي missed-window وtoo-far-apart مفحوصان على حالات مُصطنَعة في الحزمة لا على المحفظة. وللسبب نفسه لا يحمل الإشعار في هذه المحفظة إلا علاقة ongoing: recently-ended وupcoming مفحوصتان مُصطنَعتين كذلك.",
+  "noticeRelations": {
+    "ongoing": 94,
+    "recently-ended": 0,
+    "upcoming": 0
+  },
+  "tally": {
+    "overlapping": 26,
+    "missed-window": 0,
+    "exempt-emergency": 8,
+    "exempt-unplannable-predecessor": 0,
+    "too-far-apart": 0,
+    "first-on-street": 27,
+    "alone-on-street": 89,
+    "unjudgeable": 0
+  },
+  "chargeableCaseCount": 26,
+  "judgedPairCount": 34,
+  "exemptionEffect": {
+    "emergencyPermits": 38,
+    "emergencyWithPredecessor": 8,
+    "emergencyWouldBeChargeable": 8,
+    "unplannablePredecessorWouldBeChargeable": 0
+  },
+  "sensitivity": [
+    {
+      "windowDays": 7,
+      "overlapping": 26,
+      "missedWindow": 0,
+      "chargeable": 26
+    },
+    {
+      "windowDays": 14,
+      "overlapping": 26,
+      "missedWindow": 0,
+      "chargeable": 26
+    },
+    {
+      "windowDays": 30,
+      "overlapping": 26,
+      "missedWindow": 0,
+      "chargeable": 26
+    },
+    {
+      "windowDays": 60,
+      "overlapping": 26,
+      "missedWindow": 0,
+      "chargeable": 26
+    },
+    {
+      "windowDays": 90,
+      "overlapping": 26,
+      "missedWindow": 0,
+      "chargeable": 26
+    }
+  ],
+  "promoters": [
+    {
+      "promoter": "أمانة منطقة الرياض",
+      "permits": 22,
+      "emergencyPermits": 5,
+      "nonEmergencyPermits": 17,
+      "missedCases": 7,
+      "overlapping": 7,
+      "missedWindow": 0,
+      "exemptEmergency": 0,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 3,
+      "samePromoterCases": 1,
+      "ratePct": 41.2
+    },
+    {
+      "promoter": "شركة الاتصالات السعودية",
+      "permits": 25,
+      "emergencyPermits": 8,
+      "nonEmergencyPermits": 17,
+      "missedCases": 5,
+      "overlapping": 5,
+      "missedWindow": 0,
+      "exemptEmergency": 2,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 6,
+      "samePromoterCases": 2,
+      "ratePct": 29.4
+    },
+    {
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "permits": 25,
+      "emergencyPermits": 6,
+      "nonEmergencyPermits": 19,
+      "missedCases": 5,
+      "overlapping": 5,
+      "missedWindow": 0,
+      "exemptEmergency": 2,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 5,
+      "samePromoterCases": 0,
+      "ratePct": 26.3
+    },
+    {
+      "promoter": "الشركة السعودية للغاز",
+      "permits": 25,
+      "emergencyPermits": 7,
+      "nonEmergencyPermits": 18,
+      "missedCases": 3,
+      "overlapping": 3,
+      "missedWindow": 0,
+      "exemptEmergency": 2,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 4,
+      "samePromoterCases": 1,
+      "ratePct": 16.7
+    },
+    {
+      "promoter": "الشركة السعودية للكهرباء",
+      "permits": 23,
+      "emergencyPermits": 10,
+      "nonEmergencyPermits": 13,
+      "missedCases": 2,
+      "overlapping": 2,
+      "missedWindow": 0,
+      "exemptEmergency": 2,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 4,
+      "samePromoterCases": 0,
+      "ratePct": 15.4
+    },
+    {
+      "promoter": "شركة المياه الوطنية",
+      "permits": 30,
+      "emergencyPermits": 2,
+      "nonEmergencyPermits": 28,
+      "missedCases": 4,
+      "overlapping": 4,
+      "missedWindow": 0,
+      "exemptEmergency": 0,
+      "exemptUnplannablePredecessor": 0,
+      "tooFarApart": 0,
+      "firstOnStreet": 5,
+      "samePromoterCases": 3,
+      "ratePct": 14.3
+    }
+  ],
+  "cases": [
+    {
+      "permitRef": "BLD-2026-0002",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-24T09:00:00.000Z",
+      "end": "2026-08-21T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -18.3,
+      "earlierRef": "BLD-2026-0001",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-24T08:00:00.000Z",
+      "earlierEnd": "2026-08-11T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0003",
+      "street": "أبو عبيدة عامر بن الجراح",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-07-25T21:00:00.000Z",
+      "end": "2026-08-02T05:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -26.8,
+      "earlierRef": "BLD-2026-0002",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-24T09:00:00.000Z",
+      "earlierEnd": "2026-08-21T17:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0006",
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-25T08:00:00.000Z",
+      "end": "2026-08-20T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -5.8,
+      "earlierRef": "BLD-2026-0005",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-23T20:00:00.000Z",
+      "earlierEnd": "2026-07-31T04:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0010",
+      "street": "البطحاء",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-21T19:00:00.000Z",
+      "end": "2026-07-27T03:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -4.4,
+      "earlierRef": "BLD-2026-0012",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-20T20:00:00.000Z",
+      "earlierEnd": "2026-07-26T04:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0011",
+      "street": "البطحاء",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-23T16:00:00.000Z",
+      "end": "2026-08-09T00:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -3.5,
+      "earlierRef": "BLD-2026-0010",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-21T19:00:00.000Z",
+      "earlierEnd": "2026-07-27T03:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0017",
+      "street": "الطريق الدائري الشمالي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-08-01T17:00:00.000Z",
+      "end": "2026-08-07T01:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -4.2,
+      "earlierRef": "BLD-2026-0016",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-08-01T14:00:00.000Z",
+      "earlierEnd": "2026-08-05T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0019",
+      "street": "المطار",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-21T13:00:00.000Z",
+      "end": "2026-08-14T21:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.4,
+      "earlierRef": "BLD-2026-0021",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-08-15T23:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0020",
+      "street": "المطار",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-22T13:00:00.000Z",
+      "end": "2026-08-20T21:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -24.4,
+      "earlierRef": "BLD-2026-0021",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-08-15T23:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0027",
+      "street": "شارع العليا",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-10T09:00:00.000Z",
+      "end": "2026-07-19T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -3.4,
+      "earlierRef": "BLD-2026-0026",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-09T10:00:00.000Z",
+      "earlierEnd": "2026-07-13T18:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0025",
+      "street": "شارع العليا",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-11T11:00:00.000Z",
+      "end": "2026-08-10T19:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -8.2,
+      "earlierRef": "BLD-2026-0027",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-10T09:00:00.000Z",
+      "earlierEnd": "2026-07-19T17:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0030",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-22T15:00:00.000Z",
+      "end": "2026-08-02T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -25,
+      "earlierRef": "BLD-2026-0029",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-20T08:00:00.000Z",
+      "earlierEnd": "2026-08-16T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0034",
+      "street": "طريق الجنادرية",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-11T08:00:00.000Z",
+      "end": "2026-07-28T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -14.6,
+      "earlierRef": "BLD-2026-0035",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T14:00:00.000Z",
+      "earlierEnd": "2026-07-25T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0039",
+      "street": "طريق الدمام",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-18T14:00:00.000Z",
+      "end": "2026-08-04T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -16.2,
+      "earlierRef": "BLD-2026-0040",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-18T12:00:00.000Z",
+      "earlierEnd": "2026-08-03T20:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0038",
+      "street": "طريق الدمام",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "default",
+      "start": "2026-07-20T12:00:00.000Z",
+      "end": "2026-07-29T20:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -15.4,
+      "earlierRef": "BLD-2026-0039",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-18T14:00:00.000Z",
+      "earlierEnd": "2026-08-04T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0043",
+      "street": "طريق الملك خالد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-08T23:00:00.000Z",
+      "end": "2026-08-04T07:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -15,
+      "earlierRef": "BLD-2026-0044",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-08T14:00:00.000Z",
+      "earlierEnd": "2026-07-23T22:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0047",
+      "street": "طريق الملك فهد الفرعي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-11T16:00:00.000Z",
+      "end": "2026-08-06T00:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.2,
+      "earlierRef": "BLD-2026-0046",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-11T12:00:00.000Z",
+      "earlierEnd": "2026-08-05T20:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0050",
+      "street": "طريق صلاح الدين الأيوبي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-31T15:00:00.000Z",
+      "end": "2026-08-14T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -8,
+      "earlierRef": "BLD-2026-0051",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-29T07:00:00.000Z",
+      "earlierEnd": "2026-08-08T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0053",
+      "street": "طريق مكة المكرمة الفرعي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "development",
+      "start": "2026-07-22T07:00:00.000Z",
+      "end": "2026-08-06T15:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -10.5,
+      "earlierRef": "BLD-2026-0054",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-20T11:00:00.000Z",
+      "earlierEnd": "2026-08-01T19:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0057",
+      "street": "مسلمة الأنصاري",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-27T09:00:00.000Z",
+      "end": "2026-08-06T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -28.5,
+      "earlierRef": "BLD-2026-0058",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-25T14:00:00.000Z",
+      "earlierEnd": "2026-08-24T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0059",
+      "street": "مسلمة الأنصاري",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-29T15:00:00.000Z",
+      "end": "2026-08-20T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -26.3,
+      "earlierRef": "BLD-2026-0058",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-25T14:00:00.000Z",
+      "earlierEnd": "2026-08-24T22:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0062",
+      "street": "ابن العميد",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-14T18:00:00.000Z",
+      "end": "2026-07-20T02:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -9.1,
+      "earlierRef": "BLD-2026-0064",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-13T12:00:00.000Z",
+      "earlierEnd": "2026-07-23T20:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0063",
+      "street": "ابن العميد",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-16T15:00:00.000Z",
+      "end": "2026-08-12T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -7.2,
+      "earlierRef": "BLD-2026-0064",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-13T12:00:00.000Z",
+      "earlierEnd": "2026-07-23T20:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0069",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-30T14:00:00.000Z",
+      "end": "2026-08-05T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -26.5,
+      "earlierRef": "BLD-2026-0068",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-29T19:00:00.000Z",
+      "earlierEnd": "2026-08-26T03:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0067",
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-31T18:00:00.000Z",
+      "end": "2026-08-09T02:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.4,
+      "earlierRef": "BLD-2026-0068",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-29T19:00:00.000Z",
+      "earlierEnd": "2026-08-26T03:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0072",
+      "street": "الأمين عبدالله العلي النعيم",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-14T23:00:00.000Z",
+      "end": "2026-07-24T07:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -27.7,
+      "earlierRef": "BLD-2026-0073",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-13T08:00:00.000Z",
+      "earlierEnd": "2026-08-11T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0076",
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-19T09:00:00.000Z",
+      "end": "2026-08-11T17:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -14.2,
+      "earlierRef": "BLD-2026-0077",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-19T07:00:00.000Z",
+      "earlierEnd": "2026-08-02T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0082",
+      "street": "بلال بن رباح",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-29T23:00:00.000Z",
+      "end": "2026-08-29T07:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -18,
+      "earlierRef": "BLD-2026-0083",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-27T14:00:00.000Z",
+      "earlierEnd": "2026-08-16T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0087",
+      "street": "شارع ابن حسان",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-20T15:00:00.000Z",
+      "end": "2026-07-27T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -23.3,
+      "earlierRef": "BLD-2026-0085",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-20T14:00:00.000Z",
+      "earlierEnd": "2026-08-12T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0086",
+      "street": "شارع ابن حسان",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-22T14:00:00.000Z",
+      "end": "2026-08-12T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -21.3,
+      "earlierRef": "BLD-2026-0085",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-20T14:00:00.000Z",
+      "earlierEnd": "2026-08-12T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0089",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-10T14:00:00.000Z",
+      "end": "2026-07-26T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -30.1,
+      "earlierRef": "BLD-2026-0090",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T08:00:00.000Z",
+      "earlierEnd": "2026-08-09T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0091",
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-11T20:00:00.000Z",
+      "end": "2026-08-11T04:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -28.8,
+      "earlierRef": "BLD-2026-0090",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T08:00:00.000Z",
+      "earlierEnd": "2026-08-09T16:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    {
+      "permitRef": "BLD-2026-0095",
+      "street": "شارع سعد بن أبي وقاص",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-19T22:00:00.000Z",
+      "end": "2026-08-09T06:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -11,
+      "earlierRef": "BLD-2026-0096",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-07-30T23:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0098",
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-17T16:00:00.000Z",
+      "end": "2026-07-28T00:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -1.2,
+      "earlierRef": "BLD-2026-0099",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-15T13:00:00.000Z",
+      "earlierEnd": "2026-07-18T21:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    {
+      "permitRef": "BLD-2026-0104",
+      "street": "طريق خديجة بنت خويلد",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-29T15:00:00.000Z",
+      "end": "2026-08-03T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -18,
+      "earlierRef": "BLD-2026-0103",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-27T07:00:00.000Z",
+      "earlierEnd": "2026-08-16T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    }
+  ],
+  "permits": {
+    "BLD-2026-0001": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-24T08:00:00.000Z",
+      "end": "2026-08-11T16:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0002": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-24T09:00:00.000Z",
+      "end": "2026-08-21T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -18.3,
+      "earlierRef": "BLD-2026-0001",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-24T08:00:00.000Z",
+      "earlierEnd": "2026-08-11T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0003": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-07-25T21:00:00.000Z",
+      "end": "2026-08-02T05:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -26.8,
+      "earlierRef": "BLD-2026-0002",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-24T09:00:00.000Z",
+      "earlierEnd": "2026-08-21T17:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0004": {
+      "street": "الإمام عبدالعزيز بن محمد بن سعود",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "development",
+      "start": "2026-07-23T14:00:00.000Z",
+      "end": "2026-08-10T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0005": {
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-23T20:00:00.000Z",
+      "end": "2026-07-31T04:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0006": {
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-25T08:00:00.000Z",
+      "end": "2026-08-20T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -5.8,
+      "earlierRef": "BLD-2026-0005",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-23T20:00:00.000Z",
+      "earlierEnd": "2026-07-31T04:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0007": {
+      "street": "الأمير طلال بن عبدالعزيز",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-18T23:00:00.000Z",
+      "end": "2026-08-06T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0008": {
+      "street": "الأمير عبدالعزيز بن مساعد بن جلوي",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "emergency",
+      "start": "2026-07-22T07:00:00.000Z",
+      "end": "2026-08-21T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0009": {
+      "street": "الأمير محمد بن عبد الرحمن",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-27T08:00:00.000Z",
+      "end": "2026-08-20T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0012": {
+      "street": "البطحاء",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-07-20T20:00:00.000Z",
+      "end": "2026-07-26T04:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0010": {
+      "street": "البطحاء",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-21T19:00:00.000Z",
+      "end": "2026-07-27T03:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -4.4,
+      "earlierRef": "BLD-2026-0012",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-20T20:00:00.000Z",
+      "earlierEnd": "2026-07-26T04:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0011": {
+      "street": "البطحاء",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-23T16:00:00.000Z",
+      "end": "2026-08-09T00:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -3.5,
+      "earlierRef": "BLD-2026-0010",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-21T19:00:00.000Z",
+      "earlierEnd": "2026-07-27T03:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0013": {
+      "street": "السويدي العام",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-27T12:00:00.000Z",
+      "end": "2026-07-30T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0014": {
+      "street": "الشيخ جابر الأحمد الصباح",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-19T09:00:00.000Z",
+      "end": "2026-08-07T17:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0015": {
+      "street": "الطريق الدائري الثاني",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-26T10:00:00.000Z",
+      "end": "2026-08-09T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0016": {
+      "street": "الطريق الدائري الشمالي",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-08-01T14:00:00.000Z",
+      "end": "2026-08-05T22:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0017": {
+      "street": "الطريق الدائري الشمالي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-08-01T17:00:00.000Z",
+      "end": "2026-08-07T01:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -4.2,
+      "earlierRef": "BLD-2026-0016",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-08-01T14:00:00.000Z",
+      "earlierEnd": "2026-08-05T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0018": {
+      "street": "العريجاء",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-12T22:00:00.000Z",
+      "end": "2026-08-08T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0021": {
+      "street": "المطار",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-19T15:00:00.000Z",
+      "end": "2026-08-15T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0019": {
+      "street": "المطار",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-21T13:00:00.000Z",
+      "end": "2026-08-14T21:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.4,
+      "earlierRef": "BLD-2026-0021",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-08-15T23:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0020": {
+      "street": "المطار",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-22T13:00:00.000Z",
+      "end": "2026-08-20T21:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -24.4,
+      "earlierRef": "BLD-2026-0021",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-08-15T23:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0022": {
+      "street": "النهضة",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-08-01T07:00:00.000Z",
+      "end": "2026-08-11T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0023": {
+      "street": "خديجة بنت خويلد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-30T07:00:00.000Z",
+      "end": "2026-08-27T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0024": {
+      "street": "شارع الأمير متعب بن عبدالله بن عبدالعزيز",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-14T22:00:00.000Z",
+      "end": "2026-08-03T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0026": {
+      "street": "شارع العليا",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-09T10:00:00.000Z",
+      "end": "2026-07-13T18:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0027": {
+      "street": "شارع العليا",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-10T09:00:00.000Z",
+      "end": "2026-07-19T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -3.4,
+      "earlierRef": "BLD-2026-0026",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-09T10:00:00.000Z",
+      "earlierEnd": "2026-07-13T18:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0025": {
+      "street": "شارع العليا",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-11T11:00:00.000Z",
+      "end": "2026-08-10T19:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -8.2,
+      "earlierRef": "BLD-2026-0027",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-10T09:00:00.000Z",
+      "earlierEnd": "2026-07-19T17:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0028": {
+      "street": "طريق أبي بكر الصديق",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-10T21:00:00.000Z",
+      "end": "2026-07-23T05:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0029": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-20T08:00:00.000Z",
+      "end": "2026-08-16T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0030": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-22T15:00:00.000Z",
+      "end": "2026-08-02T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -25,
+      "earlierRef": "BLD-2026-0029",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-20T08:00:00.000Z",
+      "earlierEnd": "2026-08-16T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0031": {
+      "street": "طريق الأمير فيصل بن بندر بن عبدالعزيز",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-25T17:00:00.000Z",
+      "end": "2026-08-16T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0032": {
+      "street": "طريق الأمير محمد بن سلمان بن عبدالعزيز",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-09T11:00:00.000Z",
+      "end": "2026-07-15T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0033": {
+      "street": "طريق الثمامة",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-24T07:00:00.000Z",
+      "end": "2026-08-19T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0035": {
+      "street": "طريق الجنادرية",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-10T14:00:00.000Z",
+      "end": "2026-07-25T22:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0034": {
+      "street": "طريق الجنادرية",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-11T08:00:00.000Z",
+      "end": "2026-07-28T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -14.6,
+      "earlierRef": "BLD-2026-0035",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T14:00:00.000Z",
+      "earlierEnd": "2026-07-25T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0036": {
+      "street": "طريق الخرج السريع",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-28T22:00:00.000Z",
+      "end": "2026-08-24T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0037": {
+      "street": "طريق الدائري الشرقي",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-10T10:00:00.000Z",
+      "end": "2026-08-01T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0040": {
+      "street": "طريق الدمام",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-18T12:00:00.000Z",
+      "end": "2026-08-03T20:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0039": {
+      "street": "طريق الدمام",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-18T14:00:00.000Z",
+      "end": "2026-08-04T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -16.2,
+      "earlierRef": "BLD-2026-0040",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-18T12:00:00.000Z",
+      "earlierEnd": "2026-08-03T20:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0038": {
+      "street": "طريق الدمام",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "default",
+      "start": "2026-07-20T12:00:00.000Z",
+      "end": "2026-07-29T20:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -15.4,
+      "earlierRef": "BLD-2026-0039",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-18T14:00:00.000Z",
+      "earlierEnd": "2026-08-04T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0041": {
+      "street": "طريق المدينة المنورة",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "development",
+      "start": "2026-07-17T14:00:00.000Z",
+      "end": "2026-08-08T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0042": {
+      "street": "طريق الملك خالد",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "development",
+      "start": "2026-07-08T14:00:00.000Z",
+      "end": "2026-07-15T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0044": {
+      "street": "طريق الملك خالد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-08T14:00:00.000Z",
+      "end": "2026-07-23T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0043": {
+      "street": "طريق الملك خالد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-08T23:00:00.000Z",
+      "end": "2026-08-04T07:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -15,
+      "earlierRef": "BLD-2026-0044",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-08T14:00:00.000Z",
+      "earlierEnd": "2026-07-23T22:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0045": {
+      "street": "طريق الملك فهد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-08T16:00:00.000Z",
+      "end": "2026-08-08T00:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0046": {
+      "street": "طريق الملك فهد الفرعي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-11T12:00:00.000Z",
+      "end": "2026-08-05T20:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0047": {
+      "street": "طريق الملك فهد الفرعي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-11T16:00:00.000Z",
+      "end": "2026-08-06T00:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.2,
+      "earlierRef": "BLD-2026-0046",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-11T12:00:00.000Z",
+      "earlierEnd": "2026-08-05T20:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0048": {
+      "street": "طريق خريص",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "development",
+      "start": "2026-07-15T07:00:00.000Z",
+      "end": "2026-07-26T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0049": {
+      "street": "طريق ديراب",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "maintenance",
+      "start": "2026-07-15T23:00:00.000Z",
+      "end": "2026-07-27T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0051": {
+      "street": "طريق صلاح الدين الأيوبي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-29T07:00:00.000Z",
+      "end": "2026-08-08T15:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0050": {
+      "street": "طريق صلاح الدين الأيوبي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-31T15:00:00.000Z",
+      "end": "2026-08-14T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -8,
+      "earlierRef": "BLD-2026-0051",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-29T07:00:00.000Z",
+      "earlierEnd": "2026-08-08T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0052": {
+      "street": "طريق عمر بن الخطاب",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "development",
+      "start": "2026-07-30T17:00:00.000Z",
+      "end": "2026-08-18T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0054": {
+      "street": "طريق مكة المكرمة الفرعي",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "default",
+      "start": "2026-07-20T11:00:00.000Z",
+      "end": "2026-08-01T19:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0053": {
+      "street": "طريق مكة المكرمة الفرعي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "development",
+      "start": "2026-07-22T07:00:00.000Z",
+      "end": "2026-08-06T15:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -10.5,
+      "earlierRef": "BLD-2026-0054",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-20T11:00:00.000Z",
+      "earlierEnd": "2026-08-01T19:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0055": {
+      "street": "عائشة بنت أبي بكر",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "emergency",
+      "start": "2026-07-24T16:00:00.000Z",
+      "end": "2026-08-06T00:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0056": {
+      "street": "عبد العزيز بن مساعد بن جلوي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-20T22:00:00.000Z",
+      "end": "2026-08-06T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0058": {
+      "street": "مسلمة الأنصاري",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-25T14:00:00.000Z",
+      "end": "2026-08-24T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0057": {
+      "street": "مسلمة الأنصاري",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-27T09:00:00.000Z",
+      "end": "2026-08-06T17:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -28.5,
+      "earlierRef": "BLD-2026-0058",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-25T14:00:00.000Z",
+      "earlierEnd": "2026-08-24T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0059": {
+      "street": "مسلمة الأنصاري",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-29T15:00:00.000Z",
+      "end": "2026-08-20T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -26.3,
+      "earlierRef": "BLD-2026-0058",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-25T14:00:00.000Z",
+      "earlierEnd": "2026-08-24T22:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0060": {
+      "street": "وادي الساحل",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-15T11:00:00.000Z",
+      "end": "2026-07-18T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0061": {
+      "street": "إبراهيم عبداللطيف آل الشيخ",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-28T10:00:00.000Z",
+      "end": "2026-08-01T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0064": {
+      "street": "ابن العميد",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "default",
+      "start": "2026-07-13T12:00:00.000Z",
+      "end": "2026-07-23T20:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0062": {
+      "street": "ابن العميد",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-14T18:00:00.000Z",
+      "end": "2026-07-20T02:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -9.1,
+      "earlierRef": "BLD-2026-0064",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-13T12:00:00.000Z",
+      "earlierEnd": "2026-07-23T20:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0063": {
+      "street": "ابن العميد",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-16T15:00:00.000Z",
+      "end": "2026-08-12T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -7.2,
+      "earlierRef": "BLD-2026-0064",
+      "earlierPromoter": "أمانة منطقة الرياض",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-13T12:00:00.000Z",
+      "earlierEnd": "2026-07-23T20:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0065": {
+      "street": "الاحساء",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-27T10:00:00.000Z",
+      "end": "2026-08-12T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0066": {
+      "street": "الإمام الشافعي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-23T15:00:00.000Z",
+      "end": "2026-08-01T23:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0068": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-29T19:00:00.000Z",
+      "end": "2026-08-26T03:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0069": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-30T14:00:00.000Z",
+      "end": "2026-08-05T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -26.5,
+      "earlierRef": "BLD-2026-0068",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-29T19:00:00.000Z",
+      "earlierEnd": "2026-08-26T03:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0067": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-31T18:00:00.000Z",
+      "end": "2026-08-09T02:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -25.4,
+      "earlierRef": "BLD-2026-0068",
+      "earlierPromoter": "شركة المياه الوطنية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-29T19:00:00.000Z",
+      "earlierEnd": "2026-08-26T03:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": true
+    },
+    "BLD-2026-0070": {
+      "street": "الأمير عبدالله بن عبدالرحمن بن فيصل",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-29T11:00:00.000Z",
+      "end": "2026-08-12T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0071": {
+      "street": "الأمير مساعد بن عبدالرحمن بن فيصل",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-09T14:00:00.000Z",
+      "end": "2026-07-29T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0073": {
+      "street": "الأمين عبدالله العلي النعيم",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-13T08:00:00.000Z",
+      "end": "2026-08-11T16:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0072": {
+      "street": "الأمين عبدالله العلي النعيم",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-14T23:00:00.000Z",
+      "end": "2026-07-24T07:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -27.7,
+      "earlierRef": "BLD-2026-0073",
+      "earlierPromoter": "هيئة تطوير مدينة الرياض",
+      "earlierSubtype": "development",
+      "earlierStart": "2026-07-13T08:00:00.000Z",
+      "earlierEnd": "2026-08-11T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0074": {
+      "street": "الدائري الجنوبي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-13T10:00:00.000Z",
+      "end": "2026-08-11T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0075": {
+      "street": "الداخلة",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-22T22:00:00.000Z",
+      "end": "2026-08-06T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0077": {
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-19T07:00:00.000Z",
+      "end": "2026-08-02T15:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0076": {
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-19T09:00:00.000Z",
+      "end": "2026-08-11T17:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -14.2,
+      "earlierRef": "BLD-2026-0077",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-19T07:00:00.000Z",
+      "earlierEnd": "2026-08-02T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0078": {
+      "street": "الشيخ محمد بن عبداللطيف بن عبدالرحمن",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-08-02T22:00:00.000Z",
+      "end": "2026-08-14T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0079": {
+      "street": "الطائف",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "development",
+      "start": "2026-07-08T22:00:00.000Z",
+      "end": "2026-07-19T06:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0080": {
+      "street": "الطائف",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "default",
+      "start": "2026-07-08T22:00:00.000Z",
+      "end": "2026-07-26T06:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0081": {
+      "street": "النصر",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-08T12:00:00.000Z",
+      "end": "2026-07-12T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0083": {
+      "street": "بلال بن رباح",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-07-27T14:00:00.000Z",
+      "end": "2026-08-16T22:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0082": {
+      "street": "بلال بن رباح",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-29T23:00:00.000Z",
+      "end": "2026-08-29T07:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -18,
+      "earlierRef": "BLD-2026-0083",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-27T14:00:00.000Z",
+      "earlierEnd": "2026-08-16T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0084": {
+      "street": "سدير",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-19T17:00:00.000Z",
+      "end": "2026-08-16T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0085": {
+      "street": "شارع ابن حسان",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-20T14:00:00.000Z",
+      "end": "2026-08-12T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0087": {
+      "street": "شارع ابن حسان",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-20T15:00:00.000Z",
+      "end": "2026-07-27T23:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -23.3,
+      "earlierRef": "BLD-2026-0085",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-20T14:00:00.000Z",
+      "earlierEnd": "2026-08-12T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0086": {
+      "street": "شارع ابن حسان",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-22T14:00:00.000Z",
+      "end": "2026-08-12T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -21.3,
+      "earlierRef": "BLD-2026-0085",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "emergency",
+      "earlierStart": "2026-07-20T14:00:00.000Z",
+      "earlierEnd": "2026-08-12T22:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": true,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0088": {
+      "street": "شارع الاحساء",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-13T10:00:00.000Z",
+      "end": "2026-08-08T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0090": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-10T08:00:00.000Z",
+      "end": "2026-08-09T16:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0089": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-10T14:00:00.000Z",
+      "end": "2026-07-26T22:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -30.1,
+      "earlierRef": "BLD-2026-0090",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T08:00:00.000Z",
+      "earlierEnd": "2026-08-09T16:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0091": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-07-11T20:00:00.000Z",
+      "end": "2026-08-11T04:00:00.000Z",
+      "permitsOnStreet": 3,
+      "status": "exempt-emergency",
+      "wouldBe": "overlapping",
+      "gapDays": -28.8,
+      "earlierRef": "BLD-2026-0090",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-10T08:00:00.000Z",
+      "earlierEnd": "2026-08-09T16:00:00.000Z",
+      "samePromoter": true,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 2,
+      "chargeable": false,
+      "reason": "عمل طارئ — كسر ماسورة لا يُعاقَب صاحبه على عدم التنسيق"
+    },
+    "BLD-2026-0092": {
+      "street": "شارع أم الحمام",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-19T14:00:00.000Z",
+      "end": "2026-07-25T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0093": {
+      "street": "شارع جرير",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-07-14T22:00:00.000Z",
+      "end": "2026-07-26T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0094": {
+      "street": "شارع خالد بن الوليد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-19T22:00:00.000Z",
+      "end": "2026-08-14T06:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0096": {
+      "street": "شارع سعد بن أبي وقاص",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-19T15:00:00.000Z",
+      "end": "2026-07-30T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0095": {
+      "street": "شارع سعد بن أبي وقاص",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-19T22:00:00.000Z",
+      "end": "2026-08-09T06:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -11,
+      "earlierRef": "BLD-2026-0096",
+      "earlierPromoter": "الشركة السعودية للغاز",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-19T15:00:00.000Z",
+      "earlierEnd": "2026-07-30T23:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0097": {
+      "street": "طريق ابن الهيثم",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "maintenance",
+      "start": "2026-07-20T14:00:00.000Z",
+      "end": "2026-08-15T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0099": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "maintenance",
+      "start": "2026-07-15T13:00:00.000Z",
+      "end": "2026-07-18T21:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0098": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-17T16:00:00.000Z",
+      "end": "2026-07-28T00:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -1.2,
+      "earlierRef": "BLD-2026-0099",
+      "earlierPromoter": "شركة الاتصالات السعودية",
+      "earlierSubtype": "maintenance",
+      "earlierStart": "2026-07-15T13:00:00.000Z",
+      "earlierEnd": "2026-07-18T21:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0100": {
+      "street": "طريق الأمير محمد بن سعد بن عبدالعزيز",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-24T14:00:00.000Z",
+      "end": "2026-08-05T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0101": {
+      "street": "طريق الأمير محمد بن عبد العزيز",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-14T12:00:00.000Z",
+      "end": "2026-08-05T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0102": {
+      "street": "طريق الصحابة",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "development",
+      "start": "2026-07-27T08:00:00.000Z",
+      "end": "2026-08-20T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0103": {
+      "street": "طريق خديجة بنت خويلد",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-27T07:00:00.000Z",
+      "end": "2026-08-16T15:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "first-on-street",
+      "reason": "أول من بدأ على هذا الشارع — لا يُحاسب من لم يسبقه أحد",
+      "predecessorsConsidered": 0
+    },
+    "BLD-2026-0104": {
+      "street": "طريق خديجة بنت خويلد",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-29T15:00:00.000Z",
+      "end": "2026-08-03T23:00:00.000Z",
+      "permitsOnStreet": 2,
+      "status": "overlapping",
+      "wouldBe": null,
+      "gapDays": -18,
+      "earlierRef": "BLD-2026-0103",
+      "earlierPromoter": "الشركة السعودية للكهرباء",
+      "earlierSubtype": "default",
+      "earlierStart": "2026-07-27T07:00:00.000Z",
+      "earlierEnd": "2026-08-16T15:00:00.000Z",
+      "samePromoter": false,
+      "predecessorEmergency": false,
+      "predecessorsConsidered": 1,
+      "chargeable": true
+    },
+    "BLD-2026-0105": {
+      "street": "عبدالرحمن الغافقي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-10T17:00:00.000Z",
+      "end": "2026-07-16T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0106": {
+      "street": "عبدالرحمن بن عوف",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-07-12T08:00:00.000Z",
+      "end": "2026-07-23T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0107": {
+      "street": "علي بن أبي طالب",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-22T23:00:00.000Z",
+      "end": "2026-08-19T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0108": {
+      "street": "عمر بن الخطاب",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-17T13:00:00.000Z",
+      "end": "2026-08-05T21:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0109": {
+      "street": "عمرو بن العاص",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-25T11:00:00.000Z",
+      "end": "2026-08-02T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0110": {
+      "street": "محمد رشيد رضا",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-30T12:00:00.000Z",
+      "end": "2026-08-29T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0111": {
+      "street": "نبع",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-18T23:00:00.000Z",
+      "end": "2026-07-27T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0112": {
+      "street": "آل داود",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-18T19:00:00.000Z",
+      "end": "2026-08-03T03:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0113": {
+      "street": "ابن الجوزي",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-28T15:00:00.000Z",
+      "end": "2026-08-08T23:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0114": {
+      "street": "ابي بكر الرازي",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-11T07:00:00.000Z",
+      "end": "2026-07-21T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0115": {
+      "street": "أحمد بن محمد السديري",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "default",
+      "start": "2026-07-20T23:00:00.000Z",
+      "end": "2026-08-05T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0116": {
+      "street": "الإمام سعود بن عبدالعزيز بن محمد الفرعي",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-10T14:00:00.000Z",
+      "end": "2026-07-17T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0117": {
+      "street": "الأمير تركي بن عبدالعزيز الثاني",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "development",
+      "start": "2026-07-19T14:00:00.000Z",
+      "end": "2026-08-03T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0118": {
+      "street": "الأمير عبدالرحمن بن عبدالعزيز",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "development",
+      "start": "2026-07-31T23:00:00.000Z",
+      "end": "2026-08-22T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0119": {
+      "street": "الأمير محمد بن فيصل بن تركي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-26T23:00:00.000Z",
+      "end": "2026-08-12T07:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0120": {
+      "street": "البحار",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "emergency",
+      "start": "2026-08-01T10:00:00.000Z",
+      "end": "2026-08-18T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0121": {
+      "street": "البلدية",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-11T08:00:00.000Z",
+      "end": "2026-08-02T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0122": {
+      "street": "الحويطة",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-17T11:00:00.000Z",
+      "end": "2026-08-02T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0123": {
+      "street": "الخيمة",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "default",
+      "start": "2026-08-02T18:00:00.000Z",
+      "end": "2026-08-09T02:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0124": {
+      "street": "الربع الخالي",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-16T08:00:00.000Z",
+      "end": "2026-07-20T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0125": {
+      "street": "الشفق",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-14T12:00:00.000Z",
+      "end": "2026-08-13T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0126": {
+      "street": "الشيخ عبدالله المخضوب",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "default",
+      "start": "2026-07-13T12:00:00.000Z",
+      "end": "2026-07-23T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0127": {
+      "street": "العباس بن عبدالمطلب",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-11T20:00:00.000Z",
+      "end": "2026-08-08T04:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0128": {
+      "street": "المثنى بن حارثة",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-17T19:00:00.000Z",
+      "end": "2026-07-30T03:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0129": {
+      "street": "المهندس مساعد العنقري",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-13T08:00:00.000Z",
+      "end": "2026-07-29T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0130": {
+      "street": "إمتداد الطريق الدائري الشرقي - وصلة الخرج)",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-08-02T08:00:00.000Z",
+      "end": "2026-08-11T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0131": {
+      "street": "تميم الداري",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-27T11:00:00.000Z",
+      "end": "2026-08-21T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0132": {
+      "street": "حزام الدوسري",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "emergency",
+      "start": "2026-07-27T08:00:00.000Z",
+      "end": "2026-08-13T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0133": {
+      "street": "سعيد بن بيشان",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-20T12:00:00.000Z",
+      "end": "2026-08-14T20:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0134": {
+      "street": "شارع أبي بن معاذ الأنصاري",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-24T08:00:00.000Z",
+      "end": "2026-07-29T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0135": {
+      "street": "شارع الأمير مقرن بن عبدالعزيز",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-25T17:00:00.000Z",
+      "end": "2026-08-15T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0136": {
+      "street": "شارع الحميد",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "default",
+      "start": "2026-08-01T17:00:00.000Z",
+      "end": "2026-08-31T01:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0137": {
+      "street": "شارع الضياء",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "emergency",
+      "start": "2026-07-27T14:00:00.000Z",
+      "end": "2026-08-11T22:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0138": {
+      "street": "شارع الكرامة",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "default",
+      "start": "2026-07-18T20:00:00.000Z",
+      "end": "2026-07-27T04:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0139": {
+      "street": "شارع حلب",
+      "promoter": "أمانة منطقة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-08-01T11:00:00.000Z",
+      "end": "2026-08-20T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0140": {
+      "street": "شارع سعيد بن عبدالله السيد",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "maintenance",
+      "start": "2026-07-16T11:00:00.000Z",
+      "end": "2026-07-30T19:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0141": {
+      "street": "شارع عبدالله بن قيس",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-16T10:00:00.000Z",
+      "end": "2026-08-13T18:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0142": {
+      "street": "شارع وادي حنيفة",
+      "promoter": "الشركة السعودية للكهرباء",
+      "subtype": "maintenance",
+      "start": "2026-07-22T08:00:00.000Z",
+      "end": "2026-08-03T16:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0143": {
+      "street": "طريق الإمام سعود بن فيصل الفرعي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "maintenance",
+      "start": "2026-07-13T16:00:00.000Z",
+      "end": "2026-07-26T00:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0144": {
+      "street": "طريق العروبة الفرعي",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-24T09:00:00.000Z",
+      "end": "2026-08-09T17:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0145": {
+      "street": "طريق وادي حنيفة",
+      "promoter": "شركة الاتصالات السعودية",
+      "subtype": "development",
+      "start": "2026-07-14T07:00:00.000Z",
+      "end": "2026-07-30T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0146": {
+      "street": "عبدالرحمن بن عزاز",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "development",
+      "start": "2026-07-14T18:00:00.000Z",
+      "end": "2026-07-25T02:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0147": {
+      "street": "عرقة",
+      "promoter": "الشركة السعودية للغاز",
+      "subtype": "emergency",
+      "start": "2026-07-27T21:00:00.000Z",
+      "end": "2026-08-06T05:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0148": {
+      "street": "ماجد بن عبد الله القصبي",
+      "promoter": "شركة المياه الوطنية",
+      "subtype": "maintenance",
+      "start": "2026-07-20T07:00:00.000Z",
+      "end": "2026-07-27T15:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0149": {
+      "street": "محمد حامد الفقي",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-19T19:00:00.000Z",
+      "end": "2026-08-19T03:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    },
+    "BLD-2026-0150": {
+      "street": "وادي الرمة",
+      "promoter": "هيئة تطوير مدينة الرياض",
+      "subtype": "development",
+      "start": "2026-07-24T13:00:00.000Z",
+      "end": "2026-08-06T21:00:00.000Z",
+      "permitsOnStreet": 1,
+      "status": "alone-on-street",
+      "reason": "لا تصريح آخر على هذا الشارع — لا فرصة تنسيق فائتة"
+    }
+  },
+  "notices": {
+    "BLD-2026-0001": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0002",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "emergency",
+          "start": "2026-07-24T09:00:00.000Z",
+          "end": "2026-08-21T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0003",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "default",
+          "start": "2026-07-25T21:00:00.000Z",
+          "end": "2026-08-02T05:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0002": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0001",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-24T08:00:00.000Z",
+          "end": "2026-08-11T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0003",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "default",
+          "start": "2026-07-25T21:00:00.000Z",
+          "end": "2026-08-02T05:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0003": {
+      "street": "أبو عبيدة عامر بن الجراح",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0001",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-24T08:00:00.000Z",
+          "end": "2026-08-11T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0002",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "emergency",
+          "start": "2026-07-24T09:00:00.000Z",
+          "end": "2026-08-21T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0004": {
+      "street": "الإمام عبدالعزيز بن محمد بن سعود",
+      "others": []
+    },
+    "BLD-2026-0005": {
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0006",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-25T08:00:00.000Z",
+          "end": "2026-08-20T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0006": {
+      "street": "الأمير سعد بن عبدالرحمن الأول",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0005",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "emergency",
+          "start": "2026-07-23T20:00:00.000Z",
+          "end": "2026-07-31T04:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0007": {
+      "street": "الأمير طلال بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0008": {
+      "street": "الأمير عبدالعزيز بن مساعد بن جلوي",
+      "others": []
+    },
+    "BLD-2026-0009": {
+      "street": "الأمير محمد بن عبد الرحمن",
+      "others": []
+    },
+    "BLD-2026-0010": {
+      "street": "البطحاء",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0011",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "emergency",
+          "start": "2026-07-23T16:00:00.000Z",
+          "end": "2026-08-09T00:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0012",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "default",
+          "start": "2026-07-20T20:00:00.000Z",
+          "end": "2026-07-26T04:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0011": {
+      "street": "البطحاء",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0010",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-21T19:00:00.000Z",
+          "end": "2026-07-27T03:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0012",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "default",
+          "start": "2026-07-20T20:00:00.000Z",
+          "end": "2026-07-26T04:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0012": {
+      "street": "البطحاء",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0010",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-21T19:00:00.000Z",
+          "end": "2026-07-27T03:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0011",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "emergency",
+          "start": "2026-07-23T16:00:00.000Z",
+          "end": "2026-08-09T00:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0013": {
+      "street": "السويدي العام",
+      "others": []
+    },
+    "BLD-2026-0014": {
+      "street": "الشيخ جابر الأحمد الصباح",
+      "others": []
+    },
+    "BLD-2026-0015": {
+      "street": "الطريق الدائري الثاني",
+      "others": []
+    },
+    "BLD-2026-0016": {
+      "street": "الطريق الدائري الشمالي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0017",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "emergency",
+          "start": "2026-08-01T17:00:00.000Z",
+          "end": "2026-08-07T01:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0017": {
+      "street": "الطريق الدائري الشمالي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0016",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-08-01T14:00:00.000Z",
+          "end": "2026-08-05T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0018": {
+      "street": "العريجاء",
+      "others": []
+    },
+    "BLD-2026-0019": {
+      "street": "المطار",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0020",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-22T13:00:00.000Z",
+          "end": "2026-08-20T21:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0021",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-19T15:00:00.000Z",
+          "end": "2026-08-15T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0020": {
+      "street": "المطار",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0019",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-21T13:00:00.000Z",
+          "end": "2026-08-14T21:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0021",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-19T15:00:00.000Z",
+          "end": "2026-08-15T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0021": {
+      "street": "المطار",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0019",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-21T13:00:00.000Z",
+          "end": "2026-08-14T21:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0020",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-22T13:00:00.000Z",
+          "end": "2026-08-20T21:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0022": {
+      "street": "النهضة",
+      "others": []
+    },
+    "BLD-2026-0023": {
+      "street": "خديجة بنت خويلد",
+      "others": []
+    },
+    "BLD-2026-0024": {
+      "street": "شارع الأمير متعب بن عبدالله بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0025": {
+      "street": "شارع العليا",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0026",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "default",
+          "start": "2026-07-09T10:00:00.000Z",
+          "end": "2026-07-13T18:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0027",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "development",
+          "start": "2026-07-10T09:00:00.000Z",
+          "end": "2026-07-19T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0026": {
+      "street": "شارع العليا",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0025",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "maintenance",
+          "start": "2026-07-11T11:00:00.000Z",
+          "end": "2026-08-10T19:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0027",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "development",
+          "start": "2026-07-10T09:00:00.000Z",
+          "end": "2026-07-19T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0027": {
+      "street": "شارع العليا",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0025",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "maintenance",
+          "start": "2026-07-11T11:00:00.000Z",
+          "end": "2026-08-10T19:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0026",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "default",
+          "start": "2026-07-09T10:00:00.000Z",
+          "end": "2026-07-13T18:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0028": {
+      "street": "طريق أبي بكر الصديق",
+      "others": []
+    },
+    "BLD-2026-0029": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0030",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "emergency",
+          "start": "2026-07-22T15:00:00.000Z",
+          "end": "2026-08-02T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0030": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0029",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-20T08:00:00.000Z",
+          "end": "2026-08-16T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0031": {
+      "street": "طريق الأمير فيصل بن بندر بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0032": {
+      "street": "طريق الأمير محمد بن سلمان بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0033": {
+      "street": "طريق الثمامة",
+      "others": []
+    },
+    "BLD-2026-0034": {
+      "street": "طريق الجنادرية",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0035",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "default",
+          "start": "2026-07-10T14:00:00.000Z",
+          "end": "2026-07-25T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0035": {
+      "street": "طريق الجنادرية",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0034",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-11T08:00:00.000Z",
+          "end": "2026-07-28T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0036": {
+      "street": "طريق الخرج السريع",
+      "others": []
+    },
+    "BLD-2026-0037": {
+      "street": "طريق الدائري الشرقي",
+      "others": []
+    },
+    "BLD-2026-0038": {
+      "street": "طريق الدمام",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0039",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-18T14:00:00.000Z",
+          "end": "2026-08-04T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0040",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-18T12:00:00.000Z",
+          "end": "2026-08-03T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0039": {
+      "street": "طريق الدمام",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0038",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-20T12:00:00.000Z",
+          "end": "2026-07-29T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0040",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-18T12:00:00.000Z",
+          "end": "2026-08-03T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0040": {
+      "street": "طريق الدمام",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0038",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-20T12:00:00.000Z",
+          "end": "2026-07-29T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0039",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-18T14:00:00.000Z",
+          "end": "2026-08-04T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0041": {
+      "street": "طريق المدينة المنورة",
+      "others": []
+    },
+    "BLD-2026-0042": {
+      "street": "طريق الملك خالد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0043",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-08T23:00:00.000Z",
+          "end": "2026-08-04T07:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0044",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-08T14:00:00.000Z",
+          "end": "2026-07-23T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0043": {
+      "street": "طريق الملك خالد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0042",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "development",
+          "start": "2026-07-08T14:00:00.000Z",
+          "end": "2026-07-15T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0044",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-08T14:00:00.000Z",
+          "end": "2026-07-23T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0044": {
+      "street": "طريق الملك خالد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0042",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "development",
+          "start": "2026-07-08T14:00:00.000Z",
+          "end": "2026-07-15T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0043",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-08T23:00:00.000Z",
+          "end": "2026-08-04T07:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0045": {
+      "street": "طريق الملك فهد",
+      "others": []
+    },
+    "BLD-2026-0046": {
+      "street": "طريق الملك فهد الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0047",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "default",
+          "start": "2026-07-11T16:00:00.000Z",
+          "end": "2026-08-06T00:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0047": {
+      "street": "طريق الملك فهد الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0046",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-11T12:00:00.000Z",
+          "end": "2026-08-05T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0048": {
+      "street": "طريق خريص",
+      "others": []
+    },
+    "BLD-2026-0049": {
+      "street": "طريق ديراب",
+      "others": []
+    },
+    "BLD-2026-0050": {
+      "street": "طريق صلاح الدين الأيوبي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0051",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "default",
+          "start": "2026-07-29T07:00:00.000Z",
+          "end": "2026-08-08T15:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0051": {
+      "street": "طريق صلاح الدين الأيوبي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0050",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-31T15:00:00.000Z",
+          "end": "2026-08-14T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0052": {
+      "street": "طريق عمر بن الخطاب",
+      "others": []
+    },
+    "BLD-2026-0053": {
+      "street": "طريق مكة المكرمة الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0054",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-20T11:00:00.000Z",
+          "end": "2026-08-01T19:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0054": {
+      "street": "طريق مكة المكرمة الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0053",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "development",
+          "start": "2026-07-22T07:00:00.000Z",
+          "end": "2026-08-06T15:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0055": {
+      "street": "عائشة بنت أبي بكر",
+      "others": []
+    },
+    "BLD-2026-0056": {
+      "street": "عبد العزيز بن مساعد بن جلوي",
+      "others": []
+    },
+    "BLD-2026-0057": {
+      "street": "مسلمة الأنصاري",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0058",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "development",
+          "start": "2026-07-25T14:00:00.000Z",
+          "end": "2026-08-24T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0059",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-29T15:00:00.000Z",
+          "end": "2026-08-20T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0058": {
+      "street": "مسلمة الأنصاري",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0057",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-27T09:00:00.000Z",
+          "end": "2026-08-06T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0059",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-29T15:00:00.000Z",
+          "end": "2026-08-20T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0059": {
+      "street": "مسلمة الأنصاري",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0057",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-27T09:00:00.000Z",
+          "end": "2026-08-06T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0058",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "development",
+          "start": "2026-07-25T14:00:00.000Z",
+          "end": "2026-08-24T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0060": {
+      "street": "وادي الساحل",
+      "others": []
+    },
+    "BLD-2026-0061": {
+      "street": "إبراهيم عبداللطيف آل الشيخ",
+      "others": []
+    },
+    "BLD-2026-0062": {
+      "street": "ابن العميد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0063",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-16T15:00:00.000Z",
+          "end": "2026-08-12T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0064",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-13T12:00:00.000Z",
+          "end": "2026-07-23T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0063": {
+      "street": "ابن العميد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0062",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "default",
+          "start": "2026-07-14T18:00:00.000Z",
+          "end": "2026-07-20T02:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0064",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-13T12:00:00.000Z",
+          "end": "2026-07-23T20:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0064": {
+      "street": "ابن العميد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0062",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "default",
+          "start": "2026-07-14T18:00:00.000Z",
+          "end": "2026-07-20T02:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0063",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-16T15:00:00.000Z",
+          "end": "2026-08-12T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0065": {
+      "street": "الاحساء",
+      "others": []
+    },
+    "BLD-2026-0066": {
+      "street": "الإمام الشافعي",
+      "others": []
+    },
+    "BLD-2026-0067": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0068",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-29T19:00:00.000Z",
+          "end": "2026-08-26T03:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0069",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "default",
+          "start": "2026-07-30T14:00:00.000Z",
+          "end": "2026-08-05T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0068": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0067",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "maintenance",
+          "start": "2026-07-31T18:00:00.000Z",
+          "end": "2026-08-09T02:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0069",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "default",
+          "start": "2026-07-30T14:00:00.000Z",
+          "end": "2026-08-05T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0069": {
+      "street": "الإمام فيصل بن تركي بن عبدالله",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0067",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "maintenance",
+          "start": "2026-07-31T18:00:00.000Z",
+          "end": "2026-08-09T02:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0068",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "maintenance",
+          "start": "2026-07-29T19:00:00.000Z",
+          "end": "2026-08-26T03:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0070": {
+      "street": "الأمير عبدالله بن عبدالرحمن بن فيصل",
+      "others": []
+    },
+    "BLD-2026-0071": {
+      "street": "الأمير مساعد بن عبدالرحمن بن فيصل",
+      "others": []
+    },
+    "BLD-2026-0072": {
+      "street": "الأمين عبدالله العلي النعيم",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0073",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "development",
+          "start": "2026-07-13T08:00:00.000Z",
+          "end": "2026-08-11T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0073": {
+      "street": "الأمين عبدالله العلي النعيم",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0072",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "development",
+          "start": "2026-07-14T23:00:00.000Z",
+          "end": "2026-07-24T07:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0074": {
+      "street": "الدائري الجنوبي",
+      "others": []
+    },
+    "BLD-2026-0075": {
+      "street": "الداخلة",
+      "others": []
+    },
+    "BLD-2026-0076": {
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0077",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "emergency",
+          "start": "2026-07-19T07:00:00.000Z",
+          "end": "2026-08-02T15:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0077": {
+      "street": "الشيخ حسن بن عبدالله آل الشيخ",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0076",
+          "promoter": "شركة المياه الوطنية",
+          "subtype": "development",
+          "start": "2026-07-19T09:00:00.000Z",
+          "end": "2026-08-11T17:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0078": {
+      "street": "الشيخ محمد بن عبداللطيف بن عبدالرحمن",
+      "others": []
+    },
+    "BLD-2026-0079": {
+      "street": "الطائف",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0080",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "default",
+          "start": "2026-07-08T22:00:00.000Z",
+          "end": "2026-07-26T06:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0080": {
+      "street": "الطائف",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0079",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "development",
+          "start": "2026-07-08T22:00:00.000Z",
+          "end": "2026-07-19T06:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0081": {
+      "street": "النصر",
+      "others": []
+    },
+    "BLD-2026-0082": {
+      "street": "بلال بن رباح",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0083",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "default",
+          "start": "2026-07-27T14:00:00.000Z",
+          "end": "2026-08-16T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0083": {
+      "street": "بلال بن رباح",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0082",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "default",
+          "start": "2026-07-29T23:00:00.000Z",
+          "end": "2026-08-29T07:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0084": {
+      "street": "سدير",
+      "others": []
+    },
+    "BLD-2026-0085": {
+      "street": "شارع ابن حسان",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0086",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-22T14:00:00.000Z",
+          "end": "2026-08-12T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0087",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-20T15:00:00.000Z",
+          "end": "2026-07-27T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0086": {
+      "street": "شارع ابن حسان",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0085",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-20T14:00:00.000Z",
+          "end": "2026-08-12T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0087",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-20T15:00:00.000Z",
+          "end": "2026-07-27T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0087": {
+      "street": "شارع ابن حسان",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0085",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-20T14:00:00.000Z",
+          "end": "2026-08-12T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0086",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "emergency",
+          "start": "2026-07-22T14:00:00.000Z",
+          "end": "2026-08-12T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0088": {
+      "street": "شارع الاحساء",
+      "others": []
+    },
+    "BLD-2026-0089": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0090",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-10T08:00:00.000Z",
+          "end": "2026-08-09T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0091",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-11T20:00:00.000Z",
+          "end": "2026-08-11T04:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0090": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0089",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-10T14:00:00.000Z",
+          "end": "2026-07-26T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0091",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "emergency",
+          "start": "2026-07-11T20:00:00.000Z",
+          "end": "2026-08-11T04:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0091": {
+      "street": "شارع الامير بندر بن عبد العزيز",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0089",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "development",
+          "start": "2026-07-10T14:00:00.000Z",
+          "end": "2026-07-26T22:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        },
+        {
+          "permitRef": "BLD-2026-0090",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "default",
+          "start": "2026-07-10T08:00:00.000Z",
+          "end": "2026-08-09T16:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0092": {
+      "street": "شارع أم الحمام",
+      "others": []
+    },
+    "BLD-2026-0093": {
+      "street": "شارع جرير",
+      "others": []
+    },
+    "BLD-2026-0094": {
+      "street": "شارع خالد بن الوليد",
+      "others": []
+    },
+    "BLD-2026-0095": {
+      "street": "شارع سعد بن أبي وقاص",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0096",
+          "promoter": "الشركة السعودية للغاز",
+          "subtype": "maintenance",
+          "start": "2026-07-19T15:00:00.000Z",
+          "end": "2026-07-30T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0096": {
+      "street": "شارع سعد بن أبي وقاص",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0095",
+          "promoter": "هيئة تطوير مدينة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-19T22:00:00.000Z",
+          "end": "2026-08-09T06:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0097": {
+      "street": "طريق ابن الهيثم",
+      "others": []
+    },
+    "BLD-2026-0098": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0099",
+          "promoter": "شركة الاتصالات السعودية",
+          "subtype": "maintenance",
+          "start": "2026-07-15T13:00:00.000Z",
+          "end": "2026-07-18T21:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0099": {
+      "street": "طريق الأمير تركي بن عبدالعزيز الأول الفرعي",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0098",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-17T16:00:00.000Z",
+          "end": "2026-07-28T00:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0100": {
+      "street": "طريق الأمير محمد بن سعد بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0101": {
+      "street": "طريق الأمير محمد بن عبد العزيز",
+      "others": []
+    },
+    "BLD-2026-0102": {
+      "street": "طريق الصحابة",
+      "others": []
+    },
+    "BLD-2026-0103": {
+      "street": "طريق خديجة بنت خويلد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0104",
+          "promoter": "أمانة منطقة الرياض",
+          "subtype": "maintenance",
+          "start": "2026-07-29T15:00:00.000Z",
+          "end": "2026-08-03T23:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0104": {
+      "street": "طريق خديجة بنت خويلد",
+      "others": [
+        {
+          "permitRef": "BLD-2026-0103",
+          "promoter": "الشركة السعودية للكهرباء",
+          "subtype": "default",
+          "start": "2026-07-27T07:00:00.000Z",
+          "end": "2026-08-16T15:00:00.000Z",
+          "relation": "ongoing",
+          "gapDays": 0
+        }
+      ]
+    },
+    "BLD-2026-0105": {
+      "street": "عبدالرحمن الغافقي",
+      "others": []
+    },
+    "BLD-2026-0106": {
+      "street": "عبدالرحمن بن عوف",
+      "others": []
+    },
+    "BLD-2026-0107": {
+      "street": "علي بن أبي طالب",
+      "others": []
+    },
+    "BLD-2026-0108": {
+      "street": "عمر بن الخطاب",
+      "others": []
+    },
+    "BLD-2026-0109": {
+      "street": "عمرو بن العاص",
+      "others": []
+    },
+    "BLD-2026-0110": {
+      "street": "محمد رشيد رضا",
+      "others": []
+    },
+    "BLD-2026-0111": {
+      "street": "نبع",
+      "others": []
+    },
+    "BLD-2026-0112": {
+      "street": "آل داود",
+      "others": []
+    },
+    "BLD-2026-0113": {
+      "street": "ابن الجوزي",
+      "others": []
+    },
+    "BLD-2026-0114": {
+      "street": "ابي بكر الرازي",
+      "others": []
+    },
+    "BLD-2026-0115": {
+      "street": "أحمد بن محمد السديري",
+      "others": []
+    },
+    "BLD-2026-0116": {
+      "street": "الإمام سعود بن عبدالعزيز بن محمد الفرعي",
+      "others": []
+    },
+    "BLD-2026-0117": {
+      "street": "الأمير تركي بن عبدالعزيز الثاني",
+      "others": []
+    },
+    "BLD-2026-0118": {
+      "street": "الأمير عبدالرحمن بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0119": {
+      "street": "الأمير محمد بن فيصل بن تركي",
+      "others": []
+    },
+    "BLD-2026-0120": {
+      "street": "البحار",
+      "others": []
+    },
+    "BLD-2026-0121": {
+      "street": "البلدية",
+      "others": []
+    },
+    "BLD-2026-0122": {
+      "street": "الحويطة",
+      "others": []
+    },
+    "BLD-2026-0123": {
+      "street": "الخيمة",
+      "others": []
+    },
+    "BLD-2026-0124": {
+      "street": "الربع الخالي",
+      "others": []
+    },
+    "BLD-2026-0125": {
+      "street": "الشفق",
+      "others": []
+    },
+    "BLD-2026-0126": {
+      "street": "الشيخ عبدالله المخضوب",
+      "others": []
+    },
+    "BLD-2026-0127": {
+      "street": "العباس بن عبدالمطلب",
+      "others": []
+    },
+    "BLD-2026-0128": {
+      "street": "المثنى بن حارثة",
+      "others": []
+    },
+    "BLD-2026-0129": {
+      "street": "المهندس مساعد العنقري",
+      "others": []
+    },
+    "BLD-2026-0130": {
+      "street": "إمتداد الطريق الدائري الشرقي - وصلة الخرج)",
+      "others": []
+    },
+    "BLD-2026-0131": {
+      "street": "تميم الداري",
+      "others": []
+    },
+    "BLD-2026-0132": {
+      "street": "حزام الدوسري",
+      "others": []
+    },
+    "BLD-2026-0133": {
+      "street": "سعيد بن بيشان",
+      "others": []
+    },
+    "BLD-2026-0134": {
+      "street": "شارع أبي بن معاذ الأنصاري",
+      "others": []
+    },
+    "BLD-2026-0135": {
+      "street": "شارع الأمير مقرن بن عبدالعزيز",
+      "others": []
+    },
+    "BLD-2026-0136": {
+      "street": "شارع الحميد",
+      "others": []
+    },
+    "BLD-2026-0137": {
+      "street": "شارع الضياء",
+      "others": []
+    },
+    "BLD-2026-0138": {
+      "street": "شارع الكرامة",
+      "others": []
+    },
+    "BLD-2026-0139": {
+      "street": "شارع حلب",
+      "others": []
+    },
+    "BLD-2026-0140": {
+      "street": "شارع سعيد بن عبدالله السيد",
+      "others": []
+    },
+    "BLD-2026-0141": {
+      "street": "شارع عبدالله بن قيس",
+      "others": []
+    },
+    "BLD-2026-0142": {
+      "street": "شارع وادي حنيفة",
+      "others": []
+    },
+    "BLD-2026-0143": {
+      "street": "طريق الإمام سعود بن فيصل الفرعي",
+      "others": []
+    },
+    "BLD-2026-0144": {
+      "street": "طريق العروبة الفرعي",
+      "others": []
+    },
+    "BLD-2026-0145": {
+      "street": "طريق وادي حنيفة",
+      "others": []
+    },
+    "BLD-2026-0146": {
+      "street": "عبدالرحمن بن عزاز",
+      "others": []
+    },
+    "BLD-2026-0147": {
+      "street": "عرقة",
+      "others": []
+    },
+    "BLD-2026-0148": {
+      "street": "ماجد بن عبد الله القصبي",
+      "others": []
+    },
+    "BLD-2026-0149": {
+      "street": "محمد حامد الفقي",
+      "others": []
+    },
+    "BLD-2026-0150": {
+      "street": "وادي الرمة",
+      "others": []
+    }
+  }
+}
