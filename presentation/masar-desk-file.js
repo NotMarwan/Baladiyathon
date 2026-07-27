@@ -387,7 +387,12 @@
       || (entry.intersections || [])[0];
     if (!junction) return '';
 
-    return label + renderSignalPhaseBody(entry, junction);
+    /* الإجراء يُقرأ من تحليل النقل حين يكون محمَّلاً: هو الذي يعرف أيَّ مدخلٍ
+       يسلكه البديل، فيسمّي الطرفين بدل «نسّق». وإن غاب بقيت البطاقة على
+       التوصية العامة — بطاقةٌ أضعف أصدق من بطاقة تسقط. */
+    var move = (host.MASAR_SIGNAL_REALLOCATION
+      && host.MASAR_SIGNAL_REALLOCATION.permits) || null;
+    return label + renderSignalPhaseBody(entry, junction, move && move[permitRef]);
   }
 
   /** تمييز العدد بالعربية: الثلاثة إلى العشرة جمعٌ، وما فوقها مفردٌ منصوب. */
@@ -398,15 +403,51 @@
     return number(legs) + ' ضلعاً';
   }
 
-  /** جسم البطاقة المؤكَّدة: الحال، ثم المظروف، ثم الإجراء أو سببُ سقوطه. */
-  function renderSignalPhaseBody(entry, junction) {
-    var envelope = junction.envelope;
-    var eligible = entry.rule && entry.rule.state === 'eligible';
+  /** التقاطع الحاكم في تحليل النقل — أوّل تقاطع يحمل حالة التصريح نفسها. */
+  function movingJunction(move) {
+    if (!move || !move.junctions) return null;
+    var matching = move.junctions.filter(function (one) {
+      return one.action === move.action;
+    });
+    return matching[0] || move.junctions[0] || null;
+  }
 
-    var body = '<p class="desk-alt-load is-' + (eligible ? 'overflows' : 'unknown') + '">'
+  /**
+   * صدر البطاقة — والفرق الذي يصنعه تحليل النقل.
+   *
+   * حين يمرّ البديل بالإشارة نفسها فالحال ليست «أخضرٌ مهدور» وحدها: المدخل
+   * المغلق يأخذ أخضراً لا يستعمله، **والمدخل الذي حُوِّلت إليه الحركة يزدحم
+   * بأخضرٍ لم يزد**. وهذان وجهان لخطة توقيت واحدة لم تتحرك.
+   */
+  function signalPhaseLede(move) {
+    if (move && move.action === 'reallocate') {
+      return '<p class="desk-alt-load is-overflows">'
+        + '<strong>الطريق البديل يمرّ بالإشارة نفسها</strong> — فالإشارة تمنح '
+        + 'أخضرَ لمدخلٍ مغلق لا تأتي منه مركبة، بينما يزدحم المدخل الذي '
+        + 'حُوِّلت إليه الحركة بأخضرٍ لم يزد.</p>';
+    }
+    if (move && move.action === 'no-waste') {
+      return '<p class="desk-alt-load is-unknown">'
+        + '<strong>تقاطع بإشارة مؤكَّدة من مصدرين</strong> — والعمل ليس ملاصقاً '
+        + 'لخط التوقّف. فالمركبات تخرج من الإشارة وتصطفّ عند العمل: المسألة '
+        + 'طابورٌ خلف الحفر لا أخضرٌ مهدور عند الإشارة.</p>';
+    }
+    return '<p class="desk-alt-load is-overflows">'
       + '<strong>تقاطع بإشارة مؤكَّدة من مصدرين</strong> — هذا العمل يغلق مدخلاً '
       + 'على تقاطع بإشارة. الإشارة ستبقى تمنح أخضرَ لمدخلٍ مغلق ما لم تُعدَّل '
-      + 'خطتها، فالانتظار على المداخل الباقية يزيد بلا سبب.</p>'
+      + 'خطتها، فالانتظار على المداخل الباقية يزيد بلا سبب.</p>';
+  }
+
+  /** جسم البطاقة المؤكَّدة: الحال، ثم المظروف، ثم الإجراء أو سببُ سقوطه. */
+  function renderSignalPhaseBody(entry, junction, move) {
+    var moving = movingJunction(move);
+    /* «لا أخضر مهدور» يُسقط المظروف كلَّه. عرضُ مدىً للأخضر المهدور تحت عنوانٍ
+       يقول إنه غير مهدور تناقضٌ يُقرأ رقماً — والقارئ يصدّق الرقم. */
+    var envelope = (moving && moving.action === 'no-waste')
+      ? null
+      : (moving && moving.envelope) || junction.envelope;
+
+    var body = signalPhaseLede(move)
       + '<dl class="desk-figures">'
       + '<div><dt>التقاطع</dt><dd>' + escapeHtml(text(junction.name)) + '</dd></div>'
       + '<div><dt>على بُعد</dt><dd>' + escapeHtml(number(junction.intersectionToWorkM))
@@ -418,28 +459,67 @@
         ? '<div><dt>الأخضر المهدور</dt><dd>' + escapeHtml(number(envelope.lowPct))
           + '٪ إلى ' + escapeHtml(number(envelope.highPct)) + '٪ من الدورة</dd></div>'
         : '')
+      + (moving && moving.action === 'reallocate' && moving.divertedVehPerHour
+        ? '<div><dt>الحركة المحوَّلة إلى مدخل البديل</dt><dd>'
+          + escapeHtml(number(moving.divertedVehPerHour)) + ' مركبة/ساعة</dd></div>'
+        : '')
       + '</dl>';
 
     if (envelope) {
       body += '<p class="desk-hint">المدى ليس حساباً: أدناه صفر — لا أحد يعدّل '
-        + 'الخطة، وهو الوضع القائم. وأعلاه حصة مدخلٍ واحد بافتراض توزيع متساوٍ '
-        + 'على الأضلاع، وهو افتراض معلن لا قياس. ولا يُحوَّل إلى ثوانٍ: طول '
-        + 'الدورة غير منشور في أي مصدر متاح.</p>';
+        + 'الخطة، وهو الوضع القائم. وأعلاه حصة المدخل المغلق بافتراض توزيع '
+        + 'متساوٍ على الأضلاع، وهو افتراض معلن لا قياس. ولا يُحوَّل إلى ثوانٍ: '
+        + 'طول الدورة غير منشور في أي مصدر متاح.</p>';
     }
 
-    if (eligible) {
-      body += '<p class="desk-card-label">الإجراء</p>'
-        + '<p class="desk-alt-load is-overflows"><strong>تنسيق إعادة توقيت مع '
-        + 'إدارة المرور قبل بدء العمل.</strong></p>';
-    } else {
-      body += '<p class="desk-abstain">لا توصية توقيت: '
-        + escapeHtml(text(entry.rule && entry.rule.why)) + '</p>';
-    }
+    body += renderSignalAction(entry, moving);
 
     return body + '<p class="desk-source">التحكّم مؤكَّد من مصدرين مستقلين '
       + '(سجل الهيئة الملكية وعقد OpenStreetMap). وما عدا ذلك مشتقّ من النموذج: '
-      + 'عدد الأضلاع من هندسة الشبكة، والمدى من افتراض توزيع معلن. '
-      + 'لا توقيت إشارة في أي مصدر.</p>';
+      + 'عدد الأضلاع من هندسة الشبكة، ومسار البديل ومدخله من محرك التوجيه، '
+      + 'والمدى من افتراض توزيع معلن. لا توقيت إشارة في أي مصدر.</p>';
+  }
+
+  /**
+   * الإجراء — ومداره على تسمية الطرفين.
+   *
+   * «نسّق إعادة توقيت» بلاغٌ يُحال. و«انقل الأخضر من س إلى ص» أمرُ تشغيل.
+   * والفرق كله في الاسمين، فحين يغيب أحدهما تمتنع البطاقة **بسببه المكتوب**
+   * ولا تتراجع إلى العبارة العامة — التراجع يخفي أن الحالة اكتُشفت.
+   */
+  function renderSignalAction(entry, moving) {
+    if (!moving) {
+      /* تحليل النقل غير محمَّل: التوصية العامة من الطور السابق. */
+      var eligible = entry.rule && entry.rule.state === 'eligible';
+      if (eligible) {
+        return '<p class="desk-card-label">الإجراء</p>'
+          + '<p class="desk-alt-load is-overflows"><strong>تنسيق إعادة توقيت مع '
+          + 'إدارة المرور قبل بدء العمل.</strong></p>';
+      }
+      return '<p class="desk-abstain">لا توصية توقيت: '
+        + escapeHtml(text(entry.rule && entry.rule.why)) + '</p>';
+    }
+
+    if (moving.action === 'no-waste') {
+      return '<p class="desk-abstain">لا توصية توقيت: ' + escapeHtml(text(moving.why))
+        + '</p>';
+    }
+
+    var recommendation = moving.recommendation;
+    if (!recommendation || recommendation.blockedBy) {
+      return '<p class="desk-abstain">الحالة مكتشَفة والتوصية ممتنعة: '
+        + escapeHtml(text(recommendation ? recommendation.blockedBy : moving.why))
+        + '.</p>';
+    }
+
+    return '<p class="desk-card-label">الإجراء</p>'
+      + '<p class="desk-alt-load is-overflows"><strong>'
+      + escapeHtml(text(recommendation.label)) + '.</strong></p>'
+      + (recommendation.toApproach
+        ? '<p class="desk-hint">الأخضر المنقول واحد: ما يخسره «'
+          + escapeHtml(text(recommendation.fromApproach)) + '» هو عينه ما يكسبه «'
+          + escapeHtml(text(recommendation.toApproach)) + '» — لا مكسبان.</p>'
+        : '');
   }
 
   /**
