@@ -76,6 +76,12 @@
 <script src="masar-worksmap-solution.js"></script>
 <script src="masar-city-routing.js"></script>
 <script src="masar-worksmap-interactions.js"></script>
+<!-- المحرك هنا لأجل الملف الساعي وعكس دالة BPR — الحساب المروري له مصدر واحد. -->
+<script src="masar-engine.js"></script>
+<script src="masar-trafficload.js"></script>
+<script src="masar-trafficload-layer.js"></script>
+<script src="masar-digimpact.js"></script>
+<script src="masar-digimpact-layer.js"></script>
 <script>
 (function () {
   'use strict';
@@ -137,14 +143,23 @@
      * رسم التوجيه قبل شوارع الأحياء لأنه يفتح ميزةً وهي تُحسّن منظراً.
      */
     if (typeof MasarRoadsLazy !== 'undefined') {
+      /* كل حلقةِ طرقٍ تصل تُبلَّغ لطبقة الحمل: تقديرها محسوبٌ على ما كان
+         محمَّلاً لحظة التشغيل، وشوارعٌ تصل بعده تبقى بلا لون فتُقرأ خالية. */
+      var announceRoads = function () {
+        if (typeof window.__masarTrafficLoadRefresh === 'function') {
+          window.__masarTrafficLoadRefresh();
+        }
+      };
       MasarRoadsLazy.attach(GL.api, {
         onDone: function () {
+          announceRoads();
           MasarRoadsLazy.load('data/riyadh-route-graph.js', 'RIYADH_ROUTE_GRAPH',
             function (err, graph) {
               if (!err) armRouting(graph);
               MasarRoadsLazy.attach(GL.api, {
                 src: 'data/riyadh-roads-neighbourhood.geojson.js',
                 globalName: 'RIYADH_ROADS_HOOD',
+                onDone: announceRoads,
               });
             });
         },
@@ -177,7 +192,7 @@
       MasarWorksMapInteractions.install(GL.map, maplibregl, {
         decorate: function (rendered) {
           // الهندسة المرسومة مقصوصة على حدود البلاطة؛ التوجيه يحتاج الأصل.
-          return detourFor(byId[rendered.properties.id] || rendered);
+          return digImpactFor(rendered) + detourFor(byId[rendered.properties.id] || rendered);
         },
       });
     } catch (err) {
@@ -197,6 +212,180 @@
     var hero = document.getElementById('wmHero');
 
     document.getElementById('wmLegend').innerHTML = MasarWorksMapPanel.renderLegend(groups);
+
+    /**
+     * كتلة أثر الحفر في بطاقة السجل.
+     * تُحسب من خصائص السجل نفسها ومن ساعة العرض الحالية، فتُقرأ مع البطاقة
+     * ولو كانت الطبقة مطفأة: السؤال «كم يؤخّرني هذا العمل؟» يُسأل عن سجلٍ
+     * مفتوح لا عن المدينة. وتغيب بلا ضجيج إن نقص مدخل — لا رقم من فراغ.
+     */
+    function digImpactFor(feature) {
+      if (typeof MasarDigImpact === 'undefined'
+        || typeof MasarDigImpactLayer === 'undefined') return '';
+      var handle = window.__masarDigImpact;
+      var hour = handle ? handle.hour() : 18;
+      var impact = MasarDigImpact.impactOf(feature.properties, hour);
+      return impact ? MasarDigImpactLayer.popupHtml(impact) : '';
+    }
+
+    /* ---- الحمل المروري المقدَّر ----
+       داخل try: `onReady` سلسلة واحدة، ورميةٌ من طبقةٍ إضافية تُسقط ما بعدها
+       من الصفحة — وما بعدها هو السجلات والبحث والحلّ. الطبقة الإضافية تسقط
+       وحدها أو لا تسقط. */
+    try {
+      armTrafficLoad();
+    } catch (err) {
+      console.error('[masar] طبقة الحمل المروري لم تُركَّب:', err);
+    }
+
+    /**
+     * طبقة الحمل: مربّعُ تشغيلٍ في اللوحة، وكتلةُ دليلٍ تظهر معه، وبطاقةٌ عند
+     * النقر على شارع. الثلاثة مطفأة ابتداءً — الخريطة عند أول نظرة تعرض ما هو
+     * مسجَّل، والحمل مقدَّر فلا يُقدَّم على المسجَّل بلا طلب.
+     */
+    function armTrafficLoad() {
+      if (typeof MasarTrafficLoadLayer === 'undefined'
+        || typeof MasarTrafficLoad === 'undefined'
+        || typeof MasarEngine === 'undefined') return;
+
+      /* خريطةٌ لم تُقلع لا تُعرض عليها طبقة، ولا يُعرض مربّعُ تشغيلٍ يَعِد بها.
+         مربّعٌ يُؤشَّر فلا يحدث شيء أسوأ من غيابه: الأول يُقرأ عطلاً في
+         البيانات، والثاني يُقرأ ميزةً غير موجودة. والقائمة تبقى تعمل. */
+      if (typeof GL.api.isDegraded === 'function' && GL.api.isDegraded()) return;
+
+      var handle = MasarTrafficLoadLayer.install(GL.map, function () {
+        return GL.api.getData().roads;
+      });
+      // نفس اصطلاح `__masarBuildings`: مقبضٌ معلن للفحص من الطرفية.
+      window.__masarTrafficLoad = handle;
+
+      /* أثر الحفر يقرأ سجلات الأعمال لا الطرق، وله مصدره وطبقته — ويشارك
+         منزلق الساعة نفسه: ساعتان مختلفتان على الشاشة نفسها تجعلان القارئ
+         يقارن حِملَ السادسة بأثرِ الثالثة ولا شيء ينبّهه. */
+      var dig = (typeof MasarDigImpactLayer !== 'undefined')
+        ? MasarDigImpactLayer.install(GL.map, function () {
+          return GL.api.getData().works;
+        }, { hour: handle.hour() })
+        : null;
+      window.__masarDigImpact = dig;
+
+      var fieldset = panelRoot.querySelector('fieldset.masar-map-field');
+      if (fieldset) {
+        fieldset.insertAdjacentHTML('beforeend', MasarTrafficLoadLayer.toggleHtml());
+        if (dig) fieldset.insertAdjacentHTML('beforeend', MasarDigImpactLayer.toggleHtml());
+        fieldset.insertAdjacentHTML('beforeend',
+          MasarTrafficLoadLayer.controlsHtml(handle.mode(), handle.hour()));
+      }
+
+      var legendBox = document.getElementById('wmLegend');
+      var legendSlot = document.createElement('div');
+      legendSlot.id = 'tlLegend';
+      legendSlot.hidden = true;
+      legendBox.appendChild(legendSlot);
+
+      var box = panelRoot.querySelector('input[data-trafficload]');
+      var digBox = panelRoot.querySelector('input[data-digimpact]');
+      var controls = panelRoot.querySelector('[data-tl-controls]');
+      var hourInput = panelRoot.querySelector('[data-tl-hour]');
+      var hourLabel = panelRoot.querySelector('[data-tl-hour-label]');
+      var lastSummary = null;
+      var lastDigSummary = null;
+
+      /* الدليل يُعاد بناؤه من حالة المقابض نفسها لا من متغيّرات موازية —
+         نصّان يصفان حالةً واحدة ينحرفان عند أول تعديل. */
+      function paintLegend() {
+        var html = '';
+        if (box && box.checked) {
+          html += MasarTrafficLoadLayer.legendHtml(lastSummary, handle.mode(), handle.hour());
+        }
+        if (dig && digBox && digBox.checked) {
+          html += MasarDigImpactLayer.legendHtml(lastDigSummary, dig.hour());
+        }
+        legendSlot.innerHTML = html;
+        legendSlot.hidden = !html;
+      }
+
+      /* المنزلق يظهر إن كانت إحدى الطبقتين مشتغلة — كلتاهما تقرأ الساعة. */
+      function syncControls() {
+        var anyOn = (box && box.checked) || (digBox && digBox.checked);
+        if (controls) controls.hidden = !anyOn;
+        if (hourInput) {
+          hourInput.disabled = !((digBox && digBox.checked)
+            || (box && box.checked && handle.mode() === 'congestion'));
+        }
+      }
+
+      if (controls) controls.hidden = true;
+
+      if (box) {
+        box.addEventListener('change', function () {
+          lastSummary = handle.setVisible(box.checked) || lastSummary;
+          syncControls();
+          paintLegend();
+        });
+      }
+
+      if (digBox && dig) {
+        digBox.addEventListener('change', function () {
+          lastDigSummary = dig.setVisible(digBox.checked) || lastDigSummary;
+          syncControls();
+          paintLegend();
+        });
+      }
+
+      panelRoot.querySelectorAll('input[name="tl-mode"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+          if (!radio.checked) return;
+          handle.setMode(radio.value);
+          syncControls();
+          paintLegend();
+        });
+      });
+
+      if (hourInput) {
+        hourInput.addEventListener('input', function () {
+          var hour = handle.setHour(hourInput.value);
+          if (dig) lastDigSummary = dig.setHour(hour) || lastDigSummary;
+          if (hourLabel) hourLabel.textContent = MasarTrafficLoadLayer.formatHour(hour);
+          paintLegend();
+        });
+      }
+
+      /* الشبكة تصل على حلقات بعد التشغيل. بلا هذه المناداة يبقى الشريط على
+         الشرايين وحدها ويُقرأ فراغُ الشوارع المحلية «لا حركة» لا «لم يُحسب». */
+      window.__masarTrafficLoadRefresh = function () {
+        var summary = handle.refresh();
+        if (summary) lastSummary = summary;
+        if (dig) {
+          var digSummary = dig.refresh();
+          if (digSummary) lastDigSummary = digSummary;
+        }
+        if (summary || lastDigSummary) paintLegend();
+      };
+
+      /**
+       * النقر على شارع يفتح تقديره — بلا شرط تشغيل الطبقة: الرقم موجود سواء
+       * لُوِّنت الشبكة أم لا، والسؤال «كم مركبة تمرّ هنا؟» يُسأل عن شارع واحد
+       * أكثر مما يُسأل عن المدينة كلها.
+       *
+       * ويُسكت إن كان تحت المؤشّر سجلُّ عملٍ: بطاقتان تُفتحان على نقرةٍ واحدة
+       * تتزاحمان، وبطاقة السجل أولى — تلك واقعةٌ مسجَّلة وهذا تقدير.
+       */
+      GL.map.on('click', 'roads', function (event) {
+        var feature = event.features && event.features[0];
+        if (!feature) return;
+        var covering = GL.map.queryRenderedFeatures(event.point).filter(function (hit) {
+          return /-(symbols|lines)$/.test(hit.layer && hit.layer.id);
+        });
+        if (covering.length) return;
+
+        var estimate = MasarTrafficLoad.estimate(feature.properties);
+        new maplibregl.Popup({ closeButton: true, maxWidth: '320px' })
+          .setLngLat(event.lngLat)
+          .setHTML(MasarTrafficLoadLayer.roadPopupHtml(feature.properties.name, estimate))
+          .addTo(GL.map);
+      });
+    }
 
     /* ---- المسارات البديلة على شبكة الرياض ---- */
 
