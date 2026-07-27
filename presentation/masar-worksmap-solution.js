@@ -487,18 +487,49 @@
           + ' بعد التحويل مقابل ' + (load.maxRatioBefore || 0).toFixed(2)
           + ' قبله. البديل ينقل الازدحام ولا يمتصّه.</p>'
         : '';
+      /* وأين يقع ذلك الطلب؟ «يتجاوز السعة» لا يقول على أي طريق، وطابورٌ على
+         شريان كلفةٌ على من اختار الطريق بينما طابورٌ في حيٍّ كلفةٌ على من لم
+         يختر شيئاً. الشرط `minorOverflows` وحده — لا `minorEdges` — فمرور
+         البديل بحيٍّ ضمن سعته ليس خبراً. */
+      var hood = load.minorOverflows
+        ? '<p class="works-detour-hood">ويقع الحمل <strong>داخل حيّ سكني</strong>: '
+          + (load.minorBindingStreet
+            ? '«' + escapeHtml(String(load.minorBindingStreet)) + '»'
+            : 'أضيق مقطع سكني')
+          + ' يبلغ ' + Math.round((load.minorMaxRatioAfter || 0) * 100)
+          + '٪ من سعته بعد التحويل، مقابل '
+          + Math.round((load.minorMaxRatioBefore || 0) * 100) + '٪ قبله. '
+          + 'الطابور أمام البيوت لا على طريقٍ بُني ليحمله.</p>'
+        : '';
       return '<tr class="works-detour-' + (index === 0 ? 'first' : 'second')
-        + (load.overflows ? ' works-detour-strained' : '') + '">'
+        + (load.overflows ? ' works-detour-strained' : '')
+        + (load.minorOverflows ? ' works-detour-hooded' : '') + '">'
         + '<th>بديل ' + (index + 1) + '</th>'
         + '<td>' + kilometres(route.lengthM) + ' كم</td>'
         + '<td class="works-solution-num">+' + minutes(added) + ' د</td>'
         + '</tr>'
-        + (strain ? '<tr class="works-detour-detail"><td colspan="3">'
-          + strain + '</td></tr>' : '')
+        + (strain || hood ? '<tr class="works-detour-detail"><td colspan="3">'
+          + strain + hood + '</td></tr>' : '')
         + detailRow(route, index);
     }).join('');
 
     var diverted = result.diverted || {};
+
+    /* وحين **لا** يجنّب الحيَّ أيُّ بديل معروض، فالمعروض ليس مساراً بل قرار.
+       يُقال مرة على مستوى القسم لا مرتين تحت كل بديل: تكرارُه يجعله زينةً
+       تُقرأ ثم تُتجاوز. */
+    var loaded = result.alternatives.filter(function (route) {
+      return route && route.load;
+    });
+    var noneSpared = loaded.length > 0 && loaded.every(function (route) {
+      return route.load.minorOverflows;
+    });
+    var decision = noneSpared
+      ? '<p class="works-detour-decision"><strong>لا بديل مقبول</strong> — '
+        + 'كل بديل محسوب يدفع شارعاً سكنياً فوق سعته. هذا الإغلاق '
+        + '<strong>قرارٌ لا مسار</strong>: تصريفه نافذةٌ أخرى أو إغلاقٌ جزئي '
+        + 'أو تنسيقٌ مع جهةٍ أخرى، لا توجيهُ الحركة إلى الحيّ.</p>'
+      : '';
 
     return '<section class="works-detour">'
       + '<h4>المسار البديل</h4>'
@@ -508,6 +539,7 @@
       + '<td class="works-solution-num">' + minutes(result.baseline.minutes) + ' د</td></tr>'
       + rows
       + '</tbody></table>'
+      + decision
       + '<p class="works-detour-note">محسوب على شبكة الرياض كاملةً (شرايين وشوارع أحياء) — '
       + 'أزمنة رحلة BPR وعقوبات انعطاف وتقاطعات عند الساعة '
       + escapeHtml(String(result.hour === undefined ? 8 : result.hour)) + ':00. '

@@ -300,6 +300,47 @@ test('البطاقة تعرض موقع الحمل والقرار — لا رقم
   }
 });
 
+test('الخريطة تقول أين يقع الحمل — لا «يتجاوز السعة» مجرَّدة', () => {
+  /* الخريطة تحسب البديل حيّاً في المتصفح، لا تقرأ الملخّص المولَّد. فلو بقيت
+     تقول «الطلب يتجاوز السعة» وحدها، لظلّ أهمّ ما يعرفه المحرك مكتوماً في
+     السطح الذي يفتحه الناس أولاً. */
+  const Solution = require(path.join(ROOT, 'masar-worksmap-solution.js'));
+
+  const subjectResult = Routing.alternativesAround(prepared,
+    subject.geometry.coordinates,
+    { hour: report.referenceHour, count: hood.displaySearchCount });
+  const html = Solution.detourHtml(subjectResult);
+
+  assert.ok(html.indexOf('داخل حيّ سكني') !== -1,
+    'الخريطة لا تقول إن الحمل يقع داخل حيّ');
+  assert.ok(/\d+٪ من سعته بعد التحويل، مقابل \d+٪ قبله/.test(html),
+    'قبل/بعد على الشارع السكني غائبان عن الخريطة');
+  assert.ok(html.indexOf('works-detour-hood') !== -1, 'السطر بلا صنف يُنسَّق به');
+
+  /* كل بدائل هذا التصريح محمَّلة على الحيّ، فكتلة القرار واجبة. */
+  const loaded = (subjectResult.alternatives || []).filter((one) => one && one.load);
+  if (loaded.length && loaded.every((one) => one.load.minorOverflows)) {
+    assert.ok(html.indexOf('قرارٌ لا مسار') !== -1,
+      'كل البدائل محمَّلة على الحيّ والخريطة لا تسمّي المخرَج');
+    assert.strictEqual(html.split('قرارٌ لا مسار').length - 1, 1,
+      'كتلة القرار مكرَّرة — تُقرأ زينةً ثم تُتجاوز');
+  }
+
+  /* والنفي: بديلٌ لا يفيض على حيّ لا يحمل السطر ولا الكتلة. */
+  const clean = Solution.detourHtml({
+    ok: true, hour: 8, closedEdges: 1, baseline: { minutes: 5 },
+    diverted: { vehPerHour: 100, lanesClosed: 1, lanes: 2 },
+    alternatives: [{
+      lengthM: 1000, minutes: 6, addedMinutesAfterDiversion: 1, streets: [],
+      load: { overflows: false, minorOverflows: false, maxRatioAfter: 0.5 },
+    }],
+  });
+  assert.ok(clean.indexOf('داخل حيّ سكني') === -1,
+    'السطر يظهر على بديل لا يُحمّل حيّاً');
+  assert.ok(clean.indexOf('قرارٌ لا مسار') === -1,
+    'كتلة القرار تظهر على بديل مقبول');
+});
+
 test('الحدّ معلن مع الرقم — ولا يدّعي قياس أثرٍ على السكان', () => {
   /* الرقم يقول «فوق السعة». ولا يقول ضجيجاً ولا سلامةً ولا سرعةً عند البيوت،
      وهذه هي الأسئلة التي يسألها الساكن فعلاً. إعلان ما لا نقيسه شرط. */
