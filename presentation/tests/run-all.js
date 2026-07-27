@@ -44,10 +44,55 @@ const PENDING = {
   'delta-decomposition-test.js': 'لا تصريح سالب بعد ربط الحمل بالتقدير — المقايضة كانت أثر حملٍ متفائل',
 };
 
+/**
+ * حزمٌ تقطّعها بيئي موثَّق — تُعاد مرة واحدة، والدليل يُحفظ قبل الإعادة.
+ * ---------------------------------------------------------------------------
+ * `AGENTS.md` يقول نصاً: «أعد التشغيل قبل أن تظنّه منك». هذا السطر أتمتةُ تلك
+ * الجملة لا أكثر — بثلاثة قيود تمنعه من التحوّل إلى ممسحة فشل:
+ *
+ *   1. **القائمة مغلقة ومعلَّلة.** الحزمتان أدناه وحدهما، وسببهما مقيس في
+ *      `docs/engineering/FLAKY-SERVER-SUITES-2026-07-26.md`: توقيع قرعة المنفذ
+ *      (نحو 20٪ من التشغيلات) وتوقيع `libuv` المفتوح (خروج 3221226505).
+ *      حزمة خارج القائمة تسقط من أول مرة كما كانت دائماً.
+ *   2. **الدليل قبل الإعادة.** مخرج السقطة الأولى كاملاً — الرمز والإشارة
+ *      والنصّ — يُكتب إلى `logs/flaky/` قبل أي إعادة. وهذا ما تطلبه «الخطوة
+ *      التالية المقترحة» في وثيقة التقطّع حرفياً: التقاط النصّ الخام حين يقع.
+ *      إعادةٌ بلا حفظ تمحو أثر عطلٍ مفتوح ما زال يُشخَّص.
+ *   3. **السقطة الثانية حقيقية.** إعادةٌ واحدة لا حلقة. انحدارٌ فعلي في شيفرة
+ *      الخادم يسقط مرتين متتاليتين، والاحتمال أن يكون التقطّع البيئي هو الساقط
+ *      في الحالين معاً نحو 4٪ — مقبول لبوابة تسقط اليوم كذباً في خُمس
+ *      التشغيلات، فتُقرأ «أحمر» على شيفرة سليمة ويُعتاد تجاهلُها.
+ */
+const RETRY_ONCE = {
+  'server-test.js': 'توقيع منفذ/libuv موثَّق — FLAKY-SERVER-SUITES-2026-07-26.md',
+  'server-security-test.js': 'توقيع منفذ/libuv موثَّق — FLAKY-SERVER-SUITES-2026-07-26.md',
+};
+
+const FLAKY_LOG_DIR = path.join(dir, '..', '..', 'logs', 'flaky');
+
+function saveFlakyEvidence(file, error) {
+  fs.mkdirSync(FLAKY_LOG_DIR, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const target = path.join(FLAKY_LOG_DIR, `${file}-${stamp}.log`);
+  fs.writeFileSync(target, [
+    `suite: ${file}`,
+    `when: ${new Date().toISOString()}`,
+    `node: ${process.version}`,
+    `exit: ${error.status === undefined ? '—' : error.status}`,
+    `signal: ${error.signal || '—'}`,
+    '--- stdout ---',
+    String(error.stdout || ''),
+    '--- stderr ---',
+    String(error.stderr || ''),
+  ].join('\n'), 'utf8');
+  return path.relative(path.join(dir, '..', '..'), target);
+}
+
 let failed = 0;
 let pendingFailed = 0;
 let checksPassed = 0;
 const promoted = [];
+const retried = [];
 
 for (const file of files) {
   const pendingReason = PENDING[file];
@@ -74,6 +119,22 @@ for (const file of files) {
       pendingFailed += 1;
       console.log('معلَّق — يسقط كما هو معلَن');
       continue;
+    }
+    if (RETRY_ONCE[file]) {
+      const evidence = saveFlakyEvidence(file, error);
+      try {
+        const output = execFileSync(process.execPath, [path.join(dir, file)],
+          { stdio: 'pipe' });
+        checksPassed += (String(output).match(/^ {2}ok - /gm) || []).length;
+        retried.push({ file, evidence });
+        console.log('نجح بعد إعادة واحدة — تقطّع موثَّق');
+        console.log(`  [السقطة الأولى: خروج ${error.status === undefined ? '—' : error.status}`
+          + `${error.signal ? ' · إشارة ' + error.signal : ''} · الدليل: ${evidence}]`);
+        continue;
+      } catch (retryError) {
+        // سقطتان متتاليتان ليستا تقطّعاً — تسقط الحزمة بمخرج الإعادة.
+        error = retryError;
+      }
     }
     failed += 1;
     console.log('فشل');
@@ -118,6 +179,13 @@ if (pendingFailed) {
 if (promoted.length) {
   console.log('\nحزم معلَّقة نجحت — احذفها من PENDING في هذا الملف:');
   promoted.forEach((file) => console.log(`  ${file}`));
+}
+
+/* الإعادة تُذكر في الخلاصة لا في وسط اللفافة وحدها — إعادةٌ لا تُرى تتحوّل
+   بصمت من استثناء موثَّق إلى عادة. */
+if (retried.length) {
+  console.log(`\n${retried.length} حزمة نجحت بعد إعادة — التقطّع موثَّق ودليل كل سقطة محفوظ:`);
+  retried.forEach(({ file, evidence }) => console.log(`  ${file} — ${evidence}`));
 }
 
 process.exit(failed ? 1 : 0);
