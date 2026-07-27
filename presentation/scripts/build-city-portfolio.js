@@ -400,6 +400,25 @@ function build() {
       ? 3
       : (scored.level === 'medium' || scored.delayVehHours >= SEVERITY_MEDIUM_VEH_HOURS) ? 2 : 1;
 
+    /**
+     * توصيةٌ تأخيرها أعلى من المقدَّم تُصعَّد دائماً — ولو لم تتجاوز أياً من
+     * عتبات `escalationReason`.
+     * -------------------------------------------------------------------------
+     * كشفه تحكيم بارد: ثلاث حالات في المحفظة `savedVehHours` فيها سالب، أي أن
+     * «أفضل» ما وجده المحرك أسوأ رقمياً مما قُدِّم — وكانت `escalate: false`.
+     * المقايضة نفسها مشروعة ومشروحة في `tradeOff` (امتداد موقع أقصر أو تعرّض
+     * حسّاس أقل)، لكنها بالضبط نوع القرار الذي لا يُترك لعتبةٍ آلية: النظام
+     * يقايض كميةً فيزيائية بوزنٍ تفضيلي معلَن، فيلزم أن يراه إنسان. والحالات
+     * التي تتجاوز العتبات تُصعَّد أصلاً — فالشرط إضافةٌ لا استبدال.
+     *
+     * و`confidence` لا يُمسّ: هو ثقةٌ في رقم الأثر، والتصعيد حاجةٌ إلى مراجعة.
+     * قراران لا قرار — تماماً كفصل الشدة عن التصعيد أعلاه.
+     */
+    const recommendationCostsMore = best.delayVehHours > plan.baseline.delayVehHours;
+    const escalation = escalate || (recommendationCostsMore
+      ? 'التوصية تأخيرها أعلى من المقدَّم — مقايضة تحتاج قراراً بشرياً'
+      : null);
+
     features.push({
       type: 'Feature',
       geometry: group === 'pois'
@@ -449,7 +468,7 @@ function build() {
         siteSpanDays: best.breakdown.spanDays,
         // حين يكون تأخير التوصية أعلى من المقدَّم، لا يُكتفى بوفرٍ صفري:
         // تُسمّى المقايضة صراحةً وإلا قُرئت التوصية خطأً.
-        tradeOff: best.delayVehHours > plan.baseline.delayVehHours
+        tradeOff: recommendationCostsMore
           ? 'تأخير أعلى من المقدَّم بـ'
             + Math.round(best.delayVehHours - plan.baseline.delayVehHours)
             + ' ساعة-مركبة، مقابل انخفاض المجموع المكافئ بـ'
@@ -457,8 +476,8 @@ function build() {
               - best.totalEquivalentVehHours)
             + ' (امتداد موقع أقصر أو تعرّض حسّاس أقل)'
           : '',
-        escalate: Boolean(escalate),
-        escalateReason: escalate || '',
+        escalate: Boolean(escalation),
+        escalateReason: escalation || '',
         inputsVersion: 'v1',
         version: 1,
         description: 'إغلاق ' + permit.lanesClosed + ' من ' + permit.lanes

@@ -19,7 +19,16 @@ const artifacts = [
 const pitch = artifacts[0].html;
 const sources = read('presentation/masar-sources.html');
 const ideaCard = read('بطاقة-الفكرة.md');
-const allOwnedNarrative = [...artifacts.map((item) => item.html), sources, ideaCard].join('\n');
+/*
+ * نموذج التقديم الرسمي — أضيف إلى نطاق الحراسة بعد تحكيم بارد كشف أنه كان
+ * **خارجها وحده**. الملفات الخمسة الأخرى كلها مواد عرض؛ وهذا الملف هو النص
+ * الذي يُلصق حرفياً في فورم المسابقة، أي أول ما تقرؤه اللجنة. وقد حمل فعلاً
+ * ثلاث سلاسل من `forbiddenClaims` أدناه (11.1%، ACO، «يعمل مباشرة فوق بيانات
+ * بلدي الحالية») لأن الفحص لم يكن يمرّ عليه. الحارس الذي لا يحرس أهم وثيقة
+ * حارسٌ على لا شيء.
+ */
+const formAnswers = read('اجوبة-الفورم.md');
+const allOwnedNarrative = [...artifacts.map((item) => item.html), sources, ideaCard, formAnswers].join('\n');
 
 const forbiddenClaims = [
   'أول أداة',

@@ -680,7 +680,7 @@ function handleApiWorks(req, res) {
       sendJson(res, 404, { error: 'works.geojson not found' });
       return;
     }
-    res.writeHead(200, { 'Content-Type': CONTENT_TYPES['.geojson'] });
+    res.writeHead(200, securityHeaders({ 'Content-Type': CONTENT_TYPES['.geojson'] }));
     res.end(data);
   });
 }
