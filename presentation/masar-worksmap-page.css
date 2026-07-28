@@ -322,6 +322,59 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 .works-popup .works-solution-best h4 { color: var(--wm-muted); }
 .works-popup .works-solution-best p { margin-bottom: 0; }
 
+/* ---- إشعار التنسيق داخل بطاقة الخريطة ---- */
+/* الأصناف هي أصناف المكتب نفسها عمداً: مصدرُ العلامة واحد، فلا تفترق صياغة
+   الإشعار بين سطحين. وما يختلف هو الكسوة وحدها — بوب-أب بعرض ثلاثمئة وعشرين
+   بكسلاً لا يحمل تباعد عمودٍ كامل.
+   والقاعدة العامة `.works-popup p` تكسو كل فقرة باللون الخفيف، وهي تمحو تمييز
+   الحالة. فالتخصيص أدناه يعيده: الحالة تُقرأ بلونها، والحدّ يبقى خفيفاً. */
+.works-popup .desk-coord {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--wm-border);
+}
+.works-popup .desk-card-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--wm-muted);
+  margin-bottom: 0.2rem;
+}
+.works-popup .desk-coord-lead { color: var(--wm-text); font-size: 0.78rem; }
+.works-popup .desk-coord-others { list-style: none; margin: 0 0 0.5rem; padding: 0; }
+.works-popup .desk-coord-other + .desk-coord-other {
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed var(--wm-border);
+}
+.works-popup .desk-coord-who {
+  color: var(--wm-text);
+  font-size: 0.76rem;
+  margin-bottom: 0.15rem;
+}
+.works-popup .desk-coord-why { font-size: 0.7rem; margin-bottom: 0; }
+/* الإجراء المقترح هو المخرج، فيُقرأ ولا يُخفَّف مع بقية النصّ. */
+.works-popup .desk-coord-action {
+  color: var(--wm-text);
+  font-size: 0.74rem;
+  margin: 0.4rem 0 0.55rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--wm-radius);
+  background: var(--masar-success-soft);
+}
+.works-popup .desk-coord-status { font-size: 0.76rem; margin-bottom: 0.5rem; }
+.works-popup .desk-coord-status[data-tone="danger"] { color: var(--masar-danger); }
+.works-popup .desk-coord-status[data-tone="warning"] { color: var(--masar-warning); }
+.works-popup .desk-coord-status[data-tone="success"] { color: var(--masar-success); }
+.works-popup .desk-coord-rate {
+  color: var(--wm-text);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.2rem;
+}
+.works-popup .desk-hint, .works-popup .desk-none { font-size: 0.68rem; margin-bottom: 0.3rem; }
+.works-popup .desk-source { font-size: 0.66rem; line-height: 1.55; margin-bottom: 0; }
+.works-popup .desk-ref { font-size: 0.68rem; }
+
 .maplibregl-popup-content {
   border: 1px solid var(--wm-border);
   border-radius: var(--wm-radius);

@@ -38,6 +38,7 @@ const Engine = require(path.join(ROOT, 'masar-engine.js'));
 const Analysis = require(path.join(ROOT, 'masar-desk-analysis.js'));
 const DeskFile = require(path.join(ROOT, 'masar-desk-file.js'));
 const Coordination = require(path.join(ROOT, 'masar-desk-coordination.js'));
+const Interactions = require(path.join(ROOT, 'masar-worksmap-interactions.js'));
 const Builder = require(path.join(ROOT, 'scripts', 'build-digonce-compliance.js'));
 
 /* البطاقة تقرأ الوحدة من المضيف — سطرٌ واحد فيها، بلا تعديل رأس UMD، كي يبقى
@@ -529,6 +530,122 @@ test('لا حقن HTML من أسماء الجهات والشوارع', () => {
     'وسم مرّ من اسم الجهة');
   assert.ok(html.indexOf('&lt;script') !== -1,
     'النصّ الخطير لم يظهر مهرَّباً — الفحص لا يفحص شيئاً');
+});
+
+// ---- الخريطة: السطح الثاني ------------------------------------------------
+
+test('بطاقة الخريطة تعرض الإشعار — وهو المكان الذي يُنظر إليه أولاً', () => {
+  /* البطاقة كانت تقول ماذا يجري في هذا الموقع، ولا تقول أن الشارع نفسه فيه
+     عملٌ آخر. والساكن يرى إغلاقين على شارعه لا إغلاقاً في نقطتين على شاشة. */
+  const feature = portfolio.features.find((one) => {
+    const notice = report.notices[one.properties.permitRef];
+    return notice && (notice.others || []).length > 0;
+  });
+  global.MASAR_DIGONCE_COMPLIANCE = report;
+  const html = Interactions.popupHtml(feature.properties);
+
+  assert.ok(html.indexOf('تنبيه تنسيق') !== -1,
+    'بطاقة الخريطة لا تُشعر بعملٍ آخر على الشارع نفسه');
+  const other = report.notices[feature.properties.permitRef].others[0];
+  assert.ok(html.indexOf(Coordination.escapeHtml(other.promoter)) !== -1,
+    'الإشعار على الخريطة بلا اسم الجهة');
+  assert.ok(html.indexOf('طلب نافذة مشتركة') !== -1,
+    'الإشعار على الخريطة بلا إجراء مقترح');
+  assert.ok(html.indexOf('مولَّدة') !== -1,
+    'بطاقة الخريطة تعرض المؤشّر بلا حدّ التوليد');
+});
+
+test('المختصرة تطوي التفسير ولا تطوي البسط والمقام ولا الحدّ', () => {
+  /* الاختصار قرارٌ لعرض البوب-أب، وليس رخصةً لإسقاط قيد. */
+  const feature = portfolio.features.find((one) => {
+    const entry = report.permits[one.properties.permitRef];
+    const notice = report.notices[one.properties.permitRef];
+    const row = report.promoters.find((p) => p.promoter === entry.promoter);
+    return notice && (notice.others || []).length > 0 && row.nonEmergencyPermits > 0;
+  });
+  const full = Coordination.notice(feature.properties, { MASAR_DIGONCE_COMPLIANCE: report });
+  const compact = Coordination.notice(feature.properties,
+    { MASAR_DIGONCE_COMPLIANCE: report }, { compact: true });
+
+  assert.ok(compact.length < full.length, 'المختصرة ليست أقصر — الوسم بلا أثر');
+  const entry = report.permits[feature.properties.permitRef];
+  const row = report.promoters.find((one) => one.promoter === entry.promoter);
+  [String(row.missedCases), String(row.nonEmergencyPermits)].forEach((value) => {
+    assert.ok(compact.indexOf(value) !== -1,
+      `المختصرة بلا ${value} — نسبةٌ بلا مقامها رقمٌ يُساء استعماله`);
+  });
+  assert.ok(compact.indexOf('طارئة فهي خارج البسط والمقام معاً') !== -1,
+    'المختصرة لا تقول أن الطوارئ خارج الطرفين');
+  assert.ok(compact.indexOf('فرص تنسيق فائتة لا مخالفات') !== -1,
+    'المختصرة تعرض الرقم بلا صياغته المقرَّرة');
+  assert.ok(compact.indexOf('مولَّدة') !== -1 && compact.indexOf('لا قياس ميداني') !== -1,
+    'المختصرة أسقطت حدّ التوليد — وهو ما لا يُطوى');
+  assert.ok(compact.indexOf('ملف القرار') !== -1,
+    'المختصرة لا تحيل إلى موضع التفصيل');
+});
+
+test('المختصرة تجمع جملة الأثر مرة واحدة ولا تكرّرها لكل عمل', () => {
+  /* ثلاثة أعمال متداخلة كانت تعطي الجملة نفسها ثلاث مرات. والتكرار الحرفيّ
+     يُقرأ حشواً فيُتخطّى — فيضيع السطر الذي يشرح لماذا يهمّ الأمر. */
+  const many = portfolio.features.find((one) => {
+    const notice = report.notices[one.properties.permitRef];
+    return notice && (notice.others || []).length >= 2;
+  });
+  assert.ok(many, 'لا تصريح بعملين آخرين — الفحص بلا مادة');
+  const host = { MASAR_DIGONCE_COMPLIANCE: report };
+  const others = report.notices[many.properties.permitRef].others.length;
+  const count = (html) => (html.match(/desk-coord-why/g) || []).length;
+
+  assert.strictEqual(count(Coordination.notice(many.properties, host, { compact: true })), 1,
+    'المختصرة تكرّر جملة الأثر');
+  assert.strictEqual(count(Coordination.notice(many.properties, host)), others,
+    'الكاملة تفقد جملة الأثر لكل عمل — والعلاقات قد تختلف بينها');
+});
+
+test('غياب الملخّص لا يُسقط بطاقة الخريطة ولا يُصمتها عن غيره', () => {
+  const feature = portfolio.features[0];
+  const saved = global.MASAR_DIGONCE_COMPLIANCE;
+  delete global.MASAR_DIGONCE_COMPLIANCE;
+  try {
+    const html = Interactions.popupHtml(feature.properties);
+    assert.ok(html.indexOf('تنبيه تنسيق') === -1, 'قسمٌ معروض بلا بيانات');
+    assert.ok(html.indexOf('works-popup') !== -1, 'البطاقة سقطت بغياب ملف اختياري');
+    assert.ok(html.indexOf(feature.properties.promoter) !== -1,
+      'البطاقة فقدت محتواها الأصلي');
+  } finally {
+    global.MASAR_DIGONCE_COMPLIANCE = saved;
+  }
+});
+
+test('الخريطة تُحمّل الوحدة قبل وحدة التفاعل لا بعدها', () => {
+  /* وحدة التفاعل تقرأ `MasarDeskCoordination` عند التحميل لا عند النقر. فترتيب
+     الوسوم شرطُ عملٍ لا ترتيبُ ذوق — وعكسه يعطي بطاقةً صامتة بلا سبب ظاهر. */
+  const page = fs.readFileSync(path.join(ROOT, 'masar-map.html'), 'utf8');
+  const data = page.indexOf('data/digonce-compliance.js');
+  const unit = page.indexOf('masar-desk-coordination.js');
+  const interactions = page.indexOf('masar-worksmap-interactions.js');
+  assert.ok(data !== -1, 'الخريطة لا تُحمّل ملخّص الامتثال');
+  assert.ok(unit !== -1, 'الخريطة لا تُحمّل وحدة الإشعار');
+  assert.ok(unit < interactions,
+    'وحدة الإشعار محمَّلة بعد وحدة التفاعل — تقرأها الأخيرة غائبةً');
+  assert.ok(data < interactions, 'الملخّص محمَّل بعد وحدة التفاعل');
+});
+
+test('كسوة الإشعار موجودة على الخريطة — لا صنف بلا قاعدة', () => {
+  /* أصناف المكتب لا تصل الخريطة: `masar-desk.css` غير محمَّل هناك. وصنفٌ بلا
+     قاعدة يعطي كتلةً بلا شكل، وهو عطلٌ لا يظهر في فحص منطق. */
+  const css = fs.readFileSync(path.join(ROOT, 'masar-worksmap-page.css'), 'utf8');
+  const feature = portfolio.features.find((one) => {
+    const notice = report.notices[one.properties.permitRef];
+    return notice && (notice.others || []).length > 0;
+  });
+  const html = Coordination.notice(feature.properties,
+    { MASAR_DIGONCE_COMPLIANCE: report }, { compact: true });
+  const classes = [...new Set((html.match(/class="([^"]+)"/g) || [])
+    .join(' ').replace(/class="|"/g, ' ').split(/\s+/).filter(Boolean))];
+  const missing = classes.filter((name) => css.indexOf('.' + name) === -1);
+  assert.deepStrictEqual(missing, [],
+    `أصناف بلا قاعدة في كسوة الخريطة: ${missing.join('، ')}`);
 });
 
 // ---- الوصل والوثائق -------------------------------------------------------

@@ -13,15 +13,17 @@
   if (typeof module === 'object' && module.exports) {
     module.exports = factory(
       require('./masar-worksmap-layers.js'),
-      require('./masar-worksmap-solution.js')
+      require('./masar-worksmap-solution.js'),
+      require('./masar-desk-coordination.js')
     );
   } else {
     root.MasarWorksMapInteractions = factory(
       root.MasarWorksMapLayers,
-      root.MasarWorksMapSolution
+      root.MasarWorksMapSolution,
+      root.MasarDeskCoordination
     );
   }
-})(typeof self !== 'undefined' ? self : this, function (Layers, Solution) {
+})(typeof self !== 'undefined' ? self : this, function (Layers, Solution, Coordination) {
   'use strict';
 
   var GROUP_LABELS = {
@@ -90,6 +92,18 @@
        * الوحدة اختيارية: صفحة لا تحمّلها تبقى بطاقتها صحيحة ناقصةً كتلة.
        */
       + (Solution ? Solution.solutionHtml(p) : '')
+      /**
+       * إشعار التنسيق — مختصراً، لأن قارئ الخريطة يمرّ ولا يقرّر.
+       * ---------------------------------------------------------------------
+       * البطاقة تقول ماذا يجري في هذا الموقع، ولا تقول أن **الشارع نفسه** فيه
+       * عملٌ آخر. وهذا ما يراه الساكن: إغلاقان على شارعه لا إغلاقٌ في نقطتين
+       * على شاشة. فعرضُه هنا يجعل التكرار مرئياً في المكان الذي يُنظر إليه
+       * أولاً، ويحيل إلى ملف القرار لمن يريد التفصيل.
+       *
+       * الوحدة اختيارية بنفس عقد كتلة الحل: صفحة لا تحمّلها تبقى بطاقتها
+       * صحيحة ناقصةً كتلة — ولا تسقط.
+       */
+      + (Coordination ? Coordination.notice(p, null, { compact: true }) : '')
       // كتلة إضافية تُحقن من الصفحة: المسار البديل يحتاج رسم المدينة وحساباً،
       // وكلاهما خارج مسؤولية بطاقةٍ نقية تُختبر في Node.
       + (extra || '')

@@ -173,7 +173,7 @@
    * سطر واحد لكل عمل آخر على الشارع: من، ومتى، وماذا يعني ذلك.
    * المرجع يُلفّ بـ`bdi` — معرّف لاتيني وسط نصّ عربي ينكسر ترتيبه بلا ذلك.
    */
-  function renderOther(other) {
+  function renderOther(other, compact) {
     var relation = RELATIONS[other.relation] || RELATIONS.ongoing;
     var gap = other.relation === 'ongoing'
       ? ''
@@ -185,20 +185,51 @@
       + '</strong> ' + escapeHtml(relation.lead) + gap + ' — من '
       + escapeHtml(date(other.start)) + ' إلى ' + escapeHtml(date(other.end))
       + ' <bdi class="desk-ref">' + escapeHtml(other.permitRef) + '</bdi></p>'
-      + '<p class="desk-coord-why">' + escapeHtml(relation.consequence) + '</p>'
+      /* في المختصرة يُجمَع الأثر تحت القائمة مرة واحدة: ثلاثة أعمال متداخلة
+         تعطي الجملة نفسها ثلاث مرات، والتكرار الحرفيّ يُقرأ حشواً فيُتخطّى —
+         فيضيع السطر الذي يشرح لماذا يهمّ الأمر. */
+      + (compact ? ''
+        : '<p class="desk-coord-why">' + escapeHtml(relation.consequence) + '</p>')
       + '</li>';
+  }
+
+  /**
+   * أثرُ المجموعة، مرة واحدة — بأقوى علاقة حاضرة.
+   *
+   * الترتيب ليس ذوقاً: التداخل واقعٌ الآن، والمنتهي حديثاً فاتت فرصته،
+   * والقادم هو الوحيد الذي ما زال يُلحق به. فأقواها هو ما يصف حال الشارع.
+   */
+  function groupedConsequence(others) {
+    var order = ['ongoing', 'recently-ended', 'upcoming'];
+    var found = order.filter(function (key) {
+      return others.some(function (one) { return one.relation === key; });
+    })[0];
+    if (!found) return '';
+    return '<p class="desk-coord-why">'
+      + escapeHtml(RELATIONS[found].consequence) + '</p>';
   }
 
   /**
    * الإشعار كاملاً لتصريح واحد.
    *
+   * **الصيغة المختصرة (`compact`) وما لا يُختصر فيها.**
+   *
+   * بوب-أب الخريطة عرضه ثلاثمئة وعشرون بكسلاً، وبطاقة المكتب عمودٌ كامل.
+   * فالتفسيرات الطويلة تُطوى على الخريطة — لا لأنها زائدة، بل لأن قارئ الخريطة
+   * يمرّ ولا يقرّر، ومن يقرّر يفتح الملف. **وما لا يُطوى أبداً**: البسط
+   * والمقام، وحدّ «المحفظة مولَّدة»، والإجراء المقترح. الأول رقمٌ يُساء
+   * استعماله بلا مقامه، والثاني حكمٌ على شركة قائمة بلا حدّه، والثالث هو
+   * السبب الذي وُجد الإشعار له.
+   *
    * @param {object} properties خصائص التصريح المفتوح
    * @param {object} [host] مضيف الملخّص — يُحقن في الفحص، ونافذة المتصفح خارجه
+   * @param {{compact?: boolean}} [options] صيغة العرض
    * @returns {string} HTML، أو نصّ فارغ إن غاب الملخّص
    */
-  function notice(properties, host) {
+  function notice(properties, host, options) {
     var data = source(host);
     var p = properties || {};
+    var compact = Boolean(options && options.compact);
     if (!data || !p.permitRef) return '';
 
     var entry = data.permits[p.permitRef];
@@ -217,7 +248,7 @@
         + '<p class="desk-none">لا عمل آخر على «' + escapeHtml(p.street || DASH)
         + '» في نافذة ' + integer(data.windowDays) + ' يوماً حول عملك — '
         + 'لا فرصة تنسيق فائتة.</p>'
-        + renderLimit(data)
+        + renderLimit(data, compact)
         + '</section>';
     }
 
@@ -226,13 +257,16 @@
       + '<p class="desk-coord-lead">على «' + escapeHtml(p.street || DASH)
       + '» ' + escapeHtml(others.length === 1 ? 'عملٌ آخر' : 'أعمال أخرى')
       + ' في نافذة ' + integer(data.windowDays) + ' يوماً حول عملك.</p>'
-      + '<ul class="desk-coord-others">' + others.map(renderOther).join('') + '</ul>'
+      + '<ul class="desk-coord-others">' + others.map(function (other) {
+        return renderOther(other, compact);
+      }).join('') + '</ul>'
+      + (compact ? groupedConsequence(others) : '')
       + '<p class="desk-coord-action"><strong>الإجراء المقترح: طلب نافذة '
       + 'مشتركة.</strong> اقتراحٌ للتنسيق لا أمر تنفيذ — الدمج يتطلّب موافقة '
       + 'كل جهة وتوافق أعماق الخدمات ومواصفات الردم.</p>'
       + renderStatus(status, entry)
-      + renderIndicator(row, data)
-      + renderLimit(data)
+      + renderIndicator(row, data, compact)
+      + renderLimit(data, compact)
       + '</section>';
   }
 
@@ -256,19 +290,31 @@
    * البسط، فبقاؤها في المقام يخفض نسبة من عملها كله طارئ لسبب لا علاقة له
    * بتنسيقها.
    */
-  function renderIndicator(row, data) {
+  function renderIndicator(row, data, compact) {
     if (!row) return '';
     if (!row.nonEmergencyPermits) {
       return '<p class="desk-card-label">فرص التنسيق الفائتة لهذه الجهة</p>'
         + '<p class="desk-none">كل تصاريح هذه الجهة طارئة — لا مقام، فلا نسبة.</p>';
     }
 
-    return '<p class="desk-card-label">فرص التنسيق الفائتة لهذه الجهة</p>'
+    var rate = '<p class="desk-card-label">فرص التنسيق الفائتة لهذه الجهة</p>'
       + '<p class="desk-coord-rate"><strong>' + integer(row.missedCases)
       + '</strong> من <strong>' + integer(row.nonEmergencyPermits)
       + '</strong> تصريحاً غير طارئ'
       + (row.ratePct === null ? '' : ' (' + escapeHtml(String(row.ratePct)) + '٪)')
-      + '</p>'
+      + '</p>';
+
+    /* المختصرة تحمل الحدّ الذي لا يجوز طيّه: «فرص فائتة» لا «مخالفات»،
+       والطوارئ خارج الطرفين. أمّا تفصيل الصلاحية النظامية فمكانه حيث يُتَّخذ
+       القرار. */
+    if (compact) {
+      return rate
+        + '<p class="desk-hint">فرص تنسيق فائتة لا مخالفات، و'
+        + integer(row.emergencyPermits) + ' من تصاريح هذه الجهة طارئة فهي خارج '
+        + 'البسط والمقام معاً. التفصيل في ملف القرار بمكتب المراجع.</p>';
+    }
+
+    return rate
       + '<p class="desk-hint">البسط والمقام معاً دائماً: نسبةٌ بلا مقامها رقمٌ '
       + 'يُساء استعماله. و' + integer(row.emergencyPermits) + ' من تصاريح هذه '
       + 'الجهة طارئة، وهي خارج البسط والمقام معاً.</p>'
@@ -289,10 +335,19 @@
    * أسماء الجهات حقيقية والسلوك المنسوب إليها مولَّد. فبلا هذا السطر يُقرأ
    * المؤشّر حكماً على شركة قائمة، وهو ضرر لا فائدة.
    */
-  function renderLimit(data) {
-    return '<p class="desk-source">' + escapeHtml(data.portfolioLimit || '')
+  function renderLimit(data, compact) {
+    /* المختصرة تُقصّ من الجملة الأخيرة وحدها: «والآلية نفسها تعمل على سجلّ
+       حقيقي» حجّةٌ لقيمة العمل لا قيدٌ عليه، وموضعها حيث يُقرأ العمل كله.
+       أمّا القيدان — «مولَّدة» و«لا قياس ميداني» — فيبقيان حرفياً.
+       والقصّ من النصّ المولَّد لا من نسخةٍ مكتوبة هنا: نسختان من تحفّظٍ واحد
+       تفترقان بلا أن ينبّه شيء. */
+    var limit = String(data.portfolioLimit || '');
+    if (compact) limit = limit.split('. ').slice(0, 2).join('. ') + '.';
+
+    return '<p class="desk-source">' + escapeHtml(limit)
       + ' الأسماء المعروضة أسماء جهات حقيقية، والسلوك المنسوب إليها سلوك '
-      + 'تصاريح مولَّدة لا سلوكها. لا قياس ميداني ولا سجلّ تصاريح رسمي.</p>';
+      + 'تصاريح مولَّدة لا سلوكها. لا قياس ميداني'
+      + (compact ? '.' : ' ولا سجلّ تصاريح رسمي.') + '</p>';
   }
 
   return {
