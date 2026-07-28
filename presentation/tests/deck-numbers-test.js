@@ -227,13 +227,21 @@ test('عدد الفحوص والحزم في العرض يطابق جرد الت�
      أمّا عدد الفحوص فيُعرض **أرضيةً**: رقمٌ دقيق يتقادم مع كل فحص يُضاف،
      فيصير العرض يكذب بعد ساعة من صدقه. والأرضية لا تكذب أبداً — لكنها
      تكذب على نفسها إن بقيت بعيدة جداً عن الحقيقة، فلها حدّان. */
+  /* WP — الإجمالي يضمّ المعلَّقة، لا الناجح وحده.
+     كان الرقم «N / N» يُسقط الحزمة المعلَّقة من البسط والمقام معاً، فيبدو
+     العرض مكتملاً بلا استثناء — وهو ما سأله فريقٌ أحمر مستقل حرفياً. الفحص
+     هنا يطابق ما ينتجه `sync-deck-counts.js` فعلاً — بما فيه تساهله نفسه مع
+     جردٍ سابق على حقل `pendingSuites` (يُعامَل صفراً لا سقوطاً)، كي لا يُبلّغ
+     هذا الفحص عن عطلٍ لا يقع في السكربت المفحوص. */
   const suites = toArabic(manifest.suites);
+  const pendingSuites = manifest.pendingSuites === undefined ? 0 : manifest.pendingSuites;
+  const total = toArabic(manifest.suites + pendingSuites);
   /* السقوط يسمّي أمر إصلاحه.
      تقادم هذا الرقم ثلاث مرات في يومين — ٧٧ ⟵ ٨٠ ⟵ ٨١ ⟵ ٨٢ — وفي كل مرة
      كان يُصلَح بتحرير يدوي في الـHTML المبني. صار له ختّامٌ يقرأ الجرد، فبقاء
      الرسالة بلا اسمه يعيد الناس إلى التحرير اليدوي. */
-  assert.ok(RAW.indexOf(`${suites} / ${suites}`) !== -1,
-    `العرض لا يعرض «${manifest.suites} / ${manifest.suites}» — عدد الحزم متقادم.\n`
+  assert.ok(RAW.indexOf(`${suites} / ${total}`) !== -1,
+    `العرض لا يعرض «${manifest.suites} / ${manifest.suites + pendingSuites}» — عدد الحزم متقادم.\n`
     + '    الإصلاح: node presentation/scripts/sync-deck-counts.js\n'
     + '    (ويُستدعى تلقائياً من tools/deck-build/export-masar-pdf.cjs قبل التصيير)');
 

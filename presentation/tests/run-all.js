@@ -160,10 +160,20 @@ console.log(`\n${active - failed + promoted.length}/${active} حزمة نجحت`
    الشريحة عدداً ويقول الجرد آخر، ولا شيء ينبّه إلا بوّابة أرقام العرض بعد
    حين. الإعلانُ عن عيبٍ لا يجوز أن يوقف عدّاد التغطية. */
 if (!failed) {
+  /* الجرد يحمل المعلَّق أيضاً، لا الناجح وحده.
+     كان مستهلِك هذا الملف (سكربت ختم العدد على الشريحة) يرى `suites` فقط،
+     فيختم «الناجح / الناجح نفسه» — رقمٌ يُسقط الحزمة المعلَّقة من البسط
+     والمقام معاً، وهو بالضبط ما يسأل عنه فريقٌ أحمر مستقل. الحقلان أدناه
+     يتيحان للمستهلك ختم «الناجح / الإجمالي» بدل إخفاء المعلَّق. */
+  const pendingEntries = Object.entries(PENDING)
+    .filter(([file]) => files.includes(file))
+    .map(([file, reason]) => ({ file, reason }));
   const manifest = {
     note: 'مولَّد من `run-all.js` عند تشغيل أخضر — لا يُحرَّر يدوياً.',
     suites: active,
     checks: checksPassed,
+    pendingSuites: pendingEntries.length,
+    pending: pendingEntries,
   };
   fs.writeFileSync(path.join(dir, 'fixtures', 'test-manifest.json'),
     JSON.stringify(manifest, null, 2) + '\n', 'utf8');
