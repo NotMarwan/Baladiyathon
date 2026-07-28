@@ -644,15 +644,39 @@
   }
 
   /**
-   * نقطة انقلاب وزنٍ واحد: أصغر قيمة موجبة للوزن تتغيّر عندها التوصية.
+   * نقطة انقلاب وزنٍ واحد: أدنى وزن أعلى من الحالي تتغيّر عنده التوصية.
    *
-   * المجموع دالة خطّية في الوزن: `total(w) = ثابت + w × ساعات`. فالتقاطع
-   * بين مرشحَين محسوب بدقة لا بمسح عددي.
+   * لماذا صار الحقل أغنى — سؤال الفريق الأحمر ٣ في
+   * `docs/evaluation/loop/cycle-01/RED-TEAM.md`: «صنّفت تصريحاً بجوار
+   * مستشفى؛ جدولتكم لم تتغيّر حرفاً. وزنكم يحتاج أن يتضاعف ثلاث مرات
+   * ليتغيّر». كانت الدالة تُرجع نقطة الانقلاب حين توجد، وتصمت (`null` يُرشَّح
+   * بـ`filter(Boolean)` في `optimize()`) حين لا توجد — فيختلط «لم يُحسب»
+   * بـ«حُسب ولا يوجد» على من يقرأ غياب مفتاحٍ من المصفوفة. الآن يُقال
+   * الحالان معاً: الوزن المستعمل فعلياً (`currentWeight`) يرافق كل نتيجة،
+   * وحين لا ينقلب الفائز مهما ارتفع الوزن يصرّح بذلك `neverFlips`/`note`
+   * بدل رقمٍ يُخترَع.
+   *
+   * المجموع دالة خطّية صرفة في الوزن هنا: `total(w) = ثابت + w × ساعات`، ولا
+   * حدّ آخر في `evaluateSchedule` يتأثر بوزن الحساسية أو الليل. فالتقاطع بين
+   * مرشحَين حلّ معادلة خطّية واحدة، لا مسحاً عددياً. **ملاحظة أسلوب:** لو
+   * انهار هذا الشكل الخطّي مستقبلاً (حدٌّ جديد يضرب الوزن في غير الساعات)
+   * فالبديل بحثٌ ثنائي محدود الخطوات يُسمَّى في تعليق عند موضعه — لا حلٌّ
+   * مغلق يُقدَّم على شكلٍ لم يعد خطياً؛ وهذا الشرط لا ينطبق اليوم لأن الشكل
+   * أعلاه خطّي فعلاً.
    *
    * الغاية: وزنٌ بلا مصدر يصير مقبولاً حين يُعرض المدى الذي لا يغيّر القرار
    * داخله. وحين تكون نقطة الانقلاب قريبة جداً، فذلك إقرارٌ بأن التوصية هشّة.
+   * وحين لا توجد نقطة انقلاب أصلاً، فذلك إقرارٌ أعمق: لا وزنٌ يشتريه في هذا
+   * الاتجاه.
    *
-   * @returns {{weight:number, current:string, next:string}|null}
+   * @param {Array} candidates مرشّحو `buildCandidates` مرتّبين، الفائز أولهم
+   * @param {string} key اسم الوزن — `sensitivity` أو `nightPremium`
+   * @param {string} hoursKey مفتاح الساعات المقابل داخل `evaluation`
+   * @param {number} currentWeight الوزن المستعمل فعلياً في هذا النداء
+   * @returns {{key:string, currentWeight:number, current:string,
+   *            weight:(number|null), next:(string|null),
+   *            deltaPct:(number|null), neverFlips:boolean,
+   *            note:string}|null}
    */
   function switchPoint(candidates, key, hoursKey, currentWeight) {
     if (!candidates.length) return null;
@@ -662,6 +686,7 @@
     const winner = candidates[0];
     const winnerConstant = constantOf(winner);
     const winnerHours = winner.evaluation[hoursKey];
+    const winnerLabel = labelOf(winner);
 
     let best = null;
     candidates.slice(1).forEach((candidate) => {
@@ -674,12 +699,36 @@
       }
     });
 
-    if (!best) return null;
+    if (!best) {
+      return {
+        key,
+        currentWeight,
+        current: winnerLabel,
+        weight: null,
+        next: null,
+        deltaPct: null,
+        neverFlips: true,
+        note: `${winnerLabel} لا ينقلب برفع وزن ${key} مهما ارتفع — `
+          + 'لا مرشّح يتجاوزه في هذا الاتجاه',
+      };
+    }
+
+    const nextLabel = labelOf(best.next);
+    const deltaPct = currentWeight !== 0
+      ? ((best.weight - currentWeight) / currentWeight) * 100
+      : null;
+
     return {
       key,
+      currentWeight,
+      current: winnerLabel,
       weight: best.weight,
-      current: labelOf(winner),
-      next: labelOf(best.next),
+      next: nextLabel,
+      deltaPct,
+      neverFlips: false,
+      note: `وزن ${key} من ${currentWeight} إلى ${best.weight.toFixed(2)}`
+        + (deltaPct !== null ? ` (×${(best.weight / currentWeight).toFixed(2)})` : '')
+        + ` يقلب الفائز إلى ${nextLabel}`,
     };
   }
 

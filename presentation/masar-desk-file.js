@@ -201,7 +201,7 @@
    * وغياب الوحدة يعطي «غير مفحوص» لا صمتاً: صمتٌ في موضع الحالة يُقرأ
    * استقراراً.
    */
-  function renderStability(stability) {
+  function renderStability(stability, switchPoints) {
     if (!stability) {
       return '<p class="desk-stability" data-state="unknown">'
         + 'استقرار التوصية: غير مفحوص على هذه الشاشة.</p>';
@@ -233,6 +233,38 @@
         + escapeHtml(text(magnitude.worstSwingPct)) + '٪ مع «'
         + escapeHtml(text(magnitude.drivenBy)) + '» — الرقم أدناه مركزُ مدى '
         + 'لا قيمة مثبتة.</p>';
+    }
+
+    /* نقطة الانقلاب تُعرض ولا تبقى في المخرَج.
+       ---------------------------------------------------------------------
+       سؤالٌ وجّهه فريق أحمر مستقل: «صنّفتُ تصريحاً بجوار مستشفى فلم تتغيّر
+       الجدولة حرفاً — وزنكم إذاً لا يفعل شيئاً». والجواب ليس رفع معامل يُرضي
+       السؤال، فالوزن حكمُ جهةٍ لا قياسُ نموذج، ورقمٌ يُرفع ليقنع محكّماً هو
+       أول ما يمنعه هذا المستودع.
+       الجواب أن يُقال **عند أي وزن ينقلب هذا القرار بعينه**: فيقرأ المراجع
+       الوزن بمداه لا كرقم مُنزَل، ويرى إن كان الفارق هامشاً ضيّقاً أم بعيداً.
+       ونقطة انقلاب قريبة إقرارٌ بهشاشة التوصية لا دفاعٌ عنها. */
+    /* المفتاح يُترجم ولا يُطبع خاماً: `sensitivity` كلمة شيفرة، والمراجع يقرأ
+       عربية. وطباعة اسم الحقل كما هو تكشف الداخل بلا أن تفيد القارئ. */
+    var WEIGHT_LABEL = {
+      sensitivity: 'حسّاسية الجوار',
+      nightPremium: 'علاوة العمل الليلي',
+    };
+    var points = switchPoints || [];
+    var flip = points.filter(function (point) {
+      return point && point.key === 'sensitivity';
+    })[0] || points[0];
+    var flipLabel = flip ? (WEIGHT_LABEL[flip.key] || text(flip.key)) : '';
+
+    if (flip && flip.neverFlips) {
+      body += '<p class="desk-hint">ترتيب البدائل لا ينقلب مهما ارتفع وزن «'
+        + escapeHtml(flipLabel) + '» — الفارق ليس في هذا الوزن.</p>';
+    } else if (flip && typeof flip.weight === 'number' && flip.currentWeight > 0) {
+      body += '<p class="desk-hint">وزن «' + escapeHtml(flipLabel)
+        + '» الآن ' + escapeHtml(flip.currentWeight.toFixed(1))
+        + ' — وتنقلب التوصية عند ' + escapeHtml(flip.weight.toFixed(1))
+        + ' (×' + escapeHtml((flip.weight / flip.currentWeight).toFixed(2))
+        + '). والوزن تضبطه الجهة، لا النموذج.</p>';
     }
 
     return body;
@@ -269,7 +301,7 @@
     return '<section class="desk-card">'
       + '<p class="desk-card-label">التوصية</p>'
       + '<h3 class="desk-recommend">' + escapeHtml(text(best.label)) + '</h3>'
-      + renderStability(a.stability)
+      + renderStability(a.stability, a.switchPoints)
       + '<dl class="desk-figures">'
       + '<div><dt>الأثر كما طُلب</dt><dd>' + escapeHtml(number(a.scored.delayVehHours))
       + ' ساعة-مركبة</dd></div>'
