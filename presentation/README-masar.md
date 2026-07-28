@@ -222,6 +222,7 @@ presentation/
 │   ├── riyadh-roads-neighbourhood.geojson.js # ٥٢٬٨٤٥ شارع حيّ (OSM · ODbL)
 │   ├── riyadh-traffic-control.js # ٦٤٩ عقدة تحكّم: إشارات وعلامات قف (OSM · ODbL)
 │   ├── riyadh-route-graph.js # رسم التوجيه: ١١٨٬٨٩٣ عقدة و١٧٤٬١١٣ ضلعاً (OSM · ODbL)
+│   ├── riyadh-poi.geojson  # ١٬٥٢١ وجهة فوق ٥٠٠ تقييم (خرائط Google · src-P08)
 │   └── corridor-geometry.js# هندسة الممر على محور طريق الملك فهد
 ├── icons/                  # مصادر أيقونات الأعمال (SVG)
 ├── scripts/                # بناة الأصول والهندسة (تُشغَّل مرة)

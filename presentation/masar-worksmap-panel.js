@@ -144,7 +144,31 @@
     }).join('');
     return '<h2>الدليل</h2>' + rows
       + '<div class="wm-legend-split">المسارات المحسوبة</div>'
-      + routeLegendRows();
+      + routeLegendRows()
+      + poiLegendRows();
+  }
+
+  /**
+   * صفوف المعالم — تظهر فقط إن كانت الطبقة محمّلة.
+   * ---------------------------------------------------------------------------
+   * الدليل عقدٌ لا زينة: صفٌّ لطبقةٍ لم تصل يَعِد القارئ بما لن يراه، فيبحث عن
+   * نقاطٍ غائبة ويظنّ العرض معطوباً. فيُقرأ الجدول من النمط نفسه عند التركيب —
+   * وإن غاب النمط سكت الدليل. نفس شرط `routeLegendRows` أعلاه.
+   *
+   * والنقطة تُرسم دائرةً في الدليل كما هي على الخريطة، لا خطاً: الخط يعني عملاً
+   * على مقطع، والدائرة تعني وجهةً. اختلاف الشكل هو ما يمنع خلط الاثنين.
+   */
+  function poiLegendRows() {
+    var Style = typeof MasarWorksMapStyle !== 'undefined' ? MasarWorksMapStyle : null;
+    if (!Style || !Style.POI_COLORS || !Style.POI_KINDS) return '';
+    var rows = Style.POI_KINDS.map(function (kind) {
+      var label = (Style.POI_LABELS || {})[kind] || kind;
+      return '<div class="wm-legend-row">'
+        + '<span class="wm-legend-dot" style="background:' + escapeHtml(Style.POI_COLORS[kind]) + '"></span>'
+        + '<span>' + escapeHtml(label) + '</span>'
+        + '</div>';
+    }).join('');
+    return '<div class="wm-legend-split">المعالم (500 تقييم فأكثر)</div>' + rows;
   }
 
   /**

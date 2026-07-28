@@ -1105,8 +1105,9 @@
       bootDone();
 
       // الحلقة الثانية بعد أن يصير المكتب صالحاً للعمل، لا قبله.
+      // حمولتان مؤجَّلتان من المحمِّل نفسه: بقية الشبكة، ومعالم المدينة.
       if (typeof MasarRoadsLazy !== 'undefined') {
-        MasarRoadsLazy.attach(GL.api);
+        MasarRoadsLazy.attach(GL.api); MasarRoadsLazy.attachPoi(GL);
       }
       /**
        * المباني حسب النطاق المعروض — نفس علاج صفحة الخريطة.
