@@ -1,5 +1,12 @@
 {
   "note": "مولَّد من `run-all.js` عند تشغيل أخضر — لا يُحرَّر يدوياً.",
-  "suites": 83,
-  "checks": 1370
+  "suites": 84,
+  "checks": 1381,
+  "pendingSuites": 1,
+  "pending": [
+    {
+      "file": "delta-decomposition-test.js",
+      "reason": "لا تصريح سالب بعد ربط الحمل بالتقدير — المقايضة كانت أثر حملٍ متفائل"
+    }
+  ]
 }
