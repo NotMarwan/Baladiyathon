@@ -117,6 +117,48 @@
     return '<ul class="desk-list" role="listbox" aria-label="صندوق الأعمال">' + rows + '</ul>';
   }
 
+  /**
+   * الاختيار الافتراضي عند فتح المكتب: معيارٌ على الطابور لا معرّف مثبَّت.
+   * ---------------------------------------------------------------------------
+   * أول صفّ في الطابور هو ترتيب الفرز — «ما ينتظر قراراً» ثم الأعلى أثراً —
+   * لا أفضل ما يُظهِر المنتج. الأثر يرتفع مع ضعف الثقة أيضاً، فتصريحٌ منخفض
+   * الثقة يتصدّر الطابور غالباً، ويفتح المكتب حينها على صفّ يُخفي بالضبط ما
+   * يريد المراجع رؤيته أولاً: بوابة الامتناع وفارق النهار/الليل لا يظهران
+   * بوضوح إلا على تصريح واثق القياس.
+   *
+   * فالاختيار هنا دالة تُطبَّق على الطابور كما وصل: أعلى ساعات-مركبة بين
+   * التصاريح ذات الثقة المرتفعة. لا يُعاد ترتيب الطابور ولا تُصفَّى صفوفه —
+   * القائمة المعروضة تبقى كما فُرزت؛ ما يتغيّر هو أيّ صفّ منها يُحدَّد أولاً.
+   * ومعرّف تصريح مثبَّت بخطّ اليد كان سيبدو أدقّ اليوم، لكنه يتقادم مع أول
+   * إعادة توليد للمحفظة — فيفتح الديمو على صفٍّ لم يعد موجوداً.
+   *
+   * وإن لم يطابق المعيار أي صفّ (لا ثقة مرتفعة في هذا الطابور)، الاحتياط هو
+   * أول صفّ كما كان — لا صندوق فارغ على محفظة صغيرة أو تجريبية بلا صفوف
+   * عالية الثقة.
+   *
+   * @param {Array<object>} features الطابور بترتيبه الحالي — يُقرأ ولا يُعدَّل.
+   * @returns {object|null} الصفّ المختار، أو null إن كان الطابور فارغاً.
+   */
+  function pickDefault(features) {
+    var list = features || [];
+    if (!list.length) return null;
+
+    var winner = null;
+    var winnerHours = -Infinity;
+
+    list.forEach(function (feature) {
+      var p = (feature && feature.properties) || {};
+      if (p.confidence !== 'high') return;
+      var hours = Number(p.impactVehHours) || 0;
+      if (!winner || hours > winnerHours) {
+        winner = feature;
+        winnerHours = hours;
+      }
+    });
+
+    return winner || list[0];
+  }
+
   function statusOptions(selected) {
     var options = ['<option value="">كل الحالات</option>'];
     Object.keys(States.TRANSITIONS).forEach(function (status) {
@@ -175,6 +217,7 @@
     renderCounts: renderCounts,
     statusTag: statusTag,
     escapeHtml: escapeHtml,
+    pickDefault: pickDefault,
     SENSITIVITY_LABELS: SENSITIVITY_LABELS,
     CONFIDENCE_LABELS: CONFIDENCE_LABELS,
     SORT_OPTIONS: SORT_OPTIONS,

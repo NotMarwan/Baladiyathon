@@ -114,6 +114,44 @@ ok('سطر العدّادات وحدة قائمة بذاتها تُحدَّث ب
   assert.ok(bar.indexOf(line) !== -1, 'الشريط لا يبني عدّاده من الدالة نفسها');
 });
 
+/* ---- الاختيار الافتراضي عند فتح المكتب ---- */
+
+ok('الاختيار الافتراضي يقع على الأعلى أثراً بين الثقة المرتفعة — لا أول صفّ', () => {
+  const list = [
+    feature({ id: 'a', confidence: 'low', impactVehHours: 9000 }),
+    feature({ id: 'b', confidence: 'high', impactVehHours: 1200 }),
+    feature({ id: 'c', confidence: 'high', impactVehHours: 2200 }),
+    feature({ id: 'd', confidence: 'medium', impactVehHours: 5000 }),
+  ];
+  const picked = Inbox.pickDefault(list);
+  assert.ok(picked, 'لا اختيار افتراضي');
+  assert.strictEqual(picked.properties.id, 'c',
+    'الاختيار لم يقع على الأعلى أثراً بين التصاريح ذات الثقة المرتفعة');
+});
+
+ok('غياب الثقة المرتفعة في الطابور يُبقي الاحتياط أول صفّ', () => {
+  const list = [
+    feature({ id: 'a', confidence: 'low', impactVehHours: 500 }),
+    feature({ id: 'b', confidence: 'medium', impactVehHours: 9000 }),
+  ];
+  const picked = Inbox.pickDefault(list);
+  assert.strictEqual(picked.properties.id, 'a', 'الاحتياط لم يعد أول صفّ');
+});
+
+ok('طابور فارغ لا يختار شيئاً', () => {
+  assert.strictEqual(Inbox.pickDefault([]), null);
+});
+
+ok('الاختيار الافتراضي لا يغيّر ترتيب الطابور ولا يعدّل صفوفه', () => {
+  const list = [
+    feature({ id: 'a', confidence: 'low', impactVehHours: 500 }),
+    feature({ id: 'b', confidence: 'high', impactVehHours: 800 }),
+  ];
+  const before = list.map((f) => f.properties.id);
+  Inbox.pickDefault(list);
+  assert.deepStrictEqual(list.map((f) => f.properties.id), before, 'الطابور تغيّر ترتيبه');
+});
+
 /* ---- ملف القرار ---- */
 
 ok('ملف القرار الفارغ يوجّه الخطوة التالية', () => {
