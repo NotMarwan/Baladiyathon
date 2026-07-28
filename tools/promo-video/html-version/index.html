@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مسار — فيلم الإطلاق (نسخة HTML)</title>
+<style>
+/* ==========================================================================
+   Masar launch film — standalone HTML replica of the Remotion composition.
+   Same timeline (30fps frame numbers converted to seconds), same tokens
+   (masar-tokens.css palette), same choreography. Fully offline: local
+   assets/, no CDN. Font: the product's own Segoe-first stack.
+   ========================================================================== */
+:root{
+  --ink:#15202B; --canvas:#ECEFF2; --surface:#FFFFFF;
+  --primary:#1D4E77; --primary-soft:#E9F1F7;
+  --info:#2C6E9D; --info-soft:#E6F0F7;
+  --success:#2C7351; --success-soft:#E4F1EA; --success-on-ink:#7FD6A6;
+  --danger:#B23B32; --danger-soft:#F7E4E1;
+  --warning:#8C5C1C; --warning-soft:#F4EDE1;
+  --faint:#626B76; --on-dark:#FFFFFF;
+  --font:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);        /* --masar-ease            */
+  --ease-heavy:cubic-bezier(0.22,1,0.36,1); /* heavy spring approx     */
+  --ease-snap:cubic-bezier(0.34,1.3,0.5,1); /* snappy w/ tiny overshoot*/
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0B141C;overflow:hidden}
+body{font-family:var(--font)}
+
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:1920px;height:1080px;background:var(--ink);
+  overflow:hidden;transform-origin:center center;direction:rtl}
+
+/* every stage animation waits for the play gate */
+#stage *,#stage{animation-play-state:paused!important}
+body.playing #stage *,body.playing #stage{animation-play-state:running!important}
+
+/* ---- generic fade windows -------------------------------------------- */
+@keyframes aIn{from{opacity:0}to{opacity:1}}
+/* no `from` and `forwards` fill only: a backwards-filled `from{opacity:1}`
+   would override aIn's fill for the whole delay and reveal every beat at t=0 */
+@keyframes aOut{to{opacity:0}}
+.win{opacity:0;animation:aIn .4s linear var(--in,0s) both,aOut .4s linear var(--out,9999s) forwards}
+.hold{opacity:0;animation:aIn .4s linear var(--in,0s) both}
+
+.scene{position:absolute;inset:0}
+.scene.light{background:var(--canvas)}
+.scene.white{background:var(--surface)}
+.scene.dark{background:var(--ink)}
+
+/* ---- kinetic text ----------------------------------------------------- */
+.kt{display:flex;flex-wrap:wrap;justify-content:flex-start;text-align:right}
+.kt span{display:inline-block;opacity:0;white-space:pre;
+  animation:wordIn .55s var(--ease) var(--wd) both}
+@keyframes wordIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{font-size:128px;font-weight:700;color:var(--on-dark);line-height:1.25}
+.h1{font-size:88px;font-weight:700;color:var(--on-dark);line-height:1.3}
+.h2{font-size:56px;font-weight:700;color:var(--ink);line-height:1.35}
+.h3{font-size:44px;font-weight:600}
+.body{font-size:40px;font-weight:500}
+.caption{font-size:28px;font-weight:500;color:var(--faint)}
+.green{color:var(--success-on-ink)}
+
+/* ---- chips ------------------------------------------------------------ */
+.chip{display:inline-flex;align-items:center;padding:8px 32px;border-radius:999px;
+  font-size:24px;font-weight:500;white-space:nowrap;opacity:0;
+  animation:chipIn .35s var(--ease-snap) var(--in,0s) both}
+@keyframes chipIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+.chip.warning{background:var(--warning-soft);color:var(--warning);border:1px solid var(--warning)}
+.chip.success{background:var(--success-soft);color:var(--success);border:1px solid var(--success)}
+.chip.verified{background:var(--info-soft);color:var(--info);border:1px solid var(--info)}
+.chip.muted{background:var(--canvas);color:var(--faint);border:1px solid var(--faint)}
+
+/* ---- screenshot panels + Ken Burns ------------------------------------ */
+.panel{position:absolute;left:50%;top:50%;width:var(--w,76%);aspect-ratio:16/9;
+  border-radius:32px;overflow:hidden;background:var(--surface);
+  box-shadow:0 48px 140px rgba(21,32,43,.32);margin:0;
+  transform:translate(calc(-50% + var(--ox,0px)),calc(-50% + var(--oy,0px)))}
+.panel .kb{width:100%;height:100%;
+  animation:kb var(--kbDur,5.07s) var(--ease) var(--kbDelay,0s) both}
+.panel img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes kb{
+  from{transform:translate(var(--x0,0px),var(--y0,0px)) scale(var(--s0,1))}
+  to{transform:translate(var(--x1,0px),var(--y1,0px)) scale(var(--s1,1.1))}}
+
+/* ---- counters ---------------------------------------------------------- */
+.num{font-weight:700;font-size:140px;line-height:1.1}
+.num b{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
+  font-weight:700;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.num.punch{animation:punch .4s var(--ease-snap) both}
+@keyframes punch{0%{transform:scale(1)}45%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+/* ---- S2 capacity bar --------------------------------------------------- */
+.capwrap{width:430px;margin-top:14px}
+.captrack{position:relative;height:16px;border-radius:999px;background:#DDE2E7}
+.capfill{position:absolute;inset-inline-start:0;top:0;height:100%;border-radius:999px;
+  width:8.3%;background:var(--warning);
+  animation:capfill 1.5s var(--ease) var(--in,0s) both}
+@keyframes capfill{0%{width:8.3%;background:var(--warning)}
+  65%{background:var(--warning)}66%{background:var(--danger)}
+  100%{width:100%;background:var(--danger)}}
+.capmark{position:absolute;inset-inline-start:69%;top:-6px;width:3px;height:28px;background:var(--ink)}
+
+/* ---- S3 logo ----------------------------------------------------------- */
+.glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(29,78,119,.35),transparent 55%)}
+.logo-wipe{width:620px;opacity:1;clip-path:inset(0 0 0 100%);
+  animation:wipe .9s var(--ease-heavy) var(--in) both}
+@keyframes wipe{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0%)}}
+.logo-settle{width:560px;opacity:0;
+  animation:settle .8s var(--ease) var(--in) both}
+@keyframes settle{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+/* ---- S4 layout ---------------------------------------------------------- */
+.beat-text{position:absolute;top:76px;right:140px;left:140px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.beat-row{display:flex;align-items:center;gap:16px}
+.lower{position:absolute;right:64px;bottom:64px;background:rgba(21,32,43,.55);
+  color:var(--on-dark);border-radius:12px;padding:8px 32px;font-size:28px;font-weight:600}
+
+/* dig-once diagram */
+.dig{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:90px}
+.street{position:absolute;width:1100px;height:4px;background:#D6DBE1;border-radius:2px}
+.bar{position:absolute;width:900px;height:76px;border-radius:999px;display:flex;
+  align-items:center;justify-content:flex-end;padding-inline:32px;font-size:28px;font-weight:600}
+.barA{background:var(--primary-soft);border:2px solid var(--primary);color:var(--primary);
+  animation:convA 1s var(--ease) var(--cv) both,aOut .27s linear var(--mg) forwards}
+.barB{background:var(--info-soft);border:2px solid var(--info);color:var(--info);
+  animation:convB 1s var(--ease) var(--cv) both,aOut .27s linear var(--mg) forwards}
+@keyframes convA{from{transform:translateY(-96px)}to{transform:translateY(0)}}
+@keyframes convB{from{transform:translateY(96px)}to{transform:translateY(0)}}
+.barM{width:1000px;justify-content:center;font-size:32px;font-weight:700;
+  background:var(--success-soft);border:2px solid var(--success);color:var(--success);
+  opacity:0;animation:mergeIn .45s var(--ease-snap) var(--mg) both}
+@keyframes mergeIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+
+/* ---- S5 ---------------------------------------------------------------- */
+.side-caption{position:absolute;bottom:96px;left:210px;font-size:22px;color:var(--faint)}
+.rtext{position:absolute;right:140px;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+
+/* ---- overlay / controls ------------------------------------------------- */
+#gate{position:fixed;inset:0;background:rgba(11,20,28,.92);display:flex;flex-direction:column;
+  gap:28px;align-items:center;justify-content:center;z-index:50;cursor:pointer;transition:opacity .3s}
+#gate.hidden{opacity:0;pointer-events:none}
+#gate .big{color:#fff;font-size:44px;font-weight:700}
+#gate .small{color:#9AA6B2;font-size:22px}
+#gate .btn{background:var(--success);color:#fff;font-size:30px;font-weight:700;
+  border:none;border-radius:999px;padding:18px 64px;cursor:pointer;font-family:var(--font)}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+  <!-- ================= S1 · HOOK · 0–8.2s ================= -->
+  <section class="scene dark">
+    <div class="win" style="--in:.05s;--out:4.6s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 140px">
+      <div class="kt hero" data-d="0.27">«الطريق العام مغلق،</div>
+      <div class="kt hero" data-d="0.87">فصار الزحام عند بيتي»</div>
+      <div style="margin-top:32px"><span class="chip muted" style="--in:2.8s">قول ساكن — نقله منظّم الفعالية</span></div>
+    </div>
+    <div class="win" style="--in:5s;--out:7.8s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 140px">
+      <div class="kt h1" data-d="5.0">كل حفرية تسأل السؤال نفسه:</div>
+      <div class="kt h1 green" data-d="5.6" style="margin-top:16px">متى يكون الأذى أخف؟</div>
+    </div>
+  </section>
+
+  <!-- ================= S2 · COST · 7.8–18.2s ================= -->
+  <section class="scene light win" style="--in:7.8s;--out:17.8s">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 140px">
+      <div style="display:flex;gap:64px;align-items:flex-start">
+        <div class="hold" style="--in:8.13s;max-width:560px">
+          <div class="caption">حِمل شارع الحيّ بعد إغلاق قربه</div>
+          <div class="num" id="c1" style="color:var(--danger)"><b>12</b>٪</div>
+          <div class="capwrap"><div class="captrack">
+            <div class="capfill" style="--in:8.8s"></div><div class="capmark"></div>
+          </div><div style="font-size:22px;color:var(--faint);margin-top:6px">العلامة = سعة الشارع الكاملة</div></div>
+          <div style="margin-top:14px"><span class="chip warning" style="--in:10.3s">متوقَّع من تجربة</span></div>
+        </div>
+        <div class="hold" style="--in:10.97s;max-width:560px">
+          <div class="caption">أسوأ حالة في المحفظة</div>
+          <div class="num" id="c2" style="color:var(--danger)"><b>100</b>٪</div>
+          <div style="margin-top:14px"><span class="chip warning" style="--in:13.13s">متوقَّع من تجربة</span></div>
+        </div>
+        <div class="hold" style="--in:13.8s;max-width:560px">
+          <div class="caption">ساعة-مركبة يكلّفها تصريح واحد</div>
+          <div class="num" id="c3" style="color:var(--ink)"><b>0</b></div>
+          <div style="margin-top:14px"><span class="chip warning" style="--in:15.97s">محرك مسار · محفظة العرض</span></div>
+        </div>
+      </div>
+      <div class="kt body" data-d="16.3" style="align-self:flex-end;margin-top:96px;color:var(--ink);font-weight:600">أرقام لا تُعرف اليوم إلا بعد الشكوى</div>
+    </div>
+  </section>
+
+  <!-- ================= S3 · TURN + LOGO · 17.8–25.2s ================= -->
+  <section class="scene dark win" style="--in:17.8s;--out:24.8s">
+    <div class="win" style="--in:17.85s;--out:21s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 140px">
+      <div class="kt h1" data-d="17.9" style="justify-content:center;text-align:center">ماذا لو عرفنا الأثر</div>
+      <div class="kt h1 green" data-d="18.43" style="justify-content:center;text-align:center;margin-top:16px">قبل التوقيع، لا بعده؟</div>
+    </div>
+    <div class="hold" style="--in:21.35s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px">
+      <div class="glow"></div>
+      <img class="logo-wipe" style="--in:21.4s" src="assets/masar-logo-white.png" alt="مسار">
+      <div class="kt h3 green" data-d="22.27" style="justify-content:center">قرار قبل الحفر، لا بعده</div>
+    </div>
+  </section>
+
+  <!-- ================= S4 · PRODUCT PROOF · 24.8–55.2s ================= -->
+  <section class="scene light win" style="--in:24.8s;--out:54.8s">
+
+    <!-- b1 · desk overview · 24.8–29.87 -->
+    <div class="win" style="--in:24.83s;--out:29.53s">
+      <figure class="panel" style="--w:76%;--oy:92px">
+        <div class="kb" style="--kbDelay:24.83s;--s0:.96;--s1:1.06;--y1:-10px">
+          <img src="assets/desk.png" alt=""></div>
+      </figure>
+      <div class="beat-text">
+        <div class="kt h2" data-d="24.93">150 تصريح حفر — مكتب واحد</div>
+        <div class="beat-row">
+          <div class="kt caption" data-d="25.33">كل تصريح يمرّ من هنا أولاً</div>
+          <span class="chip muted" style="--in:25.93s">بيانات توضيحية · شوارع رياض حقيقية</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- b2 · schedule fix · 29.87–34.93 -->
+    <div class="win" style="--in:29.9s;--out:34.6s">
+      <figure class="panel" style="--w:56%;--ox:-330px;--oy:64px">
+        <div class="kb" style="--kbDelay:29.9s;--s0:1;--s1:1.1;--x1:30px">
+          <img src="assets/schedule-fix.png" alt=""></div>
+      </figure>
+      <div style="position:absolute;top:120px;right:140px;width:640px;display:flex;flex-direction:column;align-items:flex-end;gap:14px">
+        <div class="kt h2" data-d="30.0">التوصية: عمل ليلي بدل نهاري</div>
+        <div class="caption hold" style="--in:30.6s">ساعة-مركبة تأخيراً</div>
+        <div class="num hold" id="c4" style="--in:30.9s;color:var(--success)"><b>3,912</b></div>
+        <div class="kt body hold" data-d="32.0" style="--in:31.9s;color:var(--success);font-weight:700;font-size:34px">وفر 3,344 ساعة-مركبة — أقل بنسبة 85.5 بالمئة</div>
+        <span class="chip warning" style="--in:33.2s">متوقَّع من تجربة</span>
+      </div>
+      <div class="lower hold" style="--in:32.5s">BLD-2026-0001 · أعمال على أبو عبيدة عامر بن الجراح</div>
+    </div>
+
+    <!-- b3 · alternative routes · 34.93–40.0 -->
+    <div class="win" style="--in:34.96s;--out:39.66s">
+      <figure class="panel" style="--w:76%;--oy:92px">
+        <div class="kb" style="--kbDelay:34.96s;--s0:1.02;--s1:1.12;--x1:-40px">
+          <img src="assets/map.png" alt=""></div>
+      </figure>
+      <div class="beat-text">
+        <div class="kt h2" data-d="35.06">بديل حقيقي لكل إغلاق تقريباً</div>
+        <div class="beat-row">
+          <div class="kt caption" data-d="35.46">118 من 134 سجلاً — 3.7 دقائق إضافية وسيطاً</div>
+          <span class="chip success" style="--in:36.06s">118,893 عقدة · 174,113 ضلعاً — مُثبَت عملياً</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- b4 · dig-once · 40.0–45.07 -->
+    <div class="win" style="--in:40.03s;--out:44.73s">
+      <div class="dig">
+        <div class="street"></div>
+        <div class="bar barA" style="--cv:41.16s;--mg:42.5s">تصريح اتصالات</div>
+        <div class="bar barB" style="--cv:41.16s;--mg:42.5s">تصريح مياه</div>
+        <div class="bar barM" style="--mg:42.5s">حفر واحد منسَّق</div>
+      </div>
+      <div class="beat-text">
+        <div class="kt h2" data-d="40.13">لا يُحفر الشارع مرتين</div>
+        <div class="beat-row">
+          <div class="kt caption" data-d="40.53">الحفر الموحّد يوفّر ما بين 25 و33 بالمئة</div>
+          <span class="chip verified" style="--in:41.13s">مُتحقَّق خارجياً — GAO / FHWA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- b5 · refusal + governance · 45.07–50.13 -->
+    <div class="win" style="--in:45.1s;--out:49.8s">
+      <figure class="panel" style="--w:76%;--oy:92px">
+        <div class="kb" style="--kbDelay:45.1s;--s0:1;--s1:1.12;--x1:50px;--y1:25px">
+          <img src="assets/refusal.png" alt=""></div>
+      </figure>
+      <div class="beat-text">
+        <div class="kt h2" data-d="45.2">النظام يمتنع — ويشرح السبب</div>
+        <div class="kt caption" data-d="45.6">حين لا يصحّ الإجراء، لا ينفَّذ</div>
+      </div>
+      <div class="lower hold" style="--in:47.1s">من يفحص لا يعتمد · وكل قرار موقَّع ومؤرَّخ</div>
+    </div>
+
+    <!-- b6 · public map · 50.13–55.2 -->
+    <div class="win" style="--in:50.16s;--out:54.8s">
+      <figure class="panel" style="--w:76%;--oy:92px">
+        <div class="kb" style="--kbDelay:50.16s;--s0:1.04;--s1:1.14;--y1:-35px">
+          <img src="assets/map.png" alt=""></div>
+      </figure>
+      <div class="beat-text">
+        <div class="kt h2" data-d="50.26">والخريطة نفسها تُنشر للسكان</div>
+        <div class="kt caption" data-d="50.66">شفافية قبل أن تُغلق الشوارع</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= S5 · TRUST · 54.8–65.2s ================= -->
+  <section class="scene white win" style="--in:54.8s;--out:64.8s">
+
+    <!-- recalc · 54.8–58.8 -->
+    <div class="win" style="--in:54.83s;--out:58.46s">
+      <figure class="panel" style="--w:60%;--ox:-300px;--oy:70px">
+        <div class="kb" style="--kbDelay:54.83s;--s0:1;--s1:1.05">
+          <img src="assets/recalc-before.png" alt="">
+          <img class="hold" src="assets/recalc-after.png" alt=""
+               style="--in:56.53s;position:absolute;inset:0"></div>
+      </figure>
+      <div class="rtext" style="top:150px;width:620px">
+        <div class="kt h2" data-d="54.93">رقم يتغيّر مع كل مُدخل</div>
+        <div class="kt caption" data-d="55.4">لا لقطة مسجّلة ولا رقم مزروع</div>
+      </div>
+    </div>
+
+    <!-- osrm calibration · 58.8–62.0 -->
+    <div class="win" style="--in:58.83s;--out:61.66s">
+      <figure class="panel" style="--w:38%;--ox:-500px;--oy:140px">
+        <div class="kb" style="--kbDelay:58.83s;--s0:1;--s1:1.04">
+          <img src="assets/desk-decision.png" alt=""></div>
+      </figure>
+      <div class="side-caption hold" style="--in:59.5s">سجل قرارات مؤرَّخ</div>
+      <div class="rtext" style="top:190px;width:760px;gap:16px">
+        <div class="kt h2" data-d="58.93">قِسنا مساراتنا مقابل محرك مستقل</div>
+        <div class="kt body" data-d="59.4" style="color:var(--faint)">OSRM — مفتوح المصدر</div>
+        <span class="chip verified" style="--in:60.16s">مُتحقَّق خارجياً</span>
+      </div>
+    </div>
+
+    <!-- evidence ladder · 62.0–65.2 -->
+    <div class="win" style="--in:62.03s;--out:64.8s">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 140px">
+        <div class="kt h2" data-d="62.13">كل رقم يحمل تصنيف دليله</div>
+        <div style="display:flex;gap:16px;margin-top:32px;flex-wrap:wrap">
+          <span class="chip success"  style="--in:62.8s">مُثبَت عملياً</span>
+          <span class="chip verified" style="--in:63.2s">مُتحقَّق خارجياً</span>
+          <span class="chip warning"  style="--in:63.6s">متوقَّع من تجربة</span>
+          <span class="chip muted"    style="--in:64.0s">سيناريو توسّع مشروط</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= S6 · CLOSE · 64.8–75s ================= -->
+  <section class="scene dark hold" style="--in:64.8s">
+    <div class="win" style="--in:64.85s;--out:69.06s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:center">
+      <div class="kt h1" data-d="64.93" style="justify-content:center;text-align:center">قرار واحد،</div>
+      <div class="kt h1 green" data-d="65.53" style="justify-content:center;text-align:center;margin-top:16px">قبل كل حفرية</div>
+    </div>
+    <div class="hold" style="--in:69.4s;position:absolute;inset:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px">
+      <img class="logo-settle" style="--in:69.47s" src="assets/masar-logo-white.png" alt="مسار">
+      <div class="kt h3" data-d="70.2" style="justify-content:center;color:var(--on-dark)">بلدياثون 2026 — التحدي الثالث</div>
+    </div>
+  </section>
+
+</div></div>
+
+<div id="gate">
+  <div class="big">مسار — فيلم الإطلاق</div>
+  <div class="small">75 ثانية · بصوت — يعمل أيضاً صامتاً</div>
+  <button class="btn" id="playBtn">تشغيل ▶</button>
+</div>
+
+<audio id="score" src="assets/score.wav" preload="auto"></audio>
+
+<script>
+"use strict";
+/* scale the fixed 1920x1080 stage to the window */
+const stage = document.getElementById("stage");
+function fit(){
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `scale(${s})`;
+}
+addEventListener("resize", fit); fit();
+
+/* split kinetic-text nodes into word spans; each .kt has data-d = global
+   start seconds; words stagger 0.1s in logical (RTL reading) order */
+for (const el of document.querySelectorAll(".kt")){
+  const base = parseFloat(el.dataset.d || "0");
+  const words = el.textContent.trim().split(/\s+/);
+  el.textContent = "";
+  words.forEach((w, i) => {
+    const span = document.createElement("span");
+    span.textContent = w + (i < words.length - 1 ? " " : "");
+    span.style.setProperty("--wd", (base + i * 0.1) + "s");
+    el.appendChild(span);
+  });
+}
+
+/* counters: [element id, from, to, start s, duration s, suffix] — same
+   values as the Remotion content.ts */
+const COUNTERS = [
+  ["c1", 12,   145,   8.8,  1.5, "٪"],
+  ["c2", 100,  592,   11.63,1.5, "٪"],
+  ["c3", 0,    42350, 14.47,1.5, ""],
+  ["c4", 3912, 568,   30.9, 2.17,""],
+];
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+let t0 = null, rafId = null, done = new Set();
+function tick(now){
+  const t = (now - t0) / 1000;
+  for (const [id, from, to, start, dur, suffix] of COUNTERS){
+    const el = document.getElementById(id);
+    const p = Math.min(Math.max((t - start) / dur, 0), 1);
+    const v = Math.round(from + (to - from) * easeOutCubic(p));
+    el.firstElementChild.textContent = v.toLocaleString("en-US");
+    if (p >= 1 && !done.has(id)){ done.add(id); el.classList.add("punch"); }
+  }
+  if (t < 76) rafId = requestAnimationFrame(tick);
+}
+
+/* play gate: audio needs a user gesture; CSS animations un-pause together */
+const gate = document.getElementById("gate");
+const audio = document.getElementById("score");
+document.getElementById("playBtn").addEventListener("click", () => {
+  gate.classList.add("hidden");
+  document.body.classList.add("playing");
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+  t0 = performance.now();
+  done.clear();
+  rafId = requestAnimationFrame(tick);
+  setTimeout(() => {
+    gate.classList.remove("hidden");
+    gate.querySelector(".small").textContent = "انتهى العرض — أعد التشغيل";
+    document.getElementById("playBtn").textContent = "إعادة ▶";
+    document.body.classList.remove("playing");
+    if (rafId) cancelAnimationFrame(rafId);
+  }, 76000);
+});
+</script>
+</body>
+</html>
