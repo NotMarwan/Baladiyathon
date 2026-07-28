@@ -224,8 +224,21 @@
 <div id="counter">1 / 8</div>
 
 <main id="deck">
-  <!-- 0:00–0:15 -->
-  <section class="slide main" data-story="permit-network" data-start="0" data-end="15" data-seconds="15">
+  <!--
+    ميزانية الثواني: المجموع كان مئةً وثمانين بالضبط، والتوزيع كان خاطئاً.
+    قِيست كل شريحة بعدد كلمات ملاحظات المتحدث على معدّل ٢٫٣ كلمة/ثانية — وهو
+    معدّل سريع للإلقاء العربي الرسمي — فسقطت ثلاث شرائح تحت نصّها:
+      decision-path  ٢٠ ثانية لنصٍّ يحتاج ٢٧٫٨ (وفيه ضغطتا الديمو وقراءة ناتجه)
+      shadow-gate    ١٠ ثوانٍ لنصٍّ يحتاج ١٦٫١
+      supervised-ask ٢٥ ثانية لنصٍّ يحتاج ٣١٫٣
+    بينما جلس الفائض على impact-range (+١١٫١) وbaseline-alternative (+١٨٫٥).
+    أي أن المتحدث يُستعجَل عند لحظة الإبهار وعند الطلب — الشريحتين اللتين
+    تقرران الدرجة — ويفيض عليه الوقت حيث لا يحتاجه.
+    المجموع يبقى ١٨٠ بلا فجوة ولا تداخل، والتوزيع صار على الحاجة المقيسة
+    بهامش لا يقلّ عن ٧٪ لكل شريحة.
+  -->
+  <!-- 0:00–0:14 -->
+  <section class="slide main" data-story="permit-network" data-start="0" data-end="14" data-seconds="14">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">مسار · قرار واحد قبل تصريح واحد</div>
@@ -248,8 +261,8 @@
     </div>
   </section>
 
-  <!-- 0:15–0:35 -->
-  <section class="slide main" data-story="current-gap" data-start="15" data-end="35" data-seconds="20">
+  <!-- 0:14–0:29 -->
+  <section class="slide main" data-story="current-gap" data-start="14" data-end="29" data-seconds="15">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الأول · ما الذي لا يجيب عنه الفحص الحالي؟</div>
@@ -273,8 +286,8 @@
     </div>
   </section>
 
-  <!-- 0:35–0:55 -->
-  <section class="slide main" data-story="evidence-boundary" data-start="35" data-end="55" data-seconds="20">
+  <!-- 0:29–0:45 -->
+  <section class="slide main" data-story="evidence-boundary" data-start="29" data-end="45" data-seconds="16">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الثاني · ما الحقيقي وما الافتراض؟</div>
@@ -304,8 +317,8 @@
     </div>
   </section>
 
-  <!-- 0:55–1:40 -->
-  <section class="slide main" data-story="baseline-alternative" data-start="55" data-end="100" data-seconds="45">
+  <!-- 0:45–1:15 -->
+  <section class="slide main" data-story="baseline-alternative" data-start="45" data-end="75" data-seconds="30">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الثالث · هل يوجد بديل زمني أخف؟</div>
@@ -333,7 +346,10 @@
       </div>
       <p class="quiet">المقارنة التوضيحية تستخدم شبكة طرق محلية ومدخلات معلنة، ولا تمثل نتيجة ميدانية.</p>
       <div class="topline">
-        <h3>وسؤالٌ لا يقلّ أهمية: هل يتحمّل البديل نفسه الحركة المحوَّلة؟</h3>
+        <!-- صوت الساكن كان يعيش في المرفق وحده (شريحة ٠٧ من عرض المنصة) بينما
+             الإلقاء الحيّ يعرض الرقم عارياً. أقوى بيت في العرض لا يجوز أن يغيب
+             عن الملف الذي يقف أمام اللجنة، فالمصنوعان يشتركان الآن في الذروة. -->
+        <h3>«الطريق العام مغلق، فصار الزحام عند بيتي.» سألها ساكن — فهل يتحمّل البديل الحركة المحوَّلة، وأين يقع الطابور؟</h3>
         <div class="evidence-tag">درجة الدليل: مشتقّ من النموذج — model-derived</div>
       </div>
       <div class="metric-grid">
@@ -354,12 +370,12 @@
         </article>
       </div>
       <p class="quiet" id="alt-load-worst">—</p>
-      <aside class="speaker-notes" hidden>في الحالة التوضيحية نقارن موعد الطلب في الثامنة صباحاً ببديل واحد في العاشرة مساءً. يوضح النموذج سبب انخفاض الطلب المتوقع، ويفحص الشبكة المحلية، ثم يعرض البديل للمراجع. لا نسمي الفرق وفراً، لأن ذلك يحتاج قياساً بعد التنفيذ. ثم نسأل السؤال الأهم الذي يسقطه أغلب الحلول المنافسة: هل يتحمّل الطريق البديل نفسه هذه الحركة المحوَّلة؟ الأرقام على الشاشة محسوبة لحظياً من محفظة التصاريح نفسها، لا مكتوبة يدوياً.</aside>
+      <aside class="speaker-notes" hidden>في الحالة التوضيحية نقارن موعد الطلب في الثامنة صباحاً ببديل واحد في العاشرة مساءً. يوضح النموذج سبب انخفاض الطلب المتوقع، ويفحص الشبكة المحلية، ثم يعرض البديل للمراجع. لا نسمي الفرق وفراً، لأن ذلك يحتاج قياساً بعد التنفيذ. ثم نسأل سؤالاً سأله ساكن: الطريق العام مغلق فصار الزحام عند بيته. الأرقام على الشاشة محسوبة لحظياً من محفظة التصاريح نفسها، لا مكتوبة يدوياً.</aside>
     </div>
   </section>
 
-  <!-- 1:40–2:00 -->
-  <section class="slide main" data-story="decision-path" data-start="100" data-end="120" data-seconds="20">
+  <!-- 1:15–1:53 · لحظة الإبهار: نصٌّ ٢٧٫٨ ثانية + ضغطتان وقراءة ناتج -->
+  <section class="slide main" data-story="decision-path" data-start="75" data-end="113" data-seconds="38">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الرابع · ما مسار القرار؟</div>
@@ -376,7 +392,12 @@
         <div class="path-step"><b>05</b><p>يبقى القرار بنسخته وتوقيعه بعد إغلاق المتصفح.</p></div>
       </div>
       <p class="quiet">المدخلات التوضيحية لا تصبح بيانات تصريح، والتوصية لا تصبح موافقة، والتكامل البلدي يبقى مسار نشر مقترحاً.</p>
-      <div id="gate-demo" class="gate-demo" data-note="حالة توضيحية — المحرك الحقيقي يعمل الآن">
+      <!-- كانت نيّة الشريحة تعيش في سمة `data-note` بلا مستهلك واحد في أي
+           سكربت أو تنسيق (قِيس: صفر مطابقة لـ`data-note` في presentation/*.js
+           و*.css) — أي أنها لم تُصيَّر قطّ. صارت عنصراً يُملأ وقت التشغيل من
+           عقد المدخلات نفسه الذي يشغّله الزرّان، فالعدد لا يتقادم بتغيّر العقد. -->
+      <div id="gate-demo" class="gate-demo">
+        <p class="gate-demo-hint" id="gate-demo-contract">حالة توضيحية على المحرك الحقيقي — يعمل الآن أمامكم.</p>
         <div class="gate-demo-buttons">
           <button type="button" id="gate-demo-incomplete">١ · أرسل طلباً ناقصاً</button>
           <button type="button" id="gate-demo-complete">٢ · أكمل البيانات واحسب</button>
@@ -384,16 +405,19 @@
         <div id="gate-demo-output" class="gate-demo-output" aria-live="polite">
           <!-- كان هنا عدّ حالات مكتوب يدوياً بالمئات، تقادم في صمت والحقيقة
                أكثر من ألف. صار أرضيةً بالصيغة نفسها التي تحرسها بوابة أرقام
-               العرض مقابل جرد التشغيل، فلا تكذب حين يُضاف فحص. -->
-          <p class="gate-demo-hint">هذا المحرك نفسه الذي يختبره أكثر من تسعمئة فحص آلي — ليس فيديو ولا صوراً.</p>
+               العرض مقابل جرد التشغيل، فلا تكذب حين يُضاف فحص. والأرضية الآن
+               تحمل طريق تحقّقها: كل بطاقة رقم في هذه الصفحة تفتح سندها، وهذه
+               وحدها كانت بلا رابط — فصار الجرد المولَّد على بُعد نقرة. -->
+          <p class="gate-demo-hint">هذا المحرك نفسه الذي يختبره أكثر من تسعمئة فحص آلي — ليس فيديو ولا صوراً.
+            <a href="tests/fixtures/test-manifest.json">الجرد المولَّد — أرضية معلنة لا عدّاً دقيقاً</a></p>
         </div>
       </div>
       <aside class="speaker-notes" hidden>المسار قصير وواضح: نستلم الطلب ومصدر المدخلات، نحسب خط الأساس والبديل، نفحص النقل العام والوصول الحرج، ثم نعرض توصية مفسرة. بعد التنفيذ نقيس النتيجة، من دون موافقة آلية أو كتابة في منصة التصاريح. وهنا لحظة العرض الحية: أرسل طلباً ناقصاً أمامكم فيمتنع النظام ويسمي الحقول الناقصة، ثم أكمل البيانات فيتحول الامتناع إلى قرار كمي بالساعات-مركبة في أقل من ثانية — على المحرك الحقيقي نفسه.</aside>
     </div>
   </section>
 
-  <!-- 2:00–2:25 -->
-  <section class="slide main" data-story="impact-range" data-start="120" data-end="145" data-seconds="25">
+  <!-- 1:53–2:08 -->
+  <section class="slide main" data-story="impact-range" data-start="113" data-end="128" data-seconds="15">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الخامس · كيف نثبت الأثر؟</div>
@@ -428,8 +452,8 @@
     </div>
   </section>
 
-  <!-- 2:25–2:35 -->
-  <section class="slide main" data-story="shadow-gate" data-start="145" data-end="155" data-seconds="10">
+  <!-- 2:08–2:26 -->
+  <section class="slide main" data-story="shadow-gate" data-start="128" data-end="146" data-seconds="18">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال السادس · متى نقول نجح؟</div>
@@ -466,8 +490,8 @@
     </div>
   </section>
 
-  <!-- 2:35–3:00 -->
-  <section class="slide main" id="ask" data-story="supervised-ask" data-start="155" data-end="180" data-seconds="25">
+  <!-- 2:26–3:00 · الطلب: أطول شريحة لأن نصّها أطول -->
+  <section class="slide main" id="ask" data-story="supervised-ask" data-start="146" data-end="180" data-seconds="34">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow" style="color:#f0bd6c">الطلب المحدد</div>
@@ -714,6 +738,21 @@
   };
 
   var formatter = new Intl.NumberFormat('ar-SA-u-nu-latn', { maximumFractionDigits: 1 });
+
+  /* عدد الحقول الحاسمة يُقرأ من العقد لا يُكتب هنا.
+     الفرق ليس شكلياً: رقمٌ مكتوب في هذه الجملة يصير كذباً في اللحظة التي
+     يُضاف فيها حقل إلزامي إلى `validateDecisionInput`، ولا شيء ينبّه — وهو
+     العطل نفسه الذي أوقع عدّ الفحوص قبل أن يصير أرضيةً محروسة. */
+  var contract = document.getElementById('gate-demo-contract');
+  if (contract && typeof MasarDecision !== 'undefined') {
+    var required = MasarDecision.validateDecisionInput({}).missing.length;
+    /* «من الحقول» لا «حقلاً»: التمييز العربي يتغيّر بتغيّر العدد (ثلاثة حقول ·
+       أحد عشر حقلاً)، وصيغةٌ واحدة مثبتة تصير خطأً نحوياً أول مرة يتغيّر
+       العقد. هذه الصيغة صحيحة مع أي عدد. */
+    contract.textContent = 'عقد المدخلات يحرس ' + formatter.format(required)
+      + ' من الحقول الحاسمة، ويسمّي الناقص منها بالاسم. حالة توضيحية على المحرك '
+      + 'الحقيقي — والعدد مقروء الآن من الوحدة نفسها التي يشغّلها الزرّان.';
+  }
 
   btnIncomplete.addEventListener('click', function () {
     var verdict = MasarDecision.validateDecisionInput(INCOMPLETE_INPUT);

@@ -22,6 +22,29 @@
 
   const STORAGE_KEY = 'masar-backtests-v1';
 
+  /**
+   * نسبة مقبولة في سجل المعايرة.
+   *
+   * **لماذا حارسٌ هنا وليس عند العرض.** كان `record` يفحص التوقّع وحده،
+   * فتُقبل رصدةٌ بلا مرصود أو بمرصودٍ سالب، ويصير معامل التصحيح `NaN` أو
+   * عدداً سالباً — ويصل الشاشة كما هو: تبويب القياس في المكتب يطبع
+   * «معامل التصحيح: -0.50×» ، والنموذج التفاعلي يضرب ساعات-المركبة فيه
+   * فيعرض أثراً سالباً. أي أن آلية «تتحسّن مع كل تصريح» كانت تتحسّن نحو رقم
+   * لا معنى له.
+   *
+   * والحارس عند الكتابة لا عند العرض لسببين: السجل يُقرأ من أكثر من سطح
+   * (المكتب والنموذج)، فحارسُ سطحٍ واحد لا يحمي البقية؛ والسجل **يبقى**
+   * في `localStorage` عبر النسخ، فرصدةٌ فاسدة كُتبت مرة تعيش إلى الأبد.
+   *
+   * ولذلك يُصفّى عند القراءة أيضاً: سجلٌّ كُتب بنسخة سابقة بلا هذا الحارس
+   * قد يحمل صفوفاً فاسدة، وحارسُ الكتابة وحده لا ينظّفها.
+   */
+  function isUsableRatio(record) {
+    return record
+      && Number.isFinite(record.predictedVehHours) && record.predictedVehHours > 0
+      && Number.isFinite(record.observedVehHours) && record.observedVehHours > 0;
+  }
+
   function median(sortedAsc) {
     const n = sortedAsc.length;
     if (n === 0) return 1;
@@ -52,10 +75,13 @@
 
     /**
      * @param {{permitId:string, predictedVehHours:number, observedVehHours:number}} entry
-     * @returns {boolean} true if recorded, false if rejected (invalid prediction)
+     * @returns {boolean} true if recorded, false if rejected (invalid pair)
      */
     function record(entry) {
-      if (!entry || !(entry.predictedVehHours > 0)) return false;
+      /* الرفض يشمل الطرفين. رصدةٌ بلا مرصود ليست رصدةً ناقصة تُكمَّل لاحقاً —
+         هي صفٌّ يفسد الوسيط بصمت، لأن `undefined / 1200` يعطي `NaN` والوسيط
+         يعيده كما هو. */
+      if (!isUsableRatio(entry)) return false;
       const all = readAll();
       all.push({
         permitId: String(entry.permitId),
@@ -70,20 +96,29 @@
      * Median observed/predicted ratio across the log. 1 when the log is empty.
      * @returns {number}
      */
-    function correctionFactor() {
-      const ratios = readAll()
-        .filter(function (r) { return r.predictedVehHours > 0; })
+    function ratios() {
+      return readAll()
+        .filter(isUsableRatio)
         .map(function (r) { return r.observedVehHours / r.predictedVehHours; })
         .sort(function (a, b) { return a - b; });
-      return median(ratios);
     }
 
+    function correctionFactor() {
+      return median(ratios());
+    }
+
+    /**
+     * `n` عدد النسب **الصالحة** لا عدد الصفوف المكتوبة.
+     *
+     * الفرق يظهر على سجل كُتب بنسخة سابقة بلا حارس: المكتب يطبع «من 12 رصدة»
+     * بينما ستٌّ منها لا تدخل الوسيط أصلاً، فيُقرأ المعامل أمتن مما هو.
+     */
     function status() {
-      return { n: readAll().length, factor: correctionFactor() };
+      return { n: ratios().length, factor: correctionFactor() };
     }
 
-    return { record, records, correctionFactor, status };
+    return { record, records, ratios, correctionFactor, status };
   }
 
-  return { createCalibration, STORAGE_KEY };
+  return { createCalibration, isUsableRatio, STORAGE_KEY };
 });

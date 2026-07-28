@@ -130,6 +130,94 @@
   }
 
   /**
+   * كل نطاق مكتوب بين قوسين معقوفين داخل نصّ.
+   *
+   * السجل يكتب أحكامه ووصفاته للبشر: «نطاق `workZoneFriction` الحالي
+   * [1.00 – 1.25] أضيق من الدليل»، و«يُوسَّع النطاق إلى [1.13 – 1.68]».
+   * وهي أرقامٌ حاكمة مدفونة في جملة، لا يقارنها شيء بالنطاق الحيّ في الشيفرة.
+   *
+   * والفاصل بين الحدّين قد يكون شرطة عربية طويلة أو قصيرة أو سالباً — تُقبل
+   * الثلاثة، لأن الحارس يجب أن يمسك النصّ كما يكتبه من يعدّل السجل لا كما
+   * نتمنّاه.
+   *
+   * `lowText`/`highText` تحفظان الصياغة كما كُتبت: «1.00» تُقرأ نطاقاً
+   * بمنزلتين، و`Number('1.00')` تعيدها «1» فتُعرض في المصالحة بصورة لا يجدها
+   * القارئ في السجل حين يرجع إليه.
+   *
+   * @param {string} text نصّ عربي أو إنجليزي.
+   * @returns {Array<{low:number, high:number, lowText:string, highText:string}>}
+   */
+  function parseRanges(text) {
+    var body = String(text || '');
+    var pattern = /\[\s*(-?\d+(?:\.\d+)?)\s*[–—−-]\s*(-?\d+(?:\.\d+)?)\s*\]/g;
+    var found = [];
+    var hit = pattern.exec(body);
+    while (hit) {
+      found.push({
+        low: Number(hit[1]), high: Number(hit[2]),
+        lowText: hit[1], highText: hit[2],
+      });
+      hit = pattern.exec(body);
+    }
+    return found;
+  }
+
+  /**
+   * مصالحة نطاقٍ حيّ في الشيفرة مع ما يصفه السجل ويوصي به.
+   * ---------------------------------------------------------------------------
+   * **الفجوة التي تسدّها.** حكم السجل على محور أرضية الزمن نصٌّ مخزَّن:
+   * يذكر نطاقاً «حالياً» ويوصي بنطاقٍ أوسع. وحين يتغيّر النطاق في الشيفرة —
+   * لأي سبب، ولو كان سبباً وجيهاً — يبقى نصّ السجل على حاله. فيقرأ المحكّم
+   * وصفةً معلنة بتوسيع النطاق، ويرى في الشيفرة نطاقاً **أضيق** منها ومن
+   * «الحالي» المذكور، بلا سطرٍ واحد يصالح بينهما. وهذا هو شكل التضييق
+   * التجميلي بالضبط، سواء أكان تضييقاً تجميلياً أم لم يكن.
+   *
+   * فالمصالحة **تُحسب وقت التشغيل** ولا تُخزَّن: تُقارَن الحدود العددية،
+   * ويوصف الفرق بكلمة واحدة، ويُعرض النصّ المرجعي كما هو في السجل كي يُراجَع.
+   *
+   * @param {string} parameter مفتاح الأولوية في `derivedPriors`.
+   * @param {{low:number, high:number}} live النطاق الحيّ المستعمل في الشيفرة.
+   * @param {'verdictOnCurrentRange'|'action'} [field] الحقل المقروء.
+   * @returns {{status:string, ledger:object|null, live:object,
+   *            text:string, sentence:string}|null}
+   */
+  function reconcileRange(parameter, live, field) {
+    var prior = priorFor(parameter);
+    if (!prior || !live || !Number.isFinite(live.low) || !Number.isFinite(live.high)) {
+      return null;
+    }
+    var key = field || 'verdictOnCurrentRange';
+    var text = prior[key] || '';
+    var quoted = parseRanges(text)[0] || null;
+    if (!quoted) {
+      return { status: 'بلا نطاق مذكور', ledger: null, live: live,
+        text: text, sentence: '' };
+    }
+
+    var status;
+    if (quoted.low === live.low && quoted.high === live.high) {
+      status = 'مطابق';
+    } else if (live.low >= quoted.low && live.high <= quoted.high) {
+      status = 'أضيق';
+    } else if (live.low <= quoted.low && live.high >= quoted.high) {
+      status = 'أوسع';
+    } else {
+      status = 'مزاح';
+    }
+
+    return {
+      status: status,
+      ledger: quoted,
+      live: live,
+      text: text,
+      sentence: status === 'مطابق' ? ''
+        : 'وسجلّ الحالات يذكر لهذا المحور نطاق [' + quoted.lowText + ' – '
+          + quoted.highText + '] والنطاق الحيّ [' + live.low + ' – ' + live.high
+          + '] ' + status + ' منه.',
+    };
+  }
+
+  /**
    * الصياغة المسموحة عند عرض أي نطاق مشتقّ من هذا السجل.
    *
    * تُقرأ من مكان واحد كي لا تُعاد كتابتها في كل سطح بصيغة أضعف.
@@ -191,6 +279,8 @@
     eligibility: eligibility,
     similarity: similarity,
     priorFor: priorFor,
+    parseRanges: parseRanges,
+    reconcileRange: reconcileRange,
     permittedPhrasing: permittedPhrasing,
     checkClaim: checkClaim,
     summary: summary,

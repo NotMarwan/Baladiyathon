@@ -38,6 +38,21 @@
    * مدخلات المحرك من خصائص التصريح.
    * `durationHours` النافذة اليومية، و`totalHours` مجموع ساعات العمل عليها.
    * الخلط بينهما هو الخلل الذي أنتج رقمين لكمية واحدة.
+   *
+   * ---------------------------------------------------------------------------
+   * **الغائب يُقال غائباً — لا يصير NaN.**
+   *
+   * كل مدخل هنا له احتياطٌ معلن: الحجم والسعة والمسارات ترجع إلى ثوابت المحرك،
+   * وساعة البدء إلى الثامنة. إلا واحداً: **مدة الإغلاق**. لا تواريخ صالحة ولا
+   * عدد أيام ولا ساعات معلنة يعني أن أحداً لا يعرف كم يدوم هذا الإغلاق — ولا
+   * ثابتَ في المحرك يجيب عن ذلك.
+   *
+   * وكان الحساب يجيب عنه بـ`NaN`: `Math.ceil((NaN - NaN)/86400000)` يعطي NaN،
+   * فيضربه في النافذة فيمرّ إلى `optimize` فيرمي `RangeError` — يقع خارج أي
+   * حارس، فيبقى ملف القرار على التصريح **السابق** بينما المخزن حدّد الجديد.
+   * المراجع يقرأ ملفاً لتصريح غير الذي اختاره. وذلك أسوأ من شاشة تسقط.
+   *
+   * فالمدة الآن `null` صريحة حين تغيب، و`evaluate` يمتنع ويسمّي ما ينقص.
    */
   function inputsFor(properties, Engine) {
     var p = properties || {};
@@ -46,13 +61,18 @@
 
     var windowHours = Number(p.windowHours) > 0
       ? Number(p.windowHours) : Engine.WORK_WINDOW_HOURS;
-    var workDays = Number(p.workDays) > 0 ? Number(p.workDays)
-      : Math.max(1, Math.ceil((end - start) / 86400000));
+
+    var spanDays = (isFinite(start) && isFinite(end) && end > start)
+      ? Math.max(1, Math.ceil((end - start) / 86400000)) : null;
+    var workDays = Number(p.workDays) > 0 ? Number(p.workDays) : spanDays;
 
     // حين يغيب المجموع يُستنتج من النافذة والأيام، ولا يُفترض رقماً.
-    var totalHours = Number(p.durationHours) > 0
+    // وحين تغيب الأيام كذلك يبقى `null` — لا صفرٌ ولا واحدٌ ولا NaN.
+    var declaredTotal = Number(p.durationHours) > 0
       ? Math.max(MIN_PERMIT_HOURS, Math.min(Number(p.durationHours), MAX_PERMIT_HOURS))
-      : windowHours * workDays;
+      : null;
+    var totalHours = declaredTotal !== null ? declaredTotal
+      : (workDays !== null ? windowHours * workDays : null);
 
     return {
       aadt: Number(p.aadt) > 0 ? Number(p.aadt) : Engine.DEFAULTS.aadt,
@@ -69,6 +89,34 @@
          الجوار الحسّاس بينما البطاقة تعرض «مستشفى» — رقمان لكمية واحدة. */
       sensitivity: p.sensitivity,
     };
+  }
+
+  /**
+   * ما لا يُعوَّض بافتراض معلن — أي ما يوجب الامتناع.
+   * ---------------------------------------------------------------------------
+   * القاعدة: مدخلٌ له ثابتٌ في المحرك ليس ناقصاً بل **مفترَضاً**، ويُقال ذلك
+   * في ذيل البطاقة وفي شريط الثقة. ومدخلٌ بلا ثابت هو الناقص، والقرار عليه
+   * محجوب. اليوم واحد فقط بهذا الوصف: مدة الإغلاق.
+   *
+   * تُصدَّر كي يقرأها الصندوق أيضاً: المراجع يرى الثغرة في الطابور قبل أن
+   * يفتح الملف، لا بعده.
+   *
+   * @param {object} properties خصائص التصريح
+   * @returns {Array<{field:string, label:string, needed:string}>} فارغة إن اكتمل
+   */
+  function missingInputs(properties) {
+    var p = properties || {};
+    var start = Date.parse(p.start);
+    var end = Date.parse(p.end);
+    var hasSpan = isFinite(start) && isFinite(end) && end > start;
+
+    if (Number(p.durationHours) > 0 || Number(p.workDays) > 0 || hasSpan) return [];
+
+    return [{
+      field: 'durationHours',
+      label: 'مدة الإغلاق',
+      needed: 'تاريخا البدء والانتهاء، أو عدد أيام العمل، أو مجموع ساعاته',
+    }];
   }
 
   /** نسبة تأخير الرحلة على النافذة اليومية — موزونةً بالطلب لا بالساعات. */
@@ -119,6 +167,35 @@
   }
 
   /**
+   * الحصيلة الممتنعة — بالشكل نفسه الذي تتوقّعه كل شاشة تقرؤها.
+   * ---------------------------------------------------------------------------
+   * `scored` يبقى **كائناً** لا `null`: تبويب القياس في المُقلع يقرأ
+   * `analysis.scored.delayVehHours` مباشرة، و`null` هناك يرمي TypeError —
+   * أي نُبدل انهياراً بانهيار. فالكائن يبقى وحقلُه `null`: «غير معروف» تُقرأ
+   * ولا تُسقط.
+   *
+   * و`delayPct` و`level` يبقيان محسوبين: هما خاصيتا ساعةٍ من اليوم، والمدة
+   * الغائبة لا تمسّهما. حجبُ ما لا يزال معلوماً امتناعٌ زائد.
+   */
+  function abstain(input, scored, missing, isFailure) {
+    return {
+      scored: { delayVehHours: null, delayPct: delayPercent(scored), level: scored.level },
+      stability: null,
+      alternatives: [],
+      reasons: [],
+      delta: null,
+      units: null,
+      objective: null,
+      switchPoints: [],
+      residualSensitivity: [],
+      candidateCount: 0,
+      tradeOff: null,
+      incomplete: { fields: missing, failure: !!isFailure },
+      input: input,
+    };
+  }
+
+  /**
    * حصيلة القرار لتصريح واحد.
    * @param {object} properties خصائص التصريح
    * @param {object} Engine محرك مسار
@@ -131,10 +208,43 @@
     // النافذة اليومية وحدها: الشدة ونسبة تأخير الرحلة خاصيتا ساعةٍ من اليوم
     // لا حصيلةَ تصريح، وقراءتهما من المجموع تخلط الليل بالنهار.
     var scored = Engine.score(input);
-    var optimized = Engine.optimize(planInput(input)) || {};
+
+    /* الامتناع قبل الحساب لا بعده.
+       المدة الغائبة تجعل حصيلة التصريح كلَّها غير معرَّفة: `optimize` يحتاجها،
+       وحصيلةُ الأساس هي حصيلةُ النافذة مضروبةً في الأيام. فما يبقى معرَّفاً هو
+       ما يخصّ **الساعة** لا التصريح: نسبة تأخير الرحلة والشدة. تُعرض هي،
+       ويُقال عن الباقي إنه محجوب. */
+    var missing = missingInputs(properties);
+    if (missing.length) return abstain(input, scored, missing);
+
+    /* وأي خطأ آخر من المحرك يصير امتناعاً مرئياً كذلك.
+       ليس ستراً: الرسالة تُعرض حرفياً على البطاقة تحت عنوانٍ يميّزها عن نقص
+       البيانات. المقصود أن **لا مسار في هذه الوحدة يترك الشاشة على ملف تصريحٍ
+       آخر**؛ العطل يُقال، ولا يُقرأ الصمت جواباً. */
+    var optimized;
+    try {
+      optimized = Engine.optimize(planInput(input)) || {};
+    } catch (err) {
+      return abstain(input, scored, [{
+        field: 'engine',
+        label: 'تعذّر حساب البدائل',
+        needed: String((err && err.message) || err),
+      }], true);
+    }
 
     var alternatives = (optimized.top3 || []).slice(0, 3);
     var best = alternatives[0];
+
+    /* الاحتياط لا يضرب في `null`: مدةٌ معلنة بلا أيامٍ معروفة تجعل
+       `input.workDays` غائباً، وضربُه يعطي صفراً يُقرأ «لا أثر». فحين يغيب
+       الأساس **وتغيب الأيام** يمتنع الحساب بدل أن يخترع صفراً. */
+    if (!optimized.baseline && !(Number(input.workDays) > 0)) {
+      return abstain(input, scored, [{
+        field: 'workDays',
+        label: 'عدد أيام العمل',
+        needed: 'تاريخا البدء والانتهاء، أو عدد أيام العمل صراحةً',
+      }]);
+    }
 
     var asked = optimized.baseline ? optimized.baseline.delayVehHours
       : scored.delayVehHours * input.workDays;
@@ -188,12 +298,17 @@
             - best.totalEquivalentVehHours,
         }
         : null,
+      /* الحقل موجود دائماً بالقيمتين: `null` هنا و«كائن» في الامتناع. الحقل
+         الذي يظهر ويختفي يُقرأ بـ`a.incomplete &&` في مكان وبـ`!a.incomplete`
+         في آخر، فيفترق السطحان. */
+      incomplete: null,
       input: input,
     };
   }
 
   return {
     inputsFor: inputsFor,
+    missingInputs: missingInputs,
     delayPercent: delayPercent,
     planInput: planInput,
     evaluate: evaluate,

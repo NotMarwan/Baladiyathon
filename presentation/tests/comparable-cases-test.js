@@ -205,6 +205,134 @@ test('المظروف المقيس لم يُضيَّق — والتضييق قب�
     'الأولوية الأضيق بلا سبب مكتوب لعدم استعمالها في التضييق');
 });
 
+// ---- مصالحة النطاق الحيّ مع نصّ السجل --------------------------------------
+
+test('قارئ النطاقات يمسك ما يكتبه البشر — بشرطاته الثلاث ودقّته كما كُتبت', () => {
+  /* أحكام السجل ووصفاته أرقامٌ حاكمة مدفونة في جملة عربية، ولا يقارنها شيء
+     بالنطاق الحيّ. والقارئ يجب أن يمسكها كما تُكتب فعلاً لا كما نتمنّاها. */
+  const dashes = Cases.parseRanges(
+    'الحالي [1.00 – 1.25] ثم [1.13 — 1.68] ثم [0.60-0.89]');
+  assert.strictEqual(dashes.length, 3, 'شرطةٌ من الثلاث لم تُمسك');
+  assert.deepStrictEqual(dashes[0], { low: 1, high: 1.25, lowText: '1.00', highText: '1.25' });
+  assert.strictEqual(dashes[1].high, 1.68);
+  assert.strictEqual(dashes[2].low, 0.6);
+
+  /* الصياغة تُحفظ: «1.00» تُعاد كما كُتبت كي يجدها القارئ في السجل حين يرجع. */
+  assert.strictEqual(dashes[0].lowText, '1.00');
+  assert.deepStrictEqual(Cases.parseRanges('لا نطاق هنا [كذا] ولا [1.2]'), []);
+});
+
+test('المصالحة تصنّف الفرق ولا تسكت عنه', () => {
+  const parameter = 'capacityPerLaneInWorkZone';
+  const quoted = Cases.parseRanges(
+    Cases.priorFor(parameter).verdictOnCurrentRange)[0];
+  assert.ok(quoted, 'حكم السجل بلا نطاق مذكور');
+
+  const same = Cases.reconcileRange(parameter,
+    { low: quoted.low, high: quoted.high });
+  assert.strictEqual(same.status, 'مطابق');
+  assert.strictEqual(same.sentence, '', 'المطابق يُصمت عنه — الضجيج يُخفي الفرق');
+
+  assert.strictEqual(Cases.reconcileRange(parameter,
+    { low: quoted.low + 0.05, high: quoted.high }).status, 'أضيق');
+  assert.strictEqual(Cases.reconcileRange(parameter,
+    { low: quoted.low - 0.5, high: quoted.high + 0.5 }).status, 'أوسع');
+  assert.strictEqual(Cases.reconcileRange(parameter,
+    { low: quoted.high, high: quoted.high + 1 }).status, 'مزاح');
+  assert.strictEqual(Cases.reconcileRange(parameter, { low: NaN, high: 2 }), null);
+});
+
+test('النطاق الحيّ لأرضية الزمن يحمل مصالحته معه — لا يُترك التناقض للقارئ', () => {
+  /* **العيب الذي يحرسه هذا الفحص.** السجل يذكر لهذا المحور نطاقاً «حالياً»
+     ويوصي بتوسيعه إلى [1.13 – 1.68]. والنطاق الحيّ أضيق من الاثنين، لسببٍ
+     وجيه (الدليل انتقل إلى محور السعة بوحدته الأصلية) — لكن السبب كان يعيش
+     في تعليق شيفرة، بينما الوصفة تبقى منشورة في ملف البيانات. فمن يقرأ
+     الاثنين يرى تضييقاً بلا تفسير، وهو شكل التلميع بالضبط.
+     فالمصالحة تُحسب وقت التحميل وتُحمل في `why` — أي في العمود الذي يقرؤه
+     المحكّم على صفحة الأثر. */
+  const floor = Sensitivity.ASSUMPTIONS
+    .find((item) => item.key === 'workZoneFriction');
+  const live = floor.range();
+  const prior = Cases.priorFor('capacityPerLaneInWorkZone');
+
+  const quotedCurrent = Cases.parseRanges(prior.verdictOnCurrentRange)[0];
+  const prescribed = Cases.parseRanges(prior.action)[0];
+  assert.ok(quotedCurrent && prescribed, 'حكم السجل أو وصفته بلا نطاق مذكور');
+
+  const divergent = quotedCurrent.low !== live.low || quotedCurrent.high !== live.high
+    || prescribed.low !== live.low || prescribed.high !== live.high;
+  assert.ok(divergent,
+    'السجل والنطاق الحيّ تطابقا — احذف هذا الفحص أو اقلبه، فالمصالحة لم تعد لازمة');
+
+  assert.ok(floor.why.includes('[' + quotedCurrent.lowText + ' – '
+    + quotedCurrent.highText + ']'),
+    'تعليل الأرضية لا يذكر النطاق الذي يصفه السجل «حالياً»');
+  assert.ok(floor.why.includes('[' + prescribed.lowText + ' – '
+    + prescribed.highText + ']'),
+    'تعليل الأرضية لا يذكر وصفة السجل المعلنة');
+  assert.ok(floor.why.includes('[' + live.low + ' – ' + live.high + ']'),
+    'تعليل الأرضية لا يذكر النطاق الحيّ نفسه');
+  assert.match(floor.why, /لم تُنفَّذ عمداً/,
+    'الوصفة غير المنفَّذة بلا سبب مكتوب — وهذا هو التضييق الصامت');
+});
+
+// ---- المظروف المشترك ------------------------------------------------------
+
+test('المظروف المشترك مقيس بالمحرك لا مضروب من التأرجحات', () => {
+  /* جدول الـtornado يحرّك افتراضاً واحداً ويثبّت البقية، فالمدى الخارج منه
+     مدى **أعرض صفٍّ وحده**. واجتماع الأطراف يعطي رقماً أبعد، ولا يُشتقّ
+     ضرباً: BPR أُسّية والتفاعل غير خطّي. */
+  const input = {
+    aadt: 45000, lanes: 3, lanesClosed: 1, startHour: 8, durationHours: 120,
+    capacityPerLane: 1800, freeFlowMin: 6, sensitivity: 'hospital',
+  };
+  const table = Sensitivity.tornado(input);
+  const joint = table.envelope;
+
+  assert.ok(joint, 'لا مظروف مشترك');
+  assert.ok(joint.axes >= 5, `محاور قليلة: ${joint.axes}`);
+  assert.strictEqual(joint.base, table.base.impactVehHours);
+  assert.ok(joint.low < joint.base && joint.high > joint.base,
+    'المظروف لا يحيط بالأثر الأساس');
+
+  const widest = table.rows.reduce((max, row) => (
+    !max || row.swingPct > max.swingPct ? row : max), null);
+  assert.ok(joint.spanPct > widest.swingPct,
+    `المظروف المشترك (${joint.spanPct.toFixed(0)}٪) ليس أوسع من أعرض صفّ `
+    + `(${widest.swingPct.toFixed(0)}٪) — أي أنه لم يُقس مجتمعاً`);
+
+  /* المقاس لا المضروب: طرفا المظروف قيمتان يعيدهما المحرك على مُدخلين
+     مبنيَّين، فيجب أن يُعادا بالضبط عند إعادة القياس. */
+  const again = Sensitivity.envelope(input, table.rows, table.base);
+  assert.strictEqual(again.low, joint.low);
+  assert.strictEqual(again.high, joint.high);
+});
+
+test('المظروف المشترك يصل الملاحظات — وهي ما تُصيَّره صفحة الأثر', () => {
+  /* `masar-city-impact.html` يكتب `result.notes` في #sensitivity-notes.
+     مظروفٌ محسوب لا يصل الملاحظات لا يراه أحد. */
+  const table = Sensitivity.tornado({
+    aadt: 45000, lanes: 3, lanesClosed: 1, startHour: 8, durationHours: 120,
+    capacityPerLane: 1800, freeFlowMin: 6, sensitivity: 'hospital',
+  });
+  const note = table.notes.find((entry) => /تتحرك الافتراضات معاً/.test(entry));
+  assert.ok(note, 'المظروف المشترك غائب عن الملاحظات — فلا يصل الشاشة');
+  assert.ok(note.includes(String(Math.round(table.envelope.low))));
+  assert.ok(note.includes(String(Math.round(table.envelope.high))));
+  assert.match(note, /طرفٌ لا احتمال/,
+    'المظروف يُعرض بلا حدّه — فيُقرأ فاصل ثقة وهو ليس كذلك');
+  /* تمييز المعدود: «11 محاور» خطأٌ يقرؤه المحكّم في أول جملة عن عدم اليقين. */
+  assert.ok(!/\b1[1-9] محاور/.test(note), `تمييز خاطئ للمعدود: ${note}`);
+});
+
+test('المظروف يعتذر ولا يكذب حين لا محور مفحوصاً', () => {
+  const base = { impactVehHours: 100 };
+  assert.strictEqual(Sensitivity.envelope({}, [], base), null);
+  assert.strictEqual(Sensitivity.envelope({},
+    Sensitivity.ASSUMPTIONS.map((item) => ({ key: item.key, skipped: true })), base),
+  null, 'كل المحاور متخطّاة ومع ذلك خرج مظروف');
+});
+
 // ---- الادّعاءات الممنوعة --------------------------------------------------
 
 test('الادّعاء الممنوع يُلتقط', () => {

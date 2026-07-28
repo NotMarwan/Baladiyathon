@@ -358,4 +358,84 @@ test('offline lab exposes live controls and honest competitive positioning', () 
   assert.ok(!lab.includes('الوحيد'));
 });
 
+/* ---------------------------------------------------------------------------
+ * الامتناع يجب أن يصل الشاشة — لا أن يُحسب ويُقصّ.
+ * ---------------------------------------------------------------------------
+ * ما يفصل «محرك قرار» عن «لوحة عرض» ليس أن يحسب المحرك تعادلاً، بل أن يقرأه
+ * صاحبُ القرار. وقد وقع هنا بالضبط ما تحذّر منه القاعدة: `optimize()` كان
+ * يُلحق إعلان التعادل بذيل `reasons`، و`masar-desk-file.js` يرسم
+ * `(a.reasons || []).slice(0, 3)` تحت «أكبر ثلاثة أسباب» — فكان الإعلان يقع
+ * سابعاً ويُقصّ دائماً. أي أن الامتناع كان **حقيقةً في الـAPI وغائباً عن
+ * الشاشة** في تسعةٍ وعشرين تصريحاً من مئة وخمسين.
+ *
+ * فالفحوص أدناه لا تستدعي المحرك وحده: تمرّ بالمسار الحيّ كاملاً —
+ * `MasarDeskAnalysis.evaluate` ثم `MasarDeskFile.renderSummary` — وتفتّش عن
+ * النصّ في **HTML النهائي**. فحصٌ على المحرك وحده كان سيمرّ والعيب قائم.
+ */
+(() => {
+  const ROOT = path.join(__dirname, '..');
+  global.window = global;
+  require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
+  const Engine = require(path.join(ROOT, 'masar-engine.js'));
+  const Analysis = require(path.join(ROOT, 'masar-desk-analysis.js'));
+  const DeskFile = require(path.join(ROOT, 'masar-desk-file.js'));
+
+  const features = global.window.MASAR_CITY_PORTFOLIO.features
+    .filter((feature) => feature.properties.aadt && feature.properties.lanes);
+
+  const rendered = features.map((feature) => {
+    const analysis = Analysis.evaluate(feature.properties, Engine);
+    return { feature, analysis, html: DeskFile.renderSummary(feature, analysis) };
+  });
+
+  const inputOf = (p) => ({
+    aadt: p.aadt,
+    lanes: p.lanes,
+    lanesClosed: p.lanesClosed,
+    startHour: new Date(p.start).getUTCHours(),
+    durationHours: p.durationHours,
+    freeFlowMin: p.freeFlowMin || Engine.DEFAULTS.freeFlowMin,
+    sensitivity: p.sensitivity,
+    roadClass: p.roadClass,
+  });
+
+  const tied = rendered.filter(({ feature }) => {
+    const band = Engine.optimize(inputOf(feature.properties)).indifference;
+    return band && !band.decided;
+  });
+  const fragile = rendered.filter(({ feature }) =>
+    Engine.optimize(inputOf(feature.properties)).weightFragility);
+
+  console.log(`  · متعادل ${tied.length}/${rendered.length}`
+    + ` · هشّ الوزن ${fragile.length}/${rendered.length}`);
+
+  test('كل تصريح متعادل يصل تعادلُه إلى HTML النهائي — لا يُقصّ قبل الشاشة', () => {
+    assert.ok(tied.length > 0, 'لا تصريح متعادل في المحفظة — الفحص فارغ');
+    const swallowed = tied.filter(({ html }) => !/متعادل مع/.test(html));
+    assert.equal(swallowed.length, 0,
+      `${swallowed.length} تصريحاً متعادلاً يُعرض بفائزٍ واثق: `
+      + `${swallowed.map(({ feature }) => feature.properties.id).join('، ')}`);
+  });
+
+  test('كل توصية هشّة الوزن تصل هشاشتُها إلى HTML النهائي', () => {
+    assert.ok(fragile.length > 0, 'لا توصية هشّة في المحفظة — الفحص فارغ');
+    const swallowed = fragile.filter(({ html }) => !/وزنٍ بلا مصدر/.test(html));
+    assert.equal(swallowed.length, 0,
+      `${swallowed.length} توصيةً هشّة تُعرض بلا تحفّظ: `
+      + `${swallowed.map(({ feature }) => feature.properties.id).join('، ')}`);
+  });
+
+  test('التحفّظ لا يعمّ — توصيةٌ محسومة متينة لا تحمل تحفّظاً يُفرغه من معناه', () => {
+    const solid = rendered.filter(({ feature }) => {
+      const result = Engine.optimize(inputOf(feature.properties));
+      return result.indifference && result.indifference.decided && !result.weightFragility;
+    });
+    assert.ok(solid.length > 0, 'لا توصية محسومة متينة — الفحص فارغ');
+    const noisy = solid.filter(({ html }) =>
+      /متعادل مع/.test(html) || /وزنٍ بلا مصدر/.test(html));
+    assert.equal(noisy.length, 0,
+      `${noisy.length} توصيةً متينة تحمل تحفّظاً لا يخصّها — تحفّظٌ يعمّ لا يُقرأ`);
+  });
+})();
+
 console.log(`ALL INNOVATION TESTS PASSED (${count})`);

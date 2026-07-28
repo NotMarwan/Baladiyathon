@@ -53,6 +53,48 @@
     && Cases.priorFor('capacityPerLaneInWorkZone_signalizedArterial')) || null;
 
   /**
+   * نطاق أرضية زمن العبور — ثابتٌ واحد يقرؤه `range()` و`why` معاً.
+   *
+   * كان الرقم مكتوباً في `range()` والحديث عنه مكتوباً في `why`، فيتحرّك
+   * أحدهما ويبقى الآخر. والمصالحة مع السجل تُحسب من هذا الثابت نفسه، فلا
+   * يمكن أن تصف نطاقاً غير المستعمل.
+   */
+  var FRICTION_RANGE = { low: 1.05, high: 1.25 };
+
+  /**
+   * ما يقوله سجل الحالات عن هذا المحور بعينه — محسوباً لا منقولاً.
+   *
+   * السجل يحمل حكماً على «النطاق الحالي» ووصفةً بتوسيعه، وكلاهما نصٌّ كُتب
+   * يوم كُتب. والنطاق الحيّ تحرّك بعده لسببٍ وجيه (انتقل الدليل إلى محور
+   * السعة بوحدته الأصلية). لكن السبب كان يعيش في تعليق شيفرة لا يقرؤه أحد،
+   * بينما الوصفة المعلنة تبقى منشورة في ملف البيانات. فيقرأ المحكّم وصفةً
+   * بنطاق [1.13 – 1.68] ويرى في الجدول [1.05 – 1.25]، ويستنتج تضييقاً.
+   *
+   * فالجملة تُبنى الآن من مقارنة عددية وقت التحميل وتُعرض في عمود «الافتراض»
+   * على صفحة الأثر — لا يُترك التناقض للقارئ يكتشفه.
+   */
+  var frictionReconciliation = (function () {
+    if (!Cases || !Cases.reconcileRange) return '';
+    var against = Cases.reconcileRange('capacityPerLaneInWorkZone',
+      FRICTION_RANGE, 'verdictOnCurrentRange');
+    var prescribed = Cases.reconcileRange('capacityPerLaneInWorkZone',
+      FRICTION_RANGE, 'action');
+    var parts = [];
+    if (against && against.sentence) {
+      parts.push(against.sentence.replace('وسجلّ الحالات يذكر لهذا المحور نطاق',
+        'وحكم السجل مكتوبٌ على نطاق'));
+    }
+    if (prescribed && prescribed.sentence) {
+      parts.push('ووصفة السجل المعلنة [' + prescribed.ledger.lowText + ' – '
+        + prescribed.ledger.highText + '] لم تُنفَّذ عمداً: ذلك النطاق مشتقٌّ من '
+        + 'مقلوب نسبة السعة، وهو اشتقاق ساقط بُعدياً — نسبة سعة لا تساوي نسبة '
+        + 'زمن تحت BPR. والدليل نفسه يتحرك الآن على محور السعة بوحدته، '
+        + 'وإبقاؤه هنا عدٌّ مزدوج.');
+    }
+    return parts.length ? ' ' + parts.join(' ') : '';
+  }());
+
+  /**
    * يعيد تشكيل ملف الطلب الساعي بأسٍّ واحد ثم يُطبّع.
    *
    * `k > 1` يحدّ الذروة، و`k < 1` يفلطحها نحو التوزيع المنتظم، و`k = 1` هو
@@ -68,6 +110,19 @@
     var raised = profile.map(function (value) { return Math.pow(value, k); });
     var total = raised.reduce(function (sum, value) { return sum + value; }, 0);
     return raised.map(function (value) { return value / total; });
+  }
+
+  /**
+   * تمييز المعدود بالعربية.
+   *
+   * «11 محاور» خطأٌ يقرؤه المحكّم في أول جملة عن عدم اليقين، ويقرأ معه أن
+   * أحداً لم يقرأ ما كُتب. من ثلاثة إلى عشرة جمعٌ، وما فوقها مفردٌ منصوب.
+   */
+  function axesPhrase(count) {
+    if (count === 1) return 'محور واحد';
+    if (count === 2) return 'محورين';
+    if (count >= 3 && count <= 10) return count + ' محاور';
+    return count + ' محوراً';
   }
 
   /** توقيع التوصية: الساعة والمراحل وطول النافذة. */
@@ -240,13 +295,16 @@
          والنتيجة المقيسة معلنة ولم تُخفَ: **إسقاط الأرضية يقلب 142 توصية من
          150**. وهي أكبر تبعية بنيوية في النموذج، ومسجَّلة بوصفها القرار
          التالي الذي يستحق كتابةً — لا رقماً يُمرَّر. */
-      range: function () { return { low: 1.05, high: 1.25 }; },
+      range: function () {
+        return { low: FRICTION_RANGE.low, high: FRICTION_RANGE.high };
+      },
       apply: function (input, value) {
         return withCalibration(input, { workZoneFriction: value });
       },
       why: 'أرضية نمذجة تمنع تصفير تأخير الليل، وهي **بلا سند مقيس** — لا في '
         + 'سجل الحالات ولا في غيره، والنطاق وصفيّ معلَن. والدليل المقيس على '
-        + 'سعة مناطق العمل يتحرك على محور «سعة الحارة داخل منطقة العمل»، لا هنا.',
+        + 'سعة مناطق العمل يتحرك على محور «سعة الحارة داخل منطقة العمل»، لا هنا.'
+        + frictionReconciliation,
       source: 'masar-engine.js → WORK_ZONE_FRICTION (افتراض معلن، غير مصدري)',
     },
     {
@@ -345,10 +403,82 @@
   }
 
   /**
+   * المظروف المشترك — كل الافتراضات تتحرك معاً لا واحداً في كل مرة.
+   * ---------------------------------------------------------------------------
+   * **العيب الذي تعالجه.** جدول الـtornado يحرّك افتراضاً واحداً ويثبّت
+   * البقية على أساسها (one-at-a-time). والمدى الذي يخرج منه — وهو المدى الذي
+   * يُعرض اليوم بوصفه «مدى الأثر» — هو مدى **أعرض صفٍّ وحده**. وذلك يقلّل
+   * عدم اليقين بنيوياً: الافتراضات ليست متعارضة، فحين تجتمع أطرافها المتشائمة
+   * يخرج رقمٌ أعلى من أي طرفٍ منفرد.
+   *
+   * والفرق ليس تجميلياً. على مُدخل المحفظة الوسيط: أعرض صفٍّ يعطي مدى
+   * لا يبلغ نصفَ المظروف المشترك. أي أن الرقم المعروض كان يبدو أضيق مما
+   * تسنده افتراضات النموذج نفسها.
+   *
+   * **ولماذا لا يُجمع الأثر ضرباً.** لأن BPR أُسّية والتفاعل بين السعة
+   * والاحتكاك والطلب غير خطّي. فلا يُضرب تأرجح في تأرجح — بل **يُبنى مُدخل
+   * واحد** تُطبَّق عليه كل الافتراضات عند طرفها المخفِّض، ويُقاس بالمحرك
+   * مرة واحدة؛ ثم يُبنى نظيره عند الطرف الرافع. الرقمان مقيسان لا مشتقّان.
+   *
+   * **وما لا يدّعيه.** ليس فاصل ثقة ولا احتمالاً. اجتماع كل الأطراف
+   * المتشائمة معاً حالةٌ أقلّ ترجيحاً من كلٍّ منها وحده، ولا يقول هذا المظروف
+   * كم ترجيحها — يقول أين يقع الطرف حين لا يُفترض تعويض بين الافتراضات.
+   * وحسابُ الترجيح يحتاج توزيعاً لكل افتراض، ولا يملك النموذج واحداً منها.
+   *
+   * @param {object} input مُدخل بصيغة `Engine.score`
+   * @param {Array} rows صفوف الجدول المحسوبة (لتحديد أي طرفٍ يخفض وأيه يرفع)
+   * @returns {{low:number, high:number, base:number, spanPct:number,
+   *            axes:number, skipped:string[], widestRowSpanPct:number}|null}
+   */
+  function envelope(input, rows, base) {
+    var lowInput = input;
+    var highInput = input;
+    var axes = 0;
+    var skipped = [];
+
+    ASSUMPTIONS.forEach(function (assumption) {
+      var row = rows.filter(function (item) { return item.key === assumption.key; })[0];
+      if (!row || row.skipped) {
+        if (row) skipped.push(assumption.label);
+        return;
+      }
+      /* أي الطرفين يخفض الأثر يُقرأ من القياس لا يُفترض من الاتجاه: سعة أعلى
+         تخفض، واحتكاك أعلى يرفع، وشكل الذروة ليس رتيباً بالضرورة. */
+      var lowerEnd = row.lowImpactVehHours <= row.highImpactVehHours
+        ? row.lowValue : row.highValue;
+      var upperEnd = row.lowImpactVehHours <= row.highImpactVehHours
+        ? row.highValue : row.lowValue;
+      lowInput = assumption.apply(lowInput, lowerEnd);
+      highInput = assumption.apply(highInput, upperEnd);
+      axes += 1;
+    });
+
+    if (!axes) return null;
+
+    var low = measure(lowInput).impactVehHours;
+    var high = measure(highInput).impactVehHours;
+    var widest = rows.reduce(function (max, row) {
+      return (!max || row.swingPct > max.swingPct) ? row : max;
+    }, null);
+
+    return {
+      low: Math.min(low, high),
+      high: Math.max(low, high),
+      base: base.impactVehHours,
+      spanPct: base.impactVehHours > 0
+        ? (Math.abs(high - low) / base.impactVehHours) * 100 : 0,
+      axes: axes,
+      skipped: skipped,
+      widestRowSpanPct: widest ? widest.swingPct : 0,
+    };
+  }
+
+  /**
    * جدول الحساسية (tornado) لمُدخل تصريح واحد.
    *
    * @param {object} input مُدخل بصيغة `Engine.score`
-   * @returns {{base:object, rows:Array, dominant:object|null, notes:string[]}}
+   * @returns {{base:object, rows:Array, dominant:object|null, notes:string[],
+   *            envelope:object|null}}
    */
   function tornado(input) {
     var base = measure(input);
@@ -443,11 +573,27 @@
         + 'المحرك — أي أن دقّة النموذج ليست القيد، بل دقّة بيانات الموقع.');
     }
 
+    /* المظروف المشترك يُعلَن في الملاحظات لا في حاشية.
+       صفحة الأثر تعرض رقماً حاكماً مفرداً وتحته جدولٌ صفوفه واحد-في-كل-مرة،
+       فيُقرأ أعرض صفٍّ مدىً للأثر وهو ليس كذلك. والجملة هنا تُصيَّر في
+       `masar-city-impact.html` (#sensitivity-notes) تحت الجدول مباشرة. */
+    var joint = envelope(input, rows, base);
+    if (joint) {
+      notes.push('حين تتحرك الافتراضات معاً لا واحداً في كل مرة، يقع الأثر بين '
+        + Math.round(joint.low) + ' و' + Math.round(joint.high)
+        + ' ساعة-مركبة (' + Math.round(joint.spanPct) + '٪ من الأثر الأساس، '
+        + 'على ' + axesPhrase(joint.axes) + '). وأعرض صفٍّ وحده يعطي '
+        + Math.round(joint.widestRowSpanPct) + '٪ — أي أن قراءة الجدول صفاً '
+        + 'صفاً تقلّل عدم اليقين. والمظروف طرفٌ لا احتمال: لا يقول كم ترجيح '
+        + 'اجتماع كل الأطراف معاً.');
+    }
+
     return {
       base: base,
       rows: rows,
       dominant: rows.length ? rows[0] : null,
       notes: notes,
+      envelope: joint,
     };
   }
 
@@ -455,6 +601,7 @@
     ASSUMPTIONS: ASSUMPTIONS,
     reshapeProfile: reshapeProfile,
     tornado: tornado,
+    envelope: envelope,
     measure: measure,
   };
 });

@@ -270,10 +270,63 @@
     return body;
   }
 
+  /**
+   * الامتناع المسمّى — حين ينقص المدخل لا حين يعجز النموذج.
+   * ---------------------------------------------------------------------------
+   * «أكمل بيانات الحركة والمسارات» جملةٌ صحيحة لا تُنفَّذ: المراجع الذي يقرؤها
+   * لا يعرف أيّ حقلٍ يطلبه من مقدّم الطلب. فالبطاقة تسمّي الحقل الناقص وتقول
+   * **ما الذي يسدّه** — والفرق بين الاثنين هو الفرق بين شاشةٍ تشتكي وشاشةٍ
+   * تُدار منها مكالمة.
+   *
+   * وما بقي معلوماً يُعرض معه: نسبة تأخير الرحلة خاصيةُ ساعةٍ لا خاصيةُ مدة،
+   * فهي محسوبة ولو غابت المدة. حجبُها مع المحجوب امتناعٌ زائد يُفقر الشاشة
+   * بلا سبب.
+   */
+  function renderIncomplete(p, a) {
+    var gap = a.incomplete || {};
+    var fields = gap.fields || [];
+    var failed = !!gap.failure;
+
+    var items = fields.map(function (item) {
+      return '<li><span>' + escapeHtml(text(item.label)) + '</span>'
+        + '<span class="desk-hint">' + escapeHtml(text(item.needed)) + '</span></li>';
+    }).join('');
+
+    var known = a.scored && Number.isFinite(Number(a.scored.delayPct)) && !p.escalate
+      ? '<dl class="desk-figures"><div><dt>تأخير الرحلة على نافذة العمل</dt><dd>'
+        + escapeHtml(decimal(a.scored.delayPct)) + '٪</dd></div>'
+        + '<div><dt>الإغلاق</dt><dd>' + escapeHtml(text(p.lanesClosed)) + ' من '
+        + escapeHtml(text(p.lanes)) + ' مسارات · ' + escapeHtml(text(p.direction))
+        + '</dd></div></dl>'
+        + '<p class="desk-hint">هذه نسبةُ ساعةٍ من اليوم لا حصيلةَ التصريح — '
+        + 'وهي معلومة بلا مدة. حصيلةُ التصريح وحدها هي المحجوبة.</p>'
+      : '';
+
+    return '<section class="desk-card desk-card-abstain">'
+      + '<p class="desk-card-label">التوصية</p>'
+      + '<p class="desk-abstain">لا توصية — '
+      + (failed ? 'تعذّر حساب البدائل على هذه المدخلات.' : 'مدخلات ناقصة على هذا التصريح.')
+      + '</p>'
+      + '<p class="desk-card-label">' + (failed ? 'ما أبلغ به المحرك' : 'ما ينقص') + '</p>'
+      + '<ul class="desk-asks">' + items + '</ul>'
+      + known
+      + '<p class="desk-hint">القرار محجوب حتى تكتمل المدخلات. ولا يُقدَّر رقمٌ '
+      + 'مكان بيانٍ غائب — تقديرٌ هنا يدخل سجل القرار نسخةَ مدخلاتٍ ملفَّقة.</p>'
+      + '<p class="desk-source">المصدر: محرك مسار (BPR) على هندسة OpenStreetMap · '
+      + 'الامتناع قاعدةٌ في وحدة التحليل لا حالةُ واجهة.</p>'
+      + '</section>';
+  }
+
   function renderSummary(feature, analysis) {
     var p = (feature && feature.properties) || {};
     var a = analysis || {};
     var best = (a.alternatives || [])[0];
+
+    /* الامتناع المسمّى يسبق الامتناع العام: كلاهما «لا توصية»، وأحدهما يقول
+       أيّ حقلٍ يُطلب. تقديم العام يبتلع الخاص. */
+    if (a.incomplete && (a.incomplete.fields || []).length) {
+      return renderIncomplete(p, a);
+    }
 
     if (!best || !a.scored) {
       return '<section class="desk-card desk-card-abstain">'

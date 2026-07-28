@@ -13,11 +13,11 @@
 (function (root, factory) {
   'use strict';
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('./masar-desk-states.js'));
+    module.exports = factory(require('./masar-desk-states.js'), require('./masar-desk-analysis.js'));
   } else {
-    root.MasarDeskInbox = factory(root.MasarDeskStates);
+    root.MasarDeskInbox = factory(root.MasarDeskStates, root.MasarDeskAnalysis);
   }
-})(typeof self !== 'undefined' ? self : this, function (States) {
+})(typeof self !== 'undefined' ? self : this, function (States, Analysis) {
   'use strict';
 
   var DASH = '—';
@@ -71,10 +71,30 @@
       + '<span>' + escapeHtml(meta.label) + '</span></span>';
   }
 
+  /**
+   * ثغرة المدخلات تُرى في الطابور لا بعد فتح الملف.
+   * ---------------------------------------------------------------------------
+   * التصريح الذي لا يمكن أن يُقرَّر عليه يبدو في الصندوق كأي تصريح آخر، فيصرف
+   * المراجع نقرةً ودقيقةً ليكتشف ذلك. الوسم هنا يوفّرهما، ويجعل «الناقص» فئةً
+   * يمكن أن تُفرَز ويُطالب بها مقدّم الطلب دفعةً واحدة.
+   *
+   * والقاعدة تُقرأ من وحدة التحليل ولا تُنسخ: مصدر «ما يوجب الامتناع» واحد،
+   * وأي نسخة ثانية هنا كانت ستفترق عنه بصمت. وغياب الوحدة (ترتيب تحميل مقلوب)
+   * يُسقط الوسم ولا يُسقط الصفّ — صندوقٌ بلا وسمٍ أهون من صندوقٍ لا يُرسم.
+   */
+  function hasInputGap(properties) {
+    if (!Analysis || typeof Analysis.missingInputs !== 'function') return false;
+    return Analysis.missingInputs(properties).length > 0;
+  }
+
   function renderRow(feature, isSelected) {
     var p = (feature && feature.properties) || {};
     var flags = [];
 
+    if (hasInputGap(p)) {
+      flags.push('<span class="desk-flag" data-tone="danger"'
+        + ' title="لا مدة إغلاق معلنة — القرار محجوب">مدخلات ناقصة</span>');
+    }
     if (p.escalate) {
       flags.push('<span class="desk-flag" data-tone="danger" title="'
         + escapeHtml(p.escalateReason || '') + '">تصعيد</span>');
@@ -218,6 +238,7 @@
     statusTag: statusTag,
     escapeHtml: escapeHtml,
     pickDefault: pickDefault,
+    hasInputGap: hasInputGap,
     SENSITIVITY_LABELS: SENSITIVITY_LABELS,
     CONFIDENCE_LABELS: CONFIDENCE_LABELS,
     SORT_OPTIONS: SORT_OPTIONS,

@@ -238,4 +238,145 @@ ok('الصندوق يبقى صالحاً للعمل تحت غطاء الخريط
     'الغطاء خارج لوحة الخريطة');
 });
 
+/* ==========================================================================
+ * الرحلة مُشغَّلة لا مقروءة.
+ * ==========================================================================
+ * كل ما سبق في هذا الملف بحثٌ عن نصّ في مصدر: `desk.indexOf('renderSummary')`
+ * يمرّ إذا ورد الاسم في تعليق. وهو حارسٌ نافع على **البنية** — يمنع أن يُحذف
+ * وصلٌ أو يُقطع سكربت — لكنه لا يشغّل سطراً واحداً من الحساب أو التصيير.
+ *
+ * وقد سقطت الحزمة في ذلك مرّة: `evaluate` كان يرمي `RangeError` على تصريح بلا
+ * تواريخ ولا مدة، فيبقى ملف القرار على التصريح **السابق** بينما المخزن انتقل
+ * إلى الجديد. ثمانيةٌ وعشرون فحصاً خضراء والعيب في قلب الرحلة.
+ *
+ * فما يلي يشغّل المسار كما يشغّله المتصفح: المحفظة المنشورة نفسها، ثم
+ * `MasarDeskAnalysis.evaluate`، ثم `MasarDeskFile.renderSummary` — ويفتّش في
+ * الناتج النهائي. البوابة لا تكتمل ببحثٍ عن أسماء.
+ */
+
+const Engine = require(path.join(ROOT, 'masar-engine.js'));
+const Analysis = require(path.join(ROOT, 'masar-desk-analysis.js'));
+const Inbox = require(path.join(ROOT, 'masar-desk-inbox.js'));
+const DeskFile = require(path.join(ROOT, 'masar-desk-file.js'));
+const States = require(path.join(ROOT, 'masar-desk-states.js'));
+
+// المحفظة تُقرأ كما يقرؤها المتصفح: ملف سكربت يعلّق على `window`.
+global.window = global;
+require(path.join(ROOT, 'data', 'city-portfolio.geojson.js'));
+const portfolio = global.MASAR_CITY_PORTFOLIO;
+
+/** كل ما يُسرّب داخلاً إلى شاشة المراجع. */
+const LEAKS = ['undefined', 'NaN', '[object Object]', 'Infinity'];
+
+function leaksIn(html) {
+  return LEAKS.filter((needle) => html.indexOf(needle) !== -1);
+}
+
+ok('المحفظة المنشورة تُصيَّر كاملةً بلا رمي وبلا تسريب', () => {
+  assert.ok(portfolio && portfolio.features.length >= 100,
+    'المحفظة المنشورة غائبة أو أصغر من أن تختبر شيئاً');
+
+  const silent = [];
+  portfolio.features.forEach((feature) => {
+    const p = feature.properties;
+    let analysis;
+    // الرمي هنا هو العيب نفسه: `renderFile` يسقط قبل أن يكتب سطراً.
+    try {
+      analysis = Analysis.evaluate(p, Engine);
+    } catch (err) {
+      assert.fail(`التحليل يرمي على ${p.permitRef}: ${err.message}`);
+    }
+
+    const html = DeskFile.renderSummary(feature, analysis)
+      + DeskFile.renderHeader(feature)
+      + DeskFile.renderActions(feature)
+      + Inbox.renderRow(feature, false);
+
+    const leaked = leaksIn(html);
+    assert.deepStrictEqual(leaked, [], `تسريب على ${p.permitRef}: ${leaked.join(', ')}`);
+
+    // بطاقةٌ إمّا توصي أو تقول لماذا لا. الصمت في موضع التوصية يُقرأ موافقة.
+    if (html.indexOf('لا توصية') === -1 && html.indexOf('desk-recommend') === -1) {
+      silent.push(p.permitRef);
+    }
+  });
+  assert.deepStrictEqual(silent, [], `بطاقات صامتة: ${silent.slice(0, 5).join(', ')}`);
+});
+
+ok('الرقم المعروض محسوبٌ من المحرك لا منقولٌ من ملف البيانات', () => {
+  // الرقم المنشور مع التصريح والرقم المحسوب لحظة العرض كمّية واحدة. افتراقهما
+  // هو الخلل الذي أخرج الحساب إلى وحدة نقية أصلاً — والحارس يبقى مشغَّلاً.
+  let worst = 0;
+  let worstRef = '';
+  portfolio.features.forEach((feature) => {
+    const p = feature.properties;
+    const live = Analysis.evaluate(p, Engine).scored.delayVehHours;
+    assert.ok(Number.isFinite(live), `أثر غير محسوب على ${p.permitRef}`);
+    const drift = Math.abs(live - Number(p.impactVehHours)) / Number(p.impactVehHours) * 100;
+    if (drift > worst) { worst = drift; worstRef = p.permitRef; }
+  });
+  assert.ok(worst < 1, `الرقم المعروض يفارق المنشور بـ${worst.toFixed(2)}٪ على ${worstRef}`);
+  assert.ok(worst > 0, 'انطباق تامّ — الرقم منقول لا محسوب');
+});
+
+/**
+ * المدخل الناقص: امتناعٌ يصل الشاشة.
+ * ---------------------------------------------------------------------------
+ * ليس فحص وحدة: يمرّ بالمسار الذي يمرّ به المتصفح كاملاً — من خصائص التصريح
+ * إلى نصّ البطاقة — ويفتّش عن اسم الحقل الناقص في المخرَج النهائي.
+ */
+ok('تصريح ناقص المدخلات يمتنع باسم الحقل ولا يُسقط الرحلة', () => {
+  const source = portfolio.features[0];
+  const stripped = {
+    type: 'Feature',
+    geometry: source.geometry,
+    properties: Object.assign({}, source.properties),
+  };
+  ['start', 'end', 'durationHours', 'workDays'].forEach((field) => {
+    delete stripped.properties[field];
+  });
+
+  let analysis;
+  try {
+    analysis = Analysis.evaluate(stripped.properties, Engine);
+  } catch (err) {
+    assert.fail(`الرحلة تنهار على مدخل ناقص بدل أن تمتنع: ${err.message}`);
+  }
+
+  const card = DeskFile.renderSummary(stripped, analysis);
+  assert.ok(card.indexOf('لا توصية') !== -1, 'يوصي على مدخلات ناقصة');
+  assert.ok(card.indexOf('مدة الإغلاق') !== -1, 'الامتناع لا يسمّي الحقل الناقص');
+  assert.deepStrictEqual(leaksIn(card), [], 'تسريب في بطاقة الامتناع');
+
+  // ولا يُحفظ رقمٌ ملفَّق في نسخة المدخلات التي تدخل سجل القرار.
+  assert.strictEqual(analysis.scored.delayVehHours, null, 'أثرٌ مخترَع لمدة مجهولة');
+  const snapshot = JSON.parse(JSON.stringify(analysis.input));
+  assert.ok(!Object.keys(snapshot).some((key) => Number.isNaN(analysis.input[key])),
+    'نسخة المدخلات تحمل NaN — تُحفظ في السجل قيمةً فارغة بلا إعلان');
+
+  // والصندوق يعلن الثغرة قبل أن يفتح المراجع الملف.
+  assert.ok(Inbox.renderRow(stripped, false).indexOf('مدخلات ناقصة') !== -1,
+    'الطابور لا يميّز تصريحاً لا يمكن أن يُقرَّر عليه');
+});
+
+ok('حارس الاعتماد يشتغل فعلاً على المحفظة لا في المصدر وحده', () => {
+  // `desk.indexOf('MasarDeskStates.guard')` يمرّ بورود الاسم. هذا يشغّله.
+  const review = portfolio.features
+    .filter((feature) => feature.properties.status === 'StrategyReview')[0];
+  assert.ok(review, 'لا تصريح في مرحلة القرار داخل المحفظة');
+
+  const allowed = States.guard(review.properties, 'approve');
+  assert.ok(typeof allowed.allowed === 'boolean', 'الحارس لا يعطي حكماً');
+
+  const naked = Object.assign({}, review.properties, { inputsVersion: undefined });
+  const blocked = States.guard(naked, 'approve');
+  assert.strictEqual(blocked.allowed, false, 'اعتماد بلا نسخة مدخلات مثبّتة');
+  const shown = DeskFile.renderBlockers(blocked.blockers);
+  assert.ok(shown.indexOf('role="alert"') !== -1, 'العائق لا يُعلَن للقارئ الصوتي');
+  blocked.blockers.forEach((blocker) => {
+    assert.ok(shown.indexOf(blocker.reason) === -1,
+      `رمز داخلي تسرّب إلى الشاشة: ${blocker.reason}`);
+  });
+});
+
 console.log(`\n${passed} اختبارات نجحت`);

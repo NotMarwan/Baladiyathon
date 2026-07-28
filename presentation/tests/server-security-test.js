@@ -312,6 +312,221 @@ const REQUIRED_HEADERS = {
     });
   });
 
+  // ---- عقد التصريح منفَذاً: أول خطوة تشغيلية للجهة --------------------
+  await test('عقد التصريح يُفحص عبر HTTP — لا يحتاج كاتب Node', async () => {
+    /* **ما يقيسه هذا الفحص ليس أمناً بل جدوى.**
+
+       العقد يعرف أي حقل يمنع التشغيل وأيّه يخفض الثقة. وهذا أنفع جوابٍ
+       يملكه المشروع لجهةٍ تسأل «ما الذي أرسله لكم؟». وكان محجوباً خلف
+       وحدة UMD: من أراده كتب Node. فأعملُ خطوة تشغيلية في المشروع لم تكن
+       تصل إلى من يحتاجها.
+
+       والفحص هنا يمرّ بالسلك لا بالوحدة — استدعاء `Contract.validate`
+       مباشرةً يمرّ على منفذٍ غير موصول. */
+    const fs = require('node:fs');
+    const sample = JSON.parse(fs.readFileSync(
+      path.join(ROOT, 'data', 'permit-contract-sample.json'), 'utf8'));
+    const full = sample.records.find((item) => item.case.indexOf('سجل كامل') === 0).record;
+
+    await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
+      const post = (body) => fetch(`${base}/api/permit-contract/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      // سجل كامل يمرّ
+      const okResponse = await post(full);
+      assert.strictEqual(okResponse.status, 200, `عاد ${okResponse.status}`);
+      const okBody = await okResponse.json();
+      assert.strictEqual(okBody.summary.ready, 1, 'سجل كامل عُدّ محجوباً');
+      assert.strictEqual(okBody.summary.blocked, 0);
+      assert.ok(okBody.contractVersion, 'الردّ بلا نسخة عقد — لا يُنسب إلى مواصفة');
+
+      // سجل ينقصه حقل مانع: الردّ يسمّي الحقل لا «غير صالح» فقط
+      const broken = { ...full };
+      delete broken.lanesClosed;
+      const batch = await post({ records: [full, broken] });
+      const batchBody = await batch.json();
+      assert.strictEqual(batchBody.summary.records, 2);
+      assert.strictEqual(batchBody.summary.ready, 1, 'الدفعة لا تفرّق بين السجلّين');
+      assert.strictEqual(batchBody.summary.blocked, 1);
+      assert.strictEqual(batchBody.summary.blockingFields.lanesClosed, 1,
+        'الملخّص لا يسمّي الحقل المتكرر — تُصلَح السجلات بدل المصدر');
+      const blockedResult = batchBody.results.find((r) => !r.ok);
+      assert.ok(blockedResult.blocking.some((p) => p.key === 'lanesClosed'),
+        'الردّ لا يسمّي الحقل المانع');
+      assert.strictEqual(blockedResult.permitRef, full.permitRef,
+        'النتيجة لا تُنسب إلى رقم تصريح — لا تُردّ إلى صاحبها');
+
+      /* الحدّ يُقال مع النتيجة: العقد يصف حاجة المحرك لا أسماء منصة الجهة. */
+      assert.ok(/لا تكامل منفَّذ/.test(batchBody.limits),
+        'الردّ لا يعلن أنه ليس تكاملاً — يُقرأ مطابقةً محقَّقة');
+    });
+  });
+
+  await test('مواصفة العقد تُقرأ عبر HTTP بدرجات الحاجة الثلاث', async () => {
+    await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
+      const body = await (await fetch(`${base}/api/permit-contract`)).json();
+      assert.ok(Array.isArray(body.fields) && body.fields.length >= 5,
+        'المواصفة بلا حقول');
+      const needs = new Set(body.fields.map((f) => f.need));
+      assert.ok(needs.has('blocking') && needs.has('degrading'),
+        'المواصفة بلا تمييز بين المانع والمخفِّض — ثنائيةٌ تُرفض بها ملفات كاملة');
+      body.fields.forEach((field) => {
+        assert.ok(field.expects, `${field.key}: بلا وصف للمتوقَّع`);
+        assert.ok(field.derivedFrom, `${field.key}: بلا مصدر تسمية`);
+      });
+      assert.ok(body.needLegend.blocking, 'الدرجات بلا شرح');
+    });
+  });
+
+  await test('فحص العقد محدود العدد ومحميّ بحدّ المعدّل كبقية الواجهة', async () => {
+    await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
+      const many = { records: new Array(Server.MAX_CONTRACT_RECORDS + 1).fill({}) };
+      const response = await fetch(`${base}/api/permit-contract/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(many),
+      });
+      assert.strictEqual(response.status, 422, `عاد ${response.status}`);
+      assert.ok((await response.json()).fields.records, 'الرفض لا يسمّي الحقل');
+    });
+
+    /* الحدّ يشمل المنفذ الجديد لأنه تحت `/api/` — لا استثناء صامت. */
+    await withServer({ rateLimit: { capacity: 2, refillPerSecond: 0 } }, async (base) => {
+      const codes = [];
+      for (let i = 0; i < 3; i += 1) {
+        codes.push((await fetch(`${base}/api/permit-contract`)).status);
+      }
+      assert.deepStrictEqual(codes, [200, 200, 429], `التتابع: ${codes}`);
+    });
+  });
+
+  // ---- أرقام «اليوم الأول» محسوبة لا مكتوبة ---------------------------
+  await test('كل رقم في مسار اليوم الأول يطابق ما يُحسب وقت التشغيل', async () => {
+    /* **القاعدة التي يفرضها هذا الفحص: لا رقم مخترَع.**
+
+       وثيقة `SHADOW-PILOT.md` تعلن جرد حقول العقد ورسمَ وحدات الخادم. وكلاهما
+       يتغيّر بتعديل شيفرة، فيصير الرقم المكتوب ادعاءً قديماً بلا تبليغ.
+       فالفحص يُعيد الحساب من المصدر ويشترط أن الوثيقة تقول ما حُسب. */
+    const fs = require('node:fs');
+    const doc = fs.readFileSync(
+      path.join(ROOT, '..', 'docs', 'engineering', 'SHADOW-PILOT.md'), 'utf8');
+
+    const Contract = require(path.join(ROOT, 'masar-permit-contract.js'));
+    const census = { blocking: 0, degrading: 0, optional: 0 };
+    Contract.FIELDS.forEach((field) => { census[field.need] += 1; });
+    const ours = Contract.FIELDS.filter((f) => f.derivedFrom === 'ours').length;
+
+    const WORD = ['صفر', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة',
+      'سبعة', 'ثمانية', 'تسعة', 'عشرة', 'أحد عشر', 'اثنا عشر'];
+
+    /* الجرد الكلي ودرجاته الثلاث — كلٌّ بلفظه في الوثيقة. */
+    assert.ok(doc.indexOf(`${WORD[Contract.FIELDS.length]} حقلاً`) !== -1,
+      `الوثيقة لا تقول «${WORD[Contract.FIELDS.length]} حقلاً» — الجرد ${Contract.FIELDS.length}`);
+    assert.ok(doc.indexOf(`${WORD[census.blocking]} مانعة`) !== -1,
+      `المانعة ${census.blocking} والوثيقة تقول غير ذلك`);
+    assert.ok(doc.indexOf(`${WORD[census.degrading]} مخفِّضة`) !== -1,
+      `المخفِّضة ${census.degrading} والوثيقة تقول غير ذلك`);
+    assert.ok(doc.indexOf(`${WORD[census.optional]} اختياريان`) !== -1,
+      `الاختيارية ${census.optional} والوثيقة تقول غير ذلك`);
+    assert.ok(doc.indexOf(`${WORD[Contract.FIELDS.length - ours]} منها أسماؤها`) !== -1,
+      `المشتقّة من خدمات منشورة ${Contract.FIELDS.length - ours}`);
+    assert.ok(doc.indexOf(`${WORD[ours]} من عندنا`) !== -1,
+      `«من عندنا» ${ours} والوثيقة تقول غير ذلك`);
+
+    /* ادعاء «بلا npm install»: يُقاس بتحميل الخادم وعدّ ما جاء من
+       `node_modules`. ادعاءُ نشرٍ بلا قياس هو أول ما يسقط عند التركيب. */
+    const external = Object.keys(require.cache)
+      .filter((file) => file.indexOf('node_modules') !== -1);
+    assert.strictEqual(external.length, 0,
+      `الخادم يحمّل ${external.length} وحدة من node_modules — ادعاء «بلا تثبيت» ساقط`);
+    assert.ok(doc.indexOf('لا شيء منها من') !== -1
+      && doc.indexOf('`node_modules`') !== -1,
+    'الوثيقة لا تعلن ادعاء انعدام التبعيات الذي يقيسه هذا الفحص');
+
+    /* الأمران المكتوبان في الوثيقة يجب أن يقعا على مسارين موصولين فعلاً. */
+    const routes = (doc.match(/\/api\/permit-contract[a-z/-]*/g) || []);
+    assert.ok(routes.length >= 2, 'الوثيقة بلا أمري العقد');
+    await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
+      for (const route of new Set(routes)) {
+        const method = route.endsWith('/validate') ? 'POST' : 'GET';
+        const response = await fetch(base + route, method === 'POST'
+          ? { method, headers: { 'Content-Type': 'application/json' }, body: '{}' }
+          : {});
+        assert.notStrictEqual(response.status, 404,
+          `الوثيقة توثّق ${method} ${route} وهو غير موصول — أمرٌ يسقط عند الجهة`);
+      }
+    });
+  });
+
+  // ---- بقاء العملية تحت مسار مشوَّه ----------------------------------
+  await test('مسارٌ مشوَّه يُردّ 400 ولا يُسقط العملية', async () => {
+    /* **الاكتشاف الذي أوجب هذا الفحص.**
+       نموذج التهديد المعلَن في `server.js` يسمّي الخطر الثالث: «طلب واحد
+       يعلّق العملية». وقد عولج منه فرعٌ واحد — حلقة `score` بمدّة هائلة —
+       وبقي فرعان أرخص منه يقتلان العملية كلها لا يعلّقانها:
+
+         GET /%c0%af          →  URIError: URI malformed   (decodeURIComponent)
+         GET /a.html%00.txt   →  TypeError ERR_INVALID_ARG_VALUE  (fs.stat)
+
+       كلاهما رميٌ متزامن داخل معالج الطلب، فيخرج استثناءً غير ملتقَط وتموت
+       العملية. لا مفتاح مطلوب ولا جسم ولا تكرار: طلب `GET` واحد.
+
+       وأثره على الجدوى أكبر من أثره الأمني: محكّمٌ يخطئ حرفاً في شريط
+       العنوان يُطفئ العرض، ولا يعود إلا بمن يشغّل الخادم من الطرفية.
+
+       ولذلك يفحص هذا الاختبار **البقاء** لا رمز الحالة وحده: طلبٌ سليم
+       بعد كل مسار مشوَّه. رمز `400` وحده يمرّ على خادم مات بعده. */
+    await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {
+      const malformed = [
+        '/%c0%af%c0%afpackage.json',   // ترميز مئوي غير صالح
+        '/abc%zz',                     // بادئة % بلا رقمين ست عشريين
+        '/%',                          // % وحدها في آخر المسار
+        '/masar-home.html%00.txt',     // محرف صفري بعد امتداد سليم
+        '/%00',                        // محرف صفري وحده
+        `${Server.SUBMISSION_MOUNT}/%c0%af`,  // التركيب الآخر: حارسه مستقل
+        `${Server.SUBMISSION_MOUNT}/x%00.png`,
+      ];
+      for (const target of malformed) {
+        const response = await fetch(base + target);
+        assert.ok(response.status === 400 || response.status === 403
+          || response.status === 404,
+        `${target}: عاد ${response.status} — يُنتظر رفضٌ لا تقديم`);
+
+        /* **الشرط الحاكم**: الخادم ما يزال يردّ. */
+        const alive = await fetch(`${base}/masar-home.html`);
+        assert.strictEqual(alive.status, 200,
+          `العملية ماتت بعد ${target} — طلبٌ واحد أطفأ الخادم`);
+      }
+    });
+  });
+
+  await test('حارس الجذر يرفض المحرف الصفري قبل أن يبلغ نظام الملفات', () => {
+    /* `fs.stat` يرمي على محرف صفري بدل أن يعيد خطأً في نداء رجعي، فالرمي
+       متزامن ولا يلتقطه معالج الملف. الحارس يوقفه قبل ذلك. */
+    assert.strictEqual(Server.resolveWithin(Server.SUBMISSION_DIR, '/a\x00.png'),
+      null, 'محرف صفري عبر الحارس — سيرمي في fs.stat');
+    assert.strictEqual(Server.resolveWithin(Server.SUBMISSION_DIR, '/\x00'),
+      null, 'محرف صفري وحده عبر الحارس');
+    assert.ok(Server.resolveWithin(Server.SUBMISSION_DIR, '/masar-logo.png'),
+      'الحارس رفض ملفاً سليماً — أوسع من هدفه');
+  });
+
+  await test('أي رمي متزامن في التوجيه يصير 500 لا موتاً', async () => {
+    /* الحارسان أعلاه يعالجان ناقلَين معروفين. هذا يعالج **الصنف**: معالج
+       الطلب كلّه داخل `try`، فرميٌ لم يُتوقَّع بعدُ يخرج استجابةً لا جنازة.
+       يُحقن الرمي عبر مُحدِّد معدّل يرمي — وهو أقرب نقطة حقن حقيقية. */
+    const exploding = () => { throw new Error('رمي مزروع في التوجيه'); };
+    await withServer({ rateLimiter: exploding }, async (base) => {
+      const response = await fetch(`${base}/api/decisions`);
+      assert.strictEqual(response.status, 500, `عاد ${response.status}`);
+      const alive = await fetch(`${base}/masar-home.html`);
+      assert.strictEqual(alive.status, 200, 'العملية ماتت برميٍ في التوجيه');
+    });
+  });
+
   // ---- مفتاح الجلسة --------------------------------------------------
   await test('مفتاح الجلسة يُسلَّم للحلقة المحلية ويعلن حدّه', async () => {
     await withServer({ rateLimit: { capacity: 10000 } }, async (base) => {

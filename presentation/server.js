@@ -16,6 +16,7 @@ const crypto = require('node:crypto');
 
 const MasarEngine = require('./masar-engine.js');
 const { createLedger } = require('./masar-ledger.js');
+const PermitContract = require('./masar-permit-contract.js');
 
 /**
  * المنفذ ثابتٌ افتراضاً ومتغيّرٌ عند الطلب.
@@ -542,6 +543,110 @@ async function handleApiDigOnce(req, res) {
   );
 }
 
+// =====================================================================
+// عقد بيانات التصريح — منفَذاً لا مكتبةً
+// =====================================================================
+//
+// **لماذا صار للعقد نقطةُ نهاية.**
+//
+// `masar-permit-contract.js` يعرف، حقلاً حقلاً، ما الذي يمنع تشغيل المحرك
+// (`blocking`) وما الذي يخفض الثقة فقط (`degrading`). وهذا أنفع ما يملكه
+// المشروع لجهةٍ تسأل «ما الذي أرسله لكم؟» — لأنه يحوّل السؤال من نقاشٍ إلى
+// فحصٍ على ملفها هي.
+//
+// لكنه كان وحدة UMD بلا مستهلك عبر HTTP: من أراد الجواب كان عليه أن يكتب
+// Node. فبقيت أعملُ خطوةٍ تشغيلية في المشروع محجوبةً خلف حاجزٍ تقني لا يعبره
+// موظّف نظم في أمانة.
+//
+// ولا مفتاح عليه: الفحص قراءةٌ محضة لا تمسّ حالة الخادم ولا سجل القرارات —
+// كـ`score` تماماً. يكفيه حدّ المعدّل وحدّ الحجم.
+const MAX_CONTRACT_RECORDS = 500;
+
+/** يقرأ الجسم سجلاً واحداً أو `{records:[...]}`. */
+function contractRecordsOf(body) {
+  if (Array.isArray(body.records)) return body.records;
+  return [body];
+}
+
+function validateContractBody(body) {
+  const records = contractRecordsOf(body);
+  const fields = {};
+  if (records.length === 0) {
+    fields.records = 'must contain at least one record';
+  } else if (records.length > MAX_CONTRACT_RECORDS) {
+    fields.records = `must be at most ${MAX_CONTRACT_RECORDS} records`;
+  }
+  return { valid: Object.keys(fields).length === 0, fields };
+}
+
+/**
+ * يفحص دفعةً ويلخّصها.
+ *
+ * الملخّص هو المخرَج التشغيلي: «٢٣ سجلاً، ١٩ صالح، ٤ يمنعها حقلان» جوابٌ
+ * يتصرّف به مسؤول البيانات. وقائمة `blockingFields` تسمّي الحقول المتكررة كي
+ * يُصلَح المصدر مرّة بدل إصلاح كل سجل.
+ */
+function reviewPermitBatch(records) {
+  const results = records.map((record, index) => ({
+    index,
+    permitRef: record && typeof record === 'object' ? record.permitRef : undefined,
+    ...PermitContract.validate(record),
+  }));
+
+  const blockingFields = {};
+  results.forEach((result) => {
+    result.blocking.forEach((problem) => {
+      blockingFields[problem.key] = (blockingFields[problem.key] || 0) + 1;
+    });
+  });
+
+  return {
+    contractVersion: PermitContract.CONTRACT_VERSION,
+    summary: {
+      records: results.length,
+      ready: results.filter((r) => r.ok).length,
+      blocked: results.filter((r) => !r.ok).length,
+      blockingFields,
+    },
+    results,
+    /* الحدّ يُقال مع النتيجة لا في وثيقة منفصلة: العقد يصف ما يحتاجه المحرك،
+       ولا يدّعي أن هذه الأسماء تطابق أسماء منصة الجهة. المطابقة أول عمل
+       مشترك، لا افتراضٌ يمرّ صامتاً. */
+    limits: 'الأسماء هنا من عندنا مشتقّةً ممّا تعرضه الخدمات العامة — '
+      + 'لا تكامل منفَّذ ولا مطابقة محقَّقة مع منصة الجهة. '
+      + 'هذا الفحص يقول ما يحتاجه محرك مسار، لا ما تسمّيه منصتكم.',
+  };
+}
+
+async function handleApiPermitContract(req, res) {
+  return handleJsonEndpoint(req, res, validateContractBody, (body) =>
+    reviewPermitBatch(contractRecordsOf(body))
+  );
+}
+
+/** مواصفة العقد نفسها — تُقرأ بلا فتح ملف JavaScript. */
+function handleApiPermitContractSpec(res) {
+  sendJson(res, 200, {
+    contractVersion: PermitContract.CONTRACT_VERSION,
+    fields: PermitContract.FIELDS.map((field) => ({
+      key: field.key,
+      label: field.label,
+      need: field.need,
+      type: field.type,
+      unit: field.unit,
+      expects: field.expects,
+      why: field.why,
+      derivedFrom: field.derivedFrom || 'ours',
+      fallback: field.fallback || '',
+    })),
+    needLegend: {
+      blocking: 'بدونه لا يعمل المحرك — غيابه يوقف',
+      degrading: 'بدونه يعمل المحرك على افتراض معلن، وتنخفض الثقة',
+      optional: 'يُثري العرض ولا يمسّ الحساب',
+    },
+  });
+}
+
 /**
  * سجل القرارات — ثابتٌ على القرص (WP-L1).
  * ---------------------------------------------------------------------------
@@ -703,9 +808,30 @@ function handleApiWorks(req, res) {
  * نفسه، وتوسيع أحدهما لا يوسّع الآخر.
  */
 function resolveWithin(rootDir, relativePath) {
+  /* المحرف الصفري يُرفض هنا، قبل نظام الملفات.
+     `fs.stat` **يرمي رمياً متزامناً** على مسار يحمل `\x00` بدل أن يمرّر خطأً
+     إلى ندائه الرجعي — فلا يلتقطه معالج الملف، ويخرج استثناءً غير ملتقَط
+     تموت به العملية. `GET /masar-home.html%00.txt` كان يكفي. */
+  if (String(relativePath).indexOf('\x00') !== -1) return null;
   const resolved = path.resolve(path.join(rootDir, relativePath));
   if (resolved !== rootDir && !resolved.startsWith(rootDir + path.sep)) return null;
   return resolved;
+}
+
+/**
+ * فكّ ترميز مسار، أو `null` إن كان مشوَّهاً.
+ *
+ * `decodeURIComponent` ترمي `URIError` على ترميز مئويّ غير صالح — `%c0%af`
+ * أو `%zz` أو `%` مفردة. والرمي متزامن داخل معالج الطلب، فيقتل العملية.
+ * وهذا ليس هجوماً يحتاج أداة: حرفٌ زائد في شريط العنوان يطفئ العرض.
+ */
+function decodePath(pathname) {
+  try {
+    const decoded = decodeURIComponent(pathname);
+    return decoded.indexOf('\x00') === -1 ? decoded : null;
+  } catch (err) {
+    return null;
+  }
 }
 
 /**
@@ -783,7 +909,11 @@ function isPrivatePath(relativePath) {
 }
 
 function serveStatic(req, res, pathname) {
-  const decodedPath = decodeURIComponent(pathname);
+  const decodedPath = decodePath(pathname);
+  if (decodedPath === null) {
+    sendPlainError(res, 400, 'Bad Request');
+    return;
+  }
   const relativePath = decodedPath === '/' ? '/masar-home.html' : decodedPath;
   if (isPrivatePath(relativePath)) {
     sendPlainError(res, 403, 'Forbidden');
@@ -802,7 +932,11 @@ function serveStatic(req, res, pathname) {
  * القراءة فقط: لا `POST` يصل إلى هنا لأن التوجيه لا يمرّره أصلاً.
  */
 function serveSubmission(req, res, pathname) {
-  const decoded = decodeURIComponent(pathname);
+  const decoded = decodePath(pathname);
+  if (decoded === null) {
+    sendPlainError(res, 400, 'Bad Request');
+    return;
+  }
   const relative = decoded.slice(SUBMISSION_MOUNT.length) || '/';
   serveFrom(req, res, SUBMISSION_DIR, relative === '/' ? '/' : relative);
 }
@@ -854,7 +988,7 @@ function createServer(options) {
   const roleKeys = settings.roleKeys || resolveRoleKeys().keys;
   const takeToken = settings.rateLimiter || createRateLimiter(settings.rateLimit);
 
-  return http.createServer((req, res) => {
+  const route = (req, res) => {
     const parsedUrl = new URL(req.url, 'http://localhost');
     const pathname = parsedUrl.pathname || '/';
 
@@ -915,6 +1049,14 @@ function createServer(options) {
       handleApiDigOnce(req, res);
       return;
     }
+    if (pathname === '/api/permit-contract/validate' && req.method === 'POST') {
+      handleApiPermitContract(req, res);
+      return;
+    }
+    if (pathname === '/api/permit-contract' && req.method === 'GET') {
+      handleApiPermitContractSpec(res);
+      return;
+    }
     if (pathname === '/api/works' && req.method === 'GET') {
       handleApiWorks(req, res);
       return;
@@ -949,6 +1091,28 @@ function createServer(options) {
     }
 
     serveStatic(req, res, pathname);
+  };
+
+  /**
+   * شبكة الأمان: رميٌ متزامن في التوجيه يصير `500` لا جنازةً للعملية.
+   *
+   * الحارسان أعلاه — `decodePath` و`resolveWithin` — يعالجان ناقلَين
+   * معروفَين. وهذا يعالج **الصنف** لا الحالتين: `new URL()` ترمي على هدف
+   * طلبٍ مشوَّه، وكل نداء متزامن يُضاف لاحقاً يرث الخطر نفسه. رميٌ واحد بلا
+   * التقاط في `http.createServer` يخرج استثناءً غير ملتقَط تموت به العملية.
+   *
+   * وهذا **ليس** `process.on('uncaughtException')`: ذلك يبتلع أعطالاً بعد
+   * أن تفسد الحالة. هنا الالتقاط في حدود طلب واحد، فيسقط الطلب وحده ويبقى
+   * ما عداه سليماً.
+   */
+  return http.createServer((req, res) => {
+    try {
+      route(req, res);
+    } catch (err) {
+      console.error('خطأ غير متوقَّع في التوجيه:', err && err.stack ? err.stack : err);
+      if (!res.headersSent) sendJson(res, 500, { error: 'INTERNAL_ERROR' });
+      else res.end();
+    }
   });
 }
 
@@ -999,6 +1163,9 @@ module.exports = {
   validateScoreInput,
   validateDigOnceInput,
   validateDecision,
+  validateContractBody,
+  reviewPermitBatch,
+  MAX_CONTRACT_RECORDS,
   // WP-D1
   BOUNDS,
   BASE_SECURITY_HEADERS,
@@ -1014,6 +1181,7 @@ module.exports = {
   mayPerform,
   segregationBreach,
   resolveWithin,
+  decodePath,
   isPrivatePath,
   PRIVATE_PATHS,
   SUBMISSION_DIR,

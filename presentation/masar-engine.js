@@ -673,9 +673,27 @@
    * @param {string} key اسم الوزن — `sensitivity` أو `nightPremium`
    * @param {string} hoursKey مفتاح الساعات المقابل داخل `evaluation`
    * @param {number} currentWeight الوزن المستعمل فعلياً في هذا النداء
+   * ## الاتجاهان — لماذا لا يكفي «كم يجب أن يرتفع الوزن»
+   *
+   * كان هذا الحساب أحاديّ الاتجاه: `crossing > currentWeight` وحدها، أي
+   * «ارفع الوزن حتى ينقلب». والوزن هنا **تفضيلٌ بلا مصدر**، فليس ثمة سببٌ
+   * يجعل خطأه في اتجاه الرفع دون الخفض. وقياس المحفظة أعطى الرقم: أحد عشر
+   * تصريحاً من مئة وخمسين ينقلب فائزه حين يُخفَّض وزنٌ، وستُّ حالاتٍ منها
+   * كان الحقل يقول فيها `neverFlips: true` بملاحظة «لا ينقلب برفع وزن X
+   * مهما ارتفع» — صادقةٌ حرفياً ومضلِّلةٌ عملياً، لأن القارئ يقرؤها متانة.
+   *
+   * فالمُخرَج الصحيح ليس نقطةً بل **مدىً يصمد الفائز داخله**:
+   * `[weightDown, weight]`، وطرفٌ مفتوحٌ يُقال `null` لا يُخترَع له رقم.
+   * و`neverFlips` صار يعني ما يقوله اسمه: لا ينقلب في أيٍّ من الاتجاهين.
+   *
+   * والحدّ السفلي مقيَّد بالصفر: وزنٌ سالب لا معنى تشغيلياً له، فتقاطعٌ
+   * تحت الصفر ليس نقطة انقلاب قابلة للتحقّق ولا يُعرض.
+   *
    * @returns {{key:string, currentWeight:number, current:string,
    *            weight:(number|null), next:(string|null),
-   *            deltaPct:(number|null), neverFlips:boolean,
+   *            deltaPct:(number|null),
+   *            weightDown:(number|null), nextDown:(string|null),
+   *            deltaPctDown:(number|null), neverFlips:boolean,
    *            note:string}|null}
    */
   function switchPoint(candidates, key, hoursKey, currentWeight) {
@@ -688,18 +706,27 @@
     const winnerHours = winner.evaluation[hoursKey];
     const winnerLabel = labelOf(winner);
 
-    let best = null;
+    /* `up` أدنى وزنٍ فوق الحالي يقلب الفائز، و`down` أعلى وزنٍ تحته يقلبه.
+       الطرفان هما حدّا المدى الذي يصمد الفائز داخله. */
+    let up = null;
+    let down = null;
     candidates.slice(1).forEach((candidate) => {
       const deltaHours = candidate.evaluation[hoursKey] - winnerHours;
       if (Math.abs(deltaHours) < 1e-9) return;
       const crossing = (winnerConstant - constantOf(candidate)) / deltaHours;
-      if (!(crossing > currentWeight) || !Number.isFinite(crossing)) return;
-      if (!best || crossing < best.weight) {
-        best = { weight: crossing, next: candidate };
+      if (!Number.isFinite(crossing)) return;
+      if (crossing > currentWeight) {
+        if (!up || crossing < up.weight) up = { weight: crossing, next: candidate };
+      } else if (crossing < currentWeight && crossing >= 0) {
+        if (!down || crossing > down.weight) down = { weight: crossing, next: candidate };
       }
     });
 
-    if (!best) {
+    const pctOf = (weight) => (currentWeight !== 0
+      ? ((weight - currentWeight) / currentWeight) * 100
+      : null);
+
+    if (!up && !down) {
       return {
         key,
         currentWeight,
@@ -707,28 +734,47 @@
         weight: null,
         next: null,
         deltaPct: null,
+        weightDown: null,
+        nextDown: null,
+        deltaPctDown: null,
         neverFlips: true,
-        note: `${winnerLabel} لا ينقلب برفع وزن ${key} مهما ارتفع — `
-          + 'لا مرشّح يتجاوزه في هذا الاتجاه',
+        note: `${winnerLabel} لا ينقلب بتحريك وزن ${key} في أيّ اتجاه — `
+          + 'لا مرشّح يتجاوزه رفعاً ولا خفضاً',
       };
     }
 
-    const nextLabel = labelOf(best.next);
-    const deltaPct = currentWeight !== 0
-      ? ((best.weight - currentWeight) / currentWeight) * 100
-      : null;
+    const upLabel = up ? labelOf(up.next) : null;
+    const downLabel = down ? labelOf(down.next) : null;
+    const deltaPct = up ? pctOf(up.weight) : null;
+    const deltaPctDown = down ? pctOf(down.weight) : null;
+
+    const parts = [];
+    if (down) {
+      parts.push(`خفضُ وزن ${key} من ${currentWeight} إلى `
+        + `${down.weight.toFixed(2)} يقلب الفائز إلى ${downLabel}`);
+    }
+    if (up) {
+      parts.push(`رفعُه إلى ${up.weight.toFixed(2)}`
+        + (deltaPct !== null ? ` (×${(up.weight / currentWeight).toFixed(2)})` : '')
+        + ` يقلبه إلى ${upLabel}`);
+    }
+    /* الطرف المفقود يُقال، لا يُسكَت عنه: قارئٌ يرى حدّاً واحداً يفترض أن
+       الآخر بعيد، والصحيح أنه غير موجود أصلاً في ذلك الاتجاه. */
+    if (!down) parts.push(`ولا يقلبه خفضُه مهما انخفض حتى الصفر`);
+    if (!up) parts.push(`ولا يقلبه رفعُه مهما ارتفع`);
 
     return {
       key,
       currentWeight,
       current: winnerLabel,
-      weight: best.weight,
-      next: nextLabel,
+      weight: up ? up.weight : null,
+      next: upLabel,
       deltaPct,
+      weightDown: down ? down.weight : null,
+      nextDown: downLabel,
+      deltaPctDown,
       neverFlips: false,
-      note: `وزن ${key} من ${currentWeight} إلى ${best.weight.toFixed(2)}`
-        + (deltaPct !== null ? ` (×${(best.weight / currentWeight).toFixed(2)})` : '')
-        + ` يقلب الفائز إلى ${nextLabel}`,
+      note: parts.join(' — '),
     };
   }
 
@@ -907,6 +953,67 @@
   }
 
   /**
+   * تسامح الوزن — **مشتقٌّ لا مختار**.
+   * ---------------------------------------------------------------------------
+   * صنف اللاتمييز أعلاه يمتنع عن الحسم حين ينقلب الترتيب داخل مظروف نسبة
+   * السعة المتبقية. لكنه يصمت عن الأوزان — وهي الكمّية التي يصفها هذا الملف
+   * نفسه بأنها «تفضيلات معلنة قابلة للتعديل، وليست قياسات». فكان النظام
+   * يمتنع بسبب الافتراض المُصرَّح به، ويحسم رغم الافتراض الذي لا سند له
+   * أصلاً. والقياس على المحفظة: عشرة تصاريح تُعلَن `decided: true` بينما
+   * تحريك وزنٍ بنسبة ±25٪ يقلب فائزها، واثنان منها ينقلبان عند 0.5٪ و0.6٪.
+   *
+   * والعتبة هنا **لا تُخترَع**. تُشتقّ وقت التشغيل من المظروف الذي أعلنه
+   * المستودع بالفعل لافتراضٍ آخر بلا سند: أوسع تحريكٍ نسبيّ في
+   * `RESIDUAL_SWEEP` حول قيمته الافتراضية. أي أن القاعدة واحدة: **ما يقبله
+   * النظام حركةً في افتراضٍ بلا سند يجب أن يصمد له في الافتراض الآخر.**
+   * فلو وُسِّع مسحُ السعة اتّسع هذا التسامح معه، ولا رقم ثالث يُضاف باليد.
+   */
+  const WEIGHT_TOLERANCE = RESIDUAL_SWEEP.reduce((widest, fraction) => Math.max(
+    widest,
+    Math.abs(fraction - RESIDUAL_CAPACITY_FRACTION) / RESIDUAL_CAPACITY_FRACTION
+  ), 0);
+
+  /**
+   * هل التوصية معلَّقة على وزنٍ بلا مصدر داخل تسامحه المشتقّ؟
+   *
+   * تُفحص جهتا المدى معاً: وزنٌ يقلب الفائز بخفضٍ طفيف هشٌّ تماماً كوزنٍ
+   * يقلبه برفعٍ طفيف. والرقم المعروض محسوبٌ من `switchPoints` لا مكتوب.
+   *
+   * @returns {{keys:Array<string>, nearestPct:number, tolerancePct:number,
+   *            note:string}|null}
+   */
+  function weightFragile(switchPoints) {
+    const tolerancePct = WEIGHT_TOLERANCE * 100;
+    const hits = [];
+    switchPoints.forEach((point) => {
+      [point.deltaPct, point.deltaPctDown].forEach((pct, index) => {
+        if (pct === null || pct === undefined) return;
+        if (Math.abs(pct) > tolerancePct) return;
+        hits.push({
+          key: point.key,
+          pct,
+          next: index === 0 ? point.next : point.nextDown,
+        });
+      });
+    });
+    if (!hits.length) return null;
+
+    hits.sort((a, b) => Math.abs(a.pct) - Math.abs(b.pct));
+    const nearest = hits[0];
+    const direction = nearest.pct >= 0 ? 'رفع' : 'خفض';
+    return {
+      keys: [...new Set(hits.map((hit) => hit.key))],
+      nearestPct: nearest.pct,
+      tolerancePct,
+      note: `التوصية معلَّقة على وزنٍ بلا مصدر: ${direction} وزن `
+        + `${nearest.key} بنسبة ${Math.abs(nearest.pct).toFixed(1)}٪ وحدها `
+        + `يقلب الفائز إلى ${nearest.next} — وهو دون التسامح المشتقّ من `
+        + `مظروف نسبة السعة المتبقية (${tolerancePct.toFixed(1)}٪). `
+        + 'رجّح تشغيلياً، لا حسابياً.',
+    };
+  }
+
+  /**
    * Find the best scheduling windows for a planned closure.
    * @param {object} input - same shape as score(), startHour/durationHours are the requested baseline.
    * @returns {{top3: Array, baseline: object, switchPoints: Array}}
@@ -976,15 +1083,6 @@
      * `reasons` — فلو بقي التعادل هناك وحده لعرضت الشاشة «الفائز» كما كانت
      * تعرضه قبل الإصلاح، ولصار الإصلاح حقيقةً في الـAPI وكذبةً على الشاشة.
      */
-    if (indifference && !indifference.decided && top3.length) {
-      const others = indifference.members.length - 1;
-      top3[0].reasons = top3[0].reasons.concat([
-        `متعادل مع ${others} ${others === 1 ? 'جدول آخر' : 'جداول أخرى'} — `
-        + 'كلٌّ منها يفوز عند افتراضٍ مقبول لنسبة السعة المتبقية. '
-        + 'الاختيار بينها تشغيليّ لا حسابيّ.',
-      ]);
-    }
-
     const effectiveWeights = candidates.length
       ? candidates[0].evaluation.weights
       : { ...OBJECTIVE_WEIGHTS, ...(input.weights || {}) };
@@ -995,6 +1093,36 @@
       switchPoint(candidates, 'nightPremium', 'nightHours',
         effectiveWeights.nightPremium),
     ].filter(Boolean);
+
+    const weightFragility = weightFragile(switchPoints);
+
+    /*
+     * التحفّظ يتصدّر — وإلا لم يصل القارئ أصلاً.
+     * -----------------------------------------------------------------------
+     * كان التعادل يُلحَق بذيل `reasons` عبر `concat`. والسطح الذي يعرض
+     * التوصية يقصّ: `masar-desk-file.js` يرسم `(a.reasons || []).slice(0, 3)`
+     * تحت عنوان «أكبر ثلاثة أسباب». وأسباب المحرك ستةٌ قبل التحفّظ، فكان
+     * التعادل يقع في الموضع السابع ويُقصّ **دائماً**. أي أن تسعةً وعشرين
+     * تصريحاً من مئة وخمسين كانت تُعرض على الشاشة بفائزٍ واثق بينما المحرك
+     * يعرف أنها متعادلة — وهو حرفياً ما حذّر منه التعليق أعلى هذه الكتلة:
+     * «حقيقةٌ في الـAPI وكذبةٌ على الشاشة».
+     *
+     * فالترتيب نفسه هو الإصلاح: التحفّظات تتصدّر القائمة، فتنجو من القصّ
+     * عند أي سطحٍ يعرض الثلاثة الأولى. والامتناع أَولى بالصدارة من هامش
+     * التفوّق: قارئٌ يقرأ سبباً واحداً يجب أن يقرأ «هذا ليس محسوماً» قبل
+     * أن يقرأ «فاز بكذا ساعة-مركبة».
+     */
+    if (top3.length) {
+      const caveats = [];
+      if (indifference && !indifference.decided) {
+        const others = indifference.members.length - 1;
+        caveats.push(`متعادل مع ${others} ${others === 1 ? 'جدول آخر' : 'جداول أخرى'} — `
+          + 'كلٌّ منها يفوز عند افتراضٍ مقبول لنسبة السعة المتبقية. '
+          + 'الاختيار بينها تشغيليّ لا حسابيّ.');
+      }
+      if (weightFragility) caveats.push(weightFragility.note);
+      if (caveats.length) top3[0].reasons = caveats.concat(top3[0].reasons);
+    }
 
     return {
       top3,
@@ -1019,6 +1147,9 @@
       })),
       /* هل يُميَّز الفائز عمّا بعده أصلاً؟ حقلٌ إضافي لا يغيّر `top3`. */
       indifference,
+      /* وهل يصمد التمييز لتحريك الوزن الذي لا سند له؟ `null` يعني نعم.
+         الحقل يُقرأ برمجياً، ونصّه يتصدّر `reasons` كي يصل الشاشة أيضاً. */
+      weightFragility,
       objective: {
         unit: 'ساعة-مركبة مكافئة',
         terms: [

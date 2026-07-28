@@ -584,7 +584,7 @@ test('optimize() candidate and baseline return windows as the schedule contract'
     ['breakdown', 'delayVehHours', 'totalEquivalentVehHours', 'windows']);
   assert.deepStrictEqual(Object.keys(result).sort(),
     ['baseline', 'candidateCount', 'indifference', 'objective', 'rankedLabels',
-      'residualSensitivity', 'switchPoints', 'top3'].sort());
+      'residualSensitivity', 'switchPoints', 'top3', 'weightFragility'].sort());
 });
 
 /* صنف اللاتمييز — عقدُه وصدقُه.
@@ -628,6 +628,19 @@ test('صنف اللاتمييز معلَن، وعضويته من انقلاب ا
   const order = band.members.map((label) => result.rankedLabels.indexOf(label));
   assert.deepStrictEqual(order.slice().sort((a, b) => a - b), order,
     'أعضاء الصنف بغير ترتيب المرشحين');
+
+  /* ---- والتعادل يجب أن **يصل**، لا أن يُحسب فقط ----
+     السطح الذي يعرض التوصية يقصّ: `masar-desk-file.js` يرسم
+     `(a.reasons || []).slice(0, 3)` تحت «أكبر ثلاثة أسباب». وكان التعادل
+     يُلحَق بذيل `reasons` فيقع سابعاً ويُقصّ دائماً — تسعةٌ وعشرون تصريحاً
+     من مئة وخمسين تُعرض بفائزٍ واثق والمحرك يعرف أنها متعادلة.
+     فالموضع نفسه جزءٌ من العقد، لا تفصيل صياغة. */
+  assert.strictEqual(band.decided, false,
+    'المُدخل المفحوص هنا يجب أن يكون متعادلاً — عدّله إن تغيّر سلوك المحرك');
+  const rendered = result.top3[0].reasons.slice(0, 3);
+  assert.ok(rendered.some((reason) => /متعادل مع/.test(reason)),
+    'إعلان التعادل خارج الأسباب الثلاثة الأولى — يُقصّ قبل أن يصل الشاشة.\n'
+    + `    الأسباب: ${JSON.stringify(result.top3[0].reasons, null, 2)}`);
 });
 
 // ---------------------------------------------------------------------------

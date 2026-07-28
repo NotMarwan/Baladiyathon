@@ -40,8 +40,11 @@ const HOSPITAL_INPUT = {
   sensitivity: 'hospital',
 };
 
+/* العقد اتّسع عن قصد: نقطة الانقلاب صارت **مدىً** لا نقطة. الوزن تفضيلٌ بلا
+   مصدر، فخطؤه ممكن رفعاً وخفضاً، وحدٌّ واحد يُقرأ متانةً وهو نصف الحقيقة. */
 const EXPECTED_KEYS = ['key', 'currentWeight', 'current', 'weight', 'next',
-  'deltaPct', 'neverFlips', 'note'].sort();
+  'deltaPct', 'weightDown', 'nextDown', 'deltaPctDown', 'neverFlips',
+  'note'].sort();
 
 // ---- الشكل والعقد ----------------------------------------------------------
 
@@ -107,7 +110,7 @@ test('نفس الإثبات على وزن nightPremium', () => {
 
 test('deltaPct محسوب جبرياً من weight وcurrentWeight — يُعاد اشتقاق كلٍّ من الآخر', () => {
   const result = MasarEngine.optimize(HOSPITAL_INPUT);
-  const flipping = result.switchPoints.filter((s) => !s.neverFlips);
+  const flipping = result.switchPoints.filter((s) => s.weight !== null);
   assert.ok(flipping.length > 0, 'لا مدخل ينقلب في هذا الطلب — الحالة المفحوصة هنا فارغة');
   flipping.forEach((sp) => {
     const expectedPct = ((sp.weight - sp.currentWeight) / sp.currentWeight) * 100;
@@ -140,6 +143,139 @@ test('حساسية normal بلا نطاقات: لا وزن يقلب الفائز
   });
   assert.strictEqual(huge.rankedLabels[0], result.rankedLabels[0],
     'الفائز انقلب تجريبياً رغم أن الحقل صرّح بأنه لن ينقلب');
+});
+
+// ---- الاتجاه الآخر: خفضُ الوزن يقلب الفائز أيضاً، ويجب أن يُقال ----------
+
+/* مأخوذ من `p060` في محفظة المدينة — أُثبت عليه أن الحدّ السفلي موجود فعلاً.
+   وهو مكتوب هنا مستقلاً كي تبقى هذه الحزمة بلا تبعية بيانات. */
+const LOWER_BOUND_INPUT = {
+  aadt: 28000,
+  lanes: 2,
+  lanesClosed: 1,
+  startHour: 10,
+  durationHours: 128,
+  freeFlowMin: 6,
+  sensitivity: 'hospital',
+  roadClass: 'arterial',
+};
+
+test('الحدّ السفلي مُعاد اشتقاقه عبر optimize() — خفضُ الوزن يقلب الفائز فعلاً', () => {
+  const base = MasarEngine.optimize(LOWER_BOUND_INPUT);
+  const sp = base.switchPoints.find((s) => s.key === 'sensitivity');
+  assert.notStrictEqual(sp.weightDown, null,
+    'هذا المُدخل يجب أن يحمل حدّاً سفلياً — عدّل الثابت أعلاه إن تغيّر سلوك المحرك');
+  assert.strictEqual(base.rankedLabels[0], sp.current, 'current لا يطابق الفائز الفعلي');
+
+  const above = MasarEngine.optimize({
+    ...LOWER_BOUND_INPUT, weights: { sensitivity: sp.weightDown + 1e-3 },
+  });
+  assert.strictEqual(above.rankedLabels[0], sp.current,
+    'الفائز تغيّر قبل بلوغ الحدّ السفلي المُعلَن — الحساب مبكر');
+
+  const below = MasarEngine.optimize({
+    ...LOWER_BOUND_INPUT, weights: { sensitivity: sp.weightDown - 1e-3 },
+  });
+  assert.strictEqual(below.rankedLabels[0], sp.nextDown,
+    'الفائز لم ينقلب إلى nextDown تحت الحدّ السفلي — الحساب خطأ');
+});
+
+test('deltaPctDown محسوب جبرياً كنظيره الأعلى، وإشارته سالبة', () => {
+  const result = MasarEngine.optimize(LOWER_BOUND_INPUT);
+  const lowered = result.switchPoints.filter((s) => s.weightDown !== null);
+  assert.ok(lowered.length > 0, 'لا حدّ سفلي في هذا الطلب — الحالة المفحوصة هنا فارغة');
+  lowered.forEach((sp) => {
+    assert.ok(sp.deltaPctDown < 0, `${sp.key}: خفضٌ بنسبة موجبة — الإشارة مقلوبة`);
+    const expected = ((sp.weightDown - sp.currentWeight) / sp.currentWeight) * 100;
+    assert.ok(Math.abs(sp.deltaPctDown - expected) < 1e-9,
+      `${sp.key}: deltaPctDown لا يطابق (weightDown-currentWeight)/currentWeight`);
+    assert.ok(sp.weightDown >= 0, `${sp.key}: حدٌّ سفلي سالب — وزنٌ لا معنى له`);
+  });
+});
+
+test('`neverFlips` يعني الاتجاهين معاً — لا متانةً نصفية', () => {
+  /* `normal` بلا نطاقات: كل المرشحين بصفر ساعة حسّاسة، فلا رفعٌ ولا خفضٌ
+     يقلب. وهذه الحالة وحدها يصحّ فيها التصريح بالعجز. */
+  const flat = MasarEngine.optimize({ ...HOSPITAL_INPUT, sensitivity: 'normal' })
+    .switchPoints.find((s) => s.key === 'sensitivity');
+  assert.strictEqual(flat.neverFlips, true);
+  assert.strictEqual(flat.weightDown, null);
+  assert.strictEqual(flat.weight, null);
+  assert.ok(/أيّ اتجاه/.test(flat.note), 'الملاحظة لا تصرّح بأن العجز في الاتجاهين');
+
+  /* والعكس: مُدخلٌ ينقلب خفضاً لا رفعاً يجب ألّا يُعلَن غير قابل للانقلاب.
+     كان هذا بالضبط ما يحدث قبل الإصلاح. */
+  const oneSided = MasarEngine.optimize(LOWER_BOUND_INPUT).switchPoints
+    .filter((s) => s.weightDown !== null && s.weight === null);
+  oneSided.forEach((sp) => {
+    assert.strictEqual(sp.neverFlips, false,
+      `${sp.key}: أُعلن غير قابل للانقلاب بينما خفضُه يقلب الفائز`);
+  });
+});
+
+// ---- الامتناع بسبب الوزن: عتبةٌ مشتقّة لا مختارة -------------------------
+
+/* مأخوذ من `p069` — أقرب نقطة انقلاب في المحفظة كلها. */
+const FRAGILE_INPUT = {
+  aadt: 10000,
+  lanes: 1,
+  lanesClosed: 1,
+  startHour: 13,
+  durationHours: 101,
+  freeFlowMin: 6,
+  sensitivity: 'hospital',
+  roadClass: 'major',
+};
+
+test('توصيةٌ تنقلب بتحريكٍ ضئيل للوزن تُعلَن هشّة — والانقلاب مُعاد اشتقاقه', () => {
+  const result = MasarEngine.optimize(FRAGILE_INPUT);
+  assert.ok(result.weightFragility,
+    'نقطة انقلاب دون التسامح ولم يُعلَن أي تحفّظ');
+  const sp = result.switchPoints.find((s) => s.key === result.weightFragility.keys[0]);
+  assert.ok(Math.abs(sp.deltaPct) <= result.weightFragility.tolerancePct
+    || Math.abs(sp.deltaPctDown) <= result.weightFragility.tolerancePct);
+
+  /* لا يُصدَّق الحقل: يُستدعى المحرك عند طرفَي النقطة المُعلَنة. */
+  const flipped = MasarEngine.optimize({
+    ...FRAGILE_INPUT, weights: { [sp.key]: sp.weight + 1e-3 },
+  });
+  assert.strictEqual(flipped.rankedLabels[0], sp.next,
+    'الهشاشة مُعلَنة ولا انقلاب فعلي عندها — تحفّظٌ بلا سند');
+  const held = MasarEngine.optimize({
+    ...FRAGILE_INPUT, weights: { [sp.key]: sp.weight - 1e-3 },
+  });
+  assert.strictEqual(held.rankedLabels[0], sp.current);
+});
+
+test('التسامح مشتقٌّ وقت التشغيل من مظروف السعة المعلَن — لا رقم مكتوب', () => {
+  const result = MasarEngine.optimize(FRAGILE_INPUT);
+  /* يُعاد اشتقاق العتبة من مخرَج المحرك نفسه: أوسع تحريكٍ نسبيّ في مظروف
+     نسبة السعة المتبقية حول قيمتها الافتراضية. رقمٌ يُكتب باليد يُسقط هذا. */
+  const envelope = result.residualSensitivity
+    .map((entry) => entry.residualCapacityFraction);
+  assert.ok(envelope.length > 1, 'المظروف غير معروض — لا يمكن اشتقاق العتبة');
+  const derived = envelope.reduce((widest, fraction) => Math.max(widest,
+    Math.abs(fraction - MasarEngine.RESIDUAL_CAPACITY_FRACTION)
+      / MasarEngine.RESIDUAL_CAPACITY_FRACTION), 0) * 100;
+  assert.ok(Math.abs(result.weightFragility.tolerancePct - derived) < 1e-9,
+    `التسامح ${result.weightFragility.tolerancePct} لا يطابق المشتقّ ${derived} — `
+    + 'عتبةٌ مختارة تسلّلت مكان المشتقّة');
+});
+
+test('توصيةٌ متينة الوزن لا تُثقَل بتحفّظ لا يخصّها', () => {
+  /* HOSPITAL_INPUT نقطتا انقلابه 42٪ و169٪ — بعيدتان عن التسامح. */
+  assert.strictEqual(MasarEngine.optimize(HOSPITAL_INPUT).weightFragility, null,
+    'تحفّظ هشاشة على توصية نقطة انقلابها بعيدة — التحفّظ يفقد معناه إن عمّ');
+});
+
+// ---- التسليم: التحفّظ يجب أن ينجو من قصّ «أكبر ثلاثة أسباب» --------------
+
+test('التحفّظ يتصدّر reasons فينجو من slice(0,3) الذي يقصّه السطح', () => {
+  const result = MasarEngine.optimize(FRAGILE_INPUT);
+  const rendered = result.top3[0].reasons.slice(0, 3);
+  assert.ok(rendered.some((reason) => /وزنٍ بلا مصدر/.test(reason)),
+    'تحفّظ الهشاشة خارج الأسباب الثلاثة الأولى — يُقصّ قبل أن يصل الشاشة.\n'
+    + `    الأسباب: ${JSON.stringify(result.top3[0].reasons, null, 2)}`);
 });
 
 // ---- قيد صلب: الإضافة معلوماتية بحتة، لا تمسّ الترتيب أو الفائزين --------

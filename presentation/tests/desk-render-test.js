@@ -3,6 +3,8 @@ const assert = require('assert');
 const path = require('path');
 const Inbox = require(path.join(__dirname, '..', 'masar-desk-inbox.js'));
 const File = require(path.join(__dirname, '..', 'masar-desk-file.js'));
+const Analysis = require(path.join(__dirname, '..', 'masar-desk-analysis.js'));
+const Engine = require(path.join(__dirname, '..', 'masar-engine.js'));
 
 let passed = 0;
 function ok(name, fn) { fn(); passed += 1; console.log(`  ok - ${name}`); }
@@ -374,6 +376,83 @@ ok('سجل التدقيق يعرض الأحداث بترتيبها ولا يُخ
 
 ok('سجل تدقيق فارغ يقول ذلك صراحة', () => {
   assert.ok(File.renderAudit([]).indexOf('لا قرارات') !== -1);
+});
+
+/* ---- المدخل الناقص: امتناعٌ مسمّى لا انهيار ---- */
+
+/**
+ * لماذا هذه الحزمة موجودة.
+ * ---------------------------------------------------------------------------
+ * تصريح بلا تواريخ صالحة وبلا مدة كان يرمي `RangeError` من `Engine.optimize`
+ * عبر `MasarDeskAnalysis.evaluate`. والرمي يقع خارج كل حارس في المُقلع: المخزن
+ * ينتقل إلى التصريح الجديد، و`renderFile` يسقط قبل أن يكتب سطراً، فيبقى ملف
+ * القرار معروضاً على **التصريح السابق**. المراجع يقرأ ملفاً لغير ما اختار،
+ * ولا شيء على الشاشة يقول ذلك.
+ *
+ * فالشرط هنا مضاعف: لا يرمي، **و**يسمّي الحقل الناقص. الأول وحده يعطي بطاقةً
+ * صامتة، والصمت في موضع السبب يُقرأ «لا مشكلة».
+ */
+ok('تصريح بلا مدة إغلاق لا يُسقط البطاقة — يمتنع ويسمّي الحقل', () => {
+  const bare = feature();
+  delete bare.properties.start;
+  delete bare.properties.end;
+  delete bare.properties.durationHours;
+  delete bare.properties.workDays;
+
+  const analysis = Analysis.evaluate(bare.properties, Engine);
+  assert.ok(analysis.incomplete, 'الحصيلة لا تُعلن نقص المدخلات');
+
+  const html = File.renderSummary(bare, analysis);
+  assert.ok(html.indexOf('لا توصية') !== -1, 'يوصي على مدخلات ناقصة');
+  assert.ok(html.indexOf('مدة الإغلاق') !== -1,
+    'الامتناع عام لا يسمّي الحقل — المراجع لا يعرف ماذا يطلب');
+  assert.ok(html.indexOf('عدد أيام العمل') !== -1, 'لا يقول ما الذي يسدّ النقص');
+  assert.ok(html.indexOf('NaN') === -1 && html.indexOf('undefined') === -1);
+});
+
+ok('ما بقي معلوماً يُعرض مع الامتناع — لا حجب زائد', () => {
+  const bare = feature();
+  delete bare.properties.start;
+  delete bare.properties.end;
+  delete bare.properties.durationHours;
+  delete bare.properties.workDays;
+
+  const analysis = Analysis.evaluate(bare.properties, Engine);
+  // نسبة تأخير الرحلة خاصية ساعةٍ من اليوم لا خاصية مدة — تبقى محسوبة.
+  assert.ok(Number.isFinite(analysis.scored.delayPct), 'نسبة التأخير حُجبت بلا سبب');
+  assert.strictEqual(analysis.scored.delayVehHours, null,
+    'حصيلة التصريح رقمٌ رغم أن مدتها مجهولة');
+
+  const html = File.renderSummary(bare, analysis);
+  assert.ok(/\d/.test(html), 'البطاقة بلا رقم واحد رغم أن نسبة التأخير معلومة');
+  assert.ok(html.indexOf('٪') !== -1, 'النسبة المعلومة غير معروضة');
+});
+
+ok('الثغرة تُرى في الطابور قبل فتح الملف', () => {
+  const bare = feature();
+  delete bare.properties.start;
+  delete bare.properties.end;
+  delete bare.properties.durationHours;
+  delete bare.properties.workDays;
+
+  assert.ok(Inbox.renderRow(bare, false).indexOf('مدخلات ناقصة') !== -1,
+    'الصفّ لا يميّز تصريحاً لا يمكن أن يُقرَّر عليه');
+  assert.ok(Inbox.renderRow(feature(), false).indexOf('مدخلات ناقصة') === -1,
+    'وسم النقص على تصريح مكتمل');
+});
+
+ok('عطل المحرك يصير امتناعاً مرئياً لا رمياً صامتاً', () => {
+  const exploding = Object.assign({}, Engine, {
+    optimize: function () { throw new RangeError('capacityPerLane out of range'); },
+  });
+  const analysis = Analysis.evaluate(feature().properties, exploding);
+  assert.ok(analysis.incomplete && analysis.incomplete.failure,
+    'العطل لم يُصنَّف عطلاً');
+
+  const html = File.renderSummary(feature(), analysis);
+  assert.ok(html.indexOf('تعذّر حساب البدائل') !== -1, 'العطل مكتوم');
+  assert.ok(html.indexOf('capacityPerLane out of range') !== -1,
+    'رسالة المحرك لا تصل الشاشة — العطل يُقرأ نقص بيانات');
 });
 
 /* ---- الأمان والصلابة ---- */
