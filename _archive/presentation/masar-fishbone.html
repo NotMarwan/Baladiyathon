@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>أداة تحليل التحدي — مسار</title>
+<style>
+  :root{
+    --ink:#1f2a37;
+    --bone:#3d4f63;
+    --teal:#2aa5c7;
+    --navy:#153a5b;
+    --line:#8d9bab;
+    --paper:#ffffff;
+    --sub-bg:#f4f7fa;
+    --sub-br:#3d4f63;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#e9edf1;
+    color:var(--ink);
+    font-family:"Segoe UI","Tahoma","Arial",sans-serif;
+    padding:20px;
+    display:flex;justify-content:center;
+  }
+
+  .sheet{
+    width:100%;max-width:1400px;
+    aspect-ratio:1400/900;
+    position:relative;
+    background:var(--paper);
+    box-shadow:0 10px 40px rgba(20,40,60,.18);
+    container-type:inline-size;
+    overflow:hidden;
+  }
+
+  /* ---- header bar (matches the printed tool) ---- */
+  .bar{
+    position:absolute;inset:0 0 auto 0;height:9.5%;
+    background:linear-gradient(180deg,var(--teal) 0%,var(--teal) 55%,var(--navy) 55%,var(--navy) 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .bar h1{
+    color:#fff;font-size:3.4cqw;font-weight:700;letter-spacing:.5px;
+    transform:translateY(28%);
+  }
+  .brand{
+    position:absolute;top:1.2%;right:1.5%;
+    color:#fff;font-size:1.15cqw;line-height:1.35;text-align:right;opacity:.95;
+  }
+  .brand b{display:block;font-size:1.5cqw}
+  .tag{
+    position:absolute;top:1.4%;left:1.5%;
+    color:#fff;font-size:1.15cqw;text-align:left;line-height:1.4;
+  }
+
+  /* ---- skeleton ---- */
+  svg.bones{position:absolute;inset:0;width:100%;height:100%}
+  .spine{stroke:var(--bone);stroke-width:3;fill:none}
+  .rib{stroke:var(--line);stroke-width:2;fill:none}
+
+  .head-txt{
+    position:absolute;left:7.4%;top:43.5%;width:7.6%;height:13%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;text-align:center;font-weight:700;font-size:1.35cqw;line-height:1.4;
+  }
+
+  /* ---- sub-challenge boxes ---- */
+  .sub{
+    position:absolute;width:15%;height:12.6%;
+    border:2px solid var(--sub-br);
+    background:var(--sub-bg);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:.9cqw;
+  }
+  .sub .n{
+    position:absolute;top:-1.1cqw;inset-inline-start:-1.1cqw;
+    width:2.4cqw;height:2.4cqw;border-radius:50%;
+    background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.25cqw;font-weight:700;
+  }
+  .sub .lbl{font-size:.95cqw;color:#5b6b7d;margin-bottom:.35cqw}
+  .sub .t{font-size:1.22cqw;font-weight:700;line-height:1.35;color:var(--navy)}
+
+  /* ---- causes ---- */
+  .causes{position:absolute;width:14.3%;height:20%;text-align:right}
+  .causes h3{
+    font-size:1.15cqw;color:var(--bone);font-weight:700;
+    border-bottom:1.5px solid var(--line);padding-bottom:.25cqw;margin-bottom:.5cqw;
+  }
+  .causes li{
+    list-style:none;font-size:.98cqw;line-height:1.45;margin-bottom:.42cqw;
+    padding-inline-start:.9cqw;position:relative;color:#2b3846;
+  }
+  .causes li::before{
+    content:"";position:absolute;inset-inline-start:0;top:.55cqw;
+    width:.42cqw;height:.42cqw;background:var(--teal);border-radius:50%;
+  }
+
+  .foot{
+    position:absolute;bottom:1.2%;inset-inline-start:1.5%;
+    font-size:1.05cqw;color:#5b6b7d;
+  }
+  .foot b{color:var(--navy)}
+
+  @page{size:A4 landscape;margin:8mm}
+  @media print{
+    body{background:#fff;padding:0}
+    .sheet{box-shadow:none;max-width:none;width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="bar"><h1>أداة تحليــل التحـدي</h1></div>
+  <div class="brand"><b>مسار</b>Masar — Baladiyathon 2026</div>
+  <div class="tag">التحدي الثالث<br>أثر البنية التحتية والحفر على المرور</div>
+
+  <svg class="bones" viewBox="0 0 1400 900" preserveAspectRatio="none">
+    <!-- head -->
+    <polygon points="60,450 212,338 212,562" fill="#3d4f63"/>
+    <!-- spine -->
+    <line class="spine" x1="212" y1="450" x2="1338" y2="450"/>
+    <polygon points="1338,412 1398,450 1338,488" fill="#3d4f63"/>
+    <!-- top ribs -->
+    <line class="rib" x1="430" y1="450" x2="560" y2="216"/>
+    <line class="rib" x1="700" y1="450" x2="830" y2="216"/>
+    <line class="rib" x1="970" y1="450" x2="1100" y2="216"/>
+    <!-- bottom ribs -->
+    <line class="rib" x1="500" y1="450" x2="630" y2="684"/>
+    <line class="rib" x1="770" y1="450" x2="900" y2="684"/>
+    <line class="rib" x1="1040" y1="450" x2="1170" y2="684"/>
+  </svg>
+
+  <div class="head-txt">التحدي<br>الرئيسي</div>
+
+  <!-- ============ TOP ============ -->
+  <div class="sub" style="left:40%;top:11.1%">
+    <span class="n">١</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">لا تقدير للأثر قبل الترخيص</span>
+  </div>
+  <div class="causes" style="left:15.7%;top:25%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>لا دالة تأخير معتمدة في مسار الموافقة</li>
+      <li>القرار يعتمد الخبرة الفردية لا الحساب</li>
+      <li>الأثر يُكتشف بالشكاوى بعد الإغلاق</li>
+    </ul>
+  </div>
+
+  <div class="sub" style="left:59.3%;top:11.1%">
+    <span class="n">٢</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">التنسيق يمنع التزامن ولا يقيس الازدحام</span>
+  </div>
+  <div class="causes" style="left:35%;top:25%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>«تنسيق حفريات متعددة» زماني–مكاني فقط</li>
+      <li>لا كشف آلي لتراكب تصريحين متجاورين</li>
+      <li>فرص الخندق المشترك (Dig-Once) تفوت</li>
+    </ul>
+  </div>
+
+  <div class="sub" style="left:78.6%;top:11.1%">
+    <span class="n">٣</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">مدد إغلاق طويلة بلا بدائل مرتّبة</span>
+  </div>
+  <div class="causes" style="left:54.3%;top:25%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>١٥٠ يوماً على السريع و٣٠٠ على الرئيسي</li>
+      <li>المدة تُقبل كما قُدّمت بلا مقارنة ببديل</li>
+      <li>لا محسّن يرتّب نوافذ العمل: ليلي، عطلة، مراحل</li>
+    </ul>
+  </div>
+
+  <!-- ============ BOTTOM ============ -->
+  <div class="causes" style="left:20.7%;top:53.4%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>ملكية موزّعة: بلدية، نقل، مرور، مرافق</li>
+      <li>لا واجهة موحّدة للأحجام وسعة المسارات</li>
+      <li>طبقات المترو والحافلات مكانية بلا طلب حي</li>
+    </ul>
+  </div>
+  <div class="sub" style="left:45%;top:77.8%">
+    <span class="n">٤</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">بيانات المرور مجزّأة وغير موحّدة</span>
+  </div>
+
+  <div class="causes" style="left:40%;top:53.4%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>لا سجل يفصل الحقيقة عن الافتراض</li>
+      <li>لا أسباب مكتوبة لترجيح بديل على آخر</li>
+      <li>مراجعة القرار أو الطعن فيه متعذّرة</li>
+    </ul>
+  </div>
+  <div class="sub" style="left:64.3%;top:77.8%">
+    <span class="n">٥</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">قرار غير قابل للتفسير والتدقيق</span>
+  </div>
+
+  <div class="causes" style="left:59.3%;top:53.4%">
+    <h3>المسبـبات</h3>
+    <ul>
+      <li>لا فحص لوصول الطوارئ والنقل العام</li>
+      <li>إشعار المواطن متأخر أو غائب</li>
+      <li>لا خريطة شفافية عامة للأعمال المعتمدة</li>
+    </ul>
+  </div>
+  <div class="sub" style="left:83.6%;top:77.8%">
+    <span class="n">٦</span>
+    <span class="lbl">التحدي الفرعي</span>
+    <span class="t">أثر المواطن والخدمات الحيوية غير محسوب</span>
+  </div>
+
+  <div class="foot">
+    <b>التحدي الرئيسي:</b> تصاريح الحفر تصدر بلا تقييم كمي مسبق لأثرها المروري — فيظهر الازدحام بعد فوات أوان تعديل القرار.
+  </div>
+
+</div>
+</body>
+</html>

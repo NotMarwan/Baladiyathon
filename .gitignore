@@ -17,3 +17,7 @@ presentation/tests/shots/
 # graphify cache يُعاد بناؤه بـ `graphify update` — لا يُتتبّع.
 # graph.json و GRAPH_REPORT.md و manifest.json تبقى متتبَّعة (محرك التنقل).
 graphify-out/cache/
+
+# ── مخلّفات ويندوز ──────────────────────────────────────────────
+# NUL اسم جهاز محجوز في ويندوز: وجوده كملف يكسر الاستنساخ.
+presentation/NUL

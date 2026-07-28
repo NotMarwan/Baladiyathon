@@ -1,22 +1,63 @@
 /* ==========================================================================
    مسار — صفحة الخريطة المستقلة
-   خريطة بملء الشاشة على لوحة فاتحة رسمية. الصفحة مستقلة عن النموذج:
-   تنسيقها هنا فقط ولا تشارك masar-map.css كي لا يشدّها تنسيق النموذج.
+   خريطة بملء الشاشة على «ورقٍ» دافئ لا على رمادٍ إداري. الصفحة مستقلة عن
+   النموذج: تنسيقها هنا فقط ولا تشارك masar-map.css كي لا يشدّها تنسيق النموذج.
    RTL أولاً.
+
+   اللغة البصرية — ديوانية لا لوحة قيادة
+   --------------------------------------------------------------------------
+   أربعة أشياء تصنع الطابع، وكلها مشتقّة من وسوم الهوية لا من لوحةٍ جديدة:
+     · ورقٌ كريمي بدل الرمادي — يجعل البطاقات البيضاء تُقرأ بطاقاتٍ فعلاً.
+     · خيطٌ علوي على كل سطح، لونه يقول دوره: نيليٌّ أداة، وذهبيٌّ سجل، وشعرةٌ
+       ثانوي. والمتقطّع منه يعني «محسوبٌ لك» لا «واقعٌ مسجَّل» — في الصفحة كلها
+       بمعنىً واحد.
+     · خيوطٌ متقطّعة بدل النقاط في السجلات: السجل مقطعُ شارع لا موضع.
+     · مباعدةُ كلمات لا مباعدةُ حروف في العناوين الصغيرة — العربية موصولة،
+       و`letter-spacing` يفكّ وصلها.
+   ولا لونَ خام واحد هنا: كل قيمة مزيجٌ من `--masar-*` كي تبقى الصفحة داخل
+   الهوية ولو تغيّرت الهوية غداً. والمسافات كلها من `--masar-space-*`.
    ========================================================================== */
 
 @import url("masar-tokens.css");
 
 :root {
+  /* ---- الأسطح ---- */
+  /* الورق: `accent-soft` هو الرملي في الهوية، وتخفيفه بالأبيض يعطي كريمياً
+     دافئاً يبقى تحت النص بلا أن يزاحمه. */
+  --wm-paper: color-mix(in oklab, var(--masar-accent-soft) 78%, white);
+  --wm-paper-2: color-mix(in oklab, var(--masar-accent-soft) 34%, white);
   --wm-surface: var(--masar-surface);
-  --wm-border: var(--masar-line);
-  --wm-stage: var(--masar-canvas);
+  --wm-stage: var(--wm-paper);
+
+  /* ---- الحدود ---- */
+  /* حدّان لا حدّ واحد: خطٌّ يفصل بطاقةً عن ورق، وشعرةٌ تفصل سطراً عن سطر.
+     استعمال الأول في الموضعين يجعل داخل البطاقة مخطّطاً كجدول. */
+  --wm-border: color-mix(in oklab, var(--masar-line) 70%, var(--masar-accent-soft));
+  --wm-hair: color-mix(in oklab, var(--masar-line) 48%, white);
+
+  /* ---- الحبر ---- */
   --wm-text: var(--masar-ink);
   --wm-muted: var(--masar-muted);
   --wm-accent: var(--masar-primary);
-  --wm-radius: var(--masar-radius);
-  --wm-shadow: var(--masar-shadow);
-  --wm-bar: 52px;
+
+  /* ---- الذهب ---- */
+  --wm-gold: var(--masar-accent);
+  --wm-gold-wash: color-mix(in oklab, var(--masar-accent) 12%, transparent);
+  --wm-gold-edge: color-mix(in oklab, var(--masar-accent) 36%, transparent);
+
+  /* ---- السلّم الطباعي ----
+     ستّ درجات لا عشرون: ما دون ذلك فروقٌ بأجزاء البكسل لا تُقرأ درجات. */
+  --wm-t-lead: 1.85rem;
+  --wm-t-figure: 1.35rem;
+  --wm-t-title: 1rem;
+  --wm-t-body: 0.8rem;
+  --wm-t-meta: 0.7rem;
+  --wm-t-eyebrow: 0.64rem;
+
+  --wm-radius: var(--masar-radius-lg);
+  /* الظل خفيفٌ ومسحوبٌ لأسفل: البطاقة ترتفع عن الورق قليلاً لا تطفو فوقه. */
+  --wm-shadow: 0 10px 26px -18px color-mix(in oklab, var(--masar-ink) 55%, transparent);
+  --wm-bar: 54px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,29 +65,142 @@
 html, body { width: 100%; height: 100%; }
 
 body {
-  font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  /* الخط مستضاف محلياً في `masar-fonts.css` — الصفحة كانت تقع على خط النظام. */
+  font-family: "IBM Plex Sans Arabic", var(--masar-font);
+  /* ارتفاع سطرٍ معلن: `normal` يتبع مقاييس الخط، ومقاييس العربية تجعله يتذبذب
+     بين حجمٍ وآخر فينكسر إيقاع البطاقات. */
+  line-height: 1.55;
   color: var(--wm-text);
-  background: var(--wm-stage);
+  background: var(--wm-paper);
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* شريط التنقل يُحقن من masar-nav.js بارتفاع ثابت */
 body.masar-nav-offset { padding-top: 44px; }
 
+/*
+ * العنوان الصغير: مباعدة كلمات لا مباعدة حروف.
+ * --------------------------------------------------------------------------
+ * `letter-spacing` يُطبَّق بعد التشكيل، فالحروف العربية الموصولة تتباعد ويبقى
+ * خطُّ الوصل قصيراً — فتُقرأ الكلمة مقطَّعة. `word-spacing` يعطي الأثر نفسه
+ * (سطرٌ هادئ متّسع) بلا كسر الوصل.
+ */
+.wm-records h2,
+.wm-legend h2,
+fieldset.masar-map-field legend,
+.wm-hero .works-bar-lead,
+.works-popup-kicker,
+.works-solution h4,
+.works-detour h4,
+.tl-popup h4,
+.wm-legend-split,
+.works-solution-table thead th {
+  word-spacing: 0.16em;
+}
+
+/*
+ * الأرقام لاتينية معزولة ومتساوية العرض.
+ * الرقم داخل جملة عربية يقلب اتجاهه مع الفاصلة فيُقرأ 058,342؛ والعزل يمنع
+ * ذلك، والعرض المتساوي يجعل عمودين يُقارنان بالنظر لا بالقراءة.
+ */
+.wm-stat,
+.wm-updated,
+.wm-records-count,
+.wm-record-meta,
+.works-bar-figure,
+.works-solution-num,
+.tl-headline,
+.tl-range,
+.tl-count,
+.tl-hour b {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ==========================================================================
+   الشريط العلوي — ترويسة ديوان لا شريط أدوات
+   ========================================================================== */
 .wm-bar {
   flex: 0 0 auto;
-  height: var(--wm-bar);
+  min-height: var(--wm-bar);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-inline: 18px;
+  gap: var(--masar-space-2);
+  padding-inline: var(--masar-space-4);
   background: var(--wm-surface);
-  border-bottom: 1px solid var(--wm-border);
+  /* الترويسة تحمل خيط الأداة نفسه الذي تحمله لوحة التحكّم — لولاه لبقيت
+     الوحيدة بلا دور معلن في صفحةٍ كل أسطحها معلنة. */
+  border-block-start: 2.5px solid var(--wm-accent);
+  border-bottom: 1px solid var(--wm-hair);
   z-index: 3;
 }
 
-.wm-bar h1 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.wm-bar h1 {
+  font-size: var(--wm-t-title);
+  font-weight: 600;
+  color: var(--wm-accent);
+}
+
+/* «بيانات توضيحية» تحفّظٌ لا زينة: حلقة ذهبية مفرغة تُقرأ ختماً على الترويسة.
+   ومفرغةٌ عمداً — العدّاد بجوارها مملوء، فلا يلتبس ثابتٌ بمتغيّر. */
+.wm-badge {
+  font-size: var(--wm-t-eyebrow);
+  font-weight: 600;
+  color: var(--wm-gold);
+  background: transparent;
+  border: 1px solid var(--wm-gold-edge);
+  border-radius: var(--masar-radius-pill);
+  padding: 3px 11px;
+  white-space: nowrap;
+}
+
+.wm-bar-spacer { margin-inline-start: auto; }
+
+.wm-search input {
+  font: inherit;
+  font-size: var(--wm-t-body);
+  color: var(--wm-text);
+  width: 232px;
+  padding: 7px 14px;
+  background: var(--wm-paper-2);
+  border: 1px solid var(--wm-border);
+  border-radius: var(--masar-radius-pill);
+  transition: border-color var(--masar-t-control) var(--masar-ease),
+              background-color var(--masar-t-control) var(--masar-ease);
+}
+.wm-search input::placeholder { color: var(--wm-muted); }
+.wm-search input:hover { border-color: color-mix(in oklab, var(--masar-accent) 40%, var(--wm-border)); }
+.wm-search input:focus-visible {
+  outline: 2px solid var(--wm-gold);
+  outline-offset: 1px;
+  background: var(--wm-surface);
+}
+/* زرّ المسح الافتراضي رماديٌّ خارج اللوحة — يُلوَّن بلون النص الخافت. */
+.wm-search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--wm-muted);
+  mask-image: radial-gradient(circle, black 40%, transparent 42%);
+  cursor: pointer;
+}
+
+.wm-updated { font-size: var(--wm-t-meta); color: var(--wm-muted); }
+
+/* العدّاد قرصٌ مملوء لا نصّ سائب: رقمٌ يتغيّر مع كل ترشيح يحتاج إطاراً يثبته
+   للعين، وامتلاؤه يميّزه عن الختم المفرغ بجواره. */
+.wm-stat {
+  font-size: var(--wm-t-meta);
+  font-weight: 600;
+  color: var(--wm-gold);
+  background: var(--wm-gold-wash);
+  border: 1px solid var(--wm-gold-edge);
+  border-radius: var(--masar-radius-pill);
+  padding: 4px 12px;
+  white-space: nowrap;
+}
 
 /* ==========================================================================
    شريط الحل — لماذا يعلو الخريطة لا يجاورها
@@ -54,89 +208,72 @@ body.masar-nav-offset { padding-top: 44px; }
    معروض الآن، فيتحرك مع الفترة والبحث ومع إخفاء طبقة. موضعه فوق الخريطة لأن
    عين الناظر تبدأ من أعلى اليمين وتنزل — وما نريده أن يُقرأ أولاً لا يُوضع
    في زاوية.
-   الخلفية داكنة عمداً: الصفحة كلها فاتحة رسمية، فالشريط الوحيد الداكن يُقرأ
-   إعلاناً لا عنصر واجهة.
+
+   كان داكناً ليُقرأ إعلاناً. والداكن على صفحةٍ فاتحة يُقرأ أيضاً «شريط نظام»
+   فتتخطّاه العين مع باقي الأشرطة. فصار ورقاً بخيطٍ ذهبي متقطّع أعلاه: التقطيع
+   يقول «هذا تقديرٌ لو طُبّق» لا «هذا واقعٌ مسجَّل» — والفرق هو كل الفرق هنا.
    ========================================================================== */
 .wm-hero {
   flex: 0 0 auto;
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 6px 16px;
-  padding: 10px 18px;
-  background: var(--masar-ink);
-  color: var(--masar-on-ink);
-  border-bottom: 1px solid var(--masar-ink);
+  gap: var(--masar-space-1) var(--masar-space-4);
+  padding: var(--masar-space-3) var(--masar-space-4);
+  background: var(--wm-paper);
+  border-block-start: 2.5px dashed var(--wm-gold);
+  border-bottom: 1px solid var(--wm-hair);
   z-index: 3;
 }
 
 .wm-hero .works-bar-lead {
-  font-size: 0.8rem;
+  font-size: var(--wm-t-eyebrow);
   font-weight: 700;
-  letter-spacing: 0.01em;
-  opacity: 0.72;
+  color: var(--wm-gold);
+  flex-basis: 100%;
 }
 
-.wm-hero .works-bar-figure { font-size: 0.95rem; }
+.wm-hero .works-bar-figure {
+  font-size: var(--wm-t-body);
+  color: var(--wm-muted);
+}
 
-/* الرقم وحده يكبر: تكبير السطر كله يجعل كل شيء صارخاً فلا يبرز شيء. */
+/* الرقم وحده يكبر: تكبير السطر كله يجعل كل شيء صارخاً فلا يبرز شيء.
+   والتضييق هنا على أرقام لاتينية لا على عربية — فلا يكسر وصلاً. */
 .wm-hero .works-bar-figure b {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-inline-end: 6px;
-  color: var(--masar-success-on-ink);
+  font-size: var(--wm-t-lead);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-inline-end: var(--masar-space-2);
+  color: var(--wm-accent);
 }
 
 .wm-hero .works-bar-detail {
-  font-size: 0.8rem;
-  opacity: 0.7;
+  font-size: var(--wm-t-meta);
+  color: var(--wm-muted);
   margin-inline-start: auto;
   direction: rtl;
 }
 
-.wm-hero .works-bar-empty { font-size: 0.85rem; opacity: 0.7; }
+.wm-hero .works-bar-empty { font-size: var(--wm-t-body); color: var(--wm-muted); }
 
 @media (max-width: 640px) {
-  .wm-hero { padding: 8px 12px; }
-  .wm-hero .works-bar-figure b { font-size: 1.2rem; }
+  .wm-hero { padding: var(--masar-space-2) var(--masar-space-3); }
+  /* لا ينزل إلى 1.35: ذاك حجم `tl-headline` نفسه، فيفقد الرقمُ الأولُ أوّليّته
+     على الهاتف ويصير رقماً بين رقمين. */
+  .wm-hero .works-bar-figure b { font-size: 1.55rem; }
   .wm-hero .works-bar-detail { margin-inline-start: 0; flex-basis: 100%; }
 }
 
-.wm-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--masar-accent);
-  background: var(--masar-accent-soft);
-  border: 1px solid var(--masar-line);
-  border-radius: 999px;
-  padding: 3px 10px;
-}
-
-.wm-bar-spacer { margin-inline-start: auto; }
-
-.wm-search input {
-  font: inherit;
-  font-size: 0.83rem;
-  color: var(--wm-text);
-  width: 230px;
-  padding: 6px 10px;
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-border);
-  border-radius: var(--masar-radius-sm);
-}
-.wm-search input:focus-visible { outline: 2px solid var(--wm-accent); outline-offset: 1px; }
-
-.wm-updated {
-  font-size: 0.74rem;
-  color: var(--wm-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.wm-stat {
-  font-size: 0.78rem;
-  color: var(--wm-muted);
-  font-variant-numeric: tabular-nums;
+/* شريط التمرير عريضٌ رماديٌّ افتراضاً فيقطع البطاقة عمودياً؛ رفيعاً بلون
+   الحدّ يبقى إشارةً لا عنصراً. */
+.wm-records-body,
+.wm-legend,
+#control-panel,
+.maplibregl-popup-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--wm-border) transparent;
 }
 
 main { position: relative; flex: 1 1 auto; min-height: 0; }
@@ -149,60 +286,144 @@ main { position: relative; flex: 1 1 auto; min-height: 0; }
    الفراغ بين البطاقات يبقى للخريطة — العمود لا يلتقط المؤشر إلا في بطاقاته. */
 .wm-side {
   position: absolute;
-  inset-inline-start: 12px;
-  inset-block: 12px 18px;
+  inset-inline-start: var(--masar-space-3);
+  inset-block: var(--masar-space-3) var(--masar-space-4);
   z-index: 2;
-  width: 262px;
+  width: 274px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--masar-space-2);
   pointer-events: none;
 }
 .wm-side > * { pointer-events: auto; }
 
-#control-panel {
-  flex: 0 0 auto;
-  padding: 14px;
+/*
+ * توقيع البطاقة: خيطٌ علوي بلون دورها.
+ * البطاقات الثلاث بيضاء بالحجم نفسه، فلا شيء يقول أيّها أداةٌ وأيّها سجل.
+ * الخيط يفعل ذلك بلا كلمة: نيليٌّ للتحكّم، وذهبيٌّ للسجلات، وشعرةٌ للدليل —
+ * وسماكة الشعرة أقلّ عمداً: الثالث تابعٌ لا ثالثُ أقران.
+ */
+#control-panel,
+.wm-records,
+.wm-legend {
   background: var(--wm-surface);
   border: 1px solid var(--wm-border);
   border-radius: var(--wm-radius);
   box-shadow: var(--wm-shadow);
+}
+
+/*
+ * اللوحة مسقوفة لا منكمشة.
+ * مربّعا الحمل والأثر يُضافان إليها بعد الإقلاع (لا عند البناء)، فتطول بصفّين
+ * على شاشةٍ قصيرة ويخرج أسفل العمود عن إطاره. والسقف بالنسبة لا بالانكماش:
+ * `flex-shrink` يوزّع النقص على الأساس، وأساس قائمة السجلات ارتفاعُ ٩٣ صفاً —
+ * فتبتلع اللوحةُ نصيبَها من الانكماش وتُسحق إلى سطر.
+ */
+#control-panel {
+  flex: 0 0 auto;
+  max-height: 52%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--masar-space-3);
+  border-block-start: 2.5px solid var(--wm-accent);
   display: grid;
-  gap: 12px;
+  gap: var(--masar-space-3);
+  align-content: start;
 }
 
-.masar-map-field { display: grid; gap: 6px; font-size: 0.85rem; }
-.masar-map-field select {
-  padding: 7px 9px;
-  font: inherit;
-  color: inherit;
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-border);
-  border-radius: 8px;
-}
-.masar-map-field select:focus-visible { outline: 2px solid var(--wm-accent); outline-offset: 1px; }
-fieldset.masar-map-field { border: 0; padding: 0; }
-fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
-.masar-map-toggle { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
-.masar-map-toggle input { accent-color: var(--wm-accent); width: 16px; height: 16px; }
-.masar-map-swatch { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
-
-/* ---- بطاقة التفاصيل ---- */
-.works-popup-kicker {
-  font-size: 0.7rem;
+/* ---- عناوين البطاقات: كلمة صغيرة متّسعة، لا عنوان بحجم النص ---- */
+.wm-records h2,
+.wm-legend h2,
+fieldset.masar-map-field legend {
+  font-size: var(--wm-t-eyebrow);
   font-weight: 700;
-  color: var(--wm-accent);
-  margin-bottom: 0.3rem;
+  color: var(--wm-muted);
 }
-.works-popup h3 { font-size: 0.95rem; margin-bottom: 0.35rem; line-height: 1.4; }
-.works-popup p { font-size: 0.82rem; color: var(--wm-muted); margin-bottom: 0.55rem; }
+
+.masar-map-field { display: grid; gap: var(--masar-space-1); font-size: var(--wm-t-body); }
+.masar-map-field select {
+  padding: var(--masar-space-2) 10px;
+  font: inherit;
+  font-size: var(--wm-t-body);
+  color: inherit;
+  background: var(--wm-paper-2);
+  border: 1px solid var(--wm-border);
+  border-radius: var(--masar-radius);
+  transition: border-color var(--masar-t-control) var(--masar-ease);
+}
+.masar-map-field select:hover { border-color: color-mix(in oklab, var(--masar-accent) 40%, var(--wm-border)); }
+.masar-map-field select:focus-visible { outline: 2px solid var(--wm-gold); outline-offset: 1px; }
+fieldset.masar-map-field { border: 0; padding: 0; }
+fieldset.masar-map-field legend { margin-bottom: var(--masar-space-2); }
+
+/*
+ * مربّع الطبقة قرصٌ لا سطرٌ عارٍ.
+ * الطبقة المشتغلة والمطفأة كانتا تبدوان سواءً إلا بعلامةٍ صغيرة في مربّع
+ * النظام. الآن: الحلقة الذهبية تعني «مشتغلة»، والشارة تخفت حين تُطفأ — فحالة
+ * الخريطة تُقرأ من اللوحة بنظرة، لا بجردِ علاماتٍ صغيرة.
+ */
+.masar-map-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--masar-space-2);
+  padding: var(--masar-space-1) var(--masar-space-2);
+  margin-inline: calc(var(--masar-space-2) * -1);
+  font-size: var(--wm-t-body);
+  border: 1px solid transparent;
+  border-radius: var(--masar-radius-pill);
+  cursor: pointer;
+  transition: background-color var(--masar-t-hover) var(--masar-ease),
+              border-color var(--masar-t-hover) var(--masar-ease);
+}
+.masar-map-toggle:hover { background: var(--wm-gold-wash); border-color: var(--wm-gold-edge); }
+.masar-map-toggle:active { background: color-mix(in oklab, var(--masar-accent) 18%, transparent); }
+.masar-map-toggle:has(input:focus-visible) { outline: 2px solid var(--wm-gold); outline-offset: 1px; }
+/* المطفأة تخفت شارتُها ونصُّها. والمشتغلة بلا إطار: خمسةُ أطرٍ فوق بعضها
+   تُقرأ خمسةَ حقولِ إدخال، والحدّ يبقى للمسّ وحده (تحويم وتركيز). */
+.masar-map-toggle:has(input:not(:checked)) { color: var(--wm-muted); }
+.masar-map-toggle:has(input:not(:checked)) .masar-map-swatch { opacity: 0.28; }
+.masar-map-toggle input { accent-color: var(--wm-accent); width: 15px; height: 15px; }
+/* الشارة خيطٌ لا نقطة — الطبقة مقاطعُ شوارع، والشكل يقول ذلك قبل اللون. */
+.masar-map-swatch {
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+  transition: opacity var(--masar-t-hover) var(--masar-ease);
+}
+
+/* ==========================================================================
+   بطاقة التفاصيل
+   ========================================================================== */
+.works-popup-kicker {
+  font-size: var(--wm-t-eyebrow);
+  font-weight: 700;
+  color: var(--wm-gold);
+  margin-bottom: var(--masar-space-1);
+}
+.works-popup h3 {
+  font-size: var(--wm-t-title);
+  font-weight: 600;
+  color: var(--wm-accent);
+  margin-bottom: var(--masar-space-1);
+  line-height: 1.4;
+}
+.works-popup p { font-size: var(--wm-t-body); color: var(--wm-muted); margin-bottom: var(--masar-space-2); }
+/* الوقائع المسجَّلة بخيطٍ **مصمت**: مقابل المتقطّع في كتل التقدير تحتها.
+   بلا هذا الطرف يبقى التقطيع علامةً بلا نقيض، فلا يُقرأ معنى. */
 .works-popup dl {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.22rem 0.7rem;
-  font-size: 0.78rem;
+  gap: var(--masar-space-1) var(--masar-space-3);
+  font-size: var(--wm-t-body);
+  padding: var(--masar-space-2);
+  background: var(--wm-paper);
+  border-block-start: 2px solid var(--wm-border);
+  border-radius: var(--masar-radius);
 }
-.works-popup dt { font-weight: 700; color: var(--wm-muted); }
+.works-popup dt { font-weight: 600; color: var(--wm-muted); font-size: var(--wm-t-meta); }
+.works-popup dd { font-weight: 500; }
 
 /* ==========================================================================
    كتلة الحل داخل البطاقة
@@ -210,45 +431,47 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
    والقارئ يحتاج أن يرى الحدّ بينهما قبل أن يقرأ الأرقام.
    ========================================================================== */
 .works-solution {
-  margin-top: 0.7rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--wm-border);
+  margin-top: var(--masar-space-3);
+  padding: var(--masar-space-2);
+  background: var(--masar-success-soft);
+  border-radius: var(--masar-radius);
+  border-block-start: 2.5px solid var(--masar-success);
 }
 
 .works-solution h4 {
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--wm-t-eyebrow);
+  font-weight: 700;
   color: var(--masar-success);
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--masar-space-1);
 }
 
 .works-solution-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.78rem;
+  font-size: var(--wm-t-body);
 }
 
 .works-solution-table thead th {
-  font-size: 0.68rem;
+  font-size: var(--wm-t-eyebrow);
   font-weight: 600;
   color: var(--wm-muted);
-  padding-bottom: 0.15rem;
+  padding-bottom: 3px;
 }
 
 .works-solution-table tbody th {
   text-align: start;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
-  padding: 0.18rem 0;
+  padding: 3px 0;
   white-space: nowrap;
 }
 
-.works-solution-table td { padding: 0.18rem 0.5rem; }
+.works-solution-table td { padding: 3px var(--masar-space-2); }
 
-/* الأرقام بخط أحادي المسافة ومحاذاة واحدة — العين تقارن عمودين لا رقمين. */
+/* الأرقام بمحاذاة واحدة وعرض متساوٍ — العين تقارن عمودين لا رقمين. */
 .works-solution-num {
   text-align: end;
-  font-variant-numeric: tabular-nums;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -257,32 +480,55 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 .works-solution-table tr.works-solution-best { color: var(--masar-success); }
 
 .works-solution-gain {
-  margin-top: 0.4rem;
-  font-size: 0.76rem;
+  margin-top: var(--masar-space-2);
+  font-size: var(--wm-t-meta);
   font-weight: 700;
   color: var(--masar-success);
-  background: var(--masar-success-soft);
-  border-radius: 6px;
-  padding: 0.3rem 0.45rem;
+  background: var(--wm-surface);
+  border-radius: var(--masar-radius-sm);
+  padding: var(--masar-space-1) var(--masar-space-2);
 }
 
-/* ---- المسار البديل ---- */
+/* ==========================================================================
+   المسار البديل — «التوجيه» هو ما جاء القارئ لأجله
+   بطاقةٌ داخل بطاقة: ورقٌ وخيطٌ ذهبي متقطّع أعلاه. التقطيع نفسه المستعمل في
+   شريط الحل أعلى الصفحة، والتكرار مقصود — الذهبي المتقطّع في هذه الصفحة يعني
+   «محسوبٌ لك» دائماً، لا مرةً هنا ومرةً هناك بمعنى آخر.
+   ========================================================================== */
 .works-detour {
-  margin-top: 0.6rem;
-  padding-top: 0.55rem;
-  border-top: 1px dashed var(--wm-border);
+  margin-top: var(--masar-space-3);
+  padding: var(--masar-space-2);
+  background: var(--wm-paper);
+  border-radius: var(--masar-radius);
+  border-block-start: 2.5px dashed var(--wm-gold);
 }
 
 .works-detour h4 {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--wm-accent);
-  margin-bottom: 0.35rem;
+  font-size: var(--wm-t-eyebrow);
+  font-weight: 700;
+  color: var(--wm-gold);
+  margin-bottom: var(--masar-space-1);
 }
 
 .works-detour-closed { color: var(--masar-danger); }
 .works-detour-first { color: var(--wm-accent); }
 .works-detour-second { color: var(--masar-warning); }
+
+/* الصفّ المختار يُعلَّم بحافةٍ لا بلونٍ وحده: اللون وحده يسقط عند طباعةٍ
+   بالأبيض والأسود أو عند عمى ألوان، والحافة تبقى. */
+.works-detour-first th {
+  position: relative;
+  padding-inline-start: var(--masar-space-2);
+}
+.works-detour-first th::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 3px;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--wm-accent);
+}
 
 /*
  * تفصيل البديل: حقائق مقيسة ثم سبب مشتقّ ثم الشوارع المسلوكة.
@@ -291,14 +537,13 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
  */
 .works-detour-detail td {
   padding-top: 0;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--wm-border);
+  padding-bottom: var(--masar-space-2);
+  border-bottom: 1px solid var(--wm-hair);
 }
 
 .works-detour-detail span {
   display: block;
-  font-size: 0.68rem;
-  line-height: 1.5;
+  font-size: var(--wm-t-meta);
 }
 
 .works-detour-facts { color: var(--wm-muted); }
@@ -308,34 +553,32 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 /* أين يقع الحمل. الطابور داخل الحيّ يأخذ لون الخطر لا لون التحذير: أثره على
    من لم يختر الطريق ولم يُسأل، وهو أشدّ لا أخفّ. */
 .works-detour-hood {
-  margin: 0.25rem 0 0;
-  font-size: 0.68rem;
-  line-height: 1.55;
+  margin: var(--masar-space-1) 0 0;
+  font-size: var(--wm-t-meta);
   color: var(--masar-danger);
 }
 
 /* «لا بديل مقبول» قرارٌ لا رقم — فيُعرض كتلةً لا سطراً في الجدول، وإلا
    قُرئ حاشيةً على أرقام فوقه ثم تُجووِز. */
 .works-detour-decision {
-  margin: 0.5rem 0 0;
-  padding: 0.45rem 0.6rem;
-  font-size: 0.7rem;
-  line-height: 1.6;
+  margin: var(--masar-space-2) 0 0;
+  padding: var(--masar-space-2);
+  font-size: var(--wm-t-meta);
   color: var(--masar-danger);
   border-inline-start: 3px solid var(--masar-danger);
   background: color-mix(in oklab, var(--masar-danger) 10%, transparent);
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 var(--masar-radius-sm) var(--masar-radius-sm) 0;
 }
 
 .works-detour-note {
-  margin-top: 0.35rem;
-  font-size: 0.68rem;
+  margin-top: var(--masar-space-1);
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
 }
 
 /* «لا التفاف» خبرٌ يخصّ القرار لا عطلاً: شارعٌ وحيد إغلاقه قرار آخر. */
 .works-detour-none p {
-  font-size: 0.75rem;
+  font-size: var(--wm-t-body);
   color: var(--wm-muted);
   margin-bottom: 0;
 }
@@ -347,8 +590,8 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
 .maplibregl-popup-content {
   border: 1px solid var(--wm-border);
   border-radius: var(--wm-radius);
-  box-shadow: var(--wm-shadow);
-  padding: 14px 16px;
+  box-shadow: 0 18px 40px -22px color-mix(in oklab, var(--masar-ink) 70%, transparent);
+  padding: var(--masar-space-4);
   direction: rtl;
   text-align: right;
   /* البطاقة كبرت بكتلة الحل، والبوب-أب لا يزيح الخريطة ليتّسع: على شاشة قصيرة
@@ -358,101 +601,137 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+/* الرأس يتبع البطاقة: طرفٌ أبيض بلا حدّ يُقرأ سهماً لبطاقةٍ أخرى. */
+.maplibregl-popup-tip { border-top-color: var(--wm-surface); }
 .maplibregl-popup-close-button { color: var(--wm-muted); font-size: 17px; }
 .maplibregl-popup-close-button:hover { color: var(--wm-text); background: transparent; }
+/* مخرج البطاقة بلوحة المفاتيح — بلا حلقةٍ ظاهرة يُغادَر بالتخمين. */
+.maplibregl-popup-close-button:focus-visible {
+  outline: 2px solid var(--wm-gold);
+  outline-offset: 1px;
+  border-radius: var(--masar-radius-sm);
+}
 .maplibregl-ctrl-attrib { font-size: 10.5px; }
 .maplibregl-canvas { outline: none; }
 
-/* ---- قائمة السجلات ---- */
-/* ظاهرة لا مخفية: هي طريق لوحة المفاتيح إلى السجل، وهي أيضاً نتائج البحث
+/* ==========================================================================
+   قائمة السجلات — «نسيج» لا قائمة نقاط
+   ظاهرة لا مخفية: هي طريق لوحة المفاتيح إلى السجل، وهي أيضاً نتائج البحث
    مقروءةً كنصّ. تأخذ ما بقي من العمود وتُمرّر داخلها — لا تدفع الدليل خارج
-   الشاشة مهما طالت. */
+   الشاشة مهما طالت.
+   ========================================================================== */
+/*
+ * السجلات لا تُسحق تحت الدليل.
+ * الثلاثة في عمودٍ بارتفاع الشاشة، والدليل كان `0 0 auto` فيأخذ طوله كاملاً
+ * ويترك للسجلات ما بقي — وعلى شاشةٍ ارتفاعها ٧٥٠ بكسل لا يبقى شيء: تختفي
+ * القائمة كلها فلا يبقى للوحة المفاتيح طريقٌ إلى سجل. فللسجلات حدٌّ أدنى،
+ * والدليل هو الذي ينكمش ويُمرّر — شرحُ الألوان يحتمل التمرير، والسجل لا.
+ */
 .wm-records {
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: 132px;
   display: flex;
   flex-direction: column;
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-border);
-  border-radius: var(--wm-radius);
-  box-shadow: var(--wm-shadow);
-  padding: 11px 13px 4px;
+  border-block-start: 2.5px solid var(--wm-gold);
+  padding: var(--masar-space-3) var(--masar-space-3) var(--masar-space-1);
 }
 .wm-records h2 {
-  font-size: 0.78rem;
-  margin-bottom: 6px;
+  margin-bottom: var(--masar-space-2);
   flex: 0 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: var(--masar-space-1);
 }
 .wm-records-count {
-  color: var(--wm-muted);
-  font-weight: 400;
-  font-variant-numeric: tabular-nums;
+  color: var(--wm-gold);
+  font-weight: 700;
+  word-spacing: normal;
 }
 .wm-records-body { overflow-y: auto; overscroll-behavior: contain; margin-inline: -5px; }
-.wm-records-list { list-style: none; padding: 0 5px 9px; margin: 0; }
+.wm-records-list { list-style: none; padding: 0 5px var(--masar-space-2); margin: 0; }
 .wm-records-empty {
-  font-size: 0.76rem;
+  font-size: var(--wm-t-body);
   color: var(--wm-muted);
-  padding: 4px 5px 12px;
-  line-height: 1.6;
+  padding: var(--masar-space-1) 5px var(--masar-space-3);
 }
 
 /* الصف زرٌّ حقيقي لا div بمستمع: يأخذ التركيز ويستجيب للمسافة والإدخال
    ويعلن نفسه زراً — وكل ذلك مجاناً من الوسم الصحيح. */
 .wm-record {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  display: grid;
+  gap: var(--masar-space-1);
   width: 100%;
   font: inherit;
   color: inherit;
   text-align: start;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--masar-radius-sm);
-  padding: 5px 6px;
+  border-radius: var(--masar-radius);
+  padding: var(--masar-space-2);
   cursor: pointer;
+  transition: background-color var(--masar-t-hover) var(--masar-ease),
+              border-color var(--masar-t-hover) var(--masar-ease);
 }
-.wm-record:hover { background: var(--masar-primary-soft); }
+.wm-record:hover { background: var(--wm-paper); border-color: var(--wm-hair); }
+/* الضغطة تُجيب فوراً: النقر يطير بالخريطة ٦٠٠ مللي، وبلا ردٍّ لحظي يُقرأ
+   التأخير عطلاً فيُنقر ثانية. */
+.wm-record:active { background: color-mix(in oklab, var(--masar-primary) 9%, transparent); }
 .wm-record:focus-visible {
-  outline: 2px solid var(--wm-accent);
+  outline: 2px solid var(--wm-gold);
   outline-offset: 1px;
-  background: var(--masar-primary-soft);
+  background: var(--wm-paper);
 }
+
+/*
+ * الخيط — لماذا حلّ محلّ النقطة
+ * --------------------------------------------------------------------------
+ * السجل مقطعٌ من شارع لا موضعٌ على خريطة، والنقطة كانت تقول العكس. والخيط
+ * يقول شيئاً ثانياً مجاناً: تقطيعه يطابق تقطيع الطبقة نفسها على الخريطة، فيربط
+ * القارئ الصفَّ بما رآه مرسوماً بلا وسيط.
+ * التقطيع بقناع لا بخلفية: اللون يصل من `style` مضمَّنة يكتبها المُقلع لكل
+ * مجموعة، وأي `background-image` هنا يمحوه. وبلا شفافية: خفضُها يغيّر اللون
+ * عن لون الخريطة فينكسر الربط الذي وُضع الخيط لأجله.
+ * ومتصفّحٌ بلا `mask` يُسقط السطرين فيبقى شريطاً مصمتاً — يفقد التقطيع ولا
+ * يفقد اللون ولا الموضع.
+ */
 .wm-record-dot {
-  width: 8px;
-  height: 8px;
-  margin-block-start: 5px;
-  border-radius: 50%;
-  flex: 0 0 auto;
+  order: 2;
+  width: 100%;
+  height: 5px;
+  -webkit-mask-image: repeating-linear-gradient(to left, black 0 5px, transparent 5px 8px);
+  mask-image: repeating-linear-gradient(to left, black 0 5px, transparent 5px 8px);
 }
-.wm-record-body { display: grid; gap: 1px; min-width: 0; }
+
+.wm-record-body { order: 1; display: grid; gap: 2px; min-width: 0; }
 .wm-record-title {
-  font-size: 0.79rem;
+  font-size: var(--wm-t-body);
+  font-weight: 600;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
 .wm-record-meta {
-  font-size: 0.7rem;
+  font-size: var(--wm-t-meta);
+  font-weight: 400;
   color: var(--wm-muted);
-  font-variant-numeric: tabular-nums;
 }
 
 /* ---- الدليل ---- */
-/* الدليل أسفل العمود — الطرف الآخر لمقياس الرسم. */
+/* الدليل أسفل العمود — الطرف الآخر لمقياس الرسم. وشعرةٌ لا خيط: تابعٌ للبطاقتين
+   فوقه لا ثالثُ أقران. */
 .wm-legend {
-  flex: 0 0 auto;
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-border);
-  border-radius: var(--wm-radius);
-  box-shadow: var(--wm-shadow);
-  padding: 11px 13px;
-  font-size: 0.76rem;
+  flex: 0 1 auto;
+  max-height: 44%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-block-start: 1px solid var(--wm-hair);
+  padding: var(--masar-space-3);
+  font-size: var(--wm-t-meta);
   display: grid;
-  gap: 6px;
+  gap: var(--masar-space-2);
+  align-content: start;
 }
-.wm-legend h2 { font-size: 0.78rem; margin-bottom: 2px; }
-.wm-legend-row { display: flex; align-items: center; gap: 8px; color: var(--wm-muted); }
+.wm-legend h2 { margin-bottom: 1px; }
+.wm-legend-row { display: flex; align-items: center; gap: var(--masar-space-2); color: var(--wm-muted); }
 /*
  * الشكل يقول النمط: طبقات الخريطة مخطّطة والمسارات المحسوبة مصمتة، والدليل
  * يجب أن يفرّق بينهما بالخط لا بالكلمة — وإلا شرح لوناً وأخفى نمطاً.
@@ -465,22 +744,23 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
  * المعلم دائرة والعمل خط — والفرق مقصود.
  * الخط يعني تدخّلاً على مقطع من الشارع، والدائرة تعني وجهةً تقع بجواره. لو
  * أخذ الاثنان الشكل نفسه لصار الدليل يشرح لونين لمعنىً واحد. والعرض ٢٦ بكسل
- * محجوز للخط، فتُوسَّط الدائرة داخله كي يبقى عمود النصّ مستقيماً.
+ * محجوز للخط، فتُوسَّط الدائرة داخله كي يبقى عمود النصّ مستقيماً — والحساب
+ * معلن لا مُقدَّر مسبقاً كي يتبع أي تغيّر في العرضين.
  */
 .wm-legend-dot {
   width: 9px;
   height: 9px;
   flex: 0 0 auto;
   border-radius: 50%;
-  margin-inline: 8.5px;
+  margin-inline: calc((26px - 9px) / 2);
   box-shadow: 0 0 0 1.5px var(--wm-surface), 0 0 0 2.2px var(--wm-border);
 }
 
 .wm-legend-split {
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px solid var(--wm-border);
-  font-size: 0.68rem;
+  margin-top: var(--masar-space-2);
+  padding-top: var(--masar-space-2);
+  border-top: 1px solid var(--wm-hair);
+  font-size: var(--wm-t-eyebrow);
   font-weight: 700;
   color: var(--wm-muted);
 }
@@ -490,9 +770,9 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
   inset-block-start: 50%;
   inset-inline: 18%;
   z-index: 4;
-  padding: 16px;
+  padding: var(--masar-space-4);
   background: var(--masar-danger-soft);
-  border: 1px solid var(--masar-danger);
+  border-inline-start: 3px solid var(--masar-danger);
   border-radius: var(--wm-radius);
   color: var(--masar-danger);
 }
@@ -501,7 +781,7 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
   /* على الهاتف تنفصل البطاقتان إلى طرفي الشاشة بدل أن تتراصّا كتلةً واحدة
      تبتلع الخريطة: التحكّم أعلى والسجلات أسفل، وبينهما شريطٌ من الخريطة
      يبقى مرئياً وقابلاً للسحب — الفراغ بينهما لا يلتقط المؤشر. */
-  .wm-side { inset-inline: 12px; width: auto; justify-content: space-between; }
+  .wm-side { inset-inline: var(--masar-space-3); width: auto; justify-content: space-between; }
   .wm-records { flex: 0 0 auto; max-height: 26vh; }
   .wm-legend { display: none; }
 
@@ -510,12 +790,13 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
   .wm-bar {
     height: auto;
     flex-wrap: wrap;
-    row-gap: 6px;
-    padding-block: 8px;
-    padding-inline: 12px;
+    row-gap: var(--masar-space-1);
+    padding-block: var(--masar-space-2);
+    padding-inline: var(--masar-space-3);
   }
   .wm-bar-spacer { display: none; }
   .wm-search { flex: 1 1 100%; min-width: 0; }
+  .wm-search input { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -530,93 +811,97 @@ fieldset.masar-map-field legend { font-weight: 700; margin-bottom: 6px; }
    الرقم هنا تقدير لا قياس، فالشكل يقول ذلك: الملاحظة تحت الدليل بحجمٍ يُقرأ
    لا يُتخطّى، والمظروف بجوار الرقم لا في حاشية. رقمٌ ضخمٌ عارٍ يُقرأ قياساً.
    ========================================================================== */
-#tlLegend { display: grid; gap: 6px; }
+#tlLegend { display: grid; gap: var(--masar-space-2); }
 
 /* عناصر التحكّم تظهر مع الطبقة وتختفي بإطفائها — لوحةٌ ضيقة لا تحتمل
-   مفاتيح لطبقةٍ مطفأة. */
+   مفاتيح لطبقةٍ مطفأة. والخيط المتقطّع أعلاها كخيط كتل التقدير: ما تضبطه
+   هذه المفاتيح تقديرٌ لا سجل. */
 .tl-controls {
   display: grid;
-  gap: 6px;
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px dashed var(--wm-border);
+  gap: var(--masar-space-2);
+  margin-top: var(--masar-space-2);
+  padding: var(--masar-space-2);
+  background: var(--wm-paper);
+  border-block-start: 2px dashed var(--wm-accent);
+  border-radius: var(--masar-radius);
 }
 .tl-controls[hidden] { display: none; }
 
-.tl-modes { display: flex; gap: 10px; flex-wrap: wrap; }
-.tl-mode { display: flex; align-items: center; gap: 5px; font-size: 0.74rem; cursor: pointer; }
+.tl-modes { display: flex; gap: var(--masar-space-3); flex-wrap: wrap; }
+.tl-mode { display: flex; align-items: center; gap: 5px; font-size: var(--wm-t-meta); cursor: pointer; }
 .tl-mode input { accent-color: var(--wm-accent); width: 14px; height: 14px; }
 
-.tl-hour { display: grid; gap: 3px; font-size: 0.72rem; color: var(--wm-muted); }
-.tl-hour b { font-variant-numeric: tabular-nums; color: var(--wm-text); }
-.tl-hour input { width: 100%; accent-color: var(--wm-accent); }
-.tl-hour input:disabled { opacity: 0.4; }
-.tl-hour input:focus-visible { outline: 2px solid var(--wm-accent); outline-offset: 2px; }
+.tl-hour { display: grid; gap: var(--masar-space-1); font-size: var(--wm-t-meta); color: var(--wm-muted); }
+.tl-hour b { color: var(--wm-text); }
+.tl-hour input { width: 100%; accent-color: var(--wm-gold); }
+/* المنزلق المعطّل يخفت **ومعه سطره**: خفوتُه وحده يترك عنواناً كامل القوة
+   يشير إلى مفتاحٍ لا يكاد يُرى. */
+.tl-hour:has(input:disabled) { opacity: 0.55; }
+.tl-hour input:focus-visible { outline: 2px solid var(--wm-gold); outline-offset: 2px; }
 
 /* حالة الازدحام في البطاقة: نقطةٌ ملوّنة قبل الكلمة — نفس لون الخريطة، فيربط
    القارئ ما رآه بما قرأ بلا ترجمة. */
 .tl-state {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.76rem;
+  gap: var(--masar-space-1);
+  font-size: var(--wm-t-body);
   font-weight: 700;
   color: var(--wm-text);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--masar-space-2);
 }
 .tl-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
 
-.tl-count { color: var(--wm-muted); font-variant-numeric: tabular-nums; }
+.tl-count { color: var(--wm-muted); }
 
 .tl-note {
-  margin-top: 4px;
-  font-size: 0.68rem;
-  line-height: 1.6;
+  margin-top: 5px;
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
 }
 
 .tl-popup {
-  margin-top: 0.7rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--wm-border);
+  margin-top: var(--masar-space-3);
+  padding: var(--masar-space-2);
+  background: var(--wm-paper);
+  border-radius: var(--masar-radius);
+  border-block-start: 2.5px dashed var(--wm-accent);
 }
 
 .tl-popup h4 {
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: var(--wm-t-eyebrow);
+  font-weight: 700;
   color: var(--wm-accent);
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--masar-space-1);
 }
 
 /* الرقم والوحدة على سطر واحد بوزنين: العين تلتقط العدد والوحدة تشرحه. */
 .tl-headline {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: var(--wm-t-figure);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   color: var(--wm-text);
-  margin-bottom: 0.15rem;
-  font-variant-numeric: tabular-nums;
+  margin-bottom: 2px;
+  line-height: 1.2;
 }
-.tl-headline span { font-size: 0.72rem; font-weight: 600; color: var(--wm-muted); }
+.tl-headline span { font-size: var(--wm-t-meta); font-weight: 600; letter-spacing: normal; color: var(--wm-muted); }
 
 .tl-range {
-  font-size: 0.72rem;
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
-  margin-bottom: 0.5rem;
-  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--masar-space-2);
 }
 
 .tl-basis {
-  font-size: 0.7rem;
-  line-height: 1.6;
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
-  margin-top: 0.4rem;
+  margin-top: var(--masar-space-1);
 }
 
 .tl-caveats {
-  margin-top: 0.45rem;
-  padding-inline-start: 1.1rem;
-  font-size: 0.7rem;
-  line-height: 1.6;
+  margin-top: var(--masar-space-2);
+  padding-inline-start: var(--masar-space-4);
+  font-size: var(--wm-t-meta);
   color: var(--wm-muted);
 }
-.tl-caveats li { margin-bottom: 0.2rem; }
+.tl-caveats li { margin-bottom: 3px; }

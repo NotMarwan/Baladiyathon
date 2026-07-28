@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>مسار — الخريطة</title>
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
+<!-- الخط مستضاف محلياً: بدونه تقع الصفحة على خط النظام بينما الحزمة على القرص. -->
+<link rel="stylesheet" href="masar-fonts.css">
 <link rel="stylesheet" href="masar-worksmap-page.css">
 </head>
 <body>
@@ -75,6 +77,7 @@
 <script src="masar-worksmap-panel.js"></script>
 <script src="masar-worksmap-solution.js"></script>
 <script src="masar-city-routing.js"></script>
+<script src="masar-detour-policy.js"></script>
 <script src="masar-worksmap-interactions.js"></script>
 <!-- المحرك هنا لأجل الملف الساعي وعكس دالة BPR — الحساب المروري له مصدر واحد. -->
 <script src="masar-engine.js"></script>
@@ -465,6 +468,10 @@
       var result = MasarCityRouting.alternativesAround(routing, feature.geometry.coordinates, {
         hour: hour, count: 2,
       });
+      // بوابات السلامة تزيّن الناتج بأحكامها قبل العرض — انظر masar-detour-policy.js
+      if (typeof MasarDetourPolicy !== 'undefined') {
+        result = MasarDetourPolicy.audit(routing, result);
+      }
 
       var collection = MasarWorksMapSolution.routeCollection(result, function (states) {
         return MasarCityRouting.pathGeometry(routing, states);

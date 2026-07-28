@@ -1,0 +1,76 @@
+/* ==========================================================================
+   مسار — عناصر بصرية إضافية لملف القرار في المكتب.
+   ملفٌّ مستقل لا لأن هذه القواعد تخص منطقة مختلفة، بل لأن masar-desk.css بلغ
+   سقف أسطر شيفرته تماماً (927/927) ولا يقبل سطراً واحداً إضافياً — فكل قاعدة
+   جديدة لملف القرار تدخل هنا بدل تضخيم ملفٍّ بلا سعة. كل لون من
+   masar-tokens.css كما في الملف الأصل — لا قيمة خام هنا أيضاً.
+   ========================================================================== */
+
+/* ---- رقم القرار الواحد ----
+   الرقم الذي يُبنى عليه القرار كان صفاً بين خمسة صفوف متساوية الوزن في
+   `<dl>`. هنا يخرج بحجمٍ يخصّه وحده — أكبر رقم على الشاشة، لا صفٌّ بين صفوف. */
+.desk-verdict { display: grid; gap: 2px; margin: var(--masar-space-3) 0; }
+.desk-verdict-num {
+  font-family: var(--masar-font-mono);
+  font-size: var(--masar-text-3xl);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--masar-ink);
+  font-variant-numeric: tabular-nums;
+}
+.desk-verdict-unit { font-size: var(--masar-text-sm); color: var(--masar-muted); }
+.desk-verdict-delta {
+  justify-self: start;
+  margin-top: var(--masar-space-1);
+  padding: 2px 8px;
+  border-radius: var(--masar-radius-pill);
+  font-size: var(--masar-text-sm);
+  font-weight: 700;
+  color: var(--masar-success);
+  background: var(--masar-success-soft);
+}
+.desk-verdict-delta[data-dir="up"] {
+  color: var(--masar-warning);
+  background: var(--masar-warning-soft);
+}
+
+/* ---- الأثر بالساعة ----
+   عشرة أعمدة على الأكثر وبلا مقياس محوري إلا على ثلاثة تسميات: الأولى
+   والأخيرة والذروة — فلا تتزاحم الأرقام على عمودٍ لا يتجاوز 40 بكسلاً.
+   بلا حركة بتاتاً: لا شيء يُستثنى عند prefers-reduced-motion. */
+.desk-hours {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: 2px;
+  height: 48px;
+  margin: var(--masar-space-2) 0 var(--masar-space-6);
+  padding: 0;
+  border-bottom: 1px solid var(--masar-line);
+}
+.desk-hour { position: relative; height: 100%; display: grid; align-items: end; }
+.desk-hour-bar {
+  display: block;
+  width: 100%;
+  min-height: 2px;
+  height: calc(var(--h) * 100%);
+  border-radius: 2px 2px 0 0;
+  background: var(--masar-primary);
+}
+.desk-hour[data-peak="true"] .desk-hour-bar { background: var(--masar-danger); }
+.desk-hour[data-best="true"] .desk-hour-bar { background: var(--masar-success); }
+.desk-hour-tick {
+  position: absolute;
+  inset-inline: -6px;
+  top: 100%;
+  padding-top: 3px;
+  font-family: var(--masar-font-mono);
+  font-size: var(--masar-text-sm);
+  color: var(--masar-faint);
+  text-align: center;
+  line-height: 1;
+}
+.desk-hour-note { font-size: var(--masar-text-sm); color: var(--masar-muted); line-height: 1.6; }
+.desk-hour-note strong { font-family: var(--masar-font-mono); color: var(--masar-ink); }

@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مسار — عرض التحكيم · بلدياثون 2026</title>
+<link rel="stylesheet" href="masar-fonts.css">
+<style>
+/* ==========================================================================
+   مسار — عرض التحكيم
+   يتبع بنية «قالب الحلول بلدياتثون» التسعة أقساماً، بألوان القالب نفسها.
+   كل الأرقام بالخانات اللاتينية عمداً: المحكّم يقارنها بمصدرها فوراً.
+   ========================================================================== */
+
+:root{
+  /* هوية القالب الرسمي — مستخرجة من الملف نفسه */
+  --g:#92D050;            /* الأخضر الحاكم */
+  --g-lime:#D6FF7B;
+  --g-mid:#65A455;
+  --deep:#12463F;
+  --deep-2:#0D3A35;
+  --deep-3:#0A2B27;
+  --teal:#0E7C6B;
+
+  --ink:#0C1F1C;
+  --ink-2:#33443F;
+  --muted:#5F7069;
+  --line:#DCE4DF;
+  --paper:#F4F7F4;
+  --card:#FFFFFF;
+
+  --warn:#B8791C;
+  --danger:#B23B32;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-soft:cubic-bezier(.4,0,.2,1);
+  --t1:420ms; --t2:720ms; --t3:1100ms;
+
+  --pad:clamp(28px,4.4vw,76px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--deep-3);
+  color:var(--ink);
+  font-family:"IBM Plex Sans Arabic",system-ui,"Segoe UI",sans-serif;
+  font-size:clamp(15px,1.05vw,18px);
+  line-height:1.65;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* الأرقام لاتينية دائماً ومصطفّة عمودياً */
+.n,.num,.metric-v,.kpi-v,.score-v,td.n{
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1;
+  direction:ltr; unicode-bidi:isolate;
+}
+
+/* ---------- المسرح ---------- */
+#stage{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:grid;
+  padding:var(--pad);
+  background:var(--paper);
+  opacity:0;visibility:hidden;
+  transform:scale(.985);
+  transition:opacity var(--t2) var(--e),transform var(--t2) var(--e),visibility 0s linear var(--t2);
+  /* أفقياً لا يفيض أبداً، وعمودياً يُمرَّر بدل أن يُقصّ:
+     القصّ الصامت يأكل سطر المصدر أسفل الشريحة — وهو أول ما يُخصم عليه. */
+  overflow-x:hidden;
+  overflow-y:auto;
+  scrollbar-width:thin;
+}
+.slide.is-live{opacity:1;visibility:visible;transform:none;transition-delay:0s;z-index:2}
+.slide.is-past{transform:translateX(4%) scale(.985)}
+
+/* الشرائح الفاصلة — داكنة سينمائية */
+.slide.cover,.slide.divider,.slide.dark{
+  background:
+    radial-gradient(120% 90% at 80% 10%,rgba(146,208,80,.18),transparent 60%),
+    radial-gradient(90% 80% at 10% 90%,rgba(14,124,107,.28),transparent 62%),
+    linear-gradient(160deg,var(--deep) 0%,var(--deep-3) 100%);
+  color:#EAF3EC;
+}
+.slide.dark{--ink:#EAF3EC;--ink-2:#BBD0C6;--muted:#8FA79E;--line:rgba(255,255,255,.14);--card:rgba(255,255,255,.045)}
+
+/* حبيبات خفيفة تمنع مسطّح التدرّج */
+.slide.cover::after,.slide.divider::after,.slide.dark::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:3px 3px;mix-blend-mode:overlay;
+}
+
+/* ---------- الحركة: كشف متدرّج ---------- */
+.r{opacity:0;transform:translateY(22px);transition:opacity var(--t2) var(--e),transform var(--t2) var(--e)}
+.is-live .r{opacity:1;transform:none}
+.is-live .r:nth-child(1){transition-delay:.06s}
+.is-live .r:nth-child(2){transition-delay:.14s}
+.is-live .r:nth-child(3){transition-delay:.22s}
+.is-live .r:nth-child(4){transition-delay:.30s}
+.is-live .r:nth-child(5){transition-delay:.38s}
+.is-live .r:nth-child(6){transition-delay:.46s}
+.is-live .r:nth-child(7){transition-delay:.54s}
+.is-live .r:nth-child(8){transition-delay:.62s}
+.is-live .r:nth-child(9){transition-delay:.70s}
+
+/* كشف بقناع للعناوين الكبيرة */
+.wipe{display:block;overflow:hidden}
+.wipe>span{display:block;transform:translateY(105%);transition:transform var(--t3) var(--e)}
+.is-live .wipe>span{transform:none}
+.is-live .wipe:nth-of-type(2)>span{transition-delay:.10s}
+.is-live .wipe:nth-of-type(3)>span{transition-delay:.18s}
+
+/* ---------- الطباعة ---------- */
+h1,h2,h3,h4{margin:0;font-weight:600;line-height:1.14;letter-spacing:-.015em}
+.display{font-size:clamp(44px,6.6vw,104px);font-weight:600;letter-spacing:-.03em}
+.h1{font-size:clamp(30px,3.5vw,54px)}
+.h2{font-size:clamp(22px,2.3vw,34px)}
+.h3{font-size:clamp(17px,1.35vw,21px);font-weight:600}
+.lede{font-size:clamp(17px,1.35vw,22px);color:var(--ink-2);line-height:1.6;max-width:60ch}
+.small{font-size:clamp(12px,.86vw,14px);color:var(--muted);line-height:1.55}
+.eyebrow{
+  font-size:clamp(11px,.78vw,13px);font-weight:600;letter-spacing:.16em;
+  color:var(--g-mid);text-transform:uppercase;
+}
+.dark .eyebrow,.cover .eyebrow,.divider .eyebrow{color:var(--g)}
+mark{background:linear-gradient(transparent 62%,rgba(146,208,80,.55) 0);color:inherit;padding:0 .1em}
+.dark mark{background:linear-gradient(transparent 62%,rgba(146,208,80,.32) 0)}
+
+/* ---------- تخطيط الشريحة ---------- */
+.slide-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:clamp(14px,1.8vh,26px)}
+.slide-head .rule{flex:1;height:1px;background:var(--line);min-width:40px}
+.body-grid{display:grid;gap:clamp(14px,1.6vw,26px);align-content:start}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,2.6vw,48px);align-items:start}
+.slide-inner{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:0}
+
+/* ---------- البطاقات ---------- */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:clamp(14px,1.35vw,22px);
+  transition:transform var(--t1) var(--e),box-shadow var(--t1) var(--e),border-color var(--t1) var(--e);
+  position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -18px rgba(12,31,28,.4);border-color:var(--g-mid)}
+.dark .card:hover{box-shadow:0 14px 40px -16px rgba(0,0,0,.6)}
+.card.accent{border-inline-start:3px solid var(--g)}
+.card.warnline{border-inline-start:3px solid var(--warn)}
+.card.dangerline{border-inline-start:3px solid var(--danger)}
+.card-t{font-weight:600;font-size:clamp(14px,1.02vw,17px);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card-b{font-size:clamp(12.5px,.92vw,15px);color:var(--ink-2);line-height:1.6}
+
+/* ---------- المؤشرات المتحركة ---------- */
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi-v{font-size:clamp(30px,3.5vw,58px);font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--deep)}
+.dark .kpi-v,.cover .kpi-v,.divider .kpi-v{color:var(--g-lime)}
+.kpi-u{font-size:.42em;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi-l{font-size:clamp(12px,.88vw,14.5px);color:var(--ink-2);font-weight:500}
+.kpi-s{font-size:clamp(10.5px,.74vw,12px);color:var(--muted)}
+
+/* شارة درجة الدليل */
+.ev{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:clamp(9.5px,.68vw,11.5px);font-weight:600;letter-spacing:.02em;
+  padding:2px 8px;border-radius:99px;white-space:nowrap;
+}
+.ev::before{content:"";width:5px;height:5px;border-radius:99px;background:currentColor}
+.ev.proven{background:rgba(44,115,81,.12);color:#2C7351}
+.ev.external{background:rgba(44,110,157,.12);color:#2C6E9D}
+.ev.expected{background:rgba(184,121,28,.14);color:#8C5C1C}
+.ev.scenario{background:rgba(95,112,105,.14);color:#4E5D57}
+.dark .ev.proven{background:rgba(127,214,166,.16);color:#7FD6A6}
+.dark .ev.external{background:rgba(122,183,229,.16);color:#9CC9EC}
+.dark .ev.expected{background:rgba(240,190,110,.16);color:#F0BE6E}
+.dark .ev.scenario{background:rgba(255,255,255,.1);color:#BBD0C6}
+
+/* ---------- أشرطة النِسَب ---------- */
+.bar{height:8px;border-radius:99px;background:rgba(12,31,28,.09);overflow:hidden}
+.dark .bar{background:rgba(255,255,255,.12)}
+.bar>i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--g-mid),var(--g));transition:width var(--t3) var(--e)}
+.is-live .bar>i{width:var(--w)}
+.bar.hot>i{background:linear-gradient(90deg,#C4562E,#E08A3C)}
+
+/* ---------- الجداول ---------- */
+table{width:100%;border-collapse:collapse;font-size:clamp(12px,.9vw,15px)}
+th,td{text-align:start;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:clamp(11px,.78vw,13px);letter-spacing:.04em}
+td.n,th.n{text-align:end}
+tbody tr{transition:background var(--t1) var(--e-soft)}
+tbody tr:hover{background:rgba(146,208,80,.09)}
+tr.total td{font-weight:600;border-top:2px solid var(--deep);border-bottom:none}
+
+/* ---------- الخطوات ---------- */
+.steps{display:grid;gap:10px;counter-reset:s}
+.step{
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+  padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);
+  transition:transform var(--t1) var(--e),border-color var(--t1) var(--e);
+}
+.step:hover{transform:translateX(-4px);border-color:var(--g)}
+.step-n{
+  counter-increment:s;width:30px;height:30px;border-radius:9px;flex:none;
+  display:grid;place-items:center;background:var(--deep);color:var(--g-lime);
+  font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;
+}
+.step-n::before{content:counter(s)}
+.dark .step-n{background:var(--g);color:var(--deep-3)}
+
+/* ---------- قبل / بعد ---------- */
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(12px,1.4vw,24px);align-items:stretch}
+.ba-arrow{display:grid;place-items:center;color:var(--g-mid);font-size:26px;font-weight:300}
+.ba .before{border-inline-start:3px solid var(--danger)}
+.ba .after{border-inline-start:3px solid var(--g)}
+.ba ul{margin:0;padding-inline-start:18px;font-size:clamp(12.5px,.92vw,15px);color:var(--ink-2)}
+.ba li{margin:5px 0}
+
+/* ---------- نموذج العمل ---------- */
+.bmc{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto;gap:8px;font-size:clamp(10.5px,.76vw,13px)}
+.bmc .b{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 11px;transition:border-color var(--t1) var(--e),transform var(--t1) var(--e)}
+.bmc .b:hover{border-color:var(--g);transform:translateY(-2px)}
+.bmc .b h4{font-size:clamp(11px,.8vw,13.5px);color:var(--deep);margin-bottom:5px}
+.dark .bmc .b h4{color:var(--g-lime)}
+.bmc .b p{margin:0;color:var(--ink-2);line-height:1.5}
+.bmc .tall{grid-row:span 1}
+.bmc .wide2{grid-column:span 2}
+.bmc .wide3{grid-column:span 3}
+
+/* ---------- لوحة الدرجات ---------- */
+.scorewrap{display:grid;gap:9px}
+.scorerow{display:grid;grid-template-columns:minmax(130px,1.5fr) 1fr auto;gap:14px;align-items:center}
+.scorerow .lbl{font-size:clamp(12px,.9vw,15px);font-weight:500}
+.score-v{font-weight:600;font-size:clamp(14px,1.05vw,18px);color:var(--deep);min-width:52px;text-align:end}
+.dark .score-v{color:var(--g-lime)}
+
+/* ---------- الشريط السفلي ---------- */
+#rail{position:fixed;inset-inline:0;bottom:0;height:3px;background:rgba(255,255,255,.14);z-index:20}
+#rail>i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--g-lime));width:0;transition:width var(--t2) var(--e)}
+#hud{
+  position:fixed;inset-inline-start:var(--pad);bottom:16px;z-index:21;
+  display:flex;align-items:center;gap:12px;
+  font-size:12px;color:var(--muted);
+}
+#hud .dot{width:5px;height:5px;border-radius:99px;background:var(--g)}
+#hud .idx{font-variant-numeric:tabular-nums;direction:ltr}
+.slide.cover ~ #hud{color:#8FA79E}
+#brandbar{
+  position:fixed;inset-inline-end:var(--pad);bottom:14px;z-index:21;
+  display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted);letter-spacing:.04em;
+}
+#brandbar b{color:var(--g-mid);font-weight:600}
+
+/* أزرار التنقّل */
+.navbtn{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:22;
+  width:38px;height:38px;border-radius:99px;border:1px solid rgba(146,208,80,.35);
+  background:rgba(12,31,28,.35);color:#EAF3EC;cursor:pointer;
+  display:grid;place-items:center;font-size:16px;backdrop-filter:blur(6px);
+  transition:background var(--t1) var(--e),transform var(--t1) var(--e),opacity var(--t1) var(--e);
+  opacity:.35;
+}
+.navbtn:hover{opacity:1;background:var(--g);color:var(--deep-3);transform:translateY(-50%) scale(1.08)}
+#prev{inset-inline-end:14px}
+#next{inset-inline-start:14px}
+
+/* ---------- عناصر خاصة ---------- */
+.pain-line{
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+  padding:13px 0;border-bottom:1px solid var(--line);
+}
+.pain-line:last-child{border-bottom:none}
+.pain-t{font-size:clamp(24px,2.5vw,40px);font-weight:600;color:var(--danger);line-height:1;min-width:2.6ch;text-align:center}
+.dark .pain-t{color:#F0907F}
+
+.formula{
+  font-family:"IBM Plex Sans Arabic",monospace;direction:ltr;text-align:center;
+  background:var(--card);border:1px dashed var(--g-mid);border-radius:12px;
+  padding:clamp(12px,1.4vw,20px);font-size:clamp(13px,1.05vw,18px);color:var(--deep);
+  letter-spacing:.01em;
+}
+.dark .formula{color:var(--g-lime)}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  font-size:clamp(11px,.8vw,13px);padding:5px 11px;border-radius:99px;
+  background:rgba(146,208,80,.14);color:var(--deep);border:1px solid rgba(146,208,80,.3);font-weight:500;
+  transition:background var(--t1) var(--e),transform var(--t1) var(--e);
+}
+.chip:hover{background:var(--g);color:var(--deep-3);transform:translateY(-2px)}
+.dark .chip{color:var(--g-lime)}
+
+.srcline{font-size:clamp(10px,.72vw,12px);color:var(--muted);direction:ltr;text-align:start;word-break:break-all}
+.srcnote{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:clamp(10.5px,.74vw,12.5px);color:var(--muted)}
+
+.bigfig{font-size:clamp(56px,9vw,150px);font-weight:600;letter-spacing:-.04em;line-height:.92;color:var(--g-lime)}
+.sectnum{font-size:clamp(80px,14vw,240px);font-weight:600;line-height:.8;letter-spacing:-.05em;color:rgba(146,208,80,.14);position:absolute;inset-block-start:8%;inset-inline-end:6%;pointer-events:none}
+
+.gauge{position:relative;width:100%;aspect-ratio:2/1;overflow:hidden}
+.gauge svg{width:100%;display:block}
+.gauge-arc{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset var(--t3) var(--e)}
+.is-live .gauge-arc{stroke-dashoffset:var(--off)}
+
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-items:stretch}
+.flow-node{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;
+  position:relative;transition:border-color var(--t1) var(--e),transform var(--t1) var(--e);
+}
+.flow-node:hover{border-color:var(--g);transform:translateY(-3px)}
+.flow-node::after{
+  content:"";position:absolute;inset-inline-start:-8px;top:50%;width:8px;height:1px;background:var(--g-mid);
+}
+.flow-node:last-child::after{display:none}
+.flow-k{font-size:clamp(10px,.72vw,12px);color:var(--g-mid);font-weight:600;letter-spacing:.1em}
+
+/* شاشات العرض الشائعة أقصر من 1080: 1366×768 و1440×900 و1600×900.
+   بلا هذا القياس تفيض ثلاث عشرة شريحة بنحو 22 بكسل — يقع القصّ على سطر المصدر أسفلها. */
+@media (max-height:980px){
+  :root{--pad:clamp(20px,3.2vw,48px)}
+  .body-grid{gap:clamp(10px,1.15vw,18px)}
+  .card{padding:clamp(10px,1.05vw,16px);border-radius:12px}
+  .h1{font-size:clamp(24px,2.7vw,40px)}
+  .h2{font-size:clamp(19px,1.9vw,27px)}
+  .lede{font-size:clamp(15px,1.15vw,19px)}
+  .kpi-v{font-size:clamp(25px,2.8vw,44px)}
+  .slide-head{margin-bottom:clamp(9px,1.2vh,16px)}
+  .steps{gap:7px}
+  .step{padding:9px 12px}
+  th,td{padding:6px 10px}
+  .pain-line{padding:9px 0}
+  .srcnote{padding-top:9px}
+}
+@media (max-height:800px){
+  .display{font-size:clamp(34px,5vw,72px)}
+  .sectnum{font-size:clamp(64px,11vw,170px)}
+  .card-b{font-size:clamp(11.5px,.86vw,13.5px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:1ms!important;animation-duration:1ms!important}
+  .wipe>span{transform:none}
+  .r{opacity:1;transform:none}
+}
+@media print{
+  body{overflow:visible;background:#fff}
+  .slide{position:relative;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}
+  .navbtn,#rail,#hud,#brandbar{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+<!-- ═══════════ 0 · الغلاف ═══════════ -->
+<section class="slide cover" data-t="الغلاف">
+  <div class="slide-inner">
+    <div class="r eyebrow">بلدياثون 2026 · التحدي الثالث</div>
+    <h1 class="display" style="margin:.18em 0 .1em">
+      <span class="wipe"><span>مسار</span></span>
+    </h1>
+    <p class="r lede" style="color:#BBD0C6;font-size:clamp(19px,1.7vw,28px);max-width:34ch">
+      حزمة قرار كمّية <mark>قبل</mark> إصدار تصريح الحفر — تقيس أثر الإغلاق على الحركة،
+      وترتّب البدائل، وتقول لماذا.
+    </p>
+    <div class="r body-grid cols-4" style="margin-top:clamp(24px,4vh,54px);max-width:900px">
+      <div class="kpi"><span class="kpi-l">اسم الفريق</span><b style="font-size:1.15em">Swarm</b></div>
+      <div class="kpi"><span class="kpi-l">اسم الحل</span><b style="font-size:1.15em">مسار</b></div>
+      <div class="kpi"><span class="kpi-l">رقم الفريق</span><b style="font-size:1.15em;color:var(--warn)">يُعبَّأ قبل الرفع</b></div>
+      <div class="kpi"><span class="kpi-l">التحدي</span><b style="font-size:1.15em">الثالث</b></div>
+    </div>
+    <p class="r small" style="margin-top:clamp(20px,3.5vh,42px);color:#8FA79E">
+      تحليل وقياس تأثير مشاريع البنية التحتية وأعمال الحفر والصيانة على الحركة المرورية
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 1 ═══════════ -->
+<section class="slide divider" data-t="القسم الأول">
+  <div class="sectnum n">01</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الأول</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>التحدي</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:44ch">
+      ليست المشكلة أن الحفر يحدث. المشكلة أن أحداً لا يعرف كم يكلّف — قبل أن يوقّع.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 1.1 الألم ═══════════ -->
+<section class="slide" data-t="الألم">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">التحدي · الألم</span><span class="rule"></span>
+      <span class="small n">01 / 04</span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.35em">قرارٌ يُتّخذ اليوم بلا رقم واحد.</h2>
+    <div class="split">
+      <div class="r">
+        <div class="pain-line">
+          <div class="pain-t n">01</div>
+          <div><b class="h3">الطلب يصل كورقة، لا كأثر.</b>
+          <div class="card-b">المراجع يرى: شارع، تاريخ، مقاول، عدد حارات. لا يرى: كم ساعة انتظار سيدفعها الناس مقابل هذا التوقيع.</div></div>
+        </div>
+        <div class="pain-line">
+          <div class="pain-t n">02</div>
+          <div><b class="h3">لا بديل مقارَناً.</b>
+          <div class="card-b">لا شيء يقول «ابدأ 10 مساءً بدل 8 صباحاً فينخفض الأثر». الموافقة تكون على الجدول كما قُدِّم، لا على أفضل جدول متاح.</div></div>
+        </div>
+        <div class="pain-line">
+          <div class="pain-t n">03</div>
+          <div><b class="h3">الشارع يُحفر مرّتين.</b>
+          <div class="card-b">تصريحان لجهتين مختلفتين على الشارع نفسه بفارق أسابيع. لا أحد ربطهما، فيُغلق الشارع مرّتين وتُدفع الكلفة مرّتين.</div></div>
+        </div>
+        <div class="pain-line">
+          <div class="pain-t n">04</div>
+          <div><b class="h3">الساكن يعرف صباح الإغلاق.</b>
+          <div class="card-b">لا نافذة زمنية معلنة، ولا سبب معلن لاختيار هذا الموعد. المفاجأة نفسها جزء من الكلفة.</div></div>
+        </div>
+      </div>
+      <div class="r">
+        <div class="card dangerline" style="margin-bottom:12px">
+          <div class="eyebrow" style="color:var(--danger);margin-bottom:6px">حالة واحدة، شارع حقيقي</div>
+          <div class="card-t">طريق الملك فهد — حارة واحدة من أربع، من <span class="n">15:00</span> إلى <span class="n">23:00</span></div>
+          <div class="card-b">
+            طلبٌ يبدو بسيطاً: حارة واحدة فقط. والحساب يقول <b class="n">46.8%</b> زيادة في زمن الرحلة.
+            وله <b>مسار بديل واحد</b>: شارع <b>السويس</b>. حِمله قبل التحويل <b class="n">0.59</b> من سعته،
+            وبعد أن تنزل عليه <b class="n">1,760</b> مركبة في الساعة يصير <b class="n">3.05</b> — <b>ثلاثة أضعاف طاقته</b>.
+            وهو شارع سكني. ولا بديلَ آخر يُنقذه.
+          </div>
+          <div style="margin-top:9px"><span class="ev expected">متوقَّع من تجربة · محرك حقيقي، مدخلات موسومة تمثيلية</span></div>
+        </div>
+        <div class="card" style="margin-bottom:12px;background:rgba(178,59,50,.06);border-color:rgba(178,59,50,.25)">
+          <div class="card-b" style="font-size:1.06em;line-height:1.55">
+            «الطريق العام مغلق، فصار الزحام <b>عند بيتي</b>.»
+          </div>
+          <div class="small" style="margin-top:6px">— ساكن. وهذا بالضبط ما يحسبه مسار قبل التوقيع بدل أن يُكتشف بعده.</div>
+        </div>
+        <div class="card warnline">
+          <div class="card-t">وحقيقة تُقال ولا تُخفى</div>
+          <div class="card-b">
+            <b>لا يوجد عدّاد مرور منشور للرياض</b> يمكن المعايرة عليه علناً.
+            فالملف الساعي في النموذج <b>افتراض معلَن</b> لا قياس ميداني — ونحن نعلنه بدل أن نمرّره.
+          </div>
+          <div style="margin-top:9px"><span class="ev expected">متوقَّع من تجربة</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="srcnote r">المصدر المباشر للحالة القائمة: منصة بلدي — الخريطة التفاعلية للحفريات · <span class="srcline">balady.gov.sa/ar/node/17896</span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 1.2 الأدلة ═══════════ -->
+<section class="slide" data-t="الأدلة الداعمة">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">التحدي · الأدلة الداعمة</span><span class="rule"></span>
+      <span class="small n">02 / 04</span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">أرقام بمصادرها — وبحدودها.</h2>
+    <div class="body-grid cols-3 r">
+      <div class="card accent">
+        <div class="kpi">
+          <div class="kpi-v n"><span data-count="2.2" data-dec="1">0.0</span><span class="kpi-u"> مليون</span></div>
+          <div class="kpi-l">عمل طرق وشوارع نُفّذت في إنجلترا بين أبريل 2023 ومارس 2024</div>
+        </div>
+        <div style="margin-top:10px"><span class="ev external">مُتحقَّق خارجياً</span></div>
+        <div class="card-b" style="margin-top:8px">يثبت <b>حجم التنسيق الرقمي الممكن</b>. لا يثبت رقماً سعودياً ولا أثراً لمسار.</div>
+        <div class="srcline" style="margin-top:8px">gov.uk — Street Works / Lane Rental Guidance</div>
+      </div>
+      <div class="card accent">
+        <div class="kpi">
+          <div class="kpi-v n"><span data-count="25">0</span>–<span data-count="33">0</span><span class="kpi-u">%</span></div>
+          <div class="kpi-l">نطاق الوفر من تنسيق القنوات والألياف (Dig-Once)</div>
+        </div>
+        <div style="margin-top:10px"><span class="ev external">مُتحقَّق خارجياً</span></div>
+        <div class="card-b" style="margin-top:8px">نطاق <b>سياقي محدود</b> في تقرير رقابي أمريكي. ليس وعداً لأعمال الحفر البلدية.</div>
+        <div class="srcline" style="margin-top:8px">GAO-12-687R</div>
+      </div>
+      <div class="card warnline">
+        <div class="card-t">الفجوة الموثّقة</div>
+        <div class="card-b">
+          تعرض منصة بلدي مسارات الحفريات المصرّح بها وتدعم الترشيح وعرض التفاصيل الفنية.
+          <b>لا تُثبت الصفحات العامة</b> وجود تقدير أثر منسوب للحفرية قبل الترخيص، ولا ترتيباً كمّياً للبدائل.
+        </div>
+        <div style="margin-top:10px"><span class="ev external">مُتحقَّق خارجياً</span></div>
+        <div class="srcline" style="margin-top:8px">balady.gov.sa/ar/node/17896</div>
+      </div>
+    </div>
+    <div class="r card" style="margin-top:14px">
+      <div class="card-t">قاعدة نلتزم بها في كل شريحة تالية</div>
+      <div class="card-b">كل رقم يحمل واحداً من أربعة وسوم:
+        <span class="ev proven">مُثبَت عملياً</span>
+        <span class="ev external">مُتحقَّق خارجياً</span>
+        <span class="ev expected">متوقَّع من تجربة</span>
+        <span class="ev scenario">سيناريو توسّع مشروط</span>
+        — ورقمٌ بلا وسم لا يدخل هذا العرض.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1.3 أصحاب العلاقة ═══════════ -->
+<section class="slide" data-t="أصحاب العلاقة">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">التحدي · أصحاب العلاقة</span><span class="rule"></span>
+      <span class="small n">03 / 04</span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">أربع فئات، وحاجة واحدة لكلٍّ منها.</h2>
+    <div class="body-grid cols-4 r">
+      <div class="card accent">
+        <div class="card-t">المراجع البلدي</div>
+        <div class="card-b">يقرّر اليوم بلا رقم. يحتاج: <b>تقديراً قابلاً للتبرير</b> وبديلاً مرتّباً بسببه.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">الجهة المنفّذة</div>
+        <div class="card-b">تُفاجأ بالرفض أو التأخير. تحتاج: <b>قواعد واضحة</b> ونافذة زمنية تُخطّط عليها.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">الساكن ومستخدم الطريق</div>
+        <div class="card-b">يدفع الوقت ولا يعرف لماذا. يحتاج: <b>متى ينتهي</b>، ولماذا هذا الموعد بالذات.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">مالك الشبكة (مياه، كهرباء، ألياف)</div>
+        <div class="card-b">يحفر منفرداً. يحتاج: <b>من يحفر بجانبي قريباً</b> كي يشارك الخندق.</div>
+      </div>
+    </div>
+
+    <h3 class="r h2" style="margin:clamp(18px,2.6vh,32px) 0 .4em">الأسباب الجذرية</h3>
+    <div class="body-grid cols-3 r">
+      <div class="card"><div class="card-t">غياب وحدة قياس</div><div class="card-b">لا وحدة مشتركة تُقارَن بها طلبات مختلفة. الرأي يقابل الرأي.</div></div>
+      <div class="card"><div class="card-t">القرار مفرد لا محفظي</div><div class="card-b">كل تصريح يُدرس وحده، فتضيع التعارضات وفرص الخندق المشترك بين التصاريح.</div></div>
+      <div class="card"><div class="card-t">لا حلقة تغذية راجعة</div><div class="card-b">لا أحد يقارن ما تُوقّع بما حدث فعلاً، فلا يتحسّن التقدير مع الزمن.</div></div>
+    </div>
+
+    <div class="r card accent" style="margin-top:14px;background:rgba(146,208,80,.08)">
+      <div class="eyebrow" style="margin-bottom:6px">صياغة الفرصة</div>
+      <div class="h2" style="line-height:1.35">
+        كيف يمكننا أن نضع بين يدي المراجع — <mark>قبل التوقيع</mark> — رقماً واحداً قابلاً للتبرير،
+        وبديلاً أفضل مع سبب فوزه، دون أن نطلب بيانات لا تملكها البلدية اليوم؟
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 2 ═══════════ -->
+<section class="slide divider" data-t="القسم الثاني">
+  <div class="sectnum n">02</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الثاني</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>الحل المقترح</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      طلب حفر واحد يدخل. أربعة مخرجات تخرج. في أقل من ثانية، وعلى جهاز المحكّم.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 2.1 الحل ═══════════ -->
+<section class="slide" data-t="الحل في مسار واحد">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الحل · المسار الواحد</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">من طلبٍ إلى قرارٍ مبرَّر — في مسارٍ واحد قابل للمراجعة.</h2>
+    <div class="flow r" style="margin-bottom:clamp(16px,2.4vh,28px)">
+      <div class="flow-node"><div class="flow-k n">INPUT</div><b class="h3">طلب الحفر</b><div class="card-b">شارع · تاريخ · حارات مغلقة · مدة</div></div>
+      <div class="flow-node"><div class="flow-k n">ENGINE</div><b class="h3">محرك مسار</b><div class="card-b">دالة BPR على السعة المتبقّية</div></div>
+      <div class="flow-node"><div class="flow-k n">RANK</div><b class="h3">ترتيب البدائل</b><div class="card-b">أفضل ثلاثة جداول + سبب الفوز</div></div>
+      <div class="flow-node"><div class="flow-k n">OUTPUT</div><b class="h3">حزمة القرار</b><div class="card-b">أثر · بديل · خطة مرور · سجل</div></div>
+    </div>
+    <div class="body-grid cols-4 r">
+      <div class="card accent">
+        <div class="card-t"><span>1 ·</span> قياس الأثر</div>
+        <div class="card-b">تأخير بـ<b>الساعات-مركبة</b> لكل ساعة إغلاق، من حجم المرور وعدد الحارات المغلقة والمدة.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t"><span>2 ·</span> رؤى وتوصيات</div>
+        <div class="card-b">ترتيب بدائل الجدولة مع <b>سبب فوز</b> كل بديل، وخطة إدارة مرور عربية جاهزة للطباعة.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t"><span>3 ·</span> مسارات بديلة</div>
+        <div class="card-b">أقصر مسار حول الإغلاق، <b>محمَّلاً بالحركة المحوَّلة</b>، مع حِمله قبل وبعد، وأين يقع الطابور.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t"><span>4 ·</span> التنبؤ بالازدحام</div>
+        <div class="card-b">خمسة مستويات مسمّاة عند ساعة الذروة من نسبة الحجم إلى السعة.</div>
+      </div>
+    </div>
+    <div class="r" style="margin-top:14px">
+      <div class="chips">
+        <span class="chip">سالك</span><span class="chip">حركة خفيفة</span><span class="chip">ازدحام متوسط</span>
+        <span class="chip">ازدحام شديد</span><span class="chip">تشبّع</span>
+      </div>
+    </div>
+    <div class="srcnote r">وفوق الطلب المفرد: <b>التنسيق بين الحفريات المتعددة</b> — كشف تعارض التصاريح المتزامنة، ومجموعات الخندق المشترك، ومعامل تفاعل <b>مشتقّ</b> من ساعات التراكب لا ثابت مكتوب.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 2.2 القيمة ═══════════ -->
+<section class="slide" data-t="القيمة المضافة">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الحل · القيمة المضافة</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">ماذا يكسب كلٌّ منهم تحديداً؟</h2>
+    <div class="body-grid cols-2 r">
+      <div class="card accent">
+        <div class="card-t">للبلدية</div>
+        <div class="card-b">قرار موثّق بسببه بدل قرار بالتقدير الشخصي — و<b>سجل قرار</b> يُحتجّ به لاحقاً.
+        وكشفٌ مبكّر لفرص الخندق المشترك يقلّل تكرار الحفر على الشارع نفسه.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">للجهة المنفّذة</div>
+        <div class="card-b">قاعدة واضحة تُخطَّط عليها بدل الرفض المتأخر، وبديل زمني <b>مقترح بسببه</b> بدل رفض بلا مخرج.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">للساكن</div>
+        <div class="card-b">خريطة عامة تُظهر موقع العمل ونافذته الزمنية «من» و«إلى» والجهة المنفّذة — و<b>لماذا هذا الموعد</b>.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">لمالك الشبكة</div>
+        <div class="card-b">مجموعات تنسيق ضمن نافذة زمنية معلنة، فيصير مشاركة الخندق قراراً معروضاً لا صدفة.</div>
+      </div>
+    </div>
+
+    <h3 class="r h2" style="margin:clamp(16px,2.4vh,28px) 0 .4em">ما الذي يميّزه عن البدائل القائمة</h3>
+    <div class="body-grid cols-3 r">
+      <div class="card"><div class="card-t">ليس منصة تصاريح بديلة</div><div class="card-b">لا يحلّ محلّ بلدي ولا يكتب في نظام التصاريح. يضيف <b>طبقة قرار</b> قبل التوقيع.</div></div>
+      <div class="card"><div class="card-t">ليس لوحة مؤشرات</div><div class="card-b">اللوحة تعرض ما حدث. مسار <b>يرتّب بدائل لم تحدث بعد</b> ويقول لماذا فاز أحدها.</div></div>
+      <div class="card"><div class="card-t">ليس صندوقاً أسود</div><div class="card-b">كل مدخل مصدره معروض، والحقيقة مفصولة عن الافتراض، والامتناع معلَن حين ينقلب الترتيب.</div></div>
+    </div>
+    <div class="r card accent" style="margin-top:14px">
+      <div class="card-t">وليس نمطاً بلا سابقة — وهذا يقوّيه لا يضعفه</div>
+      <div class="card-b">
+        تنسيق أعمال الطرق رقمياً <b>مُطبَّق ومقيس</b> في جهات حكومية أخرى:
+        <b>UK Street Manager</b> — سجل وطني موحّد لأعمال الطرق مع نظام إيجار الحارات (Lane Rental) الذي يسعّر الإغلاق بساعته؛
+        و<b>NYC OCMC</b> — مكتب تنسيق أعمال الشارع الذي يجمع تصاريح الحفر لجهات متعددة قبل إصدارها.
+        مسار يأخذ المبدأ المُثبَت هناك ويضيف ما تفتقده الحالتان: <b>تقدير كمّي للأثر المروري قبل التصريح، بدرجة دليل لكل رقم</b>.
+      </div>
+      <div style="margin-top:9px"><span class="ev external">مُتحقَّق خارجياً</span></div>
+    </div>
+    <div class="srcnote r">التوافق مع التوجهات الوطنية: تقليل ساعات التأخير يدعم <b>مؤشر جودة الحياة</b>، ودمج الحفريات (Dig-Once) يدعم <b>كفاءة الإنفاق الحكومي</b> — رؤية 2030.</div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 3 ═══════════ -->
+<section class="slide divider" data-t="القسم الثالث">
+  <div class="sectnum n">03</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الثالث</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>التقنيات الناشئة</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      كل تقنية هنا تعالج مشكلة مسمّاة. ولا تقنية دخلت لأن اسمها يلمع.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 3.1 التقنيات ═══════════ -->
+<section class="slide" data-t="التقنيات ودورها">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">التقنيات · الدور</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">أربع تقنيات — والمشكلة التي تعالجها كلٌّ منها.</h2>
+    <div class="body-grid cols-2 r">
+      <div class="card accent">
+        <div class="card-t">نمذجة مرورية حاسوبية <span class="ev proven">مُثبَت عملياً</span></div>
+        <div class="card-b"><b>المشكلة:</b> لا وحدة قياس مشتركة. <b>الدور:</b> دالة BPR القياسية تحوّل الإغلاق إلى تأخير بالساعات-مركبة — رقم واحد قابل للمقارنة والتبرير.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">بحث وتحسين على الجداول <span class="ev proven">مُثبَت عملياً</span></div>
+        <div class="card-b"><b>المشكلة:</b> لا بديل مقارَناً. <b>الدور:</b> بحث محدود وشفاف بين بدائل معرّفة مسبقاً، يخرج بأفضل ثلاثة جداول ومعها سبب فوز كل واحد.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">تحليل مكاني وشبكي (Geospatial) <span class="ev proven">مُثبَت عملياً</span></div>
+        <div class="card-b"><b>المشكلة:</b> البديل قد يدفع الحمل إلى حيّ سكني. <b>الدور:</b> أقصر مسار حول الإغلاق فوق هندسة طرق حقيقية، ثم <b>تحميل الحركة المحوَّلة</b> عليه وقياس حِمله قبل وبعد.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">بيانات مفتوحة ومعايير مفتوحة <span class="ev proven">مُثبَت عملياً</span></div>
+        <div class="card-b"><b>المشكلة:</b> عزلة الأنظمة. <b>الدور:</b> تصدير أعمال الطرق بصيغة <b>WZDx 4.2</b> المعيارية — فُحص آلياً أمام المخطط الرسمي فنجح <b class="n">144</b> من <b class="n">150</b>، والستّ الباقية <b>تُسمّى وتُعلَن</b> مع سببها.</div>
+      </div>
+    </div>
+    <div class="r body-grid cols-3" style="margin-top:14px">
+      <div class="card"><div class="kpi"><div class="kpi-v n"><span data-count="144">0</span> / <span data-count="150">0</span></div><div class="kpi-l">تصريحاً يجتاز المخطط الرسمي WZDx 4.2</div><div class="kpi-s">مثبَّت على الالتزام <span class="n">42b98fc</span> · مدقّق بـ ajv 8.20.0</div></div></div>
+      <div class="card"><div class="kpi"><div class="kpi-v n"><span data-count="576">0</span></div><div class="kpi-l">منطقة عمل حقيقية من تغذية ولاية واشنطن قَبِلها المخطط نفسه بصفر أخطاء</div><div class="kpi-s">دليل أن العقد الذي نصدّر عليه يستعمله جهاز حكومي فعلي</div></div>
+        <div style="margin-top:8px"><span class="ev external">مُتحقَّق خارجياً</span></div>
+        <div class="srcline" style="margin-top:6px">Washington State DOT · WZDx 4.2 · التقرير في docs/engineering/WZDX-INTEROP.md</div></div>
+      <div class="card warnline"><div class="card-t">وحدّه المعلَن</div><div class="card-b">قبول تغذية أجنبية يقول شيئاً عن <b>صيغة التبادل</b>، ولا يقول شيئاً عن دقّة أرقام الرياض. ولا نرفع أي علم تحقّق (<span class="srcline">is_start_date_verified</span>) إلى صحيح — لأنه ادعاء بلا سند ميداني.</div></div>
+    </div>
+    <div class="r card warnline" style="margin-top:14px">
+      <div class="card-t">وما لا ندّعيه</div>
+      <div class="card-b">
+        لا نستخدم بيانات شخصية، ولا طائرات مسيّرة، ولا تتبّعاً للأفراد.
+        ولا يُصدر النموذج قراراً نهائياً: <b>القرار يظل بشرياً</b>، ولا يكتب النموذج في نظام التصاريح.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3.2 البنية والبيانات ═══════════ -->
+<section class="slide" data-t="البنية والبيانات">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">التقنيات · البنية والبيانات والأمن</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">محرك واحد، وبيانات تملكها البلدية أصلاً.</h2>
+    <div class="split">
+      <div class="r">
+        <div class="steps">
+          <div class="step"><div class="step-n"></div><div><b class="h3">محرك حساب مستقل</b><div class="card-b">مصدر الحساب الوحيد. الواجهة والاختبارات تستدعيان الملف نفسه — فلا نسختان لرقم واحد.</div></div></div>
+          <div class="step"><div class="step-n"></div><div><b class="h3">واجهة تعمل محلياً</b><div class="card-b">مكتب المراجع يعمل من ملف مباشر بلا إنترنت. الخريطة وحدها تحتاج الخادم المحلي، وعند تعذّرها تُعرض قائمة نصّية بديلة بدل التوقف.</div></div></div>
+          <div class="step"><div class="step-n"></div><div><b class="h3">تصدير معياري</b><div class="card-b">مخرجات بصيغة WZDX تُمكّن الربط لاحقاً دون إعادة بناء.</div></div></div>
+          <div class="step"><div class="step-n"></div><div><b class="h3">سجل قرار وتدقيق</b><div class="card-b">كل قرار يُسجَّل بمدخلاته وافتراضاته، فيمكن مراجعته بعد شهور.</div></div></div>
+        </div>
+      </div>
+      <div class="r">
+        <div class="card accent" style="margin-bottom:12px">
+          <div class="card-t">البيانات المطلوبة — ومصدرها</div>
+          <div class="card-b">
+            <b>تصنيف الطرق وهندستها</b> · <b>سجل التصاريح</b> · <b>القيود الرسمية</b> — وكلها بيانات الجهة نفسها.
+            ولا يعتمد النموذج على <b>مزوّد بيانات خارجي مدفوع</b>.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-t">الخصوصية والأمن والأخلاقيات</div>
+          <div class="card-b">
+            لا بيانات شخصية ولا تتبّع أفراد — المدخلات كلها عن <b>الطريق والتصريح</b>.
+            والنموذج يعرض حدوده بدل إخفائها، ولا يُعلن نجاحاً من حالة تركيبية.
+          </div>
+        </div>
+        <div class="card warnline" style="margin-top:12px">
+          <div class="card-t">حدود صادقة اليوم</div>
+          <div class="card-b">التكامل مع أنظمة البلدية <b>مسار نشر مقترح</b> لا تكامل منفَّذ. وبيانات المترو والحافلات الرسمية تصلح طبقات مكانية أولية، ولا توفّر وحدها الطلب الحي أو الإشغال.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 4 ═══════════ -->
+<section class="slide divider" data-t="القسم الرابع">
+  <div class="sectnum n">04</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الرابع</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>النموذج الأولي</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      ليس شاشات مرسومة. محرك يعمل، وأرقام تتغيّر حين تتغيّر المدخلات.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 4.1 قبل / بعد ═══════════ -->
+<section class="slide" data-t="الرحلة قبل وبعد">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">النموذج · رحلة المستفيد</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">رحلة المراجع — قبل مسار وبعده.</h2>
+    <div class="ba r">
+      <div class="card before">
+        <div class="card-t" style="color:var(--danger)">قبل</div>
+        <ul>
+          <li>يفتح الطلب ويقرأ حقولاً وصفية</li>
+          <li>يقدّر الأثر بخبرته الشخصية — بلا وحدة قياس</li>
+          <li>لا يرى تصاريح أخرى قريبة على الشارع نفسه</li>
+          <li>يوافق على الجدول <b>كما قُدّم</b> أو يرفض بلا مخرج</li>
+          <li>لا يبقى أثر مكتوب لسبب القرار</li>
+        </ul>
+      </div>
+      <div class="ba-arrow">←</div>
+      <div class="card after">
+        <div class="card-t" style="color:var(--g-mid)">بعد</div>
+        <ul>
+          <li>يفتح الطلب فيُحسب الأثر بالساعات-مركبة فوراً</li>
+          <li>يرى أفضل ثلاثة جداول بديلة <b>مع سبب فوز كلٍّ منها</b></li>
+          <li>يرى التعارض الزمني على الشارع نفسه ومجموعة الخندق المشترك</li>
+          <li>يرى هل يتحمّل الطريق البديل الحركة المحوَّلة — وأين يقع الطابور</li>
+          <li>يطبع خطة إدارة مرور، ويُحفظ القرار بمدخلاته في السجل</li>
+        </ul>
+      </div>
+    </div>
+    <div class="r body-grid cols-3" style="margin-top:clamp(16px,2.4vh,28px)">
+      <div class="card"><div class="card-t">مكتب المراجع</div><div class="card-b">المنتج الفعلي: الطابور · الملف · الأثر · البدائل · التعارض · الخطة · القرار · السجل.</div><div class="srcline" style="margin-top:6px">presentation/masar-desk.html</div></div>
+      <div class="card"><div class="card-t">الخريطة العامة للسكان</div><div class="card-b">موقع كل عمل، ونافذته الزمنية، والجهة المنفّذة، وسبب اختيار الموعد.</div><div class="srcline" style="margin-top:6px">presentation/masar-map.html</div></div>
+      <div class="card"><div class="card-t">سجل المصادر</div><div class="card-b">لكل مصدر ناشره وتاريخ تحديثه وتاريخ الوصول، وما يدعمه وما <b>لا</b> يدعمه.</div><div class="srcline" style="margin-top:6px">presentation/masar-sources.html</div></div>
+    </div>
+    <div class="r card accent" style="margin-top:14px;background:rgba(146,208,80,.09)">
+      <div class="eyebrow" style="margin-bottom:6px">اللحظة التي نطلب أن تُرى حيّة — لا في شريحة</div>
+      <div class="card-b" style="font-size:1.04em">
+        <b>اضغط «أرسل طلباً ناقصاً»</b> ← يمتنع النظام ويُسمّي الحقول الناقصة على الشاشة.
+        ثم <b>«أكمل البيانات واحسب»</b> ← يحسب التأخير نهاراً مقابل ليلاً بالساعات-مركبة أمامكم، في أقلّ من ثانية،
+        على <b>المحرك نفسه</b> الذي تفحصه <b class="n">88</b> حزمة اختبار. لا فيديو ولا لقطة مُعدّة.
+      </div>
+      <div class="srcline" style="margin-top:8px">presentation/masar-pitch.html — قسم «مسار القرار»</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4.2 الاختبار ═══════════ -->
+<section class="slide" data-t="منهجية الاختبار">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">النموذج · منهجية الاختبار ونتائجه</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">كيف نعرف أنه يعمل — لا كيف نقول إنه يعمل.</h2>
+    <div class="body-grid cols-4 r">
+      <div class="card accent"><div class="kpi">
+        <div class="kpi-v n"><span data-count="88">0</span></div>
+        <div class="kpi-l">حزمة اختبار آلي</div><div class="kpi-s">بوابة القبول — أي تغيير يجب أن يُبقيها خضراء</div></div>
+        <div style="margin-top:8px"><span class="ev proven">مُثبَت عملياً</span></div>
+      </div>
+      <div class="card accent"><div class="kpi">
+        <div class="kpi-v n"><span data-count="1460">0</span></div>
+        <div class="kpi-l">فحصاً آلياً</div><div class="kpi-s">تُقرأ من جرد مولَّد عند تشغيل أخضر، لا من رقم مكتوب</div></div>
+        <div style="margin-top:8px"><span class="ev proven">مُثبَت عملياً</span></div>
+      </div>
+      <div class="card accent"><div class="kpi">
+        <div class="kpi-v n"><span data-count="150">0</span></div>
+        <div class="kpi-l">تصريحاً تمثيلياً</div><div class="kpi-s">على شوارع رياض حقيقية · بذرة ثابتة 20260727</div></div>
+        <div style="margin-top:8px"><span class="ev scenario">سيناريو تمثيلي</span></div>
+      </div>
+      <div class="card accent"><div class="kpi">
+        <div class="kpi-v n"><span data-count="114">0</span></div>
+        <div class="kpi-l">شارعاً حقيقياً مسمّى في الرياض</div><div class="kpi-s"><span class="n">60</span> شرياني · <span class="n">51</span> رئيسي · <span class="n">39</span> محلي</div></div>
+        <div style="margin-top:8px"><span class="ev proven">مُثبَت عملياً · هندسة حقيقية</span></div>
+      </div>
+    </div>
+    <div class="r body-grid cols-2" style="margin-top:12px">
+      <div class="card accent">
+        <div class="card-t">ودقّة المسارات فُحصت أمام محرك مستقل</div>
+        <div class="card-b">
+          قارنّا مساراتنا بمحرك توجيه مفتوح المصدر (OSRM) على <b class="n">45</b> زوج نقاط ثابتة في نواة الرياض:
+          وسيط المسافة <b class="n">×1.000</b> — أي الشبكة مكتملة؛ والزمن عند <b class="n">03:00</b> فجراً <b class="n">×1.002</b> — أي السرعات الحرة سليمة.
+          وعند <b class="n">08:00</b> صباحاً نزيد عليه <b class="n">×1.382</b>: وهذه <b>نموذج الازدحام المعلَن</b> لا خطأ يُصحَّح، لأن OSRM يمشي بلا إشارات ولا ازدحام.
+        </div>
+        <div style="margin-top:8px"><span class="ev proven">مُثبَت عملياً</span></div>
+      </div>
+      <div class="card warnline">
+        <div class="card-t">وعدد المستخدمين في الاختبار — الرقم الذي يطلبه القالب</div>
+        <div class="card-b">
+          <b class="n">0</b> مستخدم خارجي غير تقني اختُبر رسمياً حتى تاريخ هذا العرض.
+          الاختبار الآلي والتحكيم البارد جريا فعلاً؛ أمّا اختبار المستخدم الحقيقي فمخطَّط ولم يُنفَّذ —
+          ونقولها بدل أن نترك الخانة فارغة أو نملأها بتقدير.
+        </div>
+        <div style="margin-top:8px"><span class="ev expected">متوقَّع من تجربة</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ 4.3 كيف نفحص ═══════════ -->
+<section class="slide" data-t="كيف نفحص">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">النموذج · طريقة الفحص وما غيّرته</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">ثلاث طبقات فحص — وما اكتشفته كلٌّ منها.</h2>
+    <div class="split">
+      <div class="r">
+        <div class="steps">
+          <div class="step"><div class="step-n"></div><div><b class="h3">اختبار آلي للمحرك</b><div class="card-b">كل معادلة وكل حدّ يقابله فحص. الأرقام تتغيّر مع المدخلات — <b>لا قيَم مزروعة</b>.</div></div></div>
+          <div class="step"><div class="step-n"></div><div><b class="h3">تحكيم بارد مستقل</b><div class="card-b">مقيّم يفتح الملفات كمحكّم بلا معرفة سابقة، ينقر ويقرأ ويسجّل <b>دليل كل خصم</b> — لا رأياً عاماً.</div></div></div>
+          <div class="step"><div class="step-n"></div><div><b class="h3">فريق أحمر</b><div class="card-b">يبحث عن الادعاء بلا مصدر والتناقض بين سطحين. وما وجده صار تعديلاً، لا حاشية.</div></div></div>
+        </div>
+      </div>
+      <div class="r">
+        <h3 class="h3" style="margin-bottom:8px">ما غيّرته هذه الطبقات فعلاً</h3>
+        <div class="card accent" style="margin-bottom:10px"><div class="card-b">توحيد كل مؤشّر يظهر في أكثر من سطح في <b>مصدر حاكم واحد يُحسب عند الاستدعاء</b> — بعد أن كشف التحكيم البارد <b class="n">10</b> تناقضات سببها أن كل صفحة كانت تحمل نسختها من الرقم.</div></div>
+        <div class="card accent" style="margin-bottom:10px"><div class="card-b">جعل عدد الفحوص يُقرأ من <b>جرد مولَّد</b> لا من رقم مكتوب في الشريحة — فالرقم المكتوب تقادم ثلاث مرات في يومين.</div></div>
+        <div class="card accent"><div class="card-b">حذف <b>رقم مالي كبير</b> كان يجمّل العرض، لأن مصدره الدولي لا ينطبق على حفريات المدن — واستُبدل بطول كيلومترات محسوب بلا تحويل مالي.</div></div>
+      </div>
+    </div>
+    <div class="srcnote r">تقارير الفحص كاملةً بدرجاتها وخصوماتها في <span class="srcline">docs/evaluation/</span> — منشورةٌ بما فيها ما خصم علينا.</div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 5 ═══════════ -->
+<section class="slide divider" data-t="القسم الخامس">
+  <div class="sectnum n">05</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الخامس</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>الأثر</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:48ch">
+      وهنا نقول الأصعب: <mark>لا توجد حتى الآن نتيجة ميدانية مقاسة</mark>.
+      فما نعرضه نموذجٌ بمعاملات معلَنة — ونطاق، لا رقم مفرد.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 5.1 كيف نقيس ═══════════ -->
+<section class="slide" data-t="كيف يُقاس الأثر">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الأثر · وحدة القياس</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.4em">وحدة واحدة يفهمها القرار: <mark>الساعة-مركبة</mark>.</h2>
+    <p class="r lede" style="margin-bottom:clamp(14px,2vh,24px)">
+      إذا تأخّرت <b class="n">1,000</b> مركبة <b class="n">6</b> دقائق كلٌّ منها، فالكلفة <b class="n">100</b> ساعة-مركبة.
+      رقم واحد يُقارَن بين طلبين مختلفين، ويُترجَم إلى وقت الناس مباشرة.
+    </p>
+    <div class="r formula" style="margin-bottom:clamp(14px,2vh,24px)">
+      الأثر  =  Σ ( تأخير الجدول كما قُدِّم  −  تأخير الجدول الأمثل )
+    </div>
+    <div class="body-grid cols-3 r">
+      <div class="card accent">
+        <div class="card-t">من أين يأتي التأخير</div>
+        <div class="card-b">دالة <b>BPR</b> القياسية: كلما اقترب الحجم من السعة المتبقّية بعد إغلاق الحارات، ارتفع زمن العبور — وهي الدالة نفسها المستخدمة في تخطيط النقل عالمياً.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">لماذا نطاق لا رقم</div>
+        <div class="card-b">افتراضان بلا سند ميداني — <b>أرضية السرعة</b> و<b>أسّ المنحنى</b> — يحرّكان الناتج. فنعرض الحدّين بدل انتقاء رقم يجمّل.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">متى يضيق النطاق</div>
+        <div class="card-b">حين تُحمَّل <b>أعداد ساعية مقيسة</b> بدل الملف الافتراضي. النطاق واسع اليوم لأننا صادقون بشأن مدخلاته.</div>
+      </div>
+    </div>
+    <div class="srcnote r">مصدر الحساب واحد لا يتكرر: <span class="srcline">presentation/masar-engine.js</span> — الواجهة والاختبارات تستدعيانه معاً، فلا نسختان لرقم واحد.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5.2 المؤشرات ═══════════ -->
+<section class="slide" data-t="مؤشرات الأثر">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الأثر · المؤشرات وخط الأساس والمستهدف</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">على محفظة تمثيلية من <span class="n">150</span> تصريحاً.</h2>
+
+    <div class="body-grid cols-3 r" style="margin-bottom:clamp(14px,2vh,22px)">
+      <div class="card accent">
+        <div class="kpi">
+          <div class="kpi-v n"><span data-count="722634">0</span></div>
+          <div class="kpi-l">ساعة-مركبة — الفرق بين الجدول كما قُدّم والجدول الأمثل</div>
+        </div>
+        <div style="margin-top:9px"><span class="ev scenario">سيناريو تمثيلي · لا وفر مثبت</span></div>
+      </div>
+      <div class="card accent">
+        <div class="kpi">
+          <div class="kpi-v n"><span data-count="89.4" data-dec="1">0.0</span><span class="kpi-u">%</span></div>
+          <div class="kpi-l">النسبة نفسها — والنطاق عبر افتراضَي الأرضية والأسّ: <b class="n">83.9%</b> – <b class="n">98.3%</b></div>
+        </div>
+        <div style="margin-top:9px"><span class="ev scenario">سيناريو تمثيلي</span></div>
+      </div>
+      <div class="card accent">
+        <div class="card-t">وبوحدات يفهمها القرار لا المهندس وحده</div>
+        <div class="card-b" style="line-height:1.8">
+          <b class="n">867,161</b> – <b class="n">1,156,215</b> <b>ساعة-إنسان</b> — بإشغال <span class="n">1.2</span> إلى <span class="n">1.6</span> راكب للمركبة.<br>
+          <b class="n">1,168</b> – <b class="n">1,836</b> <b>طن CO₂</b> — من وقود التباطؤ، ونعرض النطاق لا الرقم المفرد.
+        </div>
+        <div style="margin-top:9px"><span class="ev scenario">سيناريو تمثيلي · محسوب من الفرق أعلاه</span></div>
+      </div>
+      <div class="card warnline">
+        <div class="card-t">ولماذا الرقم كبير هكذا</div>
+        <div class="card-b">
+          لأن <b class="n">94.7%</b> من تصاريح خط الأساس تبدأ <b>نهاراً</b>. وفكّكنا الرقم:
+          الحصّة الغالبة منه سببها <b>إزاحة ساعة البدء إلى الليل وحدها</b> — لا براعة الجدولة.
+          فالفرق يقيس رداءة خط الأساس بقدر ما يقيس جودة التحسين، ونقولها بدل أن نتركها تُقرأ إنجازاً.
+        </div>
+      </div>
+    </div>
+
+    <table class="r">
+      <thead><tr><th>المؤشر</th><th class="n">خط الأساس</th><th class="n">المستهدف</th><th>مصدر القياس ودوريته</th><th>درجة الدليل</th></tr></thead>
+      <tbody>
+        <tr><td>تأخير الإغلاق (ساعة-مركبة لكل تصريح)</td><td class="n">يُحسب لكل طلب</td><td class="n">−15%</td><td>محرك مسار عند كل طلب · لحظي</td><td><span class="ev expected">متوقَّع من تجربة</span></td></tr>
+        <tr><td>حصة التصاريح ذات بدء نهاري</td><td class="n">94.7%</td><td class="n">≤ 60%</td><td>سجل التصاريح · شهري</td><td><span class="ev scenario">تمثيلي</span></td></tr>
+        <tr><td>شوارع تحمل أكثر من تصريح</td><td class="n">25</td><td class="n">−40%</td><td>كشف التعارض · أسبوعي</td><td><span class="ev scenario">تمثيلي</span></td></tr>
+        <tr><td>فرص تنسيق فائتة</td><td class="n">26</td><td class="n">≤ 10</td><td>مؤشر الامتثال الاتجاهي · شهري</td><td><span class="ev scenario">تمثيلي</span></td></tr>
+        <tr><td>مجموعات خندق مشترك مكتشَفة</td><td class="n">35</td><td class="n">تُنفَّذ ≥ 50%</td><td>محرك التنسيق · عند كل دفعة تصاريح</td><td><span class="ev scenario">تمثيلي</span></td></tr>
+        <tr class="total"><td>خطأ التقدير مقابل المرصود</td><td class="n">لا يوجد بعد</td><td class="n">يُنشَر مع كل حالة</td><td><b>تجربة الظل</b> · مستمر</td><td><span class="ev expected">متوقَّع من تجربة</span></td></tr>
+      </tbody>
+    </table>
+    <div class="srcnote r">كل رقم في هذا الجدول محسوب وقت التشغيل من محفظة مولَّدة ببذرة ثابتة <span class="n">20260727</span> — لا مكتوب يدوياً. تغيّرت المحفظة، تغيّر الجدول معها.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5.2b ما يقوله النظام ضد نفسه ═══════════ -->
+<section class="slide dark" data-t="النظام يشهد على نفسه">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الأثر · أقوى ما نملك</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.3em">النتيجة الأقوى في مسار هي التي <mark>تُحرج عرضه</mark>.</h2>
+    <p class="r lede" style="max-width:66ch;margin-bottom:clamp(14px,2vh,24px)">
+      أداةٌ تُقرَّر بها الشوارع لا تُصدَّق بأرقامها الجيدة، بل بما تعرضه حين يخالفها الحساب.
+      وهذه أربعة أرقام حسبها مسار على محفظته، وكلها ضدّ الرواية السهلة.
+    </p>
+    <div class="body-grid cols-4 r" style="margin-bottom:clamp(14px,2vh,22px)">
+      <div class="card dangerline">
+        <div class="kpi"><div class="kpi-v n"><span data-count="112">0</span> / <span data-count="150">0</span></div>
+        <div class="kpi-l">مسار بديل <b>لا يتحمّل</b> الحركة المحوَّلة إليه</div></div>
+        <div class="card-b" style="margin-top:8px">اقتراح مسار بديل بلا تحميله هو نقلٌ للطابور لا حلٌّ له. مسار يحسب الحمل <b>بعد</b> التحويل ويقولها.</div>
+      </div>
+      <div class="card dangerline">
+        <div class="kpi"><div class="kpi-v n"><span data-count="103">0</span> / <span data-count="150">0</span></div>
+        <div class="kpi-l">حالة يدفع فيها البديل الحمل <b>فوق سعة شارع سكني</b></div></div>
+        <div class="card-b" style="margin-top:8px">نسبة الإشغال على الشوارع الصغيرة: <b class="n">0.12</b> قبل التحويل ← <b class="n">1.45</b> بعده، وأسوأ حالة <b class="n">5.92</b>. تُعرض ولا تُخفى.</div>
+      </div>
+      <div class="card warnline">
+        <div class="kpi"><div class="kpi-v n"><span data-count="63">0</span> / <span data-count="150">0</span></div>
+        <div class="kpi-l">توصية <b>يمتنع</b> النظام عن البناء عليها</div></div>
+        <div class="card-b" style="margin-top:8px">الامتناع نتيجة مقبولة لا عطل: <b class="n">42%</b> من الحالات بياناتها لا تكفي لترتيب موثوق، فيقول ذلك بدل أن يرتّب بثقة زائفة.</div>
+      </div>
+      <div class="card warnline">
+        <div class="kpi"><div class="kpi-v n"><span data-count="91.1" data-dec="1">0.0</span><span class="kpi-u">%</span></div>
+        <div class="kpi-l">من رقم التأخير الرئيسي يأتي من <b>افتراض واحد بلا قياس</b></div></div>
+        <div class="card-b" style="margin-top:8px">أرضية احتكاك منطقة العمل. قِسناها، ونشرنا حصّتها، وأبقيناها لأن حذفها ينتج ادعاءً أسوأ.</div>
+      </div>
+    </div>
+    <div class="r card accent" style="background:rgba(146,208,80,.10)">
+      <div class="card-t">ولماذا نضع هذا في العرض بدل حجبه</div>
+      <div class="card-b">
+        لأن كل واحد من هذه الأرقام كان يمكن ألّا يُحسب أصلاً — ولا أحد كان سيسأل.
+        حسابُها ثم إعلانُها هو <b>الفرق العملي</b> بين أداة تساعد على القرار وأداة تجمّله.
+        والطلب الذي نخرج به من الهاكاثون واحد ومحدَّد: <b>قياس ميداني واحد</b> لزمن العبور في منطقة عمل بساعة منخفضة الطلب — لا عدّاد أحجام، فذاك يقيس شيئاً آخر.
+      </div>
+    </div>
+    <div class="srcnote r" style="border-color:rgba(255,255,255,.14)">
+      كل رقم هنا مولَّد من تشغيل فعلي: <span class="srcline">presentation/data/alternate-load.js</span> · <span class="srcline">docs/STABILITY.md</span> · <span class="srcline">docs/policy/FLOOR-DECISION-2026-07-26.md</span> — <span class="ev scenario">على المحفظة التمثيلية</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5.3 الأثر الحضري والاجتماعي ═══════════ -->
+<section class="slide" data-t="الأثر الحضري والمجتمعي">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الأثر · الحضري والمجتمعي</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">الشفافية طبقةٌ قائمة، لا وعدٌ مؤجَّل.</h2>
+    <div class="split">
+      <div class="r">
+        <div class="card accent" style="margin-bottom:12px">
+          <div class="card-t">عدالة توزيع الإزعاج</div>
+          <div class="card-b">
+            حين يدفع البديل المحسوب حركةً إلى شارع سكني، تُعرض <b>نسبة الإشغال قبل التحويل وبعده صراحةً</b>.
+            وإن دفع كل بديل الحركة إلى حيّ سكني، تعلن البطاقة قراراً صريحاً بعدم وجود بديل مقبول —
+            بدل تمرير الحمل إلى الحيّ بصمت.
+          </div>
+        </div>
+        <div class="card accent">
+          <div class="card-t">«لماذا هذا الموعد»</div>
+          <div class="card-b">
+            بطاقة كل سجل تقارن الجدول كما قُدّم بالبديل الأقل أثراً مع سبب ترشيحه،
+            أو تعلن أن الجدول المقدَّم هو <b>الأفضل ضمن الخيارات المفحوصة</b> — فتجيب السؤال بدل عرض تاريخ مجرّد.
+          </div>
+        </div>
+      </div>
+      <div class="r">
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-t">الأثر التشغيلي على البلدية</div>
+          <div class="card-b">قرار موثّق بسببه ومدخلاته، قابل للمراجعة بعد شهور — بدل قرار شفهي لا يُحتجّ به.
+          وكشف مبكّر لمجموعات الخندق المشترك يقلّل تكرار فتح الشارع نفسه.</div>
+        </div>
+        <div class="card warnline">
+          <div class="card-t">وما لا تعرضه هذه الشريحة عمداً</div>
+          <div class="card-b">
+            لا أثر سنوي للمدينة، ولا وفر محقَّق بالريال. لأن أياً منهما يتطلّب قياساً ميدانياً لم يجرِ بعد.
+            ونطاق <b class="n">25–33%</b> الرقابي نطاقٌ سياقي محدود — <b>وليس وعداً</b> لأعمال الحفر البلدية.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="srcnote r">الربط بالتوجهات الوطنية: تقليل ساعات التأخير يدعم مؤشر جودة الحياة · ودمج الحفريات يدعم كفاءة الإنفاق الحكومي — رؤية 2030.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5.4 كيف يتحسّن ═══════════ -->
+<section class="slide dark" data-t="تجربة الظل">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الأثر · كيف يتحوّل النموذج إلى قياس</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">تجربة الظل — الجسر من «نموذج» إلى «مقيس».</h2>
+    <div class="steps r" style="max-width:1000px">
+      <div class="step"><div class="step-n"></div><div><b class="h3">يعمل النظام بصمت بجانب القرار القائم</b><div class="card-b">لا يغيّر قرار المسؤول أثناء القياس. يتنبّأ فقط، ويُسجَّل تنبؤه قبل التنفيذ.</div></div></div>
+      <div class="step"><div class="step-n"></div><div><b class="h3">يُقارَن التنبؤ بالمرصود وبخطٍّ مضاد مثبَّت مسبقاً</b><div class="card-b">الخط المضاد يُثبَّت قبل التنفيذ كي لا يُختار بعده ما يجمّل النتيجة.</div></div></div>
+      <div class="step"><div class="step-n"></div><div><b class="h3">يُحسب الخطأ والانحياز والمنفعة</b><div class="card-b">والمنفعة = ساعات المركبات في الخط المضاد ناقص المرصودة — <b>للحالات المقاسة وحدها</b>.</div></div></div>
+      <div class="step"><div class="step-n"></div><div><b class="h3">تُفشل التجربة عند تجاوز قيود النقل العام أو وصول الطوارئ</b><div class="card-b">بوابة فشل معلَنة مسبقاً — لا تُراجَع بعد ظهور النتيجة.</div></div></div>
+      <div class="step"><div class="step-n"></div><div><b class="h3">يضيق التقدير مع تراكم الحالات</b><div class="card-b">معامل تصحيح يُشتقّ من وسيط سجل «التوقّع مقابل المرصود» عند كل استدعاء — بسجل تغيير معايرة موثّق بسببه ودليله ومعتمِده، لا بإعادة حساب صامتة.</div></div></div>
+    </div>
+    <div class="srcnote r" style="border-color:rgba(255,255,255,.14)">البروتوكول مكتوب ومنشور: <span class="srcline">docs/engineering/SHADOW-PILOT.md</span></div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 6 ═══════════ -->
+<section class="slide divider" data-t="القسم السادس">
+  <div class="sectnum n">06</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم السادس</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>نموذج العمل والجدوى</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      المالك الطبيعي هو الجهة المشرفة على التصاريح نفسها. لا جهة قرار جديدة، ولا اشتراك بيانات متكرر.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 6.1 BMC ═══════════ -->
+<section class="slide" data-t="نموذج العمل">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">نموذج العمل · Business Model Canvas</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">كيف يخلق مسار قيمته — وكيف يستدام.</h2>
+    <div class="bmc r">
+      <div class="b"><h4>الشركاء الرئيسيون</h4><p>الجهة المشرفة على تصاريح الحفر · أمانة المنطقة · ملّاك الشبكات (مياه، كهرباء، اتصالات) · الهيئة العامة للطرق</p></div>
+      <div class="b"><h4>الأنشطة الرئيسية</h4><p>تشغيل محرك التقدير · معايرة دورية من سجل «التوقّع مقابل المرصود» · تحديث قيود الطرق · دعم المراجعين</p></div>
+      <div class="b"><h4>القيمة المقدَّمة</h4><p>رقم واحد قابل للتبرير قبل التوقيع · بديل مرتَّب <b>مع سبب فوزه</b> · كشف تعارض وخندق مشترك · شفافية للسكان</p></div>
+      <div class="b"><h4>العلاقة مع المستفيدين</h4><p>أداة داخلية للمراجع تُستخدم في كل طلب · خريطة عامة للسكان · سجل قرار يُحتجّ به</p></div>
+      <div class="b"><h4>شرائح المستفيدين</h4><p>المراجع البلدي · الجهة المنفّذة · مالك الشبكة · الساكن ومستخدم الطريق</p></div>
+      <div class="b"><h4>الموارد الرئيسية</h4><p>محرك الحساب · بيانات الجهة نفسها (تصنيف الطرق، سجل التصاريح، القيود) · المراجع البشري القائم</p></div>
+      <div class="b"><h4>قنوات الوصول</h4><p>دمج في مسار مراجعة التصريح القائم · الخريطة العامة · تصدير WZDX للأنظمة الأخرى</p></div>
+      <div class="b wide2"><h4>هيكل التكاليف</h4><p>تطوير وإطلاق أولي · تشغيل وصيانة سنوية · لا رسوم بيانات خارجية متكرّرة · لا فريق تقني خارجي دائم</p></div>
+      <div class="b wide3"><h4>مصادر الإيرادات والوفورات</h4><p>وفورات تشغيلية للبلدية من تقليل تكرار الحفر وإعادة الفتح · تقليل ساعات التأخير المدفوعة اجتماعياً · لا نموذج اشتراك مفروض على المستفيد</p></div>
+    </div>
+    <div class="srcnote r">الاستدامة ليست وعداً نصّياً: كل تصريح يكتمل قياسه يضيف سجلاً بالتوقّع مقابل المرصود، ومعامل التصحيح يُشتقّ من وسيط هذا السجل كاملاً عند كل استدعاء.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 6.2 الجدوى ═══════════ -->
+<section class="slide" data-t="الجدوى المالية">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الجدوى المالية · ثلاث سنوات</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.35em">أرقام تقديرية — وافتراضاتها معلنة تحتها.</h2>
+    <p class="r small" style="margin-bottom:clamp(12px,1.8vh,20px)">جميع المبالغ بالريال السعودي · <b>تقديرية للتخطيط</b>، لا عرض سعر ولا وفر محقَّق.</p>
+    <table class="r">
+      <thead><tr><th>البند</th><th class="n">السنة الأولى</th><th class="n">السنة الثانية</th><th class="n">السنة الثالثة</th></tr></thead>
+      <tbody>
+        <tr><td>تكاليف التطوير والإطلاق</td><td class="n">400,000</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>تكاليف التشغيل والصيانة</td><td class="n">150,000</td><td class="n">180,000</td><td class="n">200,000</td></tr>
+        <tr><td><b>إجمالي التكاليف</b></td><td class="n">550,000</td><td class="n">180,000</td><td class="n">200,000</td></tr>
+        <tr><td>الوفورات التشغيلية للبلدية</td><td class="n">200,000</td><td class="n">450,000</td><td class="n">600,000</td></tr>
+        <tr><td>الإيرادات (رسوم / اشتراكات)</td><td class="n">50,000</td><td class="n">120,000</td><td class="n">180,000</td></tr>
+        <tr class="total"><td>صافي الأثر المالي التراكمي</td><td class="n" style="color:var(--danger)">(300,000)</td><td class="n">90,000</td><td class="n" style="color:var(--g-mid)">670,000</td></tr>
+      </tbody>
+    </table>
+    <div class="body-grid cols-3 r" style="margin-top:clamp(14px,2vh,22px)">
+      <div class="card accent"><div class="card-t">نقطة التعادل</div><div class="card-b">خلال <b>السنة الثانية</b> — بافتراض ثبات حجم التصاريح ونطاق الوفر أدناه.</div></div>
+      <div class="card warnline"><div class="card-t">افتراضات الوفر — ومن أين لا تأتي</div><div class="card-b">أساسها الكمّي الوحيد <b>طول حفر مكرر مكافئ</b> (<b class="n">92</b> كم على المحفظة) — وهو تقدير <b>بافتراض تداخل تام</b>، لا هندسة مقيسة — مضروباً في كلفة إعادة فتح محلية <b>لم تُقَس بعد</b>. و<b>لم نشتقّها</b> من نطاق <b class="n">25–33%</b> الرقابي: ذلك نطاق تنسيق قنوات وألياف، وسجل مصادرنا يقول صراحةً إنه <b>لا يُعمَّم</b> على حفريات المدن.</div></div>
+      <div class="card warnline"><div class="card-t">ما يُبطل هذه الأرقام</div><div class="card-b">كلفة إعادة الفتح المحلية الفعلية، وحجم التصاريح السنوي، ونسبة مجموعات الخندق المشترك التي <b>تُنفَّذ</b> فعلاً لا التي تُكتشَف. الثلاثة تُقاس في تجربة الظل قبل أي اعتماد.</div></div>
+    </div>
+    <div class="srcnote r">هيكل الجدول والأرقام الاسترشادية مأخوذان من <b>قالب الحلول الرسمي</b> (الشريحة 15) — والافتراضات أعلاه إضافتنا كما يطلب القالب صراحةً. <span class="ev expected">متوقَّع من تجربة</span></div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 7 ═══════════ -->
+<section class="slide divider" data-t="القسم السابع">
+  <div class="sectnum n">07</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم السابع</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>خطة العمل</span></span></h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      تبدأ بتجربة محدودة على ممرّ واحد — لا بتعميم على مدينة.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 7.1 الخطة ═══════════ -->
+<section class="slide" data-t="المراحل والمخاطر">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">خطة العمل · المراحل والمخاطر والتوسّع</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.45em">أربع مراحل، كل واحدة لها بوابة خروج.</h2>
+    <div class="body-grid cols-4 r" style="margin-bottom:clamp(14px,2vh,22px)">
+      <div class="card accent"><div class="flow-k n">PHASE 1</div><b class="h3">تجربة ظل محدودة</b><div class="card-b">ممرّ واحد · النظام يتنبّأ ولا يقرّر. <b>البوابة:</b> عينة مقاسة كافية وخطأ منشور.</div></div>
+      <div class="card accent"><div class="flow-k n">PHASE 2</div><b class="h3">تشغيل مساعد</b><div class="card-b">المراجع يرى التقدير ويقرّر. <b>البوابة:</b> قبول المراجعين وضيق نطاق الخطأ.</div></div>
+      <div class="card accent"><div class="flow-k n">PHASE 3</div><b class="h3">تنسيق محفظي</b><div class="card-b">تعميم كشف التعارض والخندق المشترك على كامل المحفظة. <b>البوابة:</b> مجموعات منفَّذة فعلاً.</div></div>
+      <div class="card accent"><div class="flow-k n">PHASE 4</div><b class="h3">تعميم وربط</b><div class="card-b">بلديات ومدن أخرى عبر تصدير WZDX. <b>البوابة:</b> عقد بيانات مستقر.</div></div>
+    </div>
+
+    <h3 class="r h3" style="margin-bottom:8px">أبرز المخاطر وخطة التخفيف</h3>
+    <div class="body-grid cols-3 r">
+      <div class="card dangerline"><div class="card-t">غياب عدّاد مرور منشور</div><div class="card-b"><b>التخفيف:</b> عرض نطاق لا رقم مفرد، ومعايرة من عدّادات مؤقتة على ممرّ التجربة.</div></div>
+      <div class="card dangerline"><div class="card-t">تحويل الحمل إلى حيّ سكني</div><div class="card-b"><b>التخفيف:</b> إعلان الإشغال قبل وبعد، ورفض صريح حين لا يوجد بديل مقبول.</div></div>
+      <div class="card dangerline"><div class="card-t">الاعتماد الزائد على التقدير</div><div class="card-b"><b>التخفيف:</b> القرار يظل بشرياً، والحالات عالية الأثر تبقى تحت مراجعة مهندس مرور.</div></div>
+    </div>
+    <div class="srcnote r">قابلية التوسّع: المدخلات كلها بيانات تملكها أي بلدية (تصنيف طرق، سجل تصاريح، قيود)، والمخرجات بصيغة معيارية — فالانتقال إلى مدينة أخرى تغييرُ بيانات لا إعادةُ بناء.</div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 8 ═══════════ -->
+<section class="slide divider" data-t="القسم الثامن">
+  <div class="sectnum n">08</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم الثامن</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>فريق العمل</span></span></h2>
+  </div>
+</section>
+
+<!-- ═══════════ 8.1 الفريق ═══════════ -->
+<section class="slide" data-t="الفريق">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">فريق العمل</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">أربعة أعضاء.</h2>
+    <div class="body-grid cols-4 r">
+      <div class="card accent"><div class="card-t">مروان صلاح</div><div class="card-b">قائد الفريق</div></div>
+      <div class="card accent"><div class="card-t">وسن صلاح</div><div class="card-b">عضو الفريق</div></div>
+      <div class="card accent"><div class="card-t">سمية صلاح</div><div class="card-b">عضو الفريق</div></div>
+      <div class="card accent"><div class="card-t">مصعب صلاح</div><div class="card-b">عضو الفريق</div></div>
+    </div>
+    <div class="srcnote r">الأسماء والأدوار كما وردت من أصحاب المشروع. لم يُختلق دور تخصصي لم يُصرَّح به. · <b>القالب يطلب صورة لكل عضو — تُضاف قبل الرفع.</b></div>
+  </div>
+</section>
+
+<!-- ═══════════ فاصل 9 ═══════════ -->
+<section class="slide divider" data-t="القسم التاسع">
+  <div class="sectnum n">09</div>
+  <div class="slide-inner">
+    <div class="r eyebrow">القسم التاسع</div>
+    <h2 class="display" style="margin-top:.1em"><span class="wipe"><span>المراجع والملاحق</span></span></h2>
+  </div>
+</section>
+
+<!-- ═══════════ 9.1 المراجع ═══════════ -->
+<section class="slide" data-t="المراجع">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">المراجع والملاحق</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.5em">كل مصدر بناشره وما يدعمه — وما لا يدعمه.</h2>
+    <div class="split">
+      <div class="r">
+        <h3 class="h3" style="margin-bottom:8px">المصادر الرسمية</h3>
+        <table>
+          <tbody>
+            <tr><td>منصة بلدي — الخريطة التفاعلية للحفريات</td><td class="srcline">balady.gov.sa/ar/node/17896</td></tr>
+            <tr><td>الهيئة العامة للطرق — كود مناطق العمل</td><td class="srcline">shc.rga.gov.sa · 305 EN</td></tr>
+            <tr><td>الهيئة الملكية لمدينة الرياض — محطات المترو</td><td class="srcline">opendata.rcrc.gov.sa</td></tr>
+            <tr><td>الهيئة الملكية لمدينة الرياض — محطات الحافلات</td><td class="srcline">opendata.rcrc.gov.sa</td></tr>
+            <tr><td>وزارة النقل البريطانية — أعمال الطرق</td><td class="srcline">gov.uk · Lane Rental Guidance</td></tr>
+            <tr><td>مكتب المساءلة الحكومية الأمريكي — تنسيق القنوات</td><td class="srcline">gao.gov · GAO-12-687R</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="r">
+        <h3 class="h3" style="margin-bottom:8px">روابط النموذج والملاحق</h3>
+        <div class="card" style="margin-bottom:9px"><div class="card-t">مكتب المراجع — المنتج الفعلي</div><div class="srcline">presentation/masar-desk.html</div></div>
+        <div class="card" style="margin-bottom:9px"><div class="card-t">الخريطة العامة للسكان</div><div class="srcline">presentation/masar-map.html</div></div>
+        <div class="card" style="margin-bottom:9px"><div class="card-t">سجل الأدلة الكامل</div><div class="srcline">presentation/masar-sources.html</div></div>
+        <div class="card" style="margin-bottom:9px"><div class="card-t">بروتوكول تجربة الظل</div><div class="srcline">docs/engineering/SHADOW-PILOT.md</div></div>
+        <div class="card"><div class="card-t">تقارير التحكيم البارد واختبار غير الخبير</div><div class="srcline">docs/evaluation/</div></div>
+      </div>
+    </div>
+    <div class="srcnote r">التشغيل: <span class="srcline">node presentation/server.js</span> — ثم <span class="srcline">http://localhost:8734/</span>. مكتب المراجع يعمل من ملف مباشر بلا خادم؛ الخريطة وحدها تتطلّب الخادم المحلي.</div>
+  </div>
+</section>
+
+<!-- ═══════════ الرؤية الموحّدة ═══════════ -->
+<section class="slide dark" data-t="طبقة ذكاء بلدي">
+  <div class="slide-inner">
+    <div class="slide-head r">
+      <span class="eyebrow">الرؤية الموحّدة</span><span class="rule"></span>
+    </div>
+    <h2 class="r h1" style="margin-bottom:.3em">مسار وحدةٌ أولى في <mark>طبقة ذكاء بلدي</mark> — لا أداة منفردة.</h2>
+    <p class="r lede" style="max-width:64ch;margin-bottom:clamp(14px,2vh,24px)">
+      النمط الذي بنيناه قابل للتعميم: <b>قرار بلدي يُقاس كمّياً قبل إصداره</b>، بمدخلات تملكها البلدية،
+      ومخرجات معيارية، وسجل يُحتجّ به. غيّر المجال وابقِ النمط.
+    </p>
+    <div class="body-grid cols-3 r" style="margin-bottom:clamp(14px,2vh,22px)">
+      <div class="card accent">
+        <div class="flow-k n">UNIT 01</div>
+        <b class="h3">مسار — أثر الحفر على الحركة</b>
+        <div class="card-b"><b>منفَّذ اليوم.</b> يقيس، ويرتّب البدائل، ويكشف التعارض، ويمتنع حين لا تكفي الأدلة.</div>
+        <div style="margin-top:8px"><span class="ev proven">مُثبَت عملياً</span></div>
+      </div>
+      <div class="card">
+        <div class="flow-k n">UNIT 02</div>
+        <b class="h3">أثر الأعمال على الخدمات البلدية</b>
+        <div class="card-b">النمط نفسه مطبَّقاً على انقطاع الخدمة والوصول للمرافق — نفس المحرك، نفس السجل، مدخلات أخرى.</div>
+        <div style="margin-top:8px"><span class="ev scenario">سيناريو توسّع مشروط</span></div>
+      </div>
+      <div class="card">
+        <div class="flow-k n">UNIT 03</div>
+        <b class="h3">محفظة المدينة — أولويات الإنفاق</b>
+        <div class="card-b">ترتيب الأعمال على مستوى المدينة بدل التصريح المفرد، بنفس وحدة القياس القابلة للمقارنة.</div>
+        <div style="margin-top:8px"><span class="ev scenario">سيناريو توسّع مشروط</span></div>
+      </div>
+    </div>
+    <div class="r card accent" style="background:rgba(146,208,80,.10)">
+      <div class="card-t">ما يجعل هذا نمطاً لا فكرة</div>
+      <div class="card-b">
+        ثلاثة أشياء تُنقل كما هي إلى أي وحدة تالية: <b>وحدة قياس واحدة</b> تُقارَن بين طلبين مختلفين،
+        و<b>وسم درجة دليل</b> على كل رقم يمنع الادعاء بلا سند، و<b>بوابة امتناع</b> تقول «لا أعرف» بدل أن ترتّب بثقة زائفة.
+        الوحدتان الثانية والثالثة توسّعٌ مشروط — <b>لا نعدّهما منجزتين</b>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ الختام ═══════════ -->
+<section class="slide cover" data-t="الختام">
+  <div class="slide-inner">
+    <div class="r eyebrow">مسار · بلدياثون 2026</div>
+    <h2 class="display" style="margin:.12em 0 .18em;max-width:20ch">
+      <span class="wipe"><span>رقم واحد،</span></span>
+      <span class="wipe"><span>قبل التوقيع.</span></span>
+    </h2>
+    <p class="r lede" style="color:#BBD0C6;max-width:46ch">
+      وما لم نقِسه بعد — قلناه. لأن أداةً تُقرَّر بها الشوارع تُصدَّق بحدودها المعلنة، لا بأرقامها الكبيرة.
+    </p>
+    <div class="r body-grid cols-3" style="margin-top:clamp(22px,3.6vh,48px);max-width:820px">
+      <div class="kpi"><div class="kpi-v n"><span data-count="4">0</span></div><div class="kpi-l">مخرجات من طلب واحد</div></div>
+      <div class="kpi"><div class="kpi-v n"><span data-count="88">0</span></div><div class="kpi-l">حزمة اختبار خضراء</div></div>
+      <div class="kpi"><div class="kpi-v n">&lt; <span data-count="1">0</span>s</div><div class="kpi-l">زمن القرار على جهاز المحكّم</div></div>
+    </div>
+    <p class="r small" style="margin-top:clamp(20px,3vh,40px);color:#8FA79E">شكراً · Digital_Innov@momah.gov.sa</p>
+  </div>
+</section>
+
+</div>
+
+<button class="navbtn" id="prev" aria-label="السابق">›</button>
+<button class="navbtn" id="next" aria-label="التالي">‹</button>
+<div id="hud"><span class="dot"></span><span id="hud-t">الغلاف</span><span class="idx"><b id="hud-i">1</b> / <span id="hud-n">1</span></span></div>
+<div id="brandbar"><b>مسار</b> · بلدياثون 2026 · التحدي الثالث</div>
+<div id="rail"><i id="railfill"></i></div>
+
+<script>
+(function(){
+  'use strict';
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hudT = document.getElementById('hud-t');
+  var hudI = document.getElementById('hud-i');
+  var rail = document.getElementById('railfill');
+  document.getElementById('hud-n').textContent = slides.length;
+
+  /* ---- عدّاد تصاعدي: يبدأ عند ظهور الشريحة، ويحترم تقليل الحركة ---- */
+  function ease(t){ return 1 - Math.pow(1 - t, 3); }
+
+  function fmt(v, dec){
+    var s = dec ? v.toFixed(dec) : String(Math.round(v));
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  }
+
+  function runCounters(slide){
+    var nodes = slide.querySelectorAll('[data-count]');
+    Array.prototype.forEach.call(nodes, function(el){
+      var target = parseFloat(el.getAttribute('data-count'));
+      var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+      if (isNaN(target)) return;
+      if (reduce){ el.textContent = fmt(target, dec); return; }
+      var dur = 1200, t0 = null;
+      function step(ts){
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        el.textContent = fmt(target * ease(p), dec);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = fmt(target, dec);
+      }
+      el.textContent = fmt(0, dec);
+      requestAnimationFrame(step);
+    });
+  }
+
+  function show(n, dir){
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (n === i && slides[n].classList.contains('is-live')) return;
+    slides.forEach(function(s, k){
+      s.classList.toggle('is-live', k === n);
+      s.classList.toggle('is-past', k < n);
+    });
+    i = n;
+    hudT.textContent = slides[n].getAttribute('data-t') || '';
+    hudI.textContent = String(n + 1);
+    rail.style.width = ((n + 1) / slides.length * 100) + '%';
+    runCounters(slides[n]);
+    if (location.hash !== '#' + (n + 1)) history.replaceState(null, '', '#' + (n + 1));
+  }
+
+  function next(){ show(i + 1); }
+  function prev(){ show(i - 1); }
+
+  document.addEventListener('keydown', function(e){
+    if (['ArrowLeft','PageDown',' ','Enter'].indexOf(e.key) > -1){ e.preventDefault(); next(); }
+    else if (['ArrowRight','PageUp','Backspace'].indexOf(e.key) > -1){ e.preventDefault(); prev(); }
+    else if (e.key === 'Home'){ show(0); }
+    else if (e.key === 'End'){ show(slides.length - 1); }
+  });
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+
+  var wheelLock = false;
+  window.addEventListener('wheel', function(e){
+    if (wheelLock) return;
+    if (Math.abs(e.deltaY) < 24) return;
+    wheelLock = true;
+    if (e.deltaY > 0) next(); else prev();
+    setTimeout(function(){ wheelLock = false; }, 780);
+  }, { passive: true });
+
+  var tx = 0;
+  window.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive: true });
+  window.addEventListener('touchend', function(e){
+    var d = e.changedTouches[0].clientX - tx;
+    if (Math.abs(d) > 56){ if (d > 0) next(); else prev(); }
+  }, { passive: true });
+
+  var start = parseInt((location.hash || '').replace('#',''), 10);
+  show(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>

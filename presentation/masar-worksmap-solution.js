@@ -501,15 +501,19 @@
           + Math.round((load.minorMaxRatioBefore || 0) * 100) + '٪ قبله. '
           + 'الطابور أمام البيوت لا على طريقٍ بُني ليحمله.</p>'
         : '';
+      var safety = safetyHtml(route.policy);
       return '<tr class="works-detour-' + (index === 0 ? 'first' : 'second')
         + (load.overflows ? ' works-detour-strained' : '')
-        + (load.minorOverflows ? ' works-detour-hooded' : '') + '">'
+        + (load.minorOverflows ? ' works-detour-hooded' : '')
+        + (route.policy && route.policy.verdict === 'fail' ? ' works-detour-vetoed' : '')
+        + '">'
         + '<th>بديل ' + (index + 1) + '</th>'
         + '<td>' + kilometres(route.lengthM) + ' كم</td>'
         + '<td class="works-solution-num">+' + minutes(added) + ' د</td>'
         + '</tr>'
-        + (strain || hood ? '<tr class="works-detour-detail"><td colspan="3">'
-          + strain + hood + '</td></tr>' : '')
+        + (strain || hood || safety
+          ? '<tr class="works-detour-detail"><td colspan="3">'
+            + strain + hood + safety + '</td></tr>' : '')
         + detailRow(route, index);
     }).join('');
 
@@ -531,6 +535,15 @@
         + 'أو تنسيقٌ مع جهةٍ أخرى، لا توجيهُ الحركة إلى الحيّ.</p>'
       : '';
 
+    /* تصعيد بوابات السلامة — حين تسقط كل البدائل هندسةً لا حملاً وحده.
+       لا يُعرض مع `noneSpared` كي لا يقف تحذيران متشابهان؛ رسالة الحيّ
+       أخصّ فتتقدّم، والتصعيد يغطي ما لا تغطيه: الزوايا واليسارات. */
+    var vetoNote = !noneSpared && result.policy && result.policy.escalate
+      ? '<p class="works-detour-decision"><strong>لا بديل يمرّ بوابات '
+        + 'السلامة</strong> — ' + escapeHtml(String(result.policy.note || ''))
+        + '</p>'
+      : '';
+
     return '<section class="works-detour">'
       + '<h4>المسار البديل</h4>'
       + '<table class="works-solution-table"><tbody>'
@@ -540,6 +553,7 @@
       + rows
       + '</tbody></table>'
       + decision
+      + vetoNote
       + '<p class="works-detour-note">محسوب على شبكة الرياض كاملةً (شرايين وشوارع أحياء) — '
       + 'أزمنة رحلة BPR وعقوبات انعطاف وتقاطعات عند الساعة '
       + escapeHtml(String(result.hour === undefined ? 8 : result.hour)) + ':00. '
@@ -555,6 +569,38 @@
   /** رقمٌ لم يُحسب يُقال «غير محسوب» — لا يُملأ برقمٍ يُكمل الجدول. */
   function computed(value, render) {
     return typeof value === 'number' && isFinite(value) ? render(value) : 'غير محسوب';
+  }
+
+  /**
+   * حكم بوابات السلامة تحت سطر البديل — هندسة الانعطاف لا الحمل.
+   * ---------------------------------------------------------------------------
+   * مخالفتا الحمل (`residential-overflow`/`arterial-overflow`) تُحجبان هنا
+   * عمداً: فقرتا `strain` و`hood` أعلاه تقولانهما بأرقامهما، وقولُ الشيء
+   * مرتين يحوّله زينةً تُتجاوز. المعروض هنا ما لم يكن يُقال قط: اليسار غير
+   * المحمي، والاندماج الحاد، والدوران، وهبوط الدرجة — كلٌّ بموضعه المسمّى.
+   * الأحكام من `masar-detour-policy.js` والأسماء ثوابته المختبَرة.
+   */
+  var LOAD_RULES = { 'residential-overflow': 1, 'arterial-overflow': 1 };
+
+  function safetyHtml(policy) {
+    if (!policy || !policy.violations) return '';
+    var shown = policy.violations.filter(function (violation) {
+      return !LOAD_RULES[violation.rule];
+    });
+    if (!shown.length) return '';
+    var items = shown.map(function (violation) {
+      var where = violation.place && violation.place.from && violation.place.to
+        ? ' (' + escapeHtml(violation.place.from) + ' ← '
+          + escapeHtml(violation.place.to) + ')'
+        : '';
+      return '<li>' + escapeHtml(violation.text) + where + '</li>';
+    }).join('');
+    var vetoed = policy.verdict === 'fail';
+    return '<p class="works-detour-safety">'
+      + (vetoed
+        ? '<strong>مرفوض من بوابات السلامة</strong> — لا يُعتمد بديلاً:'
+        : '<strong>تحذير سلامة</strong>:')
+      + '</p><ul class="works-detour-safety-list">' + items + '</ul>';
   }
 
   /**
@@ -620,5 +666,6 @@
     buildRouteLayers: buildRouteLayers,
     routeCollection: routeCollection,
     detourHtml: detourHtml,
+    safetyHtml: safetyHtml,
   };
 });
