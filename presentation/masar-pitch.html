@@ -304,8 +304,8 @@
     </div>
   </section>
 
-  <!-- 0:55–1:25 -->
-  <section class="slide main" data-story="baseline-alternative" data-start="55" data-end="85" data-seconds="30">
+  <!-- 0:55–1:40 -->
+  <section class="slide main" data-story="baseline-alternative" data-start="55" data-end="100" data-seconds="45">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الثالث · هل يوجد بديل زمني أخف؟</div>
@@ -332,12 +332,34 @@
         <a href="masar-lab.html">افتح مختبر القرار</a>
       </div>
       <p class="quiet">المقارنة التوضيحية تستخدم شبكة طرق محلية ومدخلات معلنة، ولا تمثل نتيجة ميدانية.</p>
-      <aside class="speaker-notes" hidden>في الحالة التوضيحية نقارن موعد الطلب في الثامنة صباحاً ببديل واحد في العاشرة مساءً. يوضح النموذج سبب انخفاض الطلب المتوقع، ويفحص الشبكة المحلية، ثم يعرض البديل للمراجع. لا نسمي الفرق وفراً، لأن ذلك يحتاج قياساً بعد التنفيذ.</aside>
+      <div class="topline">
+        <h3>وسؤالٌ لا يقلّ أهمية: هل يتحمّل البديل نفسه الحركة المحوَّلة؟</h3>
+        <div class="evidence-tag">درجة الدليل: مشتقّ من النموذج — model-derived</div>
+      </div>
+      <div class="metric-grid">
+        <article class="metric" data-formula="alt-load-overflow">
+          <div class="value" id="alt-load-overflow">—</div>
+          <p>من محفظة 150 تصريحاً تمثيلية، بديلها يتجاوز طاقته بعد الحركة المحوَّلة إليه.</p>
+          <a href="../docs/engineering/SHADOW-PILOT.md#design-parameters">حدّ الرقم ودرجته</a>
+        </article>
+        <article class="metric" data-formula="alt-load-residential">
+          <div class="value" id="alt-load-residential">—</div>
+          <p>من التصاريح المتجاوزة، طابورها يتكوّن على شارع سكني — لا على طريق بُني ليحملها.</p>
+          <a href="../docs/engineering/SHADOW-PILOT.md#design-parameters">حدّ الرقم ودرجته</a>
+        </article>
+        <article class="metric" data-formula="alt-load-congestion-forecast">
+          <div class="value" id="alt-load-congestion-forecast">—</div>
+          <p>وسيط نسبة الحجم/السعة على الشارع البديل — قبل تحويل الحركة إليه وبعده. وتنبؤ حالة الازدحام عند ساعة الذروة: <b id="alt-load-congestion-band">—</b></p>
+          <a href="../docs/engineering/SHADOW-PILOT.md#design-parameters">حدّ الرقم ودرجته</a>
+        </article>
+      </div>
+      <p class="quiet" id="alt-load-worst">—</p>
+      <aside class="speaker-notes" hidden>في الحالة التوضيحية نقارن موعد الطلب في الثامنة صباحاً ببديل واحد في العاشرة مساءً. يوضح النموذج سبب انخفاض الطلب المتوقع، ويفحص الشبكة المحلية، ثم يعرض البديل للمراجع. لا نسمي الفرق وفراً، لأن ذلك يحتاج قياساً بعد التنفيذ. ثم نسأل السؤال الأهم الذي يسقطه أغلب الحلول المنافسة: هل يتحمّل الطريق البديل نفسه هذه الحركة المحوَّلة؟ الأرقام على الشاشة محسوبة لحظياً من محفظة التصاريح نفسها، لا مكتوبة يدوياً.</aside>
     </div>
   </section>
 
-  <!-- 1:25–1:45 -->
-  <section class="slide main" data-story="decision-path" data-start="85" data-end="105" data-seconds="20">
+  <!-- 1:40–2:00 -->
+  <section class="slide main" data-story="decision-path" data-start="100" data-end="120" data-seconds="20">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الرابع · ما مسار القرار؟</div>
@@ -370,8 +392,8 @@
     </div>
   </section>
 
-  <!-- 1:45–2:10 -->
-  <section class="slide main" data-story="impact-range" data-start="105" data-end="130" data-seconds="25">
+  <!-- 2:00–2:25 -->
+  <section class="slide main" data-story="impact-range" data-start="120" data-end="145" data-seconds="25">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال الخامس · كيف نثبت الأثر؟</div>
@@ -406,8 +428,8 @@
     </div>
   </section>
 
-  <!-- 2:10–2:35 -->
-  <section class="slide main" data-story="shadow-gate" data-start="130" data-end="155" data-seconds="25">
+  <!-- 2:25–2:35 -->
+  <section class="slide main" data-story="shadow-gate" data-start="145" data-end="155" data-seconds="10">
     <div class="slide-inner">
       <div class="topline">
         <div class="eyebrow">السؤال السادس · متى نقول نجح؟</div>
@@ -600,6 +622,7 @@
      فغيابه لا يُعطّل رقماً واحداً بل يمنع تعريف `MasarPortfolio` كلّه. -->
 <script src="masar-trafficload.js"></script>
 <script src="masar-portfolio.js"></script>
+<script src="data/alternate-load.js"></script>
 <script>
 (function () {
   'use strict';
@@ -608,6 +631,50 @@
   if (el && typeof MasarPortfolio !== 'undefined') {
     var p = MasarPortfolio.buildPortfolio(MasarPortfolio.SEED);
     el.textContent = Math.round(p.totals.savedVehHours).toLocaleString('ar-SA-u-nu-latn') + ' س-م';
+  }
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  // بطاقة «هل يتحمّل البديل؟»: القيم من data/alternate-load.js (نتاج محرك التوجيه)، لا مكتوبة يدوياً
+  var data = (typeof window !== 'undefined') ? window.MASAR_ALTERNATE_LOAD : null;
+  if (!data || !data.tally || !data.neighbourhood) return;
+
+  var fmt = function (n) { return Math.round(n).toLocaleString('ar-SA-u-nu-latn'); };
+  var pct = function (ratio) { return fmt(ratio * 100) + '٪'; };
+
+  var overflowEl = document.getElementById('alt-load-overflow');
+  if (overflowEl) overflowEl.textContent = fmt(data.tally.overflows) + ' / ' + fmt(data.total);
+
+  var residentialEl = document.getElementById('alt-load-residential');
+  if (residentialEl) {
+    residentialEl.textContent = fmt(data.neighbourhood.tally.overloaded) + ' / ' + fmt(data.tally.overflows);
+  }
+
+  var before = data.neighbourhood.medianMinorRatioBefore;
+  var after = data.neighbourhood.medianMinorRatioAfter;
+  var congestionEl = document.getElementById('alt-load-congestion-forecast');
+  /* «قبل» و«بعد» كلمتان لا سهم.
+     السهم بين رقمين لاتينيين داخل فقرة عربية يخضع لخوارزمية الاتجاه الثنائي،
+     فيُصيَّر الطرفان معكوسين بصرياً: تُقرأ «١٤٥٪ ⟵ ١٢٪» أي أن التحويل **يخفّف**
+     الحمل — عكس ما تقوله البيانات بالضبط، وعلى أهمّ رقم في الشريحة. والتسمية
+     الصريحة لا تنعكس مهما كان اتجاه الفقرة. */
+  if (congestionEl) {
+    congestionEl.textContent = 'قبل ' + pct(before) + ' · بعد ' + pct(after);
+  }
+
+  var bandEl = document.getElementById('alt-load-congestion-band');
+  if (bandEl && typeof MasarTrafficLoad !== 'undefined') {
+    var band = MasarTrafficLoad.congestionBandOf(after);
+    var peak = MasarTrafficLoad.peakShare();
+    bandEl.textContent = band.label + ' عند الساعة ' + fmt(peak.hour) + ':00';
+  }
+
+  var worstEl = document.getElementById('alt-load-worst');
+  if (worstEl) {
+    worstEl.textContent = 'الحالة الأسوأ في المحفظة التمثيلية: البديل يصل إلى '
+      + pct(data.neighbourhood.worstMinorRatioAfter) + ' من طاقته بعد التحويل. ' + data.doesNotProve;
   }
 })();
 </script>
