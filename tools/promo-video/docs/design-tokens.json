@@ -1,0 +1,70 @@
+{
+  "_meta": {
+    "source": "Baladiyathon/presentation/masar-tokens.css (single source of truth for the product's own UI)",
+    "note": "Every color below is either a direct copy of a --masar-* custom property or a documented harmonization of one. See design-spec.md § Visual direction for the mapping table and contrast math. Contrast target: >=4.5:1 for all text-on-surface pairs listed here.",
+    "assumedFps": 30
+  },
+  "colors": {
+    "bg": "#ECEFF2",
+    "bgDark": "#15202B",
+    "surface": "#FFFFFF",
+    "text": "#15202B",
+    "textInverse": "#FFFFFF",
+    "accent": "#1D4E77",
+    "accentSoft": "#E9F1F7",
+    "danger": "#B23B32",
+    "success": "#2C7351",
+    "warning": "#8C5C1C",
+    "chipProven": "#2C7351",
+    "chipVerified": "#2C6E9D",
+    "chipExpected": "#8C5C1C",
+    "chipScenario": "#626B76",
+    "_soft": {
+      "_note": "Companion tint for each chip/tone above, for the pill background. Not in the required shape but kept alongside so the two never drift apart. Pairs and hex values copied from masar-tokens.css *-soft tokens (chipScenario borrows --masar-canvas as its 'soft' since no neutral-soft token exists in the source).",
+      "accentSoft": "#E9F1F7",
+      "dangerSoft": "#F7E4E1",
+      "successSoft": "#E4F1EA",
+      "warningSoft": "#F4EDE1",
+      "chipProvenSoft": "#E4F1EA",
+      "chipVerifiedSoft": "#E6F0F7",
+      "chipExpectedSoft": "#F4EDE1",
+      "chipScenarioSoft": "#ECEFF2",
+      "successOnInk": "#7FD6A6"
+    }
+  },
+  "font": {
+    "family": "IBM Plex Sans Arabic",
+    "fallback": "\"Segoe UI\", Tahoma, Arial, sans-serif",
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    }
+  },
+  "type": {
+    "hero": 128,
+    "h1": 88,
+    "h2": 56,
+    "body": 40,
+    "caption": 28,
+    "counterHero": 192
+  },
+  "spacing": {
+    "safeX": 140,
+    "safeY": 100,
+    "gap": 32
+  },
+  "springs": {
+    "snappy": { "damping": 15, "stiffness": 200, "mass": 0.7 },
+    "smooth": { "damping": 20, "stiffness": 120, "mass": 1 },
+    "heavy": { "damping": 26, "stiffness": 80, "mass": 1.4 },
+    "gentle": { "damping": 30, "stiffness": 60, "mass": 1 }
+  },
+  "durations": {
+    "wordStaggerFrames": 3,
+    "sceneTransitionFrames": 18,
+    "counterFrames": 45,
+    "chipInFrames": 12
+  }
+}
